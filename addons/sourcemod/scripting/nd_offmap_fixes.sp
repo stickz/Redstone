@@ -2,7 +2,7 @@
 #include <sdktools>
 #include <sdkhooks>
 
-#define PLUGIN_VERSION "1.3"
+#define VERSION "1.3"
 #define DEBUG 0
 
 new bool:validMap = false;
@@ -17,9 +17,12 @@ public Plugin:myinfo =
     name = "[ND] Off Map Buildings Fixes",
     author = "yed_, edited by Stickz",
     description = "Prevents building things in glitched locations",
-    version = PLUGIN_VERSION,
+    version = VERSION,
     url = "git@vanyli.net:nd-plugins"
 }
+
+#define UPDATE_URL  "https://github.com/stickz/Redstone/blob/master/updater/nd_offmap_fixes/nd_offmap_fixes.txt"
+#include "updater/standard.sp"
 
 public OnPluginStart() 
 {
@@ -27,6 +30,8 @@ public OnPluginStart()
     
     HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
     HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
@@ -37,7 +42,7 @@ public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
     ClearArray(HAX);
 
     if (StrEqual(map, "hydro")) 
-  	HandleHydro();
+	    HandleHydro();
     else if (StrEqual(map, "coast"))
         HandleCoast();
     else if (StrEqual(map, "gate"))
