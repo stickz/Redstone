@@ -1,9 +1,9 @@
 /*
     A rough fix for building outside of the map (Hydro, Gate, Coast...)
 
-    1.3		Changes to the plugin for Redstone by Vertex
+    1.3	    Changes to the plugin for Redstone by Vertex
 	
-	  1.2     more glitches fix (thx Phi)
+    1.2     more glitches fix (thx Phi)
             using dynamic array
             reversed coordinates
 
@@ -45,29 +45,29 @@ public OnPluginStart()
 
 public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
 {
-    	decl String:map[64];
-    	GetCurrentMap(map, sizeof(map));
+    decl String:map[64];
+    GetCurrentMap(map, sizeof(map));
     
-	ClearArray(HAX);
+    ClearArray(HAX);
 
-  	if (StrEqual(map, "hydro")) 
-  		 HandleHydro();
-  	else if (StrEqual(map, "coast"))
-  		HandleCoast();
-  	else if (StrEqual(map, "gate"))
-  	  	HandleGate();
+    if (StrEqual(map, "hydro")) 
+  	HandleHydro();
+    else if (StrEqual(map, "coast"))
+        HandleCoast();
+    else if (StrEqual(map, "gate"))
+        HandleGate();
   	  	
-	validMap = GetArraySize(HAX) > 0;
+    validMap = GetArraySize(HAX) > 0;
 }
 
 public Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	validMap = false;
+    validMap = false;
 }
 
 public OnMapEnd() 
 {
-	validMap = false;
+    validMap = false;
 }
 
 HandleGate() 
@@ -163,67 +163,71 @@ HandleCoast()
 
 public OnEntityCreated(entity, const String:classname[])
 {
-	if (!validMap)
-    	{
-		#if DEBUG == 1
-		PrintToChatAll("debug: Map is Valid");
-		#endif
+    if (!validMap)
+    {
+        #if DEBUG == 1
+	PrintToChatAll("debug: Map is Valid");
+	#endif
 		
-		return;	
-	}
+	return;	
+    }
 
-   	if (strncmp(classname, "struct_", 7) == 0) 
-        	CreateTimer(0.1, CheckBorders, entity);
+   if (strncmp(classname, "struct_", 7) == 0) 
+        CreateTimer(0.1, CheckBorders, entity);
 }
 
 public Action:CheckBorders(Handle timer, any entity) 
 {
-	float position[3];
-	GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
-    	//PrintToChatAll("placed location %f - %f - %f", position[0], position[1], position[2]);
-	new Float:hax[4];
-  	for (new i=0; i<GetArraySize(HAX); i++) 
-  	{
-    		tmpAxisCount = 0;
-    		tmpAxisViolated = 0;
+    float position[3];
+    GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
+    //PrintToChatAll("placed location %f - %f - %f", position[0], position[1], position[2]);
+    new Float:hax[4];
     
-    		// minX
-    		GetArrayArray(HAX, i, hax);
-    		if (hax[0] != 0.0) 
-    		{
-      	    		tmpAxisCount++;
-      			if (hax[0] < position[0])
-      				tmpAxisViolated++;      
-        	}
+    for (new i=0; i<GetArraySize(HAX); i++) 
+    {
+        tmpAxisCount = 0;
+    	tmpAxisViolated = 0;
     
-        	// maxX
-    		if (hax[1] != 0.0) 
-    		{
-      			tmpAxisCount++;
+    	// minX
+    	GetArrayArray(HAX, i, hax);
+    	if (hax[0] != 0.0) 
+    	{
+      	    tmpAxisCount++;
+      	    
+      	    if (hax[0] < position[0])
+      	        tmpAxisViolated++;      
+        }
+    
+        // maxX
+    	if (hax[1] != 0.0) 
+    	{
+      	    tmpAxisCount++;
       			
-        		#if DEBUG == 1
-      			PrintToChatAll("checking max X hax %f > pos %f?", hax[1], position[0]);
-            		#endif
+            #if DEBUG == 1
+      	    PrintToChatAll("checking max X hax %f > pos %f?", hax[1], position[0]);
+            #endif
       
-      			if (hax[1] > position[0]) 
-      				tmpAxisViolated++;
-    		}
+      	    if (hax[1] > position[0]) 
+      	        tmpAxisViolated++;
+    	}
     
-    		if (hax[2] != 0.0) 
-    		{
-      			tmpAxisCount++;
-      			if (hax[2] < position[1])
-      				tmpAxisViolated++;
-    		}
+    	if (hax[2] != 0.0) 
+    	{
+      	    tmpAxisCount++;
+      	    
+      	    if (hax[2] < position[1])
+      	        tmpAxisViolated++;
+    	}
     
-    		if (hax[3] != 0.0) 
-    		{
-      			tmpAxisCount++;
-      			if (hax[3] > position[1])
-      				tmpAxisViolated++;
-    		}
+    	if (hax[3] != 0.0) 
+    	{
+      	    tmpAxisCount++;
+      			
+      	    if (hax[3] > position[1])
+      	        tmpAxisViolated++;
+    	}
     
-    		if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated)) 
-    			  AcceptEntityInput(entity, "Kill");
+    	if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated)) 
+    	    AcceptEntityInput(entity, "Kill");
     }
 }
