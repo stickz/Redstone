@@ -32,4 +32,5 @@ before_script:
 script:
   - ./compile.sh nd_offmap_fixes.sp
   - cd /
-  - cp /addons/sourcemod/scripting/compiled/nd_offmap_fixes.smx /addons/sourcemod/plugins
+  - ls
+  - cp ./addons/sourcemod/scripting/compiled/nd_offmap_fixes.smx /addons/sourcemod/plugins
