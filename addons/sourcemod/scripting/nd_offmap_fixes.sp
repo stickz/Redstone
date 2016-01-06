@@ -174,7 +174,7 @@ public OnEntityCreated(entity, const String:classname[])
 	return;	
     }
 
-   if (strncmp(classname, "struct_", 7) == 0) 
+    if (strncmp(classname, "struct_", 7) == 0) 
         CreateTimer(0.1, CheckBorders, entity);
 }
 
