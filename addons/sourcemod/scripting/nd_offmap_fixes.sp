@@ -42,7 +42,7 @@ public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
     ClearArray(HAX);
 
     if (StrEqual(map, "hydro")) 
-	    HandleHydro();
+	HandleHydro();
     else if (StrEqual(map, "coast"))
         HandleCoast();
     else if (StrEqual(map, "gate"))
