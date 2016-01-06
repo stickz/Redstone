@@ -34,5 +34,6 @@ script:
   - cd -
   - cd -
   - cd -
+  - cd -
   - ls
   - cp /addons/sourcemod/scripting/compiled/nd_offmap_fixes.smx /addons/sourcemod/plugins
