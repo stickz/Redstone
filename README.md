@@ -6,6 +6,11 @@ Notice 2: Plugins which use natives are NOT permitted to have the auto-updater f
 
 Looking for: An automated build script to compile pull requests and copy the plugin to /updater/plugin_name/plugins.
 
+# Useful Information
+All [xG] Nuclear Dawn servers are running Linux with sourcemod 1.7 build 5255
+
+Bugs/Issues with sourcemod can be fixed here https://github.com/alliedmodders/sourcemod
+
 # Useful Links
 https://wiki.alliedmods.net/Introduction_to_sourcemod_plugins
 
