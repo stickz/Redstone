@@ -31,7 +31,7 @@ public OnPluginStart()
     HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
     HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
-	AddUpdaterLibrary(); //auto-updater
+    AddUpdaterLibrary(); //auto-updater
 }
 
 public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
