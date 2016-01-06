@@ -1,4 +1,4 @@
-# Redstone Server Project
+# Redstone ND Server Project
 
 Notice: Please update the scripting file only. stickz will bump the version, compile and push to the servers.
 
