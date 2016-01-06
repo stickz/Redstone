@@ -178,32 +178,32 @@ public OnEntityCreated(entity, const String:classname[])
 
 public Action:CheckBorders(Handle timer, any entity) 
 {
-    float position[3];
-	  GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
-    //PrintToChatAll("placed location %f - %f - %f", position[0], position[1], position[2]);
-	  new Float:hax[4];
+	float position[3];
+	GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
+    	//PrintToChatAll("placed location %f - %f - %f", position[0], position[1], position[2]);
+	new Float:hax[4];
   	for (new i=0; i<GetArraySize(HAX); i++) 
   	{
-    	  tmpAxisCount = 0;
+    		tmpAxisCount = 0;
     		tmpAxisViolated = 0;
     
     		// minX
     		GetArrayArray(HAX, i, hax);
     		if (hax[0] != 0.0) 
     		{
-      	    tmpAxisCount++;
+      	    		tmpAxisCount++;
       			if (hax[0] < position[0])
       				tmpAxisViolated++;      
-        }
+        	}
     
-        // maxX
+        	// maxX
     		if (hax[1] != 0.0) 
     		{
       			tmpAxisCount++;
       			
-            #if DEBUG == 1
+        		#if DEBUG == 1
       			PrintToChatAll("checking max X hax %f > pos %f?", hax[1], position[0]);
-            #endif
+            		#endif
       
       			if (hax[1] > position[0]) 
       				tmpAxisViolated++;
