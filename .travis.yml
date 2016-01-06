@@ -31,6 +31,3 @@ before_script:
 
 script:
   - ./compile.sh nd_offmap_fixes.sp
-  - cd /home/travis/
-  - ls
-  - cp /home/travis/build/stickz/Redstone/addons/sourcemod/scripting/compiled/nd_offmap_fixes.smx /home/travis/build/stickz/Redstone/addons/sourcemod/plugins
