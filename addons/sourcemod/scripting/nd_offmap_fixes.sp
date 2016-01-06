@@ -1,8 +1,6 @@
 /*
     A rough fix for building outside of the map (Hydro, Gate, Coast...)
 
-    1.3.17   Test Travis Build System
-    
     1.3	    Changes to the plugin for Redstone by Vertex
 	
     1.2     more glitches fix (thx Phi)
@@ -18,7 +16,7 @@
 #include <sdktools>
 #include <sdkhooks>
 
-#define PLUGIN_VERSION "1.3.17"
+#define PLUGIN_VERSION "1.3"
 #define DEBUG 0
 
 new bool:validMap = false;
