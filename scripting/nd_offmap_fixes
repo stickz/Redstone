@@ -45,29 +45,29 @@ public OnPluginStart()
 
 public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
 {
-    decl String:map[64];
-    GetCurrentMap(map, sizeof(map));
+    	decl String:map[64];
+    	GetCurrentMap(map, sizeof(map));
     
-    ClearArray(HAX);
+	ClearArray(HAX);
 
   	if (StrEqual(map, "hydro")) 
-  	    HandleHydro();
+  		 HandleHydro();
   	else if (StrEqual(map, "coast"))
-  		  HandleCoast();
+  		HandleCoast();
   	else if (StrEqual(map, "gate"))
   	  	HandleGate();
-
-	  validMap = GetArraySize(HAX) > 0;
+  	  	
+	validMap = GetArraySize(HAX) > 0;
 }
 
 public Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
 {
-    validMap = false;
+	validMap = false;
 }
 
 public OnMapEnd() 
 {
-    validMap = false;
+	validMap = false;
 }
 
 HandleGate() 
@@ -163,17 +163,17 @@ HandleCoast()
 
 public OnEntityCreated(entity, const String:classname[])
 {
-    if (!validMap)
-	  {
-		    #if DEBUG == 1
-		    PrintToChatAll("debug: Map is Valid");
-		    #endif
+	if (!validMap)
+    	{
+		#if DEBUG == 1
+		PrintToChatAll("debug: Map is Valid");
+		#endif
 		
-		    return;	
-	  }
+		return;	
+	}
 
-    if (strncmp(classname, "struct_", 7) == 0) 
-        CreateTimer(0.1, CheckBorders, entity);
+   	if (strncmp(classname, "struct_", 7) == 0) 
+        	CreateTimer(0.1, CheckBorders, entity);
 }
 
 public Action:CheckBorders(Handle timer, any entity) 
