@@ -1,17 +1,3 @@
-/*
-    A rough fix for building outside of the map (Hydro, Gate, Coast...)
-
-    1.3	    Changes to the plugin for Redstone by Vertex
-	
-    1.2     more glitches fix (thx Phi)
-            using dynamic array
-            reversed coordinates
-
-    1.1     initial version
-
-*/
-
-
 #include <sourcemod>
 #include <sdktools>
 #include <sdkhooks>
