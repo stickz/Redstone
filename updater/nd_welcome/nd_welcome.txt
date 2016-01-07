@@ -1,0 +1,24 @@
+"Updater"
+{
+	"Information"
+	{
+		"Version"
+		{
+			"Latest"	"1.0.7"
+		}
+		
+		"Notes"	"1.0.1: Initial Release"
+		"Notes" "1.0.2: Fixed afew toggle bugs"
+		"Notes" "1.0.3: Push update to fix the welcome message"
+		"Notes" "1.0.4: Fix bool return and use new coding style (cleaner)"
+		"Notes" "1.0.5: Attempt to fix double display of the welcome message."
+		"Notes" "1.0.6: Recompile with SM 1.7.2 and improve cookie code"
+		"Notes" "1.0.7: Remove un-needed close handle code"
+	}
+	
+	"Files"
+	{
+		"Plugin"	"Path_SM/plugins/nd_welcome.smx"
+		"Plugin"	"Path_SM/translations/nd_welcome.phrases.txt"
+	}
+}
