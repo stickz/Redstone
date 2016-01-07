@@ -1,0 +1,26 @@
+"Updater"
+{
+	"Information"
+	{
+		"Version"
+		{
+			"Latest"	"1.0.6"
+		}
+		
+		"Notes"	"1.0.1: Initial Release"
+		"Notes"	"1.0.2: Fixed colour display in warning messages"
+		"Notes" "1.0.3: Rolled out Russian translations"
+		"Notes" "1.0.4: Removed UN-needed xG prefixes"
+		"Notes" "1.0.4: Bumped compile version to 1.7.1"
+		"Notes" "1.0.5: Recompile with SM 1.7.2"
+		"Notes" "1.0.6: Recompile with SM 1.7 build 5255"
+		"Notes" "1.0.6: Various other changes for github"
+	}
+	
+	"Files"
+	{
+		"Plugin"	"Path_SM/plugins/nd_player_warnings.smx"
+		"Plugin"	"Path_SM/translations/nd_player_warnings.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_player_warnings.phrases.txt"
+	}
+}
