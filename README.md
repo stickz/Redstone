@@ -9,8 +9,8 @@ Bugs/Issues with sourcemod can be fixed here https://github.com/alliedmodders/so
 # Useful Links
 https://wiki.alliedmods.net/Introduction_to_sourcemod_plugins
 
-https://guides.github.com/activities/hello-world/
-
 https://wiki.alliedmods.net/Nuclear_Dawn_Events
+
+https://guides.github.com/activities/hello-world/
 
 https://sm.alliedmods.net/new-api/
