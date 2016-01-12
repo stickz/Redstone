@@ -31,7 +31,7 @@ public Plugin:myinfo =
 	url = "N/A"
 };
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/blob/master/updater/nd_player_warnings/nd_player_warnings.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_player_warnings/nd_player_warnings.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart()

@@ -32,7 +32,7 @@ public Plugin:myinfo =
 };
 
 /* Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/blob/master/updater/nd_welcome/nd_welcome.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_welcome/nd_welcome.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart() 
