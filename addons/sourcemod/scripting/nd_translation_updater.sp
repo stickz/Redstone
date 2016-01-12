@@ -16,7 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
-#define VERSION "1.0.1"
+#define VERSION "1.0.2"
 
 public Plugin:myinfo = 
 {
@@ -27,7 +27,7 @@ public Plugin:myinfo =
 	url = "N/A"
 }
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/blob/master/updater/nd_translation_updater/nd_translation_updater.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_translation_updater/nd_translation_updater.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart()
