@@ -8,4 +8,5 @@
 	"Welcome"
 	{
 		"en"			"Welcome to Redstone, you can customize your stay by typing !settings in chat!!"
+	}
 }
