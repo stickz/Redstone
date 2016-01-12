@@ -37,7 +37,7 @@ public Plugin:myinfo =
     url = "git@vanyli.net:nd-plugins"
 }
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/blob/master/updater/nd_offmap_fixes/nd_offmap_fixes.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_offmap_fixes/nd_offmap_fixes.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart() 
