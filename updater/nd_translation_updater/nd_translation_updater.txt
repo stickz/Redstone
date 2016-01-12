@@ -83,10 +83,5 @@
 		"Plugin"	"Path_SM/translations/cze/resourcemessages.phrases.txt"
 		"Plugin"	"Path_SM/translations/de/resourcemessages.phrases.txt"
 		"Plugin"	"Path_SM/translations/ru/resourcemessages.phrases.txt"
-		
-		"Plugin"	"Path_SM/translations/structminigame.phrases.txt"
-		"Plugin"	"Path_SM/translations/cze/structminigame.phrases.txt"
-		"Plugin"	"Path_SM/translations/de/structminigame.phrases.txt"
-		"Plugin"	"Path_SM/translations/ru/structminigame.phrases.txt"
 	}
 }
