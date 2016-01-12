@@ -17,7 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <clientprefs>
 
-#define VERSION "1.0.7"
+#define VERSION "1.0.8"
 
 new Handle:cookie_welcome_message = INVALID_HANDLE;
 new bool:option_welcome_message[MAXPLAYERS + 1] = {true,...}; //off by default

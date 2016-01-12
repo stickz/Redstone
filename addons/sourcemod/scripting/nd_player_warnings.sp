@@ -16,7 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
-#define VERSION "1.0.6"
+#define VERSION "1.0.7"
 
 #define WARN_TYPE_RESPECT 0
 #define WARN_TYPE_ADVERTISE 1
