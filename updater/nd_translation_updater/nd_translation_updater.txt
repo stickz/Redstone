@@ -1,0 +1,17 @@
+"Updater"
+{
+	"Information"
+	{
+		"Version"
+		{
+			"Latest"	"1.0.1"
+		}
+		
+		"Notes"	"1.0.1: Initial Release"
+	}
+	
+	"Files"
+	{
+		"Plugin"	"Path_SM/plugins/nd_translation_updater.smx"
+	}
+}
