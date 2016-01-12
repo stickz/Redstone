@@ -1,0 +1,17 @@
+﻿"Phrases"
+{
+	"Respect"
+	{
+		"de"		"Bitte sei respektvoll gegenüber anderen Spielern"
+	}
+	
+	"Advertise"
+	{
+		"de"		"Bitte unterlasse es Werbung zu posten"
+	}
+	
+	"Spawn Sell"
+	{
+		"de"		"Der Verkauf aller Einstiegspunkte ist auf diesem Server untersagt"
+	}
+}

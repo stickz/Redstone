@@ -3,17 +3,9 @@
 	"Cookie Welcome Message"
 	{
 		"en"			"Welcome Message"
-		"nl"			"Welcome Message"
-		"de"			"Willkommensnachricht"
-		"cze"			"Uvítací zpráva"
 	}
 
 	"Welcome"
 	{
 		"en"			"Welcome to Redstone, you can customize your stay by typing !settings in chat!!"
-		"nl"			"Welkom op Redstone, sommige functie’s zijn beschikbaar in het Nederlands door het volgende te typen !settings in chat!!"
-		"de"			"Willkommen auf Redstone! Einige Einstellungen sind in verschiedenen Sprachen verfügbar, wenn Sie !settings in den Chat eingeben."
-		"fr"			"Bienvenue à Redstone! Redstone à la recherche de traductions pour la communauté française."
-		"cze"			"Vítej na serveru Redstone. Nastavení lze měnit příkazem !settings v chatu."
-	}
 }
