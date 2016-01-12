@@ -33,7 +33,7 @@ public Plugin:myinfo =
 	url = "N/A"
 }
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/blob/master/updater/nd_build_shadow_fix/nd_build_shadow_fix.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_build_shadow_fix/nd_build_shadow_fix.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart()
