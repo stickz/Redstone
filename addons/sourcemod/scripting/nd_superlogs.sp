@@ -85,7 +85,7 @@ public Plugin:myinfo = {
 };
 
 /* Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/blob/master/updater/nd_superlogs/nd_superlogs.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_superlogs/nd_superlogs.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart()
