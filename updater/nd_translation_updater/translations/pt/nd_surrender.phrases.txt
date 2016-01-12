@@ -1,0 +1,47 @@
+﻿"Phrases"
+{
+	"Twelve Required"
+	{
+		"pt"		"São necessários ao menos 12 jogadores para utilizar esta funcionalidade"
+	}
+	
+	"Ten Required"
+	{
+		"pt"		"São necessários ao menos 10 jogadores para utilizar esta funcionalidade"	
+	}
+	
+	"Too Soon"
+	{
+		"pt"		"Você não pode render-se tão cedo na partida"	
+	}
+	
+	"Team Surrendered"
+	{
+		"pt"		"Seu time já se rendeu"
+	}
+	
+	"On Team"
+	{
+		"pt"		"Você precisa estar em um time para votar rendição"	
+	}
+	
+	"You Surrendered"
+	{
+		"pt"		"Você já votou para rendição"	
+	}
+	
+	"Round Ended"
+	{
+		"pt"		"A partida já está encerrada"	
+	}
+	
+	"Consort Surrendered"
+	{
+		"pt"		"Consortium se rendeu"	
+	}
+	
+	"Empire Surrendered"
+	{
+		"pt"		"Empire se rendeu"	
+	}
+}

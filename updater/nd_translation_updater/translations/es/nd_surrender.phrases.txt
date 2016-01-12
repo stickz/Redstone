@@ -1,0 +1,47 @@
+﻿"Phrases"
+{
+	"Twelve Required"
+	{
+		"es"		"Deben haber almenos 12 jugadores para utilizar esta opcion"
+	}	
+
+	"Ten Required"
+	{
+		"es"		"Deben haber almenos 10 jugadores para utilizar esta opcion"
+	}	
+	
+	"Too Soon"
+	{
+		"es"		"No puede rendirse tan pronto"
+	}	
+
+	"Team Surrendered"
+	{
+		"es"		"Su equipo se ha rendido"
+	}
+	
+	"On Team"
+	{
+		"es"		"Debe estar en un equipo para rendirse"
+	}	
+	
+	"You Surrendered"
+	{
+		"es"		"Ya ha votado para rendirse"
+	}	
+
+	"Round Ended"
+	{
+		"es"		"La ronda ha terminado"	
+	}
+	
+	"Consort Surrendered"
+	{	
+		"es"		"El Consorcio se ha rendido"
+	}	
+
+	"Empire Surrendered"
+	{
+		"es"		"El Imperio se ha rendido"	
+	}
+}

@@ -1,0 +1,155 @@
+﻿"Phrases"
+{
+	"Cookie TeamBalancer Messages"
+	{
+		"fr"		"Message d'équilibrage d'équipe"
+	}
+	"Slot Used"
+	{
+		"fr"		"Emplacement réservé utilisé avec succès"	
+	}
+	"Rookie Only"
+	{
+		"fr"		"Ce serveur est uniquement pour les joueurs débutants"	
+	}
+	"Veteran Only"
+	{
+		"fr"		"Ce serveur est uniquement pour les  joueurs vétérans"	
+	}
+	"Graduated"
+	{
+		"fr"		"Félicitation soldat, vous êtes prêt à sortir du camp d'entrainement !"	
+	}
+	"Submitted Placement"
+	{
+		"fr"		"Requête de commandement soumise"	
+	}
+	"Revoked Placement"
+	{
+		"fr"		"Requête de commandement rejetée"
+	}
+	"Balancer Running"
+	{
+		"fr"		"Impossible de rejoindre une équipe durant la partie d'échauffement."	
+	}
+	"Resign Switch"
+	{
+		"fr"		"Vous devez quitter le commandement avec de changer d'équipe"	
+	}
+	"Switch Disabled"
+	{
+		"fr"		"Changement d'équipe désactivé pendant quelque minutes ou jusqu'à ce que les équipes soient déséquilibrées"	
+	}
+	"Retry Placement"
+	{
+		"fr"		"Vous êtes maintenant en mode spectateur ! Veuillez réessayer votre requête de placement en équipe"	
+	}
+	"Level Retrieved"
+	{
+		"fr"		"Niveau retrouvé avec succès, veuillez réessayer"
+	}
+	"Level Switch Wait"
+	{
+		"fr"		"Veuillez attendre que le tableau des scores indique un niveau de 2 ou plus avant de changer d'équipe"	
+	}
+	"Revoke Spectator"
+	{
+		"fr"		"La requête de spectateur doit être annulée avant de pouvoir rejoindre"
+	}
+	"Spectator Avoid"
+	{
+		"fr"		"Vous ne pouvez utiliser cette commande pour éviter l'équilibrage d'équipe"	
+	}
+	"Spectator Unlocked"
+	{
+		"fr"		"Vous êtes débloqué du mode spectateur"
+	}
+	"Spectator Joined"
+	{
+		"fr"		"Vous êtes maintenant en mode spectateur ! Pour quitter, retapez !spec"
+	}
+	"Teamdiff Round Wait"
+	{
+		"fr"		"Vous ne pouvez utiliser teamdiff avant que le round ai commencé"
+	}
+	"Ether Team Stack"
+	{
+		"fr"		"Rejoindre une équipe causera un déséquilibrage. Restriction pour quelque minutes ou jusqu'à changement de statut."
+	}
+	"Could Be Switched"
+	{
+		"fr"		"Vous pourriez être changé d'équipe après que le niveau ai chargé"	
+	}
+	"Initial Team Lock"
+	{
+		"fr"		"Vous êtes bloqué(e) dans l'équipé initiale pour cause d'évitement, vous ne pouvez rejoindre avant que les équipes soient équilibrées"
+	}
+	"Separate Placement"
+	{
+		"fr"		"Placé(e) séparement pour assurer que les deux équipes aient un commandant"	
+	}
+	"Random Selection"
+	{
+		"fr"		"La sélection du commandant est aléatoire mais vous avez de fortes chances d'être choisi(e)"
+	}
+	"Balancer Not Run"
+	{
+		"fr"		"Equilibrage non lancé par manque de joueur"
+	}
+	"Balancer Off"
+	{
+		"fr"		"L'équilibrage automatique est désactivé"
+	}
+	"Waiting"
+	{
+		"fr"		"En attente de joueurs"	
+	}
+	"Please Wait"
+	{
+		"fr"		"Veuillez patienter"
+	}
+	"Status"
+	{
+		"fr"		"Statut"
+	}
+	"Excellent"
+	{
+		"fr"		"Excellent"	
+	}
+	"Good"
+	{
+		"fr"		"Bien"
+	}
+	"Not Bad"
+	{
+		"fr"		"Pas mal"
+	}
+	"Switch Recommended"
+	{
+		"fr"		"Changement d'équipe recommandé"	
+	}
+	"Slightly Imbalanced"
+	{
+		"fr"		"Légèrement déséquilibré"
+	}
+	"Moderately Imbalanced"
+	{
+		"fr"		"Modérement déséquilibré"
+	}
+	"Heavily Imbalanced"
+	{
+		"fr"		"Lourdement déséquilibré"	
+	}
+	"Empire"
+	{
+		"fr"		"Empire"
+	}
+	"Consortium"
+	{
+		"fr"		"Consortium"
+	}
+	"Skill"	
+	{
+		"fr"		"Compétence"	
+	}
+}

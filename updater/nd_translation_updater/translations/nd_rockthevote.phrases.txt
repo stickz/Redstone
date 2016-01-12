@@ -1,0 +1,52 @@
+﻿"Phrases"
+{
+	"Eight Required"
+	{
+		"en"		"Eight or less players are required for late game map changes"
+	}
+	
+	"Ten Required"
+	{
+		"en"		"Ten or less players are required for late game map changes"
+	}
+	
+	"Twelve Required"
+	{
+		"en"		"Twelve or less players are required for late game map changes"	
+	}
+	
+	"Too Late"
+	{
+		"en"		"RTV cannot be used so late into the match"	
+	}
+	
+	"Already Passed"
+	{
+		"en"		"Map change is pending, please be patient."
+	}
+	
+	"Already RTVed"
+	{
+		"en"		"You've already voted to change the map"	
+	}
+	
+	"Round Ended"
+	{
+		"en"		"RTV cannot be used after round end"	
+	}
+	
+	"Round Start"
+	{
+		"en"		"Please wait until the match has started"	
+	}
+	
+	"RTV Changing"
+	{
+		"en"		"RTV Successful: Map will change in five seconds"		
+	}
+	
+	"RTV Wait"
+	{
+		"en"		"RTV Successful: Pending next map vote for change"
+	}
+}

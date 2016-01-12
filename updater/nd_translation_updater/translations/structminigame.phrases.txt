@@ -1,0 +1,7 @@
+﻿"Phrases"
+{
+	"Cookie Structure Killings"
+	{
+		"en"		"Structure Killings"
+	}
+}

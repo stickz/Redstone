@@ -1,0 +1,175 @@
+﻿"Phrases"
+{
+	"Cookie TeamDiff Hints"
+	{
+		"en"		"TeamDiff HUD Display"
+	}
+	"Cookie TeamBalancer Messages"
+	{
+		"en"		"TeamBalancer Messages"
+	}
+	"Slot Used"
+	{
+		"en"		"Reserved slot used successfully"	
+	}
+	"Choice Granted"
+	{
+		"en"		"Team choice granted due to extremely balanced teams"
+	}
+	"TP Spectator"
+	{
+		"en"		"You cannot use this feature while team picking is active"
+	}
+	"Coast Exploit"
+	{
+		"en"		"Please avoid using the roof build exploit on coast! :) -Thanks"
+	}
+	"Donors Only"
+	{
+		"en"		"Reserved slots are for donors only"	
+	}
+	"Rookie Only"
+	{
+		"en"		"This server is for rookies players only"	
+	}
+	"Veteran Only"
+	{
+		"en"		"This server is for veteran players only"	
+	}
+	"Graduated"
+	{
+		"en"		"Congratulates soldier, you've graduated from bootcamp"	
+	}
+	"Submitted Placement"
+	{
+		"en"		"Separate commander placement request submitted"	
+	}
+	"Revoked Placement"
+	{
+		"en"		"Separate commander placement request revoked"
+	}
+	"Balancer Running"
+	{
+		"en"		"Cannot join an team while the warmup balancer is running"	
+	}
+	"Resign Switch"
+	{
+		"en"		"You must resign from commander before switching teams"	
+	}
+	"Switch Disabled"
+	{
+		"en"		"Team switching disabled for afew more minutes or until imbalanced teams"	
+	}
+	"Retry Placement"
+	{
+		"en"		"You're now in spectator mode! Please try your team placement request again"	
+	}
+	"Level Retrieved"
+	{
+		"en"		"Level retrieved successfully, please try again"
+	}
+	"Level Switch Wait"
+	{
+		"en"		"Please wait until the scoreboard shows level 2+ before switching teams"	
+	}
+	"Revoke Spectator"
+	{
+		"en"		"Spectator request must be revoked before joining"
+	}
+	"Spectator Avoid"
+	{
+		"en"		"Cannot use this command to avoid the team balancer"	
+	}
+	"Spectator Unlocked"
+	{
+		"en"		"You're unlocked from spectator mode"
+	}
+	"Spectator Joined"
+	{
+		"en"		"You're now spectator mode! To exit retype !spec."
+	}
+	"Teamdiff Round Wait"
+	{
+		"en"		"Cannot use teamdiff before the round has started"
+	}
+	"Ether Team Stack"
+	{
+		"en"		"Joining ether team will cause an stack. Restricted for a few minutes or status change."
+	}
+	"Could Be Switched"
+	{
+		"en"		"You could be switched immediately after your level loads"	
+	}
+	"Initial Team Lock"
+	{
+		"en"		"You're locked on initial team due to avoidance, cannot join until balanced"
+	}
+	"Separate Placement"
+	{
+		"en"		"Placed you separately to ensure both teams have an commander"	
+	}
+	"Random Selection"
+	{
+		"en"		"Commander Selection is random, but it's highly likely you'll be chosen"
+	}
+	"Balancer Not Run"
+	{
+		"en"		"Warm-up balancer NOT run due to lack of players"
+	}
+	"Balancer Off"
+	{
+		"en"		"Team balancer is currently OFF"
+	}
+	"Waiting"
+	{
+		"en"		"Waiting for Players to Connect"	
+	}
+	"Please Wait"
+	{
+		"en"		"Please Wait"
+	}
+	"Status"
+	{
+		"en"		"Status"
+	}
+	"Excellent"
+	{
+		"en"		"Excellent"	
+	}
+	"Good"
+	{
+		"en"		"Good"
+	}
+	"Not Bad"
+	{
+		"en"		"Not Bad"
+	}
+	"Switch Recommended"
+	{
+		"en"		"Switch Recommended"	
+	}
+	"Slightly Imbalanced"
+	{
+		"en"		"Slightly Imbalanced"
+	}
+	"Moderately Imbalanced"
+	{
+		"en"		"Moderately Imbalanced"
+	}
+	"Heavily Imbalanced"
+	{
+		"en"		"Heavily Imbalanced"	
+	}
+	"Empire"
+	{
+		"en"		"Empire"
+	}
+	"Consortium"
+	{
+		"en"		"Consort"
+	}
+	"Skill"	
+	{
+		"en"		"skill"	
+	}
+}

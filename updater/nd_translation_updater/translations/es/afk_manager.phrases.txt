@@ -1,0 +1,88 @@
+"Phrases"
+{
+	// Mod Detection (Debug Messages)
+    "NUCLEARDAWN"
+    {
+		"es"		"Detectado Modo Nuclear Dawn"
+    }
+
+	"Insurgency"
+	{
+		"es"		"Detectado Modo Insurgency"
+	}
+
+	"Synergy"
+	{
+		"es"		"Detectado Modo Synergy"
+	}
+
+	"TF2"
+	{
+		"es"		"Detectado Modo Team Fortress 2"
+	}
+
+	"CSTRIKE"
+	{
+		"es"		"Detectado Modo Counter-Strike"
+	}
+
+	"L4D"
+	{
+		"es"		"Detectado Modo Left 4 Dead"
+	}
+
+
+	// Debug Messages
+
+
+	// Plugin Messages
+	"Spectate_Force"
+	{
+		"es"		"Forzado el Jugador {1} a estar en espectador."
+	}
+
+	"Spawn_Move_Warning"
+	{
+		"es"		"Advertencia: Si usted no se mueve de su lugar de regeneramiento en {1} segundos, usted será movido a espectador."
+	}
+
+	"Move_Warning"
+	{
+		"es"		"Advertencia: Si usted no se mueve en {1} segundos, usted será movido a espectador."
+	}
+
+	"Spawn_Kick_Warning"
+	{
+		"es"		"Advertencia: Si usted no se mueve de su lugar de regeneramiento en {1} segundos, usted será expulsado."
+	}
+
+	"Kick_Warning"
+	{
+		"es"		"Advertencia: Si usted no se mueve en {1} segundos, usted será expulsado."
+	}
+
+	"Move_Announce"
+	{
+		"es"		"{1} fue movido a espectador por estar AFK."
+	}
+
+	"Move_Log"
+	{
+		"es"		"{1} fue movido a espectador por estar AFK."
+	}
+
+	"Kick_Announce"
+	{
+		"es"		"{1} fue expulsado por estar AFK."
+	}
+
+	"Kick_Message"
+	{
+		"es"		"Usted fue expulsado por estar demasiado tiempo AFK (Lejos del teclado)."
+	}
+
+	"Kick_Log"
+	{
+		"es"		"{1} fue expulsado por estar AFK."
+	}
+}

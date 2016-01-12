@@ -1,0 +1,19 @@
+﻿"Phrases"
+{
+	"Cookie HP Left"
+	{
+		"de"			"Übrige HP anzeigen"
+	}
+	"Notdied"
+	{
+		"de"			"Sie sind noch nicht tot"
+	}
+	"Killedhs"
+	{
+		"de"			"{1}{2}{3} tötete Sie mit einer {4} (headshot) und hat {5} HP übrig"
+	}
+	"Killed"
+	{
+		"de"			"{1}{2}{3} tötete Sie mit der Waffe {4} (Kopfschuss) und hat {5} HP übrig"
+	}
+}

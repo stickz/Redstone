@@ -1,0 +1,19 @@
+﻿"Phrases"
+{
+	"Cookie HP Left"
+	{
+		"nl"			"HP Left is zichtbaar"
+	}
+	"Notdied"
+	{
+		"nl"			"Je bent nog niet dood"
+	}
+	"Killedhs"
+	{
+		"nl"			"{1}{2}{3} gedood met een {4} (hoofdschot) vervolgens {5} hoeveel HP over"
+	}
+	"Killed"
+	{
+		"nl"			"De nummers {1}{2}en{3} zijn de spelersnamen, {4} het wapen en {5}  hoeveel leven er over is van de tegenstander"
+	}
+}

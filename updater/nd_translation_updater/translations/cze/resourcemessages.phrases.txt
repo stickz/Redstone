@@ -1,0 +1,95 @@
+"Phrases"
+{
+	// Translated by vaskrist
+
+	// !settings menu label
+	"Cookie Resource Messages"
+	{
+		"cze"			"Zobrazovat zprávy o zabírání zdrojů"
+	}
+	
+	//Example: "Cube, MissLiss (+3) obsadili primární zdroj."
+	// {1} are the people capturing plus some
+	"Primary Resource Captured"
+	{
+		"#format"		"{1:s},{2:s}"
+		"cze"			"{1} obsadili primární zdroj."
+	}
+	
+	//Example: "Cube (+2) obsadil severní sekundární zdroj."
+	// {1} is the person capturing plus some
+	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
+	"Secondary Resource Captured"
+	{
+		"#format"		"{1:s},{2:s}"
+		"cze"			"{1} obsadil{2} sekundární zdroj."
+	}
+	
+	//Example: "djfishfish (+2) obsadil severovýchodní terciární zdroj."
+	// {1} is the person capturing plus some
+	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
+	"Tertiary Resource Captured"
+	{
+		"#format"		"{1:s},{2:s}"
+		"cze"			"{1} obsadil{2} terciární zdroj."
+	}
+	
+	"Map Area "
+	{
+		"cze"			""
+	}
+	"Map Area N"
+	{
+		"cze"			" severní"
+	}
+	
+	"Map Area NE"
+	{
+		"cze"			" severovýchodní"
+	}
+	
+	"Map Area NW"
+	{
+		"cze"			" severozápadní"
+	}
+	
+	"Map Area S"
+	{
+		"cze"			" jižní"
+	}
+	
+	"Map Area SE"
+	{
+		"cze"			" jihovýchodní"
+	}
+	
+	"Map Area SW"
+	{
+		"cze"			" jihozápadní"
+	}
+	
+	"Map Area E"
+	{
+		"cze"			" východní"
+	}
+	
+	"Map Area W"
+	{
+		"cze"			" západní"
+	}
+	
+	"Map Area CE"
+	{
+		"cze"			" centrální"
+	}
+	
+	"Map Area OB"
+	{
+		"cze"			" na naší základně"
+	}
+	
+	"Map Area EB"
+	{
+		"cze"			" na nepřátelské základně"
+	}
+}

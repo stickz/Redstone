@@ -1,0 +1,192 @@
+﻿"Phrases"
+{	
+	"Cookie TeamBalancer Messages"	
+	{
+		"es"		"Mensajes del balanceador de equipos"	
+	}
+	
+	"Slot Used"	
+	{
+		"es"		"Vacante invertida utilizada exitosamente"
+	}
+	
+	"Rookie Only"	
+	{
+		"es"		"Este servidor es exclusivo para novatos"	
+	}
+	
+	"Veteran Only"	
+	{
+		"es"		"Este servidor es exclusivo para veteranos"
+	}
+	
+	"Graduated"	
+	{		
+		"es"		"Felicitaciones soldado, te has graduado de"	
+	}
+	
+	"Submitted Placement"	
+	{
+		"es"		"Solicitud para separar la colocacion del comandante sometida"	
+	}
+	
+	"Revoked Placement"	
+	{
+		"es"		"Solicitud para separar la colocacion del comandante denegada"	
+	}
+	
+	"Balancer Running"	
+	{
+		"es"		"No se puede unir a un equipo mientras se balancea los equipos"	
+	}
+	
+	"Resign Switch"	
+	{
+		"es"		"Debe resignar a comandar antes de cambiar de equipo"	
+	}
+	
+	"Switch Disabled"	
+	{
+		"es"		"Cambio de equipos deshabilitado por unos minutos o hasta haya desblance en los equipos"	
+	}
+	
+	"Retry Placement"	
+	{
+		"es"		"En modo espectador! Por favor someta su solicitud de colocacion de quipo nuevamente"
+	}
+	
+	"Level Retrieved"	
+	{
+		"es"		"Nivel recuperado con exito, por favor intente de nuevo"	
+	}
+	
+	"Level Switch Wait"
+	{
+		"es"		"Por favor espesra hasta que el marcador muestre nivel 2+ antes de cambiar de equipo"
+	}
+	
+	"Revoke Spectator"
+	{
+		"es"		"Peticion de espectador debe ser declinada antes de unirse"
+	}
+	
+	"Spectator Avoid"
+	{	
+		"es"		"No puede utilizar este comando para evitar el balanceador de equipos"
+	}
+	
+	"Spectator Unlocked"
+	{
+		"es"		"Ha sido liberado del modo espectador"	
+	}
+	
+	"Spectator Joined"
+	{
+		"es"		"En modo espectador! Para salir escriba !spec."	
+	}
+	
+	"Teamdiff Round Wait"
+	{
+		"es"		"No puede utilizar teamdiff antes que la ronda comience"
+	}
+	
+	"Ether Team Stack"
+	{
+		"es"		"Unirse a cualquier equipo provocara una pila. Restringido por unos minutos o hasta que cambie de estado."
+	}
+	
+	"Could Be Switched"
+	{
+		"es"		"Prodria ser cambiado inmediatamente luego de que su nivel se cargue"
+	}
+	
+	"Initial Team Lock"
+	{
+		"es"		"Ha sido fijado en el equipo inicia, imposible unirse hasta que haya balanccannot join until balanced"
+	}
+	
+	"Separate Placement"	
+	{	
+		"es"		"Colocado separado para asegurar que ambos equipos tengan comandante"
+	}
+	
+	"Random Selection"
+	{	
+		"es"		"La seleccion de comandante es aleatoria, pero es muy probable que sera usted el elegido"
+	}
+	
+	"Balancer Not Run"
+	{	
+		"es"		"Balanceador inicial No puede ejecutarse por falta de jugadores"
+	}
+	
+	"Balancer Off"
+	{
+		"es"		"Balanceador de equipos actualmente apagado"
+	}
+	
+	"Waiting"
+	{
+		"es"		"Esperando que se conecten los jugadores"
+	}
+	
+	"Please Wait"
+	{
+		"es"		"Por favor espere"
+	}
+	
+	"Status"
+	{
+		"es"		"Estado"
+	}
+	
+	"Excellent"
+	{
+		"es"		"Excelente"		
+	}
+	
+	"Good"
+	{
+		"es"		"Bien"
+	}
+	
+	"Not Bad"
+	{
+		"es"		"Nada mal"
+	}
+	
+	"Switch Recommended"
+	{
+		"es"		"Cambio recomendado"
+	}
+	
+	"Slightly Imbalanced"
+	{
+		"es"		"Ligeramente deabalanceado"
+	}
+	
+	"Moderately Imbalanced"
+	{
+		"es"		"Moderadamente desbalanceado"
+	}
+	
+	"Heavily Imbalanced"
+	{
+		"es"		"Altamente desbalanceado"
+	}
+	
+	"Empire"
+	{
+		"es"		"Imperio"
+	}
+	
+	"Consortium"
+	{
+		"es"		"Consorcio"
+	}
+	
+	"Skill"	
+	{
+		"es"		"habilidad"
+	}
+}

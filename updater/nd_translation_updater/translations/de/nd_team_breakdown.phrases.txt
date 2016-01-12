@@ -1,0 +1,37 @@
+﻿"Phrases"
+{
+	"Cookie Team Breakdown"
+	{
+		"de"			"Truppenanzahl"
+	}
+	
+	"Combat"
+	{
+		"de"			"Sturmtruppen"
+	}
+	
+	"Anti-Structure"
+	{
+		"de"			"Anti-Struktur"
+	}
+	
+	"Sniper"
+	{
+		"de"			"Scharfschützen"
+	}
+	
+	"Stealth"
+	{
+		"de"			"Tarneinheiten"
+	}
+	
+	"Medic"
+	{
+		"de"			"Sanitäter"
+	}
+	
+	"Engineer"
+	{
+		"de"			"Techniker"
+	}
+}

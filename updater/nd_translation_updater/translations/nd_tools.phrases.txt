@@ -1,0 +1,7 @@
+﻿"Phrases"
+{
+	"Spawn Bug"
+	{
+		"en"		"Change class and select another spawn point. If required, press enter to open the spawn menu"
+	}
+}

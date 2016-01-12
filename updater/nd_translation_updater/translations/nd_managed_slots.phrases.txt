@@ -1,0 +1,12 @@
+﻿"Phrases"
+{
+	"Slot Used"
+	{
+		"en"		"Reserved slot used successfully"	
+	}
+	
+	"Donors Only"
+	{
+		"en"		"Reserved slots are for donors only"	
+	}	
+}

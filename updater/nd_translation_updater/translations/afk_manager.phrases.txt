@@ -1,0 +1,97 @@
+"Phrases"
+{
+	// Mod Detection (Debug Messages)
+    "NUCLEARDAWN"
+    {
+        "en"        "Detected Mod Nuclear Dawn"
+    }
+
+	"Insurgency"
+	{
+		"en"		"Detected Mod Insurgency"
+	}
+
+	"Synergy"
+	{
+		"en"		"Detected Mod Synergy"
+	}
+
+	"TF2"
+	{
+		"en"		"Detected Mod Team Fortress 2"
+	}
+
+	"CSTRIKE"
+	{
+		"en"		"Detected Mod Counter-Strike"
+	}
+
+	"L4D"
+	{
+		"en"		"Detected Mod Left 4 Dead"
+	}
+
+
+	// Debug Messages
+
+
+	// Plugin Messages
+	"Spectate_Force"
+	{
+		"#format"	"{1:t}"
+		"en"		"Forced player {1} to join the spectator team."
+	}
+
+	"Spawn_Move_Warning"
+	{
+		"#format"	"{1:i}"
+		"en"		"Warning: If you do not move from your spawn position in {1} seconds, you will be moved to spectate."
+	}
+
+	"Move_Warning"
+	{
+		"#format"	"{1:i}"
+		"en"		"Warning: If you do not move in {1} seconds, you will be moved to spectate."
+	}
+
+	"Spawn_Kick_Warning"
+	{
+		"#format"	"{1:i}"
+		"en"		"Warning: If you do not move from your spawn position in {1} seconds, you will be kicked."
+	}
+
+	"Kick_Warning"
+	{
+		"#format"	"{1:i}"
+		"en"		"Warning: If you do not move in {1} seconds, you will be kicked."
+	}
+
+	"Move_Announce"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} was moved to spectate for being AFK too long."
+	}
+
+	"Move_Log"
+	{
+		"#format"	"{1:L}"
+		"en"		"{1} was moved to spectate for being AFK too long."
+	}
+
+	"Kick_Announce"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} was kicked for being AFK too long."
+	}
+
+	"Kick_Message"
+	{
+		"en"		"You were kicked for being AFK too long."
+	}
+
+	"Kick_Log"
+	{
+		"#format"	"{1:L}"
+		"en"		"{1} was kicked for being AFK too long."
+	}
+}

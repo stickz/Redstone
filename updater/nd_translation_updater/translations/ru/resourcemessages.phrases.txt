@@ -1,0 +1,95 @@
+"Phrases"
+{
+	//Translated by Jyotish
+
+	// !settings menu label
+	"Cookie Resource Messages"
+	{
+		"ru"			"Показывать сообщения о состоянии ресурсов."
+	}
+	
+	//Example: Cube, MissLiss (+3) захватили главный ресурс"
+	// {1} are the people capturing plus some
+	"Primary Resource Captured"
+	{
+		"#format"		"{1:s},{2:s}"
+		"ru"			""{1} захватили главный ресурс."
+	}
+	
+	//Example: "Cube (+2) захватил второстепенный ресурс на севере."
+	// {1} is the person capturing plus some
+	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
+	"Secondary Resource Captured" "Второстепенный ресурс захвачен"
+	{
+		"#format"		"{1:s},{2:s}"
+		"ru"			"{1} захватил второстепенный ресурс{2}."
+	}
+	
+	//Example: "djfishfish (+2) захватил третьестепенный ресурс на северо-востоке."
+	// {1} is the person capturing plus some
+	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
+	"Tertiary Resource Captured"
+	{
+		"#format"		"{1:s},{2:s}"
+		"ru"			"{1} захватил третьестепенный ресурс{2}."
+	}
+	
+	"Map Area "
+	{
+		"ru"			""
+	}
+	"Map Area N"
+	{
+		"ru"			" на севере"
+	}
+	
+	"Map Area NE"
+	{
+		"ru"			" на северо-востоке"
+	}
+	
+	"Map Area NW"
+	{
+		"ru"			" на северо-западе"
+	}
+	
+	"Map Area S"
+	{
+		"ru"			" на юге"
+	}
+	
+	"Map Area SE"
+	{
+		"ru"			" на юго-востоке"
+	}
+	
+	"Map Area SW"
+ 	{
+		"ru"			" на юго-западе"
+	}
+	
+	"Map Area E"
+	{
+		"ru"			" на востоке"
+	}
+	
+	"Map Area W"
+	{
+		"ru"			" на юго-западе"
+	}
+	
+	"Map Area CE"
+	{
+		"ru"			" в центре"
+	}
+	
+	"Map Area OB"
+	{
+		"ru"			" в нашей базе"
+	}
+	
+	"Map Area EB"
+	{
+		"ru"			" в вражеской базе"
+	}
+}

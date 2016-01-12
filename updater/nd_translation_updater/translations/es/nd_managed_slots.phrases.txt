@@ -1,0 +1,7 @@
+﻿"Phrases"
+{	
+	"Slot Used"	
+	{
+		"es"		"Vacante invertida utilizada exitosamente"
+	}	
+}

@@ -4,14 +4,89 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.1"
+			"Latest"	"1.0.2"
+			"Previous"	"1.0.1"
 		}
 		
 		"Notes"	"1.0.1: Initial Release"
+		"Notes"	"1.0.2: Dump server translations onto github"
 	}
 	
 	"Files"
 	{
+		"Patch"
+		{
+			"Plugin"	"Path_SM/plugins/nd_translation_updater.smx"
+		}
+		
 		"Plugin"	"Path_SM/plugins/nd_translation_updater.smx"
+		
+		"Plugin"	"Path_SM/translations/afk_manager.phrases.txt"
+		"Plugin"	"Path_SM/translations/de/afk_manager.phrases.txt"
+		"Plugin"	"Path_SM/translations/es/afk_manager.phrases.txt"
+		"Plugin"	"Path_SM/translations/fr/afk_manager.phrases.txt"
+		"Plugin"	"Path_SM/translations/pt/afk_manager.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/afk_manager.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/hp_left.phrases.txt"
+		"Plugin"	"Path_SM/translations/cze/hp_left.phrases.txt"
+		"Plugin"	"Path_SM/translations/de/hp_left.phrases.txt"
+		"Plugin"	"Path_SM/translations/nl/hp_left.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/hp_left.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_ammopack_fix.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_commander_restrictions.phrases.txt"
+		"Plugin"	"Path_SM/translations/es/nd_commander_restrictions.phrases.txt"
+		"Plugin"	"Path_SM/translations/pt/nd_commander_restrictions.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_commander_restrictions.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_managed_slots.phrases.txt"
+		"Plugin"	"Path_SM/translations/es/nd_managed_slots.phrases.txt"
+		"Plugin"	"Path_SM/translations/fr/nd_managed_slots.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_managed_slots.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_rockthevote.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_rockthevote.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_sniper_limit.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_sniper_limit.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_surrender.phrases.txt"
+		"Plugin"	"Path_SM/translations/es/nd_surrender.phrases.txt"
+		"Plugin"	"Path_SM/translations/pt/nd_surrender.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_surrender.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_team_balancer.phrases.txt"
+		"Plugin"	"Path_SM/translations/es/nd_team_balancer.phrases.txt"
+		"Plugin"	"Path_SM/translations/fr/nd_team_balancer.phrases.txt"
+		"Plugin"	"Path_SM/translations/pt/nd_team_balancer.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_team_balancer.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_team_breakdown.phrases.txt"
+		"Plugin"	"Path_SM/translations/de/nd_team_breakdown.phrases.txt"
+		"Plugin"	"Path_SM/translations/nl/nd_team_breakdown.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_team_breakdown.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_timelimit.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_timelimit.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_tools.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_warmup.phrases.txt"
+		"Plugin"	"Path_SM/translations/es/nd_warmup.phrases.txt"
+		"Plugin"	"Path_SM/translations/fr/nd_warmup.phrases.txt"
+		"Plugin"	"Path_SM/translations/pt/nd_warmup.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_warmup.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/resourcemessages.phrases.txt"
+		"Plugin"	"Path_SM/translations/cze/resourcemessages.phrases.txt"
+		"Plugin"	"Path_SM/translations/de/resourcemessages.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/resourcemessages.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/structminigame.phrases.txt"
+		"Plugin"	"Path_SM/translations/cze/structminigame.phrases.txt"
+		"Plugin"	"Path_SM/translations/de/structminigame.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/structminigame.phrases.txt"
 	}
 }

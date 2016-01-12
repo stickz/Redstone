@@ -1,0 +1,129 @@
+﻿"Phrases"
+
+{
+
+	"Demotion Reapply"
+
+	{
+
+		"es"		"No puede aplicar para comandante luego de haber sido degradado"
+
+	}
+
+
+	"Resignation Reapply"
+
+	{
+
+		"es"		"No puede aplicar por 30s luego de resignar un motin"	
+
+	}
+
+
+	"Spawn Before Apply"
+
+	{
+
+		"es"		"Por favor desplegarse antes de aplicar para comandante!"	
+
+	}
+
+
+	"Bellow Ten"
+
+	{
+
+		"es"		"Jugadores con nivel menor a 10 solo pueden comandar 1-10 jugadores"	
+
+	}
+
+
+	"Fifty Five Required"
+
+	{
+
+		"es"		"Nivel 45+ es necesario para comandar grandes cantidades de jugadores (24 o mas)"
+
+	}
+	
+
+	"Total Level"
+
+	{
+
+		"es"		"No puede comandar mas jugadores que su nivel"
+
+	}
+	
+	"No Commander"
+
+	{
+
+		"es"		"No hay comandante para degradar"
+
+	}
+	
+
+	"On Team"
+
+	{
+
+		"es"		"Debe estsar en equipo para votar"
+
+	}
+
+
+	"Four Required"
+
+	{
+
+		"es"		"4 compañero de equipo requerido para utilizar esta opcion"
+
+	}
+	
+
+	"Already Voted"
+	
+	{
+
+		"es"		"Ya ha votado para degradar al comandante"
+
+	}
+
+	
+"Round End"
+
+	{
+
+		"es"		"No puede utilizar esta opcion luego de terminanda la ronda"
+
+	}
+	
+
+	"Round Started"
+
+	{
+
+		"es"		"Por favor espera que comience la ronda antes degradar"	
+
+	}
+	
+
+	"Commander Demoted"
+
+	{
+
+		"es"		"Comandante degradado exitosamente"	
+
+	}
+	
+
+	"Demote Failed"
+
+	{
+
+		"es"		"Error! No hay comandante para degradar!"
+
+	}
+
+}

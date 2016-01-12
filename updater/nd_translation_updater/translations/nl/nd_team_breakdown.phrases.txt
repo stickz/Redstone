@@ -1,0 +1,37 @@
+﻿"Phrases"
+{
+	"Cookie Team Breakdown"
+	{
+		"nl"			"Teamverdeling"
+	}
+	
+	"Combat"
+	{
+		"nl"			"Gevecht"
+	}
+	
+	"Anti-Structure"
+	{
+		"nl"			"Anti-Structuur"
+	}
+	
+	"Sniper"
+	{
+		"nl"			"Sluipschutter"			
+	}
+	
+	"Stealth"
+	{
+		"nl"			"Stiekem"
+	}
+	
+	"Medic"
+	{
+		"nl"			"Heler"
+	}
+	
+	"Engineer"	
+	{
+		"nl"			"Ingenieur"
+	}
+}
