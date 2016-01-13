@@ -5,8 +5,7 @@ Looking for: An automated build script to compile pull requests and copy the plu
 You can receive support for responsitory questions at this link.
 http://steamcommunity.com/groups/NDBattleSoc/discussions/0/451850468369717745/
 
-This is a really good tourtial for users who are new to github.
-https://guides.github.com/activities/hello-world/
+This is a really good tourtial for users who are new to github. https://guides.github.com/activities/hello-world/
 
 All [xG] Nuclear Dawn servers are running Linux with sourcemod 1.7 build 5255
 
