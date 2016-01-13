@@ -10,7 +10,7 @@ All [xG] Nuclear Dawn servers are running Linux with sourcemod 1.7 build 5255
 
 Bugs/Issues with sourcemod can be fixed here https://github.com/alliedmodders/sourcemod
 
-# Useful Links
+# Scripting Resources
 https://wiki.alliedmods.net/Introduction_to_sourcemod_plugins
 
 https://wiki.alliedmods.net/Nuclear_Dawn_Events
