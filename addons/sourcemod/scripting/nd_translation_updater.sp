@@ -16,7 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
-#define VERSION "1.0.2"
+#define VERSION "1.0.3"
 
 public Plugin:myinfo = 
 {
@@ -33,4 +33,9 @@ public Plugin:myinfo =
 public OnPluginStart()
 {
 	AddUpdaterLibrary(); //auto-updater
+}
+
+public Updater_OnPluginUpdated()
+{
+	PrintToChatAll("\x05[xG] Server translations updated from github!");
 }
