@@ -16,14 +16,6 @@
 	{
 		"en"		"You cannot use this feature while team picking is active"
 	}
-	"Coast Exploit"
-	{
-		"en"		"Please avoid using the roof build exploit on coast! :) -Thanks"
-	}
-	"Donors Only"
-	{
-		"en"		"Reserved slots are for donors only"	
-	}
 	"Rookie Only"
 	{
 		"en"		"This server is for rookies players only"	
