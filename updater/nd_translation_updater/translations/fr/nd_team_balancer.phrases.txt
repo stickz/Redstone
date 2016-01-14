@@ -4,10 +4,6 @@
 	{
 		"fr"		"Message d'équilibrage d'équipe"
 	}
-	"Slot Used"
-	{
-		"fr"		"Emplacement réservé utilisé avec succès"	
-	}
 	"Rookie Only"
 	{
 		"fr"		"Ce serveur est uniquement pour les joueurs débutants"	
