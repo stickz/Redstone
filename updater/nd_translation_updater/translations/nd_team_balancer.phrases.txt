@@ -8,10 +8,6 @@
 	{
 		"en"		"TeamBalancer Messages"
 	}
-	"Slot Used"
-	{
-		"en"		"Reserved slot used successfully"	
-	}
 	"Choice Granted"
 	{
 		"en"		"Team choice granted due to extremely balanced teams"
