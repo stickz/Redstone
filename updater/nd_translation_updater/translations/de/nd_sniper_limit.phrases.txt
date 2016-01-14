@@ -1,0 +1,42 @@
+﻿"Phrases"
+{
+	"Empire"
+	{
+		"de"		"Imperium"
+	}
+	
+	"Consortium"
+	{
+		"de"		"Konsortium"
+	}
+	
+	"Only Commanders"
+	{
+		"en"		"Dieses Feature ist den Kommandeuren vorbehalten"
+	}
+	
+	"Commander Disabled"
+	{
+		"de"		"Die Option, dass Kommandeure die Anzahl an Heckenschützen festlegen können, wurde deaktiviert"	
+	}
+	
+	"Invalid Team"
+	{
+		"de"		"Ungültiges Team (0 = Konsortium, 1 = Imperium)"
+	}
+	
+	"Limit Reached"
+	{
+		"de"		"Heckenschützenlimit erreicht, zu Assault zurückgesetzt"
+	}
+	
+	"Proper Usage"
+	{
+		"de"		"Verwendung: !MaxSnipers <Limit>"
+	}
+	
+	"Invalid Args"
+	{
+		"de"		"Ungültige Anzahl an Argumenten: <Team> <Anzahl>"
+	}
+}
