@@ -4,10 +4,6 @@
 	{
 		"pt"		"Mensagens de Balanceamento dos Times"
 	}
-	"Slot Used"
-	{
-		"pt"		"Slot reverso utilizado com sucesso"	
-	}
 	"Rookie Only"
 	{
 		"pt"		"Este servidor é somente para jogadores iniciantes"	
