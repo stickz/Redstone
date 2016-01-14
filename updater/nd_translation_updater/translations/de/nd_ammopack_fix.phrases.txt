@@ -1,0 +1,7 @@
+﻿"Phrases"
+{
+	"Ammo Supply"
+	{
+		"de"		"Du kannst ein Munitionspaket nicht neben einer Versorgungsstation platzieren"
+	}
+}
