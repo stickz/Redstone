@@ -27,16 +27,12 @@
 [*] Level 3: Increased research time from 45s to 60s.
 
 # Structure Reinforcement
-[*] Level One: Default 10% health increase and 30s time.
+[*] Level 1: Default 10% health increase and 30s time. (no changes)
 
-[*] Level Two:
+[*] Level 2: Increased health from 15% to 17.5%.
 
-[*][*] Increased health from 15% to 17.5%.
+[*] Level 2: Increased research time from 30 to 45s.
 
-[*][*] Increased research time from 30 to 45s.
+[*] Level 3: Increased health from 25% to 30%.
 
-[*] Level Three: 
-
-[*][*] Increased health from 25% to 30%.
-
-[*][*] Increased research time from 30 to 60s.
+[*] Level 3: Increased research time from 30 to 60s.
