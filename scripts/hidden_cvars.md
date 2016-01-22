@@ -52,6 +52,7 @@ kinetic_field_cooldown
 
 # commander ability stuff
 -> damage <-
+
 nd_commander_ability_damage_value - 700.0
 
 nd_commander_ability_damage_value2 - 770.0
@@ -64,7 +65,9 @@ nd_commander_ability_damage_radius2
 
 nd_commander_ability_damage_radius3
 
+
 -> poison <-
+
 nd_commander_ability_hinder_time
 
 nd_commander_ability_hinder_time2 - 21?
@@ -89,7 +92,9 @@ nd_commander_ability_hinder_radius2
 
 nd_commander_ability_hinder_radius3
 
+
 -> heal <-
+
 nd_commander_ability_heal_time
 
 nd_commander_ability_heal_time2 - 11.0?
