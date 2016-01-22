@@ -1,0 +1,99 @@
+WeaponData
+{
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"			"#Hypospray_Name"
+	"viewmodel"			"models/weapons/hypospray/v_hypospray.mdl"
+	"playermodel"			"models/weapons/hypospray/w_hypospray.mdl"
+//	"anim_prefix"			"hypospray"
+//	"PlayerAnimationExtension"	"hypospray"
+	"anim_prefix"			"daisycutter"
+	"PlayerAnimationExtension"	"daisycutter"
+	"CustomAddon"				"hypospray"
+
+	"weapon_selection_offset"	"120"	// horizontal offset for weapon selection hud element
+	
+	"PlayerClassArms"
+	{
+		"consortium"
+		{
+			"assault"		"models/weapons/ct_arms/v_assault_ct.mdl"
+			"exo"			"models/weapons/ct_arms/v_exo_ct.mdl"
+			"stealth"		"models/weapons/ct_arms/v_stealth_ct.mdl"
+			"support"		"models/weapons/ct_arms/v_support_ct.mdl"
+		}
+		
+		"empire"
+		{
+			"assault"		"models/weapons/emp_arms/v_assault_emp.mdl"
+			"exo"			"models/weapons/emp_arms/v_exo_emp.mdl"
+			"stealth"		"models/weapons/emp_arms/v_stealth_emp.mdl"
+			"support"		"models/weapons/emp_arms/v_support_emp.mdl"
+		}
+	}
+
+	"bucket"			"2"
+	"bucket_position"		"11"
+
+	"clip_size"			"-1"
+	"default_clip"			"2"
+	
+	"primary_ammo"			"hypospray"
+	"secondary_ammo"			"hypospray"
+	"TimeReload"				"0.0"		// Fire delay after reloading
+	
+	"throwable_distance"		"725"
+	"throwable_max_prime"		"3.0"
+	"throwable_friction"		"0.6"
+	"refire_delay"			"0.5"
+	
+	"weight"				"1"
+	"item_flags"			"18"	// ITEM_FLAG_NOAUTORELOAD | ITEM_FLAG_EXHAUSTIBLE
+	"damage"			"125"	// note: does no damage to structures
+	"effective_range"		"100"
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+		"double_shot"	"common/null.wav"
+		"single_shot"	"Weapon_Hypospray.Inject"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"vgui/icons/weapons/hypospray"
+			"x"			"0"
+			"y"			"0"
+			"width"		"64"
+			"height"	"64"
+		}
+		"weapon_s"
+		{	
+			"file"		"vgui/icons/weapons/hypospray"
+			"x"			"0"
+			"y"			"0"
+			"width"		"64"
+			"height"	"64"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIcons"
+				"character"	"v"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+				"file"		"sprites/crosshairs"
+				"x"			"48"
+				"y"			"72"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}

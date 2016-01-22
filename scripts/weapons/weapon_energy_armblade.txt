@@ -1,0 +1,60 @@
+WeaponData
+{
+	"inherit"			"weapon_armblade"
+	
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"			"#EnergyArmBlades_Name"
+	
+	"meleedamage"		"155"
+	"meleeforce"		"10"
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+		"melee_miss"		"Weapon_Blade.Miss"
+		"melee_hit"		"Weapon_Blade.Attack_Hit"
+		"melee_hit_world"	"Weapon_Blade.Attack_HitWorld"
+		"special1"		"Weapon_Blade.Special"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+				"font"		"NDWeaponIcons"
+				"character"	"e"
+		}
+		"weapon_s"
+		{	
+				"font"		"NDWeaponIconsSelected"
+				"character"	"e"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIcons"
+				"character"	"c"
+		}
+		"ammo2"
+		{
+			"file"		"sprites/640hud7"
+			"x"		"48"
+			"y"		"72"
+			"width"		"24"
+			"height"	"24"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+			"file"		"sprites/crosshairs"
+			"x"			"0"
+			"y"			"48"
+			"width"		"24"
+			"height"	"24"
+		}
+	}
+}

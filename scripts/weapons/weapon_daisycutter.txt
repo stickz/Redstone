@@ -1,0 +1,128 @@
+WeaponData
+{
+	//-----------------------------------------------------------------------------
+	// Entity Info
+	//-----------------------------------------------------------------------------
+	"printname"			"#DaisyCutter_Name"
+	"viewmodel"			"models/weapons/daisy_cutter/v_daisy_cutter.mdl"
+	"playermodel"			"models/weapons/daisy_cutter/w_daisy_cutter.mdl"
+	"anim_prefix"			"daisycutter"
+	"PlayerAnimationExtension"	"daisycutter"
+	"CustomAddon"				"daisycutter"
+	"AddonOriginOffset"			"0 0 0"
+	"AddonAnglesOffset"			"0 0 0"
+	"weight"					"5"
+	"item_flags"				"0"
+//	"MuzzleFlashParticleEffect" 	""
+	"player_speed_modifier"			"0.9"
+	"player_speed_modifier_firing"	"0.4"
+
+	"weapon_selection_offset"	"210"	// horizontal offset for weapon selection hud element
+	
+	//-----------------------------------------------------------------------------
+	// Gizmo definition
+	//-----------------------------------------------------------------------------
+	"gizmos"
+	{
+		"support_warfare"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage"			"287"
+			}
+		}
+	}	
+	
+	"PlayerClassArms"
+	{
+		"consortium"
+		{
+			"assault"		"models/weapons/ct_arms/v_assault_ct.mdl"
+			"exo"			"models/weapons/ct_arms/v_exo_ct.mdl"
+			"stealth"		"models/weapons/ct_arms/v_stealth_ct.mdl"
+			"support"		"models/weapons/ct_arms/v_support_ct.mdl"
+		}
+		
+		"empire"
+		{
+			"assault"		"models/weapons/emp_arms/v_assault_emp.mdl"
+			"exo"			"models/weapons/emp_arms/v_exo_emp.mdl"
+			"stealth"		"models/weapons/emp_arms/v_stealth_emp.mdl"
+			"support"		"models/weapons/emp_arms/v_support_emp.mdl"
+		}
+	}
+
+	"primary_ammo"			"daisy_cutter"
+	
+	"bucket"			"5"
+	"bucket_position"		"6"
+	
+	"clip_size"			"-1"
+	"default_clip"			"2"
+	
+	"throwable_distance"		"725"
+	"throwable_max_prime"		"3.0"
+	"throwable_friction"		"0.6"
+	"refire_delay"			"0.5"
+
+	"weight"				"1"
+	"item_flags"			"18"	// ITEM_FLAG_NOAUTORELOAD | ITEM_FLAG_EXHAUSTIBLE
+	"damage"			"250"
+	
+	GrenadeLauncherData
+	{
+		"ProjectileDamage"	"250"
+		"DamageRadius"		"300"		
+		"ExplosionSound"	"Weapon_Grenade_Pipebomb.Explode"
+		"ExplosionEffect"	"ExplosionCore_wall"
+		"ExplosionPlayerEffect"	"ExplosionCore_MidAir"
+		"ExplosionWaterEffect"	"ExplosionCore_MidAir_underwater"
+	}
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+		"double_shot"	"common/null.wav"
+		"single_shot"	"common/null.wav"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"vgui/icons/weapons/daisycutter"
+			"x"			"0"
+			"y"			"0"
+			"width"		"64"
+			"height"	"64"
+		}
+		"weapon_s"
+		{	
+			"file"		"vgui/icons/weapons/daisycutter"
+			"x"			"0"
+			"y"			"0"
+			"width"		"64"
+			"height"	"64"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIcons"
+				"character"	"v"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+				"file"		"sprites/crosshairs"
+				"x"			"48"
+				"y"			"72"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}

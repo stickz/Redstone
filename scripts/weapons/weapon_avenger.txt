@@ -1,0 +1,264 @@
+"WeaponData"
+{
+	//-----------------------------------------------------------------------------
+	// Entity Info
+	//-----------------------------------------------------------------------------
+	// Empire Assault Rifle
+	"printname"				"#Avenger_Name"
+	"viewmodel"				"models/weapons/avenger/v_avenger.mdl"
+	"playermodel"				"models/weapons/avenger/w_avenger.mdl"
+	"anim_prefix"				"avenger"
+	"PlayerAnimationExtension"		"avenger"
+	"bucket"				"0"
+	"bucket_position"			"1"
+	"CustomAddon"				""
+	"AddonOriginOffset"			"0 0 10"
+	"AddonAnglesOffset"			"0 0 180"
+	"weight"				"10"
+	"item_flags"				"0"
+	"MuzzleFlashParticleEffect" 		"muzzle_avenger"
+	"MuzzleFlashParticleEffect_World" 	"muzzle_avenger_world"
+	"ParticleTracerEffect"			"tracers_generic"
+
+	"weapon_selection_offset"	"200"	// horizontal offset for weapon selection hud element
+
+	"gizmos"
+	{
+		"armour_piercing"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"0.75"
+				"exo_multiplier"	"2"
+				"damage_factor"		"0.2"
+			}
+		}
+		"clip_compression_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"clip_size"		"27"
+				"default_clip"		"135"
+			}
+		}
+		"clip_compression_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"clip_size"		"29"
+				"default_clip"		"145"
+			}
+		}
+		"adv_munitions_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"1.1"
+			}
+		}
+		"adv_munitions_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"1.2"
+			}
+		}
+		"silencer"
+		{
+			"model"				"models/weapons/attachments/att_silencer.mdl"
+			"bodygroup_val"		"0"
+			
+			"weapon_overrides"
+			{
+				"MuzzleFlashParticleEffect" 		"muzzle_silenced"
+				"MuzzleFlashParticleEffect_world" 	"muzzle_silenced_world"
+				"ParticleTracerEffect"			""
+				"damage_multiplier"			"0.9"
+				
+				//--------------------------------------------------------
+				// Sound Info
+				//--------------------------------------------------------
+				SoundData
+				{
+					"single_shot"		"Weapon_Avenger.FireSilent"
+					"empty"				"Weapon_Avenger.Empty"
+				}
+			}
+		}
+		
+		"wpn_stabilizer"
+		{
+			"model"				"models/weapons/attachments/att_acog.mdl"
+			"bodygroup_val"		"1"
+			
+			"weapon_overrides"
+			{
+				"BulletSpread"				"1.25"
+				"recoil_increment"			"0.153"
+			}
+		}
+		
+		"adv_inventory_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"default_clip"		"144"
+			}
+		}
+		
+		"adv_inventory_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"default_clip"		"168"
+			}
+		}
+	}
+
+	//-----------------------------------------------------------------------------
+	// Bullet Info
+	//-----------------------------------------------------------------------------
+	"clip_size"				"25"
+	"default_clip"				"125"
+	"primary_ammo"				"avenger"
+	"secondary_ammo"			"None"
+	"damage"				"38.4"
+	"damage_factor"				"0.1"		//Damage multiplier for vehicles/structures set
+	"effective_range"			"2500"
+	"falloff_range"				"2500"
+	"falloff_percent"			"20"
+	
+	//-----------------------------------------------------------------------------
+	// Timing Info
+	//-----------------------------------------------------------------------------
+	"TimeFireDelay"				"0.090"	 	// Delay between each shot
+	"TimeIdle"				"0.5"		// 
+	"TimeIdleEmpty"				"0.25"		// 
+	"TimeReload"				"0.5"		// Fire delay after reloading
+	
+	//-----------------------------------------------------------------------------
+	// Spread Info
+	//-----------------------------------------------------------------------------
+	"BulletSpread"				"1.5"
+	
+	"cof_modifier_crouched"			"0.5"
+	"cof_modifier_zoomed"			"0.1"
+	"cof_modifier_running"			"1.75"
+	"cof_modifier_standing"			"0.75"
+	"cof_modifier_walking"			"1.25"
+	"cof_modifier_jumping"			"3.5"
+
+	"time_to_penalty_cap"			"0.5"
+	"idle_time_before_penalty_decay"	"0.01"
+	"min_time_before_penalty_decay"		"0.02"
+	
+	// please ask if you have any questions, ive probably made this really confusing now
+	"recoil_model_2"				"1"		// new behavior model for recoil
+	"recoil_increment"				"0.17"
+	"recoil_entropy"				"0.2"	// random side to side movement, more and more until we max out at the cap
+	"recoil_entropy_exponent"			"0.3"	// exponent for the entropy curve
+	"recoil_cap"					"0.6"
+	"recoil_cap_entropy"				"0.15"	// random up and down movement when we've reached the cap
+	"recoil_cof_ratio"				"0.0"		// % of COF modifier used to scale recoil.
+
+	//-----------------------------------------------------------------------------
+	// Grenade Launcher Info
+	//-----------------------------------------------------------------------------
+	GrenadeLauncherData
+	{
+		"ProjectileDamage"		"85"
+		"DamageRadius"			"159"
+		"LaunchSpeed" 			"1200"
+		"MinimumRadius"			"300" // Min radius till it explodes. 
+		"ProjectileType"		"projectile_avenger"
+		"ExplosionSound"		"Weapon_Grenade_Pipebomb.Explode"
+		"ExplosionEffect"		"ExplosionCore_wall"
+		"ExplosionPlayerEffect"		"ExplosionCore_MidAir"
+		"ExplosionWaterEffect"		"ExplosionCore_MidAir_underwater"
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Sound Info
+	//-----------------------------------------------------------------------------
+	SoundData
+	{
+		"empty"				"Weapon_Avenger.Empty"
+		"reload"			"Weapon_Avenger.Reload"
+		"single_shot"			"Weapon_Avenger.Fire"
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Arm Info
+	//-----------------------------------------------------------------------------
+	"PlayerClassArms"
+	{
+		"consortium"
+		{
+			"assault"		"models/weapons/ct_arms/v_assault_ct.mdl"
+			"exo"			"models/weapons/ct_arms/v_exo_ct.mdl"
+			"stealth"		"models/weapons/ct_arms/v_stealth_ct.mdl"
+			"support"		"models/weapons/ct_arms/v_support_ct.mdl"
+		}
+		
+		"empire"
+		{
+			"assault"		"models/weapons/emp_arms/v_assault_emp.mdl"
+			"exo"			"models/weapons/emp_arms/v_exo_emp.mdl"
+			"stealth"		"models/weapons/emp_arms/v_stealth_emp.mdl"
+			"support"		"models/weapons/emp_arms/v_support_emp.mdl"
+		}
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Texture Info
+	//-----------------------------------------------------------------------------
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"vgui/icons/weapons/avenger"
+			"x"			"0"
+			"y"			"0"
+			"width"		"128"
+			"height"	"64"
+		}
+		"weapon_s"
+		{	
+			"file"		"vgui/icons/weapons/avenger"
+			"x"			"0"
+			"y"			"0"
+			"width"		"128"
+			"height"	"64"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIcons"
+				"character"	"r"
+		}
+		"ammo2"
+		{
+				"font"		"WeaponIcons"
+				"character"	"t"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+				"file"		"sprites/crosshairs"
+				"x"			"0"
+				"y"			"48"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}

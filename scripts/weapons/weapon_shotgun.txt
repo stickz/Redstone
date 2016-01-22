@@ -1,0 +1,246 @@
+"WeaponData"
+{
+	//-----------------------------------------------------------------------------
+	// Entity Info
+	//-----------------------------------------------------------------------------
+	"printname"				"#Shotgun_Name"
+	"viewmodel"				"models/weapons/shotgun/v_shotgun.mdl"
+	"playermodel"				"models/weapons/shotgun/w_shotgun.mdl"
+	"anim_prefix"				"shotgun"
+	"PlayerAnimationExtension"		"shotgun"
+	"bucket"				"0"
+	"bucket_position"			"1"
+	"CustomAddon"				""
+	"AddonOriginOffset"			"0 0 0"
+	"AddonAnglesOffset"			"0 0 0"
+	"weight"				"5"
+	"item_flags"				"0"
+	"MuzzleFlashParticleEffect" 		"muzzle_shotgun"
+	"MuzzleFlashParticleEffect_World" 	"muzzle_shotgun_world"
+	"ParticleTracerEffect"			"tracers_shotgun"
+	
+	"weapon_selection_offset"	"230"	// horizontal offset for weapon selection hud element
+
+	//-----------------------------------------------------------------------------
+	// Gizmo definition
+	//-----------------------------------------------------------------------------
+	"gizmos"
+	{
+		"armour_piercing"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"0.75"
+				"exo_multiplier"	"2"
+			}
+		}
+		"clip_compression_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"clip_size"		"9"
+				"default_clip"		"36"
+			}
+		}
+		"clip_compression_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"clip_size"		"10"
+				"default_clip"		"40"
+			}
+		}
+		"adv_munitions_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"1.1"
+			}
+		}
+		"adv_munitions_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"1.2"
+			}
+		}
+		"silencer"
+		{
+			"model"				"models/weapons/attachments/att_silencer_large.mdl"
+			"bodygroup_val"		"0"
+			
+			"weapon_overrides"
+			{
+				"MuzzleFlashParticleEffect" 		"muzzle_silenced"
+				"MuzzleFlashParticleEffect_world" 	"muzzle_silenced_world"
+				"ParticleTracerEffect"			""
+				"damage_multiplier"			"0.9"
+
+				--------------------------------------------------------
+				Sound Info
+				--------------------------------------------------------
+				SoundData
+				{
+					"single_shot"		"Weapon_Shotgun.FireSilent"
+					"empty"				"Weapon_Shotgun.Empty"
+				}
+			}
+		}
+		
+		"wpn_stabilizer"
+		{
+			//"model"				"models/weapons/attachments/att_acog.mdl"
+			//"bodygroup_val"		"1"
+			
+			"weapon_overrides"
+			{
+				"BulletSpread"				"1.25"
+				"recoil_increment"			"0.9"
+			}
+		}
+		
+		"adv_inventory_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"default_clip"		"40"
+			}
+		}
+		
+		"adv_inventory_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"default_clip"		"48"
+			}
+		}
+
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Bullet Info
+	//-----------------------------------------------------------------------------
+	"clip_size"				"8"
+	"default_clip"				"24"
+	"primary_ammo"				"shotgun"
+	"secondary_ammo"			"None"
+	"damage"				"18"
+	"effective_range"			"800"
+	"falloff_range"				"4000"
+	"falloff_percent"			"20"
+	"BulletsPerShot"			"10"
+	"damage_factor"				"0.05"		//Damage multiplier for vehicles/structures
+	
+	//-----------------------------------------------------------------------------
+	// Timing Info
+	//-----------------------------------------------------------------------------
+	"TimeFireDelay"				"0.63333"	// Delay between each shot
+	"TimeIdle"				"0.5"		// 
+	"TimeIdleEmpty"				"0.25"		// 
+	"TimeReload"				"1.1"		// Fire delay after reloading
+	
+	//-----------------------------------------------------------------------------
+	// Spread Info
+	//-----------------------------------------------------------------------------
+	"BulletSpread"				"1.75"
+	
+	"cof_modifier_crouched"			"0.8"
+	"cof_modifier_running"			"1.5"
+	"cof_modifier_standing"			"1"
+	"cof_modifier_jumping"			"10"
+	"cof_modifier_zoomed"			"0.5"
+	"cof_modifier_suit_lockdown" 		"0.75"
+	
+	"time_to_penalty_cap"			"0.5"
+	"idle_time_before_penalty_decay"	"0.2"
+	"min_time_before_penalty_decay"		"0.2"
+
+	
+	"recoil_increment"			"1.0"
+	"recoil_cap"				"2.0"
+	"recoil_cap_entropy"			"0.8"
+	"recoil_lockdown_modifier"		"0.5"
+	"recoil_cof_ratio"			"0.0"		// % of COF modifier used to scale recoil.
+	
+	//-----------------------------------------------------------------------------
+	// Sound Info
+	//-----------------------------------------------------------------------------
+	SoundData
+	{
+		"empty"			"Weapon_Shotgun.Empty"
+		"reload"		"Weapon_Shotgun.Reload"
+		"special1"		"Weapon_Shotgun.Special1"
+		"single_shot"		"Weapon_Shotgun.Fire"
+//		"double_shot"		"Weapon_Shotgun.Double"
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Arm Info
+	//-----------------------------------------------------------------------------
+	"PlayerClassArms"
+	{
+		"consortium"
+		{
+			"assault"		"models/weapons/ct_arms/v_assault_ct.mdl"
+			"exo"			"models/weapons/ct_arms/v_exo_ct.mdl"
+			"stealth"		"models/weapons/ct_arms/v_stealth_ct.mdl"
+			"support"		"models/weapons/ct_arms/v_support_ct.mdl"
+		}
+		
+		"empire"
+		{
+			"assault"		"models/weapons/emp_arms/v_assault_emp.mdl"
+			"exo"			"models/weapons/emp_arms/v_exo_emp.mdl"
+			"stealth"		"models/weapons/emp_arms/v_stealth_emp.mdl"
+			"support"		"models/weapons/emp_arms/v_support_emp.mdl"
+		}
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Texture Info
+	//-----------------------------------------------------------------------------
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"vgui/icons/weapons/shotgun"
+			"x"			"0"
+			"y"			"0"
+			"width"		"128"
+			"height"	"64"
+		}
+		"weapon_s"
+		{	
+			"file"		"vgui/icons/weapons/shotgun"
+			"x"			"0"
+			"y"			"0"
+			"width"		"128"
+			"height"	"64"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIcons"
+				"character"	"s"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+				"file"		"sprites/crosshairs"
+				"x"			"0"
+				"y"			"48"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}

@@ -1,0 +1,107 @@
+// Nuclear Dawn Weapon - blowtorch
+
+WeaponData
+{
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"			"#Blowtorch_Name"
+	"viewmodel"			"models/weapons/blowtorch/v_blowtorch.mdl"
+	"playermodel"			"models/weapons/blowtorch/w_blowtorch.mdl"
+	"anim_prefix"			"repairtool"
+	"PlayerAnimationExtension"	"repairtool"
+
+	"CustomAddon"				"repairtool"
+
+	"PlayerClassArms"
+	{
+		"consortium"
+		{
+			"assault"		"models/weapons/ct_arms/v_assault_ct.mdl"
+			"exo"			"models/weapons/ct_arms/v_exo_ct.mdl"
+			"stealth"		"models/weapons/ct_arms/v_stealth_ct.mdl"
+			"support"		"models/weapons/ct_arms/v_support_ct.mdl"
+		}
+		
+		"empire"
+		{
+			"assault"		"models/weapons/emp_arms/v_assault_emp.mdl"
+			"exo"			"models/weapons/emp_arms/v_exo_emp.mdl"
+			"stealth"		"models/weapons/emp_arms/v_stealth_emp.mdl"
+			"support"		"models/weapons/emp_arms/v_support_emp.mdl"
+		}
+	}
+
+	"bucket"			"2"
+	"bucket_position"		"10"
+
+	"clip_size"			"-1"
+	"primary_ammo"			"None"
+	"secondary_ammo"		"None"
+
+	"weight"			"0"
+	"item_flags"			"0"
+
+	"damage"			"12"		// damage done to enemy players/structures, every 0.1 seconds of contact
+
+	"damage_scale"			"1.2"	// damage scale against structures
+
+	"effective_range"		"100"	// range of the repair tool
+	
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+		"empty"			"Weapon_nx300.Empty"
+		"single_shot"		"Weapon_Repair_Tool.Fire"
+		"reload"			"Weapon_nx300.Reload"
+
+		"special1"		"Weapon_Repair_Tool.FireLoop"
+		"special2"		"Weapon_Repair_Tool.HitLoop"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"vgui/icons/weapons/blowtorch"
+			"x"			"0"
+			"y"			"0"
+			"width"		"64"
+			"height"	"64"
+		}
+		"weapon_s"
+		{	
+			"file"		"vgui/icons/weapons/blowtorch"
+			"x"			"0"
+			"y"			"0"
+			"width"		"64"
+			"height"	"64"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIcons"
+				"character"	"c"
+		}
+		"ammo2"
+		{
+			"file"		"sprites/640hud7"
+			"x"		"48"
+			"y"		"72"
+			"width"		"24"
+			"height"	"24"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+			"file"		"sprites/crosshairs"
+			"x"			"0"
+			"y"			"48"
+			"width"		"24"
+			"height"	"24"
+		}
+	}
+}

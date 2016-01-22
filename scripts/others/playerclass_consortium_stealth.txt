@@ -1,0 +1,179 @@
+moPlayerClassDatafile
+{
+	// FilePLayerClassInfo_t members
+	"printname"			"#ND_Consortium_Stealth"	
+	"playermodel"			"models/players/consortium/nd_stealth_ct.mdl"
+	"selectcmd"			"cls_ct_stealth"
+
+	// CSDKPlayerClassInfo members
+
+	// What team has this class, for verification
+	"team"			"CONSORTIUM"
+	
+
+	"grenadetype"		"grenade"
+	"numgrens"		"2"
+	
+	"WeightCapacity"	"20.0f"
+
+	"limitcvar"		"mp_limit_empire_stealth"
+
+	"description" "#ND_Stealth_Description"
+	
+	"classimage"		"cls_blue_class3_active"
+	"classimagebg"		"cls_blue_class3_active_bg"
+	"icon"			"icons/class_icon_stealth"
+	
+	"health" 		"100"
+	"emp_min_hinder_time"	"2"
+	"emp_max_hinder_time"	"5"
+
+	// Movement
+	"RunSpeed"		"280"
+	"SprintSpeed"		"400"
+	"ProneSpeed"		"50"
+	//"IronsightSpeed"	"60"
+	
+	// View Hight
+	"StandingViewHeight" 	"64"
+	"DuckingViewHeight" 	"50"
+	
+	// Hull Height
+	"StandingHullHeight" "74"
+	"DuckingHullHeight" "64"
+	
+	"mainmenu_cam_height_offset" "-3"
+	"mainmenu_cam_distance_offset" "0"
+	
+	// Bullet damage
+	"bullet_damage"
+	{
+		"head"
+		{
+			"multiplier"	"2"
+			"sparks"	"0"
+			"blood"		"1"
+		}
+		
+		"chest"
+		{
+			"multiplier"	"1"
+			"sparks"	"1"
+			"blood"		"1"
+		}
+		
+		"stomach"
+		{
+			"multiplier"	"1"
+			"sparks"	"0"
+			"blood"		"1"
+		}
+		
+		"left_arm"
+		{
+			"multiplier"	"0.9"
+			"sparks"	"0"
+			"blood"		"1"
+		}
+		
+		"right_arm"
+		{
+			"multiplier"	"0.9"
+			"sparks"	"0"
+			"blood"		"1"
+		}
+		
+		"left_leg"
+		{
+			"multiplier"	"0.85"
+			"sparks"	"0"
+			"blood"		"1"
+		}
+		
+		"right_leg"
+		{
+			"multiplier"	"0.85"
+			"sparks"	"0"
+			"blood"		"1"
+		}
+	}
+	
+	
+	"subclasses"
+	{
+		PlayerClassDatafile
+		{
+			// FilePLayerClassInfo_t members
+			"printname"		"#ND_Consortium_Assassin"	
+
+			"recommended_loadout"
+			{
+				"item"		"weapon_armknives"
+				"item"		"weapon_mp500"
+				"item"		"weapon_p900"
+				"primary"	"weapon_mp500"
+			}
+
+			"CloakConsumeRate"	"6.5"		// 15 seconds
+			"CloakRegenRate"	"5"
+
+			// Movement
+			"RunSpeed"		"280"
+			"SprintSpeed"		"400"
+			
+			"kit_button_img"   "vgui/icons/weapons/kitselection/knives"
+		}
+		
+		PlayerClassDatafile
+		{
+			// FilePLayerClassInfo_t members
+			"printname"		"#ND_Consortium_Sniper"	
+
+			"recommended_loadout"
+			{
+				"item"		"weapon_paladin"
+				"item"		"weapon_p900"
+				"item"		"weapon_radarkit"
+				//"item"		"weapon_daisycutter"
+				"primary"	"weapon_paladin"
+			}
+
+			"CloakConsumeRate"	"6.5"		// 15 seconds
+			"CloakRegenRate"	"5"
+
+			// Movement
+			"RunSpeed"		"280"
+			"SprintSpeed"		"400"
+			
+			"kit_button_img"   "vgui/icons/weapons/kitselection/paladin"
+		}
+		
+		PlayerClassDatafile
+		{
+			// FilePLayerClassInfo_t members
+			"printname"		"#ND_Consortium_Scout"	
+
+			"recommended_loadout"
+			{
+				"item"		"weapon_mp7"
+				"item"		"weapon_p900"
+				"item"		"weapon_remote_grenade"
+				"primary"	"weapon_mp7"
+			}
+
+			// "requires_research"
+			// {
+				// "advanced_kits"		{}
+			// }
+
+			"CloakConsumeRate"	"6.5"		// 15 seconds
+			"CloakRegenRate"	"5"
+
+			// Movement
+			"RunSpeed"		"280"
+			"SprintSpeed"		"400"
+			
+			"kit_button_img"   "vgui/icons/weapons/kitselection/remote_grenade"
+		}
+	}
+}

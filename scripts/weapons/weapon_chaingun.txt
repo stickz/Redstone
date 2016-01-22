@@ -1,0 +1,256 @@
+"WeaponData"
+{
+	//-----------------------------------------------------------------------------
+	// Entity Info
+	//-----------------------------------------------------------------------------
+	"printname"				"#Chaingun_Name"
+	"viewmodel"				"models/weapons/chaingun/v_chaingun.mdl"
+	"playermodel"				"models/weapons/chaingun/w_chaingun.mdl"
+	"anim_prefix"				"chaingun"
+	"PlayerAnimationExtension"		"chaingun"
+	"bucket"				"0"
+	"bucket_position"			"1"
+	"CustomAddon"				"chaingun"
+	"AddonOriginOffset"			"0 0 0"
+	"AddonAnglesOffset"			"0 0 0"
+	"weight"				"10"
+	"item_flags"				"0"
+	"MuzzleFlashParticleEffect" 		"muzzle_chaingun"
+	"MuzzleFlashParticleEffect_World" 	"muzzle_chaingun_world"
+	"player_speed_modifier"			"0.9"
+	"player_speed_modifier_firing"		"0.4"
+	"ParticleTracerEffect"			"tracers_chaingun"
+	
+	"weapon_selection_offset"		"195"	// horizontal offset for weapon selection hud element
+
+	//-----------------------------------------------------------------------------
+	// Gizmo definition
+	//-----------------------------------------------------------------------------
+	"gizmos"
+	{
+		"armour_piercing"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"0.715"
+				"exo_multiplier"	"2"
+				"damage_factor"		"0.16"
+			}
+		}
+		"clip_compression_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"clip_size"		"220"
+				"default_clip"		"660"
+			}
+		}
+		"clip_compression_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"clip_size"		"240"
+				"default_clip"		"720"
+			}
+		}
+		"adv_munitions_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"1.05"
+			}
+		}
+		"adv_munitions_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"1.1"
+			}
+		}
+//		"silencer"
+//		{
+			//"model"				"models/weapons/attachments/att_silencer.mdl"
+			//"bodygroup_val"		"0"
+//			
+//			"weapon_overrides"
+//			{
+//				"MuzzleFlashParticleEffect" 		""
+//				"ParticleTracerEffect"			""
+//				"damage_multiplier"			"0.9"
+//			}
+//		}
+		
+		"wpn_stabilizer"
+		{
+			//"model"				"models/weapons/attachments/att_acog.mdl"
+			//"bodygroup_val"		"1"
+			
+			"weapon_overrides"
+			{
+				"BulletSpread"		"2"
+				"recoil_increment"	"0.05"
+			}
+		}
+		"siege_specialist_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"TimeReload"		"0.425"
+			}
+		}
+		"siege_specialist_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"TimeReload"		"0.375"
+				"damage_factor"		"0.175"
+			}
+		}
+		"homewrecker"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_factor"		"0.2"
+			}
+		}
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Bullet Info
+	//-----------------------------------------------------------------------------
+	"clip_size"				"200"
+	"default_clip"				"600"
+	"primary_ammo"				"chaingun"
+	"secondary_ammo"			"None"
+	"damage"				"24"
+	"effective_range"			"1000"
+	"falloff_range"				"3000"
+	"falloff_percent"			"20"
+	"damage_factor"				"0.15"		//Damage multiplier for vehicles/structures
+	"exo_multiplier"			"1.0"
+	
+	//-----------------------------------------------------------------------------
+	// Timing Info
+	//-----------------------------------------------------------------------------
+	"TimeFireDelay"				"0.05"		// Delay between each shot
+	"TimeIdle"				"0.5"		// 
+	"TimeIdleEmpty"				"0.25"		// 
+	"TimeReload"				"0.5"		// Fire delay after reloading
+	
+	//-----------------------------------------------------------------------------
+	// Spread Info
+	//-----------------------------------------------------------------------------
+	"BulletSpread"				"3"
+	
+	"cof_modifier_crouched"			"0.5"
+	"cof_modifier_running"			"1.5"
+	"cof_modifier_standing"			"1"
+	"cof_modifier_jumping"			"10"
+	"cof_modifier_suit_lockdown" 		"0.1"
+	
+	"time_to_penalty_cap"			"0.5"
+	"idle_time_before_penalty_decay"	"0.1"
+	"min_time_before_penalty_decay"		"0.1"
+
+	
+	"recoil_increment"			"0.005"
+	"recoil_cap"				"0.1"
+	"recoil_cap_entropy"			"0.5"
+	"recoil_lockdown_modifier"		"0.01"
+	"recoil_cof_ratio"			"0.00"		// % of COF modifier used to scale recoil
+	
+	"viewmodel_bob_strength" "2"
+	"viewmodel_bob_pivot_offset" "0 0 0"
+	"viewmodel_bob_vertical_multiplier" "1"
+	"viewmodel_bob_lateral_multiplier" "1.5"
+
+	"viewmodel_bob_pitch_multiplier" "1"
+	"viewmodel_bob_yaw_multiplier" "1"
+	"viewmodel_bob_roll_multiplier" "2"
+	
+	//-----------------------------------------------------------------------------
+	// Sound Info
+	//-----------------------------------------------------------------------------
+	SoundData
+	{
+		"empty"				"Weapon_Chaingun.Empty"
+		"reload"			"Weapon_Chaingun.Reload"
+		"single_shot"			"Weapon_Chaingun.Fire"
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Arm Info
+	//-----------------------------------------------------------------------------
+	"PlayerClassArms"
+	{
+		"consortium"
+		{
+			"assault"		"models/weapons/ct_arms/v_assault_ct.mdl"
+			"exo"			"models/weapons/ct_arms/v_exo_ct.mdl"
+			"stealth"		"models/weapons/ct_arms/v_stealth_ct.mdl"
+			"support"		"models/weapons/ct_arms/v_support_ct.mdl"
+		}
+		
+		"empire"
+		{
+			"assault"		"models/weapons/emp_arms/v_assault_emp.mdl"
+			"exo"			"models/weapons/emp_arms/v_exo_emp.mdl"
+			"stealth"		"models/weapons/emp_arms/v_stealth_emp.mdl"
+			"support"		"models/weapons/emp_arms/v_support_emp.mdl"
+		}
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Texture Info
+	//-----------------------------------------------------------------------------
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"vgui/icons/weapons/chaingun"
+			"x"			"0"
+			"y"			"0"
+			"width"		"128"
+			"height"	"64"
+		}
+		"weapon_s"
+		{	
+			"file"		"vgui/icons/weapons/chaingun"
+			"x"			"0"
+			"y"			"0"
+			"width"		"128"
+			"height"	"64"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIcons"
+				"character"	"u"
+		}
+		"ammo2"
+		{
+				"font"		"WeaponIcons"
+				"character"	"z"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+				"file"		"sprites/crosshairs"
+				"x"			"0"
+				"y"			"48"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}

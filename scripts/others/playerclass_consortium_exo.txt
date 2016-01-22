@@ -1,0 +1,139 @@
+PlayerClassDatafile
+{
+	// FilePLayerClassInfo_t members
+	"printname"		"#ND_Consortium_Exo"	
+	"playermodel"		"models/players/consortium/nd_exo_ct.mdl"
+	"selectcmd"		"cls_ct_exo"
+
+	// CSDKPlayerClassInfo members
+
+	// What team has this class, for verification
+	"team"			"CONSORTIUM"
+	
+
+	"grenadetype"		"grenade"
+	"numgrens"		"4"
+	
+	"WeightCapacity"	"50.0f"
+
+	"limitcvar"		"mp_limit_consortium_exo"
+
+	"classimage"		"cls_blue_class3_active"
+	"classimagebg"		"cls_blue_class3_active_bg"
+	"icon"			"icons/class_icon_exo"
+	
+	"description" "#ND_Exo_Description"
+	
+	"health" 		"600"
+	"emp_min_hinder_time"	"3"
+	"emp_max_hinder_time"	"8"
+
+	// Movement
+	"RunSpeed"		"160"
+	"SprintSpeed"		"220"
+	"ProneSpeed"		"60"
+	"IronsightSpeed"	"100"
+	
+	// View Hight
+	"StandingViewHeight" 	"78"
+	"DuckingViewHeight" 	"50"
+	"ProningViewHeight" 	"20"
+	
+	// Hull Height
+	"StandingHullHeight" "80"
+	"DuckingHullHeight" "70"
+	
+	"mainmenu_cam_height_offset" "-20"
+	"mainmenu_cam_distance_offset" "10"
+	
+	// Bullet damage
+	"bullet_damage"
+	{
+		"head"
+		{
+			"multiplier"	"1.1"
+			"sparks"	"1"
+			"blood"		"1"
+		}
+		
+		"chest"
+		{
+			"multiplier"	"0.8"
+			"sparks"	"1"
+			"blood"		"1"
+		}
+		
+		"stomach"
+		{
+			"multiplier"	"0.9"
+			"sparks"	"1"
+			"blood"		"1"
+		}
+		
+		"left_arm"
+		{
+			"multiplier"	"0.75"
+			"sparks"	"1"
+			"blood"		"1"
+		}
+		
+		"right_arm"
+		{
+			"multiplier"	"0.75"
+			"sparks"	"1"
+			"blood"		"1"
+		}
+		
+		"left_leg"
+		{
+			"multiplier"	"0.7"
+			"sparks"	"1"
+			"blood"		"1"
+		}
+		
+		"right_leg"
+		{
+			"multiplier"	"0.7"
+			"sparks"	"1"
+			"blood"		"1"
+		}
+	}
+	
+	"subclasses"
+	{
+		PlayerClassDatafile
+		{
+			// FilePLayerClassInfo_t members
+			"printname"		"#ND_Consortium_Butcher"		//Suppressor
+
+			"recommended_loadout"
+			{
+				"item"		"weapon_chaingun"
+				"item"		"weapon_p900"	
+				"primary"	"weapon_chaingun"
+			}
+			
+			"kit_button_img"   "vgui/icons/weapons/kitselection/chaingun"
+		}
+		
+		PlayerClassDatafile
+		{
+			// FilePLayerClassInfo_t members
+			"printname"		"#ND_Consortium_Wrecker"		//Destroyer
+
+			"recommended_loadout"
+			{
+				"item"		"weapon_m95"		
+				"item"		"weapon_p900"	
+				"primary"	"weapon_m95"
+			}
+
+			"requires_research"
+			{
+				"advanced_kits"		{}
+			}
+
+			"kit_button_img"   "vgui/icons/weapons/kitselection/m95"
+		}
+	}
+}

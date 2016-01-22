@@ -1,0 +1,55 @@
+// Categorization of structures.
+"build_categories"
+{
+	"infrastructure"
+	{
+		"text"	"#BuildCategory_Production"
+		
+		"members"
+		{
+			"0"	"command_bunker"
+			"1"	"assembler"
+			"2"	"power_station"
+			"3"	"fusion_reactor"
+			"4"	"power_relay"
+		}
+	}
+	
+	"production"
+	{
+		"text"	"#BuildCategory_Infrastructure"
+		
+		"members"
+		{
+			"0"	"transport_gate"
+			//"1"	"transport_pad"
+			"2"	"armoury"
+			"3"	"radar"
+			"4"	"support_station"
+		}
+	}
+	
+	"defense"
+	{
+		"text"	"#BuildCategory_Defense"
+		
+		"members"
+		{
+			"0"	"machinegun_turret"
+			"1"	"rocket_turret"
+			"2"	"flamethrower_turret"
+			"3"	"sonic_turret"
+			"4"	"artillery_explosion"
+			"5"	"artillery_gas"
+			"6"	"barrier"
+			"7"	"wall"
+			"8"	"energy_wall"
+		}
+	}
+	
+	// special category that vehicles automatically fall under
+	"vehicles"
+	{
+		"text"	"#BuildCategory_Vehicles"
+	}
+}

@@ -1,0 +1,251 @@
+"WeaponData"
+{
+	//-----------------------------------------------------------------------------
+	// Entity Info
+	//-----------------------------------------------------------------------------
+	// Consortium Siege - Rocket Launcher
+	"printname"				"#M95_Name"
+	"viewmodel"				"models/weapons/m95/v_m95.mdl"
+	"playermodel"				"models/weapons/m95/w_m95.mdl"
+	"anim_prefix"				"m95"
+	"PlayerAnimationExtension"		"m95"
+	"bucket"				"0"
+	"bucket_position"			"1"
+	"CustomAddon"				""
+	"AddonOriginOffset"			"0 0 -5"
+	"AddonAnglesOffset"			"0 0 0"
+	"weight"				"10"
+	"item_flags"				"0"
+	"MuzzleFlashParticleEffect"		 ""
+	"MuzzleFlashParticleEffect_World" 	"muzzle_m95_rear"
+	
+	"weapon_selection_offset"		"130"	// horizontal offset for weapon selection hud element
+
+	//-----------------------------------------------------------------------------
+	// Gizmo definition
+	//-----------------------------------------------------------------------------
+	"gizmos"
+	{
+		"armour_piercing"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"0.75"
+				"exo_multiplier"	"3"
+			}
+		}
+		"clip_compression_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"clip_size"		"4"
+				"default_clip"		"12"
+			}
+		}
+		"clip_compression_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"clip_size"		"6"
+				"default_clip"		"12"
+			}
+		}
+		"adv_munitions_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"1.05"
+			}
+		}
+		"adv_munitions_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"1.1"
+			}
+		}
+//		"silencer"
+//		{
+			//"model"				"models/weapons/attachments/att_silencer.mdl"
+			//"bodygroup_val"		"0"
+//			
+//			"weapon_overrides"
+//			{
+//				"MuzzleFlashParticleEffect" 		""
+//				"ParticleTracerEffect"			""
+//				"damage_multiplier"			"0.9"
+//			}
+//		}
+		
+		"wpn_stabilizer"
+		{
+			"model"				"models/weapons/attachments/att_m95sight.mdl"
+			"bodygroup_val"		"1"
+			
+			"weapon_overrides"
+			{
+				"BulletSpread"		"1.75"
+				"recoil_increment"	"0.5"
+			}
+		}
+		"siege_specialist_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"TimeFireDelay"		"1.6"
+				"damage_factor"		"4.70"
+			}
+		}
+		"siege_specialist_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"TimeFireDelay"		"1.58"
+				"damage_factor"		"5.29"
+			}
+		}
+		"homewrecker"
+		{
+			
+			"weapon_overrides"
+			{
+				"TimeFireDelay"		"1.75"
+				"damage_factor"		"5.69"
+			}
+		}
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Bullet Info
+	//-----------------------------------------------------------------------------
+	"clip_size"				"3"
+	"default_clip"				"12"
+	"primary_ammo"				"m95"
+	"secondary_ammo"			"None"
+	"damage"				"115"		// Deal this much damage in the centre of radius
+	"damage_radius"				"200"		// Damage things in this radius
+	"damage_factor"				"4.60"		//Damage multiplier for vehicles/structures
+	"exo_multiplier"			"1.5"
+	"effective_range"			"6000"
+	"falloff_range"				"12000"
+	"falloff_percent"			"50"
+	"resupply_cost_per_round"		"30"
+	//-----------------------------------------------------------------------------
+	// Timing Info
+	//-----------------------------------------------------------------------------
+	"TimeFireDelay"				"1.7"		// Delay between each shot
+	"TimeIdle"				"0"		// 
+	"TimeIdleEmpty"				"0"		// 
+	"TimeReload"				"0.5"		// Fire delay after reloading
+	
+	//-----------------------------------------------------------------------------
+	// Spread and recoil
+	//-----------------------------------------------------------------------------
+	"BulletSpread"				"2"
+	
+	"cof_modifier_crouched"			"0.5"
+	"cof_modifier_zoomed"			"0.1"
+	"cof_modifier_running"			"5"
+	"cof_modifier_standing"			"1"
+	"cof_modifier_jumping"			"2"
+	"cof_modifier_suit_lockdown" 		"0.1"
+
+	"resupply_cost_per_round"		"30"
+	
+	"time_to_penalty_cap"			"4"
+	"idle_time_before_penalty_decay"	"1"
+	"min_time_before_penalty_decay"		"0.5"
+	
+	"recoil_model_2"			"1"
+	"recoil_increment"			"2"
+	"recoil_entropy"			"0.3"	// random side to side movement, more and more until we max out at the cap
+	"recoil_entropy_exponent"		"0.7"	// exponent for the entropy curve		
+	"recoil_cap"				"6.0"		//7
+	"recoil_cap_entropy"			"0.25"
+	"recoil_cof_ratio"			"0.0"		// % of COF modifier used to scale recoil.
+		
+	//-----------------------------------------------------------------------------
+	// Sound Info
+	//-----------------------------------------------------------------------------
+	SoundData
+	{
+		"empty"				"Weapon_m95.Empty"
+		"single_shot"			"Weapon_m95.Fire"
+		"reload"			"Weapon_m95.Reload"
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Arm Info
+	//-----------------------------------------------------------------------------
+	"PlayerClassArms"
+	{
+		"consortium"
+		{
+			"assault"		"models/weapons/ct_arms/v_assault_ct.mdl"
+			"exo"			"models/weapons/ct_arms/v_exo_ct.mdl"
+			"stealth"		"models/weapons/ct_arms/v_stealth_ct.mdl"
+			"support"		"models/weapons/ct_arms/v_support_ct.mdl"
+		}
+		
+		"empire"
+		{
+			"assault"		"models/weapons/emp_arms/v_assault_emp.mdl"
+			"exo"			"models/weapons/emp_arms/v_exo_emp.mdl"
+			"stealth"		"models/weapons/emp_arms/v_stealth_emp.mdl"
+			"support"		"models/weapons/emp_arms/v_support_emp.mdl"
+		}
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Texture Info
+	//-----------------------------------------------------------------------------
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"vgui/icons/weapons/m95"
+			"x"			"0"
+			"y"			"0"
+			"width"		"128"
+			"height"	"64"
+		}
+		"weapon_s"
+		{	
+			"file"		"vgui/icons/weapons/m95"
+			"x"			"0"
+			"y"			"0"
+			"width"		"128"
+			"height"	"64"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIcons"
+				"character"	"r"
+		}
+		"ammo2"
+		{
+				"font"		"WeaponIcons"
+				"character"	"t"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+				"file"		"sprites/crosshairs"
+				"x"			"0"
+				"y"			"48"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}

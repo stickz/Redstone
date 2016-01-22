@@ -1,0 +1,10 @@
+"primary_resource_point"
+{
+	"starting_resources"			"80000"
+	"extract_interval" 			"15.0"		// Length of time in seconds before we hand out more resources
+	"extract_amt"				"750"		// Amount of resources to give in each extraction
+	
+	"extract_delay"				"0.0"
+	
+	"trickle_multiplier"		"0.5"		// Percentage of extract amount to give when we are "out" of resources
+}

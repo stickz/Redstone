@@ -1,0 +1,72 @@
+"WeaponData"
+{
+	// Load value defaults from another weapon script here
+	"inherit"				"weapon_f2000"
+	
+	//-----------------------------------------------------------------------------
+	// Entity Info
+	//-----------------------------------------------------------------------------
+	"printname"				"#F2000_Silenced_Name"
+
+	"GrenadeLauncherData"
+	{
+		"ProjectileDamage"	"150"
+		"DamageRadius"		"75"
+		"LaunchSpeed" 		"1200"
+		"MinimumRadius"		"300" // Min radius till it explodes. 		
+		"ProjectileType"	"projectile_avenger"
+		"ExplosionSound"	"Weapon_Grenade_Pipebomb.Explode"
+		"ExplosionEffect"	"ExplosionCore_wall"
+		"ExplosionPlayerEffect"	"ExplosionCore_MidAir"
+		"ExplosionWaterEffect"	"ExplosionCore_MidAir_underwater"
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Sound Info
+	//-----------------------------------------------------------------------------
+	SoundData
+	{
+		"single_shot"			"Weapon_F2000.PrimaryFire"
+	}
+
+	
+	//-----------------------------------------------------------------------------
+	// Texture Info
+	//-----------------------------------------------------------------------------
+	TextureData
+	{
+		"weapon"
+		{
+				"font"		"NDWeaponIcons"
+				"character"	"l"
+		}
+		"weapon_s"
+		{	
+				"font"		"NDWeaponIconsSelected"
+				"character"	"l"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIcons"
+				"character"	"r"
+		}
+		"ammo2"
+		{
+				"font"		"WeaponIcons"
+				"character"	"t"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+				"file"		"sprites/crosshairs"
+				"x"			"0"
+				"y"			"48"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}

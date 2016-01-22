@@ -1,0 +1,78 @@
+"WeaponData"
+{
+	"inherit"			"weapon_shotgun"
+	
+	//-----------------------------------------------------------------------------
+	// Entity Info
+	//-----------------------------------------------------------------------------
+	"printname"				"#SilverNovaShotgun_Name"
+	
+	//-----------------------------------------------------------------------------
+	// Bullet Info
+	//-----------------------------------------------------------------------------
+	"clip_size"				"10"
+	"default_clip"				"30"
+	"damage"				"10"
+	"BulletsPerShot"			"12"
+	"damage_factor"				"0.15"		//Damage multiplier for vehicles/structures
+	
+	// Splash damage vars (per bullet)
+	"splash_damage_radius"		"30"
+	"splash_damage"				"50"
+	
+	//-----------------------------------------------------------------------------
+	// Timing Info
+	//-----------------------------------------------------------------------------
+	"TimeFireDelay"				"0.833"		// Delay between each shot
+	"TimeIdle"				"0.5"		// 
+	"TimeIdleEmpty"				"0.25"		// 
+	"TimeReload"				"0.5"		// Fire delay after reloading
+		
+	//-----------------------------------------------------------------------------
+	// Sound Info
+	//-----------------------------------------------------------------------------
+	SoundData
+	{
+		"empty"			"Weapon_Shotgun.Empty"
+		"reload"		"Weapon_Shotgun.Reload"
+		"special1"		"Weapon_Shotgun.Special1"
+		"single_shot"		"Weapon_Shotgun.Single"
+		"double_shot"		"Weapon_Shotgun.Double"
+	}
+	
+
+	//-----------------------------------------------------------------------------
+	// Texture Info
+	//-----------------------------------------------------------------------------
+	TextureData
+	{
+		"weapon"
+		{
+				"font"		"NDWeaponIcons"
+				"character"	"b"
+		}
+		"weapon_s"
+		{	
+				"font"		"NDWeaponIconsSelected"
+				"character"	"b"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIcons"
+				"character"	"s"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+				"file"		"sprites/crosshairs"
+				"x"			"0"
+				"y"			"48"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}

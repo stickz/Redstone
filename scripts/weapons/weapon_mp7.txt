@@ -1,0 +1,234 @@
+"WeaponData"
+{
+	//-----------------------------------------------------------------------------
+	// Entity Info
+	//-----------------------------------------------------------------------------
+	//Consortium machine pistol
+	"printname"				"#MP7_Name"
+	"viewmodel"				"models/weapons/mp7/v_mp7.mdl"
+	"playermodel"				"models/weapons/mp7/w_mp7.mdl"
+	"anim_prefix"				"mp7"
+	"PlayerAnimationExtension"		"mp7"
+	"bucket"				"0"
+	"bucket_position"			"2"
+	"CustomAddon"				""
+	"AddonOriginOffset"			"0 0 -5"
+	"AddonAnglesOffset"			"0 0 0"
+	"weight"				"4"
+	"item_flags"				"0"
+	"MuzzleFlashParticleEffect" 		"muzzle_mp7"
+	"MuzzleFlashParticleEffect_World" 	"muzzle_mp7_world"
+	"player_speed_modifier_firing"		"0.5"
+	"ParticleTracerEffect"			"tracers_smg"
+	
+	"weapon_selection_offset"		"130"	// horizontal offset for weapon selection hud element
+
+	//-----------------------------------------------------------------------------
+	// Gizmo definition
+	//-----------------------------------------------------------------------------
+	"gizmos"
+	{
+		"armour_piercing"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"0.75"
+				"exo_multiplier"	"2"
+			}
+		}
+		"clip_compression_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"clip_size"		"72"
+				"default_clip"		"288"
+			}
+		}
+		"clip_compression_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"clip_size"		"78"
+				"default_clip"		"312"
+			}
+		}
+		"adv_munitions_1"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"1.1"
+			}
+		}
+		"adv_munitions_2"
+		{
+			
+			"weapon_overrides"
+			{
+				"damage_multiplier"	"1.2"
+			}
+		}
+		"silencer"
+		{
+			"model"				"models/weapons/attachments/att_silencer.mdl"
+			"bodygroup_val"		"0"
+			
+			"weapon_overrides"
+			{
+				"MuzzleFlashParticleEffect" 		"muzzle_silenced"
+				"MuzzleFlashParticleEffect_world" 	"muzzle_silenced_world"
+				"ParticleTracerEffect"			""
+				"damage_multiplier"			"0.9"
+
+			//-----------------------------------------------------------------------------
+			// Sound Info
+			//-----------------------------------------------------------------------------
+			SoundData
+			{
+				"single_shot"			"Weapon_MP7.FireSilent"
+				"empty"					"Weapon_MP7.Empty"
+			}
+			}
+		}
+		
+		"wpn_stabilizer"
+		{
+			"model"				"models/weapons/attachments/att_reflex.mdl"
+			"bodygroup_val"		"1"
+			
+			"weapon_overrides"
+			{
+				"BulletSpread"				"1.125"
+				"recoil_increment"			"0.09"
+			}
+		}
+		
+
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Bullet Info
+	//-----------------------------------------------------------------------------
+	"clip_size"				"65"
+	"default_clip"				"240"
+	"primary_ammo"				"mp7"
+	"secondary_ammo"			"None"
+	"damage"				"14.4"
+	"effective_range"			"1500"
+	"falloff_range"				"3000"
+	"falloff_percent"			"20"
+	"damage_factor"				"0.1"		//Damage multiplier for vehicles/structures
+	
+	//-----------------------------------------------------------------------------
+	// Timing Info
+	//-----------------------------------------------------------------------------
+	"TimeFireDelay"				"0.045"	 	// Delay between each shot
+	"TimeIdle"				"0.5"		// 
+	"TimeIdleEmpty"				"0.25"		// 
+	"TimeReload"				"0.5"		// Fire delay after reloading
+	
+	//-----------------------------------------------------------------------------
+	// Spread Info
+	//-----------------------------------------------------------------------------
+	"BulletSpread"				"1.5"
+	
+	"cof_modifier_crouched"			"0.5"
+	"cof_modifier_zoomed"			"0.1"
+	"cof_modifier_running"			"2.0"
+	"cof_modifier_standing"			"0.75"
+	"cof_modifier_walking"			"1.5"
+	"cof_modifier_jumping"			"3.5"
+	
+	"time_to_penalty_cap"			"0.1"
+	"idle_time_before_penalty_decay"	"0.01"
+	"min_time_before_penalty_decay"		"0.01"
+
+	"recoil_model_2"			"1"
+	"recoil_increment"			"0.1"
+	"recoil_entropy"			"0.5"	// random side to side movement, more and more until we max out at the cap
+	"recoil_entropy_exponent"		"0.65"	// exponent for the entropy curve		
+	"recoil_cap"				"1.0"		//7
+	"recoil_cap_entropy"			"0.25"
+	"recoil_cof_ratio"			"0.0"		// % of COF modifier used to scale recoil
+		
+	//-----------------------------------------------------------------------------
+	// Sound Info
+	//-----------------------------------------------------------------------------
+	SoundData
+	{
+		"empty"				"Weapon_MP7.Empty"
+		"single_shot"			"Weapon_MP7.Fire"
+		"reload"			"Weapon_MP7.Reload"
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Arm Info
+	//-----------------------------------------------------------------------------
+	"PlayerClassArms"
+	{
+		"consortium"
+		{
+			"assault"		"models/weapons/ct_arms/v_assault_ct.mdl"
+			"exo"			"models/weapons/ct_arms/v_exo_ct.mdl"
+			"stealth"		"models/weapons/ct_arms/v_stealth_ct.mdl"
+			"support"		"models/weapons/ct_arms/v_support_ct.mdl"
+		}
+		
+		"empire"
+		{
+			"assault"		"models/weapons/emp_arms/v_assault_emp.mdl"
+			"exo"			"models/weapons/emp_arms/v_exo_emp.mdl"
+			"stealth"		"models/weapons/emp_arms/v_stealth_emp.mdl"
+			"support"		"models/weapons/emp_arms/v_support_emp.mdl"
+		}
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Texture Info
+	//-----------------------------------------------------------------------------
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"vgui/icons/weapons/mp7"
+			"x"			"0"
+			"y"			"0"
+			"width"		"128"
+			"height"	"64"
+		}
+		"weapon_s"
+		{	
+			"file"		"vgui/icons/weapons/mp7"
+			"x"			"0"
+			"y"			"0"
+			"width"		"128"
+			"height"	"64"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIcons"
+				"character"	"r"
+		}
+		"ammo2"
+		{
+				"font"		"WeaponIcons"
+				"character"	"t"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+				"file"		"sprites/crosshairs"
+				"x"			"0"
+				"y"			"48"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}
