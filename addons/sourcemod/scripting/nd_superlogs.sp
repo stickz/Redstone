@@ -26,7 +26,7 @@
 #include <sdkhooks>
 
 #define NAME "SuperLogs: Nuclear Dawn"
-#define VERSION "1.0.1"
+#define VERSION "1.0.4"
 
 
 #define MAX_LOG_WEAPONS 28
