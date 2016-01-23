@@ -26,7 +26,7 @@
 #include <sdkhooks>
 
 #define NAME "SuperLogs: Nuclear Dawn"
-#define VERSION "1.0.0"
+#define VERSION "1.0.1"
 
 
 #define MAX_LOG_WEAPONS 28
@@ -134,9 +134,12 @@ public OnMapStart()
 public OnClientPutInServer(client)
 {
 	g_bReadyToShoot[client] = false;
-	SDKHook(client, SDKHook_TraceAttackPost, Hook_TraceAttackPost);
-	SDKHook(client, SDKHook_PostThink, Hook_PostThink);
-	SDKHook(client, SDKHook_PostThinkPost, Hook_PostThinkPost);
+	if (!IsFakeClient(client))
+	{
+		SDKHook(client, SDKHook_TraceAttackPost, Hook_TraceAttackPost);
+		SDKHook(client, SDKHook_PostThink, Hook_PostThink);
+		SDKHook(client, SDKHook_PostThinkPost, Hook_PostThinkPost);
+	}
 	reset_player_stats(client);
 }
 
