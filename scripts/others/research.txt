@@ -84,7 +84,7 @@
 	"player_boost3"
 	{
 		"cost"	"20000"
-		"time"	"60"
+		"time"	"45"
 		"name"			"#ND_Research_Player_Upgrades3_Name"
 		"description"	"#ND_Research_Player_Upgrades3_Desc"
 		"icon"			"vgui/icons/player_upgrade"
@@ -102,7 +102,7 @@
 	"structure_boost2"
 	{
 		"cost"	"12500"
-		"time"	"45"
+		"time"	"30"
 		"name"			"#ND_Research_Structure_Upgrades2_Name"
 		"description"	"#ND_Research_Structure_Upgrades2_Desc"
 		"icon"			"vgui/icons/structure_upgrade"
@@ -111,7 +111,7 @@
 	"structure_boost3"
 	{
 		"cost"	"25000"
-		"time"	"60"
+		"time"	"30"
 		"name"			"#ND_Research_Structure_Upgrades3_Name"
 		"description"	"#ND_Research_Structure_Upgrades3_Desc"
 		"icon"			"vgui/icons/structure_upgrade"
