@@ -28,7 +28,6 @@
 	{
 		"armour_piercing"
 		{
-			
 			"weapon_overrides"
 			{
 				"damage_multiplier"	"0.75"
@@ -37,7 +36,6 @@
 		}
 		"clip_compression_1"
 		{
-			
 			"weapon_overrides"
 			{
 				"clip_size"		"13"
@@ -46,8 +44,6 @@
 		}
 		"clip_compression_2"
 		{
-
-			
 			"weapon_overrides"
 			{
 				"clip_size"		"15"
@@ -56,8 +52,6 @@
 		}
 		"adv_munitions_1"
 		{
-
-			
 			"weapon_overrides"
 			{
 				"damage_multiplier"	"1.1"
@@ -65,8 +59,6 @@
 		}
 		"adv_munitions_2"
 		{
-
-			
 			"weapon_overrides"
 			{
 				"damage_multiplier"	"1.2"
@@ -76,7 +68,6 @@
 		{
 			"model"				"models/weapons/attachments/att_silencer.mdl"
 			"bodygroup_val"		"0"
-
 			
 			"weapon_overrides"
 			{
@@ -110,7 +101,6 @@
 		
 		"adv_inventory_1"
 		{
-			
 			"weapon_overrides"
 			{
 				"default_clip"		"60"
@@ -119,8 +109,6 @@
 		
 		"adv_inventory_2"
 		{
-			
-			
 			"weapon_overrides"
 			{
 				"default_clip"		"72"
@@ -128,7 +116,6 @@
 		}
 		"siege_specialist_1"
 		{
-			
 			"weapon_overrides"
 			{
 				"TimeReload"		"0.0"
@@ -137,7 +124,6 @@
 		}
 		"siege_specialist_2"
 		{
-			
 			"weapon_overrides"
 			{
 				"TimeReload"		"0.0"
@@ -146,7 +132,6 @@
 		}
 		"homewrecker"
 		{
-			
 			"weapon_overrides"
 			{
 				"damage_factor"		"0.15"
@@ -255,21 +240,21 @@
 		}
 		"ammo"
 		{
-				"font"		"WeaponIcons"
-				"character"	"p"
+			"font"		"WeaponIcons"
+			"character"	"p"
 		}
 		"crosshair"
 		{
-				"font"		"Crosshairs"
-				"character"	"Q"
+			"font"		"Crosshairs"
+			"character"	"Q"
 		}
 		"autoaim"
 		{
-				"file"		"sprites/crosshairs"
-				"x"			"0"
-				"y"			"48"
-				"width"		"24"
-				"height"	"24"
+			"file"		"sprites/crosshairs"
+			"x"			"0"
+			"y"			"48"
+			"width"		"24"
+			"height"	"24"
 		}
 	}
 }
