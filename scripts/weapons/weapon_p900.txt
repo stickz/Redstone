@@ -132,6 +132,7 @@
 			"weapon_overrides"
 			{
 				"TimeReload"		"0.0"
+				"damage_multiplier"	"0.8"
 			}
 		}
 		"siege_specialist_2"
