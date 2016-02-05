@@ -140,7 +140,7 @@
 			"weapon_overrides"
 			{
 				"TimeReload"		"0.0"
-				"damage_multiplier"	"0.2"
+				"damage_multiplier"	"0.5"
 			}
 		}
 		"homewrecker"
