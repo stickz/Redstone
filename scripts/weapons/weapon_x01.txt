@@ -130,8 +130,8 @@
 	"damage"				"20"	// extra damage in the explosion, down below in the X01 values
 	"damage_factor"				"4.230"		//Damage multiplier for vehicles/structures
 	"effective_range"			"4000"
-	"falloff_range"				"4000"
-	"falloff_percent"			"20"
+	"falloff_range"				"6000"
+	"falloff_percent"			"25"
 	"exo_multiplier"			"2.0"
 	"resupply_cost_per_round"		"15"
 	
