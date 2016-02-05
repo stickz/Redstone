@@ -122,6 +122,7 @@
 			{
 				"TimeReload"		"0.0"
 				"damage_multiplier"	"0.8"
+				"damage_factor"		"0.13"
 			}
 		}
 		"siege_specialist_2"
@@ -130,6 +131,7 @@
 			{
 				"TimeReload"		"0.0"
 				"damage_multiplier"	"0.5"
+				"damage_factor"		"0.15"
 			}
 		}
 		"homewrecker"
