@@ -138,6 +138,7 @@
 		{
 			"weapon_overrides"
 			{
+				"damage_multiplier"	"0.95"
 				"damage_factor"		"0.15"
 			}
 		}
