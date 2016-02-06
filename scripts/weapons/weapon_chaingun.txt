@@ -102,6 +102,7 @@
 			"weapon_overrides"
 			{
 				"TimeReload"		"0.425"
+				"damage_factor"		"0.25"
 			}
 		}
 		"siege_specialist_2"
@@ -110,7 +111,7 @@
 			"weapon_overrides"
 			{
 				"TimeReload"		"0.375"
-				"damage_factor"		"0.175"
+				"damage_factor"		"0.275"
 			}
 		}
 		"homewrecker"
@@ -118,7 +119,7 @@
 			
 			"weapon_overrides"
 			{
-				"damage_factor"		"0.2"
+				"damage_factor"		"0.3"
 			}
 		}
 	}
