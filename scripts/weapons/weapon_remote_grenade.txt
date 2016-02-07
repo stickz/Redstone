@@ -17,9 +17,22 @@ WeaponData
 	//-----------------------------------------------------------------------------
 	"gizmos"
 	{
+		"adv_munitions_1"
+		{
+			"weapon_overrides"
+			{
+				"damage"			"210"
+			}
+		}
+		"adv_munitions_2"
+		{
+			"weapon_overrides"
+			{
+				"damage"			"215"
+			}
+		}
 		"support_warfare"
 		{
-			
 			"weapon_overrides"
 			{
 				"damage"			"235"
