@@ -135,7 +135,7 @@
 	"effective_range"			"1000"
 	"falloff_range"				"3000"
 	"falloff_percent"			"20"
-	"damage_factor"				"0.15"		//Damage multiplier for vehicles/structures
+	"damage_factor"				"0.175"		//Damage multiplier for vehicles/structures
 	"exo_multiplier"			"1.0"
 	
 	//-----------------------------------------------------------------------------
