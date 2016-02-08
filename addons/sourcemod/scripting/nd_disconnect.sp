@@ -46,6 +46,6 @@ public Event_PlayerDisconnected(Handle:event, const String:name[], bool:dontBroa
 		GetEventString(event, "reason", reason, sizeof(reason));
 		
 		if(StrContains(reason, "timed out", false) != -1)
-			PrintToChatAll("\x05%s lost connection", clientName);	
+			PrintToChatAll("\x05%s lost connection or crashed!", clientName);	
 	}
 }
