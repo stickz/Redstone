@@ -30,4 +30,4 @@ before_script:
   - chmod +x spcomp
 
 script:
-  - ./compile.sh nd_offmap_fixes.sp
+  - ./compile.sh dontshout.sp nd_build_shadow_fix.sp nd_continents.sp nd_disconnect.sp nd_offmap_fixes.sp nd_ping.sp nd_player_warnings.sp nd_reloadfix.sp nd_superlogs.sp nd_translation_updater.sp nd_welcome.sp structminigame.sp   
