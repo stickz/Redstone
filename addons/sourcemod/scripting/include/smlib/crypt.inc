@@ -444,7 +444,7 @@ static stock MD5Transform(buf[], into[])
 	MD5Transform_FF(b, c, d, a, into[11], 22, 0x895cd7be);
 	MD5Transform_FF(a, b, c, d, into[12], 7, 0x6b901122);
 	MD5Transform_FF(d, a, b, c, into[13], 12, 0xfd987193);
-	MD5Transform_FF(c, d, a, b, ininto[14], 17, 0xa679438e);
+	MD5Transform_FF(c, d, a, b, into[14], 17, 0xa679438e);
 	MD5Transform_FF(b, c, d, a, into[15], 22, 0x49b40821);
 
 	MD5Transform_GG(a, b, c, d, into[1], 5, 0xf61e2562);
