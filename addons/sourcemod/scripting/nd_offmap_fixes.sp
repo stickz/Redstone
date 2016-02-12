@@ -18,7 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <sdkhooks>
 
-#define VERSION "1.3"
+#define VERSION "1.4"
 #define DEBUG 0
 
 new bool:validMap = false;
@@ -234,7 +234,7 @@ public Action:CheckBorders(Handle timer, any entity)
       	        tmpAxisViolated++;
     	}
     
-    	if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated)) 
-    	    AcceptEntityInput(entity, "Kill");
+    	if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated))
+    	    SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
     }
 }
