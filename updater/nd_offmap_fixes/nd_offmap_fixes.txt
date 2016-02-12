@@ -4,12 +4,13 @@
    	{
       		"Version"
       		{
-			"Latest"	"1.3"
+			"Latest"	"1.4"
       		}
 		
       		"Notes"	"1.1: Initial Release"
       		"Notes"	"1.2: reversed coordinates, using dynamic array, more glitches fix (thx Phi)"
       		"Notes"	"1.3: Changes to the plugin for Redstone by Vertex"
+			"Notes"	"1.4: Improve method used to destory the structure"
    	}
 	
 	"Files"
