@@ -82,34 +82,36 @@ public OnMapStart() {
 
 public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
 {
-    new client = GetClientOfUserId(GetEventInt(event, "userid"));
-    new cls = GetEventInt(event, "class");
-    new subcls = GetEventInt(event, "subclass");
+	new client = GetClientOfUserId(GetEventInt(event, "userid"));
+    	new cls = GetEventInt(event, "class");
+    	new subcls = GetEventInt(event, "subclass");
 
-    if (IsSniperClass(cls, subcls)) 
+	if (IsSniperClass(cls, subcls)) 
 	{
-        if (IsTooMuchSnipers(client)) 
+        	if (IsTooMuchSnipers(client)) 
 		{
-            ResetClass(client);
-            return Plugin_Continue;
-        }
-    }
+	            	ResetClass(client);
+	            	return Plugin_Continue;
+        	}
+	 }
 
     return Plugin_Continue;
 }
 
 public Action:Event_PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) 
 {
-    new client = GetClientOfUserId(GetEventInt(event, "userid"));
-    new cls = m_iDesiredPlayerClass(client);
-    new subcls = m_iDesiredPlayerSubclass(client);
+	new client = GetClientOfUserId(GetEventInt(event, "userid"));
+    	new cls = m_iDesiredPlayerClass(client);
+    	new subcls = m_iDesiredPlayerSubclass(client);
 
-    if (IsSniperClass(cls, subcls)) {
-        if (IsTooMuchSnipers(client)) {
-            ResetClass(client);
-            return Plugin_Continue;
-        }
-    }
+	if (IsSniperClass(cls, subcls)) 
+	{
+        	if (IsTooMuchSnipers(client)) 
+        	{
+        		ResetClass(client);
+            		return Plugin_Continue;
+        	}
+    	}
 
     return Plugin_Continue;
 }
@@ -117,60 +119,61 @@ public Action:Event_PlayerDeath(Handle:event, const String:name[], bool:dontBroa
 // CHANGE LIMIT
 public Action:CMD_ChangeSnipersLimit(client, args) 
 {
-    if (!IsValidClient(client))
-        return Plugin_Handled;    
+	if (!IsValidClient(client))
+        	return Plugin_Handled;    
 
-    if (args != 2) {
-        PrintToChat(client, "\x05[xG] %t", "Invalid Args");
-        return Plugin_Handled;
-    }
+	 if (args != 2) 
+	 {
+	 	PrintToChat(client, "\x05[xG] %t", "Invalid Args");
+	 	return Plugin_Handled;
+    	}
 
-    decl String:strteam[32];
-    GetCmdArg(1, strteam, sizeof(strteam));
-    new team = StringToInt(strteam);
+	decl String:strteam[32];
+	GetCmdArg(1, strteam, sizeof(strteam));
+    	new team = StringToInt(strteam);
 
-    decl String:strvalue[32];
-    GetCmdArg(2, strvalue, sizeof(strvalue));
-    new value = StringToInt(strvalue);
+    	decl String:strvalue[32];
+	GetCmdArg(2, strvalue, sizeof(strvalue));
+	new value = StringToInt(strvalue);
 
-    ChangeSnipersLimit(client, team+2, value);
-    return Plugin_Handled;
+    	ChangeSnipersLimit(client, team+2, value);
+    	return Plugin_Handled;
 }
 
 public Action:CMD_ChangeTeamSnipersLimit(client, args) 
 {	
-    if (!g_Bool[allowComanders])
-    {
-        PrintToChat(client, "\x05[xG] %t", "Commander Disabled"); //commander setting of sniper limits are disabled
-        return Plugin_Handled;
-    }
-
-    if (!IsValidClient(client))
-        return Plugin_Handled;    
-
-    new client_team = GetClientTeam(client);
-
-    if (client_team < 2)
-        return Plugin_Handled;    
-
-    if (!args) 
+	if (!g_Bool[allowComanders])
 	{
-        PrintToChat(client, "[xG] %t", "Proper Usage");
-        return Plugin_Handled;
-    }
+		PrintToChat(client, "\x05[xG] %t", "Commander Disabled"); //commander setting of sniper limits are disabled
+        	return Plugin_Handled;
+    	}
 
-    if (!NDC_IsCommander(client)) 
+    	if (!IsValidClient(client))
+        	return Plugin_Handled;    
+
+    	new client_team = GetClientTeam(client);
+
+    	if (client_team < 2)
+		return Plugin_Handled;    
+
+    	if (!args) 
 	{
-        PrintToChat(client, "\x05[xG] %t", "Only Commanders"); //snipers limiting is available only for Commander
-        return Plugin_Handled;
-    }
+        	PrintToChat(client, "[xG] %t", "Proper Usage");
+        	return Plugin_Handled;
+    	}
 
-    decl String:strvalue[32];
-    GetCmdArg(1, strvalue, sizeof(strvalue));
-    new value = StringToInt(strvalue);
+    	if (!NDC_IsCommander(client)) 
+	{
+        	PrintToChat(client, "\x05[xG] %t", "Only Commanders"); //snipers limiting is available only for Commander
+        	return Plugin_Handled;
+	 }
 
-    ChangeSnipersLimit(client, client_team, value);
-    return Plugin_Handled;
+    	decl String:strvalue[32];
+	GetCmdArg(1, strvalue, sizeof(strvalue));
+	new value = StringToInt(strvalue);
+
+	ChangeSnipersLimit(client, client_team, value);
+	return Plugin_Handled;
 }
 
 // HELPER FUNCTIONS
@@ -181,12 +184,12 @@ bool:IsTooMuchSnipers(client)
 	new sniperCount = GetSniperCount(clientTeam);
 
 	if (!hasSetSniperLimit(clientTeam))
-		return clientCount < 6 &&  sniperCount >= LOW_LIMIT || 
-			   clientCount < 13 && sniperCount >= MED_LIMIT ||
-			                       sniperCount >= HIGH_LIMIT;
+		return 	clientCount < 6  &&  sniperCount >= LOW_LIMIT || 
+			clientCount < 13 &&  sniperCount >= MED_LIMIT ||
+			                     sniperCount >= HIGH_LIMIT;
 	else
-		return clientTeam == TEAM_CON && sniperCount >= g_Integer[newConsortLimit] ||
-			   clientTeam == TEAM_EMP && sniperCount >= g_Integer[newEmpireLimit];
+		return 	clientTeam == TEAM_CON && sniperCount >= g_Integer[newConsortLimit] ||
+			clientTeam == TEAM_EMP && sniperCount >= g_Integer[newEmpireLimit];
 }
 
 bool:hasSetSniperLimit(team)
@@ -201,19 +204,20 @@ bool:hasSetSniperLimit(team)
 	return team == TEAM_CON && g_Bool[consortSetLimit] || team == TEAM_EMP && g_Bool[empireSetLimit];
 }
 
-bool:IsSniperClass(class, subclass) {
-    return (class == ASSAULT_CLASS && subclass == ASSAULT_MARKSMAN) || (class == SNIPER_CLASS && subclass == SNIPER_SNIPER)
+bool:IsSniperClass(class, subclass) 
+{
+	return (class == ASSAULT_CLASS && subclass == ASSAULT_MARKSMAN) || (class == SNIPER_CLASS && subclass == SNIPER_SNIPER)
 }
 
 ResetClass(client) 
 {
-    SetEntProp(client, Prop_Send, "m_iPlayerClass", ASSAULT_CLASS);
-    SetEntProp(client, Prop_Send, "m_iPlayerSubclass", ASSAULT_INFANTRY);
-    SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", ASSAULT_CLASS);
-    SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", ASSAULT_INFANTRY);
-    SetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0);
+	SetEntProp(client, Prop_Send, "m_iPlayerClass", ASSAULT_CLASS);
+    	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", ASSAULT_INFANTRY);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", ASSAULT_CLASS);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", ASSAULT_INFANTRY);
+	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0);
 
-    PrintToChat(client, "\x05[xG] %t.", "Limit Reached");
+    	PrintToChat(client, "\x05[xG] %t.", "Limit Reached");
 }
 
 ChangeSnipersLimit(client, team, value)
