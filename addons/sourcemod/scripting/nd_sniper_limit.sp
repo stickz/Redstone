@@ -126,7 +126,7 @@ public Action:CMD_ChangeSnipersLimit(client, args)
 	 {
 	 	PrintToChat(client, "\x05[xG] %t", "Invalid Args");
 	 	return Plugin_Handled;
-    	}
+	 }
 
 	decl String:strteam[32];
 	GetCmdArg(1, strteam, sizeof(strteam));
