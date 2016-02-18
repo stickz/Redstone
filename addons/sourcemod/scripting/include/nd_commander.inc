@@ -3,20 +3,19 @@
 #endif
 #define _nd_commander_included
 
+#define NOT_COMMANDER -1
+#define CONSORT_COMMANDER 2
+#define EMPIRE_COMMANDER 3 
+
 /**
  * Retreive the team of the commander
  *
  * If client is not a commander, will return -1.
  *
- * @param clientIDX  	The index of the client.
+ * @param clientIDX  		The index of the client.
  * @return        		The team number of the commander 
- *						or -1 if the person is not a commander.
+ *				or -1 if the person is not a commander.
  */
- 
-#define NOT_COMMANDER -1
-#define CONSORT_COMMANDER 2
-#define EMPIRE_COMMANDER 3 
- 
 native GetCommanderTeam(clientIDX);
 
 #define GCT_LOADED() (GetFeatureStatus(FeatureType_Native, "GetCommanderTeam") == FeatureStatus_Available)
