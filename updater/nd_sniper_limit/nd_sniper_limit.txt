@@ -1,0 +1,25 @@
+"Updater"
+{
+	"Information"
+	{
+		"Version"
+		{
+			"Latest"	"1.1.8"
+		}
+		
+		"Notes" "1.1.4: Bumped compile version to 1.7.1"
+		"Notes" "1.1.5: Tweaked automatic setting to be smarter and more efficient"
+		"Notes" "1.1.6: Apply more aggressive limits on snipers < 6 = 2, < 13 = 3 : 4"
+		"Notes" "1.1.7: Recompile with SM 1.7.2"
+		"Notes" "1.1.8: Set min cap to 1, fix stocks, use GetCommanderTeam() method"
+	}
+	
+	"Files"
+	{
+		"Plugin"	"Path_SM/plugins/nd_sniper_limit.smx"
+		
+		"Plugin"	"Path_SM/translations/nd_sniper_limit.phrases.txt"
+		"Plugin"	"Path_SM/translations/de/nd_sniper_limit.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_sniper_limit.phrases.txt"
+	}
+}
