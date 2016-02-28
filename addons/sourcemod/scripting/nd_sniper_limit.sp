@@ -12,7 +12,7 @@
 #define MED_LIMIT 3
 #define HIGH_LIMIT 4
 
-#define PLUGIN_VERSION "1.1.8"
+#define PLUGIN_VERSION "1.1.9"
 #define DEBUG 0
 
 #define TEAM_CON 2
@@ -66,8 +66,8 @@ public OnPluginStart()
 	RegAdminCmd("sm_maxsnipers_admin", CMD_ChangeSnipersLimit, ADMFLAG_GENERIC, "!maxsnipers_admin <team> <amount>");
 	RegConsoleCmd("sm_maxsnipers", CMD_ChangeTeamSnipersLimit, "Change the maximum number of snipers in the team: !maxsnipers <amount>");
 
-	HookEvent("player_changeclass", Event_ChangeClass, EventHookMode_Pre);
-	//HookEvent("player_death", Event_PlayerDeath, EventHookMode_Post);
+	HookEvent("player_changeclass", Event_SetClass, EventHookMode_Pre);
+	//HookEvent("player_death", Event_SetClass, EventHookMode_Post);
 	
 	AddUpdaterLibrary();
 	
@@ -80,7 +80,7 @@ public OnMapStart() {
 	g_Bool[consortSetLimit] = false;
 }
 
-public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
+public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadcast) 
 {
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
     	new cls = GetEventInt(event, "class");
@@ -94,24 +94,6 @@ public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroa
 	            	return Plugin_Continue;
         	}
 	 }
-
-    return Plugin_Continue;
-}
-
-public Action:Event_PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) 
-{
-	new client = GetClientOfUserId(GetEventInt(event, "userid"));
-    	new cls = m_iDesiredPlayerClass(client);
-    	new subcls = m_iDesiredPlayerSubclass(client);
-
-	if (IsSniperClass(cls, subcls)) 
-	{
-        	if (IsTooMuchSnipers(client)) 
-        	{
-        		ResetClass(client);
-            		return Plugin_Continue;
-        	}
-    	}
 
     return Plugin_Continue;
 }
