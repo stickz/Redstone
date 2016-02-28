@@ -37,6 +37,8 @@ public OnPluginStart()
 	
 	pDeadWeightArray = CreateArray(23);
 	
+	AddUpdaterLibrary();
+	
 	LoadTranslations("nd_dead_weight.phrases");
 }
 
