@@ -27,7 +27,7 @@ public OnPluginStart()
 	eDeadWeights = CreateConVar("sm_enable_deadweights", "1", "Sets wetheir to allow commanders to set their own limits.");
 	
 	RegAdminCmd("sm_SetPlayerSiege", CMD_SetPlayerClass, ADMFLAG_GENERIC, "!SetPlayerSeige <player>");
-	RegConsoleCmd("sm_LockSeige", CMD_LockPlayerSeige, "!LockSeige !LockSeige <player>");
+	RegConsoleCmd("sm_LockSeige", CMD_LockPlayerSeige, "!LockSeige <player>");
 	
 	HookEvent("player_changeclass", Event_SetClass, EventHookMode_Pre);
 	HookEvent("player_death", Event_SetClass, EventHookMode_Post);
