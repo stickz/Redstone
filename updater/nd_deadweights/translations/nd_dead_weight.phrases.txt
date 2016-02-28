@@ -15,16 +15,6 @@
 		"en"		"This feature is only available for commanders"
 	}
 	
-	"Empire"
-	{
-		"en"		"Empire"
-	}
-	
-	"Consortium"
-	{
-		"en"		"Consort"
-	}
-	
 	"Cannot Find Player"
 	{
 		"en"		"Cannot find specified player. Make sure to use a unique name segement"
