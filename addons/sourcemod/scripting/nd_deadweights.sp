@@ -15,7 +15,7 @@ public Plugin:myinfo =
 	name = "[ND] Dead Weights",
 	author = "stickz",
 	description = "Allows assigning players to exo seige kit",
-    version = VERSION
+    	version = VERSION
 }
 
 new Handle:eDeadWeights = INVALID_HANDLE,
