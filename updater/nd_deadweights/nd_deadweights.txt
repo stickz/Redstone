@@ -1,0 +1,19 @@
+"Updater"
+{
+	"Information"
+	{
+		"Version"
+		{
+			"Latest"	"1.0.1"
+		}
+		
+		"Notes" "1.0.1: Inital Release"
+	}
+	
+	"Files"
+	{
+		"Plugin"	"Path_SM/plugins/nd_deadweights.smx"
+		
+		"Plugin"	"Path_SM/translations/nd_deadweights.phrases.txt"
+	}
+}

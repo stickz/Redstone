@@ -1,0 +1,72 @@
+﻿"Phrases"
+{
+	"Disabled Feature"
+	{
+		"en"		"This feature is currently disabled"
+	}
+	
+	"Proper Usage"
+	{
+		"en"		"Usage: !LockSeige <player>"
+	}
+	
+	"Only Commanders"
+	{
+		"en"		"This feature is only available for commanders"
+	}
+	
+	"Empire"
+	{
+		"en"		"Empire"
+	}
+	
+	"Consortium"
+	{
+		"en"		"Consort"
+	}
+	
+	"Cannot Find Player"
+	{
+		"en"		"Cannot find specified player. Make sure to use a unique name segement"
+	}
+	
+	"Cannot Lock"
+	{
+		"en"		"This player currently cannot be locked seige."	
+	}
+	
+	"Enabled Seige Lock"
+	{
+		"en"		"Player succesfully locked into exo seige kit"		
+	}
+	
+	"Disabled Seige Lock"
+	{
+		"en"		"Player exo seige kit lock succesfully removed"		
+	}
+	
+	"Admin Lock Enabled"
+	{
+		"en"		"An admin locked you into exo seige kit due to lack of team contribution."	
+	}
+	
+	"Commander Lock Enabled"
+	{
+		"en"		"The commander locked you into exo seige kit due to a lack of meaningful team contribution."	
+	}
+	
+	"Admin Lock Disbled"
+	{
+		"en"		"An admin disbled your exo seige kit lock"	
+	}
+	
+	"Commander Lock Disbled"
+	{
+		"en"		"The commander disbled your exo seige kit lock"	
+	}
+	
+	"Locked Siege"
+	{
+		"en"		"You're locked into seige and cannot change class"	
+	}
+}
