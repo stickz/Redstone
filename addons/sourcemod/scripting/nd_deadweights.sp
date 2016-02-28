@@ -18,7 +18,7 @@ public Plugin:myinfo =
     	version = VERSION
 }
 
-new Handle:eDeadWeights = INVALID_HANDLE,
+new 	Handle:eDeadWeights = INVALID_HANDLE,
 	Handle:pDeadWeightArray = INVALID_HANDLE,
 	bool:player_forced_seige[MAXPLAYERS + 1] = {false,...};
 
