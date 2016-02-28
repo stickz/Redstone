@@ -21,6 +21,9 @@ public Plugin:myinfo =
 new 	Handle:eDeadWeights = INVALID_HANDLE,
 	Handle:pDeadWeightArray = INVALID_HANDLE,
 	bool:player_forced_seige[MAXPLAYERS + 1] = {false,...};
+	
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_deadweights/nd_deadweights.txt"
+#include "updater/standard.sp"
 
 public OnPluginStart()
 {
