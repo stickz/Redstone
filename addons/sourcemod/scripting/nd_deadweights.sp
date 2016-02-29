@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #tryinclude <nd_breakdown>
 #define REQUIRE_PLUGIN
 
+#define DEBUG 1
 #define VERSION "1.0.1"
 
 public Plugin:myinfo =
@@ -36,7 +37,8 @@ public Plugin:myinfo =
 
 new 	Handle:eDeadWeights = INVALID_HANDLE,
 	Handle:pDeadWeightArray = INVALID_HANDLE,
-	bool:player_forced_seige[MAXPLAYERS + 1] = {false,...};
+	bool:player_forced_seige[MAXPLAYERS + 1] = {false,...},
+	bool:advancedKitsAvailable[2] = {false, ...};
 	
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_deadweights/nd_deadweights.txt"
 #include "updater/standard.sp"
@@ -50,6 +52,7 @@ public OnPluginStart()
 	
 	HookEvent("player_changeclass", Event_SetClass, EventHookMode_Pre);
 	HookEvent("player_death", Event_SetClass, EventHookMode_Post);
+	HookEvent("research_complete", Event_ResearchComplete);
 	
 	pDeadWeightArray = CreateArray(23);
 	
@@ -61,6 +64,9 @@ public OnPluginStart()
 public OnMapStart()
 {
 	ClearArray(pDeadWeightArray);
+	
+	advancedKitsAvailable[0] = false;
+	advancedKitsAvailable[1] = false;
 	
 	for (new client = 1; client <= MaxClients; client++)
 	{
@@ -174,13 +180,34 @@ public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadca
 	
 	if (player_forced_seige[client])
 	{
-		if (!PlayerIsSeige(class, subclass))
+		if (advancedKitsAvailable[GetClientTeam(client) - 2])
 		{
-			SetPlayerSeige(client);
-			return Plugin_Continue;
-		}	
+			if (!PlayerIsSeige(class, subclass))
+			{
+				SetPlayerSeige(client);
+				return Plugin_Continue;
+			}
+		}
 	}
 
+	return Plugin_Continue;
+}
+
+public Action:Event_ResearchComplete(Handle:event, const String:name[], bool:dontBroadcast) 
+{
+	new team = GetEventInt(event, "teamid");
+	new researchID = GetEventInt(event, "researchid");
+	
+	#if DEBUG == 1
+	decl String:message[64];
+	Format(message, sizeof(message), "Research id %d complete", researchID);
+	PrintToAdmins(message, "a");
+	#endif
+	
+	//This is improper becuase we need to get the research id
+	//But just put this here for now while testing this plugin
+	advancedKitsAvailable[team - 2] = true;
+	
 	return Plugin_Continue;
 }
 
