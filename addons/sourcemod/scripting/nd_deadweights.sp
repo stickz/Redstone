@@ -186,7 +186,7 @@ public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadca
 
 bool:PlayerIsSeige(class, subclass)
 {
-	return class == mExo && subclass == eSiege_Kit;	
+	return class == MAIN_CLASS_EXO && subclass == EXO_CLASS_SEIGE_KIT;	
 }
 
 bool:CanLockSeige(target)
