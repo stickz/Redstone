@@ -15,6 +15,6 @@
 	"Files"
 	{
 		"Plugin"	"Path_SM/plugins/nd_deadweights.smx"		
-		"Plugin"	"Path_SM/translations/nd_dead_weight.phrases.phrases.txt"
+		"Plugin"	"Path_SM/translations/nd_dead_weight.phrases.txt"
 	}
 }
