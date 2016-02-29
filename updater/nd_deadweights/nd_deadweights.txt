@@ -4,16 +4,17 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.1"
+			"Latest"	"1.0.2"
 		}
 		
 		"Notes" "1.0.1: Inital Release"
+		"Notes" "1.0.2: Add debuging in admin chat"
+		"Notes" "1.0.2: Add research event to look for advanced kits"
 	}
 	
 	"Files"
 	{
-		"Plugin"	"Path_SM/plugins/nd_deadweights.smx"
-		
+		"Plugin"	"Path_SM/plugins/nd_deadweights.smx"		
 		"Plugin"	"Path_SM/translations/nd_deadweights.phrases.txt"
 	}
 }
