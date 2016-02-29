@@ -3,46 +3,32 @@
 #endif
 #define _nd_breakdown_included
 
-/* Main and Subclass enums for the following prop ents
+/* Main and Subclass constants for the following prop ents
  * "m_iPlayerClass"
  * "m_iPlayerSubclass"
  * "m_iDesiredPlayerClass"
  * m_iDesiredPlayerSubclass"
  */
-enum MainClasses
-{
-	mAssault,
-	mExo,
-	mStealth,
-	mSupport
-}
+ 
+#define MAIN_CLASS_ASSAULT 	0
+#define MAIN_CLASS_EXO 		1
+#define MAIN_CLASS_STEALTH	2
+#define	MAIN_CLASS_SUPPORT	3
 
-enum aSubClasses
-{
-	aInfantry,
-	aGrenadier,
-	aSniper
-}
+#define ASSAULT_CLASS_INFANTRY	0
+#define ASSAULT_CLASS_GRENADIER	1
+#define	ASSAULT_CLASS_SNIPER	2
 
-enum eSubClasses
-{
-	eSuppression,
-	eSiege_Kit
-}
+#define EXO_CLASS_SUPRESSION	0
+#define EXO_CLASS_SEIGE_KIT		1
 
-enum seSubClasses
-{
-	seAssassin,
-	seSniper,
-	seSabateur
-}
+#define	STEALTH_CLASS_ASSASSIN	0
+#define	STEALTH_CLASS_SNIPER	1
+#define STEALTH_CLASS_SABATEUR 	2
 
-enum suSubClasses
-{
-	suMedic,
-	suEngineer,
-	suBBQ
-}
+#define SUPPORT_CLASS_MEDIC		0
+#define SUPPORT_CLASS_ENGINEER	1
+#define SUPPORT_CLASS_BBQ		2
 
 /**
  * Retreive the number of snipers on an given team
