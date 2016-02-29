@@ -196,10 +196,10 @@ bool:CanLockSeige(target)
 
 SetPlayerSeige(client)
 {
-	SetEntProp(client, Prop_Send, "m_iPlayerClass", mExo);
-	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", eSiege_Kit);
-	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", mExo);
-	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", eSiege_Kit);
+	SetEntProp(client, Prop_Send, "m_iPlayerClass", MAIN_CLASS_EXO);
+	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", EXO_CLASS_SEIGE_KIT);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", MAIN_CLASS_EXO);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", EXO_CLASS_SEIGE_KIT);
 	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0);
 
 	PrintToChat(client, "\x05[xG] %t.", "Locked Siege");
