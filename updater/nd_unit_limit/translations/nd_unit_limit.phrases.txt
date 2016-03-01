@@ -1,0 +1,42 @@
+﻿"Phrases"
+{
+	"Empire"
+	{
+		"en"		"Empire"
+	}
+	
+	"Consortium"
+	{
+		"en"		"Consort"
+	}
+	
+	"Only Commanders"
+	{
+		"en"		"This feature is only available for commanders"
+	}
+	
+	"Commander Disabled"
+	{
+		"en"		"commander setting of sniper limits are disabled"	
+	}
+	
+	"Invalid Team"
+	{
+		"en"		"Invalid team (0 = Consort, 1 = Empire)"
+	}
+	
+	"Limit Reached"
+	{
+		"en"		"Snipers limit reached, resetting to Assault"
+	}
+	
+	"Proper Usage"
+	{
+		"en"		"Usage: !MaxSnipers <limit>"
+	}
+	
+	"Invalid Args"
+	{
+		"en"		"Invalid number of arguments: <team> <amount>"
+	}
+}

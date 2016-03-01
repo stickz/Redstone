@@ -1,0 +1,21 @@
+"Updater"
+{
+	"Information"
+	{
+		"Version"
+		{
+			"Latest"	"2.0.0"
+		}
+		
+		"Notes" "2.0.0: Inital plugin upgrade from sniper to unit limiter"
+	}
+	
+	"Files"
+	{
+		"Plugin"	"Path_SM/plugins/nd_unit_limit.smx"
+		
+		"Plugin"	"Path_SM/translations/nd_unit_limit.phrases.txt"
+		"Plugin"	"Path_SM/translations/de/nd_unit_limit.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/nd_unit_limit.phrases.txt"
+	}
+}
