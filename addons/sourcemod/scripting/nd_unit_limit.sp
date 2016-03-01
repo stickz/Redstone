@@ -28,7 +28,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define TYPE_STRUCTURE 	2
 
 #define MIN_SNIPER_VALUE		1
-#define MIN_STEALTH_VALUE 		3
+#define MIN_STEALTH_LOW_VALUE 		2
+#define MIN_STEALTH_HIGH_VALUE 		2
 #define MIN_ANTI_STRUCTURE_VALUE	3
 
 #define MIN_ANTI_STRUCTURE_PER 	60
@@ -191,8 +192,8 @@ public Action:CMD_ChangeTeamStealthLimit(client, args)
 	if (value > 10)
         	value = 10;
 
-	else if (value < MIN_STEALTH_VALUE)
-        	value = MIN_STEALTH_VALUE;
+	else if (value < MIN_STEALTH_LOW_VALUE)
+        	value = MIN_STEALTH_LOW_VALUE;
         	
         SetUnitLimit(client, GetClientTeam(client), TYPE_STEALTH, value);
 	return Plugin_Handled;
@@ -282,7 +283,12 @@ bool:IsTooMuchStealth(client)
 		return false;
 		
 	new stealthCount = GetStealthCount(clientTeam);
-	return UnitLimit[teamIDX][TYPE_STEALTH] > stealthCount;
+	new unitLimit = UnitLimit[teamIDX][TYPE_STEALTH];
+	
+	new stealthMin = GetMinStealthValue(team);
+	new stealthLimit = stealthMin > unitLimit ? stealthMin : unitLimit;
+	
+	return stealthCount > stealthLimit;
 }
 
 bool:IsTooMuchAntiStructure(client)
@@ -306,6 +312,11 @@ bool:IsAntiStructure(class, subClass)
 	return (class == MAIN_CLASS_EXO && subClass == EXO_CLASS_SEIGE_KIT)
 	    || (class == MAIN_CLASS_SUPPORT && subClass == SUPPORT_CLASS_BBQ);
 	    // Don't account for sabeuters or grenadiers becuase they are a mixed unit
+}
+
+GetMinStealthValue(team)
+{
+	return ValidTeamCount(team) < 7 ? MIN_STEALTH_LOW_VALUE : MIN_STEALTH_HIGH_VALUE; 
 }
 
 ResetClass(client) 
