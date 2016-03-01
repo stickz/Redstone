@@ -294,7 +294,7 @@ bool:IsTooMuchAntiStructure(client)
 		return false;
 	
 	new AntiStructureCount = GetAntiStructureCount(clientTeam);
-	new Float:AntiStructureFloat = float(AntiStructureCount;
+	new Float:AntiStructureFloat = float(AntiStructureCount);
 	
 	new teamCount = OnTeamCount(clientTeam);
 	new Float:teamFloat = float(teamCount);
