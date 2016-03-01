@@ -299,7 +299,7 @@ bool:IsTooMuchAntiStructure(client)
 	new teamCount = ValidTeamCount(clientTeam);
 	new Float:teamFloat = float(teamCount);
 	
-	new Float:AntiStructurePercent = (AntiStructureFloat / teamFloat) * 100.0);
+	new Float:AntiStructurePercent = ((AntiStructureFloat / teamFloat) * 100.0);
 	
 	new percentLimit = UnitLimit[clientTeam - 2][TYPE_STRUCTURE];
 	return percentLimit >= AntiStructurePercent && AntiStructureCount > MIN_ANTI_STRUCTURE_VALUE;
