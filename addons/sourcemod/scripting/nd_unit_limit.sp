@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define MIN_STEALTH_VALUE 		3
 #define MIN_ANTI_STRUCTURE_VALUE	3
 
-#define MIN_ANTI_STUCTURE_PER 	60
+#define MIN_ANTI_STRUCTURE_PER 	60
 
 #define LOW_LIMIT 	2
 #define MED_LIMIT 	3
@@ -111,7 +111,7 @@ public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadca
 	
 	else if (IsStealthClass(cls))
 	{
-		if (IsTooMuchStealths(client)) 
+		if (IsTooMuchStealth(client)) 
 		{
 	            	ResetClass(client);
 	            	return Plugin_Continue;
@@ -127,7 +127,7 @@ public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadca
         	}
 	}
 
-    return Plugin_Continue;
+	return Plugin_Continue;
 }
 
 // CHANGE LIMIT
@@ -136,11 +136,11 @@ public Action:CMD_ChangeSnipersLimit(client, args)
 	if (!IsValidClient(client))
         	return Plugin_Handled;    
 
-	 if (args != 2) 
-	 {
-	 	PrintToChat(client, "\x05[xG] %t", "Invalid Args");
+	if (args != 2) 
+	{
+		PrintToChat(client, "\x05[xG] %t", "Invalid Args");
 	 	return Plugin_Handled;
-	 }
+	}
 
 	decl String:strteam[32];
 	GetCmdArg(1, strteam, sizeof(strteam));
@@ -162,7 +162,7 @@ public Action:CMD_ChangeSnipersLimit(client, args)
 
 public Action:CMD_ChangeTeamSnipersLimit(client, args) 
 {	
-	if (CheckCommonFailure(client, TYPE_SNIPER))
+	if (CheckCommonFailure(client, TYPE_SNIPER, args))
 		return Plugin_Handled;
 
     	decl String:strvalue[32];
@@ -181,7 +181,7 @@ public Action:CMD_ChangeTeamSnipersLimit(client, args)
 
 public Action:CMD_ChangeTeamStealthLimit(client, args) 
 {
-	if (CheckCommonFailure(client, TYPE_STEALTH))
+	if (CheckCommonFailure(client, TYPE_STEALTH, args))
 		return Plugin_Handled;
 	
 	decl String:strvalue[32];
@@ -200,7 +200,7 @@ public Action:CMD_ChangeTeamStealthLimit(client, args)
 
 public Action:CMD_ChangeTeamAntiStructureLimit(client, args) 
 {
-	if (CheckCommonFailure(client, TYPE_STRUCTURE))
+	if (CheckCommonFailure(client, TYPE_STRUCTURE, args))
 		return Plugin_Handled;
 	
 	decl String:strvalue[32];
@@ -217,7 +217,7 @@ public Action:CMD_ChangeTeamAntiStructureLimit(client, args)
 	return Plugin_Handled;
 }
 
-bool:CheckCommonFailure(client, type)
+bool:CheckCommonFailure(client, type, args)
 {
 	if (!GetConVarBool(eCommanders))
 	{
@@ -334,7 +334,7 @@ SetUnitLimit(client, team, type, value)
 
 stock String:GetTypeName(type)
 {
-	new String:typeName = "";
+	new String:typeName[32];
 	
 	switch (type)
         {
