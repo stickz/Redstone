@@ -30,6 +30,18 @@
 #define SUPPORT_CLASS_ENGINEER	1
 #define SUPPORT_CLASS_BBQ		2
 
+/* Player class stock functions */
+stock bool:IsSniperClass(class, subClass) 
+{
+      return (class == MAIN_CLASS_ASSAULT && subClass == ASSAULT_CLASS_INFANTRY) 
+	        || (class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SNIPER)
+}
+
+stock bool:IsStealthClass(class)
+{
+      return class == MAIN_CLASS_STEALTH;
+}
+
 /**
  * Retreive the number of snipers on an given team
  *
