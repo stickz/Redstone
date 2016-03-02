@@ -21,12 +21,15 @@
 			"Plugin"	"Path_SM/plugins/nd_translation_updater.smx"
 			
 			"Plugin"	"Path_SM/translations/nd_disconnect.phrases.txt"
-			
 			"Plugin"	"Path_SM/translations/nd_continents.phrases.txt"
+			"Plugin"	"Path_SM/translations/nd_rockthevote.phrases.txt"
+			"Plugin"	"Path_SM/translations/nd_surrender.phrases.txt"
+			"Plugin"	"Path_SM/translations/nd_team_balancer.phrases.txt"
+			"Plugin"	"Path_SM/translations/nd_timelimit.phrases.txt"
+			"Plugin"	"Path_SM/translations/nd_tools.phrases.txt"
 			
 			"Plugin"	"Path_SM/translations/de/nd_ammopack_fix.phrases.txt"
 			"Plugin"	"Path_SM/translations/de/nd_managed_slots.phrases.txt"
-			"Plugin"	"Path_SM/translations/de/nd_sniper_limit.phrases.txt"			
 		}
 		
 		"Plugin"	"Path_SM/plugins/nd_translation_updater.smx"
@@ -64,10 +67,6 @@
 		
 		"Plugin"	"Path_SM/translations/nd_rockthevote.phrases.txt"
 		"Plugin"	"Path_SM/translations/ru/nd_rockthevote.phrases.txt"
-		
-		"Plugin"	"Path_SM/translations/nd_sniper_limit.phrases.txt"
-		"Plugin"	"Path_SM/translations/de/nd_sniper_limit.phrases.txt"
-		"Plugin"	"Path_SM/translations/ru/nd_sniper_limit.phrases.txt"
 		
 		"Plugin"	"Path_SM/translations/nd_surrender.phrases.txt"
 		"Plugin"	"Path_SM/translations/es/nd_surrender.phrases.txt"
