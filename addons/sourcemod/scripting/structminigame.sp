@@ -16,6 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <sdktools>
+#include <nd_stocks>
 #include <colors>
 #include <clientprefs>
 
@@ -35,9 +36,17 @@ public Plugin:myinfo =
 #include "updater/standard.sp"
 
 #define TEAM_EMPIRE		3
-#define TEAM_CONSORT	2
+#define TEAM_CONSORT		2
 #define TEAM_SPEC		1
 #define MAX_TEAMS 		4
+
+new const String:nd_lgreen_colour[16] = { "{lightgreen}" };
+
+new const String:nd_team_colour[2][] =
+{
+	"{blue},
+	"{red}"
+}
 
 new StructuresKilled[MAX_TEAMS];
 new Handle:cookie_structure_killings = INVALID_HANDLE;
@@ -146,20 +155,34 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	if (StructuresKilled[TEAM_EMPIRE] + StructuresKilled[TEAM_CONSORT] >= 20)
 	{
 		ClearKills();
+
+		decl String:clientName[64];
+		GetClientName(client, clientName, sizeof(clientName));
 		
-		switch (team)
-		{
-			case TEAM_CONSORT:
-			{
-				CPrintToChatAll("{red}%N {lightgreen}just gave {red}Consortium {lightgreen}the advantage!", client);
-				PrintCenterTextAll("Advantage - Consortium");			
-			} 
-			case TEAM_EMPIRE:
-			{
-				CPrintToChatAll("{blue}%N {lightgreen}just gave the {blue}Empire {lightgreen}the advantage!", client);
-				PrintCenterTextAll("Advantage - Empire");			
-			}		
-		}
+		decl String:justGave[16];
+		Format(justGave, sizeof(justGave), "%t", "Just Gave");
+		
+		decl String:theAdvantage[16];
+		Format(theAdvantage, sizeof(heAdvantage), "%t", "Advantage");
+		
+		decl String:teamName[16];
+		Format(teamName, sizeof(teamName), "%t", team == TEAM_CONSORT ? "Consort" : "Empire");
+		
+		new teamIDX = getOtherTeam(team) - 2;
+		
+		decl String:advantageMessage[64];
+		Format(advantageMessage, sizeof(advantageMessage), "%T", client, "Advantage Message",
+										 nd_team_colour[teamIDX], clientName,
+										 nd_lgreen_colour, justGave, 
+										 nd_team_colour[teamIDX], teamName, 
+ 										 nd_lgreen_colour, theAdvantage);
+ 										 
+		CPrintToChatAll(advantageMessage);
+		
+		decl String:advantageCenter[32];
+		Format(advantageCenter, sizeof(advantageCenter), "%T", client, "Advantage Center", teamName); 
+		
+		PrintCenterTextAll(advantageCenter);	
 	
 		for (new idx = 1; idx <= MaxClients; idx++)
 			if (IsClientInGame(idx) && IsPlayerAlive(idx))
