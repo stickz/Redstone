@@ -44,9 +44,9 @@ new const String:nd_lgreen_colour[16] = { "{lightgreen}" };
 
 new const String:nd_team_colour[2][] =
 {
-	"{blue},
+	"{blue}",
 	"{red}"
-}
+};
 
 new StructuresKilled[MAX_TEAMS];
 new Handle:cookie_structure_killings = INVALID_HANDLE;
@@ -163,7 +163,7 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 		Format(justGave, sizeof(justGave), "%t", "Just Gave");
 		
 		decl String:theAdvantage[16];
-		Format(theAdvantage, sizeof(heAdvantage), "%t", "Advantage");
+		Format(theAdvantage, sizeof(theAdvantage), "%t", "Advantage");
 		
 		decl String:teamName[16];
 		Format(teamName, sizeof(teamName), "%t", team == TEAM_CONSORT ? "Consort" : "Empire");
