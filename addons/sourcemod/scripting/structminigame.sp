@@ -199,5 +199,5 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 
 bool:GiveAdvantage(client, team)
 {
-	return IsClientInGameclient) && IsPlayerAlive(client) && !NDC_IsCommander(client) && GetClientTeam(client) == team;
+	return IsClientInGame(client) && IsPlayerAlive(client) && !NDC_IsCommander(client) && GetClientTeam(client) == team;
 }
