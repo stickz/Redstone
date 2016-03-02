@@ -106,22 +106,22 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	decl String:buildingname[32];
 	switch (type) // get building name
 	{
-		case 0:	Format(buildingname, sizeof(buildingname), "%T", client, "Command Bunker"); //the Command Bunker
-		case 1:	Format(buildingname, sizeof(buildingname), "%T", client, "MG Turret"); //a Machine Gun Turret
-		case 2:	Format(buildingname, sizeof(buildingname), "%T", client, "Transport Gate"); //a Transport Gate
-		case 3:	Format(buildingname, sizeof(buildingname), "%T", client, "Power Station"); //a Power Station
-		case 4:	Format(buildingname, sizeof(buildingname), "%T", client, "Wireless Repeater"); //a Wireless Repeater
-		case 5:	Format(buildingname, sizeof(buildingname), "%T", client, "Relay Tower"); //a Relay Tower
-		case 6:	Format(buildingname, sizeof(buildingname), "%T", client, "Supply Station"); //a Supply Station
-		case 7:	Format(buildingname, sizeof(buildingname), "%T", client, "Assembler"); //an Assembler
-		case 8:	Format(buildingname, sizeof(buildingname), "%T", client, "Armory"); //an Armory
-		case 9:	Format(buildingname, sizeof(buildingname), "%T", client, "Artillery"); //an Artillery
-		case 10: Format(buildingname, sizeof(buildingname), "%T", client, "Radar Station"); //a Radar Station
-		case 11: Format(buildingname, sizeof(buildingname), "%T", client, "Flamethrower Turret"); //a Flamethrower Turret
-		case 12: Format(buildingname, sizeof(buildingname), "%T", client, "Sonic Turret"); //a Sonic Turret
-		case 13: Format(buildingname, sizeof(buildingname), "%T", client, "Rocket Turret"); //a Rocket Turret
-		case 14: Format(buildingname, sizeof(buildingname), "%T", client, "Wall"); //a Wall
-		case 15: Format(buildingname, sizeof(buildingname), "%T", client, "Barrier"); //a Barrier
+		case 0:	Format(buildingname, sizeof(buildingname), "%t", "Command Bunker"); //the Command Bunker
+		case 1:	Format(buildingname, sizeof(buildingname), "%t", "MG Turret"); //a Machine Gun Turret
+		case 2:	Format(buildingname, sizeof(buildingname), "%t", "Transport Gate"); //a Transport Gate
+		case 3:	Format(buildingname, sizeof(buildingname), "%t", "Power Station"); //a Power Station
+		case 4:	Format(buildingname, sizeof(buildingname), "%t", "Wireless Repeater"); //a Wireless Repeater
+		case 5:	Format(buildingname, sizeof(buildingname), "%t", "Relay Tower"); //a Relay Tower
+		case 6:	Format(buildingname, sizeof(buildingname), "%t", "Supply Station"); //a Supply Station
+		case 7:	Format(buildingname, sizeof(buildingname), "%t", "Assembler"); //an Assembler
+		case 8:	Format(buildingname, sizeof(buildingname), "%t", "Armory"); //an Armory
+		case 9:	Format(buildingname, sizeof(buildingname), "%t", "Artillery"); //an Artillery
+		case 10: Format(buildingname, sizeof(buildingname), "%t", "Radar Station"); //a Radar Station
+		case 11: Format(buildingname, sizeof(buildingname), "%t", "Flamethrower Turret"); //a Flamethrower Turret
+		case 12: Format(buildingname, sizeof(buildingname), "%t", "Sonic Turret"); //a Sonic Turret
+		case 13: Format(buildingname, sizeof(buildingname), "%t", "Rocket Turret"); //a Rocket Turret
+		case 14: Format(buildingname, sizeof(buildingname), "%t", "Wall"); //a Wall
+		case 15: Format(buildingname, sizeof(buildingname), "%t", "Barrier"); //a Barrier
 		//default: Format(buildingname, sizeof(buildingname), "a %d (?)", type); //a %d (?)
 	}
 	
