@@ -17,6 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <nd_stocks>
+#include <nd_research>
 
 #undef REQUIRE_PLUGIN
 #tryinclude <nd_balancer>
@@ -24,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #tryinclude <nd_breakdown>
 #define REQUIRE_PLUGIN
 
-#define DEBUG 1
+#define DEBUG 0
 #define VERSION "1.0.3"
 
 public Plugin:myinfo =
@@ -203,10 +204,9 @@ public Action:Event_ResearchComplete(Handle:event, const String:name[], bool:don
 	Format(message, sizeof(message), "Research id %d complete", researchID);
 	PrintToAdmins(message, "a");
 	#endif
-	
-	//This is improper becuase we need to get the research id
-	//But just put this here for now while testing this plugin
-	advancedKitsAvailable[team - 2] = true;
+
+	if (researchID == RESEARCH_ADVANCED_KITS)
+		advancedKitsAvailable[team - 2] = true;
 	
 	return Plugin_Continue;
 }
