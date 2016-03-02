@@ -131,7 +131,7 @@ public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadca
 		if (IsTooMuchAntiStructure(client)) 
 		{
 	            	ResetClass(client);
-	            	PrintToChat(client, "\x05[xG] %t.", "Anti-Structure Limit Reached");
+	            	PrintToChat(client, "\x05[xG] %t.", "AntiStructure Limit Reached");
 	            	return Plugin_Continue;
         	}
 	}
