@@ -22,6 +22,8 @@
 			
 			"Plugin"	"Path_SM/translations/nd_disconnect.phrases.txt"
 			
+			"Plugin"	"Path_SM/translations/nd_continents.phrases.txt"
+			
 			"Plugin"	"Path_SM/translations/de/nd_ammopack_fix.phrases.txt"
 			"Plugin"	"Path_SM/translations/de/nd_managed_slots.phrases.txt"
 			"Plugin"	"Path_SM/translations/de/nd_sniper_limit.phrases.txt"			
@@ -44,13 +46,15 @@
 		
 		"Plugin"	"Path_SM/translations/nd_ammopack_fix.phrases.txt"
 		"Plugin"	"Path_SM/translations/de/nd_ammopack_fix.phrases.txt"
-		
-		"Plugin"	"Path_SM/translations/nd_disconnect.phrases.txt"
+
+		"Plugin"	"Path_SM/translations/nd_continents.phrases.txt"
 		
 		"Plugin"	"Path_SM/translations/nd_commander_restrictions.phrases.txt"
 		"Plugin"	"Path_SM/translations/es/nd_commander_restrictions.phrases.txt"
 		"Plugin"	"Path_SM/translations/pt/nd_commander_restrictions.phrases.txt"
 		"Plugin"	"Path_SM/translations/ru/nd_commander_restrictions.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_disconnect.phrases.txt"
 		
 		"Plugin"	"Path_SM/translations/nd_managed_slots.phrases.txt"
 		"Plugin"	"Path_SM/translations/de/nd_managed_slots.phrases.txt"
