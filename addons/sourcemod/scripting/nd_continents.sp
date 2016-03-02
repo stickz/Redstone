@@ -63,7 +63,7 @@ public Action:CMD_CheckLocations(client,args)
 		}
 	}
 	
-	PrintToChat(client, "\x05[xG] Player Locations: %s", printOut);
+	PrintToChat(client, "\x05[xG] %t: %s", "Player Locations", printOut);
 }
 
 public bool:isContinentEmpty(contientNumber)
