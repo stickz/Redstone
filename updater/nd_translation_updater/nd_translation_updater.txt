@@ -31,6 +31,8 @@
 			
 			"Plugin"	"Path_SM/translations/de/nd_ammopack_fix.phrases.txt"
 			"Plugin"	"Path_SM/translations/de/nd_managed_slots.phrases.txt"
+			
+			"Plugin"	"Path_SM/translations/numbers.phrases.txt"
 		}
 		
 		"Plugin"	"Path_SM/plugins/nd_translation_updater.smx"
@@ -100,5 +102,7 @@
 		"Plugin"	"Path_SM/translations/cze/resourcemessages.phrases.txt"
 		"Plugin"	"Path_SM/translations/de/resourcemessages.phrases.txt"
 		"Plugin"	"Path_SM/translations/ru/resourcemessages.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/numbers.phrases.txt"
 	}
 }
