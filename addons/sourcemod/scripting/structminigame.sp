@@ -17,6 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <nd_stocks>
+#include <nd_commander>
 #include <colors>
 #include <clientprefs>
 
@@ -185,13 +186,18 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 		PrintCenterTextAll(advantageCenter);	
 	
 		for (new idx = 1; idx <= MaxClients; idx++)
-			if (IsClientInGame(idx) && IsPlayerAlive(idx))
+		{
+			if (GiveAdvantage(idx, team)) 
 			{
-				new teamidx = GetClientTeam(idx);
-				if (idx != GameRules_GetPropEnt("m_hCommanders", teamidx-2) && teamidx == team)
-					SetEntityHealth(idx, GetClientHealth(idx) + 175);				
+				SetEntityHealth(idx, GetClientHealth(idx) + 175);
 			}
+		}
 		
 		return;
 	}
+}
+
+bool:GiveAdvantage(client, team)
+{
+	return IsClientInGameclient) && IsPlayerAlive(client) && !NDC_IsCommander(client) && GetClientTeam(client) == team;
 }
