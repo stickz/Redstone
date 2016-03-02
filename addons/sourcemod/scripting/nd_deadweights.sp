@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define REQUIRE_PLUGIN
 
 #define DEBUG 0
-#define VERSION "1.0.4"
+#define VERSION "1.0.5"
 
 public Plugin:myinfo =
 {
