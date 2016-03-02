@@ -25,9 +25,19 @@
 		"en"		"Invalid team (0 = Consort, 1 = Empire)"
 	}
 	
-	"Limit Reached"
+	"Sniper Limit Reached"
 	{
-		"en"		"Snipers limit reached, resetting to Assault"
+		"en"		"Sniper limit reached, resetting to Assault"
+	}
+	
+	"Stealth Limit Reached"
+	{
+		"en"		"Stealth limit reached, resetting to Assault"
+	}
+	
+	"AntiStructure Limit Reached"
+	{
+		"en"		"Anti-Structure limit reached, resetting to Assault"
 	}
 	
 	"Proper Sniper Usage"

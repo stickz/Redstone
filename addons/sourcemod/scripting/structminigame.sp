@@ -16,10 +16,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <sdktools>
+#include <nd_stocks>
+#include <nd_commander>
 #include <colors>
 #include <clientprefs>
 
-#define VERSION "1.0.6"
+#define VERSION "1.0.7"
 
 public Plugin:myinfo =
 {
@@ -35,9 +37,17 @@ public Plugin:myinfo =
 #include "updater/standard.sp"
 
 #define TEAM_EMPIRE		3
-#define TEAM_CONSORT	2
+#define TEAM_CONSORT		2
 #define TEAM_SPEC		1
 #define MAX_TEAMS 		4
+
+new const String:nd_lgreen_colour[16] = { "{lightgreen}" };
+
+new const String:nd_team_colour[2][] =
+{
+	"{blue}",
+	"{red}"
+};
 
 new StructuresKilled[MAX_TEAMS];
 new Handle:cookie_structure_killings = INVALID_HANDLE;
@@ -106,33 +116,37 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	decl String:buildingname[32];
 	switch (type) // get building name
 	{
-		case 0:	Format(buildingname, sizeof(buildingname), "the Command Bunker");
-		case 1:	Format(buildingname, sizeof(buildingname), "a Machine Gun Turret");
-		case 2:	Format(buildingname, sizeof(buildingname), "a Transport Gate");
-		case 3:	Format(buildingname, sizeof(buildingname), "a Power Station");
-		case 4:	Format(buildingname, sizeof(buildingname), "a Wireless Repeater");
-		case 5:	Format(buildingname, sizeof(buildingname), "a Relay Tower");
-		case 6:	Format(buildingname, sizeof(buildingname), "a Supply Station");
-		case 7:	Format(buildingname, sizeof(buildingname), "an Assembler");
-		case 8:	Format(buildingname, sizeof(buildingname), "an Armory");
-		case 9:	Format(buildingname, sizeof(buildingname), "an Artillery");
-		case 10: Format(buildingname, sizeof(buildingname), "a Radar Station");
-		case 11: Format(buildingname, sizeof(buildingname), "a Flamethrower Turret");
-		case 12: Format(buildingname, sizeof(buildingname), "a Sonic Turret");
-		case 13: Format(buildingname, sizeof(buildingname), "a Rocket Turret");
-		case 14: Format(buildingname, sizeof(buildingname), "a Wall");
-		case 15: Format(buildingname, sizeof(buildingname), "a Barrier");
-		default: Format(buildingname, sizeof(buildingname), "a %d (?)", type);
+		case 0:	Format(buildingname, sizeof(buildingname), "%t", "Command Bunker"); //the Command Bunker
+		case 1:	Format(buildingname, sizeof(buildingname), "%t", "MG Turret"); //a Machine Gun Turret
+		case 2:	Format(buildingname, sizeof(buildingname), "%t", "Transport Gate"); //a Transport Gate
+		case 3:	Format(buildingname, sizeof(buildingname), "%t", "Power Station"); //a Power Station
+		case 4:	Format(buildingname, sizeof(buildingname), "%t", "Wireless Repeater"); //a Wireless Repeater
+		case 5:	Format(buildingname, sizeof(buildingname), "%t", "Relay Tower"); //a Relay Tower
+		case 6:	Format(buildingname, sizeof(buildingname), "%t", "Supply Station"); //a Supply Station
+		case 7:	Format(buildingname, sizeof(buildingname), "%t", "Assembler"); //an Assembler
+		case 8:	Format(buildingname, sizeof(buildingname), "%t", "Armory"); //an Armory
+		case 9:	Format(buildingname, sizeof(buildingname), "%t", "Artillery"); //an Artillery
+		case 10: Format(buildingname, sizeof(buildingname), "%t", "Radar Station"); //a Radar Station
+		case 11: Format(buildingname, sizeof(buildingname), "%t", "Flamethrower Turret"); //a Flamethrower Turret
+		case 12: Format(buildingname, sizeof(buildingname), "%t", "Sonic Turret"); //a Sonic Turret
+		case 13: Format(buildingname, sizeof(buildingname), "%t", "Rocket Turret"); //a Rocket Turret
+		case 14: Format(buildingname, sizeof(buildingname), "%t", "Wall"); //a Wall
+		case 15: Format(buildingname, sizeof(buildingname), "%t", "Barrier"); //a Barrier
+		//default: Format(buildingname, sizeof(buildingname), "a %d (?)", type); //a %d (?)
 	}
 	
 	StructuresKilled[team]++;
 	
-	decl String:PrintMessage[128];
+	decl String:clientname[128];
+	GetClientName(client, clientname, sizeof(clientname));
 	
+	decl String:PrintMessage[128];
 	switch (team)
 	{
-		case TEAM_CONSORT: Format(PrintMessage, sizeof(PrintMessage), "{red}%N destroyed %s", client, buildingname);
-		case TEAM_EMPIRE: Format(PrintMessage, sizeof(PrintMessage), "{blue}%N destroyed %s", client, buildingname);
+		case TEAM_CONSORT: Format(PrintMessage, sizeof(PrintMessage), "{red}%T", client, "Building Destoryed", clientname, buildingname);
+		case TEAM_EMPIRE: Format(PrintMessage, sizeof(PrintMessage), "{blue}%T", client, "Building Destoryed", clientname, buildingname);
+		//case TEAM_CONSORT: Format(PrintMessage, sizeof(PrintMessage), "{red}%N destroyed %s", client, buildingname);
+		//case TEAM_EMPIRE: Format(PrintMessage, sizeof(PrintMessage), "{blue}%N destroyed %s", client, buildingname);
 	}
 
 	for (new i = 1; i <= MaxClients; i++)
@@ -142,29 +156,48 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	if (StructuresKilled[TEAM_EMPIRE] + StructuresKilled[TEAM_CONSORT] >= 20)
 	{
 		ClearKills();
+
+		decl String:clientName[64];
+		GetClientName(client, clientName, sizeof(clientName));
 		
-		switch (team)
-		{
-			case TEAM_CONSORT:
-			{
-				CPrintToChatAll("{red}%N {lightgreen}just gave {red}Consortium {lightgreen}the advantage!", client);
-				PrintCenterTextAll("Advantage - Consortium");			
-			} 
-			case TEAM_EMPIRE:
-			{
-				CPrintToChatAll("{blue}%N {lightgreen}just gave the {blue}Empire {lightgreen}the advantage!", client);
-				PrintCenterTextAll("Advantage - Empire");			
-			}		
-		}
+		decl String:justGave[16];
+		Format(justGave, sizeof(justGave), "%t", "Just Gave");
+		
+		decl String:theAdvantage[16];
+		Format(theAdvantage, sizeof(theAdvantage), "%t", "Advantage");
+		
+		decl String:teamName[16];
+		Format(teamName, sizeof(teamName), "%t", team == TEAM_CONSORT ? "Consort" : "Empire");
+		
+		new teamIDX = getOtherTeam(team) - 2;
+		
+		decl String:advantageMessage[64];
+		Format(advantageMessage, sizeof(advantageMessage), "%T", client, "Advantage Message",
+										 nd_team_colour[teamIDX], clientName,
+										 nd_lgreen_colour, justGave, 
+										 nd_team_colour[teamIDX], teamName, 
+ 										 nd_lgreen_colour, theAdvantage);
+ 										 
+		CPrintToChatAll(advantageMessage);
+		
+		decl String:advantageCenter[32];
+		Format(advantageCenter, sizeof(advantageCenter), "%T", client, "Advantage Center", teamName); 
+		
+		PrintCenterTextAll(advantageCenter);	
 	
 		for (new idx = 1; idx <= MaxClients; idx++)
-			if (IsClientInGame(idx) && IsPlayerAlive(idx))
+		{
+			if (GiveAdvantage(idx, team)) 
 			{
-				new teamidx = GetClientTeam(idx);
-				if (idx != GameRules_GetPropEnt("m_hCommanders", teamidx-2) && teamidx == team)
-					SetEntityHealth(idx, GetClientHealth(idx) + 175);				
+				SetEntityHealth(idx, GetClientHealth(idx) + 175);
 			}
+		}
 		
 		return;
 	}
+}
+
+bool:GiveAdvantage(client, team)
+{
+	return IsClientInGame(client) && IsPlayerAlive(client) && !NDC_IsCommander(client) && GetClientTeam(client) == team;
 }

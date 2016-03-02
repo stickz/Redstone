@@ -1,7 +1,136 @@
-﻿"Phrases"
+"Phrases"
 {
+	//!settings feature name
 	"Cookie Structure Killings"
 	{
 		"en"		"Structure Killings"
+	}
+	
+	//Building Names
+	"Command Bunker"
+	{
+		"en"		"the Command Bunker"
+	}
+	"MG Turret"
+	{
+		"en"		"a Machine Gun Turret"
+	}
+	"Transport Gate"
+	{
+		"en"		"a Transport Gate"
+	}
+	"Power Station"
+	{
+		"en"		"a Power Station"
+	}
+	"Wireless Repeater"
+	{
+		"en"		"a Wireless Repeater"
+	}
+	"Relay Tower"
+	{
+		"en"		"a Relay Tower"
+	}
+	"Supply Station"
+	{
+		"en"		"a Supply Station"
+	}
+	"Assembler"
+	{
+		"en"		"an Assembler"
+	}
+	"Armory"
+	{
+		"en"		"an Armory"
+	}
+	"Artillery"
+	{
+		"en"		"an Artillery"
+	}
+	"Radar Station"
+	{
+		"en"		"a Radar Station"
+	}
+	"Flamethrower Turret"
+	{
+		"en"		"a Flamethrower Turret"
+	}
+	"Sonic Turret"
+	{
+		"en"		"a Sonic Turret"
+	}
+	"Rocket Turret"
+	{
+		"en"		"a Rocket Turret"
+	}
+	"Wall"
+	{
+		"en"		"a Wall"
+	}
+	"Barrier"
+	{
+		"en"		"a Barrier"
+	}
+	
+	//Now let's put the building destoryed message to together
+	//{1} and {2} can be put in any order and more words can be added
+	//{1} = Player Name, {2} = Building Name (translated phrases above)
+	"Building Destoryed"
+	{
+		"#format"	"{1:s},{2:t}"
+		"en"		"{1} destroyed {2}"
+	}
+	
+	
+	//Advantage Translations
+	
+	//these four are helper phrases, 
+	//change based on "Advantage Message"
+	"Just Gave"
+	{
+		"en"		"just gave"
+	}
+	"Advantage"
+	{
+		"en"		"the advantage"
+	}
+	"Empire"
+	{
+		"en"		"Empire"
+	}
+	"Consort"
+	{
+		"en"		"Consortium"
+	}
+	
+	//This message is a complicated mess, so read carefully
+	"Advantage Message"
+	{
+		//{1} changes {2} to the team colour
+		//{2} = Is the player's name
+		
+		//{3} changes {4} to the colour green
+		//{4} = "Just Gave" translation above
+		
+		//{5} changes {6} to the team colour
+		//{6} = Is etheir "Empire" or "Consort" as translated above
+
+		//{7} changes {8} to the colour green
+		//{8} = "Advantage" translation above
+		
+		//Ex1. Vertex just gave Consortium the advantage! -without colours
+		//Ex2. {blue} Vertex {green} just gave {blue} Consortium {green} the advantage!
+		//If required, change the number order to suit your needs
+		
+		"#format"	"{1:s},{2:s},{3:s},{4:t},{5:s},{6:t},{7:s},{8:t}"
+		"en"		"{1}{2} {3}{4} {5}{6} {7}{8}"
+	}
+	
+	//This message only uses the phrase "Empire" or "Consort"
+	"Advantage Center"
+	{
+		//{1} = Is etheir "Empire" or "Consort" as translated above
+		"#format"	"{1:t}"
+		"en"		"Advantage - {1}"
 	}
 }

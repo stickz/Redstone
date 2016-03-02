@@ -28,6 +28,7 @@ public Plugin:myinfo =
 public OnPluginStart()
 {
 	HookEvent("player_disconnect", Event_PlayerDisconnected, EventHookMode_Pre);
+	LoadTranslations("nd_disconnect.phrases");
 }
 
 public Event_PlayerDisconnected(Handle:event, const String:name[], bool:dontBroadcast)
@@ -46,6 +47,6 @@ public Event_PlayerDisconnected(Handle:event, const String:name[], bool:dontBroa
 		GetEventString(event, "reason", reason, sizeof(reason));
 		
 		if(StrContains(reason, "timed out", false) != -1)
-			PrintToChatAll("\x05%s lost connection or crashed!", clientName);	
+			PrintToChatAll("\x05%t", "Lost Connection", clientName);	
 	}
 }

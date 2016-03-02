@@ -37,7 +37,8 @@ new const 	String:aAfrica[][2] = {"AO","BF","BI","BJ","BW","CD","CF","CG","CI","
 
 public OnPluginStart()
 {
-	RegConsoleCmd("sm_locations", CMD_CheckLocations);	
+	RegConsoleCmd("sm_locations", CMD_CheckLocations);
+	LoadTranslations("nd_continents.phrases");
 }
 
 public Action:CMD_CheckLocations(client,args)
@@ -63,7 +64,7 @@ public Action:CMD_CheckLocations(client,args)
 		}
 	}
 	
-	PrintToChat(client, "\x05[xG] Player Locations: %s", printOut);
+	PrintToChat(client, "\x05[xG] %t", "Player Locations", printOut);
 }
 
 public bool:isContinentEmpty(contientNumber)
