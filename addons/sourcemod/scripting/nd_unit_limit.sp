@@ -111,6 +111,7 @@ public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadca
         	if (IsTooMuchSnipers(client)) 
 		{
 	            	ResetClass(client);
+	            	PrintToChat(client, "\x05[xG] %t.", "Sniper Limit Reached");
 	            	return Plugin_Continue;
         	}
 	}
@@ -120,6 +121,7 @@ public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadca
 		if (IsTooMuchStealth(client)) 
 		{
 	            	ResetClass(client);
+	            	PrintToChat(client, "\x05[xG] %t.", "Stealth Limit Reached");
 	            	return Plugin_Continue;
         	}
 	}
@@ -129,6 +131,7 @@ public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadca
 		if (IsTooMuchAntiStructure(client)) 
 		{
 	            	ResetClass(client);
+	            	PrintToChat(client, "\x05[xG] %t.", "Anti-Structure Limit Reached");
 	            	return Plugin_Continue;
         	}
 	}
@@ -331,8 +334,6 @@ ResetClass(client)
 	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", MAIN_CLASS_ASSAULT);
 	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", ASSAULT_CLASS_INFANTRY);
 	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0);
-
-    	PrintToChat(client, "\x05[xG] %t.", "Limit Reached");
 }
 
 SetUnitLimit(client, team, type, value)
