@@ -24,6 +24,7 @@
 			"Plugin"	"Path_SM/translations/nd_commander_restrictions.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_continents.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_map_management.phrases.txt"
+			"Plugin"	"Path_SM/translations/nd_radio_controls.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_rockthevote.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_surrender.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_team_balancer.phrases.txt"
@@ -70,6 +71,8 @@
 		"Plugin"	"Path_SM/translations/ru/nd_managed_slots.phrases.txt"
 		
 		"Plugin"	"Path_SM/translations/nd_map_management.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_radio_controls.phrases.txt"
 		
 		"Plugin"	"Path_SM/translations/nd_rockthevote.phrases.txt"
 		"Plugin"	"Path_SM/translations/ru/nd_rockthevote.phrases.txt"
