@@ -4,13 +4,14 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.3"
+			"Latest"	"1.0.4"
 		}
 		
 		"Notes" "1.0.1: Inital Release"
 		"Notes" "1.0.2: Add debuging in admin chat"
 		"Notes" "1.0.2: Add research event to look for advanced kits"
 		"Notes"	"1.0.3: Fix broken auto-update translation url"
+		"Notes" "1.0.4: Add partial fix for advanced kits issue"
 	}
 	
 	"Files"
