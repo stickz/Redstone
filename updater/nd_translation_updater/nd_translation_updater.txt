@@ -21,6 +21,7 @@
 			"Plugin"	"Path_SM/plugins/nd_translation_updater.smx"
 			
 			"Plugin"	"Path_SM/translations/nd_disconnect.phrases.txt"
+			"Plugin"	"Path_SM/translations/nd_commander_restrictions.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_continents.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_rockthevote.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_surrender.phrases.txt"
