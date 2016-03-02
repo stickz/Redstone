@@ -4,13 +4,14 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.3"
-			"Previous"	"1.0.2"
+			"Latest"	"1.0.4"
+			"Previous"	"1.0.3"
 		}
 		
 		"Notes"	"1.0.1: Initial Release"
 		"Notes"	"1.0.2: Dump server translations onto github"
 		"Notes" "1.0.3: Add more German translations"
+		"Notes"	"1.0.4: Add more translatable phrases"
 	}
 	
 	"Files"
@@ -18,6 +19,8 @@
 		"Patch"
 		{
 			"Plugin"	"Path_SM/plugins/nd_translation_updater.smx"
+			
+			"Plugin"	"Path_SM/translations/nd_disconnect.phrases.txt"
 			
 			"Plugin"	"Path_SM/translations/de/nd_ammopack_fix.phrases.txt"
 			"Plugin"	"Path_SM/translations/de/nd_managed_slots.phrases.txt"
@@ -41,6 +44,8 @@
 		
 		"Plugin"	"Path_SM/translations/nd_ammopack_fix.phrases.txt"
 		"Plugin"	"Path_SM/translations/de/nd_ammopack_fix.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/nd_disconnect.phrases.txt"
 		
 		"Plugin"	"Path_SM/translations/nd_commander_restrictions.phrases.txt"
 		"Plugin"	"Path_SM/translations/es/nd_commander_restrictions.phrases.txt"
