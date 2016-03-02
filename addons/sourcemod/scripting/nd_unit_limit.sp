@@ -72,7 +72,12 @@ public OnPluginStart()
 	RegAdminCmd("sm_maxsnipers_admin", CMD_ChangeSnipersLimit, ADMFLAG_GENERIC, "!maxsnipers_admin <team> <amount>");
 	
 	RegConsoleCmd("sm_maxsnipers", CMD_ChangeTeamSnipersLimit, "Change the maximum number of snipers in the team: !maxsnipers <amount>");
+	RegConsoleCmd("sm_maxsniper", CMD_ChangeTeamSnipersLimit, "Change the maximum number of snipers in the team: !maxsnipers <amount>");
+	
 	RegConsoleCmd("sm_maxstealths", CMD_ChangeTeamStealthLimit, "Change the maximum number of stealth in the team: !maxsteaths <amount>");
+	RegConsoleCmd("sm_maxstealth", CMD_ChangeTeamStealthLimit, "Change the maximum number of stealth in the team: !maxsteaths <amount>");
+	
+	RegConsoleCmd("sm_MaxAntiStructures", CMD_ChangeTeamAntiStructureLimit, "Change the maximum percent of antistrcture in the team: !MaxAntiStructure <amount>");
 	RegConsoleCmd("sm_MaxAntiStructure", CMD_ChangeTeamAntiStructureLimit, "Change the maximum percent of antistrcture in the team: !MaxAntiStructure <amount>");
 
 	HookEvent("player_changeclass", Event_SetClass, EventHookMode_Pre);
