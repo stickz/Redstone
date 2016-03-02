@@ -1,7 +1,83 @@
-﻿"Phrases"
+"Phrases"
 {
+	//!settings feature name
 	"Cookie Structure Killings"
 	{
 		"en"		"Structure Killings"
+	}
+	
+	//Building Names
+	"Command Bunker"
+	{
+		"en"		"the Command Bunker"
+	}
+	"MG Turret"
+	{
+		"en"		"a Machine Gun Turret"
+	}
+	"Transport Gate"
+	{
+		"en"		"a Transport Gate"
+	}
+	"Power Station"
+	{
+		"en"		"a Power Station"
+	}
+	"Wireless Repeater"
+	{
+		"en"		"a Wireless Repeater"
+	}
+	"Relay Tower"
+	{
+		"en"		"a Relay Tower"
+	}
+	"Supply Station"
+	{
+		"en"		"a Supply Station"
+	}
+	"Assembler"
+	{
+		"en"		"an Assembler"
+	}
+	"Armory"
+	{
+		"en"		"an Armory"
+	}
+	"Artillery"
+	{
+		"en"		"an Artillery"
+	}
+	"Radar Station"
+	{
+		"en"		"a Radar Station"
+	}
+	"Flamethrower Turret"
+	{
+		"en"		"a Flamethrower Turret"
+	}
+	"Sonic Turret"
+	{
+		"en"		"a Sonic Turret"
+	}
+	"Rocket Turret"
+	{
+		"en"		"a Rocket Turret"
+	}
+	"Wall"
+	{
+		"en"		"a Wall"
+	}
+	"Barrier"
+	{
+		"en"		"a Barrier"
+	}
+	
+	//Now let's put the building destoryed message to together
+	//{1} and {2} can be put in any order and more words can be added
+	//{1} = Player Name, {2} = Building Name (translated phrases above)
+	"Building Destoryed"
+	{
+		#format"	"{1:s}, ,{2:t}"
+		"en"		"{1} destroyed {2}"
 	}
 }
