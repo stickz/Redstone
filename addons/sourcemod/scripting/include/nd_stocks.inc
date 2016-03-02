@@ -38,6 +38,29 @@ stock String:ND_GetTeamName(team)
 	return TeamName;
 }
 
+stock String:GetTransNumber(value)
+{
+	new String:number[32];
+	
+	switch (value)
+	{
+		case 1: Format(number, sizeof(number), "%t", "one");
+		case 2: Format(number, sizeof(number), "%t", "two");
+		case 3: Format(number, sizeof(number), "%t", "three");
+		case 4: Format(number, sizeof(number), "%t", "four");
+		case 5: Format(number, sizeof(number), "%t", "five");
+		case 6: Format(number, sizeof(number), "%t", "six");
+		case 7: Format(number, sizeof(number), "%t", "seven");
+		case 8: Format(number, sizeof(number), "%t", "eight");
+		case 9: Format(number, sizeof(number), "%t", "nine");
+		case 10: Format(number, sizeof(number), "%t", "ten");
+		case 11: Format(number, sizeof(number), "%t", "eleven");
+		case 12: Format(number, sizeof(number), "%t", "twelve");	
+	}
+	
+	return number;
+}
+
 stock bool:IsValidClient(client, bool:nobots = true)
 { 
     if (client <= 0 || client > MaxClients || !IsClientConnected(client) || (nobots && IsFakeClient(client)))
