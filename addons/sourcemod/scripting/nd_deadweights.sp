@@ -25,13 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #tryinclude <nd_breakdown>
 #define REQUIRE_PLUGIN
 
-<<<<<<< HEAD
-#define DEBUG 1
-#define VERSION "1.0.4"
-=======
 #define DEBUG 0
-#define VERSION "1.0.3"
->>>>>>> origin/master
+#define VERSION "1.0.4"
 
 public Plugin:myinfo =
 {
