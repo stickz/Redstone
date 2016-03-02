@@ -285,7 +285,7 @@ bool:IsTooMuchStealth(client)
 	new stealthCount = GetStealthCount(clientTeam);
 	new unitLimit = UnitLimit[teamIDX][TYPE_STEALTH];
 	
-	new stealthMin = GetMinStealthValue(team);
+	new stealthMin = GetMinStealthValue(clientTeam);
 	new stealthLimit = stealthMin > unitLimit ? stealthMin : unitLimit;
 	
 	return stealthCount > stealthLimit;

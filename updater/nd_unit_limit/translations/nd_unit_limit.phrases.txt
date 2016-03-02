@@ -30,9 +30,19 @@
 		"en"		"Snipers limit reached, resetting to Assault"
 	}
 	
-	"Proper Usage"
+	"Proper Sniper Usage"
 	{
-		"en"		"Usage: !MaxSnipers <limit>"
+		"en"		"Usage: !maxsnipers <limit>"
+	}
+	
+	"Proper Stealth Usage"
+	{
+		"en"		"Usage: !maxstealth <limit>"
+	}
+	
+	"Proper Structure Usage"
+	{
+		"en"		"Usage: !MaxAntiStructure <percent>"
 	}
 	
 	"Invalid Args"

@@ -30,9 +30,19 @@
 		"de"		"Heckenschützenlimit erreicht, zu Assault zurückgesetzt"
 	}
 	
-	"Proper Usage"
+	"Proper Sniper Usage"
 	{
-		"de"		"Verwendung: !MaxSnipers <Limit>"
+		"de"		"Verwendung: !maxsnipers <Limit>"
+	}
+	
+	"Proper Stealth Usage"
+	{
+		"de"		"Verwendung: !maxstealth <Limit>"
+	}
+	
+	"Proper Structure Usage"
+	{
+		"de"		"Verwendung: !MaxAntiStructure <Percent>"
 	}
 	
 	"Invalid Args"
