@@ -25,10 +25,6 @@ public Plugin:myinfo =
 	url 		= "N/A"
 };
 
-/* Auto Updater */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_disconnect/nd_disconnect.txt"
-#include "updater/standard.sp"
-
 public OnPluginStart()
 {
 	HookEvent("player_disconnect", Event_PlayerDisconnected, EventHookMode_Pre);
