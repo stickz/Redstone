@@ -106,33 +106,37 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	decl String:buildingname[32];
 	switch (type) // get building name
 	{
-		case 0:	Format(buildingname, sizeof(buildingname), "the Command Bunker");
-		case 1:	Format(buildingname, sizeof(buildingname), "a Machine Gun Turret");
-		case 2:	Format(buildingname, sizeof(buildingname), "a Transport Gate");
-		case 3:	Format(buildingname, sizeof(buildingname), "a Power Station");
-		case 4:	Format(buildingname, sizeof(buildingname), "a Wireless Repeater");
-		case 5:	Format(buildingname, sizeof(buildingname), "a Relay Tower");
-		case 6:	Format(buildingname, sizeof(buildingname), "a Supply Station");
-		case 7:	Format(buildingname, sizeof(buildingname), "an Assembler");
-		case 8:	Format(buildingname, sizeof(buildingname), "an Armory");
-		case 9:	Format(buildingname, sizeof(buildingname), "an Artillery");
-		case 10: Format(buildingname, sizeof(buildingname), "a Radar Station");
-		case 11: Format(buildingname, sizeof(buildingname), "a Flamethrower Turret");
-		case 12: Format(buildingname, sizeof(buildingname), "a Sonic Turret");
-		case 13: Format(buildingname, sizeof(buildingname), "a Rocket Turret");
-		case 14: Format(buildingname, sizeof(buildingname), "a Wall");
-		case 15: Format(buildingname, sizeof(buildingname), "a Barrier");
-		default: Format(buildingname, sizeof(buildingname), "a %d (?)", type);
+		case 0:	Format(buildingname, sizeof(buildingname), "%T", client, "Command Bunker"); //the Command Bunker
+		case 1:	Format(buildingname, sizeof(buildingname), "%T", client, "MG Turret"); //a Machine Gun Turret
+		case 2:	Format(buildingname, sizeof(buildingname), "%T", client, "Transport Gate"); //a Transport Gate
+		case 3:	Format(buildingname, sizeof(buildingname), "%T", client, "Power Station"); //a Power Station
+		case 4:	Format(buildingname, sizeof(buildingname), "%T", client, "Wireless Repeater"); //a Wireless Repeater
+		case 5:	Format(buildingname, sizeof(buildingname), "%T", client, "Relay Tower"); //a Relay Tower
+		case 6:	Format(buildingname, sizeof(buildingname), "%T", client, "Supply Station"); //a Supply Station
+		case 7:	Format(buildingname, sizeof(buildingname), "%T", client, "Assembler"); //an Assembler
+		case 8:	Format(buildingname, sizeof(buildingname), "%T", client, "Armory"); //an Armory
+		case 9:	Format(buildingname, sizeof(buildingname), "%T", client, "Artillery"); //an Artillery
+		case 10: Format(buildingname, sizeof(buildingname), "%T", client, "Radar Station"); //a Radar Station
+		case 11: Format(buildingname, sizeof(buildingname), "%T", client, "Flamethrower Turret"); //a Flamethrower Turret
+		case 12: Format(buildingname, sizeof(buildingname), "%T", client, "Sonic Turret"); //a Sonic Turret
+		case 13: Format(buildingname, sizeof(buildingname), "%T", client, "Rocket Turret"); //a Rocket Turret
+		case 14: Format(buildingname, sizeof(buildingname), "%T", client, "Wall"); //a Wall
+		case 15: Format(buildingname, sizeof(buildingname), "%T", client, "Barrier"); //a Barrier
+		//default: Format(buildingname, sizeof(buildingname), "a %d (?)", type); //a %d (?)
 	}
 	
 	StructuresKilled[team]++;
 	
-	decl String:PrintMessage[128];
+	decl String:clientname[128];
+	GetClientName(client, clientname, sizeof(clientname));
 	
+	decl String:PrintMessage[128];
 	switch (team)
 	{
-		case TEAM_CONSORT: Format(PrintMessage, sizeof(PrintMessage), "{red}%N destroyed %s", client, buildingname);
-		case TEAM_EMPIRE: Format(PrintMessage, sizeof(PrintMessage), "{blue}%N destroyed %s", client, buildingname);
+		case TEAM_CONSORT: Format(PrintMessage, sizeof(PrintMessage), "{red}%T", client, "Building Destoryed", clientname, buildingname);
+		case TEAM_EMPIRE: Format(PrintMessage, sizeof(PrintMessage), "{blue}%T", client, "Building Destoryed", clientname, buildingname);
+		//case TEAM_CONSORT: Format(PrintMessage, sizeof(PrintMessage), "{red}%N destroyed %s", client, buildingname);
+		//case TEAM_EMPIRE: Format(PrintMessage, sizeof(PrintMessage), "{blue}%N destroyed %s", client, buildingname);
 	}
 
 	for (new i = 1; i <= MaxClients; i++)
