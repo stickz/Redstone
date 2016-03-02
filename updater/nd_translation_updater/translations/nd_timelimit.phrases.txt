@@ -64,4 +64,24 @@
 	{
 		"en"		"Vote extend is now availible"
 	}
+	
+	
+	//Three types of extend printouts
+	//{1} = Player's name
+	//{2} and/or {3} = team number remaining (1,2,3 etc)
+	"Extend Both"
+	{
+		"#format"	"{1:s},{2:i},{3:i}"
+		"en"		"{1} typed extend : {2} Con & {3} Emp required." 	
+	}
+	"Extend Empire"
+	{
+		"#format"	"{1:s},{2:i}"
+		"en"		"{1} typed extend : {2} empire required."	
+	}
+	"Extend Consort"
+	{
+		"#format"	"{1:s},{2:i}"
+		"en"		"{1} typed extend : {2} consort required."	
+	}
 }
