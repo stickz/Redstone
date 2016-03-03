@@ -146,8 +146,8 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	decl String:PrintMessage[128];
 	switch (team)
 	{
-		case TEAM_CONSORT: Format(PrintMessage, sizeof(PrintMessage), "{red}%T", client, "Building Destoryed", clientname, buildingname);
-		case TEAM_EMPIRE: Format(PrintMessage, sizeof(PrintMessage), "{blue}%T", client, "Building Destoryed", clientname, buildingname);
+		case TEAM_CONSORT: Format(PrintMessage, sizeof(PrintMessage), "{red}%T", "Building Destoryed", client, clientname, buildingname);
+		case TEAM_EMPIRE: Format(PrintMessage, sizeof(PrintMessage), "{blue}%T", "Building Destoryed", client, clientname, buildingname);
 		//case TEAM_CONSORT: Format(PrintMessage, sizeof(PrintMessage), "{red}%N destroyed %s", client, buildingname);
 		//case TEAM_EMPIRE: Format(PrintMessage, sizeof(PrintMessage), "{blue}%N destroyed %s", client, buildingname);
 	}
