@@ -112,56 +112,61 @@ ClearKills()
 		
 public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "attacker")),	
-	team = GetClientTeam(client), 
+	new attacker = GetClientOfUserId(GetEventInt(event, "attacker")),	
+	team = GetClientTeam(attacker), 
 	type = GetEventInt(event, "type");
 	
 	decl String:buildingname[32];
 	switch (type) // get building name
 	{
-		case 0:	Format(buildingname, sizeof(buildingname), "%t", "Command Bunker"); //the Command Bunker
-		case 1:	Format(buildingname, sizeof(buildingname), "%t", "MG Turret"); //a Machine Gun Turret
-		case 2:	Format(buildingname, sizeof(buildingname), "%t", "Transport Gate"); //a Transport Gate
-		case 3:	Format(buildingname, sizeof(buildingname), "%t", "Power Station"); //a Power Station
-		case 4:	Format(buildingname, sizeof(buildingname), "%t", "Wireless Repeater"); //a Wireless Repeater
-		case 5:	Format(buildingname, sizeof(buildingname), "%t", "Relay Tower"); //a Relay Tower
-		case 6:	Format(buildingname, sizeof(buildingname), "%t", "Supply Station"); //a Supply Station
-		case 7:	Format(buildingname, sizeof(buildingname), "%t", "Assembler"); //an Assembler
-		case 8:	Format(buildingname, sizeof(buildingname), "%t", "Armory"); //an Armory
-		case 9:	Format(buildingname, sizeof(buildingname), "%t", "Artillery"); //an Artillery
-		case 10: Format(buildingname, sizeof(buildingname), "%t", "Radar Station"); //a Radar Station
-		case 11: Format(buildingname, sizeof(buildingname), "%t", "Flamethrower Turret"); //a Flamethrower Turret
-		case 12: Format(buildingname, sizeof(buildingname), "%t", "Sonic Turret"); //a Sonic Turret
-		case 13: Format(buildingname, sizeof(buildingname), "%t", "Rocket Turret"); //a Rocket Turret
-		case 14: Format(buildingname, sizeof(buildingname), "%t", "Wall"); //a Wall
-		case 15: Format(buildingname, sizeof(buildingname), "%t", "Barrier"); //a Barrier
+		case 0:	Format(buildingname, sizeof(buildingname), "%s", "Command Bunker"); //the Command Bunker
+		case 1:	Format(buildingname, sizeof(buildingname), "%s", "MG Turret"); //a Machine Gun Turret
+		case 2:	Format(buildingname, sizeof(buildingname), "%s", "Transport Gate"); //a Transport Gate
+		case 3:	Format(buildingname, sizeof(buildingname), "%s", "Power Station"); //a Power Station
+		case 4:	Format(buildingname, sizeof(buildingname), "%s", "Wireless Repeater"); //a Wireless Repeater
+		case 5:	Format(buildingname, sizeof(buildingname), "%s", "Relay Tower"); //a Relay Tower
+		case 6:	Format(buildingname, sizeof(buildingname), "%s", "Supply Station"); //a Supply Station
+		case 7:	Format(buildingname, sizeof(buildingname), "%s", "Assembler"); //an Assembler
+		case 8:	Format(buildingname, sizeof(buildingname), "%s", "Armory"); //an Armory
+		case 9:	Format(buildingname, sizeof(buildingname), "%s", "Artillery"); //an Artillery
+		case 10: Format(buildingname, sizeof(buildingname), "%s", "Radar Station"); //a Radar Station
+		case 11: Format(buildingname, sizeof(buildingname), "%s", "Flamethrower Turret"); //a Flamethrower Turret
+		case 12: Format(buildingname, sizeof(buildingname), "%s", "Sonic Turret"); //a Sonic Turret
+		case 13: Format(buildingname, sizeof(buildingname), "%s", "Rocket Turret"); //a Rocket Turret
+		case 14: Format(buildingname, sizeof(buildingname), "%s", "Wall"); //a Wall
+		case 15: Format(buildingname, sizeof(buildingname), "%s", "Barrier"); //a Barrier
 		//default: Format(buildingname, sizeof(buildingname), "a %d (?)", type); //a %d (?)
 	}
 	
 	StructuresKilled[team]++;
 	
 	decl String:clientname[128];
-	GetClientName(client, clientname, sizeof(clientname));
-	
-	decl String:PrintMessage[128];
+	GetClientName(attacker, clientname, sizeof(clientname));
+
+	new String:colour[16];
 	switch (team)
 	{
-		case TEAM_CONSORT: Format(PrintMessage, sizeof(PrintMessage), "{red}%T", "Building Destoryed", client, clientname, buildingname);
-		case TEAM_EMPIRE: Format(PrintMessage, sizeof(PrintMessage), "{blue}%T", "Building Destoryed", client, clientname, buildingname);
-		//case TEAM_CONSORT: Format(PrintMessage, sizeof(PrintMessage), "{red}%N destroyed %s", client, buildingname);
-		//case TEAM_EMPIRE: Format(PrintMessage, sizeof(PrintMessage), "{blue}%N destroyed %s", client, buildingname);
-	}
+		case TEAM_CONSORT: colour = "{red}";
+		case TEAM_EMPIRE: colour = "{blue}";
+	}	
 
-	for (new i = 1; i <= MaxClients; i++)
-		if (IsClientInGame(i) && !option_structure_killings[i])
-			CPrintToChat(i, "%s", PrintMessage);
+	decl String:PrintMessage[128];
+	decl String:buildTrans[32];
+	for (new client = 1; client <= MaxClients; client++)
+		if (IsClientInGame(client) && !option_structure_killings[client])
+		{
+			Format(buildTrans, sizeof(buildTrans), "%T", buildTrans, client);
+			Format(PrintMessage, sizeof(PrintMessage), "%s%T", colour, "Building Destoryed", client, clientname, buildTrans);
+			CPrintToChat(client, "%s", PrintMessage);
+		}
+	
 	
 	if (StructuresKilled[TEAM_EMPIRE] + StructuresKilled[TEAM_CONSORT] >= 20)
 	{
 		ClearKills();
 
-		decl String:clientName[64];
-		GetClientName(client, clientName, sizeof(clientName));
+		/*decl String:clientName[64];
+		GetClientName(attacker, clientName, sizeof(clientName));
 		
 		decl String:justGave[16];
 		Format(justGave, sizeof(justGave), "%t", "Just Gave");
@@ -175,7 +180,7 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 		new teamIDX = getOtherTeam(team) - 2;
 		
 		decl String:advantageMessage[64];
-		Format(advantageMessage, sizeof(advantageMessage), "%T", client, "Advantage Message",
+		Format(advantageMessage, sizeof(advantageMessage), "%T", attacker, "Advantage Message",
 										 nd_team_colour[teamIDX], clientName,
 										 nd_lgreen_colour, justGave, 
 										 nd_team_colour[teamIDX], teamName, 
@@ -184,9 +189,9 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 		CPrintToChatAll(advantageMessage);
 		
 		decl String:advantageCenter[32];
-		Format(advantageCenter, sizeof(advantageCenter), "%T", client, "Advantage Center", teamName); 
+		Format(advantageCenter, sizeof(advantageCenter), "%T", attacker, "Advantage Center", teamName); 
 		
-		PrintCenterTextAll(advantageCenter);	
+		PrintCenterTextAll(advantageCenter);*/	
 	
 		for (new idx = 1; idx <= MaxClients; idx++)
 		{
