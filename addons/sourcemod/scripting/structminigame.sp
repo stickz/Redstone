@@ -119,45 +119,47 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	decl String:buildingname[32];
 	switch (type) // get building name
 	{
-		case 0:	Format(buildingname, sizeof(buildingname), "%s", "Command Bunker"); //the Command Bunker
-		case 1:	Format(buildingname, sizeof(buildingname), "%s", "MG Turret"); //a Machine Gun Turret
-		case 2:	Format(buildingname, sizeof(buildingname), "%s", "Transport Gate"); //a Transport Gate
-		case 3:	Format(buildingname, sizeof(buildingname), "%s", "Power Station"); //a Power Station
-		case 4:	Format(buildingname, sizeof(buildingname), "%s", "Wireless Repeater"); //a Wireless Repeater
-		case 5:	Format(buildingname, sizeof(buildingname), "%s", "Relay Tower"); //a Relay Tower
-		case 6:	Format(buildingname, sizeof(buildingname), "%s", "Supply Station"); //a Supply Station
-		case 7:	Format(buildingname, sizeof(buildingname), "%s", "Assembler"); //an Assembler
-		case 8:	Format(buildingname, sizeof(buildingname), "%s", "Armory"); //an Armory
-		case 9:	Format(buildingname, sizeof(buildingname), "%s", "Artillery"); //an Artillery
-		case 10: Format(buildingname, sizeof(buildingname), "%s", "Radar Station"); //a Radar Station
-		case 11: Format(buildingname, sizeof(buildingname), "%s", "Flamethrower Turret"); //a Flamethrower Turret
-		case 12: Format(buildingname, sizeof(buildingname), "%s", "Sonic Turret"); //a Sonic Turret
-		case 13: Format(buildingname, sizeof(buildingname), "%s", "Rocket Turret"); //a Rocket Turret
-		case 14: Format(buildingname, sizeof(buildingname), "%s", "Wall"); //a Wall
-		case 15: Format(buildingname, sizeof(buildingname), "%s", "Barrier"); //a Barrier
+		case 0:	Format(buildingname, sizeof(buildingname), "Command Bunker"); //the Command Bunker
+		case 1:	Format(buildingname, sizeof(buildingname), "MG Turret"); //a Machine Gun Turret
+		case 2:	Format(buildingname, sizeof(buildingname), "Transport Gate"); //a Transport Gate
+		case 3:	Format(buildingname, sizeof(buildingname), "Power Station"); //a Power Station
+		case 4:	Format(buildingname, sizeof(buildingname), "Wireless Repeater"); //a Wireless Repeater
+		case 5:	Format(buildingname, sizeof(buildingname), "Relay Tower"); //a Relay Tower
+		case 6:	Format(buildingname, sizeof(buildingname), "Supply Station"); //a Supply Station
+		case 7:	Format(buildingname, sizeof(buildingname), "Assembler"); //an Assembler
+		case 8:	Format(buildingname, sizeof(buildingname), "Armory"); //an Armory
+		case 9:	Format(buildingname, sizeof(buildingname), "Artillery"); //an Artillery
+		case 10: Format(buildingname, sizeof(buildingname), "Radar Station"); //a Radar Station
+		case 11: Format(buildingname, sizeof(buildingname), "Flamethrower Turret"); //a Flamethrower Turret
+		case 12: Format(buildingname, sizeof(buildingname), "Sonic Turret"); //a Sonic Turret
+		case 13: Format(buildingname, sizeof(buildingname), "Rocket Turret"); //a Rocket Turret
+		case 14: Format(buildingname, sizeof(buildingname), "Wall"); //a Wall
+		case 15: Format(buildingname, sizeof(buildingname), "Barrier"); //a Barrier
 		//default: Format(buildingname, sizeof(buildingname), "a %d (?)", type); //a %d (?)
 	}
 	
 	StructuresKilled[team]++;
 	
-	decl String:clientname[128];
-	GetClientName(attacker, clientname, sizeof(clientname));
-
-	new String:colour[16];
+	decl String:attackerName[128];
+	GetClientName(attacker, attackerName, sizeof(attackerName));
+	
+	decl String:teamColour[16];
 	switch (team)
 	{
-		case TEAM_CONSORT: colour = "{red}";
-		case TEAM_EMPIRE: colour = "{blue}";
-	}	
+		case TEAM_CONSORT: Format(teamColour, sizeof(teamColour), "{red}");
+		case TEAM_EMPIRE: Format(teamColour, sizeof(teamColour), "{blue}");
+	}
 
-	decl String:PrintMessage[128];
-	decl String:buildTrans[32];
 	for (new client = 1; client <= MaxClients; client++)
-		if (IsClientInGame(client) && !option_structure_killings[client])
+		if (IsValidClient(client) && !option_structure_killings[client])
 		{
-			Format(buildTrans, sizeof(buildTrans), "%T", buildTrans, client);
-			Format(PrintMessage, sizeof(PrintMessage), "%s%T", colour, "Building Destoryed", client, clientname, buildTrans);
-			CPrintToChat(client, "%s", PrintMessage);
+			decl String:structure[32];
+			Format(structure, sizeof(structure), "%T", buildingname, client);
+			
+			decl String:message[128];
+			Format(message, sizeof(message), "%T", "Building Destoryed", client, teamColour, attackerName, structure);
+			
+			CPrintToChat(client, message);
 		}
 	
 	
