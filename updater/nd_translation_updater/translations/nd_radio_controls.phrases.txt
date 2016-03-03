@@ -2,7 +2,7 @@
 {
 	"Radio Disabled"
 	{
-		"The radio menu is currently broken or disabled."
+		"en"		"The radio menu is currently broken or disabled."
 	}
 	
 	"Radio Wait"
