@@ -17,9 +17,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <nd_stocks>
-#include <nd_commander>
 #include <colors>
 #include <clientprefs>
+
+#undef REQUIRE_PLUGIN
+#tryinclude <nd_commander>
+#define REQUIRE_PLUGIN
 
 #define VERSION "1.0.7"
 
