@@ -4,8 +4,8 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.5"
-			"Previous"	"1.0.4"
+			"Latest"	"1.0.6"
+			"Previous"	"1.0.5"
 		}
 		
 		"Notes"	"1.0.1: Initial Release"
@@ -13,6 +13,7 @@
 		"Notes" "1.0.3: Add more German translations"
 		"Notes"	"1.0.4: Add more translatable phrases"
 		"Notes"	"1.0.5: Change around nd_surrender phrases"
+		"Notes"	"1.0.6: Fix critical error with radio control phrases"
 	}
 	
 	"Files"
