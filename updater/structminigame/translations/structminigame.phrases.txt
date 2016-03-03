@@ -83,17 +83,6 @@
 	
 	
 	//Advantage Translations
-	
-	//these four are helper phrases, 
-	//change based on "Advantage Message"
-	"Just Gave"
-	{
-		"en"		"just gave"
-	}
-	"Advantage"
-	{
-		"en"		"the advantage"
-	}
 	"Empire"
 	{
 		"en"		"Empire"
@@ -109,28 +98,26 @@
 		//{1} changes {2} to the team colour
 		//{2} = Is the player's name
 		
-		//{3} changes {4} to the colour green
-		//{4} = "Just Gave" translation above
+		//{3} changes the 'just gave' colour to green
 		
-		//{5} changes {6} to the team colour
-		//{6} = Is etheir "Empire" or "Consort" as translated above
-
-		//{7} changes {8} to the colour green
-		//{8} = "Advantage" translation above
+		//{4} changes {5} to the team colour
+		//{5} = Is etheir "Empire" or "Consort" as translated above
+		
+		//{6} changes 'the advantage' colour to green
 		
 		//Ex1. Vertex just gave Consortium the advantage! -without colours
 		//Ex2. {blue} Vertex {green} just gave {blue} Consortium {green} the advantage!
 		//If required, change the number order to suit your needs
 		
-		"#format"	"{1:s},{2:s},{3:s},{4:t},{5:s},{6:t},{7:s},{8:t}"
-		"en"		"{1}{2} {3}{4} {5}{6} {7}{8}"
+		"#format"	"{1:s},{2:s},{3:s},{4:s},{5:s},{6:s}"
+		"en"		"{1}{2} {3}just gave {4}{5} {6}the advantage"
 	}
 	
 	//This message only uses the phrase "Empire" or "Consort"
 	"Advantage Center"
 	{
 		//{1} = Is etheir "Empire" or "Consort" as translated above
-		"#format"	"{1:t}"
+		"#format"	"{1:s}"
 		"en"		"Advantage - {1}"
 	}
 }
