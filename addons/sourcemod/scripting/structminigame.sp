@@ -180,7 +180,7 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 		new teamIDX = getOtherTeam(team) - 2;
 		
 		decl String:advantageMessage[64];
-		Format(advantageMessage, sizeof(advantageMessage), "%T", client, "Advantage Message",
+		Format(advantageMessage, sizeof(advantageMessage), "%T", attacker, "Advantage Message",
 										 nd_team_colour[teamIDX], clientName,
 										 nd_lgreen_colour, justGave, 
 										 nd_team_colour[teamIDX], teamName, 
@@ -189,7 +189,7 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 		CPrintToChatAll(advantageMessage);
 		
 		decl String:advantageCenter[32];
-		Format(advantageCenter, sizeof(advantageCenter), "%T", client, "Advantage Center", teamName); 
+		Format(advantageCenter, sizeof(advantageCenter), "%T", attacker, "Advantage Center", teamName); 
 		
 		PrintCenterTextAll(advantageCenter);	
 	
