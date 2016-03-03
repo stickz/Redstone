@@ -77,7 +77,7 @@
 	//{1} = Player Name, {2} = Building Name (translated phrases above)
 	"Building Destoryed"
 	{
-		"#format"	"{1:s},{2:t}"
+		"#format"	"{1:s},{2:s}"
 		"en"		"{1} destroyed {2}"
 	}
 	
