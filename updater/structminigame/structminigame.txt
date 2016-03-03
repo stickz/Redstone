@@ -4,7 +4,7 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.7"
+			"Latest"	"1.0.8"
 		}
 		
 		"Notes"	"1.0.1: Initial Release"
@@ -14,6 +14,7 @@
 		"Notes" "1.0.5: Remove unneeded code and recompile with sm 1.7.2"
 		"Notes" "1.0.6: Changes for github & Convert to lastest standard"
 		"Notes"	"1.0.7: Add advanced translation support to building messages"
+		"Notes"	"1.0.8: Fix translation support for building and advantage messages"
 	}
 	
 	"Files"
