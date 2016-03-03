@@ -167,11 +167,11 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	{
 		ClearKills();
 
-		decl String:teamName[16];
+		decl String:teamTrans[16];
 		switch (team)
 		{
-			case TEAM_CONSORT: Format(structure, sizeof(structure), "Consort");  
-			case TEAM_EMPIRE:  Format(structure, sizeof(structure), "Empire");
+			case TEAM_CONSORT: Format(teamTrans, sizeof(teamTrans), "Consort");  
+			case TEAM_EMPIRE:  Format(teamTrans, sizeof(teamTrans), "Empire");
 		}
 		
 		decl String:colourGreen[32];
@@ -181,7 +181,7 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 			if (IsValidClient(client))
 			{
 				decl String:teamName[32];
-				Format(structure, sizeof(structure), "%T", teamName, client);
+				Format(teamName, sizeof(teamName), "%T", teamTrans, client);
 				
 				decl String:chatMessage[128];
 				Format(chatMessage, sizeof(chatMessage), "%T", "Advantage Message", client, teamColour, attackerName, colourGreen, teamColour, teamName, colourGreen);
