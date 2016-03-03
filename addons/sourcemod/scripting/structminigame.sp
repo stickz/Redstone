@@ -44,14 +44,6 @@ public Plugin:myinfo =
 #define TEAM_SPEC		1
 #define MAX_TEAMS 		4
 
-new const String:nd_lgreen_colour[16] = { "{lightgreen}" };
-
-new const String:nd_team_colour[2][] =
-{
-	"{blue}",
-	"{red}"
-};
-
 new StructuresKilled[MAX_TEAMS];
 new Handle:cookie_structure_killings = INVALID_HANDLE;
 new bool:option_structure_killings[MAXPLAYERS + 1] = {true,...}; //off by default
