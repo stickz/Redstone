@@ -165,7 +165,7 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	{
 		ClearKills();
 
-		decl String:clientName[64];
+		/*decl String:clientName[64];
 		GetClientName(attacker, clientName, sizeof(clientName));
 		
 		decl String:justGave[16];
@@ -191,7 +191,7 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 		decl String:advantageCenter[32];
 		Format(advantageCenter, sizeof(advantageCenter), "%T", attacker, "Advantage Center", teamName); 
 		
-		PrintCenterTextAll(advantageCenter);	
+		PrintCenterTextAll(advantageCenter);*/	
 	
 		for (new idx = 1; idx <= MaxClients; idx++)
 		{
