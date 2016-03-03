@@ -8,6 +8,13 @@
 	"Ten Required"
 	{
 		"es"		"Deben haber almenos 10 jugadores para utilizar esta opcion"
+	}
+
+	//This phrase is incorrect, translate from this instead
+	//"Four players on your team are required to surrender"
+	"Four Required"
+	{
+		"es"		"Deben haber almenos 8 jugadores para utilizar esta opcion"	
 	}	
 	
 	"Too Soon"

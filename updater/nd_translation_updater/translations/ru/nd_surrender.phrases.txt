@@ -10,6 +10,13 @@
 		"ru"		"Для использования вам нужно 10, и более игроков"	
 	}
 	
+	//This phrase is incorrect, translate from this instead
+	//"Four players on your team are required to surrender"
+	"Four Required"
+	{
+		"ru"		"Для использования вам нужно 8, и более игроков"	
+	}
+	
 	"Too Soon"
 	{
 		"ru"		"Нельзя сдаваться так рано"	

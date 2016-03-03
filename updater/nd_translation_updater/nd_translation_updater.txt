@@ -4,14 +4,15 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.4"
-			"Previous"	"1.0.3"
+			"Latest"	"1.0.5"
+			"Previous"	"1.0.4"
 		}
 		
 		"Notes"	"1.0.1: Initial Release"
 		"Notes"	"1.0.2: Dump server translations onto github"
 		"Notes" "1.0.3: Add more German translations"
 		"Notes"	"1.0.4: Add more translatable phrases"
+		"Notes"	"1.0.5: Change around nd_surrender phrases"
 	}
 	
 	"Files"
@@ -26,10 +27,14 @@
 			"Plugin"	"Path_SM/translations/nd_map_management.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_radio_controls.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_rockthevote.phrases.txt"
-			"Plugin"	"Path_SM/translations/nd_surrender.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_team_balancer.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_timelimit.phrases.txt"
 			"Plugin"	"Path_SM/translations/nd_tools.phrases.txt"
+			
+			"Plugin"	"Path_SM/translations/nd_surrender.phrases.txt"
+			"Plugin"	"Path_SM/translations/es/nd_surrender.phrases.txt"
+			"Plugin"	"Path_SM/translations/pt/nd_surrender.phrases.txt"
+			"Plugin"	"Path_SM/translations/ru/nd_surrender.phrases.txt"
 			
 			"Plugin"	"Path_SM/translations/de/nd_ammopack_fix.phrases.txt"
 			"Plugin"	"Path_SM/translations/de/nd_managed_slots.phrases.txt"
