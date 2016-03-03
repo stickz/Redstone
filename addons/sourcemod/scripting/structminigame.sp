@@ -167,34 +167,31 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	{
 		ClearKills();
 
-		/*decl String:clientName[64];
-		GetClientName(attacker, clientName, sizeof(clientName));
-		
-		decl String:justGave[16];
-		Format(justGave, sizeof(justGave), "%t", "Just Gave");
-		
-		decl String:theAdvantage[16];
-		Format(theAdvantage, sizeof(theAdvantage), "%t", "Advantage");
-		
 		decl String:teamName[16];
-		Format(teamName, sizeof(teamName), "%t", team == TEAM_CONSORT ? "Consort" : "Empire");
+		switch (team)
+		{
+			case TEAM_CONSORT: Format(structure, sizeof(structure), "Consort");  
+			case TEAM_EMPIRE:  Format(structure, sizeof(structure), "Empire");
+		}
 		
-		new teamIDX = getOtherTeam(team) - 2;
+		decl String:colourGreen[32];
+		Format(colourGreen, sizeof(colourGreen), "{lightgreen}");
 		
-		decl String:advantageMessage[64];
-		Format(advantageMessage, sizeof(advantageMessage), "%T", attacker, "Advantage Message",
-										 nd_team_colour[teamIDX], clientName,
-										 nd_lgreen_colour, justGave, 
-										 nd_team_colour[teamIDX], teamName, 
- 										 nd_lgreen_colour, theAdvantage);
- 										 
-		CPrintToChatAll(advantageMessage);
-		
-		decl String:advantageCenter[32];
-		Format(advantageCenter, sizeof(advantageCenter), "%T", attacker, "Advantage Center", teamName); 
-		
-		PrintCenterTextAll(advantageCenter);*/	
-	
+		for (new client = 1; client <= MaxClients; client++)
+			if (IsValidClient(client))
+			{
+				decl String:teamName[32];
+				Format(structure, sizeof(structure), "%T", teamName, client);
+				
+				decl String:chatMessage[128];
+				Format(chatMessage, sizeof(chatMessage), "%T", "Advantage Message", client, teamColour, attackerName, colourGreen, teamColour, teamName, colourGreen);
+				CPrintToChat(client, chatMessage);
+				
+				decl String:centerMessage[64];
+				Format(centerMessage, sizeof(centerMessage), "%T", "Advantage Center", client, teamName);
+				PrintCenterText(client, centerMessage);
+			}		
+
 		for (new idx = 1; idx <= MaxClients; idx++)
 		{
 			if (GiveAdvantage(idx, team)) 
