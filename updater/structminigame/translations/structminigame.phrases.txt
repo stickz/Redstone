@@ -72,13 +72,13 @@
 		"en"		"a Barrier"
 	}
 	
-	//Now let's put the building destoryed message to together
-	//{1} and {2} can be put in any order and more words can be added
-	//{1} = Player Name, {2} = Building Name (translated phrases above)
 	"Building Destoryed"
 	{
-		"#format"	"{1:s},{2:s}"
-		"en"		"{1} destroyed {2}"
+		//{1} = team colour (always keep this first)
+		//{2} = Player's name who destoryed the structure
+		//{3} = The name of the structure destoryed (translated above)
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"{1}{2} destroyed {3}"
 	}
 	
 	
