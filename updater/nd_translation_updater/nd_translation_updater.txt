@@ -4,8 +4,8 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.7"
-			"Previous"	"1.0.6"
+			"Latest"	"1.0.8"
+			"Previous"	"1.0.7"
 		}
 		
 		"Notes"	"1.0.1: Initial Release"
@@ -15,6 +15,7 @@
 		"Notes"	"1.0.5: Change around nd_surrender phrases"
 		"Notes"	"1.0.6: Fix critical error with radio control phrases"
 		"Notes"	"1.0.7: Update nd surrender russian translations"
+		"Notes" "1.0.8: Add show damage phrases"
 	}
 	
 	"Files"
@@ -42,6 +43,11 @@
 			"Plugin"	"Path_SM/translations/de/nd_managed_slots.phrases.txt"
 			
 			"Plugin"	"Path_SM/translations/numbers.phrases.txt"
+			
+			"Plugin"	"Path_SM/translations/showdamage.phrases.txt"
+			"Plugin"	"Path_SM/translations/cze/showdamage.phrases.txt"
+			"Plugin"	"Path_SM/translations/de/showdamage.phrases.txt"
+			"Plugin"	"Path_SM/translations/ru/showdamage.phrases.txt"
 		}
 		
 		"Plugin"	"Path_SM/plugins/nd_translation_updater.smx"
@@ -117,5 +123,10 @@
 		"Plugin"	"Path_SM/translations/ru/resourcemessages.phrases.txt"
 		
 		"Plugin"	"Path_SM/translations/numbers.phrases.txt"
+		
+		"Plugin"	"Path_SM/translations/showdamage.phrases.txt"
+		"Plugin"	"Path_SM/translations/cze/showdamage.phrases.txt"
+		"Plugin"	"Path_SM/translations/de/showdamage.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/showdamage.phrases.txt"
 	}
 }
