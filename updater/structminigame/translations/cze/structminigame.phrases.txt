@@ -1,7 +1,73 @@
-﻿"Phrases"
+"Phrases"
 {
 	"Cookie Structure Killings"
 	{
 		"cze"		"Zničené budovy"
+	}
+	
+	//Building Names
+	"Command Bunker"
+	{
+		"cze"		"Velitelský bunkr"
+	}
+	"MG Turret"
+	{
+		"cze"		"Kulometná věž"
+	}
+	"Transport Gate"
+	{
+		"cze"		"Transportní brána"
+	}
+	"Power Station"
+	{
+		"cze"		"Elektrárna"
+	}
+	"Wireless Repeater"
+	{
+		"cze"		"Bezdrátový přenašeč"
+	}
+	"Relay Tower"
+	{
+		"cze"		"Přenašeč"
+	}
+	"Supply Station"
+	{
+		"cze"		"podpůrná stanice"
+	}
+	"Assembler"
+	{
+		"cze"		"Assembler"
+	}
+	"Armory"
+	{
+		"cze"		"Zbrojnice"
+	}
+	"Artillery"
+	{
+		"cze"		"Artilérie"
+	}
+	"Radar Station"
+	{
+		"cze"		"Radar"
+	}
+	"Flamethrower Turret"
+	{
+		"cze"		"Plamenometná věž"
+	}
+	"Sonic Turret"
+	{
+		"cze"		"Sonická věž"
+	}
+	"Rocket Turret"
+	{
+		"cze"		"Raketometná věž"
+	}
+	"Wall"
+	{
+		"cze"		"Zeď"
+	}
+	"Barrier"
+	{
+		"cze"		"Barikáda"
 	}
 }
