@@ -16,9 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
-#define VERSION "1.0.8"
-
-//This is to test the auto-builder
+#define VERSION "1.0.9"
 
 public Plugin:myinfo = 
 {
