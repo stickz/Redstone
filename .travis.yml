@@ -26,7 +26,7 @@ env:
   matrix:
     - SOURCEMOD=stable
     - SOURCEMOD=dev
-
+    
 # Allow dev build to fail
 matrix:
   allow_failures:
