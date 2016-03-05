@@ -16,3 +16,7 @@ https://wiki.alliedmods.net/Introduction_to_sourcemod_plugins
 https://wiki.alliedmods.net/Nuclear_Dawn_Events
 
 https://sm.alliedmods.net/new-api/
+
+# Compile plugins
+
+Run `make` to compile `addons/sourcemod/scripting/*.sp` files using latest stable build of SourceMod or `make compile-dev` to compile using latest dev build.
