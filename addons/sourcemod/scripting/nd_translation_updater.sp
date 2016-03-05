@@ -18,6 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define VERSION "1.0.8"
 
+//This is to test the auto-builder
+
 public Plugin:myinfo = 
 {
 	name = "[ND] Translation Updater",
