@@ -1,6 +1,9 @@
 #Use the new container-based infrastructure
 sudo: false
 language: sourcepawn
+cache:
+  directories:
+    - .tmp
 
 #Install some apt packages needed for spcomp
 addons:
@@ -18,16 +21,14 @@ notifications:
 
 #Set the build environment
 env:
-  - SOURCEMOD=1.7
-  - SOURCEMOD=1.8
+  - SOURCEMOD=stable
+  - SOURCEMOD=dev
+
+# Allow dev build to fail
+matrix:
+  allow_failures:
+    - env: SOURCEMOD=dev
 
 #And compile!
-before_script:
-  - wget "http://www.sourcemod.net/smdrop/1.7/sourcemod-1.7.3-git5255-linux.tar.gz" -O sourcemod-$SOURCEMOD-linux.tar.gz
-  - tar -xzf sourcemod-$SOURCEMOD-linux.tar.gz
-  - cd addons/sourcemod/scripting/
-  - wget https://bitbucket.org/GoD_Tony/updater/raw/53ebb3e27e5a43bc46dc52dc0de76ac2fb48cd9e/include/updater.inc -O include/updater.inc
-  - chmod +x spcomp
-
 script:
-  - ./compile.sh dontshout.sp nd_build_shadow_fix.sp nd_continents.sp nd_disconnect.sp nd_offmap_fixes.sp nd_ping.sp nd_player_warnings.sp nd_reloadfix.sp nd_superlogs.sp nd_translation_updater.sp nd_welcome.sp structminigame.sp nd_unit_limit.sp   
+  - make compile-$SOURCEMOD
