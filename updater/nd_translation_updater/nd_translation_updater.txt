@@ -4,7 +4,7 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.1.0"
+			"Latest"	"1.1.1"
 			"Previous"	"1.0.9"
 		}
 		
@@ -14,6 +14,7 @@
 		"Notes" "1.0.8: Add show damage phrases"
 		"Notes"	"1.0.9: Update 'typed surrender' & test auto-build"
 		"Notes"	"1.1.0: Fix phrase error on 'Player Assigned' message"
+		"Notes" "1.1.1: Trigger update for auto-building"
 	}
 	
 	"Files"
