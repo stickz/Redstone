@@ -17,7 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <clientprefs>
 
-#define VERSION "1.0.8"
+#define VERSION "1.0.9"
 
 new Handle:cookie_welcome_message = INVALID_HANDLE;
 new bool:option_welcome_message[MAXPLAYERS + 1] = {true,...}; //off by default
@@ -32,7 +32,7 @@ public Plugin:myinfo =
 };
 
 /* Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_welcome/nd_welcome.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_welcome/nd_welcome.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart() 
