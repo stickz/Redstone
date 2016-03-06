@@ -177,7 +177,7 @@
 	{
 		//{1} = team name (empire or consort above)
 		//{2} = reason ("imbalanced teams" above is one)
-		"#format"	"{1:t},{2:t}"
+		"#format"	"{1:s},{2:s}"
 		"en"		"Assigned you to {1}. ({2})"
 	}
 	
