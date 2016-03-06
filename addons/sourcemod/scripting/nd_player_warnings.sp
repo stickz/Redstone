@@ -16,7 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
-#define VERSION "1.0.7"
+#define VERSION "1.0.8"
 
 #define WARN_TYPE_RESPECT 0
 #define WARN_TYPE_ADVERTISE 1
@@ -31,7 +31,7 @@ public Plugin:myinfo =
 	url = "N/A"
 };
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_player_warnings/nd_player_warnings.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_player_warnings/nd_player_warnings.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart()
