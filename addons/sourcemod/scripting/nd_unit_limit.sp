@@ -38,7 +38,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define MED_LIMIT 	3
 #define HIGH_LIMIT 	4
 
-#define PLUGIN_VERSION "2.0.3"
+#define PLUGIN_VERSION "2.0.4"
 #define DEBUG 0
 
 #define TEAM_CONSORT 2
@@ -52,12 +52,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 new Handle:eCommanders = INVALID_HANDLE,
 	UnitLimit[2][3],
-	bool:SetLimit[2][3];
+	bool:SetLimit[2][3],
+	bool:roundStarted = false;
 
 public Plugin:myinfo = 
 {
 	name = "[ND] Unit Limiter",
-	author = "yed_, stickz",
+	author = "stickz, yed_",
 	description = "Limit the number of units by class type on a team",
 	version = PLUGIN_VERSION,
 	url = "https://github.com/stickz/Redstone/"
@@ -81,6 +82,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_MaxAntiStructure", CMD_ChangeTeamAntiStructureLimit, "Change the maximum percent of antistrcture in the team: !MaxAntiStructure <amount>");
 
 	HookEvent("player_changeclass", Event_SetClass, EventHookMode_Pre);
+	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	//HookEvent("player_death", Event_SetClass, EventHookMode_Post);
 	
 	AddUpdaterLibrary();
@@ -100,8 +102,21 @@ public OnMapStart()
 	}
 }
 
+public OnMapEnd()
+{
+	roundStarted = false;
+}
+
+public Action:Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	roundStarted = true;
+}
+
 public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadcast) 
 {
+	if (!roundStarted)
+		return Plugin_Continue;
+	
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
     	new cls = GetEventInt(event, "class");
     	new subcls = GetEventInt(event, "subclass");
