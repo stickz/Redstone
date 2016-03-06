@@ -13,3 +13,13 @@ compile-stable:
 
 compile-dev:
 	./build_scripts/compile.sh -v --sourcemod 1.8.0-5868
+
+pack:
+	rm -fr ./build && mkdir ./build && cp -r ./updater ./build
+
+deploy:
+	@./build_scripts/deploy.sh -v \
+		--dir=build \
+		--repo=github.com/stickz/Redstone \
+		--token=${GH_TOKEN} \
+		--branch=build
