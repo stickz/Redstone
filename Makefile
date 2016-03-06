@@ -9,7 +9,7 @@ compile: compile-stable
 #   or whatever version-build of SourceMod you want to compile
 #   with
 compile-stable:
-	./build_scripts/compile.sh -v --sourcemod 1.7.3-5301
+	./build_scripts/compile.sh -v --sourcemod 1.7.3-5255
 
 compile-dev:
 	./build_scripts/compile.sh -v --sourcemod 1.8.0-5868
