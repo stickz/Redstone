@@ -26,7 +26,7 @@
 #include <sdkhooks>
 
 #define NAME "SuperLogs: Nuclear Dawn"
-#define VERSION "1.0.4"
+#define VERSION "1.0.5"
 
 
 #define MAX_LOG_WEAPONS 28
@@ -85,7 +85,7 @@ public Plugin:myinfo = {
 };
 
 /* Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_superlogs/nd_superlogs.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_superlogs/nd_superlogs.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart()
