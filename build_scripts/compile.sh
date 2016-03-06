@@ -2,7 +2,7 @@
 
 # set command line switches defaults
 verbose=false
-sourcemod_version="1.7.3-5301"
+sourcemod_version="1.7.3-5255"
 sourcemod_major_minor_version=0
 sourcemod_major_minor_patch_version=0
 sourcemod_build=0
