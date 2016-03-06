@@ -4,7 +4,7 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.8"
+			"Latest"	"1.0.9"
 		}
 		
 		"Notes"	"1.0.1: Initial Release"
@@ -15,6 +15,7 @@
 		"Notes" "1.0.6: Recompile with SM 1.7.2 and improve cookie code"
 		"Notes" "1.0.7: Remove un-needed close handle code"
 		"Notes" "1.0.8: Better German translation, split up into multiple files"
+		"Notes" "1.0.9: Trigger update for auto-building"
 	}
 	
 	"Files"
