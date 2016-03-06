@@ -38,7 +38,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define MED_LIMIT 	3
 #define HIGH_LIMIT 	4
 
-#define PLUGIN_VERSION "2.0.1"
+#define PLUGIN_VERSION "2.0.2"
 #define DEBUG 0
 
 #define TEAM_CONSORT 2
@@ -47,7 +47,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define m_iDesiredPlayerClass(%1) (GetEntProp(%1, Prop_Send, "m_iDesiredPlayerClass"))
 #define m_iDesiredPlayerSubclass(%1) (GetEntProp(%1, Prop_Send, "m_iDesiredPlayerSubclass"))
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_unit_limit/nd_unit_limit.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_unit_limit/nd_unit_limit.txt"
 #include "updater/standard.sp"
 
 new Handle:eCommanders = INVALID_HANDLE,
