@@ -38,7 +38,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define MED_LIMIT 	3
 #define HIGH_LIMIT 	4
 
-#define PLUGIN_VERSION "2.0.2"
+#define PLUGIN_VERSION "2.0.3"
 #define DEBUG 0
 
 #define TEAM_CONSORT 2
@@ -279,7 +279,7 @@ bool:IsTooMuchSnipers(client)
 			clientCount < 13 &&  sniperCount >= MED_LIMIT ||
 			                     sniperCount >= HIGH_LIMIT;
 	else
-		return sniperCount > UnitLimit[teamIDX][TYPE_SNIPER];
+		return sniperCount >= UnitLimit[teamIDX][TYPE_SNIPER];
 }
 
 bool:IsTooMuchStealth(client)
@@ -296,7 +296,7 @@ bool:IsTooMuchStealth(client)
 	new stealthMin = GetMinStealthValue(clientTeam);
 	new stealthLimit = stealthMin > unitLimit ? stealthMin : unitLimit;
 	
-	return stealthCount > stealthLimit;
+	return stealthCount >= stealthLimit;
 }
 
 bool:IsTooMuchAntiStructure(client)
