@@ -6,9 +6,6 @@ set -e
 # set command line switches defaults
 verbose=false
 sourcemod_version="1.7.3-5255"
-sourcemod_major_minor_version=0
-sourcemod_major_minor_patch_version=0
-sourcemod_build=0
 cache=true
 
 # process command line switches
@@ -16,29 +13,21 @@ while [ $# -gt 0 ]
 do
   case "$1" in
     -v)  verbose=true;;
-    --sourcemod) sourcemod_version="$2"; shift;;
+    --sourcemod=*) sourcemod_version=`echo $1 | sed -e 's/^[^=]*=//g'`;;
     --no-cache) cache=false;;
     --)  shift; break;;
     -*)
-      echo >&2 "usage: $0 [-v] [--sourcemod version-build] [--no-cache]"
+      echo >&2 "usage: $0 [-v] [--sourcemod=version-build] [--no-cache]"
       exit 1;;
     *)  break;; # terminate while loop
     esac
     shift
 done
 
-# Break down SourceMod version and trigger an error if
-# provided version doesn't follow format of X.X.X-XXXX
+# Break down SourceMod version
 sourcemod_major_minor_version=${sourcemod_version%.*}
 sourcemod_major_minor_patch_version=${sourcemod_version%-*}
 sourcemod_build=${sourcemod_version##*-}
-if [ "$sourcemod_major_minor_version" = 0 ] \
-  || [ "$sourcemod_major_minor_patch_version" = 0 ] \
-  || [ "$sourcemod_build" = 0 ]; then
-  echo "Error: Wrong SourceMod version provided: $sourcemod_version"
-  echo "Error: Please provide version similar to following format: 1.7.3-5301"
-  exit 1;
-fi
 
 # Detect OS and exit if OS is not supported
 OS="`uname`"
@@ -103,9 +92,8 @@ UPDATER_PATCH_PATH="$TMPDIR/updater.inc"
 plugins_paths=`ls ${PLUGINS_SRC_DIR}/*.sp`
 
 # backup addons directory
-if [ ! -d "$PLUGINS_SRC_BACKUP_DIR" ]; then
-  mkdir -p $PLUGINS_SRC_BACKUP_DIR
-fi
+rm -fr $PLUGINS_SRC_BACKUP_DIR
+mkdir -p $PLUGINS_SRC_BACKUP_DIR
 cp -r "$ROOTDIR/addons" "$PLUGINS_SRC_BACKUP_DIR"
 if [ "$verbose" = true ]; then
   echo "- Back up /addons directory before messing it up"
@@ -113,12 +101,22 @@ fi
 
 # download latest sourcemod and copy addons contents
 if [ ! -d "$SOURCEMOD_DIR" ] || [ "$cache" = false ]; then
+
+  # check that SourceMod file URL is correct
+  wget --spider $SOURCEMOD_ARCHIVE_URL
+  if [ $? -ne 0 ]; then
+    echo "Error: could not download SourceMod v$sourcemod_version"
+    echo "Error: Please make sure to provide existing version in following format: 1.7.3-5301"
+    exit 1;
+  fi
+
   if [ "$verbose" = true ]; then
     echo "- Downloading SourceMod v$sourcemod_version from
     $SOURCEMOD_ARCHIVE_URL to $SOURCEMOD_DIR"
   fi
   mkdir -p $SOURCEMOD_DIR
   wget $SOURCEMOD_ARCHIVE_URL -O $SOURCEMOD_ARCHIVE_PATH
+
   if [ "$OS" = "Mac" ]; then
     # -o stands for OVERWRITE, meaning don't prompt if overwriting files
     unzip -o $SOURCEMOD_ARCHIVE_PATH -d $SOURCEMOD_DIR > /dev/null
