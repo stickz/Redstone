@@ -17,9 +17,9 @@ https://wiki.alliedmods.net/Nuclear_Dawn_Events
 
 https://sm.alliedmods.net/new-api/
 
-# Compile plugins
+# Build plugins
 
-Run `make` to compile `addons/sourcemod/scripting/*.sp` files using latest stable build of SourceMod or `make compile-dev` to compile using latest dev build.
+Run `make` to compile `addons/sourcemod/scripting/*.sp` files using latest stable build of SourceMod or `make build-dev` to compile using latest dev build.
 
 # Deployment
 
@@ -27,7 +27,7 @@ If you have write access to this repo then following command will compile and
 deploy all the files required by server to the `build` branch upstream:
 
 ```
-GH_TOKEN=<your token>; make compile pack deploy
+GH_TOKEN=<your token>; make build pack deploy
 ```
 
 You won't likely need to do this manually though because Travis CI does
