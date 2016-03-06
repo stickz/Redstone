@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define REQUIRE_PLUGIN
 
 #define DEBUG 0
-#define VERSION "1.0.5"
+#define VERSION "1.0.6"
 
 public Plugin:myinfo =
 {
@@ -41,7 +41,7 @@ new 	Handle:eDeadWeights = INVALID_HANDLE,
 	bool:player_forced_seige[MAXPLAYERS + 1] = {false,...},
 	bool:advancedKitsAvailable[2] = {false, ...};
 	
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_deadweights/nd_deadweights.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_deadweights/nd_deadweights.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart()
