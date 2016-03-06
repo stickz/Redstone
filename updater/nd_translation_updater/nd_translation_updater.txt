@@ -4,19 +4,16 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.9"
-			"Previous"	"1.0.8"
+			"Latest"	"1.1.0"
+			"Previous"	"1.0.9"
 		}
 		
-		"Notes"	"1.0.1: Initial Release"
-		"Notes"	"1.0.2: Dump server translations onto github"
-		"Notes" "1.0.3: Add more German translations"
-		"Notes"	"1.0.4: Add more translatable phrases"
 		"Notes"	"1.0.5: Change around nd_surrender phrases"
 		"Notes"	"1.0.6: Fix critical error with radio control phrases"
 		"Notes"	"1.0.7: Update nd surrender russian translations"
 		"Notes" "1.0.8: Add show damage phrases"
 		"Notes"	"1.0.9: Update 'typed surrender' & test auto-build"
+		"Notes"	"1.1.0: Fix phrase error on 'Player Assigned' message"
 	}
 	
 	"Files"
