@@ -16,7 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
-#define VERSION "1.0.9"
+#define VERSION "1.1.0"
 
 public Plugin:myinfo = 
 {
