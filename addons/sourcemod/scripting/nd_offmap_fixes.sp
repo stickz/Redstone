@@ -18,7 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <sdkhooks>
 
-#define VERSION "1.4"
+#define VERSION "1.4.1"
 #define DEBUG 0
 
 new bool:validMap = false;
@@ -37,7 +37,7 @@ public Plugin:myinfo =
     url = "git@vanyli.net:nd-plugins"
 }
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_offmap_fixes/nd_offmap_fixes.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_offmap_fixes/nd_offmap_fixes.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart() 

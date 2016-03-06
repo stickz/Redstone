@@ -18,7 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <sdkhooks>
 
-#define PLUGIN_VERSION "1.0.3"
+#define PLUGIN_VERSION "1.0.4"
 
 #define MAX_BUILD_TIME 57
 
@@ -33,7 +33,7 @@ public Plugin:myinfo =
 	url = "N/A"
 }
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/nd_build_shadow_fix/nd_build_shadow_fix.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_build_shadow_fix/nd_build_shadow_fix.txt"
 #include "updater/standard.sp"
 
 public OnPluginStart()

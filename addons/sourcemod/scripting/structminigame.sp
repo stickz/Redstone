@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #tryinclude <nd_commander>
 #define REQUIRE_PLUGIN
 
-#define VERSION "1.0.8"
+#define VERSION "1.0.9"
 
 public Plugin:myinfo =
 {
@@ -36,7 +36,7 @@ public Plugin:myinfo =
 };
 
 /* Auto Updater */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/master/updater/structminigame/structminigame.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/structminigame/structminigame.txt"
 #include "updater/standard.sp"
 
 #define TEAM_EMPIRE		3

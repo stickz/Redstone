@@ -4,12 +4,13 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.3"
+			"Latest"	"1.0.4"
 		}
 		
 		"Notes"	"1.0.1: Initial Release"
 		"Notes" "1.0.2: Bug Fix - Added IsValidEntity() before checking classname"
 		"Notes" "1.0.3: Recompile with SM 1.7.2"
+		"Notes" "1.0.4: Trigger update for auto-building"
 	}
 	
 	"Files"

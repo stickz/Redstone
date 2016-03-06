@@ -4,7 +4,7 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.0.5"
+			"Latest"	"1.0.6"
 		}
 		
 		"Notes" "1.0.1: Inital Release"
@@ -13,6 +13,7 @@
 		"Notes"	"1.0.3: Fix broken auto-update translation url"
 		"Notes" "1.0.4: Add partial fix for advanced kits issue"
 		"Notes"	"1.0.5: Disable debuging and fix if statement"
+		"Notes" "1.0.6: Trigger update for auto-building"
 	}
 	
 	"Files"
