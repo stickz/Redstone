@@ -15,10 +15,10 @@ do
     --)  shift; break;;
     -*)
       echo >&2 "usage: $0 [-v]
-                          [--repo github.com/owner/repo]
-                          [--token OAuth token]
-                          [--dir directory to deploy]
-                          [--branch remote branch]"
+                          [--repo=github.com/owner/repo]
+                          [--token=OAuth token]
+                          [--dir=directory to deploy]
+                          [--branch=remote branch]"
       exit 1;;
     *)  break;; # terminate while loop
     esac
