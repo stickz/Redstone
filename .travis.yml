@@ -1,6 +1,6 @@
 #Use the new container-based infrastructure
 sudo: false
-language: sourcepawn
+language: c++
 cache:
   directories:
     - .tmp
@@ -22,7 +22,7 @@ notifications:
 #Set the build environment
 env:
   global:
-    - secure="KYpwJLE/aquoy9pnPSdgYECy1G8t5AO1RRqNaJjqwLAhjoge5nHRzhZnEhcOC+8wi+dfXUr+Dp4OA8k1ZZVykNGc+HNLTF0COj4FVsSG+JogVGCIr0I0o/7NnxiTgRQ08jugNCIGYNtQhgY4F+FYz03DY93XwO0tNM8JjNM+8NBegYR9t/pdZv9iQHSz74AeFMfC1//7ZyP9CnjY40HIa76e7evqmkE1A0kzBnjQfpgK3bBYddDaowC3zh7J36iw7QOawe3MqhmtNGodjH/AjPFsCsr+xC8zqMiQURBw3e08x7d50FWI4+XAmxeW6E2WrB+RS1Q8j7+ot0tvNfOhpQLpOhr/xpsRTYEyj/o/OvPtDHlEpnkm1zKaEJojHLnVJVLy4ktnZbDslPnkrQezhMqFc4wazUkZgFX7ZovuZUr67RYX02buLcndkqdDhQL6EuqLRLElKfP3vIsn/dqNN3OMefMz/BORDwPOuvbXaG6JynFx2mCov3pRXe4Y+IIFgbxRoGDu0OjdF+BCXGaqvanYu+Fw5iSBJndFjMPZubexJF6z+4RkFR6B5SWCV1YbJn3W2ilyK2e6gvrme63MCvQGVuzqSIqKKSSRWkhHdzVNHD2sLJKkQ8n4C6byaUdWwiZhI9O6+r1vUE6fw+GTDcMQLjhS6KIIEFJtxNCbk2E="
+    - secure: "KYpwJLE/aquoy9pnPSdgYECy1G8t5AO1RRqNaJjqwLAhjoge5nHRzhZnEhcOC+8wi+dfXUr+Dp4OA8k1ZZVykNGc+HNLTF0COj4FVsSG+JogVGCIr0I0o/7NnxiTgRQ08jugNCIGYNtQhgY4F+FYz03DY93XwO0tNM8JjNM+8NBegYR9t/pdZv9iQHSz74AeFMfC1//7ZyP9CnjY40HIa76e7evqmkE1A0kzBnjQfpgK3bBYddDaowC3zh7J36iw7QOawe3MqhmtNGodjH/AjPFsCsr+xC8zqMiQURBw3e08x7d50FWI4+XAmxeW6E2WrB+RS1Q8j7+ot0tvNfOhpQLpOhr/xpsRTYEyj/o/OvPtDHlEpnkm1zKaEJojHLnVJVLy4ktnZbDslPnkrQezhMqFc4wazUkZgFX7ZovuZUr67RYX02buLcndkqdDhQL6EuqLRLElKfP3vIsn/dqNN3OMefMz/BORDwPOuvbXaG6JynFx2mCov3pRXe4Y+IIFgbxRoGDu0OjdF+BCXGaqvanYu+Fw5iSBJndFjMPZubexJF6z+4RkFR6B5SWCV1YbJn3W2ilyK2e6gvrme63MCvQGVuzqSIqKKSSRWkhHdzVNHD2sLJKkQ8n4C6byaUdWwiZhI9O6+r1vUE6fw+GTDcMQLjhS6KIIEFJtxNCbk2E="
   matrix:
     - SOURCEMOD=stable
     - SOURCEMOD=dev
@@ -35,3 +35,13 @@ matrix:
 #And compile!
 script:
   - make compile-$SOURCEMOD
+
+after_success:
+  - |
+      if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
+        if [ "$SOURCEMOD" = "stable" ]; then
+          # because `make compile` was already done before,
+          # we only need to pack the build directory and deploy
+          make pack deploy
+        fi
+      fi
