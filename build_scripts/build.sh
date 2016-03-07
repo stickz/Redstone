@@ -215,7 +215,7 @@ do
 
   # Only write plugin updater file if it has a directory in /updater
   if [ -d "$PLUGINS_DIR/$plugin_name" ]; then
-    echo '"Updater {"' >> $plugin_updater_path
+    echo '"Updater" {' >> $plugin_updater_path
     echo '  "Information" {' >> $plugin_updater_path
     echo '    "Version" {' >> $plugin_updater_path
     echo "      \"Latest\" \"$plugin_hash\"" >> $plugin_updater_path
