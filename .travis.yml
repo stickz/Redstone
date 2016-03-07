@@ -34,6 +34,10 @@ matrix:
   allow_failures:
     - env: SOURCEMOD=dev
 
+git:
+  depth: 9999999
+
+
 #And compile!
 script:
   - make build-$SOURCEMOD
@@ -43,7 +47,7 @@ after_success:
       if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
         if [ "$SOURCEMOD" = "stable" ]; then
           # because `make build` was already done before,
-          # we only need to pack the build directory and deploy
-          make pack deploy
+          # we only need to run deploy task
+          make deploy
         fi
       fi

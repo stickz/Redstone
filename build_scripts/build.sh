@@ -1,8 +1,5 @@
 #!/usr/bin/env sh
 
-# Once any command returns non-zero code - exit with that code
-set -e
-
 # set command line switches defaults
 verbose=false
 sourcemod_version="1.7.3-5255"
@@ -15,6 +12,7 @@ do
     -v)  verbose=true;;
     --sourcemod=*) sourcemod_version=`echo $1 | sed -e 's/^[^=]*=//g'`;;
     --no-cache) cache=false;;
+    --out=*) output_dir=`echo $1 | sed -e 's/^[^=]*=//g'`;;
     --)  shift; break;;
     -*)
       echo >&2 "usage: $0 [-v] [--sourcemod=version-build] [--no-cache]"
@@ -69,9 +67,23 @@ fi
 # etc.)
 TMPDIR="$ROOTDIR/.tmp"
 
+# If --out= is passed and path is absolute - set as is,
+# if path is relative - append to project root directory
+# if --out= is not passed, use default path
+if [ -n ${output_dir+x} ] && [ "$output_dir" != "" ]; then
+  if [ "${output_dir%${output_dir#?}}"x = '/x' ]; then
+    BUILDDIR="$output_dir"
+  else
+    BUILDDIR="$ROOTDIR/$output_dir"
+  fi
+else
+  BUILDDIR="$ROOTDIR/build"
+fi
+
 PLUGINS_SRC_BACKUP_DIR="$TMPDIR/addons_backup"
 PLUGINS_SRC_DIR="$ROOTDIR/addons/sourcemod/scripting"
-PLUGINS_DIST_DIR="$ROOTDIR/updater"
+PLUGINS_DIR="$ROOTDIR/updater"
+PLUGINS_DIST_DIR="$BUILDDIR/updater"
 
 COMPILE_BINARY="$PLUGINS_SRC_DIR/spcomp"
 COMPILE_INCLUDE_DIR="$PLUGINS_SRC_DIR/include"
@@ -87,6 +99,16 @@ fi
 
 UPDATER_PATCH_URL="https://bitbucket.org/GoD_Tony/updater/raw/53ebb3e27e5a43bc46dc52dc0de76ac2fb48cd9e/include/updater.inc -O include/updater.inc"
 UPDATER_PATCH_PATH="$TMPDIR/updater.inc"
+
+############
+# Action!
+##########
+
+# Reset build directory
+rm -fr $BUILDDIR && mkdir $BUILDDIR
+
+# Prepare directory where we place compiled plugins
+mkdir $PLUGINS_DIST_DIR
 
 # get list of all plugins to compile
 plugins_paths=`ls ${PLUGINS_SRC_DIR}/*.sp`
@@ -153,17 +175,66 @@ for plugin_path in $plugins_paths
 do
   plugin_filename="${plugin_path##*/}"
   plugin_name="${plugin_filename%.*}"
-  plugin_dir="$PLUGINS_DIST_DIR/$plugin_name/plugins"
-  plugin_dest_path="$plugin_dir/$plugin_name"
-  if [ ! -d "$plugin_dir" ]; then
-    mkdir -p $plugin_dir
+  plugin_dir="$PLUGINS_DIST_DIR/$plugin_name"
+  plugin_translations_dir="$PLUGINS_DIR/$plugin_name/translations"
+  plugin_dest_path="$plugin_dir/plugins/$plugin_name"
+  plugin_updater_path="$plugin_dir/$plugin_name.txt"
+
+  if [ ! -d "$plugin_dir/plugins" ]; then
+    mkdir -p $plugin_dir/plugins
   fi
+
+  # Copy translations
+  if [ -d "$plugin_translations_dir" ]; then
+    if [ "$verbose" = true ]; then
+      echo "- Copying plugin '$plugin_name' translations"
+    fi
+    cp -r $plugin_translations_dir $plugin_dir
+  fi
+
+  # get plugin's last commit and extract 7 characters hash off of it
+  plugin_paths_for_hash="$plugin_path"
+  if [ -d "$plugin_translations_dir" ]; then
+    plugin_paths_for_hash="$plugin_paths_for_hash $plugin_translations_dir"
+  fi
+  plugin_hash=`git log -n 1 --oneline -- ${plugin_paths_for_hash}`
+  plugin_hash=`echo $plugin_hash | sed -e 's/\s.*$//g'`
+
+  sed "s/version \?= \?[^,]*/version = \"${plugin_hash}\"/g" $plugin_path > $TMPDIR/${plugin_name}
+  mv $TMPDIR/${plugin_name} ${plugin_path}
+  if [ "$verbose" = true ]; then
+    echo "- Replaced version in $plugin_name.sp with hash $plugin_hash"
+  fi
+
   if [ "$verbose" = true ]; then
     echo "- Compiling plugin '$plugin_name'"
   fi
   $COMPILE_BINARY $plugin_path \
     -i${COMPILE_INCLUDE_DIR} \
     -o${plugin_dest_path}
+
+  # Write plugin updater file
+  echo '"Updater {"' >> $plugin_updater_path
+  echo '  "Information" {' >> $plugin_updater_path
+  echo '    "Version" {' >> $plugin_updater_path
+  echo "      \"Latest\" \"$plugin_hash\"" >> $plugin_updater_path
+  echo '    }' >> $plugin_updater_path
+  echo '  }' >> $plugin_updater_path
+  echo '  "Files" {' >> $plugin_updater_path
+  # turn off variable value expansion except for splitting at newlines
+  set -f; IFS='
+  ' 
+  for line in `find $plugin_dir -type f -not -path $plugin_updater_path`; do
+    set +f; unset IFS
+    file_relative_path=`echo $line | sed -e "s|${plugin_dir}||g"`
+    echo "    \"Plugin\" \"Path_SM$file_relative_path\"" >> $plugin_updater_path
+  done
+  set +f; unset IFS
+  echo '  }' >> $plugin_updater_path
+  echo '}' >> $plugin_updater_path
+  if [ "$verbose" = true ]; then
+    echo "- Generated Updater file for plugin '$plugin_name'"
+  fi
 done
 
 # restore previously backed up addons directory
