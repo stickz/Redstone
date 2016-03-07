@@ -27,7 +27,7 @@ If you have write access to this repo then following command will compile and
 deploy all the files required by server to the `build` branch upstream:
 
 ```
-GH_TOKEN=<your token>; make build deploy
+export GH_TOKEN=<your token>; make build deploy
 ```
 
 You won't likely need to do this manually though because Travis CI does

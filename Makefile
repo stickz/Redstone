@@ -18,6 +18,6 @@ build-dev:
 deploy:
 	@./build_scripts/deploy.sh -v \
 		--dir=build \
-		--repo=github.com/stickz/Redstone \
+		--repo=github.com/sergeylukin/Redstone \
 		--token=${GH_TOKEN} \
 		--branch=build
