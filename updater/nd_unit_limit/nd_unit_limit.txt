@@ -4,7 +4,7 @@
 	{
 		"Version"
 		{
-			"Latest"	"2.0.4"
+			"Latest"	"2.0.5"
 		}
 		
 		"Notes" "2.0.0: Inital plugin upgrade from sniper to unit limiter"
@@ -12,6 +12,7 @@
 		"Notes" "2.0.2: Trigger update for auto-building"
 		"Notes"	"2.0.3: Fix incorrect operators in unit limits"
 		"Notes"	"2.0.4: Add round-start filter to unit limits"
+		"Notes"	"2.0.5: Fix plugin error not caught by travis"
 	}
 	
 	"Files"
