@@ -27,8 +27,10 @@ env:
     - SOURCEMOD=stable
     - SOURCEMOD=dev
     
-# Allow dev build to fail
 matrix:
+  # Mark build as finished as soon as stable compilation is completed
+  fast_finish: true
+  # Allow dev build to fail
   allow_failures:
     - env: SOURCEMOD=dev
 
