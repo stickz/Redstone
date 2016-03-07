@@ -213,27 +213,29 @@ do
     -i${COMPILE_INCLUDE_DIR} \
     -o${plugin_dest_path}
 
-  # Write plugin updater file
-  echo '"Updater {"' >> $plugin_updater_path
-  echo '  "Information" {' >> $plugin_updater_path
-  echo '    "Version" {' >> $plugin_updater_path
-  echo "      \"Latest\" \"$plugin_hash\"" >> $plugin_updater_path
-  echo '    }' >> $plugin_updater_path
-  echo '  }' >> $plugin_updater_path
-  echo '  "Files" {' >> $plugin_updater_path
-  # turn off variable value expansion except for splitting at newlines
-  set -f; IFS='
-  ' 
-  for line in `find $plugin_dir -type f -not -path $plugin_updater_path`; do
+  # Only write plugin updater file if it has a directory in /updater
+  if [ -d "$PLUGINS_DIR/$plugin_name" ]; then
+    echo '"Updater {"' >> $plugin_updater_path
+    echo '  "Information" {' >> $plugin_updater_path
+    echo '    "Version" {' >> $plugin_updater_path
+    echo "      \"Latest\" \"$plugin_hash\"" >> $plugin_updater_path
+    echo '    }' >> $plugin_updater_path
+    echo '  }' >> $plugin_updater_path
+    echo '  "Files" {' >> $plugin_updater_path
+    # turn off variable value expansion except for splitting at newlines
+    set -f; IFS='
+    ' 
+    for line in `find $plugin_dir -type f -not -path $plugin_updater_path`; do
+      set +f; unset IFS
+      file_relative_path=`echo $line | sed -e "s|${plugin_dir}||g"`
+      echo "    \"Plugin\" \"Path_SM$file_relative_path\"" >> $plugin_updater_path
+    done
     set +f; unset IFS
-    file_relative_path=`echo $line | sed -e "s|${plugin_dir}||g"`
-    echo "    \"Plugin\" \"Path_SM$file_relative_path\"" >> $plugin_updater_path
-  done
-  set +f; unset IFS
-  echo '  }' >> $plugin_updater_path
-  echo '}' >> $plugin_updater_path
-  if [ "$verbose" = true ]; then
-    echo "- Generated Updater file for plugin '$plugin_name'"
+    echo '  }' >> $plugin_updater_path
+    echo '}' >> $plugin_updater_path
+    if [ "$verbose" = true ]; then
+      echo "- Generated Updater file for plugin '$plugin_name'"
+    fi
   fi
 done
 
