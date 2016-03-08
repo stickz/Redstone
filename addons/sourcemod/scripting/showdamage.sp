@@ -33,6 +33,8 @@ new bool:show_damage_ff = false;
 new bool:show_damage_own_dmg = false;
 new show_damage_text_area = 1;
 
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/showdamage/showdamage.txt"
+#include "updater/standard.sp"
 
 public OnPluginStart()
 {
@@ -77,6 +79,8 @@ public OnPluginStart()
 	HookConVarChange(cvar_show_damage_ff, OnCVarChange);
 	HookConVarChange(cvar_show_damage_own_dmg, OnCVarChange);
 	HookConVarChange(cvar_show_damage_text_area, OnCVarChange);
+	
+	AddUpdaterLibrary();
 	
 	//AutoExecConfig(true, "plugin.showdamage");
 	LoadTranslations("common.phrases");
