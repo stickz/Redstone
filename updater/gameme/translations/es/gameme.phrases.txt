@@ -1,0 +1,156 @@
+"Phrases"
+{
+
+	"IngameMenu_Caption"
+	{
+		"es"		"gameME - Menu Principal"
+	}
+	"IngameMenu_Menu1"
+	{
+		"es"		"Mostrar Ranking"
+	}
+	"IngameMenu_Menu2"
+	{
+		"es"		"Siguientes Jugadores"
+	}
+	"IngameMenu_Menu3"
+	{
+		"es"		"Top10 Jugadores"
+	}
+	"IngameMenu_Menu4"
+	{
+		"es"		"Clasificación Automática"
+	}
+	"IngameMenu_Menu5"
+	{
+		"es"		"Avisos en Chat"
+	}
+	"IngameMenu_Menu6"
+	{
+		"es"		"Alternar Clasificación"
+	}
+	"IngameMenu_Menu7"
+	{
+		"es"		"Ranking de Clan"
+	}
+	"IngameMenu_Menu8"
+	{
+		"es"		"Estado de Servidor"
+	}
+	"IngameMenu_Menu9"
+	{
+		"es"		"Statsme"
+	}
+	"IngameMenu_Menu10"
+	{
+		"es"		"Uso de Armas"
+	}
+	"IngameMenu_Menu11"
+	{
+		"es"		"Precisión de Armas"
+	}
+	"IngameMenu_Menu12"
+	{
+		"es"		"Objetivos de Armas"
+	}
+	"IngameMenu_Menu13"
+	{
+		"es"		"Muertes de Jugador"
+	}
+	"IngameMenu_Menu14"
+	{
+		"es"		"Lista de Bans"
+	}
+	"IngameMenu_Menu15"
+	{
+		"es"		"Mostrar Ayuda"
+	}
+	"IngameMenu_Menu16"
+	{
+		"en"		"Resetear Estadisticas"
+	}
+	
+
+	"AutoMenu_Caption"
+	{
+		"es"		"TrolStats - Clasificación Automática"
+	}
+	"AutoMenu_Menu1"
+	{
+		"es"		"Activar al Iniciar la Ronda"
+	}
+	"AutoMenu_Menu2"
+	{
+		"es"		"Activar al Final de la Ronda"
+	}
+	"AutoMenu_Menu3"
+	{
+		"es"		"Activar a la Muerte del Jugador"
+	}
+	"AutoMenu_Menu4"
+	{
+		"es"		"Desactivar"
+	}
+
+
+	"ConsoleMenu_Caption"
+	{
+		"es"		"gameME - Avisos en el Chat"
+	}
+	"ConsoleMenu_Menu1"
+	{
+		"es"		"Activar Mensajes / Eventos"
+	}
+	"ConsoleMenu_Menu2"
+	{
+		"es"		"Desactivar Mensajes / Eventos"
+	}
+	"ConsoleMenu_Menu3"
+	{
+		"es"		"Activar Chat Global"
+	}
+	"ConsoleMenu_Menu4"
+	{
+		"es"		"Desactivar Chat Global"
+	}
+
+
+	"DamagePanel_Attackers"
+	{
+		"es"		"Atacantes"
+	}
+	"DamagePanel_Killed"
+	{
+		"es"		"Muertes"
+	}
+	"DamagePanel_Wounded"
+	{
+		"es"		"Heridos"
+	}
+	"DamagePanel_Killer"
+	{
+		"es"		"Asesinos"
+	}
+	"DamagePanel_Dmg"
+	{
+		"es"		"Dmg"
+	}
+	"DamagePanel_Hit"
+	{
+		"es"		"Tiro"
+	}
+	"DamagePanel_Hits"
+	{
+		"es"		"Tiros"
+	}
+	"DamagePanel_Hp"
+	{
+		"es"		"Vida"
+	}
+
+	"DamageChat_Killedyou"
+	{
+		"es"		"{1} te ha matado con {2} dmg, {3} vida restante"
+	}
+
+}
