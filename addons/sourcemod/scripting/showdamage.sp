@@ -15,8 +15,6 @@ public Plugin:myinfo =
 new player_old_health[MAXPLAYERS + 1];
 new player_damage[MAXPLAYERS + 1];
 new bool:block_timer[MAXPLAYERS + 1] = {false,...};
-//new bool:FrameMod = true;
-new String:DamageEventName[16];
 new MaxDamage = 10000000;
 new bool:option_show_damage[MAXPLAYERS + 1] = {true,...};
 new Handle:cookie_show_damage = INVALID_HANDLE;
@@ -38,57 +36,17 @@ new show_damage_text_area = 1;
 
 public OnPluginStart()
 {
-	decl String:gameName[80];
-	GetGameFolderName(gameName, 80);
+	CreateConvars(); //plugin controls
 	
-	if (StrEqual(gameName, "cstrike") || StrEqual(gameName, "insurgency") || StrEqual(gameName, "nucleardawn"))
-	{
-		HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Post);
-		DamageEventName = "dmg_health";
-		//FrameMod = false;
-	}
-	else if (StrEqual(gameName, "left4dead") || StrEqual(gameName, "left4dead2"))
-	{
-		HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Post);
-		HookEvent("infected_hurt", Event_InfectedHurt, EventHookMode_Post);
-		MaxDamage = 2000;
-		DamageEventName = "dmg_health";
-		//FrameMod = false;
-	}
-	else if (StrEqual(gameName, "dod") || StrEqual(gameName, "hidden"))
-	{
-		HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Post);
-		DamageEventName = "damage";
-		//FrameMod = false;
-	}
-	else
-	{
-		HookEvent("player_hurt", Event_PlayerHurt_FrameMod, EventHookMode_Pre);
-		//FrameMod = true;
-	}
+	AddHooks(); //convar and event hooks
 	
-	CreateConVar("sm_show_damage_version", PLUGIN_VERSION, "Show Damage Version", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY|FCVAR_DONTRECORD);
-	cvar_show_damage = CreateConVar("sm_show_damage", "1", "Enabled/Disabled show damage functionality, 0 = off/1 = on", FCVAR_PLUGIN, true, 0.0, true, 1.0);
-	cvar_show_damage_ff = CreateConVar("sm_show_damage_ff", "0", "Show friendly fire damage, 0 = off/1 = on", FCVAR_PLUGIN, true, 0.0, true, 1.0);
-	cvar_show_damage_own_dmg = CreateConVar("sm_show_damage_own_dmg", "0", "Show your own damage, 0 = off/1 = on", FCVAR_PLUGIN, true, 0.0, true, 1.0);
-	cvar_show_damage_text_area = CreateConVar("sm_show_damage_text_area", "1", "Defines the area for damage text:\n 1 = in the center of the screen\n 2 = in the hint text area \n 3 = in chat area of screen", FCVAR_PLUGIN, true, 1.0, true, 3.0);
+	AddUpdaterLibrary(); //auto-updater support
 	
-	HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
+	AddClientPrefs(); //client pref support (toggle on/off)
 	
-	HookConVarChange(cvar_show_damage, OnCVarChange);
-	HookConVarChange(cvar_show_damage_ff, OnCVarChange);
-	HookConVarChange(cvar_show_damage_own_dmg, OnCVarChange);
-	HookConVarChange(cvar_show_damage_text_area, OnCVarChange);
+	LoadTranslations("showdamage.phrases"); //translation phrase support
 	
-	AddUpdaterLibrary();
-	
-	//AutoExecConfig(true, "plugin.showdamage");
-	LoadTranslations("common.phrases");
-	LoadTranslations("showdamage.phrases");
-	
-	cookie_show_damage = RegClientCookie("Show Damage On/Off", "", CookieAccess_Protected);
-	new info;
-	SetCookieMenuItem(CookieMenuHandler_ShowDamage, any:info, "Show Damage");
+	//AutoExecConfig(true, "showdamage"); github auto-update is better
 }
 
 public CookieMenuHandler_ShowDamage(client, CookieMenuAction:action, any:info, String:buffer[], maxlen)
@@ -96,23 +54,14 @@ public CookieMenuHandler_ShowDamage(client, CookieMenuAction:action, any:info, S
 	if (action == CookieMenuAction_DisplayOption)
 	{
 		decl String:status[10];
-		if (option_show_damage[client])
-			Format(status, sizeof(status), "%T", "On", client);
-		else
-			Format(status, sizeof(status), "%T", "Off", client);
-		
+		Format(status, sizeof(status), "%T", option_show_damage[client] ? "On" : "Off", client);
 		Format(buffer, maxlen, "%T: %s", "Cookie Show Damage", client, status);
 	}
 	// CookieMenuAction_SelectOption
 	else
 	{
 		option_show_damage[client] = !option_show_damage[client];
-		
-		if (option_show_damage[client])
-			SetClientCookie(client, cookie_show_damage, "On");
-		else
-			SetClientCookie(client, cookie_show_damage, "Off");
-		
+		SetClientCookie(client, cookie_show_damage, option_show_damage[client] ? "On" : "Off");
 		ShowCookieMenu(client);
 	}
 }
@@ -141,13 +90,6 @@ public Action:Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroa
 	
 	return Plugin_Continue;
 }
-
-//This is for games that have no damage information in player_hurt event
-/*public OnGameFrame()
-	if (FrameMod && show_damage)
-		for (new client = 1; client <= MaxClients; client++)
-			if (IsClientInGame(client))
-				player_old_health[client] = GetClientHealth(client);*/
 
 public Action:ShowDamage(Handle:timer, any:client)
 {
@@ -180,7 +122,7 @@ public Action:Event_PlayerHurt(Handle:event, const String:name[], bool:dontBroad
 {	
 	new client_attacker = GetClientOfUserId(GetEventInt(event, "attacker")),
 	client = GetClientOfUserId(GetEventInt(event, "userid")),
-	damage = GetEventInt(event, DamageEventName);
+	damage = GetEventInt(event, "dmg_health");
 	
 	CalcDamage(client, client_attacker, damage);
 	return Plugin_Continue;
@@ -227,4 +169,32 @@ GetCVars()
 	show_damage_ff = GetConVarBool(cvar_show_damage_ff);
 	show_damage_own_dmg = GetConVarBool(cvar_show_damage_own_dmg);
 	show_damage_text_area = GetConVarInt(cvar_show_damage_text_area);
+}
+
+AddHooks()
+{
+	HookConVarChange(cvar_show_damage, OnCVarChange);
+	HookConVarChange(cvar_show_damage_ff, OnCVarChange);
+	HookConVarChange(cvar_show_damage_own_dmg, OnCVarChange);
+	HookConVarChange(cvar_show_damage_text_area, OnCVarChange);
+	
+	HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Post);
+	HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
+}
+
+AddClientPrefs()
+{
+	LoadTranslations("common.phrases");
+	
+	cookie_show_damage = RegClientCookie("Show Damage On/Off", "", CookieAccess_Protected);
+	new info;
+	SetCookieMenuItem(CookieMenuHandler_ShowDamage, any:info, "Show Damage");
+}
+
+CreateConvars()
+{
+	cvar_show_damage = CreateConVar("sm_show_damage", "1", "Enabled/Disabled show damage functionality, 0 = off/1 = on", FCVAR_PLUGIN, true, 0.0, true, 1.0);
+	cvar_show_damage_ff = CreateConVar("sm_show_damage_ff", "0", "Show friendly fire damage, 0 = off/1 = on", FCVAR_PLUGIN, true, 0.0, true, 1.0);
+	cvar_show_damage_own_dmg = CreateConVar("sm_show_damage_own_dmg", "0", "Show your own damage, 0 = off/1 = on", FCVAR_PLUGIN, true, 0.0, true, 1.0);
+	cvar_show_damage_text_area = CreateConVar("sm_show_damage_text_area", "1", "Defines the area for damage text:\n 1 = in the center of the screen\n 2 = in the hint text area \n 3 = in chat area of screen", FCVAR_PLUGIN, true, 1.0, true, 3.0);
 }
