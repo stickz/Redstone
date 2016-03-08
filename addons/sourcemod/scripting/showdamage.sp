@@ -15,6 +15,7 @@ public Plugin:myinfo =
 new player_old_health[MAXPLAYERS + 1];
 new player_damage[MAXPLAYERS + 1];
 new bool:block_timer[MAXPLAYERS + 1] = {false,...};
+new String:DamageEventName[16];
 new MaxDamage = 10000000;
 new bool:option_show_damage[MAXPLAYERS + 1] = {true,...};
 new Handle:cookie_show_damage = INVALID_HANDLE;
@@ -38,7 +39,7 @@ public OnPluginStart()
 {
 	CreateConvars(); //plugin controls
 	
-	AddHooks(); //convar and event hooks
+	AddConVarHooks(); //convar and event hooks
 	
 	AddUpdaterLibrary(); //auto-updater support
 	
@@ -46,7 +47,23 @@ public OnPluginStart()
 	
 	LoadTranslations("showdamage.phrases"); //translation phrase support
 	
-	//AutoExecConfig(true, "showdamage"); github auto-update is better
+	AutoExecConfig(true, "showdamage");
+		
+	HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Post);
+	HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
+	
+	decl String:gameName[80];
+	GetGameFolderName(gameName, 80);
+	
+	if (StrEqual(gameName, "left4dead") || StrEqual(gameName, "left4dead2"))
+	{
+		HookEvent("infected_hurt", Event_InfectedHurt, EventHookMode_Post);
+		MaxDamage = 2000;
+	}
+	
+	DamageEventName = StrEqual(gameName, "dod") || StrEqual(gameName, "hidden") 
+			? "damage"
+			: "dmg_health";
 }
 
 public CookieMenuHandler_ShowDamage(client, CookieMenuAction:action, any:info, String:buffer[], maxlen)
@@ -108,21 +125,11 @@ public Action:ShowDamage(Handle:timer, any:client)
 	player_damage[client] = 0;
 }
 
-public Action:Event_PlayerHurt_FrameMod(Handle:event, const String:name[], bool:dontBroadcast)
-{	
-	new client = GetClientOfUserId(GetEventInt(event, "userid")),
-	client_attacker = GetClientOfUserId(GetEventInt(event, "attacker")),
-	damage = player_old_health[client] - GetClientHealth(client);
-	
-	CalcDamage(client, client_attacker, damage);
-	return Plugin_Continue;
-}
-
 public Action:Event_PlayerHurt(Handle:event, const String:name[], bool:dontBroadcast)
 {	
 	new client_attacker = GetClientOfUserId(GetEventInt(event, "attacker")),
 	client = GetClientOfUserId(GetEventInt(event, "userid")),
-	damage = GetEventInt(event, "dmg_health");
+	damage = GetEventInt(event, DamageEventName);
 	
 	CalcDamage(client, client_attacker, damage);
 	return Plugin_Continue;
@@ -171,15 +178,12 @@ GetCVars()
 	show_damage_text_area = GetConVarInt(cvar_show_damage_text_area);
 }
 
-AddHooks()
+AddConVarHooks()
 {
 	HookConVarChange(cvar_show_damage, OnCVarChange);
 	HookConVarChange(cvar_show_damage_ff, OnCVarChange);
 	HookConVarChange(cvar_show_damage_own_dmg, OnCVarChange);
 	HookConVarChange(cvar_show_damage_text_area, OnCVarChange);
-	
-	HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Post);
-	HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
 }
 
 AddClientPrefs()
