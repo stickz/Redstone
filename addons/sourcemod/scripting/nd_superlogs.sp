@@ -36,9 +36,6 @@
 
 #define BUNKER_DAMAGE_TIMES 10
 
-#define ND_TEAM_EMP 3
-#define ND_TEAM_CT 2
-
 new g_weapon_stats[MAXPLAYERS+1][MAX_LOG_WEAPONS][15];
 new const String:g_weapon_list[MAX_LOG_WEAPONS][MAX_WEAPON_LEN] = {
 									"avenger", 
@@ -109,8 +106,8 @@ public OnPluginStart()
 	
 	GetTeams();
 	// GetTeamName gets #ND_Consortium and #ND_Empire in release version -.-. Game logs with CONSORTIUM and EMPIRE translated
-	strcopy(g_team_list[ND_TEAM_CT], sizeof(g_team_list[]), "CONSORTIUM");
-	strcopy(g_team_list[ND_TEAM_EMP], sizeof(g_team_list[]), "EMPIRE");
+	strcopy(g_team_list[TEAM_CONSORT], sizeof(g_team_list[]), "CONSORTIUM");
+	strcopy(g_team_list[TEAM_EMPIRE], sizeof(g_team_list[]), "EMPIRE");
 	
 	for(new i=1;i<=MaxClients;i++)
 	{
@@ -125,8 +122,8 @@ public OnMapStart()
 {
 	GetTeams();
 	// GetTeamName gets #ND_Consortium and #ND_Empire in release version -.-. Game logs with CONSORTIUM and EMPIRE translated
-	strcopy(g_team_list[ND_TEAM_CT], sizeof(g_team_list[]), "CONSORTIUM");
-	strcopy(g_team_list[ND_TEAM_EMP], sizeof(g_team_list[]), "EMPIRE");
+	strcopy(g_team_list[TEAM_CONSORT], sizeof(g_team_list[]), "CONSORTIUM");
+	strcopy(g_team_list[TEAM_EMPIRE], sizeof(g_team_list[]), "EMPIRE");
 	
 	g_iBunkerAttacked[0] = 0;
 	g_iBunkerAttacked[1] = 0;
@@ -317,7 +314,7 @@ public Event_RoundWin(Handle:event, const String:name[], bool:dontBroadcast)
 	if(team >= 2)
 	{
 		LogTeamEvent(team, "triggered", "round_win");
-		LogTeamEvent(GetOtherTeam(team), "triggered", "round_lose");
+		LogTeamEvent(getOtherTeam(team), "triggered", "round_lose");
 	}
 	
 	g_iBunkerAttacked[0] = 0;
@@ -348,7 +345,7 @@ public Event_StructureDamageSparse(Handle:event, const String:name[], bool:dontB
 		
 		if(g_iBunkerAttacked[team-2] == BUNKER_DAMAGE_TIMES)
 		{
-			LogTeamEvent(GetOtherTeam(team), "triggered", "damaged_opposite_bunker");
+			LogTeamEvent(getOtherTeam(team), "triggered", "damaged_opposite_bunker");
 			g_iBunkerAttacked[team-2] = 0;
 		}
 	}
@@ -393,17 +390,6 @@ public Action:LogMap(Handle:timer)
 {
 	// Called 1 second after OnPluginStart since srcds does not log the first map loaded. Idea from Stormtrooper's "mapfix.sp" for psychostats
 	LogMapLoad();
-}
-
-stock GetOtherTeam(team)
-{
-	switch (team)
-	{
-		case ND_TEAM_CT: return ND_TEAM_EMP;
-		case ND_TEAM_EMP: return ND_TEAM_CT;	
-	}
-	
-	return team;
 }
 
 stock FixWeaponLoggingName(String:sWeapon[], maxlength)
