@@ -25,7 +25,6 @@ new Handle:g_minAlphaCount = INVALID_HANDLE;		// minimum amount of alphanumeric 
 new Handle:g_maxPercent = INVALID_HANDLE;			// Maximum percent of characters thay may be uppercase
 new Handle:g_isEnabled = INVALID_HANDLE;			// Var for storing whether the plugin is enabled
 
-
 public Plugin:myinfo = 
 {
 	name = "Don't Shout",
@@ -34,6 +33,9 @@ public Plugin:myinfo =
 	version = "1.0",
 	url = "http://"	
 };
+
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/dontshout/dontshout.txt"
+#include "updater/standard.sp"
 
 public OnPluginStart()
 {
@@ -49,6 +51,8 @@ public OnPluginStart()
 	RegConsoleCmd("say", Command_HandleSay);
 	RegConsoleCmd("say2", Command_HandleSay);
 	RegConsoleCmd("say_team", Command_HandleSay);
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public OnPluginEnd()
