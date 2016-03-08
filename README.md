@@ -1,12 +1,12 @@
 # Redstone ND Server Project
-Looking for: An automated build script to compile pull requests and copy the plugin to /updater/plugin_name/plugins.
+Looking for: An automated script to reboot servers at a specified time os everyday.
 
 # Useful Information
 Get Started Using Github Here: https://guides.github.com/activities/hello-world/
 
-Vist this link for questions: http://steamcommunity.com/groups/NDBattleSoc/discussions/0/451850468369717745/
+The current stable build environment for this github is sourcemod 1.7 build 5255.
 
-All [xG] Nuclear Dawn servers are running Linux with sourcemod 1.7 build 5255
+Compile checks are run with sourcemod 1.8 dev to point out future issues.
 
 Bugs/Issues with sourcemod can be fixed here https://github.com/alliedmodders/sourcemod
 
