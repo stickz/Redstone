@@ -35,10 +35,24 @@ new const 	String:aAfrica[][2] = {"AO","BF","BI","BJ","BW","CD","CF","CG","CI","
 		String:aSouthAmerica[][2] = {"AR","BO","BR","CL","CO","EC","FK","GF","GY","PE","PY","SR","UY","VE"},
 		String:aAntarctica[][2] = {"AQ","BV","GS","HM","TF"};
 
+public Plugin:myinfo =
+{
+	name = "[ND] Continents",
+	author = "Stickz",
+	description = "Show a player's continent based on their IP.",
+	version = "dummy",
+	url = "https://github.com/stickz/Redstone/"
+};
+
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_continents/nd_continents.txt"
+#include "updater/standard.sp"
+
 public OnPluginStart()
 {
 	RegConsoleCmd("sm_locations", CMD_CheckLocations);
 	LoadTranslations("nd_continents.phrases");
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public Action:CMD_CheckLocations(client,args)
@@ -193,4 +207,4 @@ stock bool:IsValidClient(client, bool:nobots = true)
         return false;
 
     return IsClientInGame(client); 
-} 
+}
