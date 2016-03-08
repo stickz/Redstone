@@ -24,6 +24,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <sdkhooks>
+#include <nd_stocks>
 
 #define NAME "SuperLogs: Nuclear Dawn"
 #define VERSION "1.0.5"
@@ -377,6 +378,16 @@ public Event_StructureDeath(Handle:event, const String:name[], bool:dontBroadcas
 			case 11: LogPlayerEvent(iAttacker, "triggered", "flamethrowerturret_destroyed");
 			case 12: LogPlayerEvent(iAttacker, "triggered", "sonicturret_destroyed");
 			case 13: LogPlayerEvent(iAttacker, "triggered", "rocketturret_destroyed");
+			default:
+			{
+				decl String:sBuffer[32];
+				GetEdictClassname(iEnt, sBuffer, sizeof(sBuffer));
+				
+				decl String:message[64];
+				Format(message, sizeof(message), "Event %s triggered", sBuffer);
+				
+				PrintToAdmins(message, "a");
+			}
 			//case 14: Wall
 			//case 15: Barrier
 			//default: Format(buildingname, sizeof(buildingname), "a %d (?)", type);
