@@ -1,14 +1,13 @@
 #include <sourcemod>
 #include <clientprefs>
 
-#define PLUGIN_VERSION "1.0.7"
-
+//Notice the version is auto-filled by the travis builder
 public Plugin:myinfo = 
 {
 	name = "Show Damage",
 	author = "exvel",
 	description = "Shows damage in the center of the screen.",
-	version = PLUGIN_VERSION,
+	version = "dummy",
 	url = "www.sourcemod.net"
 }
 
