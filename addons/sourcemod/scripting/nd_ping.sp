@@ -28,6 +28,9 @@ public Plugin:myinfo =
 	url = "vintagejailbreak.org"
 };
 
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_ping/nd_ping.txt"
+#include "updater/standard.sp"
+
 new Handle:gH_Cvar_Type = INVALID_HANDLE;
 
 enum MinimapBlipType
@@ -45,6 +48,8 @@ public OnPluginStart()
 	RegConsoleCmd("sm_ping", Command_Ping);
 	gH_Cvar_Type = CreateConVar("sm_ping_type", "3", "The type of map blip to use. Check the source for details.", FCVAR_PLUGIN, true, 0.0);
 	CreateConVar("sm_ping_version", PLUGIN_VERSION, "Player Ping Version", FCVAR_PLUGIN|FCVAR_NOTIFY|FCVAR_REPLICATED|FCVAR_DONTRECORD);
+
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public Action:Command_Ping(client, args)
