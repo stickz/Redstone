@@ -489,10 +489,14 @@ new Handle: QueryCallbackArray;
 #define CALLBACK_DATA_SIZE 7
 enum callback_data {callback_data_id, Float: callback_data_time, callback_data_client, Handle: callback_data_plugin, Function: callback_data_function, callback_data_payload, callback_data_limit};
 
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/gameme/gameme.txt"
+#include "updater/standard.sp"
 
 public OnPluginStart() 
 {
 	LogToGame("gameME Plugin %s (http://www.gameme.com), copyright (c) 2007-2016 TTS Oetzel & Goerz GmbH", GAMEME_PLUGIN_VERSION);
+	
+	AddUpdaterLibrary(); //auto-updater support
 
 	// setup default values
 	gameme_plugin[log_locations]       = 1;
