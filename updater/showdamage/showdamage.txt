@@ -1,0 +1,21 @@
+"Updater"
+{
+	"Information"
+	{
+		"Version"
+		{
+			"Latest"	"1.0.1"
+		}
+		
+		"Notes"	"1.0.1: Initial Release"
+	}
+	
+	"Files"
+	{
+		"Plugin"	"Path_SM/plugins/showdamage.smx"
+		"Plugin"	"Path_SM/translations/showdamage.phrases.txt"
+		"Plugin"	"Path_SM/translations/cze/showdamage.phrases.txt"
+		"Plugin"	"Path_SM/translations/de/showdamage.phrases.txt"
+		"Plugin"	"Path_SM/translations/ru/showdamage.phrases.txt"
+	}
+}
