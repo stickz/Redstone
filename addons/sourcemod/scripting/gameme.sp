@@ -2046,7 +2046,7 @@ public build_damage_chat(player_index)
 				color_gameme_entities(killed_message);
 					
 				if (gameme_plugin[mod_id] == MOD_DODS) {
-					PrintToChat(player_index, killed_message);
+					//PrintToChat(player_index, killed_message);
 				} else { 
 					new Handle: message_handle = StartMessageOne("SayText2", player_index);
 					if (message_handle != INVALID_HANDLE) {
@@ -4411,7 +4411,7 @@ public Action: gameme_psay(args)
 					}
 					
 					if (gameme_plugin[mod_id] == MOD_DODS) {
-						PrintToChat(player_index, client_message);
+						//PrintToChat(player_index, client_message);
 					} else { 
 						new Handle: message_handle = StartMessageOne("SayText2", player_index);
 						if (message_handle != INVALID_HANDLE) {
@@ -4440,7 +4440,7 @@ public Action: gameme_psay(args)
 
 				new player_index = GetClientOfUserId(recipient_client);
 				if ((player_index > 0) && (!IsFakeClient(player_index)) && (IsClientInGame(player_index))) {
-					PrintToChat(player_index, client_message);
+					//PrintToChat(player_index, client_message);
 				}
 			}
 		}
