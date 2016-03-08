@@ -41,9 +41,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define PLUGIN_VERSION "2.0.5"
 #define DEBUG 0
 
-#define TEAM_CONSORT 2
-#define TEAM_EMPIRE 3
-
 #define m_iDesiredPlayerClass(%1) (GetEntProp(%1, Prop_Send, "m_iDesiredPlayerClass"))
 #define m_iDesiredPlayerSubclass(%1) (GetEntProp(%1, Prop_Send, "m_iDesiredPlayerSubclass"))
 
