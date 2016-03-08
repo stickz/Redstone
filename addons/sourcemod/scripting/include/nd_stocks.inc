@@ -3,6 +3,12 @@
 #endif
 #define _nd_stocks_included_
 
+/* The team name constants */
+#define TEAM_UNASSIGNED		0
+#define TEAM_SPEC		1
+#define TEAM_CONSORT		2
+#define TEAM_EMPIRE		3
+
 stock String:NumberInEnglish(num)
 {
 	decl String:englishNumber[16];
@@ -22,17 +28,25 @@ stock String:NumberInEnglish(num)
 	return englishNumber;
 }
 
+/**
+ * Gets the name of a given team index
+ *
+ * @param team			Team index.
+ * @return			The name of the team or "Unknown" on invalid team index
+ * @error			Invalid team index.
+ */
+
 stock String:ND_GetTeamName(team)
 {
 	new String:TeamName[12];
 	
 	switch(team)
 	{
-		case 3: 	TeamName = "Empire";
-		case 2: 	TeamName = "Consortium";
-		case 1:		TeamName = "Spectate";
-		case 0:		TeamName = "Unassigned";
-		default: 	TeamName = "Unknown";
+		case TEAM_EMPIRE: 	TeamName = "Empire";
+		case TEAM_CONSORT: 	TeamName = "Consortium";
+		case TEAM_SPEC:		TeamName = "Spectate";
+		case TEAM_UNASSIGNED:	TeamName = "Unassigned";
+		default: 		TeamName = "Unknown";
 	}
 	
 	return TeamName;
@@ -86,19 +100,29 @@ stock PrintToAdmins(const String:message[], const String:flags[])
     } 
 }
 
-/* Cache 'FindEntityByClassname(-1, "nd_player_manager")' to varriable and input an argiment when calling in loop
- * This is a very intensive task, repeating will hinder server performance majorily */
+/** 
+ * Retreives the level of a given client index
+ *
+ * @param client		Client index.
+ * @return			The level of the client or some value less than 2
+ * @error			Unloaded level or level less than 2.
+ */
  
-stock RetreiveLevel(client, PlayerManEnt = -1)
+stock ND_RetreiveLevel(client)
 {
-	new PlayerManager = PlayerManEnt != -1 ? PlayerManEnt : FindEntityByClassname(-1, "nd_player_manager");	
-	return GetEntProp(PlayerManager, Prop_Send, "m_iPlayerRank", 1, client);
+	return GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iPlayerRank", 1, client);
 }
 
-stock RetrieveScore(client, PlayerManEnt = -1)
+/** 
+ * Retreives the current score of a given client index
+ *
+ * @param client		Client index.
+ * @return			The current score of the client
+ */
+
+stock ND_RetrieveScore(client)
 {
-	new PlayerManager = PlayerManEnt != -1 ? PlayerManEnt : FindEntityByClassname(-1, "nd_player_manager");	
-	return GetEntProp(PlayerManager, Prop_Send, "m_iScore", 1, client);
+	return GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iScore", 1, client);
 }
 
 /* Count Constants */
