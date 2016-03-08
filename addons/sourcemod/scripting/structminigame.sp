@@ -39,9 +39,6 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/structminigame/structminigame.txt"
 #include "updater/standard.sp"
 
-#define TEAM_EMPIRE		3
-#define TEAM_CONSORT		2
-#define TEAM_SPEC		1
 #define MAX_TEAMS 		4
 
 new StructuresKilled[MAX_TEAMS];
