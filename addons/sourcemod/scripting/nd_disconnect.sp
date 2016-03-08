@@ -21,14 +21,19 @@ public Plugin:myinfo =
 	name 		= "[ND] Disconnect Messages",
 	author 		= "stickz",
 	description = "N/A",
-	version 	= "1.0.1",
+	version 	= "dummy",
 	url 		= "N/A"
 };
+
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_disconnect/nd_disconnect.txt"
+#include "updater/standard.sp"
 
 public OnPluginStart()
 {
 	HookEvent("player_disconnect", Event_PlayerDisconnected, EventHookMode_Pre);
 	LoadTranslations("nd_disconnect.phrases");
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public Event_PlayerDisconnected(Handle:event, const String:name[], bool:dontBroadcast)
