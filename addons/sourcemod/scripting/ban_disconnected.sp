@@ -2,11 +2,11 @@
 #include <adminmenu>
 #include <sdktools>
 
-
 #define STORED_ENTRIES 100
 #define PLUGIN_VERSION "1.04"
 
-public Plugin:myinfo = {
+public Plugin:myinfo = 
+{
 	name        = "Ban disconnected players",
 	author      = "mad_hamster",
 	description = "Lets you ban players that recently disconnected",
@@ -14,25 +14,27 @@ public Plugin:myinfo = {
 	url         = "http://pro-css.co.il"
 };
 
-
 new Handle:hTopMenu = INVALID_HANDLE;
 
 static String:disconnected_player_names  [STORED_ENTRIES][32];
 static String:disconnected_player_authids[STORED_ENTRIES][32];
 static disconnected_player_times         [STORED_ENTRIES];
 
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/ban_disconnected/ban_disconnected.txt"
+#include "updater/standard.sp"
 
-
-public OnPluginStart() {
+public OnPluginStart() 
+{
 	CreateConVar("ban_disconnected_ver", PLUGIN_VERSION, "", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY);
 	RegAdminCmd("sm_bandisconnected", BanDisconnected, ADMFLAG_BAN);
 	HookEvent("player_disconnect", OnEventPlayerDisconnect);
+	
 	new Handle:topmenu;
 	if (LibraryExists("adminmenu") && ((topmenu = GetAdminTopMenu()) != INVALID_HANDLE))
 		OnAdminMenuReady(topmenu);
+	
+	AddUpdaterLibrary(); //auto-updater
 }
-
-
 
 public Action:OnEventPlayerDisconnect(Handle:event, const String:name[], bool:dont_broadcast) {
 	decl String:steam_id[32];
