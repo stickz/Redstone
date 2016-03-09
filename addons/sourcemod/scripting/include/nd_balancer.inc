@@ -7,7 +7,7 @@
  * Retreive the team difference on the server
  * Positive for Consort and negative for Empire
  *
- * @return the average skill as a float value
+ * @return the skill difference on the teams
  */
 native Float:GetTeamDifference();
 
