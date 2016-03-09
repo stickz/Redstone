@@ -98,8 +98,14 @@ git config user.email "travis@example.com"
 git add .
 git commit -m "Build Redstone server"
 git push --force --quiet "https://${token}@${repo}" master:${branch} > /dev/null 2>&1
+RETVAL=$?
 rm -fr .git
 
-if [ "$verbose" = true ]; then
-  echo "- Deployed $dir to branch $branch on $repo"
+if test $RETVAL -gt 0; then
+  echo "Error: failed to push $dir to branch $branch on $repo"
+  exit $RETVAL
+else
+  if [ "$verbose" = true ]; then
+    echo "- Deployed $dir to branch $branch on $repo"
+  fi
 fi
