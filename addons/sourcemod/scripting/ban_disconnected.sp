@@ -25,7 +25,6 @@ static disconnected_player_times         [STORED_ENTRIES];
 
 public OnPluginStart() 
 {
-	CreateConVar("ban_disconnected_ver", PLUGIN_VERSION, "", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY);
 	RegAdminCmd("sm_bandisconnected", BanDisconnected, ADMFLAG_BAN);
 	HookEvent("player_disconnect", OnEventPlayerDisconnect);
 	
