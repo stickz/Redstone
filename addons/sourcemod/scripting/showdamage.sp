@@ -53,7 +53,7 @@ public OnPluginStart()
 {
 	CreateConvars(); //plugin controls
 	
-	AddConVarHooks(); //convar and event hooks
+	AddConVarHooks(); //convar hooks
 	
 	AddUpdaterLibrary(); //auto-updater support
 	
