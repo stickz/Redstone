@@ -27,7 +27,6 @@ public Plugin:myinfo =
 	url = "www.sourcemod.net"
 }
 
-new player_old_health[MAXPLAYERS + 1];
 new player_damage[MAXPLAYERS + 1];
 new bool:block_timer[MAXPLAYERS + 1] = {false,...};
 new String:DamageEventName[16];
