@@ -4,6 +4,14 @@
 #define _nd_balancer_included
 
 /**
+ * Retreive the team difference on the server
+ * Positive for Consort and negative for Empire
+ *
+ * @return the average skill as a float value
+ */
+native Float:GetTeamDifference();
+
+/**
  * Retreive the average skill on the server
  * Currently on a scale of 1-80 level and 80-120 enhanced skill
  *
