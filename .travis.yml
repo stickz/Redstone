@@ -37,17 +37,17 @@ matrix:
 git:
   depth: 9999999
 
+
 #And compile!
 script:
   - make build-$SOURCEMOD
 
-deploy:
-  # don't remove files generated during the "build" task
-  skip_cleanup: true
-  # use custom shell scripting to deploy (we deploy to `build` branch)
-  provider: script
-  script: make deploy
-  # only run this when master branch is modified and only for stable build
-  on:
-    branch: master
-    condition: $SOURCEMOD = "stable"
+after_success:
+  - |
+      if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
+        if [ "$SOURCEMOD" = "stable" ]; then
+          # because `make build` was already done before,
+          # we only need to run deploy task
+          make deploy
+        fi
+      fi
