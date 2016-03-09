@@ -71,14 +71,14 @@
 	//{2} and/or {3} = team number remaining (1,2,3 etc)
 	"Extend Both"
 	{
-		"ru"		"{1} typed extend : {2} Con & {3} Emp required." 	
+		"ru"		"{1} проголосовал за продление раунда. Нехватает голосов: {2} от Кон. и {3} от Имп."	
 	}
 	"Extend Empire"
 	{
-		"ru"		"{1} typed extend : {2} empire required."	
+		"ru"		"{1} проголосовал за продление раунда. Нехватает голосов от Империи: {2}"	
 	}
 	"Extend Consort"
 	{
-		"ru"		"{1} typed extend : {2} consort required."	
+		"ru"		"{1} проголосовал за продление раунда. Нехватает голосов от Консорциума: {2}"	
 	}
 }
