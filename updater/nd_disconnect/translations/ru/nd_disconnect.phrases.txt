@@ -1,0 +1,8 @@
+﻿"Phrases"
+{
+	"Lost Connection"
+	{
+		//{1} = Player Name
+		"ru"		"{1} lost connection!"
+	}
+}
