@@ -137,11 +137,11 @@ public Action:CMD_LockPlayerSeige(client, args)
 		return Plugin_Handled;	
 	}
 	
-	if (!CanLockSeige(target))
+	/*if (!CanLockSeige(target))
 	{
 		PrintToChat(client, "\x05[xG] %t", "Cannot Lock"); //This player cannot be locked seige.
 		return Plugin_Handled;	
-	}	
+	}*/	
 	
 	SeigeLockPlayer(client, target, false);
 	return Plugin_Handled;
@@ -216,10 +216,10 @@ bool:PlayerIsSeige(class, subclass)
 	return class == MAIN_CLASS_EXO && subclass == EXO_CLASS_SEIGE_KIT;	
 }
 
-bool:CanLockSeige(target)
+/*bool:CanLockSeige(target)
 {
 	return true;
-}
+}*/
 
 SetPlayerSeige(client)
 {
