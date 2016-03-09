@@ -8,67 +8,67 @@
 	//Building Names
 	"Command Bunker"
 	{
-		"ru"		"the Command Bunker"
+		"ru"		"Командный бункер"
 	}
 	"MG Turret"
 	{
-		"ru"		"a Machine Gun Turret"
+		"ru"		"Пулемётная установка"
 	}
 	"Transport Gate"
 	{
-		"ru"		"a Transport Gate"
+		"ru"		"Телепорт"
 	}
 	"Power Station"
 	{
-		"ru"		"a Power Station"
+		"ru"		"Генератор"
 	}
 	"Wireless Repeater"
 	{
-		"ru"		"a Wireless Repeater"
+		"ru"		"Репитер"
 	}
 	"Relay Tower"
 	{
-		"ru"		"a Relay Tower"
+		"ru"		"Проводник энергии"
 	}
 	"Supply Station"
 	{
-		"ru"		"a Supply Station"
+		"ru"		"Снаряжение"
 	}
 	"Assembler"
 	{
-		"ru"		"an Assembler"
+		"ru"		"Транслятор"
 	}
 	"Armory"
 	{
-		"ru"		"an Armory"
+		"ru"		"Оружейная"
 	}
 	"Artillery"
 	{
-		"ru"		"an Artillery"
+		"ru"		"Артиллерия"
 	}
 	"Radar Station"
 	{
-		"ru"		"a Radar Station"
+		"ru"		"Радар"
 	}
 	"Flamethrower Turret"
 	{
-		"ru"		"a Flamethrower Turret"
+		"ru"		"Огнемётная установка"
 	}
 	"Sonic Turret"
 	{
-		"ru"		"a Sonic Turret"
+		"ru"		"Огнемётная установка"
 	}
 	"Rocket Turret"
 	{
-		"ru"		"a Rocket Turret"
+		"ru"		"Ракетная установка"
 	}
 	"Wall"
 	{
-		"ru"		"a Wall"
+		"ru"		"Стена"
 	}
 	"Barrier"
 	{
-		"ru"		"a Barrier"
+		"ru"		"Барьер"
 	}
 	
 	"Building Destoryed"
@@ -76,7 +76,7 @@
 		//{1} = team colour (always keep this first)
 		//{2} = Player's name who destoryed the structure
 		//{3} = The name of the structure destoryed (translated above)
-		"ru"		"{1}{2} destroyed {3}"
+		"ru"		"{1}{2} уничтожил {3}"
 	}
 	
 	
@@ -107,13 +107,13 @@
 		//Ex2. {blue} Vertex {green} just gave {blue} Consortium {green} the advantage!
 		//If required, change the number order to suit your needs
 		
-		"ru"		"{1}{2} {3}just gave {4}{5} {6}the advantage"
+		"ru"		"{1}{2} {3}дал {6}преимущество команде {4}{5}"
 	}
 	
 	//This message only uses the phrase "Empire" or "Consort"
 	"Advantage Center"
 	{
 		//{1} = Is etheir "Empire" or "Consort" as translated above
-		"ru"		"Advantage - {1}"
+		"ru"		"Преимущество - {1}"
 	}
 }
