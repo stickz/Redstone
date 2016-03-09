@@ -4,4 +4,116 @@
 	{
 		"ru"		"Убито структурами"
 	}
+	
+	//Building Names
+	"Command Bunker"
+	{
+		"ru"		"the Command Bunker"
+	}
+	"MG Turret"
+	{
+		"ru"		"a Machine Gun Turret"
+	}
+	"Transport Gate"
+	{
+		"ru"		"a Transport Gate"
+	}
+	"Power Station"
+	{
+		"ru"		"a Power Station"
+	}
+	"Wireless Repeater"
+	{
+		"ru"		"a Wireless Repeater"
+	}
+	"Relay Tower"
+	{
+		"ru"		"a Relay Tower"
+	}
+	"Supply Station"
+	{
+		"ru"		"a Supply Station"
+	}
+	"Assembler"
+	{
+		"ru"		"an Assembler"
+	}
+	"Armory"
+	{
+		"ru"		"an Armory"
+	}
+	"Artillery"
+	{
+		"ru"		"an Artillery"
+	}
+	"Radar Station"
+	{
+		"ru"		"a Radar Station"
+	}
+	"Flamethrower Turret"
+	{
+		"ru"		"a Flamethrower Turret"
+	}
+	"Sonic Turret"
+	{
+		"ru"		"a Sonic Turret"
+	}
+	"Rocket Turret"
+	{
+		"ru"		"a Rocket Turret"
+	}
+	"Wall"
+	{
+		"ru"		"a Wall"
+	}
+	"Barrier"
+	{
+		"ru"		"a Barrier"
+	}
+	
+	"Building Destoryed"
+	{
+		//{1} = team colour (always keep this first)
+		//{2} = Player's name who destoryed the structure
+		//{3} = The name of the structure destoryed (translated above)
+		"ru"		"{1}{2} destroyed {3}"
+	}
+	
+	
+	//Advantage Translations
+	"Empire"
+	{
+		"ru"		"Империя"
+	}
+	"Consortium"
+	{
+		"ru"		"Консирициум"
+	}
+	
+	//This message is a complicated mess, so read carefully
+	"Advantage Message"
+	{
+		//{1} changes {2} to the team colour
+		//{2} = Is the player's name
+		
+		//{3} changes the 'just gave' colour to green
+		
+		//{4} changes {5} to the team colour
+		//{5} = Is etheir "Empire" or "Consort" as translated above
+		
+		//{6} changes 'the advantage' colour to green
+		
+		//Ex1. Vertex just gave Consortium the advantage! -without colours
+		//Ex2. {blue} Vertex {green} just gave {blue} Consortium {green} the advantage!
+		//If required, change the number order to suit your needs
+		
+		"ru"		"{1}{2} {3}just gave {4}{5} {6}the advantage"
+	}
+	
+	//This message only uses the phrase "Empire" or "Consort"
+	"Advantage Center"
+	{
+		//{1} = Is etheir "Empire" or "Consort" as translated above
+		"ru"		"Advantage - {1}"
+	}
 }
