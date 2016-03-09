@@ -76,7 +76,7 @@ public QuerygameMEStatsCallback(command, payload, client, &Handle: datapack)
 		ResetPack(data);
 		
 		// total values
-		new rank            = ReadPackCell(data);
+		/*new rank            = ReadPackCell(data);
 		new players         = ReadPackCell(data);	
 		new skill           = ReadPackCell(data);	
 		new kills           = ReadPackCell(data);	
@@ -124,7 +124,7 @@ public QuerygameMEStatsCallback(command, payload, client, &Handle: datapack)
 		new global_deaths     = ReadPackCell(data);
 		new Float: global_kpd = ReadPackFloat(data);
 		new global_headshots  = ReadPackCell(data);
-		new Float: global_hpk = ReadPackFloat(data);
+		new Float: global_hpk = ReadPackFloat(data);*/
 
 		CloseHandle(data);
 
