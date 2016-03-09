@@ -148,4 +148,27 @@
 	{
 		"ru"		"Навык"	
 	}
+	"Disconnected WB"
+	{
+		//{1} = Player's Name
+		"ru"		"{1} disconnected after warmup balance"	
+	}
+	
+	"Imbalanced Teams"
+	{
+		"ru"		"imbalanced teams"	
+	}
+	
+	"Player Assigned"
+	{
+		//{1} = team name (empire or consort above)
+		//{2} = reason ("imbalanced teams" above is one)
+		"ru"		"Assigned you to {1}. ({2})"
+	}
+	
+	"Skill Averages"
+	{
+		//{1} = Empire Number, {2} = Consort Number
+		"ru"		"Skill Averages: Empire: {1}, Consort: {2}"	
+	}
 }
