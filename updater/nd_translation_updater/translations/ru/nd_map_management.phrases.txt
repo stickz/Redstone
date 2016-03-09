@@ -8,12 +8,12 @@
 	"Not Enough Players"
 	{
 		//{1} = Next Map, {2} = Changed map
-		"ru"		"Not enough players for {1}! Next map changed to {2}!"
+		"ru"		"Для карты {1} нехватает игроков! Выбрана следующая карта: {2}!"
 	}
 	
 	"Too Many Players"
 	{
 		//{1} = Next Map, {2} = Changed map
-		"ru"		"Too many players for {1}! Next map changed to {2}!"	
+		"ru"		"Слишком много игроков для карты {1}! Выбрана следующая карта: {2}!"	
 	}
 }
