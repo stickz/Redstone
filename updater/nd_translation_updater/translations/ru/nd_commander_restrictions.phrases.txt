@@ -69,4 +69,9 @@
 	{
 		"ru"		"Не найдено командира для понижения"
 	}
+	
+	"Demote Vote"
+	{
+		"ru"		"{1} has voted to !demote the commander. ({2} more required)"
+	}
 }
