@@ -37,7 +37,7 @@ public OnPluginStart()
 {	
 	LoadTranslations("nd_welcome.phrases");
 	
-	AddClientPrefsSupport():
+	AddClientPrefsSupport();
 	
 	AddUpdaterLibrary(); //Add updater support if included
 }
