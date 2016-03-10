@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 public Plugin:myinfo =
 {
 	name 		= "Player Warnings",
-	autho		= "Stickz",
+	author		= "Stickz",
 	description 	= "Allows moderators to warn players in different languages.",
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
