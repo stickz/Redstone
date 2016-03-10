@@ -18,19 +18,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <sdkhooks>
 
-#define PLUGIN_VERSION "1.0.4"
-
 #define MAX_BUILD_TIME 57
 
 new placementEntCount = 0;
 
 public Plugin:myinfo = 
 {
-	name = "[ND] Build Shadow Fix",
-	author = "stickz",
-	description = "Fixes stuck build shadows when a building fails to build",
-	version = PLUGIN_VERSION,
-	url = "N/A"
+	name 		= "[ND] Build Shadow Fix",
+	author 		= "stickz",
+	descriptio	= "Fixes stuck build shadows when a building fails to build",
+	version 	= "dummy",
+	url 		= "https://github.com/stickz/Redstone"
 }
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_build_shadow_fix/nd_build_shadow_fix.txt"
