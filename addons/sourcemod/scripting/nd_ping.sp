@@ -46,8 +46,7 @@ enum MinimapBlipType
 public OnPluginStart()
 {
 	RegConsoleCmd("sm_ping", Command_Ping);
-	gH_Cvar_Type = CreateConVar("sm_ping_type", "3", "The type of map blip to use. Check the source for details.", true, 0.0);
-	CreateConVar("sm_ping_version", PLUGIN_VERSION, "Player Ping Version", FCVAR_NOTIFY|FCVAR_REPLICATED|FCVAR_DONTRECORD);
+	gH_Cvar_Type = CreateConVar("sm_ping_type", "3", "The type of map blip to use. Check the source for details.", _, true, 0.0);
 
 	AddUpdaterLibrary(); //auto-updater
 }
