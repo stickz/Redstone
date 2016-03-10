@@ -26,7 +26,7 @@ public Plugin:myinfo =
 {
 	name 		= "[ND] Build Shadow Fix",
 	author 		= "stickz",
-	descriptio	= "Fixes stuck build shadows when a building fails to build",
+	description	= "Fixes stuck build shadows when a building fails to build",
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone"
 }
