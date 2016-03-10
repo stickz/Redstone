@@ -4,6 +4,13 @@
 #define _nd_balancer_included
 
 /**
+ * Called when the team difference changes
+ *
+ * @noreturn
+ */
+forward OnTeamDiffUpdated();
+
+/**
  * Retreive the team difference on the server
  * Positive for Consort and negative for Empire
  *
