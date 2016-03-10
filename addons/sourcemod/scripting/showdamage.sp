@@ -211,8 +211,8 @@ AddClientPrefs()
 
 CreateConvars()
 {
-	cvar_show_damage = CreateConVar("sm_show_damage", "1", "Enabled/Disabled show damage functionality, 0 = off/1 = on", FCVAR_PLUGIN, true, 0.0, true, 1.0);
-	cvar_show_damage_ff = CreateConVar("sm_show_damage_ff", "0", "Show friendly fire damage, 0 = off/1 = on", FCVAR_PLUGIN, true, 0.0, true, 1.0);
-	cvar_show_damage_own_dmg = CreateConVar("sm_show_damage_own_dmg", "0", "Show your own damage, 0 = off/1 = on", FCVAR_PLUGIN, true, 0.0, true, 1.0);
-	cvar_show_damage_text_area = CreateConVar("sm_show_damage_text_area", "1", "Defines the area for damage text:\n 1 = in the center of the screen\n 2 = in the hint text area \n 3 = in chat area of screen", FCVAR_PLUGIN, true, 1.0, true, 3.0);
+	cvar_show_damage = CreateConVar("sm_show_damage", "1", "Enabled/Disabled show damage functionality, 0 = off/1 = on", _, true, 0.0, true, 1.0);
+	cvar_show_damage_ff = CreateConVar("sm_show_damage_ff", "0", "Show friendly fire damage, 0 = off/1 = on", _, true, 0.0, true, 1.0);
+	cvar_show_damage_own_dmg = CreateConVar("sm_show_damage_own_dmg", "0", "Show your own damage, 0 = off/1 = on", _, true, 0.0, true, 1.0);
+	cvar_show_damage_text_area = CreateConVar("sm_show_damage_text_area", "1", "Defines the area for damage text:\n 1 = in the center of the screen\n 2 = in the hint text area \n 3 = in chat area of screen", _, true, 1.0, true, 3.0);
 }
