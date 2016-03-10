@@ -70,8 +70,9 @@ new const String:g_weapon_list[MAX_LOG_WEAPONS][MAX_WEAPON_LEN] = {
 new g_bReadyToShoot[MAXPLAYERS+1] = {false,...};
 new g_iBunkerAttacked[2] = {0,...};
 
-public Plugin:myinfo = {
-	name 		= "[ND] Superlogs,
+public Plugin:myinfo = 
+{
+	name 		= "[ND] Superlogs",
 	author 		= "Peace-Maker, stickz",
 	description 	= "Advanced Nuclear Dawn logging designed for various statistical plugins",
 	version 	= "dummy",
