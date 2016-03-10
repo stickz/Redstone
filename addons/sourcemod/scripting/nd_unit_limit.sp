@@ -38,7 +38,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define MED_LIMIT 	3
 #define HIGH_LIMIT 	4
 
-#define PLUGIN_VERSION "2.0.5"
 #define DEBUG 0
 
 #define m_iDesiredPlayerClass(%1) (GetEntProp(%1, Prop_Send, "m_iDesiredPlayerClass"))
@@ -57,7 +56,7 @@ public Plugin:myinfo =
 	name = "[ND] Unit Limiter",
 	author = "stickz, yed_",
 	description = "Limit the number of units by class type on a team",
-	version = PLUGIN_VERSION,
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 }
 
