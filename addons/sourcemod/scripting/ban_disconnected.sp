@@ -3,14 +3,14 @@
 #include <sdktools>
 
 #define STORED_ENTRIES 100
-#define PLUGIN_VERSION "1.04"
 
+//Notice the version is auto-filled by the travis builder
 public Plugin:myinfo = 
 {
 	name        = "Ban disconnected players",
 	author      = "mad_hamster",
 	description = "Lets you ban players that recently disconnected",
-	version     = PLUGIN_VERSION,
+	version     = "dummy",
 	url         = "http://pro-css.co.il"
 };
 
