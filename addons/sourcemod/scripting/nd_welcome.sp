@@ -17,18 +17,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <clientprefs>
 
-#define VERSION "1.0.9"
-
 new Handle:cookie_welcome_message = INVALID_HANDLE;
 new bool:option_welcome_message[MAXPLAYERS + 1] = {true,...}; //off by default
 
 public Plugin:myinfo =
 {
-	name = "Welcome Features",
-	author = "Stickz",
-	description = "Display a welcome message",
-	version = VERSION,
-	url = "N/A"
+	name 		= "Welcome Features",
+	author 		= "Stickz",
+	description 	= "Display a welcome message",
+	version 	= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
 };
 
 /* Updater Support */
@@ -37,12 +35,9 @@ public Plugin:myinfo =
 
 public OnPluginStart() 
 {	
-	LoadTranslations("common.phrases"); //required for on and off
 	LoadTranslations("nd_welcome.phrases");
 	
-	cookie_welcome_message = RegClientCookie("Welcome Message On/Off", "", CookieAccess_Protected);
-	new info;
-	SetCookieMenuItem(CookieMenuHandler_WelcomeMessage, any:info, "Welcome Message");
+	AddClientPrefsSupport():
 	
 	AddUpdaterLibrary(); //Add updater support if included
 }
@@ -89,4 +84,13 @@ bool:GetCookieWelcomeMessage(client)
 	GetClientCookie(client, cookie_welcome_message, buffer, sizeof(buffer));
 	
 	return StrEqual(buffer, "On");
+}
+
+AddClientPrefsSupport()
+{
+	LoadTranslations("common.phrases"); //required for on and off
+	
+	cookie_welcome_message = RegClientCookie("Welcome Message On/Off", "", CookieAccess_Protected);
+	new info;
+	SetCookieMenuItem(CookieMenuHandler_WelcomeMessage, any:info, "Welcome Message");
 }
