@@ -24,15 +24,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #tryinclude <nd_commander>
 #define REQUIRE_PLUGIN
 
-#define VERSION "1.0.9"
-
 public Plugin:myinfo =
 {
-	name = "[ND] Structure Killings",
-	author = "databomb edited by stickz",
-	description = "Provides a mini-game and announcement for structure killing",
-	version = VERSION,
-	url = "vintagejailbreak.org"
+	name 		= "[ND] Structure Killings",
+	author 		= "databomb edited by stickz",
+	description 	= "Provides a mini-game and announcement for structure killing",
+	version 	= "dummy",
+	url 		= "vintagejailbreak.org"
 };
 
 /* Auto Updater */
@@ -49,11 +47,8 @@ public OnPluginStart()
 {
 	HookEvent("structure_death", Event_StructDeath);
 	
-	cookie_structure_killings = RegClientCookie("Structure Killings On/Off", "", CookieAccess_Protected);
-	new info;
-	SetCookieMenuItem(CookieMenuHandler_StructureKillings, any:info, "Structure Killings");
-	
-	LoadTranslations("common.phrases"); //required for on and off
+	AddClientPrefSupport();
+
 	LoadTranslations("structminigame.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
@@ -196,4 +191,13 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 bool:GiveAdvantage(client, team)
 {
 	return IsClientInGame(client) && IsPlayerAlive(client) && !NDC_IsCommander(client) && GetClientTeam(client) == team;
+}
+
+AddClientPrefSupport()
+{
+	cookie_structure_killings = RegClientCookie("Structure Killings On/Off", "", CookieAccess_Protected);
+	new info;
+	SetCookieMenuItem(CookieMenuHandler_StructureKillings, any:info, "Structure Killings");
+	
+	LoadTranslations("common.phrases"); //required for on and off
 }
