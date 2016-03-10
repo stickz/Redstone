@@ -43,7 +43,7 @@ public OnPluginStart()
 	LoadTranslations("common.phrases");
 
 	// create convars
-	g_isEnabled = CreateConVar("bd_shout_enabled", "1", "Whether the anti-shout plugin is enabled.", FCVAR_PLUGIN | FCVAR_SPONLY | FCVAR_REPLICATED | FCVAR_NOTIFY);
+	g_isEnabled = CreateConVar("bd_shout_enabled", "1", "Whether the anti-shout plugin is enabled.", FCVAR_SPONLY | FCVAR_REPLICATED | FCVAR_NOTIFY);
 	g_maxPercent = CreateConVar("bd_shout_percent", "0.7", "Percent of alphanumeric characters that need to be uppercase before the plugin will kick in.", 0, true, 0.01, true, 1.0);
 	g_minAlphaCount = CreateConVar("bd_shout_mincharcount", "6", "Minimum amount of alphanumeric characters before the sentence will be altered.");
 
