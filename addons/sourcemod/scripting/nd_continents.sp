@@ -42,7 +42,7 @@ public Plugin:myinfo =
 	author 		= "Stickz",
 	description 	= "Show a player's continent based on their IP.",
 	version		= "dummy",
-	ur		= "https://github.com/stickz/Redstone/"
+	url		= "https://github.com/stickz/Redstone/"
 };
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_continents/nd_continents.txt"
