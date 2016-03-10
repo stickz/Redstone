@@ -17,15 +17,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 
-#define PLUGIN_VERSION "1.0.0"
-
 public Plugin:myinfo =
 {
-	name = "[ND] Player Ping",
-	author = "databomb",
-	description = "Players can use the /ping or bind to sm_ping to send a notification to the commander.",
-	version = PLUGIN_VERSION,
-	url = "vintagejailbreak.org"
+	name 		= "[ND] Player Ping",
+	author 		= "databomb",
+	description	= "Players can use the /ping or bind to sm_ping to send a notification to the commander.",
+	version 	= "dummy",
+	url 		= "vintagejailbreak.org"
 };
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_ping/nd_ping.txt"

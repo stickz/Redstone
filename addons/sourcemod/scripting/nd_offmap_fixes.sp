@@ -18,7 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <sdkhooks>
 
-#define VERSION "1.4.1"
 #define DEBUG 0
 
 new bool:validMap = false;
@@ -30,11 +29,11 @@ new tmpAxisViolated;
 
 public Plugin:myinfo = 
 {
-    name = "[ND] Off Map Buildings Fixes",
-    author = "yed_, edited by Stickz",
-    description = "Prevents building things in glitched locations",
-    version = VERSION,
-    url = "git@vanyli.net:nd-plugins"
+	name 		= "[ND] Off Map Buildings Fixes",
+	author 		= "yed_, stickz",
+    	description 	= "Prevents building things in glitched locations",
+    	version 	= "dummy",
+	url 		= "git@vanyli.net:nd-plugins"
 }
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_offmap_fixes/nd_offmap_fixes.txt"

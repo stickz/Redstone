@@ -26,14 +26,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define REQUIRE_PLUGIN
 
 #define DEBUG 0
-#define VERSION "1.0.6"
 
 public Plugin:myinfo =
 {
-	name = "[ND] Dead Weights",
-	author = "stickz",
-	description = "Allows assigning players to exo seige kit",
-    	version = VERSION
+	name 		= "[ND] Dead Weights",
+	author 		= "stickz",
+	description 	= "Allows assigning players to exo seige kit",
+    	version 	= "dummy",
+    	url     	= "https://github.com/stickz/Redstone/"
 }
 
 new 	Handle:eDeadWeights = INVALID_HANDLE,

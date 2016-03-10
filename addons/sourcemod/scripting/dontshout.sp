@@ -27,11 +27,11 @@ new Handle:g_isEnabled = INVALID_HANDLE;			// Var for storing whether the plugin
 
 public Plugin:myinfo = 
 {
-	name = "Don't Shout",
-	author = "Brainstorm",
-	description = "Changes chat messages to lowercase when they are (almost) fully in uppercase",
-	version = "1.0",
-	url = "http://"	
+	name 		= "Don't Shout",
+	author		= "Brainstorm",
+	description 	= "Changes chat messages to lowercase when they are (almost) fully in uppercase",
+	version 	= "dummy",
+	url 		= "http://"	
 };
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/dontshout/dontshout.txt"

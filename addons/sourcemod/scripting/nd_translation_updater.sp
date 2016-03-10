@@ -16,15 +16,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
-#define VERSION "1.1.1"
-
 public Plugin:myinfo = 
 {
-	name = "[ND] Translation Updater",
-	author = "stickz",
-	description = "A simple dummy for updating server translations",
-	version = VERSION,
-	url = "N/A"
+	name 		= "[ND] Translation Updater",
+	author 		= "stickz",
+	description 	= "A simple dummy for updating server translations",
+	version 	= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
 }
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_translation_updater/nd_translation_updater.txt"
