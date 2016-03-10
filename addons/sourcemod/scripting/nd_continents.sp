@@ -16,6 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <geoip>
+#include <nd_stocks>
      
 // possible values are:
 //AF = Africa
@@ -199,12 +200,4 @@ String:getContient(client)
 	// Not found, might be one of the special codes bug we'll just return an unknown!
 	code = "XX";
 	return code;
-}
-
-stock bool:IsValidClient(client, bool:nobots = true)
-{ 
-    if (client <= 0 || client > MaxClients || !IsClientConnected(client) || (nobots && IsFakeClient(client)))
-        return false;
-
-    return IsClientInGame(client); 
 }
