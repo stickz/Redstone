@@ -30,7 +30,7 @@ new tmpAxisViolated;
 public Plugin:myinfo = 
 {
 	name 		= "[ND] Off Map Buildings Fixes",
-	author 		= "yed_, edited by Stickz",
+	author 		= "yed_, Stickz",
     	description 	= "Prevents building things in glitched locations",
     	version 	= "dummy",
 	url 		= "git@vanyli.net:nd-plugins"
