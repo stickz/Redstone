@@ -1335,7 +1335,7 @@ start_gameme_live()
 			if (GetExtensionFileStatus("socket.ext") == 1) {
 				LogToGame("Extension Socket is available");
 				if (gameme_plugin[mod_id] == MOD_CSS) {
-					css_data[money_offset] = FindSendPropOffs("CCSPlayer", "m_iAccount");
+					css_data[money_offset] = FindSendPropInfo("CCSPlayer", "m_iAccount");
 				}
 				gameme_plugin[live_socket] = SocketCreate(SOCKET_UDP, OnSocketError);
 		
