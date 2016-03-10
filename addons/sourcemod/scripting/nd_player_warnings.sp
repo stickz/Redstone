@@ -16,19 +16,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
-#define VERSION "1.0.8"
-
 #define WARN_TYPE_RESPECT 0
 #define WARN_TYPE_ADVERTISE 1
 #define WARN_TYPE_SPAWNSELL 2
 
 public Plugin:myinfo =
 {
-	name = "Player Warnings",
-	author = "Stickz",
-	description = "Allows moderators to warn players in different languages.",
-	version = VERSION,
-	url = "N/A"
+	name 		= "Player Warnings",
+	autho		= "Stickz",
+	description 	= "Allows moderators to warn players in different languages.",
+	version 	= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
 };
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_player_warnings/nd_player_warnings.txt"
