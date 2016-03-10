@@ -643,24 +643,24 @@ public OnPluginStart()
 	SetTrieValue(gameme_plugin[blocked_commands], "/gameme_menu", 1);
 	SetTrieValue(gameme_plugin[blocked_commands], "!gameme_menu", 1);
 
-	CreateConVar("gameme_plugin_version", GAMEME_PLUGIN_VERSION, "gameME Plugin", FCVAR_PLUGIN|FCVAR_NOTIFY);
-	CreateConVar("gameme_webpage", "http://www.gameme.com", "http://www.gameme.com", FCVAR_PLUGIN|FCVAR_NOTIFY);
-	gameme_plugin[block_chat_commands] = CreateConVar("gameme_block_commands", "1", "If activated gameME commands are blocked from the chat area", FCVAR_PLUGIN);
-	gameme_plugin[block_chat_commands_values] = CreateConVar("gameme_block_commands_values", "", "Define which commands should be blocked from the chat area", FCVAR_PLUGIN);
+	CreateConVar("gameme_plugin_version", GAMEME_PLUGIN_VERSION, "gameME Plugin", FCVAR_NOTIFY);
+	CreateConVar("gameme_webpage", "http://www.gameme.com", "http://www.gameme.com", FCVAR_NOTIFY);
+	gameme_plugin[block_chat_commands] = CreateConVar("gameme_block_commands", "1", "If activated gameME commands are blocked from the chat area");
+	gameme_plugin[block_chat_commands_values] = CreateConVar("gameme_block_commands_values", "", "Define which commands should be blocked from the chat area");
 	HookConVarChange(gameme_plugin[block_chat_commands_values], OnBlockChatCommandsValuesChange);
-	gameme_plugin[message_prefix] = CreateConVar("gameme_message_prefix", "", "Define the prefix displayed on every gameME ingame message", FCVAR_PLUGIN);
+	gameme_plugin[message_prefix] = CreateConVar("gameme_message_prefix", "", "Define the prefix displayed on every gameME ingame message");
 	HookConVarChange(gameme_plugin[message_prefix], OnMessagePrefixChange);
-	gameme_plugin[protect_address] = CreateConVar("gameme_protect_address", "", "Address to be protected for logging/forwarding", FCVAR_PLUGIN);
+	gameme_plugin[protect_address] = CreateConVar("gameme_protect_address", "", "Address to be protected for logging/forwarding");
 	HookConVarChange(gameme_plugin[protect_address], OnProtectAddressChange);
-	gameme_plugin[enable_log_locations] = CreateConVar("gameme_log_locations", "1", "If activated the gameserver logs players locations", FCVAR_PLUGIN);
+	gameme_plugin[enable_log_locations] = CreateConVar("gameme_log_locations", "1", "If activated the gameserver logs players locations");
 	HookConVarChange(gameme_plugin[enable_log_locations], OnLogLocationsChange);
-	gameme_plugin[display_spectatorinfo] = CreateConVar("gameme_display_spectatorinfo", "0", "If activated gameME Stats data are displayed while spectating a player", FCVAR_PLUGIN);
+	gameme_plugin[display_spectatorinfo] = CreateConVar("gameme_display_spectatorinfo", "0", "If activated gameME Stats data are displayed while spectating a player");
 	HookConVarChange(gameme_plugin[display_spectatorinfo], OnDisplaySpectatorinfoChange);
-	gameme_plugin[enable_damage_display] = CreateConVar("gameme_damage_display", "0", "If activated the damage summary is display on player_death (1 = menu, 2 = chat)", FCVAR_PLUGIN);
+	gameme_plugin[enable_damage_display] = CreateConVar("gameme_damage_display", "0", "If activated the damage summary is display on player_death (1 = menu, 2 = chat)");
 	HookConVarChange(gameme_plugin[enable_damage_display], OnDamageDisplayChange);
-	gameme_plugin[enable_gameme_live] = CreateConVar("gameme_live", "0", "If activated gameME Live! is enabled", FCVAR_PLUGIN);
+	gameme_plugin[enable_gameme_live] = CreateConVar("gameme_live", "0", "If activated gameME Live! is enabled");
 	HookConVarChange(gameme_plugin[enable_gameme_live], OngameMELiveChange);
-	gameme_plugin[gameme_live_address] = CreateConVar("gameme_live_address", "", "Network address of gameME Live!", FCVAR_PLUGIN);
+	gameme_plugin[gameme_live_address] = CreateConVar("gameme_live_address", "", "Network address of gameME Live!");
 	HookConVarChange(gameme_plugin[gameme_live_address], OnLiveAddressChange);
 
 	get_server_mod();
