@@ -23,17 +23,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <smlib>
 
-#define PLUGIN_VERSION "0.2.0"
-
-
-public Plugin:myinfo = {
-	name = "Reload Fix",
-	author = "yed_",
-	description = "Fix the problem with double-reloading of weapon",
-	version = PLUGIN_VERSION,
-    url = "https://github.com/yedpodtrzitko/ndix"
+public Plugin:myinfo =  {
+	name 		= "Reload Fix",
+	author 		= "yed_",
+	description 	= "Fix the problem with double-reloading of weapon",
+	version 	= "dummy",
+    	url 		= "https://github.com/yedpodtrzitko/ndix"
 }
-
 
 public OnPluginStart() {
 	//g_ActiveWeaponOffset = FindSendPropInfo("CBasePlayer", "m_hActiveWeapon");
