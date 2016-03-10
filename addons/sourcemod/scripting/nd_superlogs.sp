@@ -405,6 +405,7 @@ HookEvents()
 SetupTeams()
 {
 	GetTeams();
+	
 	// GetTeamName gets #ND_Consortium and #ND_Empire in release version -.-. Game logs with CONSORTIUM and EMPIRE translated
 	strcopy(g_team_list[TEAM_CONSORT], sizeof(g_team_list[]), "CONSORTIUM");
 	strcopy(g_team_list[TEAM_EMPIRE], sizeof(g_team_list[]), "EMPIRE");
