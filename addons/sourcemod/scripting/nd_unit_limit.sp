@@ -53,11 +53,11 @@ new Handle:eCommanders = INVALID_HANDLE,
 
 public Plugin:myinfo = 
 {
-	name = "[ND] Unit Limiter",
-	author = "stickz, yed_",
-	description = "Limit the number of units by class type on a team",
-	version = "dummy",
-	url = "https://github.com/stickz/Redstone/"
+	name		= "[ND] Unit Limiter",
+	author 		= "stickz, yed_",
+	description 	= "Limit the number of units by class type on a team",
+	versio		= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
 }
 
 public OnPluginStart() 
