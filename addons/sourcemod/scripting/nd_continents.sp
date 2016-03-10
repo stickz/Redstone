@@ -38,11 +38,11 @@ new const 	String:aAfrica[][2] = {"AO","BF","BI","BJ","BW","CD","CF","CG","CI","
 
 public Plugin:myinfo =
 {
-	name = "[ND] Continents",
-	author = "Stickz",
-	description = "Show a player's continent based on their IP.",
-	version = "dummy",
-	url = "https://github.com/stickz/Redstone/"
+	name 		= "[ND] Continents",
+	author 		= "Stickz",
+	description 	= "Show a player's continent based on their IP.",
+	versio		= "dummy",
+	ur		= "https://github.com/stickz/Redstone/"
 };
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_continents/nd_continents.txt"
