@@ -21,7 +21,7 @@ public Plugin:myinfo =
 {
 	name 		= "[ND] Player Ping",
 	author 		= "databomb",
-	descriptio	= "Players can use the /ping or bind to sm_ping to send a notification to the commander.",
+	description	= "Players can use the /ping or bind to sm_ping to send a notification to the commander.",
 	version 	= "dummy",
 	url 		= "vintagejailbreak.org"
 };
