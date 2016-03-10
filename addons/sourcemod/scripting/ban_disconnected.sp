@@ -56,8 +56,6 @@ public Action:OnEventPlayerDisconnect(Handle:event, const String:name[], bool:do
 	return Plugin_Continue;
 }
 
-
-
 public Action:BanDisconnected(client, args) {
 	if (args < 2 || args > 3)
 		ReplyToCommand(client, "[SM] Usage: sm_bandisconnected <\"steamid\"> <minutes|0> [\"reason\"]");
@@ -71,8 +69,6 @@ public Action:BanDisconnected(client, args) {
 
 	return Plugin_Handled;
 }
-
-
 
 CheckAndPerformBan(client, const String:steamid[], minutes, const String:reason[]) {
 	new AdminId:source_aid = GetUserAdmin(client), AdminId:target_aid;
@@ -90,7 +86,6 @@ CheckAndPerformBan(client, const String:steamid[], minutes, const String:reason[
 }
 
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Menu madness
 ///////////////////////////////////////////////////////////////////////////////
@@ -105,8 +100,6 @@ public OnAdminMenuReady(Handle:topmenu) {
 	}
 }
 
-
-
 public AdminMenu_Ban(Handle:topmenu,
 	TopMenuAction:action, TopMenuObject:object_id, param, String:buffer[], maxlength)
 {
@@ -115,8 +108,6 @@ public AdminMenu_Ban(Handle:topmenu,
 	else if (action == TopMenuAction_SelectOption)
 		DisplayBanTargetMenu(param);
 }
-
-
 
 DisplayBanTargetMenu(client) {
 	new Handle:menu = CreateMenu(MenuHandler_BanPlayerList);
@@ -138,32 +129,30 @@ DisplayBanTargetMenu(client) {
 	DisplayMenu(menu, client, MENU_TIME_FOREVER);
 }
 
-
-
-public MenuHandler_BanPlayerList(Handle:menu, MenuAction:action, param1, param2) {
-	if (action == MenuAction_End)
-		CloseHandle(menu);
-	else if (action == MenuAction_Cancel) {
-		if (param2 == MenuCancel_ExitBack && hTopMenu != INVALID_HANDLE)
-			DisplayTopMenu(hTopMenu, param1, TopMenuPosition_LastCategory);
-	}
-	else if (action == MenuAction_Select) {
-		decl String:state_[128];
-		GetMenuItem(menu, param2, state_, sizeof(state_));
-		DisplayBanTimeMenu(param1, state_);
+public MenuHandler_BanPlayerList(Handle:menu, MenuAction:action, param1, param2) 
+{
+	switch (action)
+	{
+		case MenuAction_End: CloseHandle(menu);
+		case MenuAction_Cancel:
+		{
+			if (param2 == MenuCancel_ExitBack && hTopMenu != INVALID_HANDLE)
+				DisplayTopMenu(hTopMenu, param1, TopMenuPosition_LastCategory);
+		}
+		case MenuAction_Select:
+		{
+			decl String:state_[128];
+			GetMenuItem(menu, param2, state_, sizeof(state_));
+			DisplayBanTimeMenu(param1, state_);
+		}
 	}
 }
-
-
 
 AddMenuItemWithState(Handle:menu, const String:state_[], const String:addstate[], const String:display[]) {
 	decl String:newstate[128];
 	Format(newstate, sizeof(newstate), "%s\n%s", state_, addstate);
 	AddMenuItem(menu, newstate, display);
 }
-
-
-
 
 DisplayBanTimeMenu(client, const String:state_[]) {
 	new Handle:menu = CreateMenu(MenuHandler_BanTimeList);
@@ -183,23 +172,24 @@ DisplayBanTimeMenu(client, const String:state_[]) {
 	DisplayMenu(menu, client, MENU_TIME_FOREVER);
 }
 
-
-
-public MenuHandler_BanTimeList(Handle:menu, MenuAction:action, param1, param2) {
-	if (action == MenuAction_End)
-		CloseHandle(menu);
-	else if (action == MenuAction_Cancel) {
-		if (param2 == MenuCancel_ExitBack && hTopMenu != INVALID_HANDLE)
-			DisplayTopMenu(hTopMenu, param1, TopMenuPosition_LastCategory);
-	}
-	else if (action == MenuAction_Select) {
-		decl String:state_[128];
-		GetMenuItem(menu, param2, state_, sizeof(state_));
-		DisplayBanReasonMenu(param1, state_);
+public MenuHandler_BanTimeList(Handle:menu, MenuAction:action, param1, param2) 
+{
+	switch (action)
+	{
+		case MenuAction_End: CloseHandle(menu);
+		case MenuAction_Cancel:
+		{
+			if (param2 == MenuCancel_ExitBack && hTopMenu != INVALID_HANDLE)
+				DisplayTopMenu(hTopMenu, param1, TopMenuPosition_LastCategory);
+		}
+		case MenuAction_Select:
+		{
+			decl String:state_[128];
+			GetMenuItem(menu, param2, state_, sizeof(state_));
+			DisplayBanReasonMenu(param1, state_);
+		}
 	}
 }
-
-
 
 DisplayBanReasonMenu(client, const String:state_[]) {
 	new Handle:menu = CreateMenu(MenuHandler_BanReasonList);
@@ -221,25 +211,28 @@ DisplayBanReasonMenu(client, const String:state_[]) {
 	DisplayMenu(menu, client, MENU_TIME_FOREVER);
 }
 
-
-
-public MenuHandler_BanReasonList(Handle:menu, MenuAction:action, param1, param2) {
-	if (action == MenuAction_End)
-		CloseHandle(menu);
-	else if (action == MenuAction_Cancel) {
-		if (param2 == MenuCancel_ExitBack && hTopMenu != INVALID_HANDLE)
-			DisplayTopMenu(hTopMenu, param1, TopMenuPosition_LastCategory);
-	}
-	else if (action == MenuAction_Select) {
-		decl String:state_[128], String:state_parts[4][32];
-		GetMenuItem(menu, param2, state_, sizeof(state_));
-		if (ExplodeString(state_, "\n", state_parts, sizeof(state_parts), sizeof(state_parts[])) != 3)
-			SetFailState("Bug in menu handlers");
-		else CheckAndPerformBan(param1, state_parts[0], StringToInt(state_parts[1]), state_parts[2]);
+public MenuHandler_BanReasonList(Handle:menu, MenuAction:action, param1, param2) 
+{
+	switch (action)
+	{
+		case MenuAction_End: CloseHandle(menu);
+		case MenuAction_Cancel:
+		{
+			if (param2 == MenuCancel_ExitBack && hTopMenu != INVALID_HANDLE)
+				DisplayTopMenu(hTopMenu, param1, TopMenuPosition_LastCategory);
+		}
+		case MenuAction_Select:
+		{
+			decl String:state_[128], String:state_parts[4][32];
+			GetMenuItem(menu, param2, state_, sizeof(state_));
+			
+			if (ExplodeString(state_, "\n", state_parts, sizeof(state_parts), sizeof(state_parts[])) != 3)
+				SetFailState("Bug in menu handlers");
+			else 
+				CheckAndPerformBan(param1, state_parts[0], StringToInt(state_parts[1]), state_parts[2]);
+		}
 	}
 }
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // A very simple fixed-size queue yielding offsets into cyclic array(s)
@@ -249,13 +242,10 @@ static queue_max_size = STORED_ENTRIES;
 static queue_size     = 0;
 static queue_start    = 0;
 
-
 queue_get_size()   { return queue_size; }
 //queue_is_full()    { return queue_size == queue_max_size; }
 //queue_is_empty()   { return queue_size == 0; }
 //queue_space_left() { return queue_max_size - queue_size; }
-
-
 
 // Given a logical position within the queue between 0 (queue front; oldest item)
 // and queue_size-1 (queue back; newest item), returns the translated position
@@ -295,4 +285,3 @@ queue_pop() {
 		return pos;
 	}
 }
-
