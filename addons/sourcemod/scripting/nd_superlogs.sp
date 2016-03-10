@@ -26,10 +26,6 @@
 #include <sdkhooks>
 #include <nd_stocks>
 
-#define NAME "SuperLogs: Nuclear Dawn"
-#define VERSION "1.0.5"
-
-
 #define MAX_LOG_WEAPONS 28
 #define IGNORE_SHOTS_START 16
 #define MAX_WEAPON_LEN 20
@@ -75,11 +71,11 @@ new g_bReadyToShoot[MAXPLAYERS+1] = {false,...};
 new g_iBunkerAttacked[2] = {0,...};
 
 public Plugin:myinfo = {
-	name = NAME,
-	author = "Peace-Maker edited by stickz",
-	description = "Advanced logging. Generates auxilary logging for use with log parsers such as HLstatsX and Psychostats",
-	version = VERSION,
-	url = "http://www.hlxcommunity.com"
+	name 		= "[ND] Superlogs,
+	author 		= "Peace-Maker, stickz",
+	description 	= "Advanced Nuclear Dawn logging designed for various statistical plugins",
+	version 	= "dummy",
+	url 		= "http://www.hlxcommunity.com"
 };
 
 /* Updater Support */
@@ -89,41 +85,21 @@ public Plugin:myinfo = {
 public OnPluginStart()
 {
 	CreatePopulateWeaponTrie();
-	CreateConVar("superlogs_nucleardawn_version", VERSION, NAME, FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY);
-		
-	HookEvent("player_death", Event_PlayerDeathPre, EventHookMode_Pre);
-	HookEvent("promoted_to_commander", Event_PromotedToCommander);
-	HookEvent("resource_captured", Event_ResourceCaptured);
-	HookEvent("structure_damage_sparse", Event_StructureDamageSparse);
-	HookEvent("structure_death", Event_StructureDeath);
-	
-	// wstats
-	HookEvent("player_spawn", Event_PlayerSpawn);
-	HookEvent("round_win", Event_RoundWin);
-	HookEvent("player_disconnect", Event_PlayerDisconnect, EventHookMode_Pre);
+
+	HookEvents(); //Hook events
 	
 	CreateTimer(1.0, LogMap);
 	
-	GetTeams();
-	// GetTeamName gets #ND_Consortium and #ND_Empire in release version -.-. Game logs with CONSORTIUM and EMPIRE translated
-	strcopy(g_team_list[TEAM_CONSORT], sizeof(g_team_list[]), "CONSORTIUM");
-	strcopy(g_team_list[TEAM_EMPIRE], sizeof(g_team_list[]), "EMPIRE");
+	SetupTeams();
 	
-	for(new i=1;i<=MaxClients;i++)
-	{
-		if(IsClientInGame(i))
-			OnClientPutInServer(i);
-	}
+	AccountForLateLoading();
 	
 	AddUpdaterLibrary(); //Add updater support if included
 }
 
 public OnMapStart()
 {
-	GetTeams();
-	// GetTeamName gets #ND_Consortium and #ND_Empire in release version -.-. Game logs with CONSORTIUM and EMPIRE translated
-	strcopy(g_team_list[TEAM_CONSORT], sizeof(g_team_list[]), "CONSORTIUM");
-	strcopy(g_team_list[TEAM_EMPIRE], sizeof(g_team_list[]), "EMPIRE");
+	SetupTeams();
 	
 	g_iBunkerAttacked[0] = 0;
 	g_iBunkerAttacked[1] = 0;
@@ -410,4 +386,35 @@ stock FixWeaponLoggingName(String:sWeapon[], maxlength)
 	//	strcopy(sWeapon, maxlength, "repair tool");
 	else if(StrEqual(sWeapon, "u23_grenade"))
 		strcopy(sWeapon, maxlength, "u23 grenade");
+}
+
+HookEvents()
+{
+	HookEvent("player_death", Event_PlayerDeathPre, EventHookMode_Pre);
+	HookEvent("promoted_to_commander", Event_PromotedToCommander);
+	HookEvent("resource_captured", Event_ResourceCaptured);
+	HookEvent("structure_damage_sparse", Event_StructureDamageSparse);
+	HookEvent("structure_death", Event_StructureDeath);
+	
+	// wstats
+	HookEvent("player_spawn", Event_PlayerSpawn);
+	HookEvent("round_win", Event_RoundWin);
+	HookEvent("player_disconnect", Event_PlayerDisconnect, EventHookMode_Pre);
+}
+
+SetupTeams()
+{
+	GetTeams();
+	// GetTeamName gets #ND_Consortium and #ND_Empire in release version -.-. Game logs with CONSORTIUM and EMPIRE translated
+	strcopy(g_team_list[TEAM_CONSORT], sizeof(g_team_list[]), "CONSORTIUM");
+	strcopy(g_team_list[TEAM_EMPIRE], sizeof(g_team_list[]), "EMPIRE");
+}
+
+AccountForLateLoading()
+{
+	for(new i=1;i<=MaxClients;i++)
+	{
+		if(IsClientInGame(i))
+			OnClientPutInServer(i);
+	}
 }
