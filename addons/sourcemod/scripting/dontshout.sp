@@ -66,10 +66,8 @@ public Action:Command_HandleSay(client, args)
 {
 	// do not handle console stuff and do not work when the plugin is disabled
 	if (client < 1 || !GetConVarBool(g_isEnabled))
-	{
 		return Plugin_Continue;
-	}
-	
+
 	// get argument string
 	decl String:argString[MAX_LINE_LENGTH];
 	GetCmdArgString(argString, sizeof(argString));
@@ -121,10 +119,8 @@ public Action:Command_HandleSay(client, args)
 		// We've handled it.
 		return Plugin_Handled;
 	}
-	else
-	{
-		return Plugin_Continue;
-	}
+
+	return Plugin_Continue;
 }
 
 /*
@@ -167,10 +163,8 @@ public SubString(const String:text[], String:result[MAX_LINE_LENGTH], startIndex
 	// check input
 	new length = endIndex - startIndex;
 	if (length <= 0 || startIndex >= strlen(text))
-	{
 		return;
-	}
-	
+
 	// perform char-by-char copy
 	for(new index = 0; index < length; index++)
 	{
