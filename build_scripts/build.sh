@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# Once any command returns non-zero code - exit with that code
+set -e
+
 # set command line switches defaults
 verbose=false
 sourcemod_version="1.7.3-5255"
