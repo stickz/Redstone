@@ -5,20 +5,7 @@
 
 #undef REQUIRE_PLUGIN
 #tryinclude <adminmenu>
-#tryinclude <updater>
-
-#define PLUGIN_VERSION "1.0.6"
-
-/* Auto Updater */
-#if defined _updater_included
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/votemute_p/votemute_p.txt"
-
-public OnLibraryAdded(const String:name[])
-{
-    if (StrEqual(name, "updater"))
-        Updater_AddPlugin(UPDATE_URL);
-}
-#endif
+#define REQUIRE_PLUGIN
 
 ConVar g_Cvar_Limits;
 ConVar g_Cvar_Admins;
@@ -43,20 +30,22 @@ new String:g_voteInfo[3][65];
 
 new g_votetype = 0;
 
-//new bool:g_Gagged[65]
-
+//Version is auto-filled by the travis builder
 public Plugin:myinfo =
 {
-	name = "Vote Mute/Vote Silence",
-	author = "<eVa>Dog edited by Stickz",
-	description = "Vote Muting and Silencing",
-	version = PLUGIN_VERSION,
-	url = "http://www.theville.org"
+	name 		= "Vote Mute/Vote Silence",
+	author 		= "<eVa>Dog edited by Stickz",
+	description 	= "Vote Muting and Silencing",
+	version 	= "dummy",
+	url 		= "http://www.theville.org"
 }
+
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/votemute_p/votemute_p.txt"
+#include "updater/standard.sp"
 
 public OnPluginStart()
 {
-	CreateConVar("sm_votemute_version", PLUGIN_VERSION, "Version of votemute/votesilence", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY);
 	g_Cvar_Limits = CreateConVar("sm_votemute_limit", "0.51", "percent required for successful mute vote or mute silence.");
 	g_Cvar_Admins = CreateConVar("sm_votemute_adminonly", "0", "1= admins only, 0 = regular players allowed");
 	g_Cvar_Duration = CreateConVar("sm_votemute_duration", "60", "set punishment duration, 0 = permanent");
@@ -67,45 +56,12 @@ public OnPluginStart()
 	RegConsoleCmd("sm_votemute", Command_Votemute,  "sm_votemute <player> ");  
 	RegConsoleCmd("sm_votesilence", Command_Votesilence,  "sm_votesilence <player> ");  
 	RegConsoleCmd("sm_votegag", Command_Votegag,  "sm_votegag <player> "); 
-	
-	//RegConsoleCmd("say", Command_Say);
-	//RegConsoleCmd("say_team", Command_Say);
-	//RegConsoleCmd("voicemenu", Command_VoiceMenu)
-	
+
 	LoadTranslations("common.phrases");
 	
-	#if defined _updater_included
-	if (LibraryExists("updater"))
-        Updater_AddPlugin(UPDATE_URL);
-	#endif
+	AddUpdaterLibrary(); //auto-updater
 }
 
-/*public Action:Command_Say(client, args)
-{
-	if (client)
-	{
-		if (g_Gagged[client])
-		{
-			return Plugin_Handled;		
-		}
-	}
-	
-	return Plugin_Continue;
-}
-
-public Action:Command_VoiceMenu(client, args)
-{
-	if (client)
-	{
-		if (g_Gagged[client])
-		{
-			return Plugin_Handled	
-		}
-	}
-	return Plugin_Continue
-}*/
-
-	
 public Action:Command_Votemute(client, args)
 {
 	if (IsVoteInProgress())
@@ -132,8 +88,8 @@ public Action:Command_Votemute(client, args)
 	}
 	else
 	{
-		new String:arg[64];
-		GetCmdArg(1, arg, 64);
+		decl String:arg[64];
+		GetCmdArg(1, arg, sizeof(arg));
 		
 		new target = FindTarget(client, arg);
 
@@ -187,8 +143,8 @@ public Action:Command_Votesilence(client, args)
 	}
 	else
 	{
-		new String:arg[64];
-		GetCmdArg(1, arg, 64);
+		decl String:arg[64];
+		GetCmdArg(1, arg, sizeof(args));
 		
 		new target = FindTarget(client, arg);
 
@@ -238,8 +194,8 @@ public Action:Command_Votegag(client, args)
 	}
 	else
 	{
-		new String:arg[64];
-		GetCmdArg(1, arg, 64);
+		decl String:arg[64];
+		GetCmdArg(1, arg, sizeof(arg));
 		
 		new target = FindTarget(client, arg);
 
@@ -283,7 +239,6 @@ DisplayVoteMuteMenu(client, target)
 	
 	decl String:Message[64];
 	Format(Message, sizeof(Message), "\"%L\" initiated a %s vote against \"%L\"", client, Name, target);
-	
 	PrintToAdmins(Message, "a");
 	LogAction(client, target, Message);
 	
@@ -299,9 +254,7 @@ DisplayVoteTargetMenu(client)
 {
 	new Handle:menu = CreateMenu(MenuHandler_Vote);
 	
-	decl String:title[100];
-	new String:playername[128]
-	new String:identifier[64]
+	decl String:title[100], playername[128], identifier[64];
 	Format(title, sizeof(title), "%s", "Choose player:");
 	SetMenuTitle(menu, title);
 	SetMenuExitBackButton(menu, true);
@@ -328,11 +281,9 @@ public MenuHandler_Vote(Handle:menu, MenuAction:action, param1, param2)
 		case MenuAction_Select:
 		{
 			decl String:info[32], String:name[32];
-			new target;
-			
 			GetMenuItem(menu, param2, info, sizeof(info), _, name, sizeof(name));
-			target = StringToInt(info);
-
+			
+			new target = StringToInt(info);
 			if (target == 0)
 				PrintToChat(param1, "[SM] %s", "Player no longer available");
 
