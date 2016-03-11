@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define WARN_TYPE_ADVERTISE 1
 #define WARN_TYPE_SPAWNSELL 2
 
+//Version is auto-filled by the travis builder
 public Plugin:myinfo =
 {
 	name 		= "Player Warnings",
