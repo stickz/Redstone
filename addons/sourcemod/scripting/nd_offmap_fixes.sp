@@ -27,7 +27,6 @@ new Handle:HAX = INVALID_HANDLE;
 new tmpAxisCount;
 new tmpAxisViolated;
 
-//Version is auto-filled by the travis builder
 public Plugin:myinfo = 
 {
 	name 		= "[ND] Off Map Buildings Fixes",
