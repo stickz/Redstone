@@ -100,4 +100,10 @@
 		"#format"	"{1:s},{2:d}"
 		"en"		"{1} has voted to !demote the commander. ({2} more required)"
 	}
+	
+	"Skill Required"
+	{
+		"#format"	"{1:i}"
+		"en"		"{1} skill on server stats required to command!"
+	}
 }
