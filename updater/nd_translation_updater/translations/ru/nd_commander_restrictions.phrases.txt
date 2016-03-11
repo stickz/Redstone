@@ -74,4 +74,9 @@
 	{
 		"ru"		"{1} проголосовал за устранение командира. Необходимо ещё голосов: {2} "
 	}
+	
+	"Skill Required"
+	{
+		"ru"		"{1} skill on server stats required to command!"
+	}
 }
