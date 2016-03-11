@@ -51,6 +51,7 @@ new Handle:eCommanders = INVALID_HANDLE,
 	bool:SetLimit[2][3],
 	bool:roundStarted = false;
 
+//Version is auto-filled by the travis builder
 public Plugin:myinfo = 
 {
 	name		= "[ND] Unit Limiter",

@@ -25,6 +25,7 @@ new Handle:g_minAlphaCount = INVALID_HANDLE;		// minimum amount of alphanumeric 
 new Handle:g_maxPercent = INVALID_HANDLE;			// Maximum percent of characters thay may be uppercase
 new Handle:g_isEnabled = INVALID_HANDLE;			// Var for storing whether the plugin is enabled
 
+//Version is auto-filled by the travis builder
 public Plugin:myinfo = 
 {
 	name 		= "Don't Shout",
