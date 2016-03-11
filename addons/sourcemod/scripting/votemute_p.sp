@@ -58,6 +58,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_votegag", Command_Votegag,  "sm_votegag <player> "); 
 
 	LoadTranslations("common.phrases");
+	LoadTranslations("votemute_p.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
 }
