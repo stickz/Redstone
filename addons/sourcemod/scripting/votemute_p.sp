@@ -254,11 +254,12 @@ DisplayVoteTargetMenu(client)
 {
 	new Handle:menu = CreateMenu(MenuHandler_Vote);
 	
-	decl String:title[100], playername[128], identifier[64];
+	decl String:title[100];
 	Format(title, sizeof(title), "%s", "Choose player:");
 	SetMenuTitle(menu, title);
 	SetMenuExitBackButton(menu, true);
 	
+	char playername[128], identifier[64];
 	for (new i = 1; i < GetMaxClients(); i++)
 	{
 		if (IsClientInGame(i) && !(GetUserFlagBits(i) & ADMFLAG_CHAT))
