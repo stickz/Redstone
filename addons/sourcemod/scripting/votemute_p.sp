@@ -263,9 +263,9 @@ DisplayVoteTargetMenu(client)
 	{
 		if (IsClientInGame(i) && !(GetUserFlagBits(i) & ADMFLAG_CHAT))
 		{
-			GetClientName(i, playername, sizeof(playername))
-			Format(identifier, sizeof(identifier), "%i", i)
-			AddMenuItem(menu, identifier, playername)
+			GetClientName(i, playername, sizeof(playername));
+			Format(identifier, sizeof(identifier), "%i", i);
+			AddMenuItem(menu, identifier, playername);
 		}
 	}
 	
