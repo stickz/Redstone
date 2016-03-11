@@ -5,26 +5,13 @@
 
 #undef REQUIRE_PLUGIN
 #tryinclude <adminmenu>
-#tryinclude <updater>
-
-#define PLUGIN_VERSION "1.0.6"
-
-/* Auto Updater */
-#if defined _updater_included
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/votemute_p/votemute_p.txt"
-
-public OnLibraryAdded(const String:name[])
-{
-    if (StrEqual(name, "updater"))
-        Updater_AddPlugin(UPDATE_URL);
-}
-#endif
+#define REQUIRE_PLUGIN
 
 ConVar g_Cvar_Limits;
 ConVar g_Cvar_Admins;
 ConVar g_Cvar_Duration;
 
-new Handle:g_hVoteMenu = INVALID_HANDLE;
+Handle g_hVoteMenu = INVALID_HANDLE;
 
 #define VOTE_CLIENTID	0
 #define VOTE_USERID		1
@@ -38,25 +25,26 @@ new Handle:g_hVoteMenu = INVALID_HANDLE;
 
 #define INVALID_TARGET -1
 
-new g_voteClient[2];
-new String:g_voteInfo[3][65];
+int g_voteClient[2];
+char g_voteInfo[3][65];
 
-new g_votetype = 0;
-
-//new bool:g_Gagged[65]
+int g_votetype = 0;
 
 public Plugin:myinfo =
 {
-	name = "Vote Mute/Vote Silence",
-	author = "<eVa>Dog edited by Stickz",
-	description = "Vote Muting and Silencing",
-	version = PLUGIN_VERSION,
-	url = "http://www.theville.org"
+	name 		= "Vote Mute/Vote Silence",
+	author 		= "<eVa>Dog edited by Stickz",
+	description 	= "Vote Muting and Silencing",
+	version 	= "dummy",
+	url		= "http://www.theville.org"
 }
+
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/votemute_p/votemute_p.txt"
+#include "updater/standard.sp"
 
 public OnPluginStart()
 {
-	CreateConVar("sm_votemute_version", PLUGIN_VERSION, "Version of votemute/votesilence", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY);
 	g_Cvar_Limits = CreateConVar("sm_votemute_limit", "0.51", "percent required for successful mute vote or mute silence.");
 	g_Cvar_Admins = CreateConVar("sm_votemute_adminonly", "0", "1= admins only, 0 = regular players allowed");
 	g_Cvar_Duration = CreateConVar("sm_votemute_duration", "60", "set punishment duration, 0 = permanent");
@@ -67,46 +55,13 @@ public OnPluginStart()
 	RegConsoleCmd("sm_votemute", Command_Votemute,  "sm_votemute <player> ");  
 	RegConsoleCmd("sm_votesilence", Command_Votesilence,  "sm_votesilence <player> ");  
 	RegConsoleCmd("sm_votegag", Command_Votegag,  "sm_votegag <player> "); 
-	
-	//RegConsoleCmd("say", Command_Say);
-	//RegConsoleCmd("say_team", Command_Say);
-	//RegConsoleCmd("voicemenu", Command_VoiceMenu)
-	
+
 	LoadTranslations("common.phrases");
 	
-	#if defined _updater_included
-	if (LibraryExists("updater"))
-        Updater_AddPlugin(UPDATE_URL);
-	#endif
+	AddUpdaterLibrary(); //auto-updater
 }
 
-/*public Action:Command_Say(client, args)
-{
-	if (client)
-	{
-		if (g_Gagged[client])
-		{
-			return Plugin_Handled;		
-		}
-	}
-	
-	return Plugin_Continue;
-}
-
-public Action:Command_VoiceMenu(client, args)
-{
-	if (client)
-	{
-		if (g_Gagged[client])
-		{
-			return Plugin_Handled	
-		}
-	}
-	return Plugin_Continue
-}*/
-
-	
-public Action:Command_Votemute(client, args)
+public Action:Command_Votemute(int client, char args)
 {
 	if (IsVoteInProgress())
 	{
@@ -132,10 +87,10 @@ public Action:Command_Votemute(client, args)
 	}
 	else
 	{
-		new String:arg[64];
+		char arg[64];
 		GetCmdArg(1, arg, 64);
 		
-		new target = FindTarget(client, arg);
+		int target = FindTarget(client, arg);
 
 		if (target == INVALID_TARGET)
 		{
@@ -160,7 +115,7 @@ public Action:Command_Votemute(client, args)
 	return Plugin_Handled;
 }
 
-public Action:Command_Votesilence(client, args)
+public Action:Command_Votesilence(int client, char args)
 {
 	if (IsVoteInProgress())
 	{
@@ -179,7 +134,6 @@ public Action:Command_Votesilence(client, args)
 		return Plugin_Handled;
 	}
 	
-	
 	if (args < 1)
 	{
 		g_votetype = VOTE_TYPE_SILENCE;
@@ -187,10 +141,10 @@ public Action:Command_Votesilence(client, args)
 	}
 	else
 	{
-		new String:arg[64];
+		char arg[64];
 		GetCmdArg(1, arg, 64);
 		
-		new target = FindTarget(client, arg);
+		int target = FindTarget(client, arg);
 
 		if (target == INVALID_TARGET)
 			return Plugin_Handled;
@@ -238,10 +192,10 @@ public Action:Command_Votegag(client, args)
 	}
 	else
 	{
-		new String:arg[64];
+		char arg[64];
 		GetCmdArg(1, arg, 64);
 		
-		new target = FindTarget(client, arg);
+		int target = FindTarget(client, arg);
 
 		if (target == INVALID_TARGET)
 		{
@@ -272,7 +226,7 @@ DisplayVoteMuteMenu(client, target)
 
 	GetClientName(target, g_voteInfo[VOTE_NAME], sizeof(g_voteInfo[]));
 	
-	decl String:Name[8];
+	char Name[8];
 	
 	switch (g_votetype)
 	{
@@ -281,7 +235,7 @@ DisplayVoteMuteMenu(client, target)
 		case VOTE_TYPE_SILENCE: Format(Name, sizeof(Name), "Silence");	
 	}
 	
-	decl String:Message[64];
+	char Message[64];
 	Format(Message, sizeof(Message), "\"%L\" initiated a %s vote against \"%L\"", client, Name, target);
 	
 	PrintToAdmins(Message, "a");
@@ -297,12 +251,11 @@ DisplayVoteMuteMenu(client, target)
 
 DisplayVoteTargetMenu(client)
 {
-	new Handle:menu = CreateMenu(MenuHandler_Vote);
+	Handle menu = CreateMenu(MenuHandler_Vote);
 	
-	decl String:title[100];
-	new String:playername[128]
-	new String:identifier[64]
+	char title[100]; char playername[128]; char identifier[64];
 	Format(title, sizeof(title), "%s", "Choose player:");
+	
 	SetMenuTitle(menu, title);
 	SetMenuExitBackButton(menu, true);
 	
@@ -320,7 +273,7 @@ DisplayVoteTargetMenu(client)
 }
 
 
-public MenuHandler_Vote(Handle:menu, MenuAction:action, param1, param2)
+public MenuHandler_Vote(Handle:menu, MenuAction:action, int param1, int param2)
 {
 	switch (action)
 	{
@@ -328,10 +281,9 @@ public MenuHandler_Vote(Handle:menu, MenuAction:action, param1, param2)
 		case MenuAction_Select:
 		{
 			decl String:info[32], String:name[32];
-			new target;
-			
 			GetMenuItem(menu, param2, info, sizeof(info), _, name, sizeof(name));
-			target = StringToInt(info);
+			
+			int target = StringToInt(info);
 
 			if (target == 0)
 				PrintToChat(param1, "[SM] %s", "Player no longer available");
@@ -342,7 +294,7 @@ public MenuHandler_Vote(Handle:menu, MenuAction:action, param1, param2)
 	}
 }
 
-public Handler_VoteCallback(Handle:menu, MenuAction:action, param1, param2)
+public Handler_VoteCallback(Handle:menu, MenuAction:action, int param1, int param2)
 {
 	switch (action)
 	{
@@ -350,31 +302,30 @@ public Handler_VoteCallback(Handle:menu, MenuAction:action, param1, param2)
 		
 		case MenuAction_Display:
 		{
-			decl String:title[64];
+			char title[64];
 			GetMenuTitle(menu, title, sizeof(title));
 			
-			decl String:buffer[255];
+			char buffer[255];
 			Format(buffer, sizeof(buffer), "%s %s", title, g_voteInfo[VOTE_NAME]);
 
-			new Handle:panel = Handle:param2;
+			Handle panel = Handle param2;
 			SetPanelTitle(panel, buffer);		
 		}
 		
 		case MenuAction_DisplayItem:
 		{
-			decl String:display[64];
+			char display[64];
 			GetMenuItem(menu, param2, "", 0, _, display, sizeof(display));
 		 
 			if (strcmp(display, "No") == 0 || strcmp(display, "Yes") == 0)
 			{
-				decl String:buffer[255];
+				char buffer[255];
 				Format(buffer, sizeof(buffer), "%s", display);
 
 				return RedrawMenuItem(buffer);
 			}		
 		}
-		//case MenuAction_Select: VoteSelect(menu, param1, param2);
-		
+
 		case MenuAction_VoteCancel:
 		{
 			if (param1 == VoteCancel_NoVotes)	
@@ -383,8 +334,9 @@ public Handler_VoteCallback(Handle:menu, MenuAction:action, param1, param2)
 		
 		case MenuAction_VoteEnd:
 		{
-			decl String:item[64], String:display[64];
-			new Float:percent, Float:limit, votes, totalVotes;
+			char item[64]; char display[64];
+			Float percent; Float limit; 
+			int votes; int totalVotes;
 
 			GetMenuVoteInfo(param2, votes, totalVotes);
 			GetMenuItem(menu, param1, item, sizeof(item), _, display, sizeof(display));
@@ -435,7 +387,7 @@ public Handler_VoteCallback(Handle:menu, MenuAction:action, param1, param2)
 	return 0;	
 }
 
-bool:isSilenced(client)
+bool:isSilenced(int client)
 {
 	return SourceComms_GetClientMuteType(client) != bNot && SourceComms_GetClientGagType(client) != bNot;
 }
@@ -446,14 +398,14 @@ VoteMenuClose()
 	g_hVoteMenu = INVALID_HANDLE;
 }
 
-Float:GetVotePercent(votes, totalVotes)
+Float:GetVotePercent(int votes, int totalVotes)
 {
 	return FloatDiv(float(votes),float(totalVotes));
 }
 
-bool:TestVoteDelay(client)
+bool:TestVoteDelay(int client)
 {
- 	new delay = CheckVoteDelay();
+ 	int delay = CheckVoteDelay();
  	
  	if (delay > 0)
  	{
