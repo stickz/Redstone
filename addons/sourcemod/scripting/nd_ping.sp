@@ -17,7 +17,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 
-//Version is auto-filled by the travis builder
 public Plugin:myinfo =
 {
 	name 		= "[ND] Player Ping",

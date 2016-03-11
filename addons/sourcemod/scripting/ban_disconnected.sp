@@ -4,7 +4,7 @@
 
 #define STORED_ENTRIES 100
 
-//Version is auto-filled by the travis builder
+//Notice the version is auto-filled by the travis builder
 public Plugin:myinfo = 
 {
 	name        = "Ban disconnected players",
