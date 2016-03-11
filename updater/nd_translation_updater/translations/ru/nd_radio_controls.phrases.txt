@@ -2,11 +2,11 @@
 {
 	"Radio Disabled"
 	{
-		"ru"		"The radio menu is currently broken or disabled."
+		"ru"		"Радио передачи отключены или неисправны."
 	}
 	
 	"Radio Wait"
 	{
-		"ru"		"Please wait {1} second(s) before the next radio message."	
+		"ru"		"Пожалуйста подождите {1} сек. перед отправкой радио передачи."	
 	}
 }
