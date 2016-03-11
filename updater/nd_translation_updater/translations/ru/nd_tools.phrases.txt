@@ -7,13 +7,13 @@
 	
 	"Spawn Bug"
 	{
-		"ru"		"Change class and select another spawn point. If required, press enter to open the spawn menu"
+		"ru"		"Смените класс или выберитте другой телепорт. Нажмите ENTER для вызова меню"
 	}
 	
 	//Notice: If the numbers.phrases file isn't translated, it will fill {1} with English
 	//{1} is not a number like 1,2,3 etc, (improper grammer) instead it's one,two,three etc.
 	"Suicide Request"
 	{
-		"ru"		"Your suicide request will complete in {1} seconds."
+		"ru"		"До самоуничтожения осталось {1} сек."
 	}
 }
