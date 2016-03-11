@@ -203,7 +203,7 @@ do
   plugin_hash=`git log -n 1 --oneline -- ${plugin_paths_for_hash}`
   plugin_hash=`echo $plugin_hash | sed -e 's/\s.*$//g'`
 
-  sed "s/version \?= \?[^,]*/version = \"${plugin_hash}\"/g" $plugin_path > $TMPDIR/${plugin_name}
+  sed "s/version\s*=\s*[^,]*/version = \"${plugin_hash}\"/g" $plugin_path > $TMPDIR/${plugin_name}
   mv $TMPDIR/${plugin_name} ${plugin_path}
   if [ "$verbose" = true ]; then
     echo "- Replaced version in $plugin_name.sp with hash $plugin_hash"
