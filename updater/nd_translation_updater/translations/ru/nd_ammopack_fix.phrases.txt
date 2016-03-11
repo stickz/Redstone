@@ -2,6 +2,6 @@
 {
 	"Ammo Supply"
 	{
-		"ru"		"You cannot place an ammopack beside a supply station"
+		"ru"		"Невозможно оставить патроны рядом с боеприпасами"
 	}
 }
