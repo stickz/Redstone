@@ -71,10 +71,8 @@ public Action:Command_Votemute(client, args)
 	}	
 	
 	if (!TestVoteDelay(client))
-	{
 		return Plugin_Handled;
-	}
-	
+
 	if (g_Cvar_Admins.BoolValue && !IsValidAdmin(client, "k"))
 	{
 		ReplyToCommand(client, "[xG] This command is for server moderators only.");
@@ -94,10 +92,8 @@ public Action:Command_Votemute(client, args)
 		new target = FindTarget(client, arg);
 
 		if (target == INVALID_TARGET)
-		{
 			return Plugin_Handled;
-		}
-		
+
 		else if (SourceComms_GetClientMuteType(target) != bNot)
 		{
 			PrintToChat(client, "\x05[xG] This client is already muted!");
@@ -125,10 +121,8 @@ public Action:Command_Votesilence(client, args)
 	}	
 	
 	if (!TestVoteDelay(client))
-	{
 		return Plugin_Handled;
-	}
-	
+
 	if (g_Cvar_Admins.BoolValue && !IsValidAdmin(client, "k"))
 	{
 		ReplyToCommand(client, "[xG] This command is for server moderators only.");
@@ -183,10 +177,8 @@ public Action:Command_Votegag(client, args)
 	}		
 	
 	if (!TestVoteDelay(client))
-	{
 		return Plugin_Handled;
-	}
-	
+
 	if (args < 1)
 	{
 		g_votetype = VOTE_TYPE_GAG;
@@ -200,10 +192,8 @@ public Action:Command_Votegag(client, args)
 		new target = FindTarget(client, arg);
 
 		if (target == INVALID_TARGET)
-		{
 			return Plugin_Handled;
-		}
-		
+
 		else if (SourceComms_GetClientGagType(target) != bNot)
 		{
 			PrintToChat(client, "\x05[xG] This client is already gagged!");
