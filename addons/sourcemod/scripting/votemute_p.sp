@@ -1,5 +1,3 @@
-#pragma newdecls required //force translational synax to be used
-
 #include <sourcemod>
 #include <sdktools>
 #include <sourcecomms>
