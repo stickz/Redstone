@@ -33,9 +33,9 @@ new g_votetype = 0;
 //Version is auto-filled by the travis builder
 public Plugin:myinfo =
 {
-	name 		= "Vote Mute/Vote Silence",
-	author 		= "<eVa>Dog edited by Stickz",
-	description 	= "Vote Muting and Silencing",
+	name 		= "Vote Gag, Mute, Silence",
+	author 		= "<eVa>Dog, Stickz",
+	description 	= "Allows vote gag, mute and silencing for sourcecomms",
 	version 	= "dummy",
 	url 		= "http://www.theville.org"
 }
@@ -64,20 +64,8 @@ public OnPluginStart()
 
 public Action:Command_Votemute(client, args)
 {
-	if (IsVoteInProgress())
-	{
-		ReplyToCommand(client, "[SM] Vote in Progress");
+	if (!CanStartVote(client))
 		return Plugin_Handled;
-	}	
-	
-	if (!TestVoteDelay(client))
-		return Plugin_Handled;
-
-	if (g_Cvar_Admins.BoolValue && !IsValidAdmin(client, "k"))
-	{
-		ReplyToCommand(client, "[xG] This command is for server moderators only.");
-		return Plugin_Handled;
-	}
 	
 	if (args < 1)
 	{
@@ -96,15 +84,10 @@ public Action:Command_Votemute(client, args)
 
 		else if (SourceComms_GetClientMuteType(target) != bNot)
 		{
-			PrintToChat(client, "\x05[xG] This client is already muted!");
+			PrintToChat(client, "\x05[xG] %t!", "Already Muted"); //This client is already muted!
 			return Plugin_Handled;
 		}
-		else if (isSilenced(client))
-		{
-			PrintToChat(client, "\x05[xG] You cannot use this feature while silenced!");
-			return Plugin_Handled;				
-		}
-		
+
 		g_votetype = VOTE_TYPE_MUTE;
 		DisplayVoteMuteMenu(client, target);
 	}
@@ -114,21 +97,8 @@ public Action:Command_Votemute(client, args)
 
 public Action:Command_Votesilence(client, args)
 {
-	if (IsVoteInProgress())
-	{
-		ReplyToCommand(client, "[SM] Vote in Progress");
+	if (!CanStartVote(client))
 		return Plugin_Handled;
-	}	
-	
-	if (!TestVoteDelay(client))
-		return Plugin_Handled;
-
-	if (g_Cvar_Admins.BoolValue && !IsValidAdmin(client, "k"))
-	{
-		ReplyToCommand(client, "[xG] This command is for server moderators only.");
-		return Plugin_Handled;
-	}
-	
 	
 	if (args < 1)
 	{
@@ -147,15 +117,10 @@ public Action:Command_Votesilence(client, args)
 
 		else if (isSilenced(target))
 		{
-			PrintToChat(client, "\x05[xG] This client is already silenced!");
+			PrintToChat(client, "\x05[xG] %t!", "Already Silenced"); //This client is already silenced
 			return Plugin_Handled;		
 		}
-		else if (isSilenced(client))
-		{
-			PrintToChat(client, "\x05[xG] You cannot use this feature while silenced!");
-			return Plugin_Handled;				
-		}
-		
+
 		g_votetype = VOTE_TYPE_SILENCE;
 		DisplayVoteMuteMenu(client, target);
 	}
@@ -164,19 +129,7 @@ public Action:Command_Votesilence(client, args)
 
 public Action:Command_Votegag(client, args)
 {
-	if (IsVoteInProgress())
-	{
-		ReplyToCommand(client, "[SM] Vote in Progress");
-		return Plugin_Handled;
-	}
-
-	if (g_Cvar_Admins.BoolValue && !IsValidAdmin(client, "k"))
-	{
-		ReplyToCommand(client, "[xG] This command is for server moderators only.");
-		return Plugin_Handled;
-	}		
-	
-	if (!TestVoteDelay(client))
+	if (!CanStartVote(client))
 		return Plugin_Handled;
 
 	if (args < 1)
@@ -196,19 +149,40 @@ public Action:Command_Votegag(client, args)
 
 		else if (SourceComms_GetClientGagType(target) != bNot)
 		{
-			PrintToChat(client, "\x05[xG] This client is already gagged!");
+			PrintToChat(client, "\x05[xG] %t!", "Already Gagged"); //This client is already gagged
 			return Plugin_Handled;
-		}
-		else if (isSilenced(client))
-		{
-			PrintToChat(client, "\x05[xG] You cannot use this feature while silenced!");
-			return Plugin_Handled;				
 		}
 		
 		g_votetype = VOTE_TYPE_GAG;
 		DisplayVoteMuteMenu(client, target);
 	}
 	return Plugin_Handled;
+}
+
+bool:CanStartVote(client)
+{
+	if (IsVoteInProgress())
+	{
+		PrintToChat(client, "\x05[xG] %t.", "Vote in Progress"); //Please wait for the current server-wide vote to finish
+		return false;
+	}
+
+	if (g_Cvar_Admins.BoolValue && !IsValidAdmin(client, "k"))
+	{
+		PrintToChat(client, "\x05[xG] %t.", "Moderater Only"); //This command is for server moderators only
+		return false;
+	}		
+	
+	if (!TestVoteDelay(client))
+		return false;
+		
+	if (isSilenced(client))
+	{
+		PrintToChat(client, "\x05[xG] %t!", "Silence Use"); //You cannot use this feature while silenced
+		return false;				
+	}
+
+	return true;
 }
 
 DisplayVoteMuteMenu(client, target)
@@ -399,12 +373,7 @@ bool:TestVoteDelay(client)
  	
  	if (delay > 0)
  	{
- 		if (delay > 60)
- 			ReplyToCommand(client, "[SM] Vote delay: %i mins", delay % 60);
-
- 		else
- 			ReplyToCommand(client, "[SM] Vote delay: %i secs", delay);
- 		
+ 		PrintToChat(client, "\x05[xG] %t.", "Wait Seconds", delay);
  		return false;
  	}
  	
