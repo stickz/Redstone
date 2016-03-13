@@ -15,6 +15,12 @@
 		"ru"		"Right Click on ND -> Properties -> Set Launch Options"
 	}
 	
+	"Unexpected Interp"
+	{
+		//{1} and {2} are both decimal numbers
+		"ru"		"Found cl_interp {1}, Expected: cl_interp {2}"	
+	}
+	
 	"Interp Rates"
 	{
 		//{1} = the cl_interp in decimal forum ex. 0.115
