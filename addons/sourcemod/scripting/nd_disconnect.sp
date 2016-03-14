@@ -68,7 +68,7 @@ PrintLostConnection(client)
 	
 	for (new idx = 1; idx <= MaxClients; idx++)
 	{
-		if (IsValidClient(idx) && option_lost_connection_message(idx))
+		if (IsValidClient(idx) && option_lost_connection_message[idx])
 		{
 			PrintToChat(idx, "\x05%t", "Lost Connection", clientName);
 		}
