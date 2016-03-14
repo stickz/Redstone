@@ -15,6 +15,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include <sourcemod>
+#include <nd_stocks>
+#include <clientprefs>
+
+new Handle:cookie_lost_connection_message = INVALID_HANDLE;
+new bool:option_lost_connection_message[MAXPLAYERS + 1] = {true,...}; //off by default
 
 //Version is auto-filled by the travis builder
 public Plugin:myinfo = 
@@ -34,6 +39,8 @@ public OnPluginStart()
 	HookEvent("player_disconnect", Event_PlayerDisconnected, EventHookMode_Pre);
 	LoadTranslations("nd_disconnect.phrases");
 	
+	AddClientPrefsSupport();
+	
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -46,13 +53,64 @@ public Event_PlayerDisconnected(Handle:event, const String:name[], bool:dontBroa
 	{
 		new client = GetClientOfUserId(GetEventInt(event,"userid"));		
 		
-		decl String:clientName[64];
-		GetClientName(client, clientName, sizeof(clientName))
-		
 		decl String:reason[64];
 		GetEventString(event, "reason", reason, sizeof(reason));
 		
 		if(StrContains(reason, "timed out", false) != -1)
-			PrintToChatAll("\x05%t", "Lost Connection", clientName);	
+			PrintLostConnection(client);	
 	}
+}
+
+PrintLostConnection(client)
+{
+	decl String:clientName[64];
+	GetClientName(client, clientName, sizeof(clientName))
+	
+	for (new idx = 1; idx <= MaxClients; idx++)
+	{
+		if (IsValidClient(idx) && option_lost_connection_message(idx))
+		{
+			PrintToChat(idx, "\x05%t", "Lost Connection", clientName);
+		}
+	}
+}
+
+public CookieMenuHandler_LostConnectionMessage(client, CookieMenuAction:action, any:info, String:buffer[], maxlen)
+{
+	switch (action)
+	{
+		case CookieMenuAction_DisplayOption:
+		{
+			decl String:status[10];
+			Format(status, sizeof(status), "%T", option_lost_connection_message[client] ? "On" : "Off", client);		
+			Format(buffer, maxlen, "%T: %s", "Cookie Lost Connect", client, status);		
+		}
+		
+		case CookieMenuAction_SelectOption:
+		{
+			option_lost_connection_message[client] = !option_lost_connection_message[client];
+			SetClientCookie(client, cookie_lost_connection_message, option_lost_connection_message[client] ? "On" : "Off");		
+			ShowCookieMenu(client);		
+		}	
+	}
+}
+
+public OnClientCookiesCached(client)
+	option_lost_connection_message[client] = GetCookieLostConnectionMessage(client);
+
+bool:GetCookieLostConnectionMessage(client)
+{
+	decl String:buffer[10];
+	GetClientCookie(client, cookie_lost_connection_message, buffer, sizeof(buffer));
+	
+	return !StrEqual(buffer, "Off");
+}
+
+AddClientPrefsSupport()
+{
+	LoadTranslations("common.phrases"); //required for on and off
+	
+	cookie_lost_connection_message = RegClientCookie("Lost Connection Message On/Off", "", CookieAccess_Protected);
+	new info;
+	SetCookieMenuItem(CookieMenuHandler_LostConnectionMessage, any:info, "Lost Connection Message");
 }
