@@ -83,7 +83,7 @@ bool:GetCookieWelcomeMessage(client)
 	decl String:buffer[10];
 	GetClientCookie(client, cookie_welcome_message, buffer, sizeof(buffer));
 	
-	return StrEqual(buffer, "On");
+	return !StrEqual(buffer, "Off");
 }
 
 AddClientPrefsSupport()
