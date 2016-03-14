@@ -1,5 +1,10 @@
-﻿"Phrases"
+"Phrases"
 {
+	"Cookie Lost Connect"
+	{
+		"ru"		"D/C Message"
+	}
+	
 	"Lost Connection"
 	{
 		//{1} = Player Name
