@@ -2,36 +2,36 @@
 {
 	"Already Muted"
 	{
-		"ru"		"This client is already muted"
+		"ru"		"У этого игрока уже отключён микрофон"
 	}
 	
 	"Already Gagged"
 	{
-		"ru"		"This client is already gagged"
+		"ru"		"У этого игрока уже отключён чат"
 	}
 	
 	"Already Silenced"
 	{
-		"ru"		"This client is already silenced"
+		"ru"		"Этот игрок уже находится в режиме молчания"
 	}
 	
 	"Vote in Progress"
 	{
-		"ru"		"Please wait for the current server-wide vote to finish"
+		"ru"		"Подождите пока закончится текущее голосование"
 	}
 	
 	"Moderater Only"
 	{
-		"ru"		"This command is set to moderators only"
+		"ru"		"Эту команду могут использовать только модераторы."
 	}
 	
 	"Silence Use"
 	{
-		"ru"		"You cannot use this feature while silenced"
+		"ru"		"Невозможно использовать данную функцию т.к. Вы находитесь в режиме молчания"
 	}
 	
 	"Wait Seconds"
 	{
-		"ru"		"Please wait {1} seconds before starting a vote"
+		"ru"		"Невозможно начать голосование. Пожождите {1} секунд"
 	}
 }
