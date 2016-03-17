@@ -33,7 +33,7 @@
 /* Player class stock functions */
 stock bool:IsSniperClass(class, subClass) 
 {
-      return (class == MAIN_CLASS_ASSAULT && subClass == ASSAULT_CLASS_INFANTRY) 
+      return 	   (class == MAIN_CLASS_ASSAULT && subClass == ASSAULT_CLASS_SNIPER) 
 	        || (class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SNIPER)
 }
 
