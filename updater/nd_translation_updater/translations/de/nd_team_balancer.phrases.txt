@@ -150,11 +150,11 @@
 	}
 	"Empire"
 	{
-		"de"		"Empire"
+		"de"		"Imperium"
 	}
 	"Consortium"
 	{
-		"de"		"Consort"
+		"de"		"Konsortium"
 	}
 	"Skill"	
 	{
