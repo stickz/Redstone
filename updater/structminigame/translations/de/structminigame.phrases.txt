@@ -83,11 +83,11 @@
 	//Advantage Translations
 	"Empire"
 	{
-		"de"		"Empire"
+		"de"		"Imperium"
 	}
-	"Consort"
+	"Consortium"
 	{
-		"de"		"Consortium"
+		"de"		"Konsortium"
 	}
 	
 	//This message is a complicated mess, so read carefully
