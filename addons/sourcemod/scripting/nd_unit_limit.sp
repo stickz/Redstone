@@ -78,8 +78,7 @@ public OnPluginStart()
 
 	HookEvent("player_changeclass", Event_SetClass, EventHookMode_Pre);
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
-	//HookEvent("player_death", Event_SetClass, EventHookMode_Post);
-	
+
 	AddUpdaterLibrary();
 	
 	LoadTranslations("nd_unit_limit.phrases");
