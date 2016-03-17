@@ -1,0 +1,84 @@
+﻿"Phrases"
+{
+	"Cookie TimeLimit Features"
+	{
+		"de"		"TimeLimit Features"
+	}
+	
+	"Six Required"
+	{
+		"de"		"Six players are required to use this feature"	
+	}
+	
+	"Already Extended"
+	{
+		"de"		"Only one extension is allowed per map"
+	}
+	
+	"On Team"
+	{
+		"de"		"You must be on a team use to this feature"	
+	}
+	
+	"You Extended"
+	{
+		"de"		"You've already voted to extend the match"
+	}
+	
+	"Round Ended"
+	{
+		"de"		"This feature cannot be used at round end"
+	}
+	
+	"Wait End"
+	{
+		"de"		"Please wait until the last five minutes before extending"
+	}
+	
+	"Regular Time"
+	{
+		"de"		"The regular time limit is currently being used"
+	}
+	
+	"Time Disabled"
+	{
+		"de"		"The time limit is disabled until more players connect"
+	}
+	 
+	"Time End"
+	{
+		"de"		"Round ended by 1h delayed population time limit"
+	}
+	
+	"Limit Effect"
+	{
+		"de"		"Population timelimit now in effect for 1h"
+	}
+	
+	"Round Extended"
+	{
+		"de"		"time limit extended by fifteen minutes"
+	}
+
+	"Extend Availible"
+	{
+		"de"		"Vote extend is now availible"
+	}
+	
+	
+	//Three types of extend printouts
+	//{1} = Player's name
+	//{2} and/or {3} = team number remaining (1,2,3 etc)
+	"Extend Both"
+	{
+		"de"		"{1} typed extend : {2} Con & {3} Emp required." 	
+	}
+	"Extend Empire"
+	{
+		"de"		"{1} typed extend : {2} empire required."	
+	}
+	"Extend Consort"
+	{
+		"de"		"{1} typed extend : {2} consort required."	
+	}
+}

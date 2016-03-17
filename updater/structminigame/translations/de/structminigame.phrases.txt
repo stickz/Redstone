@@ -4,4 +4,116 @@
 	{
 		"de"		"Strukturzerstörungen"
 	}
+	
+	//Building Names
+	"Command Bunker"
+	{
+		"de"		"the Command Bunker"
+	}
+	"MG Turret"
+	{
+		"de"		"a Machine Gun Turret"
+	}
+	"Transport Gate"
+	{
+		"de"		"a Transport Gate"
+	}
+	"Power Station"
+	{
+		"de"		"a Power Station"
+	}
+	"Wireless Repeater"
+	{
+		"de"		"a Wireless Repeater"
+	}
+	"Relay Tower"
+	{
+		"de"		"a Relay Tower"
+	}
+	"Supply Station"
+	{
+		"de"		"a Supply Station"
+	}
+	"Assembler"
+	{
+		"de"		"an Assembler"
+	}
+	"Armory"
+	{
+		"de"		"an Armory"
+	}
+	"Artillery"
+	{
+		"de"		"an Artillery"
+	}
+	"Radar Station"
+	{
+		"de"		"a Radar Station"
+	}
+	"Flamethrower Turret"
+	{
+		"de"		"a Flamethrower Turret"
+	}
+	"Sonic Turret"
+	{
+		"de"		"a Sonic Turret"
+	}
+	"Rocket Turret"
+	{
+		"de"		"a Rocket Turret"
+	}
+	"Wall"
+	{
+		"de"		"a Wall"
+	}
+	"Barrier"
+	{
+		"de"		"a Barrier"
+	}
+	
+	"Building Destoryed"
+	{
+		//{1} = team colour (always keep this first)
+		//{2} = Player's name who destoryed the structure
+		//{3} = The name of the structure destoryed (translated above)
+		"de"		"{1}{2} destroyed {3}"
+	}
+	
+	
+	//Advantage Translations
+	"Empire"
+	{
+		"de"		"Empire"
+	}
+	"Consort"
+	{
+		"de"		"Consortium"
+	}
+	
+	//This message is a complicated mess, so read carefully
+	"Advantage Message"
+	{
+		//{1} changes {2} to the team colour
+		//{2} = Is the player's name
+		
+		//{3} changes the 'just gave' colour to green
+		
+		//{4} changes {5} to the team colour
+		//{5} = Is etheir "Empire" or "Consort" as translated above
+		
+		//{6} changes 'the advantage' colour to green
+		
+		//Ex1. Vertex just gave Consortium the advantage! -without colours
+		//Ex2. {blue} Vertex {green} just gave {blue} Consortium {green} the advantage!
+		//If required, change the number order to suit your needs
+		
+		"de"		"{1}{2} {3}just gave {4}{5} {6}the advantage"
+	}
+	
+	//This message only uses the phrase "Empire" or "Consort"
+	"Advantage Center"
+	{
+		//{1} = Is etheir "Empire" or "Consort" as translated above
+		"de"		"Advantage - {1}"
+	}
 }

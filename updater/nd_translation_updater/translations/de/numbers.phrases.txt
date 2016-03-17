@@ -1,0 +1,51 @@
+﻿"Phrases"
+{
+	"one"
+	{
+		"de"		"one"
+	}
+	"two"
+	{
+		"de"		"two"
+	}
+	"three"
+	{
+		"de"		"three"
+	}
+	"four"
+	{
+		"de"		"four"
+	}
+	"five"
+	{
+		"de"		"five"
+	}
+	"six"
+	{
+		"de"		"six"
+	}
+	"seven"
+	{
+		"de"		"seven"
+	}
+	"eight"
+	{
+		"de"		"eight"
+	}
+	"nine"
+	{
+		"de"		"nine"
+	}
+	"ten"
+	{
+		"de"		"ten"
+	}
+	"eleven"
+	{
+		"de"		"eleven"
+	}
+	"twelve"
+	{
+		"de"		"twelve"
+	}
+}

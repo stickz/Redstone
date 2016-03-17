@@ -12,7 +12,7 @@
 	
 	"Only Commanders"
 	{
-		"en"		"Dieses Feature ist den Kommandeuren vorbehalten"
+		"de"		"Dieses Feature ist den Kommandeuren vorbehalten"
 	}
 	
 	"Commander Disabled"

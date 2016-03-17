@@ -1,0 +1,62 @@
+﻿"Phrases"
+{
+	"Eight Required"
+	{
+		"de"		"Eight or less players are required for late game map changes"
+	}
+	
+	"Ten Required"
+	{
+		"de"		"Ten or less players are required for late game map changes"
+	}
+	
+	"Twelve Required"
+	{
+		"de"		"Twelve or less players are required for late game map changes"	
+	}
+	
+	"Too Late"
+	{
+		"de"		"RTV cannot be used so late into the match"	
+	}
+	
+	"Already Passed"
+	{
+		"de"		"Map change is pending, please be patient."
+	}
+	
+	"Already RTVed"
+	{
+		"de"		"You've already voted to change the map"	
+	}
+	
+	"Round Ended"
+	{
+		"de"		"RTV cannot be used after round end"	
+	}
+	
+	"Round Start"
+	{
+		"de"		"Please wait until the match has started"	
+	}
+	
+	"RTV Changing"
+	{
+		"de"		"RTV Successful: Map will change in five seconds"		
+	}
+	
+	"RTV Wait"
+	{
+		"de"		"RTV Successful: Pending next map vote for change"
+	}
+	
+	
+	//Notice: If the numbers.phrases file isn't translated, it will fill {2} with English
+	//{2} is not a number like 1,2,3 etc, (improper grammer) instead it's one,two,three etc.
+	"Typed Change Map"
+	{
+		//{1} = Player's Name
+		//{2} = Translated numbers from number.phrases		
+		"de"		"{1} typed change map: {2} more required."
+	}
+}

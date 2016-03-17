@@ -12,7 +12,6 @@
 	// {1} are the people capturing plus some
 	"Primary Resource Captured"
 	{
-		"#format"		"{1:s},{2:s}"
 		"de"			"{1} haben die Primäre erobert."
 	}
 	
@@ -21,7 +20,6 @@
 	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
 	"Secondary Resource Captured"
 	{
-		"#format"		"{1:s},{2:s}"
 		"de"			"{1} hat die Sekundäre{2} erobert."
 	}
 	
@@ -30,7 +28,6 @@
 	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
 	"Tertiary Resource Captured"
 	{
-		"#format"		"{1:s},{2:s}"
 		"de"			"{1} hat eine Tertiäre{2} erobert."
 	}
 	

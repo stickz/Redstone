@@ -1,0 +1,61 @@
+﻿"Phrases"
+{
+	"Twelve Required"
+	{
+		"de"		"There must be atleast 12 players to use this feature"
+	}
+	
+	"Ten Required"
+	{
+		"de"		"There must be atleast 10 players to use this feature"	
+	}
+	
+	"Four Required"
+	{
+		"de"		"Four players on your team are required to surrender"	
+	}
+	
+	"Too Soon"
+	{
+		"de"		"You cannot surrender so soon into the match"	
+	}
+	
+	"Team Surrendered"
+	{
+		"de"		"Your team has already surrendered"
+	}
+	
+	"On Team"
+	{
+		"de"		"You must be on a team to vote surrender"	
+	}
+	
+	"You Surrendered"
+	{
+		"de"		"You've already voted to surrender"	
+	}
+	
+	"Round Ended"
+	{
+		"de"		"The round has already ended"	
+	}
+	
+	"Consort Surrendered"
+	{
+		"de"		"Consortium has surrendered"	
+	}
+	
+	"Empire Surrendered"
+	{
+		"de"		"Empire has surrendered"	
+	}
+	
+	//Notice: If the numbers.phrases file isn't translated, it will fill {2} with English
+	//{2} is not a number like 1,2,3 etc, (improper grammer) instead it's one,two,three etc.
+	"Typed Surrender"
+	{
+		//{1} = Player's Name
+		//{2} = Translated numbers from number.phrases		
+		"de"		"{1} typed surrender : {2} more required."
+	}
+}

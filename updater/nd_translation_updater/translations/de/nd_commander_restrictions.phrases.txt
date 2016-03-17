@@ -1,0 +1,107 @@
+﻿"Phrases"
+{
+	"Demotion Reapply"
+	{
+		"de"		"You cannot reapply for commander after being demoted"
+	}
+
+	"Resignation Reapply"
+	{
+		"de"		"You cannot reapply for 30s after mutiny resignation"	
+	}
+	
+	"Spawn Before Apply"
+	{
+		"de"		"Please spawn before applying for commander!"	
+	}
+	
+	"Bellow Ten"
+	{
+		"de"		"Players bellow level 10 can only command <10 players or level <25 averages."	
+	}
+	
+	"Fifty Five Required"
+	{
+		"de"		"Level 40+ commanders are given first pick with 24+ players"
+	}
+	
+	"Total Level"
+	{
+		"de"		"You cannot command more total players than your level"
+	}
+	
+	"No Commander"
+	{
+		"de"		"There is no commander to demote"
+	}
+	
+	"On Team"
+	{
+		"de"		"You must be on a team to vote demote"
+	}
+	
+	"Four Required"
+	{
+		"de"		"Four team players required to use this feature"
+	}
+	
+	"Already Voted"
+	{
+		"de"		"You've already voted to demote the commander"
+	}
+	
+	"Round End"
+	{
+		"de"		"Cannot use this feature after round end"
+	}
+	
+	"Round Started"
+	{
+		"de"		"Please wait until round start before demoting"	
+	}
+	
+	"Commander Demoted"
+	{
+		"de"		"Commander demoted successfully"	
+	}
+	
+	"Demote Failed"
+	{
+		"de"		"Error! Commander not found for demotion!"
+	}
+	
+	"Demote First"
+	{
+		"de"		"You cannot cast the first demote vote after demotion"
+	}
+	
+	"Silence First"
+	{
+		"de"		"You cannot cast the first demote vote while silenced"
+	}
+	
+	"Silence Command"
+	{
+		"de"		"You cannot command while silenced"
+	}
+	
+	"Restrictions Relaxed"
+	{
+		"de"		"Commander restrictions relaxed"
+	}
+	
+	"Demote Not Found"
+	{
+		"de"		"Your vote to demote the commander is already reversed or not present."
+	}
+	
+	"Demote Vote"
+	{
+		"de"		"{1} has voted to !demote the commander. ({2} more required)"
+	}
+	
+	"Skill Required"
+	{
+		"de"		"{1} skill on server stats required to command!"
+	}
+}
