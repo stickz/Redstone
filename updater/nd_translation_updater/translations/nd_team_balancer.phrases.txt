@@ -165,7 +165,7 @@
 	{
 		//{1} = Player's Name
 		"#format"	"{1:s}"
-		"en"		"{1} created a team imbalance by disconnecting after warmup balance."
+		"en"		"{1} created a team imbalance by disconnecting after warmup balance"
 	}
 	
 	"Imbalanced Teams"
