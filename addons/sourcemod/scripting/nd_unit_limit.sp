@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define MIN_SNIPER_VALUE		1
 #define MIN_STEALTH_LOW_VALUE 		2
 #define MIN_STEALTH_HIGH_VALUE 		2
-#define MIN_ANTI_STRUCTURE_VALUE	3
+#define MIN_ANTI_STRUCTURE_VALUE	4
 
 #define MIN_ANTI_STRUCTURE_PER 	60
 
