@@ -396,7 +396,7 @@ PrintLimitSet(commander, team, type, limit)
 	{
 		if (IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			PrintToChat(client, "\x05[xG] %t", Phrase, commanderName, limt);
+			PrintToChat(client, "\x05[xG] %t", Phrase, commanderName, limit);
 		}
 	}
 }
