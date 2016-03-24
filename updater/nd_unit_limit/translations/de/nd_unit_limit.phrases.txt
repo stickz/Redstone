@@ -45,6 +45,25 @@
 		"de"		"Verwendung: !MaxAntiStructure <Percent>"
 	}
 	
+	"Set Sniper Limit"
+	{
+		//{1} = number of snipers in word form (ex. one, two, three)
+		"de"		"Sniper count limited to {1}"
+	}
+	
+	"Set Stealth Limit"
+	{
+		//{1} = number of stealth in word form (ex. one, two, three)
+		"de"		"Stealth count limited to {1}"
+	}
+	
+	"Set Structure Limit"
+	{
+		//{1} = number of Ant-Structure in number form (ex. 60, 70, 80)
+		"de" 		"Anti-Structure limited to {1} percent"
+	}
+	
+	
 	"Invalid Args"
 	{
 		"de"		"Ungültige Anzahl an Argumenten: <Team> <Anzahl>"
