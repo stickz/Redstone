@@ -55,6 +55,21 @@
 		"en"		"Usage: !MaxAntiStructure <percent>"
 	}
 	
+	"Set Sniper Limit"
+	{
+		"en"		"Sniper count limited to {1}"
+	}
+	
+	"Set Stealth Limit"
+	{
+		"en"		"Stealth count limited to {1}"
+	}
+	
+	"Set Structure Limit"
+	{
+		"en" 		"Anti-Structure limited to {1} percent"
+	}
+	
 	"Invalid Args"
 	{
 		"en"		"Invalid number of arguments: <team> <amount>"
