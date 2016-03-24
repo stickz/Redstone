@@ -410,7 +410,7 @@ PrintLimitSet(commander, team, type, limit)
 				Format(TranslatedLimit, sizeof(TranslatedLimit), "%T", NumberInEnglish(limit), client);
 				
 				decl String:Message[64];
-				Format(Message, sizeof(Message", "\x05[xG] %T.", Phrase, client, TranslatedLimit);
+				Format(Message, sizeof(Message), "\x05[xG] %T.", Phrase, client, TranslatedLimit);
 				PrintToChat(client, Message);
 			}
 		}
