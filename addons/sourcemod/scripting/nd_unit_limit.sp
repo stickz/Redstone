@@ -82,6 +82,7 @@ public OnPluginStart()
 	AddUpdaterLibrary();
 	
 	LoadTranslations("nd_unit_limit.phrases");
+	LoadTranslations("numbers.phrases");
 }
 
 public OnMapStart() 
@@ -386,14 +387,32 @@ stock String:GetLimitPhrase(type)
 
 PrintLimitSet(commander, team, type, limit)
 {
-	decl String:Phrase[32];
-	Format(Phrase, sizeof(Phrase), GetLimitPhrase(type));
-	
-	for (new client = 1; client <= MaxClients; client++)
+	if (type == TYPE_STRUCTURE)
 	{
-		if (IsValidClient(client) && GetClientTeam(client) == team)
+		for (new client = 1; client <= MaxClients; client++)
 		{
-			PrintToChat(client, "\x05[xG] %t", Phrase, limit);
+			if (IsValidClient(client) && GetClientTeam(client) == team)
+			{
+				PrintToChat(client, "\x05[xG] %t.", "Set Structure Limit", limit);
+			}
+		}
+	}
+	else
+	{
+		decl String:Phrase[32];
+		Format(Phrase, sizeof(Phrase), GetLimitPhrase(type));
+		
+		for (new client = 1; client <= MaxClients; client++)
+		{
+			if (IsValidClient(client) && GetClientTeam(client) == team)
+			{
+				decl String:TranslatedLimit[32];
+				Format(TranslatedLimit, sizeof(TranslatedLimit), "%T", NumberInEnglish(limit), client);
+				
+				decl String:Message[64];
+				Format(Message, sizeof(Message", "\x05[xG] %T.", Phrase, client, TranslatedLimit);
+				PrintToChat(client, Message);
+			}
 		}
 	}
 }
