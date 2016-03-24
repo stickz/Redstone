@@ -321,6 +321,7 @@ bool:IsTooMuchAntiStructure(client)
 	new Float:AntiStructurePercent = ((AntiStructureFloat / teamFloat) * 100.0);
 	
 	new percentLimit = UnitLimit[clientTeam - 2][TYPE_STRUCTURE];
+	
 	return percentLimit >= AntiStructurePercent && AntiStructureFloat > MIN_ANTI_STRUCTURE_VALUE;
 }
 
@@ -345,17 +346,14 @@ ResetClass(client)
 	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0);
 }
 
-SetUnitLimit(client, team, type, value)
+SetUnitLimit(commander, team, type, value)
 {
 	new teamIDX = team - 2;
 	
 	UnitLimit[teamIDX][type] = value;
 	SetLimit[teamIDX][type] = true;
 	
-	decl String:teamName[16];
-	Format(teamName, sizeof(teamName), "%t", team == TEAM_CONSORT ? "Consortium" : "Empire");
-
-	PrintToChat(client, "\x05[xG] %s's %s limit was changed to %i.", teamName, GetTypeName(type), value);
+	PrintLimitSet(commander, team, type, value);
 }
 
 stock String:GetTypeName(type)
@@ -370,4 +368,35 @@ stock String:GetTypeName(type)
         }
         
         return typeName;
+}
+
+stock String:GetLimitPhrase(type)
+{
+	new String:LimitPhrase[32];
+	
+	switch (type)
+        {
+        	case TYPE_SNIPER: 	LimitPhrase = "Set Sniper Limit";
+        	case TYPE_STEALTH:	LimitPhrase = "Set Stealth Limit"; 
+        	case TYPE_STRUCTURE: 	LimitPhrase = "Set Structure Limit";
+        }
+        
+        return LimitPhrase;
+}
+
+PrintLimitSet(commander, team, type, limit)
+{
+	decl String:Phrase[32];
+	Format(Phrase, sizeof(Phrase), GetLimitPhrase(type));
+	
+	decl String:commanderName[64];
+	GetClientName(commander, commanderName, sizeof(commanderName));
+	
+	for (new client = 1; client <= MaxClients; client++)
+	{
+		if (IsValidClient(client) && GetClientTeam(client) == team)
+		{
+			PrintToChat(client, "\x05[xG] %t", Phrase, commanderName, limt);
+		}
+	}
 }
