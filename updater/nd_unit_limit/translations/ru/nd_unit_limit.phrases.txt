@@ -45,6 +45,24 @@
 		"ru"		"Используйте: !MaxAntiStructure <количество>"
 	}
 	
+	"Set Sniper Limit"
+	{
+		//{1} = number of snipers in word form (ex. one, two, three)
+		"ru"		"Sniper count limited to {1}"
+	}
+	
+	"Set Stealth Limit"
+	{
+		//{1} = number of stealth in word form (ex. one, two, three)
+		"ru"		"Stealth count limited to {1}"
+	}
+	
+	"Set Structure Limit"
+	{
+		//{1} = number of Ant-Structure in number form (ex. 60, 70, 80)
+		"ru" 		"Anti-Structure limited to {1} percent"
+	}
+	
 	"Invalid Args"
 	{
 		"ru"		"Неверные значения аргументов: <команда> <количество>"
