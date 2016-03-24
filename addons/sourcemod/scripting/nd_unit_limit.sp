@@ -389,14 +389,11 @@ PrintLimitSet(commander, team, type, limit)
 	decl String:Phrase[32];
 	Format(Phrase, sizeof(Phrase), GetLimitPhrase(type));
 	
-	decl String:commanderName[64];
-	GetClientName(commander, commanderName, sizeof(commanderName));
-	
 	for (new client = 1; client <= MaxClients; client++)
 	{
 		if (IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			PrintToChat(client, "\x05[xG] %t", Phrase, commanderName, limit);
+			PrintToChat(client, "\x05[xG] %t", Phrase, limit);
 		}
 	}
 }
