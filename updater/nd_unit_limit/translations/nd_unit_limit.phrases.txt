@@ -57,16 +57,19 @@
 	
 	"Set Sniper Limit"
 	{
+		"#format"	"{1:s}"
 		"en"		"Sniper count limited to {1}"
 	}
 	
 	"Set Stealth Limit"
 	{
+		"#format"	"{1:s}"
 		"en"		"Stealth count limited to {1}"
 	}
 	
 	"Set Structure Limit"
 	{
+		"#format"	"{1:i}"
 		"en" 		"Anti-Structure limited to {1} percent"
 	}
 	
