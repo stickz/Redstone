@@ -45,6 +45,11 @@ native GameME_GetServerType();
 
 #define GST_LOADED() (GetFeatureStatus(FeatureType_Native, "GameME_GetServerType") == FeatureStatus_Available)
 
+stock bool:RegularServerType()
+{
+	return GST_LOADED() && GameME_GetServerType() == GAMEME_TYPE_REGULAR;
+}
+
 /**
  * Retreive the cached gameme client skill value
  *
