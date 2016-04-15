@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <nd_breakdown>
 #include <nd_stocks>
+#include <nd_rounds>
 
 #undef REQUIRE_PLUGIN
 #tryinclude <nd_commander>
@@ -48,8 +49,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 new Handle:eCommanders = INVALID_HANDLE,
 	UnitLimit[2][3],
-	bool:SetLimit[2][3],
-	bool:roundStarted = false;
+	bool:SetLimit[2][3];
 
 //Version is auto-filled by the travis builder
 public Plugin:myinfo = 
@@ -76,8 +76,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_MaxAntiStructures", CMD_ChangeTeamAntiStructureLimit, "Change the maximum percent of antistrcture in the team: !MaxAntiStructure <amount>");
 	RegConsoleCmd("sm_MaxAntiStructure", CMD_ChangeTeamAntiStructureLimit, "Change the maximum percent of antistrcture in the team: !MaxAntiStructure <amount>");
 
-	HookEvent("player_changeclass", Event_SetClass, EventHookMode_Pre);
-	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
+	HookEvent("player_changeclass", Event_SelectClass, EventHookMode_Pre);
 
 	AddUpdaterLibrary();
 	
@@ -97,19 +96,9 @@ public OnMapStart()
 	}
 }
 
-public OnMapEnd()
+public Action:Event_SelectClass(Handle:event, const String:name[], bool:dontBroadcast) 
 {
-	roundStarted = false;
-}
-
-public Action:Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
-{
-	roundStarted = true;
-}
-
-public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadcast) 
-{
-	if (!roundStarted)
+	if (!ND_RoundStarted())
 		return Plugin_Continue;
 	
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
