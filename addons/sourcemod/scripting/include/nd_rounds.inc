@@ -5,10 +5,13 @@
 
 /**
  * Checks wether the round is currently started or not
- * Works for ussage OnPluginStart() when for late loading
+ * Works for usage OnPluginStart() when for late loading
+ *
+ * Returns false during the first set of loading on server start
+ * However, this condiction is not actually a late load.
  *
  * @return True or False 	Round Started.
  */
 native bool:ND_RoundStarted();
 
-#define TDS_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStarted") == FeatureStatus_Available)
+#define NDRS_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStarted") == FeatureStatus_Available)
