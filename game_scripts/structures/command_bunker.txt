@@ -1,0 +1,729 @@
+"command_bunker"
+{
+	"shared"
+	{
+		"name"			"#CommandBunker_Name"
+		
+		"unpack_time"		"0.0" // seconds
+
+		// POWER
+
+		"power_use"		"0"
+		"power_radius"		"1500"
+		
+		"buildcost"		"0"
+		"hitpoints"		"16000"
+		"cap"			"2"
+		
+		"shield"
+		{
+			"points"		"0"
+			"rate"		"0"
+			"ticks"		"0"
+		}
+		
+		"can_user_build"	"0"
+		
+		"tooltip"			"Commander controls their faction from here."
+		"buildamt"		"125"
+		"repairamt"	"175"
+		"tabtarget"	"base_structures"
+		"hotkey"		"B"
+		
+		
+		"extract_interval" 			"5.0"		// Length of time in seconds before we hand out more resources
+		"extract_amt"				"100"		// Amount of resources to give in each extraction	
+		
+		"decloak_radius"			"1000"	
+		
+		"available_research"
+		{
+			"advanced_tactics"		{}
+			"power_modulation"		{}
+		}
+	}
+	
+	"consortium"
+	{
+		"model"		"models/rts_structures/rts_bunker/rts_bunker_ct.mdl"
+
+		"power_supply"		"950"
+
+		"ambient_sounds"
+		{
+			"ct_bunker_snd"
+			{
+				"attachment"	"commander_seat"
+				"min_interval"	"2"
+				"max_interval"	"2"
+				
+				"sounds"
+				{
+					"ct_hq_loop_1" {}
+				}
+			}
+		}
+		
+		"ui_graphic"
+		{
+			// fractional, because it is in '480p-space' so to speak, and then it is scaled and rounded
+			"width"		"101.6"
+			"height"	"114.0"
+			"texture"	"vgui/icons/structures/bunker_ct"
+		}
+
+		"damage_effects"
+		{
+			//Destruction Stage 1
+			"PlaySound"
+			{
+				"EffectData"	"Breakable.Spark"
+				"StartEffectHealthPerc"	"75"
+				"AttachmentName"	"sparks01"
+			}
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.ExplosionSmall"
+				"StartEffectHealthPerc"	"75"
+				"AttachmentName"	"fire01"
+			}
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.MetalSmall"
+				"StartEffectHealthPerc"	"75"
+				"AttachmentName"	"fire01"
+			}
+			"ChangeBodyGroup"
+			{
+				"EffectData"	"0,1"
+				"StartEffectHealthPerc"	"75"
+			}
+			"Burst"
+			{
+				"EffectData" "1000 10000"
+				"Options" "0.5 1 0.5"
+				"StartEffectHealdPerc" "75"
+				"AttachmentName" "smoke01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"sparks_generic02"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"75"
+				"StopEffectHealthPerc"	"25"
+				"AttachmentName"	"sparks01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning02_smoke"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"75"
+				"StopEffectHealthPerc"	"50"
+				"AttachmentName"	"smoke01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"smoke_medium02"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"75"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke02"
+			}
+
+			//Destruction Stage 2
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.ExplosionMedium"
+				"StartEffectHealthPerc"	"50"
+				"AttachmentName"	"smoke02"
+			}
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.MetalMedium"
+				"StartEffectHealthPerc"	"50"
+				"AttachmentName"	"smoke02"
+			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Fire.SmallLoop"
+//				"StartEffectHealthPerc"	"50"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"smoke01"
+//			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Fire.SmallLoop"
+//				"StartEffectHealthPerc"	"50"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"smoke02"
+//			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Steam.SmallLoop"
+//				"StartEffectHealthPerc"	"50"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"steam01"
+//			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Steam.SmallLoop"
+//				"StartEffectHealthPerc"	"50"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"steam02"
+//			}
+			"ChangeBodyGroup"
+			{
+				"EffectData"	"0,2"
+				"StartEffectHealthPerc"	"50"
+			}	
+			"Burst"
+			{
+				"EffectData" "1000 10000"
+				"Options" "0.5 1 0.5"
+				"StartEffectHealdPerc" "50"
+				"AttachmentName" "smoke02"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning01"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"50"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning01"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"50"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke02"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"explosion_generic"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"50"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke02"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning02_smoke"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"50"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke03"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning02_smoke"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"50"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke04"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"steam_short"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"50"
+				"StopEffectHealthPerc"	"25"
+				"AttachmentName"	"steam01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"steam_long"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"50"
+				"StopEffectHealthPerc"	"25"
+				"AttachmentName"	"steam02"
+			}
+
+			//Destruction Stage 3
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.ExplosionMedium"
+				"StartEffectHealthPerc"	"25"
+				"AttachmentName"	"fire01"
+			}
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.MetalMedium"
+				"StartEffectHealthPerc"	"25"
+				"AttachmentName"	"fire01"
+			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Fire.LargeLoop"
+//				"StartEffectHealthPerc"	"25"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"fire01"
+//			}
+			"ChangeBodyGroup"
+			{
+				"EffectData"	"0,3"
+				"StartEffectHealthPerc"	"25"
+			}	
+			"Burst"
+			{
+				"EffectData" "1000 10000"
+				"Options" "0.5 1 0.5"
+				"StartEffectHealdPerc" "25"
+				"AttachmentName" "fire01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"explosion_generic"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"25"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"fire01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning06"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"25"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"fire01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"smoke_medium02"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"25"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke05"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"smoke_medium02"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"25"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke06"
+			}
+
+
+			//Final Destruction Stage - Carcass
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.ExplosionLarge"
+				"StartEffectHealthPerc"	"0"
+				"AttachmentName"	"fire04"
+			}
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.MetalLarge"
+				"StartEffectHealthPerc"	"0"
+				"AttachmentName"	"fire04"
+			}
+			"ChangeBodyGroup"
+			{
+				"EffectData"	"0,4"
+				"StartEffectHealthPerc"	"0"
+			}
+			"ChangeSkin"
+			{
+				"EffectData"	"1"
+				"StartEffectHealthPerc"	"0"
+			}
+			"Burst"
+			{
+				"EffectData" "1000 10000"
+				"Options" "0.5 1 0.5"
+				"StartEffectHealdPerc" "0"
+				"AttachmentName" "explosion04"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning07"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"0"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"fire02"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning07"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"0"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"fire03"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning07"
+				"Options"		"-1"			// play once only
+				"StartEffectHealthPerc"	"0"
+				"AttachmentName"	"fire04"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"explosion_generic"
+				"Options"		"-1"			// play once only
+				"StartEffectHealthPerc"	"0"
+				"AttachmentName"	"fire04"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"explosion_generic"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"0"
+				"AttachmentName"	"smoke01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"explosion_generic"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"0"
+				"AttachmentName"	"fire02"
+			}
+
+			"Settings"
+			{
+				"DelayToSpawnSmokeAfterCarcass"		"10"
+				"DelayToRemoveAfterSmoke"		"2"
+			}
+		}
+	}
+	
+	"empire"
+	{
+		"model"		"models/rts_structures/rts_bunker/rts_bunker_emp_part1.mdl"
+
+		"power_supply"		"1250"
+
+		"ambient_sounds"
+		{
+			"emp_bunker_snd"
+			{
+				"attachment"	"commander_seat"
+				"min_interval"	"2"
+				"max_interval"	"2"
+				
+				"sounds"
+				{
+					"ct_hq_loop_1" {}
+				}
+			}
+		}
+
+		"ui_graphic"
+		{
+			// fractional, because it is in '480p-space' so to speak, and then it is scaled and rounded
+			"width"		"101.6"
+			"height"	"114.0"
+			"texture"	"vgui/icons/structures/bunker_emp"
+		}
+
+		"damage_effects"
+		{
+			//Destruction Stage 1
+			"PlaySound"
+			{
+				"EffectData"	"Breakable.Spark"
+				"StartEffectHealthPerc"	"75"
+				"AttachmentName"	"sparks01"
+			}
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.ExplosionSmall"
+				"StartEffectHealthPerc"	"75"
+				"AttachmentName"	"fire01"
+			}
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.MetalSmall"
+				"StartEffectHealthPerc"	"75"
+				"AttachmentName"	"fire01"
+			}
+			"ChangeBodyGroup"
+			{
+				"EffectData"	"0,1"
+				"StartEffectHealthPerc"	"75"
+			}
+			"Burst"
+			{
+				"EffectData" "1000 10000"
+				"Options" "0.5 1 0.5"
+				"StartEffectHealdPerc" "75"
+				"AttachmentName" "smoke01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning02_smoke"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"75"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"smoke_medium02"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"75"
+				"StopEffectHealthPerc"	"25"
+				"AttachmentName"	"smoke02"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"sparks_generic02"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"75"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"sparks01"
+			}
+
+			//Destruction Stage 2
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.ExplosionMedium"
+				"StartEffectHealthPerc"	"50"
+				"AttachmentName"	"smoke03"
+			}
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.MetalMedium"
+				"StartEffectHealthPerc"	"50"
+				"AttachmentName"	"smoke03"
+			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Fire.SmallLoop"
+//				"StartEffectHealthPerc"	"50"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"fire01"
+//			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Fire.SmallLoop"
+//				"StartEffectHealthPerc"	"50"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"fire02"
+//			}
+			"ChangeBodyGroup"
+			{
+				"EffectData"	"0,0"
+				"StartEffectHealthPerc"	"50"
+			}
+			"SwapModel"
+			{
+				"EffectData"	"models/rts_structures/rts_bunker/rts_bunker_emp_part2.mdl"
+				"StartEffectHealthPerc"	"50"
+			}
+			"Burst"
+			{
+				"EffectData" "1000 10000"
+				"Options" "0.5 1 0.5"
+				"StartEffectHealdPerc" "50"
+				"AttachmentName" "smoke03"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"smoke_medium02"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"50"
+				"StopEffectHealthPerc"	"25"
+				"AttachmentName"	"smoke03"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning01"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"50"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"fire01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning01"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"50"
+				"StopEffectHealthPerc"	"25"
+				"AttachmentName"	"fire02"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"explosion_generic"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"50"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke03"
+			}
+
+
+			//Destruction Stage 3
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.ExplosionMedium"
+				"StartEffectHealthPerc"	"25"
+				"AttachmentName"	"fire03"
+			}
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.MetalMedium"
+				"StartEffectHealthPerc"	"25"
+				"AttachmentName"	"fire03"
+			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Fire.LargeLoop"
+//				"StartEffectHealthPerc"	"25"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"fire03"
+//			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Fire.LargeLoop"
+//				"StartEffectHealthPerc"	"25"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"smoke02"
+//			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Steam.SmallLoop"
+//				"StartEffectHealthPerc"	"25"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"steam01"
+//			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Steam.SmallLoop"
+//				"StartEffectHealthPerc"	"25"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"steam02"
+//			}
+			"ChangeBodyGroup"
+			{
+				"EffectData"	"0,1"
+				"StartEffectHealthPerc"	"25"
+			}
+			"Burst"
+			{
+				"EffectData" "1000 10000"
+				"Options" "0.5 1 0.5"
+				"StartEffectHealdPerc" "25"
+				"AttachmentName" "fire03"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning06"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"25"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"fire03"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning04"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"25"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke02"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"steam_short"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"25"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"steam01"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"steam_long"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"25"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"steam02"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"explosion_generic"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"25"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"fire03"
+			}
+
+			//Final Destruction Stage - Carcass
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.ExplosionLarge"
+				"StartEffectHealthPerc"	"0"
+				"AttachmentName"	"fire03"
+			}
+			"PlaySound"
+			{
+				"EffectData"	"Destruction.MetalLarge"
+				"StartEffectHealthPerc"	"0"
+				"AttachmentName"	"fire03"
+			}
+//			"PlaySound"
+//			{
+//				"EffectData"	"Fire.LargeLoop"
+//				"StartEffectHealthPerc"	"10"
+//				"StopEffectHealthPerc"	"-1"
+//				"AttachmentName"	"fire04"
+//			}
+			"ChangeBodyGroup"
+			{
+				"EffectData"	"0,2"
+				"StartEffectHealthPerc"	"0"
+			}
+			"ChangeSkin"
+			{
+				"EffectData"	"1"
+				"StartEffectHealthPerc"	"0"
+			}
+			"Burst"
+			{
+				"EffectData" "1000 10000"
+				"Options" "0.5 1 0.5"
+				"StartEffectHealdPerc" "0"
+				"AttachmentName" "fire04"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"burning07"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"10"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"fire04"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"explosion_generic"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"0"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"fire04"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"explosion_generic"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"0"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"fire03"
+			}
+			"PlayParticleEffect"
+			{
+				"EffectData"	"explosion_generic"
+				"Options"		"-1"			// delay between plays
+				"StartEffectHealthPerc"	"0"
+				"StopEffectHealthPerc"	"-1"
+				"AttachmentName"	"smoke02"
+			}
+
+
+			"Settings"
+			{
+				"DelayToSpawnSmokeAfterCarcass"		"10"
+				"DelayToRemoveAfterSmoke"		"2"
+			}
+		}
+	}
+}
