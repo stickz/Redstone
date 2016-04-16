@@ -15,3 +15,16 @@
 native bool:ND_RoundStarted();
 
 #define NDRS_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStarted") == FeatureStatus_Available)
+
+/**
+ * Checks wether the map is currently started or not
+ * Works for usage OnPluginStart() when for late loading
+ *
+ * Returns false during the first set of loading on server start
+ * However, this condiction is not actually a late load.
+ *
+ * @return True or False 	Map Started.
+ */
+native bool:ND_MapStarted();
+
+#define NDMS_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStarted") == FeatureStatus_Available)
