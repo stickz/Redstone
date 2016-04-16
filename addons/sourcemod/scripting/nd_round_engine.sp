@@ -14,6 +14,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
+public Plugin:myinfo =
+{
+	name 		= "[ND] Round Engine",
+	author 		= "Stickz",
+	description 	= "LL and Proceduralization Support",
+	version 	= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
+};
+
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_round_engine/nd_round_engine.txt"
 #include "updater/standard.sp"
 
