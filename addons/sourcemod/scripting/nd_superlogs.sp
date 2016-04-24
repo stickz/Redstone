@@ -127,10 +127,8 @@ public Action:Event_PlayerDeathPre(Handle:event, const String:name[], bool:dontB
 	GetEventString(event, "weapon", weapon, sizeof(weapon));
 	
 	if (attacker <= 0 || victim <= 0)
-	{
 		return Plugin_Continue;
-	}
-	
+
 	// Which commander ablilty?!
 	if(StrEqual(weapon, "commander ability"))
 	{
@@ -177,7 +175,7 @@ public Hook_PostThink(client)
 		return;
 	
 	new iWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
-	if(iWeapon == -1 || !IsValidEdict(iWeapon))
+	if(IsInvalid(iWeapon))
 	{
 		g_bReadyToShoot[client] = false;
 		return;
@@ -188,8 +186,8 @@ public Hook_PostThink(client)
 	if(StrContains(sWeapon, "weapon_", false) != 0)
 		return;
 	
-	new Float:flNextAttackTime = GetEntPropFloat(iWeapon, Prop_Send, "m_flNextPrimaryAttack");
-	g_bReadyToShoot[client] = flNextAttackTime <= GetGameTime() && GetEntProp(iWeapon, Prop_Send, "m_iClip1") > 0;
+	g_bReadyToShoot[client] = GetEntPropFloat(iWeapon, Prop_Send, "m_flNextPrimaryAttack") <= GetGameTime() 
+				&& GetEntProp(iWeapon, Prop_Send, "m_iClip1") > 0;
 }
 
 public Hook_PostThinkPost(client)
@@ -198,7 +196,7 @@ public Hook_PostThinkPost(client)
 		return;
 	
 	new iWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
-	if(iWeapon == -1 || !IsValidEdict(iWeapon))
+	if(IsInvalid(iWeapon))
 		return;
 	
 	decl String:sWeapon[30];
@@ -209,8 +207,7 @@ public Hook_PostThinkPost(client)
 	ReplaceString(sWeapon, sizeof(sWeapon), "weapon_", "", false);
 	FixWeaponLoggingName(sWeapon, sizeof(sWeapon));
 	
-	new Float:flNextAttackTime = GetEntPropFloat(iWeapon, Prop_Send, "m_flNextPrimaryAttack");
-	if(g_bReadyToShoot[client] && flNextAttackTime > GetGameTime())
+	if(g_bReadyToShoot[client] && GetEntPropFloat(iWeapon, Prop_Send, "m_flNextPrimaryAttack") > GetGameTime())
 	{
 		new weapon_index = get_weapon_index(sWeapon);
 		if (weapon_index > -1 && weapon_index < IGNORE_SHOTS_START)
@@ -362,6 +359,11 @@ public Action:LogMap(Handle:timer)
 {
 	// Called 1 second after OnPluginStart since srcds does not log the first map loaded. Idea from Stormtrooper's "mapfix.sp" for psychostats
 	LogMapLoad();
+}
+
+bool:IsInvalid(iWeapon)
+{
+	return iWeapon == -1 || !IsValidEdict(iWeapon);
 }
 
 stock FixWeaponLoggingName(String:sWeapon[], maxlength)
