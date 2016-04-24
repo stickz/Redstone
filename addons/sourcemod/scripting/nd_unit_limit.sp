@@ -164,7 +164,7 @@ public Action:CMD_ChangeSnipersLimit(client, args)
 	GetCmdArg(2, strvalue, sizeof(strvalue));
 	new value = StringToInt(strvalue);
 
-    	SetUnitLimit(client, team, TYPE_SNIPER, value);
+    	SetUnitLimit(team, TYPE_SNIPER, value);
     	return Plugin_Handled;
 }
 
@@ -183,7 +183,7 @@ public Action:CMD_ChangeTeamSnipersLimit(client, args)
 	else if (value < MIN_SNIPER_VALUE)
         	value = MIN_SNIPER_VALUE;
         	
-        SetUnitLimit(client, GetClientTeam(client), TYPE_SNIPER, value);
+        SetUnitLimit(GetClientTeam(client), TYPE_SNIPER, value);
 	return Plugin_Handled;
 }
 
@@ -202,7 +202,7 @@ public Action:CMD_ChangeTeamStealthLimit(client, args)
 	else if (value < MIN_STEALTH_LOW_VALUE)
         	value = MIN_STEALTH_LOW_VALUE;
         	
-        SetUnitLimit(client, GetClientTeam(client), TYPE_STEALTH, value);
+        SetUnitLimit(GetClientTeam(client), TYPE_STEALTH, value);
 	return Plugin_Handled;
 }
 
@@ -221,7 +221,7 @@ public Action:CMD_ChangeTeamAntiStructureLimit(client, args)
 	else if (value < MIN_ANTI_STRUCTURE_PER)
         	value = MIN_ANTI_STRUCTURE_PER;
         	
-        SetUnitLimit(client, GetClientTeam(client), TYPE_STRUCTURE, value);
+        SetUnitLimit(GetClientTeam(client), TYPE_STRUCTURE, value);
 	return Plugin_Handled;
 }
 
@@ -336,14 +336,14 @@ ResetClass(client)
 	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0);
 }
 
-SetUnitLimit(commander, team, type, value)
+SetUnitLimit(team, type, value)
 {
 	new teamIDX = team - 2;
 	
 	UnitLimit[teamIDX][type] = value;
 	SetLimit[teamIDX][type] = true;
 	
-	PrintLimitSet(commander, team, type, value);
+	PrintLimitSet(team, type, value);
 }
 
 stock String:GetTypeName(type)
@@ -374,7 +374,7 @@ stock String:GetLimitPhrase(type)
         return LimitPhrase;
 }
 
-PrintLimitSet(commander, team, type, limit)
+PrintLimitSet(team, type, limit)
 {
 	if (type == TYPE_STRUCTURE)
 	{
