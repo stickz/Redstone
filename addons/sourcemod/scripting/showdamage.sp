@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 public Plugin:myinfo = 
 {
 	name 		= "Show Damage",
-	author 		= "exvel",
+	author 		= "exvel, stickz",
 	description 	= "Shows damage in the center of the screen.",
 	version 	= "dummy",
 	url 		= "www.sourcemod.net"
@@ -35,16 +35,10 @@ new bool:option_show_damage[MAXPLAYERS + 1] = {true,...};
 new Handle:cookie_show_damage = INVALID_HANDLE;
 
 //CVars' handles
-new Handle:cvar_show_damage = INVALID_HANDLE;
-new Handle:cvar_show_damage_ff = INVALID_HANDLE;
-new Handle:cvar_show_damage_own_dmg = INVALID_HANDLE;
-new Handle:cvar_show_damage_text_area = INVALID_HANDLE;
-
-//CVars' varibles
-new bool:show_damage = true;
-new bool:show_damage_ff = false;
-new bool:show_damage_own_dmg = false;
-new show_damage_text_area = 1;
+ConVar gcvar_enabled;
+ConVar gcvar_ff;
+ConVar gcvar_own_dmg;
+ConVar gcvar_text_area;
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/showdamage/showdamage.txt"
 #include "updater/standard.sp"
@@ -52,8 +46,6 @@ new show_damage_text_area = 1;
 public OnPluginStart()
 {
 	CreateConvars(); //plugin controls
-	
-	AddConVarHooks(); //convar hooks
 	
 	AddUpdaterLibrary(); //auto-updater support
 	
@@ -94,9 +86,6 @@ bool:GetCookieShowDamage(client)
 	return !StrEqual(buffer, "Off");
 }
 
-public OnConfigsExecuted()
-	GetCVars();
-
 public OnClientConnected(client)
 	block_timer[client] = false;
 
@@ -115,7 +104,7 @@ public Action:ShowDamage(Handle:timer, any:client)
 	if (player_damage[client] <= 0 || !client || !IsClientInGame(client))
 		return;
 	
-	switch (show_damage_text_area)
+	switch (gcvar_text_area.IntValue)
 	{
 		case 1:	PrintCenterText(client, "%t", "CenterText Damage Text", player_damage[client]);
 		case 2:	PrintHintText(client, "%t", "HintText Damage Text", player_damage[client]);
@@ -145,16 +134,16 @@ public Action:Event_InfectedHurt(Handle:event, const String:name[], bool:dontBro
 
 CalcDamage(client, client_attacker, damage)
 {
-	if (!show_damage || !option_show_damage[client_attacker] || client_attacker == 0 || IsFakeClient(client_attacker) || !IsClientInGame(client_attacker) || damage > MaxDamage)
+	if (!gcvar_enabled.BoolValue || !option_show_damage[client_attacker] || client_attacker == 0 || IsFakeClient(client_attacker) || !IsClientInGame(client_attacker) || damage > MaxDamage)
 		return;
 	
 	//If client == 0 than skip this verifying. It can be an infected or something else without client index.
 	if (client != 0)
 	{
-		if (client == client_attacker && !show_damage_own_dmg)
+		if (client == client_attacker && !gcvar_own_dmg.BoolValue)
 			return;
 
-		else if (GetClientTeam(client) == GetClientTeam(client_attacker) && !show_damage_ff)
+		else if (GetClientTeam(client) == GetClientTeam(client_attacker) && !gcvar_ff.BoolValue)
 			return;
 	}
 	
@@ -165,25 +154,6 @@ CalcDamage(client, client_attacker, damage)
 	
 	CreateTimer(0.01, ShowDamage, client_attacker);
 	block_timer[client_attacker] = true;
-}
-
-public OnCVarChange(Handle:convar_hndl, const String:oldValue[], const String:newValue[])
-	GetCVars();
-
-GetCVars()
-{
-	show_damage = GetConVarBool(cvar_show_damage);
-	show_damage_ff = GetConVarBool(cvar_show_damage_ff);
-	show_damage_own_dmg = GetConVarBool(cvar_show_damage_own_dmg);
-	show_damage_text_area = GetConVarInt(cvar_show_damage_text_area);
-}
-
-AddConVarHooks()
-{
-	HookConVarChange(cvar_show_damage, OnCVarChange);
-	HookConVarChange(cvar_show_damage_ff, OnCVarChange);
-	HookConVarChange(cvar_show_damage_own_dmg, OnCVarChange);
-	HookConVarChange(cvar_show_damage_text_area, OnCVarChange);
 }
 
 AddClientPrefs()
@@ -197,10 +167,10 @@ AddClientPrefs()
 
 CreateConvars()
 {
-	cvar_show_damage = CreateConVar("sm_show_damage", "1", "Enabled/Disabled show damage functionality, 0 = off/1 = on", _, true, 0.0, true, 1.0);
-	cvar_show_damage_ff = CreateConVar("sm_show_damage_ff", "0", "Show friendly fire damage, 0 = off/1 = on", _, true, 0.0, true, 1.0);
-	cvar_show_damage_own_dmg = CreateConVar("sm_show_damage_own_dmg", "0", "Show your own damage, 0 = off/1 = on", _, true, 0.0, true, 1.0);
-	cvar_show_damage_text_area = CreateConVar("sm_show_damage_text_area", "1", "Defines the area for damage text:\n 1 = in the center of the screen\n 2 = in the hint text area \n 3 = in chat area of screen", _, true, 1.0, true, 3.0);
+	gcvar_enabled = CreateConVar("sm_show_damage", "1", "Enabled/Disabled show damage functionality, 0 = off/1 = on", _, true, 0.0, true, 1.0);
+	gcvar_ff = CreateConVar("sm_show_damage_ff", "0", "Show friendly fire damage, 0 = off/1 = on", _, true, 0.0, true, 1.0);
+	gcvar_own_dmg = CreateConVar("sm_show_damage_own_dmg", "0", "Show your own damage, 0 = off/1 = on", _, true, 0.0, true, 1.0);
+	gcvar_text_area = CreateConVar("sm_show_damage_text_area", "1", "Defines the area for damage text:\n 1 = in the center of the screen\n 2 = in the hint text area \n 3 = in chat area of screen", _, true, 1.0, true, 3.0);
 }
 
 SetupEvents()
