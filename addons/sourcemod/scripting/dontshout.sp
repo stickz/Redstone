@@ -21,9 +21,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define MAX_LINE_LENGTH			   192		// maximum length of a single line of text
 #define PLUGIN_DEBUG				 1		// debug mode enabled when set
 
-new Handle:g_minAlphaCount = INVALID_HANDLE;		// minimum amount of alphanumeric characters
-new Handle:g_maxPercent = INVALID_HANDLE;			// Maximum percent of characters thay may be uppercase
-new Handle:g_isEnabled = INVALID_HANDLE;			// Var for storing whether the plugin is enabled
+ConVar g_minAlphaCount;		// minimum amount of alphanumeric characters
+ConVar g_maxPercent;			// Maximum percent of characters thay may be uppercase
+ConVar g_isEnabled;			// Var for storing whether the plugin is enabled
 
 //Version is auto-filled by the travis builder
 public Plugin:myinfo = 
@@ -56,17 +56,10 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public OnPluginEnd()
-{
-	CloseHandle(g_isEnabled);
-	CloseHandle(g_maxPercent);
-	CloseHandle(g_minAlphaCount);
-}
-
 public Action:Command_HandleSay(client, args)
 {
 	// do not handle console stuff and do not work when the plugin is disabled
-	if (client < 1 || !GetConVarBool(g_isEnabled))
+	if (client < 1 || !g_isEnabled.BoolValue)
 		return Plugin_Continue;
 
 	// get argument string
@@ -87,12 +80,10 @@ public Action:Command_HandleSay(client, args)
 		}
 	}
 	
-	// calculate percentage of characters that is uppercase & get convar values
+	// calculate percentage of characters that is uppercase
 	new Float:percentageUpper = float(upperCount) / float(totalCount);
-	new Float:maxPercent = GetConVarFloat(g_maxPercent);
-	new minCharCount = GetConVarInt(g_minAlphaCount);
-	
-	if (totalCount >= minCharCount && percentageUpper >= maxPercent)
+
+	if (totalCount >= g_minAlphaCount.IntValue && percentageUpper >= g_maxPercent.FloatValue)
 	{
 		// remove the surrounding quotes, if they are present
 		if (argString[0] == '"' && argString[strlen(argString) - 1] == '"')
