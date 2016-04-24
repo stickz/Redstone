@@ -161,10 +161,10 @@ public Action:Event_PlayerDeathPre(Handle:event, const String:name[], bool:dontB
 	{
 		g_weapon_stats[attacker][weapon_index][LOG_HIT_KILLS]++;
 		g_weapon_stats[victim][weapon_index][LOG_HIT_DEATHS]++;
+		
 		if (GetClientTeam(attacker) == victim_team)
-		{
 			g_weapon_stats[attacker][weapon_index][LOG_HIT_TEAMKILLS]++;
-		}
+
 		dump_player_stats(victim);
 	}
 	
@@ -189,10 +189,7 @@ public Hook_PostThink(client)
 		return;
 	
 	new Float:flNextAttackTime = GetEntPropFloat(iWeapon, Prop_Send, "m_flNextPrimaryAttack");
-	if(flNextAttackTime <= GetGameTime() && GetEntProp(iWeapon, Prop_Send, "m_iClip1") > 0)
-		g_bReadyToShoot[client] = true;
-	else
-		g_bReadyToShoot[client] = false;
+	g_bReadyToShoot[client] = flNextAttackTime <= GetGameTime() && GetEntProp(iWeapon, Prop_Send, "m_iClip1") > 0;
 }
 
 public Hook_PostThinkPost(client)
@@ -217,9 +214,8 @@ public Hook_PostThinkPost(client)
 	{
 		new weapon_index = get_weapon_index(sWeapon);
 		if (weapon_index > -1 && weapon_index < IGNORE_SHOTS_START)
-		{
 			g_weapon_stats[client][weapon_index][LOG_HIT_SHOTS]++;
-		}
+			
 		g_bReadyToShoot[client] = false;
 	}
 }
@@ -273,15 +269,13 @@ public Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
 
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
 	if (client > 0)
-	{
 		reset_player_stats(client);
-	}
 }
 
 public Action:Event_PlayerDisconnect(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"));
-	OnPlayerDisconnect(client);
+	//This calls OnPlayerDisconnect(client) forward
+	OnPlayerDisconnect(GetClientOfUserId(GetEventInt(event, "userid")));
 	return Plugin_Continue;
 }
 
@@ -315,6 +309,7 @@ public Event_StructureDamageSparse(Handle:event, const String:name[], bool:dontB
 {
 	if(!GetEventBool(event, "bunker"))
 		return;
+		
 	new team = GetEventInt(event, "ownerteam");
 	if(team >= 2)
 	{
