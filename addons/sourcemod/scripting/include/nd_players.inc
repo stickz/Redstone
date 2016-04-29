@@ -3,6 +3,11 @@
 #endif
 #define _nd_players_included_
 
+#define BK_CLIENT_TYPE_REGULAR 		0
+#define BK_CLIENT_TYPE_GRADUATED 	1
+#define BK_CLIENT_TYPE_MIDDLE 		2
+#define BK_CLIENT_TYPE_VETERAN 		3
+
 /**
  * Checks what type of client we're looking at
  * Backup method for if server statistics goes down
