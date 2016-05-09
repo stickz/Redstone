@@ -42,7 +42,7 @@ PrintCommanderLangTeam(team, const String:langName[])
 	{
 		if (IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			PrintToChat(client, "\x05The commander's game client language is %s.", cName, langName);  
+			PrintToChat(client, "\x05The commander's game client language is %s.", langName);  
 		}
 	}
 }
