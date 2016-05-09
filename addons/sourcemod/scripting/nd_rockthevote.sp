@@ -17,6 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <mapchooser>
 #include <nd_stocks>
+#include <nd_rounds>
 
 enum Bools
 {
