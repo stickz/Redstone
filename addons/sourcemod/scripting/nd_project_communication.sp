@@ -10,6 +10,8 @@ public Plugin:myinfo =
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
+#define LANGUAGE_COUNT 64
+
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
 #include "updater/standard.sp"
@@ -68,7 +70,7 @@ PrintTLangToTeam(team, const String:printOut[])
 PrintTeamLanguages()
 {
 	new bool:ShowMessage[2] = {false, ...};
-	new langCount[2][64] = {0, ..., ...};
+	new langCount[2][LANGUAGE_COUNT] = InitializeArray();
 	new clientTeam, teamIDX;
 	
 	for (new client = 1; client <= MaxClients; client++)
@@ -98,7 +100,7 @@ PrintTeamLanguages()
 		if (ShowMessage[team])
 		{
 			decl String:PrintOut[128];
-			for (new lang = 0; lang < 64; lang++)
+			for (new lang = 0; lang < LANGUAGE_COUNT; lang++)
 			{
 				if (langCount[team][lang] > 0)
 				{
@@ -110,4 +112,17 @@ PrintTeamLanguages()
 			PrintTLangToTeam(team + 2, PrintOut);
 		}
 	}
+}
+
+InitializeArray()
+{
+	new langCount[2][64];
+	
+	for (i = 0; i < LANGUAGE_COUNT; i++)
+	{
+		langCount[0][i] = 0;
+		langCount[1][i] = 0;
+	}
+	
+	return langCount();
 }
