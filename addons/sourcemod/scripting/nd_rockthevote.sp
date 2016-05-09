@@ -21,9 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 enum Bools
 {
 	enableRTV,
-	hasPassedRTV,
-	roundHasEnded,
-	roundHasStarted
+	hasPassedRTV
 };
 
 new voteCount,	
@@ -61,12 +59,16 @@ public OnPluginStart()
 	LoadTranslations("numbers.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
+	
+	if (ND_RoundStarted()) 
+	{
+		StartRTVDisableTimer();
+	}
 }
 
 public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
 {	
-	g_Bool[roundHasStarted] = true;
-	RtvDisableTimer = CreateTimer(480.0, TIMER_DisableRTV, _, TIMER_FLAG_NO_MAPCHANGE);
+	StartRTVDisableTimer();
 }
 
 public Action:OnClientSayCommand(client, const String:command[], const String:sArgs[])
@@ -90,8 +92,6 @@ public Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
 {
 	if (!g_Bool[enableRTV] && RtvDisableTimer != INVALID_HANDLE)
 		CloseHandle(RtvDisableTimer);
-		
-	g_Bool[roundHasEnded] = true;
 }
 
 public OnMapStart()
@@ -100,8 +100,6 @@ public OnMapStart()
 	
 	g_Bool[enableRTV] = true;
 	g_Bool[hasPassedRTV] = false;
-	g_Bool[roundHasEnded] = false;
-	g_Bool[roundHasStarted] = false;
 	
 	for (new client = 1; client <= MaxClients; client++)
 	{
@@ -141,10 +139,10 @@ callRockTheVote(client)
 	else if (g_hasVoted[client])
 		PrintToChat(client, "\x05[xG] %t!", "Already RTVed");
 	
-	else if (g_Bool[roundHasEnded])
+	else if (ND_RoundEnded())
 		PrintToChat(client, "\x05[xG] %t!", "Round Ended");
 		
-	else if (!g_Bool[roundHasStarted])
+	else if (!ND_RoundStarted())
 		PrintToChat(client, "\x05[xG] %t!", "Round Start");
 
 	else
@@ -214,4 +212,9 @@ displayVotes(Remainder, client)
 	GetClientName(client, name, sizeof(name));
 	
 	PrintToChatAll("\x05%t", "Typed Change Map", name, NumberInEnglish(Remainder));
+}
+
+StartRTVDisableTimer()
+{
+	RtvDisableTimer = CreateTimer(480.0, TIMER_DisableRTV, _, TIMER_FLAG_NO_MAPCHANGE);
 }
