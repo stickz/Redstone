@@ -1,6 +1,8 @@
-
-"Simple Building Request"
+"Phrases"
 {
-	"#format"	"{1:s},{2:s}"
-	"en"		"{1} is requesting {2}"
+	"Simple Building Request"
+	{
+		"#format"	"{1:s},{2:s}"
+		"en"		"{1} is requesting {2}"
+	}
 }
