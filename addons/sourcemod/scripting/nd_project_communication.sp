@@ -115,7 +115,10 @@ PrintTeamLanguages()
 				{
 					decl String:langCode[8], String:langName[32];
 					GetLanguageInfo(lang, langCode, sizeof(langCode), langName, sizeof(langName));  
-					StrCat(PrintOut, sizeof(PrintOut), " %s: %d", langCode, langCount[team][lang]);
+					
+					decl String:ToCopy[18];
+					Format(ToCopy, sizeof(ToCopy), " %s: %d", langCode, langCount[team][lang]);
+					StrCat(PrintOut, sizeof(PrintOut), ToCopy);
 				}
 			}
 			PrintTLangToTeam(team + 2, PrintOut);
