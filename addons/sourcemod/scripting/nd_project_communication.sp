@@ -10,7 +10,7 @@ public Plugin:myinfo =
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
-#define LANGUAGE_COUNT 64
+#define LANGUAGE_COUNT 44
 
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
