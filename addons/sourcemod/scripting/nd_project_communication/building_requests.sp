@@ -55,8 +55,11 @@ PrintSimpleBuildingRequest(client, const String:bName[])
 		{
 			if (IsValidClient(idx) && GetClientTeam(client) == team)
 			{
+				decl String:building[64];
+				Format(building, sizeof(building), "%T", bName, idx);
+				
 				decl String:ToPrint[128];
-				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, cName, bName);
+				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, cName, building);
 				
 				PrintToChat(idx, "/x04(Translator) /x05%s", ToPrint); 
 			}
