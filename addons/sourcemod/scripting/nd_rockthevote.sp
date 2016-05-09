@@ -123,8 +123,6 @@ public OnClientDisconnected(client)
 public Action:TIMER_DisableRTV(Handle:timer)
 {
 	g_Bool[enableRTV] = false;
-	//if (SurrenderDelayTimer != INVALID_HANDLE)
-	//	CloseHandle(SurrenderDelayTimer);
 }
 
 callRockTheVote(client)
@@ -134,8 +132,7 @@ callRockTheVote(client)
 	if (!g_Bool[enableRTV])
 	{
 		if (clientCount > RTV_MAX_PLAYERS)
-			PrintToChat(client, "\x05[xG] %t", "Too Late");		
-			//PrintToChat(client, "\x05[xG] %t!", "Eight Required");
+			PrintToChat(client, "\x05[xG] %t", "Too Late");
 	}
 	
 	else if (g_Bool[hasPassedRTV])
