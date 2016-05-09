@@ -5,33 +5,33 @@
 	// !settings menu label
 	"Cookie Resource Messages"
 	{
-		"ru"			"Показывать сообщения о состоянии ресурсов."
+		"ru"			"ДЋГ®Д™Е•Г§Е±ГўЕ•Е€Гј Е„Г®Г®ГЎЕЇДєГ­ДЌЛ™ Г® Е„Г®Е„Е€Г®Л™Г­ДЌДЌ Д‘ДєЕ„ГіД‘Е„Г®Гў."
 	}
 	
-	//Example: Cube, MissLiss (+3) захватили главный ресурс"
+	//Example: Cube, MissLiss (+3) Г§Е•Е‘ГўЕ•Е€ДЌГ«ДЌ ДѓГ«Е•ГўГ­Е±Г© Д‘ДєЕ„ГіД‘Е„"
 	// {1} are the people capturing plus some
 	"Primary Resource Captured"
 	{
 		"#format"		"{1:s},{2:s}"
-		"ru"			""{1} захватили главный ресурс."
+		"ru"			"{1} Г§Е•Е‘ГўЕ•Е€ДЌГ«ДЌ ДѓГ«Е•ГўГ­Е±Г© Д‘ДєЕ„ГіД‘Е„."
 	}
 	
-	//Example: "Cube (+2) захватил второстепенный ресурс на севере."
+	//Example: "Cube (+2) Г§Е•Е‘ГўЕ•Е€ДЌГ« ГўЕ€Г®Д‘Г®Е„Е€ДєДЏДєГ­Г­Е±Г© Д‘ДєЕ„ГіД‘Е„ Г­Е• Е„ДєГўДєД‘Дє."
 	// {1} is the person capturing plus some
 	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
-	"Secondary Resource Captured" "Второстепенный ресурс захвачен"
+	"Secondary Resource Captured" "Г‚Е€Г®Д‘Г®Е„Е€ДєДЏДєГ­Г­Е±Г© Д‘ДєЕ„ГіД‘Е„ Г§Е•Е‘ГўЕ•Г·ДєГ­"
 	{
 		"#format"		"{1:s},{2:s}"
-		"ru"			"{1} захватил второстепенный ресурс{2}."
+		"ru"			"{1} Г§Е•Е‘ГўЕ•Е€ДЌГ« ГўЕ€Г®Д‘Г®Е„Е€ДєДЏДєГ­Г­Е±Г© Д‘ДєЕ„ГіД‘Е„{2}."
 	}
 	
-	//Example: "djfishfish (+2) захватил третьестепенный ресурс на северо-востоке."
+	//Example: "djfishfish (+2) Г§Е•Е‘ГўЕ•Е€ДЌГ« Е€Д‘ДєЕ€ГјДєЕ„Е€ДєДЏДєГ­Г­Е±Г© Д‘ДєЕ„ГіД‘Е„ Г­Е• Е„ДєГўДєД‘Г®-ГўГ®Е„Е€Г®Д™Дє."
 	// {1} is the person capturing plus some
 	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
 	"Tertiary Resource Captured"
 	{
 		"#format"		"{1:s},{2:s}"
-		"ru"			"{1} захватил третьестепенный ресурс{2}."
+		"ru"			"{1} Г§Е•Е‘ГўЕ•Е€ДЌГ« Е€Д‘ДєЕ€ГјДєЕ„Е€ДєДЏДєГ­Г­Е±Г© Д‘ДєЕ„ГіД‘Е„{2}."
 	}
 	
 	"Map Area "
@@ -40,56 +40,56 @@
 	}
 	"Map Area N"
 	{
-		"ru"			" на севере"
+		"ru"			" Г­Е• Е„ДєГўДєД‘Дє"
 	}
 	
 	"Map Area NE"
 	{
-		"ru"			" на северо-востоке"
+		"ru"			" Г­Е• Е„ДєГўДєД‘Г®-ГўГ®Е„Е€Г®Д™Дє"
 	}
 	
 	"Map Area NW"
 	{
-		"ru"			" на северо-западе"
+		"ru"			" Г­Е• Е„ДєГўДєД‘Г®-Г§Е•ДЏЕ•Г¤Дє"
 	}
 	
 	"Map Area S"
 	{
-		"ru"			" на юге"
+		"ru"			" Г­Е• ЕЈДѓДє"
 	}
 	
 	"Map Area SE"
 	{
-		"ru"			" на юго-востоке"
+		"ru"			" Г­Е• ЕЈДѓГ®-ГўГ®Е„Е€Г®Д™Дє"
 	}
 	
 	"Map Area SW"
  	{
-		"ru"			" на юго-западе"
+		"ru"			" Г­Е• ЕЈДѓГ®-Г§Е•ДЏЕ•Г¤Дє"
 	}
 	
 	"Map Area E"
 	{
-		"ru"			" на востоке"
+		"ru"			" Г­Е• ГўГ®Е„Е€Г®Д™Дє"
 	}
 	
 	"Map Area W"
 	{
-		"ru"			" на юго-западе"
+		"ru"			" Г­Е• ЕЈДѓГ®-Г§Е•ДЏЕ•Г¤Дє"
 	}
 	
 	"Map Area CE"
 	{
-		"ru"			" в центре"
+		"ru"			" Гў Г¶ДєГ­Е€Д‘Дє"
 	}
 	
 	"Map Area OB"
 	{
-		"ru"			" в нашей базе"
+		"ru"			" Гў Г­Е•Е™ДєГ© ГЎЕ•Г§Дє"
 	}
 	
 	"Map Area EB"
 	{
-		"ru"			" в вражеской базе"
+		"ru"			" Гў ГўД‘Е•Д‡ДєЕ„Д™Г®Г© ГЎЕ•Г§Дє"
 	}
 }
