@@ -25,7 +25,12 @@ enum Bools
 	hasPassedRTV
 };
 
-#define RTV_COMMANDS_SIZE 3
+#define TEAM_SPEC		1
+#define TEAM_CONSORT		2
+#define TEAM_EMPIRE		3
+
+#define RTV_MAX_PLAYERS 	8
+#define RTV_COMMANDS_SIZE 	3
 
 new const String:nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
 {
@@ -39,19 +44,13 @@ new 	voteCount,
 	bool:g_hasVoted[MAXPLAYERS+1] = {false, ... },
 	Handle:RtvDisableTimer = INVALID_HANDLE;
 
-#define TEAM_SPEC			1
-#define TEAM_CONSORT		2
-#define TEAM_EMPIRE			3
-
-#define RTV_MAX_PLAYERS 8
-
 public Plugin:myinfo =
 {
-	name = "Rock the Vote",
-	author = "Stickz",
-	description = "Vote to change map on ND",
-	version = "dummy",
-	url = "N/A"
+	name 		= "[ND] Rock the Vote",
+	author 		= "Stickz",
+	description 	= "Vote to change map on ND",
+	version 	= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
 };
 
 /* Auto Updater */
@@ -109,10 +108,9 @@ public Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
 
 public OnMapStart()
 {
-	voteCount = 0;
-	
-	g_Bool[enableRTV] = true;
-	g_Bool[hasPassedRTV] = false;
+	voteCount 		= 0;
+	g_Bool[enableRTV] 	= true;
+	g_Bool[hasPassedRTV] 	= false;
 	
 	for (new client = 1; client <= MaxClients; client++)
 	{
