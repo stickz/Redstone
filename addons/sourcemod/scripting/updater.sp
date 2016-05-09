@@ -100,11 +100,7 @@ public OnPluginStart()
 	
 	// Convars.
 	new Handle:hCvar = INVALID_HANDLE;
-	
-	hCvar = CreateConVar("sm_updater_version", PLUGIN_VERSION, PLUGIN_NAME, FCVAR_PLUGIN|FCVAR_NOTIFY|FCVAR_DONTRECORD);
-	OnVersionChanged(hCvar, "", "");
-	HookConVarChange(hCvar, OnVersionChanged);
-	
+
 	hCvar = CreateConVar("sm_updater", "2", "Determines update functionality. (1 = Notify, 2 = Download, 3 = Include source code)", FCVAR_PLUGIN, true, 1.0, true, 3.0);
 	OnSettingsChanged(hCvar, "", "");
 	HookConVarChange(hCvar, OnSettingsChanged);
@@ -196,14 +192,6 @@ public Action:Command_Status(client, args)
 	ReplyToCommand(client, "[Updater] --- Status End ---");
 
 	return Plugin_Handled;
-}
-
-public OnVersionChanged(Handle:convar, const String:oldValue[], const String:newValue[])
-{
-	if (!StrEqual(newValue, PLUGIN_VERSION))
-	{
-		SetConVarString(convar, PLUGIN_VERSION);
-	}
 }
 
 public OnSettingsChanged(Handle:convar, const String:oldValue[], const String:newValue[])
