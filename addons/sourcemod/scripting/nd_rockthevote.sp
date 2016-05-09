@@ -25,7 +25,16 @@ enum Bools
 	hasPassedRTV
 };
 
-new voteCount,	
+#define RTV_COMMANDS_SIZE 3
+
+new const String:nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
+{
+	"rtv",
+	"change map",
+	"changemap"
+};
+
+new 	voteCount,	
 	bool:g_Bool[Bools],
 	bool:g_hasVoted[MAXPLAYERS+1] = {false, ... },
 	Handle:RtvDisableTimer = INVALID_HANDLE;
@@ -76,14 +85,17 @@ public Action:OnClientSayCommand(client, const String:command[], const String:sA
 {
 	if (client)
 	{
-		if (strcmp(sArgs, "rtv", false) == 0 || strcmp(sArgs, "change map", false) == 0 || strcmp(sArgs, "changemap", false) == 0) 
+		for (new idx = 0; idx < RTV_COMMANDS_SIZE; idx++)
 		{
-			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
-
-			callRockTheVote(client);
-				
-			SetCmdReplySource(old);
-			return Plugin_Stop;				
+			if (strcmp(sArgs, nd_rtv_commands[idx], false) == 0) 
+			{
+				new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
+	
+				callRockTheVote(client);
+					
+				SetCmdReplySource(old);
+				return Plugin_Stop;				
+			}
 		}
 	}	
 	return Plugin_Continue;
