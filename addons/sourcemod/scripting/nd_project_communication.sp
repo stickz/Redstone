@@ -124,5 +124,5 @@ InitializeArray()
 		langCount[1][i] = 0;
 	}
 	
-	return langCount();
+	return langCount;
 }
