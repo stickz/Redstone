@@ -31,20 +31,18 @@ public Event_CommanderPromo(Handle:event, const String:name[], bool:dontBroadcas
 		decl String:langCode[8], String:langName[32];
 		GetLanguageInfo(langNum, langCode, sizeof(langCode), langName, sizeof(langName));
 		
-		PrintCommanderLangTeam(client, team, langName);
+		if (!StrEqual("english", langName, true))
+			PrintCommanderLangTeam(team, langName);
 	}
 }
 
-PrintCommanderLangTeam(commander, team, const String:langName[])
+PrintCommanderLangTeam(team, const String:langName[])
 {
-	decl String:cName[64];
-	GetClientName(commander, cName, sizeof(cName));
-	
 	for (new client = 1; client <= MaxClients; client++)
 	{
 		if (IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			PrintToChat(client, "\x05%s's game client language is %s.", cName, langName);  
+			PrintToChat(client, "\x05The commander's game client language is %s.", cName, langName);  
 		}
 	}
 }
