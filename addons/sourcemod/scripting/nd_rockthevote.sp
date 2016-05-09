@@ -60,6 +60,7 @@ public Plugin:myinfo =
 public OnPluginStart()
 {
 	RegConsoleCmd("sm_rtv", CMD_RockTheVote);
+	RegConsoleCmd("sm_changemap", CMD_RockTheVote);
 	
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
