@@ -8,15 +8,13 @@
 #define REQUIRE_EXTENSIONS
 
 /* Plugin Info */
-#define PLUGIN_NAME 		"Updater"
-#define PLUGIN_VERSION 		"1.2.2"
 
 public Plugin:myinfo =
 {
-	name = PLUGIN_NAME,
+	name = "Plugin Updater",
 	author = "GoD-Tony",
 	description = "Automatically updates SourceMod plugins and files",
-	version = PLUGIN_VERSION,
+	version = "dummy",
 	url = "http://forums.alliedmods.net/showthread.php?t=169095"
 };
 
@@ -30,7 +28,7 @@ public Plugin:myinfo =
 #define TEMP_FILE_EXT		"temp"		// All files are downloaded with this extension first.
 #define MAX_URL_LENGTH		256
 
-#define UPDATE_URL			"http://godtony.mooo.com/updater/updater.txt"
+#define UPDATE_URL			"https://github.com/stickz/Redstone/raw/build/updater/updater/updater.txt"
 
 enum UpdateStatus {
 	Status_Idle,		
