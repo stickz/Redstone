@@ -12,6 +12,7 @@ public Plugin:myinfo =
 
 #define LANGUAGE_COUNT 		44
 #define STRING_STARTS_WITH 	0
+#define IS_WITHIN_STRING	-1
 
 #define REQUEST_BUILDING_COUNT 12
 
@@ -61,19 +62,18 @@ public Action:OnClientSayCommand(client, const String:command[], const String:sA
 		if (STRING_STARTS_WITH == StrContains(sArgs, "request", false))
 		{
 			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
+			SetCmdReplySource(old);
 			
 			for (new idx = 0; idx < REQUEST_BUILDING_COUNT; idx++)
 			{
-				if (StrContains(sArgs, nd_request_building[idx], false))
+				if (StrContains(sArgs, nd_request_building[idx], false) > IS_WITHIN_STRING)
 				{
 					PrintSimpleBuildingRequest(client, nd_request_building[idx]);
-					SetCmdReplySource(old);
 					return Plugin_Stop; 
 				}
 			}
 			
 			PrintToChat(client, "/x04(Translator) /x05No translation keyword found.");
-			SetCmdReplySource(old);
 			return Plugin_Stop; 
 		}
 	}
