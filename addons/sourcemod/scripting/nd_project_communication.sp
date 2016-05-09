@@ -3,7 +3,7 @@
 
 public Plugin:myinfo =
 {
-	name 		= "[ND] Project Communication,
+	name 		= "[ND] Project Communication",
 	author 		= "Stickz",
 	description 	= "Breaks Communication Barriers",
 	version 	= "dummy",
@@ -17,6 +17,7 @@ public Plugin:myinfo =
 public OnPluginStart()
 {
 	HookEvent("promoted_to_commander", Event_CommanderPromo);
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public Event_CommanderPromo(Handle:event, const String:name[], bool:dontBroadcast)
@@ -28,9 +29,9 @@ public Event_CommanderPromo(Handle:event, const String:name[], bool:dontBroadcas
 	{
 		new langNum = GetClientLanguage(client);
 		decl String:langCode[8], String:langName[32];
-		GetLanguageInfo(langNum, langCode, sizeof(langCode), langName, sizeof(langName);
+		GetLanguageInfo(langNum, langCode, sizeof(langCode), langName, sizeof(langName));
 		
-		PrintCommanderLangTeam(commander, team, langName);
+		PrintCommanderLangTeam(client, team, langName);
 	}
 }
 
