@@ -1,8 +1,8 @@
 
 /* Download Manager */
 
-#include "updater/download_socket.sp"
-#include "updater/download_steamworks.sp"
+#include download_socket.sp"
+#include "download_steamworks.sp"
 
 static QueuePack_URL = 0;
 
