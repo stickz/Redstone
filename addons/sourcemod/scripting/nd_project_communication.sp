@@ -62,7 +62,7 @@ public Action:OnClientSayCommand(client, const String:command[], const String:sA
 		{
 			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
 			
-			for (new idx = 0; idx < REQUEST_PHRASES_SIZE; idx++)
+			for (new idx = 0; idx < REQUEST_BUILDING_COUNT; idx++)
 			{
 				if (StrContains(sArgs, nd_request_building[idx], false))
 				{
@@ -77,6 +77,8 @@ public Action:OnClientSayCommand(client, const String:command[], const String:sA
 			return Plugin_Stop; 
 		}
 	}
+	
+	return Plugin_Continue;
 }
 
 PrintSimpleBuildingRequest(client, const String:bName[])
