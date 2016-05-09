@@ -35,7 +35,7 @@ public Event_CommanderPromo(Handle:event, const String:name[], bool:dontBroadcas
 	}
 }
 
-PrintCommanderLangTeam(commander, team, langName)
+PrintCommanderLangTeam(commander, team, const String:langName[])
 {
 	decl String:cName[64];
 	GetClientName(commander, cName, sizeof(cName));
