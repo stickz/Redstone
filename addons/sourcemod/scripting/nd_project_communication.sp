@@ -68,7 +68,7 @@ PrintTLangToTeam(team, const String:printOut[])
 PrintTeamLanguages()
 {
 	new bool:ShowMessage[2] = {false, ...};
-	new langCount[2][64] = {0, ...};
+	new langCount[2][64] = {0, ..., ...};
 	new clientTeam, teamIDX;
 	
 	for (new client = 1; client <= MaxClients; client++)
@@ -104,7 +104,7 @@ PrintTeamLanguages()
 				{
 					decl String:langCode[8], String:langName[32];
 					GetLanguageInfo(lang, langCode, sizeof(langCode), langName, sizeof(langName));  
-					StrCat(printOut, sizeof(printOut), langCode);
+					StrCat(PrintOut, sizeof(PrintOut), langCode);
 				}
 			}
 			PrintTLangToTeam(team + 2, PrintOut);
