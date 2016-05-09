@@ -10,7 +10,9 @@ public Plugin:myinfo =
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
-#define LANGUAGE_COUNT 44
+#define LANGUAGE_COUNT 		44
+#define STRING_STARTS_WITH 	0
+#define IS_WITHIN_STRING	-1
 
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
@@ -18,6 +20,7 @@ public Plugin:myinfo =
 
 #include "nd_project_communication/commander_lang.sp"
 #include "nd_project_communication/team_lang.sp"
+#include "nd_project_communication/building_requests.sp"
 
 public OnPluginStart()
 {
@@ -25,6 +28,9 @@ public OnPluginStart()
 	HookEvent("promoted_to_commander", Event_CommanderPromo);
 	
 	AddUpdaterLibrary(); //auto-updater
+	
+	LoadTranslations("structminigame.phrases");
+	LoadTranslations("nd_project_communication.phrases");
 }
 
 public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
