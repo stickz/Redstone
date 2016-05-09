@@ -70,9 +70,17 @@ PrintTLangToTeam(team, const String:printOut[])
 PrintTeamLanguages()
 {
 	new bool:ShowMessage[2] = {false, ...};
-	new langCount[2][LANGUAGE_COUNT] = InitializeArray();
+	new langCount[2][LANGUAGE_COUNT];
 	new clientTeam, teamIDX;
 	
+	//initialize langCount Array
+	for (new i = 0; i < LANGUAGE_COUNT; i++)
+	{
+		langCount[0][i] = 0;
+		langCount[1][i] = 0;
+	}
+	
+	//sort through players to find languages
 	for (new client = 1; client <= MaxClients; client++)
 	{
 		if (IsValidClient(client))
@@ -95,6 +103,7 @@ PrintTeamLanguages()
 		}
 	}
 	
+	//sort through language talley and print them out
 	for (new team = 0; team < 2; team++)
 	{
 		if (ShowMessage[team])
@@ -112,17 +121,4 @@ PrintTeamLanguages()
 			PrintTLangToTeam(team + 2, PrintOut);
 		}
 	}
-}
-
-InitializeArray()
-{
-	new langCount[2][64];
-	
-	for (i = 0; i < LANGUAGE_COUNT; i++)
-	{
-		langCount[0][i] = 0;
-		langCount[1][i] = 0;
-	}
-	
-	return langCount;
 }
