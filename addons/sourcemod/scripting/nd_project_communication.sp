@@ -14,30 +14,13 @@ public Plugin:myinfo =
 #define STRING_STARTS_WITH 	0
 #define IS_WITHIN_STRING	-1
 
-#define REQUEST_BUILDING_COUNT 12
-
-new const String:nd_request_building[REQUEST_BUILDING_COUNT][] =
-{
-	"Transport Gate",
-	"MG Turret",
-	"Power Station",
-	"Supply Station",
-	"Armory",
-	"Artillery",
-	"Radar Station",
-	"Flamethrower Turret",
-	"Sonic Turret",
-	"Rocket Turret",
-	"Wall",
-	"Barrier"
-};
-
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
 #include "updater/standard.sp"
 
 #include "nd_project_communication/commander_lang.sp"
 #include "nd_project_communication/team_lang.sp"
+#include "nd_project_communication/building_requests.sp"
 
 public OnPluginStart()
 {
@@ -53,52 +36,4 @@ public OnPluginStart()
 public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
 {
 	PrintTeamLanguages();
-}
-
-public Action:OnClientSayCommand(client, const String:command[], const String:sArgs[])
-{
-	if (client)
-	{
-		if (STRING_STARTS_WITH == StrContains(sArgs, "request", false))
-		{
-			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
-			SetCmdReplySource(old);
-			
-			for (new idx = 0; idx < REQUEST_BUILDING_COUNT; idx++)
-			{
-				if (StrContains(sArgs, nd_request_building[idx], false) > IS_WITHIN_STRING)
-				{
-					PrintSimpleBuildingRequest(client, nd_request_building[idx]);
-					return Plugin_Stop; 
-				}
-			}
-			
-			PrintToChat(client, "/x04(Translator) /x05No translation keyword found.");
-			return Plugin_Stop; 
-		}
-	}
-	
-	return Plugin_Continue;
-}
-
-PrintSimpleBuildingRequest(client, const String:bName[])
-{
-	if (IsValidClient(client))
-	{
-		new team = GetClientTeam(client);
-		
-		decl String:cName[64];
-		GetClientName(client, cName, sizeof(cName));
-		
-		for (new idx = 0; idx <= MaxClients; idx++)
-		{
-			if (IsValidClient(idx) && GetClientTeam(client) == team)
-			{
-				decl String:ToPrint[128];
-				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, cName, bName);
-				
-				PrintToChat(idx, "/x04(Translator) /x05%s", ToPrint); 
-			}
-		}
-	}
 }
