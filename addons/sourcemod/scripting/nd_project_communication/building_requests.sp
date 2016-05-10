@@ -34,7 +34,7 @@ public Action:OnClientSayCommand(client, const String:command[], const String:sA
 				}
 			}
 			
-			PrintToChat(client, "/x04(Translator) /x05No translation keyword found.");
+			PrintToChat(client, "\x04(Translator) \x05No translation keyword found.");
 			return Plugin_Stop; 
 		}
 	}
@@ -61,7 +61,7 @@ PrintSimpleBuildingRequest(client, const String:bName[])
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, cName, building);
 				
-				PrintToChat(idx, "/x04(Translator) /x05%s", ToPrint); 
+				PrintToChat(idx, "\x04(Translator) \x05%s", ToPrint); 
 			}
 		}
 	}
