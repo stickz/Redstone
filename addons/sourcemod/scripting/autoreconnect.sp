@@ -33,6 +33,8 @@ public OnPluginStart()
 {
 	RegServerCmd("quit", OnDown);
 	RegServerCmd("_restart", OnDown);
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public Action:OnDown(args)
