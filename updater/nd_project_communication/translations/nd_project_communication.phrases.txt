@@ -5,4 +5,16 @@
 		"#format"	"{1:s},{2:s}"
 		"en"		"{1} is requesting {2}"
 	}
+	
+	"Team Languages"
+	{
+		"#format"	"{1:s}"
+		"en"		"Team Languages: {1}"
+	}
+	
+	"Commander Language"
+	{
+		"#format"	"{1:s}"
+		"en"		"The commander's game client language is {1}."
+	}
 }
