@@ -19,7 +19,8 @@
 	//Example: "Cube (+2) çŕőâŕňčë âňîđîńňĺďĺííűé đĺńóđń íŕ ńĺâĺđĺ."
 	// {1} is the person capturing plus some
 	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
-	"Secondary Resource Captured" "Âňîđîńňĺďĺííűé đĺńóđń çŕőâŕ÷ĺí"
+	//"Âňîđîńňĺďĺííűé đĺńóđń çŕőâŕ÷ĺí"
+	"Secondary Resource Captured"
 	{
 		"#format"		"{1:s},{2:s}"
 		"ru"			"{1} çŕőâŕňčë âňîđîńňĺďĺííűé đĺńóđń{2}."
