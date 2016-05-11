@@ -4,20 +4,17 @@
 	{
 		//{1} = Player's Name
 		//{2} = Building Name from structminigame.phrases
-		"#format"	"{1:s},{2:s}"
-		"en"		"{1} is requesting {2}"
+		"ru"		"{1} is requesting {2}"
 	}
 	
 	"Team Languages"
 	{
-		"#format"	"{1:s}"
-		"en"		"Team Languages: {1}"
+		"ru"		"Team Languages: {1}"
 	}
 	
 	"Commander Language"
 	{
-		"#format"	"{1:s}"
-		"en"		"The commander's game client language is {1}."
+		"ru"		"The commander's game client language is {1}."
 	}
 	
 	"Extended Building Request"
@@ -25,37 +22,36 @@
 		//{1} = Player's Name
 		//{2} = Building Name from structminigame.phrases
 		//{3} = Location Name (see bellow)
-		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"{1} is requesting {2} {3}"
+		"ru"		"{1} is requesting {2} {3}"
 	}
 	
 	"On The Roof"
 	{
-		"en"		"on the roof"
+		"ru"		"on the roof"
 	}
 	
 	"At Base"
 	{
-		"en"		"at base"
+		"ru"		"at base"
 	}
 	
 	"At Prime"
 	{
-		"en"		"at prime"
+		"ru"		"at prime"
 	}
 	
 	"At Position"
 	{
-		"en"		"at position"
+		"ru"		"at their position"
 	}
 	
 	"At East Secondary"
 	{
-		"en"		"at eastern secondary"
+		"ru"		"at eastern secondary"
 	}
 	
 	"At West Secondary"
 	{
-		"en"		"at western secondary"
+		"ru"		"at western secondary"
 	}
 }
