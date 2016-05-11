@@ -104,7 +104,7 @@ PrintExtendedBuildingRequest(client, const String:bName[], const String:lName[])
 				Format(building, sizeof(building), "%T", bName, idx);
 				
 				decl String:location[64];
-				Format(location, sizeof(location), "%T, lName, idx);
+				Format(location, sizeof(location), "%T", lName, idx);
 				
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Extended Building Request", idx, cName, building, location);
