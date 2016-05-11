@@ -32,6 +32,8 @@ enum Bools
 #define RTV_MAX_PLAYERS 	8
 #define RTV_COMMANDS_SIZE 	3
 
+#define PREFIX "\x05[xG]"
+
 new const String:nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
 {
 	"rtv",
@@ -142,20 +144,20 @@ callRockTheVote(client)
 	if (!g_Bool[enableRTV])
 	{
 		if (clientCount > RTV_MAX_PLAYERS)
-			PrintToChat(client, "\x05[xG] %t", "Too Late");
+			PrintToChat(client, "%s %t", PREFIX, "Too Late");
 	}
 	
 	else if (g_Bool[hasPassedRTV])
-		PrintToChat(client, "\x05[xG] %t!", "Already Passed");	
+		PrintToChat(client, "%s %t!", PREFIX, "Already Passed");	
 
 	else if (g_hasVoted[client])
-		PrintToChat(client, "\x05[xG] %t!", "Already RTVed");
+		PrintToChat(client, "%s %t!", PREFIX, "Already RTVed");
 	
 	else if (ND_RoundEnded())
-		PrintToChat(client, "\x05[xG] %t!", "Round Ended");
+		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
 		
 	else if (!ND_RoundStarted())
-		PrintToChat(client, "\x05[xG] %t!", "Round Start");
+		PrintToChat(client, "%s %t!", PREFIX, "Round Start");
 
 	else
 	{
@@ -193,7 +195,7 @@ prepMapChange()
 	
 	if (!CanMapChooserStartVote())
 	{
-		PrintToChatAll("\x05[xG] %t", "RTV Wait"); //Pending map change due to successful rtv vote.		
+		PrintToChatAll("%s %t", PREFIX, "RTV Wait"); //Pending map change due to successful rtv vote.		
 		CreateTimer(1.0, Timer_DelayMapChange, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	}
 	else
@@ -215,7 +217,7 @@ public Action:Timer_DelayMapChange(Handle:timer)
 FiveSecondChange()
 {
 	ServerCommand("mp_roundtime 1");
-	PrintToChatAll("\x05[xG] %t", "RTV Changing"); //RTV Successful: Map will change in five seconds.
+	PrintToChatAll("%s %t", PREFIX, "RTV Changing"); //RTV Successful: Map will change in five seconds.
 }
 
 displayVotes(Remainder, client)

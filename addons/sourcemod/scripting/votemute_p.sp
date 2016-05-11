@@ -24,6 +24,7 @@ new Handle:g_hVoteMenu = INVALID_HANDLE;
 #define VOTE_TYPE_SILENCE 2
 
 #define INVALID_TARGET -1
+#define PREFIX "\x05[xG]"
 
 new g_voteClient[2];
 new String:g_voteInfo[3][65];
@@ -85,7 +86,7 @@ public Action:Command_Votemute(client, args)
 
 		else if (SourceComms_GetClientMuteType(target) != bNot)
 		{
-			PrintToChat(client, "\x05[xG] %t!", "Already Muted"); //This client is already muted!
+			PrintToChat(client, "%s %t!", PREFIX, "Already Muted"); //This client is already muted!
 			return Plugin_Handled;
 		}
 
@@ -118,7 +119,7 @@ public Action:Command_Votesilence(client, args)
 
 		else if (isSilenced(target))
 		{
-			PrintToChat(client, "\x05[xG] %t!", "Already Silenced"); //This client is already silenced
+			PrintToChat(client, "%s %t!", PREFIX, "Already Silenced"); //This client is already silenced
 			return Plugin_Handled;		
 		}
 
@@ -150,7 +151,7 @@ public Action:Command_Votegag(client, args)
 
 		else if (SourceComms_GetClientGagType(target) != bNot)
 		{
-			PrintToChat(client, "\x05[xG] %t!", "Already Gagged"); //This client is already gagged
+			PrintToChat(client, "%s %t!", PREFIX, "Already Gagged"); //This client is already gagged
 			return Plugin_Handled;
 		}
 		
@@ -164,13 +165,13 @@ bool:CanStartVote(client)
 {
 	if (IsVoteInProgress())
 	{
-		PrintToChat(client, "\x05[xG] %t.", "Vote in Progress"); //Please wait for the current server-wide vote to finish
+		PrintToChat(client, "%s %t.", PREFIX, "Vote in Progress"); //Please wait for the current server-wide vote to finish
 		return false;
 	}
 
 	if (g_Cvar_Admins.BoolValue && !IsValidAdmin(client, "k"))
 	{
-		PrintToChat(client, "\x05[xG] %t.", "Moderater Only"); //This command is for server moderators only
+		PrintToChat(client, "%s %t.", PREFIX, "Moderater Only"); //This command is for server moderators only
 		return false;
 	}		
 	
@@ -179,7 +180,7 @@ bool:CanStartVote(client)
 		
 	if (isSilenced(client))
 	{
-		PrintToChat(client, "\x05[xG] %t!", "Silence Use"); //You cannot use this feature while silenced
+		PrintToChat(client, "%s %t!", PREFIX, "Silence Use"); //You cannot use this feature while silenced
 		return false;				
 	}
 
@@ -374,7 +375,7 @@ bool:TestVoteDelay(client)
  	
  	if (delay > 0)
  	{
- 		PrintToChat(client, "\x05[xG] %t.", "Wait Seconds", delay);
+ 		PrintToChat(client, "%s %t.", PREFIX, "Wait Seconds", delay);
  		return false;
  	}
  	
