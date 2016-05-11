@@ -9,7 +9,6 @@
 	
 	"Team Languages"
 	{
-		"#format"	"{1:s}"
 		"ru"		"Team Languages: {1}"
 	}
 	
