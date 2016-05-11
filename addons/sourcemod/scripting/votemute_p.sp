@@ -165,7 +165,7 @@ bool:CanStartVote(client)
 {
 	if (IsVoteInProgress())
 	{
-		PrintToChat(client, "%s %t.", PREFIX "Vote in Progress"); //Please wait for the current server-wide vote to finish
+		PrintToChat(client, "%s %t.", PREFIX, "Vote in Progress"); //Please wait for the current server-wide vote to finish
 		return false;
 	}
 
