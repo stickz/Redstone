@@ -1,0 +1,58 @@
+"Phrases"
+{
+	"Simple Building Request"
+	{
+		//{1} = Player's Name
+		//{2} = Building Name from structminigame.phrases
+		"ru"		"{1} is requesting {2}"
+	}
+	
+	"Team Languages"
+	{
+		"#format"	"{1:s}"
+		"ru"		"Team Languages: {1}"
+	}
+	
+	"Commander Language"
+	{
+		"ru"		"The commander's game client language is {1}."
+	}
+	
+	"Extended Building Request"
+	{
+		//{1} = Player's Name
+		//{2} = Building Name from structminigame.phrases
+		//{3} = Location Name (see bellow)
+		"ru"		"{1} is requesting {2} {3}"
+	}
+	
+	"On The Roof"
+	{
+		"ru"		"on the roof"
+	}
+	
+	"At Base"
+	{
+		"ru"		"at base"
+	}
+	
+	"At Prime"
+	{
+		"ru"		"at prime"
+	}
+	
+	"At Position"
+	{
+		"ru"		"at their position"
+	}
+	
+	"At East Secondary"
+	{
+		"ru"		"at eastern secondary"
+	}
+	
+	"At West Secondary"
+	{
+		"ru"		"at western secondary"
+	}
+}
