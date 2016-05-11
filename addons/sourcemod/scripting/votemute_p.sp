@@ -375,7 +375,7 @@ bool:TestVoteDelay(client)
  	
  	if (delay > 0)
  	{
- 		PrintToChat(client, "\x05[xG] %t.", "Wait Seconds", delay);
+ 		PrintToChat(client, "%s %t.", PREFIX "Wait Seconds", delay);
  		return false;
  	}
  	
