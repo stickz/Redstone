@@ -40,6 +40,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define HIGH_LIMIT 	4
 
 #define DEBUG 0
+#define PREFIX "\x05[xG]"
 
 #define m_iDesiredPlayerClass(%1) (GetEntProp(%1, Prop_Send, "m_iDesiredPlayerClass"))
 #define m_iDesiredPlayerSubclass(%1) (GetEntProp(%1, Prop_Send, "m_iDesiredPlayerSubclass"))
@@ -110,7 +111,7 @@ public Action:Event_SelectClass(Handle:event, const String:name[], bool:dontBroa
         	if (IsTooMuchSnipers(client)) 
 		{
 	            	ResetClass(client);
-	            	PrintToChat(client, "\x05[xG] %t.", "Sniper Limit Reached");
+	            	PrintToChat(client, "%s %t.", PREFIX, "Sniper Limit Reached");
 	            	return Plugin_Continue;
         	}
 	}
@@ -120,7 +121,7 @@ public Action:Event_SelectClass(Handle:event, const String:name[], bool:dontBroa
 		if (IsTooMuchStealth(client)) 
 		{
 	            	ResetClass(client);
-	            	PrintToChat(client, "\x05[xG] %t.", "Stealth Limit Reached");
+	            	PrintToChat(client, "%s %t.", PREFIX, "Stealth Limit Reached");
 	            	return Plugin_Continue;
         	}
 	}
@@ -130,7 +131,7 @@ public Action:Event_SelectClass(Handle:event, const String:name[], bool:dontBroa
 		if (IsTooMuchAntiStructure(client)) 
 		{
 	            	ResetClass(client);
-	            	PrintToChat(client, "\x05[xG] %t.", "AntiStructure Limit Reached");
+	            	PrintToChat(client, "%s %t.", PREFIX, "AntiStructure Limit Reached");
 	            	return Plugin_Continue;
         	}
 	}
@@ -146,7 +147,7 @@ public Action:CMD_ChangeSnipersLimit(client, args)
 
 	if (args != 2) 
 	{
-		PrintToChat(client, "\x05[xG] %t", "Invalid Args");
+		PrintToChat(client, "%s %t", PREFIX, "Invalid Args");
 	 	return Plugin_Handled;
 	}
 
@@ -156,7 +157,7 @@ public Action:CMD_ChangeSnipersLimit(client, args)
     	
     	if (team < 2)
     	{
-    		PrintToChat(client, "\x05[xG] %t", "Invalid Team"); 
+    		PrintToChat(client, "%s %t", PREFIX, "Invalid Team"); 
     		return Plugin_Handled;
     	}
 
@@ -229,7 +230,7 @@ bool:CheckCommonFailure(client, type, args)
 {
 	if (!GetConVarBool(eCommanders))
 	{
-		PrintToChat(client, "\x05[xG] %t", "Commander Disabled"); //commander setting of sniper limits are disabled
+		PrintToChat(client, "%s %t", PREFIX, "Commander Disabled"); //commander setting of sniper limits are disabled
         	return true;
     	}
 
@@ -240,7 +241,7 @@ bool:CheckCommonFailure(client, type, args)
 
     	if (client_team < 2)
     	{
-    		PrintToChat(client, "\x05[xG] %t", "Invalid Team"); 
+    		PrintToChat(client, "%s %t", PREFIX, "Invalid Team"); 
 		return true;
 	}
 	
@@ -248,9 +249,9 @@ bool:CheckCommonFailure(client, type, args)
 	{
         	switch (type)
         	{
-        		case TYPE_SNIPER: 	PrintToChat(client, "[xG] %t", "Proper Sniper Usage");
-        		case TYPE_STEALTH:	PrintToChat(client, "[xG] %t", "Proper Stealth Usage");
-        		case TYPE_STRUCTURE: 	PrintToChat(client, "[xG] %t", "Proper Structure Usage");
+        		case TYPE_SNIPER: 	PrintToChat(client, "%s %t", PREFIX, "Proper Sniper Usage");
+        		case TYPE_STEALTH:	PrintToChat(client, "%s %t", PREFIX, "Proper Stealth Usage");
+        		case TYPE_STRUCTURE: 	PrintToChat(client, "%s %t", PREFIX, "Proper Structure Usage");
         	}
 
         	return true;
@@ -258,7 +259,7 @@ bool:CheckCommonFailure(client, type, args)
     	
     	if (!NDC_IsCommander(client)) 
 	{
-		PrintToChat(client, "\x05[xG] %t", "Only Commanders"); //snipers limiting is available only for Commander
+		PrintToChat(client, "%s %t", PREFIX, "Only Commanders"); //snipers limiting is available only for Commander
 		return true;
 	}
 	
