@@ -119,7 +119,7 @@ public Action:Command_Votesilence(client, args)
 
 		else if (isSilenced(target))
 		{
-			PrintToChat(client, "%s %t!", PREFIX "Already Silenced"); //This client is already silenced
+			PrintToChat(client, "%s %t!", PREFIX, "Already Silenced"); //This client is already silenced
 			return Plugin_Handled;		
 		}
 
@@ -151,7 +151,7 @@ public Action:Command_Votegag(client, args)
 
 		else if (SourceComms_GetClientGagType(target) != bNot)
 		{
-			PrintToChat(client, "%s %t!", PREFIX "Already Gagged"); //This client is already gagged
+			PrintToChat(client, "%s %t!", PREFIX, "Already Gagged"); //This client is already gagged
 			return Plugin_Handled;
 		}
 		
@@ -171,7 +171,7 @@ bool:CanStartVote(client)
 
 	if (g_Cvar_Admins.BoolValue && !IsValidAdmin(client, "k"))
 	{
-		PrintToChat(client, "%s %t.", PREFIX "Moderater Only"); //This command is for server moderators only
+		PrintToChat(client, "%s %t.", PREFIX, "Moderater Only"); //This command is for server moderators only
 		return false;
 	}		
 	
@@ -180,7 +180,7 @@ bool:CanStartVote(client)
 		
 	if (isSilenced(client))
 	{
-		PrintToChat(client, "%s %t!", PREFIX "Silence Use"); //You cannot use this feature while silenced
+		PrintToChat(client, "%s %t!", PREFIX, "Silence Use"); //You cannot use this feature while silenced
 		return false;				
 	}
 
