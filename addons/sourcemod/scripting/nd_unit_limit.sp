@@ -131,7 +131,7 @@ public Action:Event_SelectClass(Handle:event, const String:name[], bool:dontBroa
 		if (IsTooMuchAntiStructure(client)) 
 		{
 	            	ResetClass(client);
-	            	PrintToChat(client, %s %t.", PREFIX, "AntiStructure Limit Reached");
+	            	PrintToChat(client, "%s %t.", PREFIX, "AntiStructure Limit Reached");
 	            	return Plugin_Continue;
         	}
 	}
