@@ -86,7 +86,7 @@ public Action:Command_Votemute(client, args)
 
 		else if (SourceComms_GetClientMuteType(target) != bNot)
 		{
-			PrintToChat(client, "%s %t!", PREFIX "Already Muted"); //This client is already muted!
+			PrintToChat(client, "%s %t!", PREFIX, "Already Muted"); //This client is already muted!
 			return Plugin_Handled;
 		}
 
