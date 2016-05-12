@@ -31,31 +31,31 @@
 	
 	"On The Roof"
 	{
-		"en"		"on the roof"
+		"en"		"on the Rooftop"
 	}
 	
 	"At Base"
 	{
-		"en"		"at base"
+		"en"		"at Base"
 	}
 	
 	"At Prime"
 	{
-		"en"		"at prime"
+		"en"		"at the Primary Resource Point"
 	}
 	
 	"At Position"
 	{
-		"en"		"at position"
+		"en"		"at their Standing Positon"
 	}
 	
 	"At East Secondary"
 	{
-		"en"		"at eastern secondary"
+		"en"		"at Eastern Secondary"
 	}
 	
 	"At West Secondary"
 	{
-		"en"		"at western secondary"
+		"en"		"at Western Secondary"
 	}
 }
