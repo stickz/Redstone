@@ -26,36 +26,36 @@
 		//{2} = Building Name from structminigame.phrases
 		//{3} = Location Name (see bellow)
 		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"{1} is requesting {2} {3}"
+		"en"		"{1} is requesting {2} at {3}"
 	}
 	
-	"On The Roof"
+	"Roof"
 	{
-		"en"		"on the Rooftop"
+		"en"		"the Rooftop"
 	}
 	
-	"At Base"
+	"Base"
 	{
-		"en"		"at Base"
+		"en"		"Base"
 	}
 	
-	"At Prime"
+	"Prime"
 	{
-		"en"		"at the Primary Resource Point"
+		"en"		"Primary"
 	}
 	
-	"At Position"
+	"Position"
 	{
-		"en"		"at their Standing Positon"
+		"en"		"their Standing Positon"
 	}
 	
-	"At East Secondary"
+	"East Secondary"
 	{
-		"en"		"at Eastern Secondary"
+		"en"		"Eastern Secondary"
 	}
 	
-	"At West Secondary"
+	"West Secondary"
 	{
-		"en"		"at Western Secondary"
+		"en"		"Western Secondary"
 	}
 }

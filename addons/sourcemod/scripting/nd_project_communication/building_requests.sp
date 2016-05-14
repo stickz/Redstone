@@ -19,47 +19,41 @@ new const String:nd_request_building[REQUEST_BUILDING_COUNT][] =
 #define REQUEST_LOCATION_COUNT 6
 new const String:nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
-	"On The Roof",
-	"At Base",
-	"At Primary",
-	"At Position",
-	"At East Secondary",
-	"At West Secondary"
+	"Roof",
+	"Base",
+	"Primary",
+	"Position",
+	"East Secondary",
+	"West Secondary"
 };
 
-public Action:OnClientSayCommand(client, const String:command[], const String:sArgs[])
+bool:CheckBuildingRequest(client, const String:sArgs[])
 {
-	if (client)
+	if (STRING_STARTS_WITH == StrContains(sArgs, "request", false))
 	{
-		if (STRING_STARTS_WITH == StrContains(sArgs, "request", false))
+		for (new building = 0; building < REQUEST_BUILDING_COUNT; building++)
 		{
-			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
-			SetCmdReplySource(old);
-			
-			for (new building = 0; building < REQUEST_BUILDING_COUNT; building++)
+			if (StrContains(sArgs, nd_request_building[building], false) > IS_WITHIN_STRING)
 			{
-				if (StrContains(sArgs, nd_request_building[building], false) > IS_WITHIN_STRING)
+				for (new location = 0; location < REQUEST_LOCATION_COUNT; location++)
 				{
-					for (new location = 0; location < REQUEST_LOCATION_COUNT; location++)
+					if (StrContains(sArgs, nd_request_location[location], false) > IS_WITHIN_STRING)
 					{
-						if (StrContains(sArgs, nd_request_location[location], false) > IS_WITHIN_STRING)
-						{
-							PrintExtendedBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
-							return Plugin_Stop;	
-						}
+						PrintExtendedBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
+						return true;	
 					}
-					
-					PrintSimpleBuildingRequest(client, nd_request_building[building]);
-					return Plugin_Stop; 
 				}
+					
+				PrintSimpleBuildingRequest(client, nd_request_building[building]);
+				return true;
 			}
-			
-			PrintToChat(client, "\x04(Translator) \x05No translation keyword found.");
-			return Plugin_Stop; 
 		}
+			
+		PrintToChat(client, "\x04(Translator) \x05No translation keyword found.");
+		return true;
 	}
 	
-	return Plugin_Continue;
+	return false;
 }
 
 PrintSimpleBuildingRequest(client, const String:bName[])

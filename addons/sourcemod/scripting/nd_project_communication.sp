@@ -54,3 +54,18 @@ public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
 {
 	PrintTeamLanguages();
 }
+
+public Action:OnClientSayCommand(client, const String:command[], const String:sArgs[])
+{
+	if (client)
+	{
+		if (CheckBuildingRequest(client, sArgs))
+		{
+			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
+			SetCmdReplySource(old);
+			return Plugin_Stop; 
+		}
+	}
+	
+	return Plugin_Continue;
+}
