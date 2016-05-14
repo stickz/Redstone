@@ -19,12 +19,12 @@ new const String:nd_request_building[REQUEST_BUILDING_COUNT][] =
 #define REQUEST_LOCATION_COUNT 6
 new const String:nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
-	"On The Roof",
-	"At Base",
-	"At Primary",
-	"At Position",
-	"At East Secondary",
-	"At West Secondary"
+	"Roof",
+	"Base",
+	"Primary",
+	"Position",
+	"East Secondary",
+	"West Secondary"
 };
 
 bool:CheckBuildingRequest(client, const String:sArgs[])
