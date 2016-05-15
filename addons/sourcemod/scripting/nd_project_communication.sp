@@ -38,6 +38,7 @@ public Plugin:myinfo =
 #include "nd_project_communication/commander_lang.sp"
 #include "nd_project_communication/team_lang.sp"
 #include "nd_project_communication/building_requests.sp"
+#include "nd_project_communication/capture_requests.sp"
 
 public OnPluginStart()
 {
