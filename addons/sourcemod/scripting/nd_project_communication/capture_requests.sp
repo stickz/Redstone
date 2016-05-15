@@ -28,7 +28,7 @@ bool:CheckCaptureRequest(client, const String:sArgs[])
 	return false;
 };
 
-PrintCaptureRquest(client, const String:rName[])
+PrintCaptureRequest(client, const String:rName[])
 {
 	if (IsValidClient(client))
 	{
