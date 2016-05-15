@@ -16,15 +16,6 @@ WeaponData
 	//-----------------------------------------------------------------------------
 	"gizmos"
 	{
-		"armour_piercing"
-		{
-			
-			"weapon_overrides"
-			{
-				"damage_multiplier"	"0.75"
-				"exo_multiplier"	"2"
-			}
-		}
 		"clip_compression_1"
 		{
 			
@@ -105,7 +96,7 @@ WeaponData
 
 	"damage"			"100" // max dmg per second when in contact with flame
 	"damage_factor"			"2.0"
-	"exo_multiplier"		"1.5"
+	"exo_multiplier"		"1.3"
 
 	"cof_modifier_crouched"		"-0.5"
 	"cof_modifier_walking"		"1"	
