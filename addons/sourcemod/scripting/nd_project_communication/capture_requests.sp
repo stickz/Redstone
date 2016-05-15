@@ -26,7 +26,7 @@ bool:CheckCaptureRequest(client, const String:sArgs[])
 	}
 	
 	return false;
-};
+}
 
 PrintCaptureRequest(client, const String:rName[])
 {
