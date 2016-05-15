@@ -39,23 +39,33 @@
 		"en"		"Base"
 	}
 	
-	"Prime"
+	"Prim"
 	{
 		"en"		"Primary"
 	}
 	
-	"Position"
+	"Pos"
 	{
 		"en"		"their Standing Positon"
 	}
 	
-	"East Secondary"
+	"East Sec"
 	{
 		"en"		"Eastern Secondary"
 	}
 	
-	"West Secondary"
+	"West Sec"
 	{
 		"en"		"Western Secondary"
+	}
+	
+	"Base Tert"
+	{
+		"en"		"Base Tertiary"
+	}
+	
+	"Tert"
+	{
+		"en"		"Tertiaries"
 	}
 }
