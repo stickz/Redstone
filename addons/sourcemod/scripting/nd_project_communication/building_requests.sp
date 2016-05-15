@@ -21,10 +21,10 @@ new const String:nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
 	"Roof",
 	"Base",
-	"Primary",
-	"Position",
-	"East Secondary",
-	"West Secondary"
+	"Prim",
+	"Pos",
+	"East Sec",
+	"West Sec"
 };
 
 bool:CheckBuildingRequest(client, const String:sArgs[])
