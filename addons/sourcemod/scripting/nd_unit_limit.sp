@@ -383,7 +383,7 @@ PrintLimitSet(team, type, limit)
 		{
 			if (IsValidClient(client) && GetClientTeam(client) == team)
 			{
-				PrintToChat(client, "\x05[xG] %t.", "Set Structure Limit", limit);
+				PrintToChat(client, "%s %t.", PREFIX, "Set Structure Limit", limit);
 			}
 		}
 	}
@@ -400,7 +400,7 @@ PrintLimitSet(team, type, limit)
 				Format(TranslatedLimit, sizeof(TranslatedLimit), "%T", NumberInEnglish(limit), client);
 				
 				decl String:Message[64];
-				Format(Message, sizeof(Message), "\x05[xG] %T.", Phrase, client, TranslatedLimit);
+				Format(Message, sizeof(Message), "%s %T.", PREFIX, Phrase, client, TranslatedLimit);
 				PrintToChat(client, Message);
 			}
 		}
