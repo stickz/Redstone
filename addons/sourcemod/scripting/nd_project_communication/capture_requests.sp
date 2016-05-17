@@ -10,11 +10,11 @@ new const String:nd_request_capture[REQUEST_CAPTURE_COUNT][] =
 
 bool:CheckCaptureRequest(client, const String:sArgs[])
 {
-	if (STRING_STARTS_WITH == StrContains(sArgs, "capture", false))
+	if (StrStartsWith(sArgs, "capture") //if the string starts with capture
 	{
-		for (new resource = 0; resource < REQUEST_CAPTURE_COUNT; resource++)
+		for (new resource = 0; resource < REQUEST_CAPTURE_COUNT; resource++) //for all the resoruce points
 		{
-			if (StrContains(sArgs, nd_request_capture[resource], false) > IS_WITHIN_STRING)
+			if (StrIsWithin(sArgs, nd_request_capture[resource])) //if a resource point is within the string
 			{
 				PrintCaptureRequest(client, nd_request_capture[resource]);
 				return true;
