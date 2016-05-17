@@ -20,7 +20,7 @@ new const String:nd_request_building[REQUEST_BUILDING_COUNT][] =
 new const String:nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
 	"Roof",
-	"Base Tert"
+	"Base Tert",
 	"Base",
 	"Prim",
 	"Pos",
