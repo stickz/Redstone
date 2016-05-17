@@ -18,7 +18,7 @@ PrintCLangToTeam(team, const String:langName[])
 {
 	for (new client = 1; client <= MaxClients; client++)
 	{
-		if (IsValidClient(client) && GetClientTeam(client) == team)
+		if (IsOnTeam(client, team))
 		{
 			PrintToChat(client, "%s%t", "Commander Language", MESSAGE_COLOUR, langName);  
 		}
