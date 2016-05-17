@@ -21,7 +21,7 @@ bool:CheckCaptureRequest(client, const String:sArgs[])
 			}
 		}
 		
-		PrintToChat(client, "\x04(Translator) \x05No translation keyword found.");
+		PrintToChat(client, "\x04%t \x05%t.", "Translate Tag", "No Translate Keyword");
 		return true;
 	}
 	
@@ -47,7 +47,7 @@ PrintCaptureRequest(client, const String:rName[])
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Capture Request", idx, cName, resource);
 				
-				PrintToChat(idx, "\x04(Translator) \x05%s", ToPrint); 
+				PrintToChat(idx, "\x04%t \x05%s", "Translate Tag", ToPrint); 
 			}
 		}
 	}
