@@ -17,6 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <nd_stocks>
 
+//This is a comment to trigger a plugin rebuild
 //Version is auto-filled by the travis builder
 public Plugin:myinfo =
 {
