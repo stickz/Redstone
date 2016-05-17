@@ -69,7 +69,7 @@ PrintSimpleBuildingRequest(client, const String:bName[])
 		
 		for (new idx = 0; idx <= MaxClients; idx++)
 		{
-			if (IsValidClient(idx) && GetClientTeam(client) == team)
+			if (IsOnTeam(idx, team))
 			{
 				decl String:building[64];
 				Format(building, sizeof(building), "%T", bName, idx);
@@ -95,7 +95,7 @@ PrintExtendedBuildingRequest(client, const String:bName[], const String:lName[])
 		
 		for (new idx = 0; idx <= MaxClients; idx++)
 		{
-			if (IsValidClient(idx) && GetClientTeam(client) == team)
+			if (IsOnTeam(idx, team))
 			{
 				decl String:building[64];
 				Format(building, sizeof(building), "%T", bName, idx);
