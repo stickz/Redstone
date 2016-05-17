@@ -10,18 +10,22 @@ new const String:nd_request_capture[REQUEST_CAPTURE_COUNT][] =
 
 bool:CheckCaptureRequest(client, const String:sArgs[])
 {
-	if (STRING_STARTS_WITH == StrContains(sArgs, "capture", false))
+	if (!g_Enable[CaptureReqs].BoolValue)
+		return false; //don't use this feature if not enabled
+	
+	if (StrStartsWith(sArgs, "capture")) //if the string starts with capture
 	{
-		for (new resource = 0; resource < REQUEST_CAPTURE_COUNT; resource++)
+		for (new resource = 0; resource < REQUEST_CAPTURE_COUNT; resource++) //for all the resoruce points
 		{
-			if (StrContains(sArgs, nd_request_capture[resource], false) > IS_WITHIN_STRING)
+			if (StrIsWithin(sArgs, nd_request_capture[resource])) //if a resource point is within the string
 			{
 				PrintCaptureRequest(client, nd_request_capture[resource]);
 				return true;
 			}
 		}
 		
-		PrintToChat(client, "\x04(Translator) \x05No translation keyword found.");
+		PrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", 
+						  MESSAGE_COLOUR, "No Translate Keyword");
 		return true;
 	}
 	
@@ -39,7 +43,7 @@ PrintCaptureRequest(client, const String:rName[])
 		
 		for (new idx = 0; idx <= MaxClients; idx++)
 		{
-			if (IsValidClient(idx) && GetClientTeam(client) == team)
+			if (IsOnTeam(idx, client))
 			{
 				decl String:resource[64];
 				Format(resource, sizeof(resource), "%T", rName, idx);
@@ -47,7 +51,8 @@ PrintCaptureRequest(client, const String:rName[])
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Capture Request", idx, cName, resource);
 				
-				PrintToChat(idx, "\x04(Translator) \x05%s", ToPrint); 
+				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
+							      MESSAGE_COLOUR, ToPrint); 
 			}
 		}
 	}

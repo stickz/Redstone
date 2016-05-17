@@ -30,15 +30,18 @@ new const String:nd_request_location[REQUEST_LOCATION_COUNT][] =
 
 bool:CheckBuildingRequest(client, const String:sArgs[])
 {
-	if (STRING_STARTS_WITH == StrContains(sArgs, "request", false))
+	if (!g_Enable[BuildingReqs].BoolValue) 
+		return false; //don't use feature if not enabled
+
+	if (StrStartsWith(sArgs, "request")) //if string starts with request
 	{
-		for (new building = 0; building < REQUEST_BUILDING_COUNT; building++)
+		for (new building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
 		{
-			if (StrContains(sArgs, nd_request_building[building], false) > IS_WITHIN_STRING)
+			if (StrIsWithin(sArgs, nd_request_building[building])) //if a building name is within the string
 			{
-				for (new location = 0; location < REQUEST_LOCATION_COUNT; location++)
+				for (new location = 0; location < REQUEST_LOCATION_COUNT; location++) //for all the locations
 				{
-					if (StrContains(sArgs, nd_request_location[location], false) > IS_WITHIN_STRING)
+					if (StrIsWithin(sArgs, nd_request_location[location])) //if a location is within the string
 					{
 						PrintExtendedBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
 						return true;	
@@ -50,7 +53,8 @@ bool:CheckBuildingRequest(client, const String:sArgs[])
 			}
 		}
 			
-		PrintToChat(client, "\x04(Translator) \x05No translation keyword found.");
+		PrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", 
+					 	  MESSAGE_COLOUR, "No Translate Keyword");
 		return true;
 	}
 	
@@ -68,7 +72,7 @@ PrintSimpleBuildingRequest(client, const String:bName[])
 		
 		for (new idx = 0; idx <= MaxClients; idx++)
 		{
-			if (IsValidClient(idx) && GetClientTeam(client) == team)
+			if (IsOnTeam(idx, team))
 			{
 				decl String:building[64];
 				Format(building, sizeof(building), "%T", bName, idx);
@@ -76,7 +80,8 @@ PrintSimpleBuildingRequest(client, const String:bName[])
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, cName, building);
 				
-				PrintToChat(idx, "\x04(Translator) \x05%s", ToPrint); 
+				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
+							      MESSAGE_COLOUR, ToPrint); 
 			}
 		}
 	}
@@ -93,7 +98,7 @@ PrintExtendedBuildingRequest(client, const String:bName[], const String:lName[])
 		
 		for (new idx = 0; idx <= MaxClients; idx++)
 		{
-			if (IsValidClient(idx) && GetClientTeam(client) == team)
+			if (IsOnTeam(idx, team))
 			{
 				decl String:building[64];
 				Format(building, sizeof(building), "%T", bName, idx);
@@ -104,7 +109,8 @@ PrintExtendedBuildingRequest(client, const String:bName[], const String:lName[])
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Extended Building Request", idx, cName, building, location);
 			
-				PrintToChat(idx, "\x04(Translator) \x05%s", ToPrint); 
+				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
+							      MESSAGE_COLOUR, ToPrint); 
 			}
 		}
 	}

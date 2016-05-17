@@ -31,10 +31,15 @@ public Plugin:myinfo =
 #define STRING_STARTS_WITH 	0
 #define IS_WITHIN_STRING	-1
 
+#define MESSAGE_COLOUR	"\x05"
+#define TAG_COLOUR	"\x04"
+
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
 #include "updater/standard.sp"
 
+#include "nd_project_communication/convars.sp"
+#include "nd_project_communication/stock_functions.sp"
 #include "nd_project_communication/commander_lang.sp"
 #include "nd_project_communication/team_lang.sp"
 #include "nd_project_communication/building_requests.sp"
@@ -42,26 +47,33 @@ public Plugin:myinfo =
 
 public OnPluginStart()
 {
+	/* Hook needed events */
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("promoted_to_commander", Event_CommanderPromo);
 	
 	AddUpdaterLibrary(); //auto-updater
+	CreateConVars(); //create ConVars (from convars.sp)
 	
+	/* Add translated phrases */
 	LoadTranslations("structminigame.phrases");
 	LoadTranslations("nd_project_communication.phrases");
 }
 
-public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
-{
-	PrintTeamLanguages();
+public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast) {
+	PrintTeamLanguages(); //print client languages at round start
 }
 
 public Action:OnClientSayCommand(client, const String:command[], const String:sArgs[])
 {
-	if (client)
+	if (client) //is the chat message is triggered by a client?
 	{
-		if (CheckBuildingRequest(client, sArgs) || CheckCaptureRequest(client, sArgs))
+		//does the chat message contain translatable phrases?
+		if (CheckBuildingRequest(client, sArgs) ||  CheckCaptureRequest(client, sArgs))
 		{
+			/* 
+			 * Block the old chat message
+			 * And print the new translated message 
+			 */
 			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
 			SetCmdReplySource(old);
 			return Plugin_Stop; 

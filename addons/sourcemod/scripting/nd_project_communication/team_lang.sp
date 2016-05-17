@@ -1,5 +1,8 @@
 PrintTeamLanguages()
 {
+	if (!g_Enable[TeamLang].BoolValue)
+		return; //don't use this feature if not enabled
+	
 	new bool:ShowMessage[2] = {false, ...};
 	new langCount[2][LANGUAGE_COUNT];
 	new clientTeam, teamIDX;
@@ -61,9 +64,9 @@ PrintTLangToTeam(team, const String:printOut[])
 {
 	for (new client = 1; client <= MaxClients; client++)
 	{
-		if (IsValidClient(client) && GetClientTeam(client) == team)
+		if (IsOnTeam(client, team))
 		{
-			PrintToChat(client, "\x05%t", "Team Languages", printOut);	
+			PrintToChat(client, "%s%t", "Team Languages", MESSAGE_COLOUR, printOut);	
 		}
 	}
 }
