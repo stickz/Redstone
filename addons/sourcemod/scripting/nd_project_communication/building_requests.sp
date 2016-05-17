@@ -30,15 +30,15 @@ new const String:nd_request_location[REQUEST_LOCATION_COUNT][] =
 
 bool:CheckBuildingRequest(client, const String:sArgs[])
 {
-	if (STRING_STARTS_WITH == StrContains(sArgs, "request", false))
+	if (StrStartsWith(sArgs, "request")) //if string starts with request
 	{
-		for (new building = 0; building < REQUEST_BUILDING_COUNT; building++)
+		for (new building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
 		{
-			if (StrContains(sArgs, nd_request_building[building], false) > IS_WITHIN_STRING)
+			if (StrIsWithin(sArgs, nd_request_building[building])) //if a building name is within the string
 			{
-				for (new location = 0; location < REQUEST_LOCATION_COUNT; location++)
+				for (new location = 0; location < REQUEST_LOCATION_COUNT; location++) //for all the locations
 				{
-					if (StrContains(sArgs, nd_request_location[location], false) > IS_WITHIN_STRING)
+					if (StrIsWithin(sArgs, nd_request_location[location])) //if a location is within the string
 					{
 						PrintExtendedBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
 						return true;	
