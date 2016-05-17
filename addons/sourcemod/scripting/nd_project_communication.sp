@@ -38,6 +38,7 @@ public Plugin:myinfo =
 #include "nd_project_communication/commander_lang.sp"
 #include "nd_project_communication/team_lang.sp"
 #include "nd_project_communication/building_requests.sp"
+#include "nd_project_communication/capture_requests.sp"
 
 public OnPluginStart()
 {
@@ -59,7 +60,7 @@ public Action:OnClientSayCommand(client, const String:command[], const String:sA
 {
 	if (client)
 	{
-		if (CheckBuildingRequest(client, sArgs))
+		if (CheckBuildingRequest(client, sArgs) || CheckCaptureRequest(client, sArgs))
 		{
 			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
 			SetCmdReplySource(old);
