@@ -50,7 +50,7 @@ bool:CheckBuildingRequest(client, const String:sArgs[])
 			}
 		}
 			
-		PrintToChat(client, "\x04(Translator) \x05No translation keyword found.");
+		PrintToChat(client, "\x04%t \x05%t.", "Translate Tag", "No Translate Keyword");
 		return true;
 	}
 	
@@ -76,7 +76,7 @@ PrintSimpleBuildingRequest(client, const String:bName[])
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, cName, building);
 				
-				PrintToChat(idx, "\x04(Translator) \x05%s", ToPrint); 
+				PrintToChat(idx, "\x04%t \x05%s", "Translate Tag", ToPrint); 
 			}
 		}
 	}
@@ -104,7 +104,7 @@ PrintExtendedBuildingRequest(client, const String:bName[], const String:lName[])
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Extended Building Request", idx, cName, building, location);
 			
-				PrintToChat(idx, "\x04(Translator) \x05%s", ToPrint); 
+				PrintToChat(idx, "\x04%t \x05%s", "Translate Tag", ToPrint); 
 			}
 		}
 	}
