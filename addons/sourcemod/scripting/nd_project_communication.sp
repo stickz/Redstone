@@ -38,7 +38,7 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
 #include "updater/standard.sp"
 
-#include "nd_project_commenication/stock_functions.sp"
+#include "nd_project_communication/stock_functions.sp"
 #include "nd_project_communication/commander_lang.sp"
 #include "nd_project_communication/team_lang.sp"
 #include "nd_project_communication/building_requests.sp"
