@@ -27,17 +27,16 @@ public Plugin:myinfo =
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
+/* Create Defines */
 #define LANGUAGE_COUNT 		44
-#define STRING_STARTS_WITH 	0
-#define IS_WITHIN_STRING	-1
-
-#define MESSAGE_COLOUR	"\x05"
-#define TAG_COLOUR	"\x04"
+#define MESSAGE_COLOUR		"\x05"
+#define TAG_COLOUR		"\x04"
 
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
 #include "updater/standard.sp"
 
+/* Include Plugin Segments */
 #include "ndpc/convars.sp"
 #include "ndpc/stock_functions.sp"
 #include "ndpc/commander_lang.sp"
