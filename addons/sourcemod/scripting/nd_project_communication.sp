@@ -38,12 +38,12 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
 #include "updater/standard.sp"
 
-#include "nd_project_communication/convars.sp"
-#include "nd_project_communication/stock_functions.sp"
-#include "nd_project_communication/commander_lang.sp"
-#include "nd_project_communication/team_lang.sp"
-#include "nd_project_communication/building_requests.sp"
-#include "nd_project_communication/capture_requests.sp"
+#include "ndpc/convars.sp"
+#include "ndpc/stock_functions.sp"
+#include "ndpc/commander_lang.sp"
+#include "ndpc/team_lang.sp"
+#include "ndpc/building_requests.sp"
+#include "ndpc/capture_requests.sp"
 
 public OnPluginStart()
 {
