@@ -38,6 +38,7 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
 #include "updater/standard.sp"
 
+#include "nd_project_communication/convars.sp"
 #include "nd_project_communication/stock_functions.sp"
 #include "nd_project_communication/commander_lang.sp"
 #include "nd_project_communication/team_lang.sp"
@@ -51,6 +52,7 @@ public OnPluginStart()
 	HookEvent("promoted_to_commander", Event_CommanderPromo);
 	
 	AddUpdaterLibrary(); //auto-updater
+	CreateConVars(); //create ConVars (from convars.sp)
 	
 	/* Add translated phrases */
 	LoadTranslations("structminigame.phrases");
@@ -66,7 +68,7 @@ public Action:OnClientSayCommand(client, const String:command[], const String:sA
 	if (client) //is the chat message is triggered by a client?
 	{
 		//does the chat message contain translatable phrases?
-		if (CheckBuildingRequest(client, sArgs) || CheckCaptureRequest(client, sArgs))
+		if (CheckBuildingRequest(client, sArgs) ||  CheckCaptureRequest(client, sArgs))
 		{
 			/* 
 			 * Block the old chat message
