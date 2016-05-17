@@ -61,7 +61,7 @@ PrintTLangToTeam(team, const String:printOut[])
 {
 	for (new client = 1; client <= MaxClients; client++)
 	{
-		if (IsValidClient(client) && GetClientTeam(client) == team)
+		if (IsOnTeam(client, team))
 		{
 			PrintToChat(client, "%s%t", "Team Languages", MESSAGE_COLOUR, printOut);	
 		}
