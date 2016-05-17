@@ -30,6 +30,9 @@ new const String:nd_request_location[REQUEST_LOCATION_COUNT][] =
 
 bool:CheckBuildingRequest(client, const String:sArgs[])
 {
+	if (!g_Enable[BuildingReqs].BoolValue) 
+		return false; //don't use feature if not enabled
+
 	if (StrStartsWith(sArgs, "request")) //if string starts with request
 	{
 		for (new building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
