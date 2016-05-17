@@ -20,7 +20,7 @@ PrintCLangToTeam(team, const String:langName[])
 	{
 		if (IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			PrintToChat(client, "\x05%t", "Commander Language", langName);  
+			PrintToChat(client, "%s%t", "Commander Language", MESSAGE_COLOUR, langName);  
 		}
 	}
 }
