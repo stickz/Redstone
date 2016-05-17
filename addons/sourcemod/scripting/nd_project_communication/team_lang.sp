@@ -63,7 +63,7 @@ PrintTLangToTeam(team, const String:printOut[])
 	{
 		if (IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			PrintToChat(client, "\x05%t", "Team Languages", printOut);	
+			PrintToChat(client, "%s%t", "Team Languages", MESSAGE_COLOUR, printOut);	
 		}
 	}
 }
