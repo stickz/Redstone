@@ -62,11 +62,21 @@ PrintTeamLanguages()
 
 PrintTLangToTeam(team, const String:printOut[])
 {
+	decl String:MessageColour[8];
+	Format(MessageColour, sizeof(MessageColour), MESSAGE_COLOUR);
+	
 	for (new client = 1; client <= MaxClients; client++)
 	{
 		if (IsOnTeam(client, team))
 		{
-			PrintToChat(client, "%s%t", MESSAGE_COLOUR, "Team Languages", printOut);	
+			decl String:tPhrase[128];
+			Format(tPhrase, sizeof(tPhrase), "%T", "Team Languages", client, printOut);
+			
+			decl String:toPrint[150];
+			StrCat(toPrint, sizeof(toPrint), MessageColour);
+			StrCat(toPrint, sizeof(toPrint), tPhrase);
+			
+			PrintToChat(client, "%s", toPrint);	
 		}
 	}
 }
