@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define REQUIRE_PLUGIN
 
 #define DEBUG 0
+#define PREFIX "\x05[xG]"
 
 //Version is auto-filled by the travis builder
 public Plugin:myinfo =
@@ -98,7 +99,7 @@ public Action:CMD_LockPlayerSeige(client, args)
 {
 	if (!GetConVarBool(eDeadWeights))
 	{
-		PrintToChat(client, "\x05[xG] %t", "Disabled Feature"); //This feature is currently disabled.
+		PrintToChat(client, "%s %t", PREFIX, "Disabled Feature"); //This feature is currently disabled.
 		return Plugin_Handled;	
 	}
 	
@@ -107,7 +108,7 @@ public Action:CMD_LockPlayerSeige(client, args)
 	
 	if (args != 1) 
 	{
-		PrintToChat(client, "/x05[xG] %t", "Proper Usage");
+		PrintToChat(client, "%s %t", PREFIX, "Proper Usage");
 	 	return Plugin_Handled;
 	}
 	
@@ -117,7 +118,7 @@ public Action:CMD_LockPlayerSeige(client, args)
 
 	if (!NDC_IsCommander(client)) 
 	{
-		PrintToChat(client, "\x05[xG] %t", "Only Commanders"); //Player Seige locking is available only for Commander
+		PrintToChat(client, "%s %t", PREFIX, "Only Commanders"); //Player Seige locking is available only for Commander
 		return Plugin_Handled;
 	}
 	
@@ -128,7 +129,7 @@ public Action:CMD_LockPlayerSeige(client, args)
 	new target = FindTarget(client, targetArg);
 	if (target == -1)
 	{
-		PrintToChat(client, "/x05[xG] %t", "Cannot Find Player");
+		PrintToChat(client, "%s %t", PREFIX, "Cannot Find Player");
 	 	return Plugin_Handled;
 	}
 	
@@ -140,7 +141,7 @@ public Action:CMD_LockPlayerSeige(client, args)
 	
 	/*if (!CanLockSeige(target))
 	{
-		PrintToChat(client, "\x05[xG] %t", "Cannot Lock"); //This player cannot be locked seige.
+		PrintToChat(client, "%s %t", PREFIX, "Cannot Lock"); //This player cannot be locked seige.
 		return Plugin_Handled;	
 	}*/	
 	
@@ -166,7 +167,7 @@ public Action:CMD_SetPlayerClass(client, args)
 	new target = FindTarget(client, targetArg);
 	if (target == -1)
 	{
-		PrintToChat(client, "/x05[xG] %t", "Cannot Find Player");
+		PrintToChat(client, "%s %t", PREFIX, "Cannot Find Player");
 	 	return Plugin_Handled;
 	}
 	
@@ -230,7 +231,7 @@ SetPlayerSeige(client)
 	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", EXO_CLASS_SEIGE_KIT);
 	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0);
 
-	PrintToChat(client, "\x05[xG] %t.", "Locked Siege");
+	PrintToChat(client, "%s %t.", PREFIX, "Locked Siege");
 }
 
 SeigeLockPlayer(admin, target, bool:AdminUsed = true)
@@ -243,14 +244,14 @@ SeigeLockPlayer(admin, target, bool:AdminUsed = true)
 	
 	if (player_forced_seige[target])
 	{
-		PrintToChat(admin, "\x05[xG] %t.", "Enabled Seige Lock");
-		PrintToChat(target, "\x05[xG] %t.", AdminUsed ? "Admin Lock Enabled" : "Commander Lock Enabled");
+		PrintToChat(admin, "%s %t.", PREFIX, "Enabled Seige Lock");
+		PrintToChat(target, "%s %t.", PREFIX, AdminUsed ? "Admin Lock Enabled" : "Commander Lock Enabled");
 		PushArrayString(pDeadWeightArray, gAuth);
 	}
 	else
 	{
-		PrintToChat(admin, "\x05[xG] %t.", "Disabled Seige Lock");
-		PrintToChat(target, "\x05[xG] %t.", AdminUsed ? "Admin Lock Disibled" : "Commander Lock Disbled");
+		PrintToChat(admin, "%s %t.", PREFIX, "Disabled Seige Lock");
+		PrintToChat(target, "%s %t.", PREFIX, AdminUsed ? "Admin Lock Disibled" : "Commander Lock Disbled");
 		
 		new ArrayIndex = FindStringInArray(pDeadWeightArray, gAuth);
 		if (ArrayIndex != -1)
