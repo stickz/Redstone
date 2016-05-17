@@ -42,26 +42,32 @@ public Plugin:myinfo =
 
 public OnPluginStart()
 {
+	/* Hook needed events */
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("promoted_to_commander", Event_CommanderPromo);
 	
 	AddUpdaterLibrary(); //auto-updater
 	
+	/* Add translated phrases */
 	LoadTranslations("structminigame.phrases");
 	LoadTranslations("nd_project_communication.phrases");
 }
 
-public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
-{
-	PrintTeamLanguages();
+public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast) {
+	PrintTeamLanguages(); //print client languages at round start
 }
 
 public Action:OnClientSayCommand(client, const String:command[], const String:sArgs[])
 {
-	if (client)
+	if (client) //is the chat message is triggered by a client?
 	{
+		//does the chat message contain translatable phrases?
 		if (CheckBuildingRequest(client, sArgs) || CheckCaptureRequest(client, sArgs))
 		{
+			/* 
+			 * Block the old chat message
+			 * And print the new translated message 
+			 */
 			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
 			SetCmdReplySource(old);
 			return Plugin_Stop; 
