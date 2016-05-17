@@ -40,7 +40,17 @@
 		"en"		"{1} says capture {2}"
 	}
 	
-	/* Shared common phrases */
+	/* Plugin Messages */
+	"Translate Tag"
+	{
+		"en"		"(Translator)"
+	}
+	"No Translate Keyword"
+	{
+		"en"		"No translation keyword found."
+	}
+	
+	/* Common phrases */
 	"Roof"
 	{
 		"en"		"the Rooftop"
