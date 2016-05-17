@@ -19,11 +19,21 @@ public Event_CommanderPromo(Handle:event, const String:name[], bool:dontBroadcas
 
 PrintCLangToTeam(team, const String:langName[])
 {
+	decl String:MessageColour[8];
+	Format(MessageColour, sizeof(MessageColour), MESSAGE_COLOUR);
+	
 	for (new client = 1; client <= MaxClients; client++)
 	{
 		if (IsOnTeam(client, team))
 		{
-			PrintToChat(client, "%s%t", MESSAGE_COLOUR, "Commander Language", langName);  
+			decl String:tPhrase[64];
+			Format(tPhrase, sizeof(tPhrase), "%T", "Commander Language", client, langName);
+			
+			decl String:toPrint[80];
+			StrCat(toPrint, sizeof(toPrint), MessageColour);
+			StrCat(toPrint, sizeof(toPrint), tPhrase);
+			
+			PrintToChat(client, "%s", toPrint);  
 		}
 	}
 }
