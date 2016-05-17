@@ -10,7 +10,7 @@ new const String:nd_request_capture[REQUEST_CAPTURE_COUNT][] =
 
 bool:CheckCaptureRequest(client, const String:sArgs[])
 {
-	if (StrStartsWith(sArgs, "capture") //if the string starts with capture
+	if (StrStartsWith(sArgs, "capture")) //if the string starts with capture
 	{
 		for (new resource = 0; resource < REQUEST_CAPTURE_COUNT; resource++) //for all the resoruce points
 		{
