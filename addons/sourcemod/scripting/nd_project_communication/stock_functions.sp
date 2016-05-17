@@ -8,7 +8,7 @@ stock bool:StrIsWithin(const String:sArgs[], const String:segment[])
 	return StrContains(sArgs, segment, false) > IS_WITHIN_STRING;
 }
 
-stock bool:ClientIsOnTeam(client, team)
+stock bool:IsOnTeam(client, team)
 {
 	return IsValidClient(client) && GetClientTeam(client) == team;
 }
