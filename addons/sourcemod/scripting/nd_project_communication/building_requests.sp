@@ -16,10 +16,11 @@ new const String:nd_request_building[REQUEST_BUILDING_COUNT][] =
 	"Barrier"
 };
 
-#define REQUEST_LOCATION_COUNT 6
+#define REQUEST_LOCATION_COUNT 7
 new const String:nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
 	"Roof",
+	"Base Tert"
 	"Base",
 	"Prim",
 	"Pos",
