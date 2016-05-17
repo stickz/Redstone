@@ -38,6 +38,7 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
 #include "updater/standard.sp"
 
+#include "nd_project_commenication/stock_functions.sp"
 #include "nd_project_communication/commander_lang.sp"
 #include "nd_project_communication/team_lang.sp"
 #include "nd_project_communication/building_requests.sp"
@@ -78,14 +79,4 @@ public Action:OnClientSayCommand(client, const String:command[], const String:sA
 	}
 	
 	return Plugin_Continue;
-}
-
-stock bool:StrStartsWith(const String:sArgs[], const String:segment[])
-{
-	return STRING_STARTS_WITH == StrContains(sArgs, segment, false);
-}
-
-stock bool:StrIsWithin(const String:sArgs[], const String:segment[])
-{
-	return StrContains(sArgs, segment, false) > IS_WITHIN_STRING;
 }
