@@ -185,6 +185,9 @@ public OnEntityCreated(entity, const String:classname[])
 
 public Action:CheckBorders(Handle timer, any entity) 
 {
+    if (!IsValidEdict(entity))
+    	return;
+    	
     float position[3];
     GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
     //PrintToChatAll("placed location %f - %f - %f", position[0], position[1], position[2]);
