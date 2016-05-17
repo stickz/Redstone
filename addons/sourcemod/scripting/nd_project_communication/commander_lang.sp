@@ -1,16 +1,19 @@
 public Event_CommanderPromo(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"));
-	new team = GetEventInt(event, "teamid");
-	
-	if (IsValidClient(client))
+	if (g_Enable[CommanderLang].BoolValue) //only use feature if enabled
 	{
-		new langNum = GetClientLanguage(client);
-		decl String:langCode[8], String:langName[32];
-		GetLanguageInfo(langNum, langCode, sizeof(langCode), langName, sizeof(langName));
+		new client = GetClientOfUserId(GetEventInt(event, "userid"));
+		new team = GetEventInt(event, "teamid");
 		
-		if (!StrEqual("english", langName, true))
-			PrintCLangToTeam(team, langName);
+		if (IsValidClient(client))
+		{
+			new langNum = GetClientLanguage(client);
+			decl String:langCode[8], String:langName[32];
+			GetLanguageInfo(langNum, langCode, sizeof(langCode), langName, sizeof(langName));
+			
+			if (!StrEqual("english", langName, true))
+				PrintCLangToTeam(team, langName);
+		}
 	}
 }
 
