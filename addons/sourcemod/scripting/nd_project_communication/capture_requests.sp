@@ -21,7 +21,8 @@ bool:CheckCaptureRequest(client, const String:sArgs[])
 			}
 		}
 		
-		PrintToChat(client, "\x04%t \x05%t.", "Translate Tag", "No Translate Keyword");
+		PrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", 
+						  MESSAGE_COLOUR, "No Translate Keyword");
 		return true;
 	}
 	
@@ -47,7 +48,8 @@ PrintCaptureRequest(client, const String:rName[])
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Capture Request", idx, cName, resource);
 				
-				PrintToChat(idx, "\x04%t \x05%s", "Translate Tag", ToPrint); 
+				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
+							      MESSAGE_COLOUR, ToPrint); 
 			}
 		}
 	}
