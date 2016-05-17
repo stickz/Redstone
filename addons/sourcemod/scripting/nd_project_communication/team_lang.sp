@@ -1,5 +1,8 @@
 PrintTeamLanguages()
 {
+	if (!g_Enable[TeamLang].BoolValue)
+		return; //don't use this feature if not enabled
+	
 	new bool:ShowMessage[2] = {false, ...};
 	new langCount[2][LANGUAGE_COUNT];
 	new clientTeam, teamIDX;
