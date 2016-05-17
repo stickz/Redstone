@@ -43,18 +43,16 @@ PrintCaptureRequest(client, const String:rName[])
 		
 		for (new idx = 0; idx <= MaxClients; idx++)
 		{
-			if (IsOnTeam(idx, client))
+			if (IsOnTeam(idx, team))
 			{
 				decl String:resource[64];
 				Format(resource, sizeof(resource), "%T", rName, idx);
 				
-				decl String:tTag[16];
-				Format(tTag, sizeof(tTag), "%T", "Translate Tag", idx);
-				
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Capture Request", idx, cName, resource);
 				
-				PrintToChat(idx, "%s%s %s%s", TAG_COLOUR, tTag, MESSAGE_COLOUR, ToPrint); 
+				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag",
+							      MESSAGE_COLOUR, ToPrint); 
 			}
 		}
 	}
