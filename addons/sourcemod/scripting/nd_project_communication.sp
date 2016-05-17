@@ -31,6 +31,9 @@ public Plugin:myinfo =
 #define STRING_STARTS_WITH 	0
 #define IS_WITHIN_STRING	-1
 
+#define MESSAGE_COLOUR	"\x05"
+#define TAG_COLOUR	"\x04"
+
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
 #include "updater/standard.sp"
