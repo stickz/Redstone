@@ -40,7 +40,7 @@ PrintCaptureRequest(client, const String:rName[])
 		
 		for (new idx = 0; idx <= MaxClients; idx++)
 		{
-			if (IsValidClient(idx) && GetClientTeam(client) == team)
+			if (IsOnTeam(idx, client))
 			{
 				decl String:resource[64];
 				Format(resource, sizeof(resource), "%T", rName, idx);
