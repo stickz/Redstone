@@ -26,7 +26,7 @@ new const String:ndpcMenuDisplay[OPTION_COUNT][] = {
 #include <menus>
 
 new Handle:ndpcSettingsMenu = INVALID_HANDLE;
-new Handle:cookie_show_option[OPTION_COUNT] = {..., INVALID_HANDLE};
+new Handle:cookie_show_option[OPTION_COUNT] = {INVALID_HANDLE, ...};
 new bool:ndpc_option[OPTION_COUNT][MAXPLAYERS + 1];
 
 AddClientPrefsSupport()
@@ -51,7 +51,7 @@ public OnAllPluginsLoaded()
 public OnClientCookiesCached(client)
 {
 	/* Update all the settings booleans the client */
-	for (new i = 0; i < OPTION_COINT; i++)	{
+	for (new i = 0; i < OPTION_COUNT; i++)	{
 		ndpc_option[i][client] = GetCookieStatus(client, cookie_show_option[i]);
 	}
 }
@@ -91,7 +91,7 @@ public ndpcSettingsHandler(Handle:menu, MenuAction:action, param1, param2)
 	{
 		case MenuAction_DisplayItem:
 		{
-			new client = parm1, index = parm2;
+			new client = param1, index = param2;
 			
 			decl String:status[10];
 			Format(status, sizeof(status), "%T", ndpc_option[index][client] ? "On" : "Off", client);
@@ -107,10 +107,10 @@ public ndpcSettingsHandler(Handle:menu, MenuAction:action, param1, param2)
 		
 		case MenuAction_Select:
 		{
-			new client = parm1, index = parm2;
+			new client = param1, index = param2;
 			
 			ndpc_option[index][client] = !ndpc_option[index][client];
-			SetClientCookie(client, cookie_show_option[index][client], ndpc_option[index][client] ? "On" : "Off");
+			SetClientCookie(client, cookie_show_option[index], ndpc_option[index][client] ? "On" : "Off");
 			
 			DisplayMenu(ndpcSettingsMenu, client, MENU_TIME_FOREVER);
 		}
