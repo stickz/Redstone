@@ -28,6 +28,9 @@ public Plugin:myinfo =
     	url     	= "https://github.com/stickz/Redstone/"
 }
 
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_ontakedamage_fix/nd_ontakedamage_fix.txt"
+#include "updater/standard.sp"
+
 public OnPluginStart()
 {
 	HookEvent("player_changeclass", Event_BlockGizmo, EventHookMode_Pre);
@@ -36,6 +39,8 @@ public OnPluginStart()
 	
 	AddCommandListener(CommandListener:CMD_JoinClass, "joinclass");	
 	AddCommandListener(CommandListener:CMD_JoinSquad, "joinsquad");
+	
+	AddUpdaterLibrary(); //for updater support
 }
 
 public Action:Event_BlockGizmo(Handle:event, const String:name[], bool:dontBroadcast) 
