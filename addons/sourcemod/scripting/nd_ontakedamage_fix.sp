@@ -49,6 +49,7 @@ public Action:Event_BlockGizmo(Handle:event, const String:name[], bool:dontBroad
 	return Plugin_Continue;
 }
 
+/* Note: This hook will be removed soon if deemed redundant by further testing */
 public Action:Event_StructDamageSparse(Handle:event, const String:name[], bool:dontBroadcast) 
 {
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));	
