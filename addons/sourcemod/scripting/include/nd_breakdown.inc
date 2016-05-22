@@ -55,6 +55,17 @@ stock bool:IsStealthSab(class, subClass))
 	return class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SABATEUR;
 }
 
+stock ResetClass(client, class, subClass, gizmo = -1)
+{
+	SetEntProp(client, Prop_Send, "m_iPlayerClass", class);
+    	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", class);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", subClass);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", subClass);
+	
+	if (gizmo != -1)
+		SetEntProp(client, Prop_Send, "m_iDesiredGizmo", gizmo);
+}
+
 /**
  * Retreive the number of snipers on an given team
  *
