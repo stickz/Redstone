@@ -45,6 +45,10 @@ public Plugin:myinfo =
 
 ConVar UseClassRefresh;
 
+#define PROP_REFRESH_COUNT 4
+new DesiredClass[2][PROP_REFRESH_COUNT];
+new bool:ClassReset[2] = { false , ...};
+
 public OnPluginStart()
 {
 	HookEvent("player_changeclass", Event_ChangeClass, EventHookMode_Pre);
@@ -67,12 +71,11 @@ public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroa
 {
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
-	if (UseClassRefresh.BoolValue && NDC_IsCommander(client))
-	{
-		if (!IsPlayerAlive(client))
-			ResetGizmos(client);
-		else
+	if (UseClassRefresh.BoolValue && NDC_IsCommander(client)) {
+		if (!ClassReset[GetClientTeam(client) - 2))
 			ResetClass(client);
+		else 
+			SetWantedClass(client);
 	}
 	
 	return Plugin_Continue;
@@ -105,18 +108,31 @@ ResetGizmos(client)
 	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", NO_GIZMO);
 }
 
+RefreshClass(client)
+{
+	new tI = GetClientTeam(client) - 2;
+	for (new s = 0; s < PROP_REFRESH_COUNT; s++) {
+		SetEntProp(client, Prop_Send, DesiredClass[tI][s], 0);
+	}
+	
+	ResetGizmos(client);
+}
+
 ResetClass(client) 
 {
 	SetEntProp(client, Prop_Send, "m_iPlayerClass", MAIN_CLASS_ASSAULT);
     	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", ASSAULT_CLASS_INFANTRY);
 	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", MAIN_CLASS_ASSAULT);
 	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", ASSAULT_CLASS_INFANTRY);
-	ResetGizmos(client);
 	
-	PrintToChatAll("debug: client class reset");
+	ResetGizmos(client);
+	SetWantedClass(client);
+	ClassReset[GetClientTeam(client) - 2] = true;
+	
+	PrintToChat(client, "/x05[xG] Please trigger a change class again.");
 }
 
-/*#define PROP_REFRESH_COUNT 4
+#define PROP_REFRESH_COUNT 4
 new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
 	"m_iPlayerClass",
 	"m_iPlayerSubclass",
@@ -124,22 +140,12 @@ new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
 	"m_iDesiredPlayerSubclass"
 };
 
-CheckRefreshClass(client) 
+SetWantedClass(client) 
 {
-	new WantedClass[PROP_REFRESH_COUNT];
+	new tI = GetClientTeam(client) - 2;
 	for (new g = 0; g < PROP_REFRESH_COUNT; g++) {
-		WantedClass[g] = GetEntProp(client, Prop_Send, PropRefreshName[g], 0);
+		DesiredClass[tI][g] = GetEntProp(client, Prop_Send, PropRefreshName[g], 0);
 	}
-		
-	ResetGizmos(client);
 	
-	for (new s = 0; s < PROP_REFRESH_COUNT; s++) {
-		SetEntProp(client, Prop_Send, PropRefreshName[s], 0);
-	}
-		
-	for (new r = 0; r < PROP_REFRESH_COUNT; r++) {
-		SetEntProp(client, Prop_Send, PropRefreshName[r], WantedClass[r]);
-	}
-
-	PrintToChatAll("debug: client class refreshed");
-}*/
+	PrintToChatAll("debug: wanted class set");
+}
