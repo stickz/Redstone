@@ -60,7 +60,16 @@ public Action:Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroa
 
 public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
 {
-	CheckRefreshClass(GetClientOfUserId(GetEventInt(event, "userid"))); // CheckRefreshClass(client)	
+	new client = GetClientOfUserId(GetEventInt(event, "userid"));
+	
+	if (NDC_IsCommander(client))
+	{
+		ResetGizmos(client);
+		
+		if (UseClassRefresh.BoolValue && IsClientInGame(client) && IsPlayerAlive(client))
+			return Plugin_Handled;
+	}
+	
 	return Plugin_Continue;
 }
 
@@ -82,8 +91,7 @@ CheckGizmoReset(client)
 {
 	if (NDC_IsCommander(client))
 	{
-		SetEntProp(client, Prop_Send, "m_iActiveGizmo", NO_GIZMO);
-		SetEntProp(client, Prop_Send, "m_iDesiredGizmo", NO_GIZMO);
+		ResetGizmos(client);
 		
 		/*new propValues[2];		
 		propValues[0] = GetEntProp(client, Prop_Send, "m_iActiveGizmo", 0);
@@ -92,7 +100,13 @@ CheckGizmoReset(client)
 	}
 }
 
-#define PROP_REFRESH_COUNT 4
+ResetGizmos(client)
+{
+	SetEntProp(client, Prop_Send, "m_iActiveGizmo", NO_GIZMO);
+	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", NO_GIZMO);
+}
+
+/*#define PROP_REFRESH_COUNT 4
 new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
 	"m_iPlayerClass",
 	"m_iPlayerSubclass",
@@ -104,24 +118,19 @@ CheckRefreshClass(client)
 {
 	if (UseClassRefresh.BoolValue && NDC_IsCommander(client))
 	{
-		/* Store the wanted classes */
 		new WantedClass[PROP_REFRESH_COUNT];
 		for (new g = 0; g < PROP_REFRESH_COUNT; g++) {
 			WantedClass[g] = GetEntProp(client, Prop_Send, PropRefreshName[g], 0);
 		}
 		
-		/* Set the gizmo type to none */
-		SetEntProp(client, Prop_Send, "m_iActiveGizmo", NO_GIZMO);
-		SetEntProp(client, Prop_Send, "m_iDesiredGizmo", NO_GIZMO);
+		ResetGizmos();
 		
-		/* Reset the clients class to fire the class change event */
 		for (new s = 0; s < PROP_REFRESH_COUNT; s++) {
 			SetEntProp(client, Prop_Send, PropRefreshName[s], 0);
 		}
 		
-		/* Restore the class that the client wants */
 		for (new r = 0; r < PROP_REFRESH_COUNT; r++) {
 			SetEntProp(client, Prop_Send, PropRefreshName[r], WantedClass[r]);
 		}
 	}
-}
+}*/
