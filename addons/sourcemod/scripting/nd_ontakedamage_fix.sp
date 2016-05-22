@@ -46,7 +46,6 @@ ConVar UseSquadBlock;
 public OnPluginStart()
 {
 	HookEvent("player_changeclass", Event_ChangeClass, EventHookMode_Pre);
-	HookEvent("player_spawn", Event_ChangeClass, EventHookMode_Pre);
 	
 	AddCommandListener(CommandListener:CMD_JoinSquad, "joinsquad");
 	AddUpdaterLibrary(); //for updater support
@@ -61,25 +60,22 @@ public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroa
 	
 	if (UseClassReset.BoolValue && NDC_IsCommander(client))
 	{
-		new iClass = GetEntProp(client, Prop_Send, "m_iPlayerClass");
-		new iSubClass = GetEntProp(client, Prop_Send, "m_iPlayerSubclass");
+		new iClass = GetEventInt(event, "class");
+    		new iSubClass = GetEventInt(event, "subclass");
 		
-		new dClass = GetEntProp(client, Prop_Send, "m_iDesiredPlayerClass");
-		new dSubClass = GetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass");
-		
-		if (IsExoSeigeKit(iClass, iSubClass) || IsExoSeigeKit(dClass, dSubClass)) 
+		if (IsExoSeigeKit(iClass, iSubClass)) 
 		{
 			ResetClass(client, MAIN_CLASS_EXO, EXO_CLASS_SUPRESSION, 0);
 			return Plugin_Continue;	
 		}
 
-		else if (IsSupportBBQ(iClass, iSubClass) || IsSupportBBQ(dClass, dSubClass))
+		else if (IsSupportBBQ(iClass, iSubClass))
 		{
 			ResetClass(client, MAIN_CLASS_SUPPORT, SUPPORT_CLASS_ENGINEER, 0);
 			return Plugin_Continue;
 		}
 			
-		else if (IsStealthSab(iClass, iSubClass) || IsStealthSab(dClass, dSubClass))
+		else if (IsStealthSab(iClass, iSubClass))
 		{
 			ResetClass(client, MAIN_CLASS_STEALTH, STEALTH_CLASS_ASSASSIN, 0);
 			return Plugin_Continue;
