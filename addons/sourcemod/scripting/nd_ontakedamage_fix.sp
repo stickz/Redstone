@@ -114,8 +114,9 @@ RefreshClass(client)
 	for (new s = 0; s < PROP_REFRESH_COUNT; s++) {
 		SetEntProp(client, Prop_Send, DesiredClass[tI][s], 0);
 	}
-	
+
 	ResetGizmos(client);
+	ClassReset[ti] = false;
 }
 
 ResetClass(client) 
