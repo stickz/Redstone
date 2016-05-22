@@ -55,7 +55,7 @@ public OnPluginStart()
 	UseSquadBlock = CreateConVar("sm_otdf_sblock", "0", "Use the squad block feature");
 }
 
-public Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
+public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
 {
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
