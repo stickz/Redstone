@@ -42,15 +42,15 @@ stock bool:IsStealthClass(class)
 }
 
 /* Orginally for the damage fix plugin */
-stock bool:IsExoSeigeKit(class, subClass))
+stock bool:IsExoSeigeKit(class, subClass)
 {
 	return class == MAIN_CLASS_EXO && subClass == EXO_CLASS_SEIGE_KIT;
 }
-stock bool:IsSupportBBQ(class, subClass))
+stock bool:IsSupportBBQ(class, subClass)
 {
 	return class == MAIN_CLASS_SUPPORT && subClass == SUPPORT_CLASS_BBQ;
 }
-stock bool:IsStealthSab(class, subClass))
+stock bool:IsStealthSab(class, subClass)
 {
 	return class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SABATEUR;
 }
