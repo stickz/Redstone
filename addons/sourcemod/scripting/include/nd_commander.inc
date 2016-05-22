@@ -40,3 +40,7 @@ stock bool:NDC_IsCommanderOnTeam(client, team)
 		
 	return GetCommanderTeam(client) == team;
 }
+
+#if !defined REQUIRE_PLUGIN		
+MarkNativeAsOptional("GetCommanderTeam");
+#endif
