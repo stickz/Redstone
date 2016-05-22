@@ -46,6 +46,13 @@ public Plugin:myinfo =
 ConVar UseClassRefresh;
 
 #define PROP_REFRESH_COUNT 4
+new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
+	"m_iPlayerClass",
+	"m_iPlayerSubclass",
+	"m_iDesiredPlayerClass",
+	"m_iDesiredPlayerSubclass"
+};
+
 new DesiredClass[2][PROP_REFRESH_COUNT];
 new bool:ClassReset[2] = { false , ...};
 
@@ -116,7 +123,7 @@ RefreshClass(client)
 	}
 
 	ResetGizmos(client);
-	ClassReset[ti] = false;
+	ClassReset[tI] = false;
 }
 
 ResetClass(client) 
@@ -132,14 +139,6 @@ ResetClass(client)
 	
 	PrintToChat(client, "/x05[xG] Please trigger a change class again.");
 }
-
-#define PROP_REFRESH_COUNT 4
-new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
-	"m_iPlayerClass",
-	"m_iPlayerSubclass",
-	"m_iDesiredPlayerClass",
-	"m_iDesiredPlayerSubclass"
-};
 
 SetWantedClass(client) 
 {
