@@ -65,7 +65,7 @@ public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroa
 	if (UseClassRefresh.BoolValue && NDC_IsCommander(client))
 	{
 		if (!IsPlayerAlive(client))
-			ResetGizmos();
+			ResetGizmos(client);
 		else
 		{
 			ResetClass(client);
