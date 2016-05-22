@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 
 #undef REQUIRE_PLUGIN
+#include <nd_breakdown>
 #include <nd_commander>
 #define REQUIRE_PLUGIN
 
