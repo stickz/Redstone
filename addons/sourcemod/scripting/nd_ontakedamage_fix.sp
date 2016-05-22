@@ -124,23 +124,20 @@ new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
 
 CheckRefreshClass(client) 
 {
-	if (UseClassRefresh.BoolValue && NDC_IsCommander(client))
-	{
-		new WantedClass[PROP_REFRESH_COUNT];
-		for (new g = 0; g < PROP_REFRESH_COUNT; g++) {
-			WantedClass[g] = GetEntProp(client, Prop_Send, PropRefreshName[g], 0);
-		}
-		
-		ResetGizmos(client);
-		
-		for (new s = 0; s < PROP_REFRESH_COUNT; s++) {
-			SetEntProp(client, Prop_Send, PropRefreshName[s], 0);
-		}
-		
-		for (new r = 0; r < PROP_REFRESH_COUNT; r++) {
-			SetEntProp(client, Prop_Send, PropRefreshName[r], WantedClass[r]);
-		}
-		
-		PrintToChatAll("debug: client class refreshed");
+	new WantedClass[PROP_REFRESH_COUNT];
+	for (new g = 0; g < PROP_REFRESH_COUNT; g++) {
+		WantedClass[g] = GetEntProp(client, Prop_Send, PropRefreshName[g], 0);
 	}
+		
+	ResetGizmos(client);
+	
+	for (new s = 0; s < PROP_REFRESH_COUNT; s++) {
+		SetEntProp(client, Prop_Send, PropRefreshName[s], 0);
+	}
+		
+	for (new r = 0; r < PROP_REFRESH_COUNT; r++) {
+		SetEntProp(client, Prop_Send, PropRefreshName[r], WantedClass[r]);
+	}
+
+	PrintToChatAll("debug: client class refreshed");
 }
