@@ -17,10 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <nd_breakdown>
-
-#undef REQUIRE_PLUGIN
 #include <nd_commander>
-#define REQUIRE_PLUGIN
 
 public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 {
