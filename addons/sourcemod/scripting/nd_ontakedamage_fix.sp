@@ -78,11 +78,15 @@ public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroa
 {
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
-	if (UseClassRefresh.BoolValue && NDC_IsCommander(client)) {
-		if (!ClassReset[GetClientTeam(client) - 2])
-			ResetClass(client);
-		else 
-			RefreshClass(client);
+	if (NDC_IsCommander(client)) {
+		ResetGizmos(client);
+		
+		if (UseClassRefresh.BoolValue) {
+			if (!ClassReset[GetClientTeam(client) - 2])
+				ResetClass(client);
+			else 
+				RefreshClass(client);
+		}
 	}
 	
 	return Plugin_Continue;
