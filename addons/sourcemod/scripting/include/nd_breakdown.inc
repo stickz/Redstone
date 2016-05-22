@@ -58,8 +58,8 @@ stock bool:IsStealthSab(class, subClass)
 stock ResetClass(client, class, subClass, gizmo = -1)
 {
 	SetEntProp(client, Prop_Send, "m_iPlayerClass", class);
-    	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", class);
-	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", subClass);
+    	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", subClass);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", class);
 	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", subClass);
 	
 	if (gizmo != -1)
