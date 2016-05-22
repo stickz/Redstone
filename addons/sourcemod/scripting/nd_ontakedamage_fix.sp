@@ -119,7 +119,7 @@ RefreshClass(client)
 {
 	new tI = GetClientTeam(client) - 2;
 	for (new s = 0; s < PROP_REFRESH_COUNT; s++) {
-		SetEntProp(client, Prop_Send, DesiredClass[tI][s], 0);
+		SetEntProp(client, Prop_Send, PropRefreshName[s], DesiredClass[tI][s]);
 	}
 
 	ResetGizmos(client);
