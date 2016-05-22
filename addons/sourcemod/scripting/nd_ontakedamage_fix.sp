@@ -16,7 +16,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <sdktools>
+
+#undef REQUIRE_PLUGIN
 #include <nd_commander>
+#define REQUIRE_PLUGIN
 
 //This is a comment to force a plugin rebuild
 //Version is auto-filled by the travis builder
