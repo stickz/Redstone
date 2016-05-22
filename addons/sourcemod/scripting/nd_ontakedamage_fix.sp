@@ -66,7 +66,7 @@ public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroa
 	{
 		ResetGizmos(client);
 		
-		if (UseClassRefresh.BoolValue && IsClientIngame(client) && IsPlayerAlive(client))
+		if (UseClassRefresh.BoolValue && IsClientInGame(client) && IsPlayerAlive(client))
 			return Plugin_Handled;
 	}
 	
@@ -91,7 +91,7 @@ CheckGizmoReset(client)
 {
 	if (NDC_IsCommander(client))
 	{
-		ResetGizmos();
+		ResetGizmos(client);
 		
 		/*new propValues[2];		
 		propValues[0] = GetEntProp(client, Prop_Send, "m_iActiveGizmo", 0);
@@ -100,7 +100,7 @@ CheckGizmoReset(client)
 	}
 }
 
-ResetGizmos()
+ResetGizmos(client)
 {
 	SetEntProp(client, Prop_Send, "m_iActiveGizmo", NO_GIZMO);
 	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", NO_GIZMO);
