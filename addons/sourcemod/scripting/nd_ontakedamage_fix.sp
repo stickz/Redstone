@@ -130,13 +130,14 @@ RefreshClass(client)
 
 ResetClass(client) 
 {
+	SetWantedClass(client);
+	
 	SetEntProp(client, Prop_Send, "m_iPlayerClass", MAIN_CLASS_ASSAULT);
     	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", ASSAULT_CLASS_INFANTRY);
 	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", MAIN_CLASS_ASSAULT);
 	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", ASSAULT_CLASS_INFANTRY);
 	
 	ResetGizmos(client);
-	SetWantedClass(client);
 	ClassReset[GetClientTeam(client) - 2] = true;
 	
 	PrintToChat(client, "\x05[xG] Please trigger a change class again.");
