@@ -124,6 +124,8 @@ RefreshClass(client)
 
 	ResetGizmos(client);
 	ClassReset[tI] = false;
+	
+	PrintToChat(client, "\x05[xG] Your desired class has been succesfully set.");
 }
 
 ResetClass(client) 
@@ -137,7 +139,7 @@ ResetClass(client)
 	SetWantedClass(client);
 	ClassReset[GetClientTeam(client) - 2] = true;
 	
-	PrintToChat(client, "/x05[xG] Please trigger a change class again.");
+	PrintToChat(client, "\x05[xG] Please trigger a change class again.");
 }
 
 SetWantedClass(client) 
@@ -146,6 +148,4 @@ SetWantedClass(client)
 	for (new g = 0; g < PROP_REFRESH_COUNT; g++) {
 		DesiredClass[tI][g] = GetEntProp(client, Prop_Send, PropRefreshName[g], 0);
 	}
-	
-	PrintToChatAll("debug: wanted class set");
 }
