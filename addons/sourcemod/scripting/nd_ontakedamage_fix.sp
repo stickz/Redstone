@@ -18,6 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <nd_commander>
 
+#define NO_GIZMO 0
+
 //Version is auto-filled by the travis builder
 public Plugin:myinfo =
 {
@@ -77,8 +79,8 @@ CheckGizmoReset(client)
 {
 	if (NDC_IsCommander(client))
 	{
-		SetEntProp(client, Prop_Send, "m_iActiveGizmo", 0);
-		SetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0);
+		SetEntProp(client, Prop_Send, "m_iActiveGizmo", NO_GIZMO);
+		SetEntProp(client, Prop_Send, "m_iDesiredGizmo", NO_GIZMO);
 		
 		/*new propValues[2];		
 		propValues[0] = GetEntProp(client, Prop_Send, "m_iActiveGizmo", 0);
@@ -89,6 +91,6 @@ CheckGizmoReset(client)
 
 bool:HasGizmo(client)
 {
-	return 	GetEntProp(client, Prop_Send, "m_iActiveGizmo", 0) != 0 || 
-			GetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0) != 0;
+	return 	GetEntProp(client, Prop_Send, "m_iActiveGizmo", 0) != NO_GIZMO || 
+		GetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0) != NO_GIZMO;
 }
