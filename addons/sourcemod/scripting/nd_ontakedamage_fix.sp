@@ -46,7 +46,14 @@ public Plugin:myinfo =
 ConVar UseClassRefresh;
 
 #define PROP_REFRESH_COUNT 4
-new DesiredClass[2][PROP_REFRESH_COUNT];
+new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
+	"m_iPlayerClass",
+	"m_iPlayerSubclass",
+	"m_iDesiredPlayerClass",
+	"m_iDesiredPlayerSubclass"
+};
+
+new String:DesiredClass[2][PROP_REFRESH_COUNT];
 new bool:ClassReset[2] = { false , ...};
 
 public OnPluginStart()
@@ -75,7 +82,7 @@ public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroa
 		if (!ClassReset[GetClientTeam(client) - 2])
 			ResetClass(client);
 		else 
-			SetWantedClass(client);
+			RefreshClass(client);
 	}
 	
 	return Plugin_Continue;
@@ -116,7 +123,9 @@ RefreshClass(client)
 	}
 
 	ResetGizmos(client);
-	ClassReset[ti] = false;
+	ClassReset[tI] = false;
+	
+	PrintToChat(client, "\x05[xG] Your desired class has been succesfully set.");
 }
 
 ResetClass(client) 
@@ -130,16 +139,8 @@ ResetClass(client)
 	SetWantedClass(client);
 	ClassReset[GetClientTeam(client) - 2] = true;
 	
-	PrintToChat(client, "/x05[xG] Please trigger a change class again.");
+	PrintToChat(client, "\x05[xG] Please trigger a change class again.");
 }
-
-#define PROP_REFRESH_COUNT 4
-new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
-	"m_iPlayerClass",
-	"m_iPlayerSubclass",
-	"m_iDesiredPlayerClass",
-	"m_iDesiredPlayerSubclass"
-};
 
 SetWantedClass(client) 
 {
@@ -147,6 +148,4 @@ SetWantedClass(client)
 	for (new g = 0; g < PROP_REFRESH_COUNT; g++) {
 		DesiredClass[tI][g] = GetEntProp(client, Prop_Send, PropRefreshName[g], 0);
 	}
-	
-	PrintToChatAll("debug: wanted class set");
 }
