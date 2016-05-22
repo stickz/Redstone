@@ -18,8 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <nd_commander>
 
-#define NO_GIZMO 0
-
 //Version is auto-filled by the travis builder
 public Plugin:myinfo =
 {
@@ -29,6 +27,8 @@ public Plugin:myinfo =
     	version 	= "dummy",
     	url     	= "https://github.com/stickz/Redstone/"
 }
+
+#define NO_GIZMO 0
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_ontakedamage_fix/nd_ontakedamage_fix.txt"
 #include "updater/standard.sp"
