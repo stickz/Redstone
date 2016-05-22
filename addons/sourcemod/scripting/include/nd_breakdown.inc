@@ -33,13 +33,37 @@
 /* Player class stock functions */
 stock bool:IsSniperClass(class, subClass) 
 {
-      return 	   (class == MAIN_CLASS_ASSAULT && subClass == ASSAULT_CLASS_SNIPER) 
+	return 	   (class == MAIN_CLASS_ASSAULT && subClass == ASSAULT_CLASS_SNIPER) 
 	        || (class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SNIPER)
 }
-
 stock bool:IsStealthClass(class)
 {
-      return class == MAIN_CLASS_STEALTH;
+	return class == MAIN_CLASS_STEALTH;
+}
+
+/* Orginally for the damage fix plugin */
+stock bool:IsExoSeigeKit(class, subClass)
+{
+	return class == MAIN_CLASS_EXO && subClass == EXO_CLASS_SEIGE_KIT;
+}
+stock bool:IsSupportBBQ(class, subClass)
+{
+	return class == MAIN_CLASS_SUPPORT && subClass == SUPPORT_CLASS_BBQ;
+}
+stock bool:IsStealthSab(class, subClass)
+{
+	return class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SABATEUR;
+}
+
+stock ResetClass(client, class, subClass, gizmo = -1)
+{
+	SetEntProp(client, Prop_Send, "m_iPlayerClass", class);
+    	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", class);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", subClass);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", subClass);
+	
+	if (gizmo != -1)
+		SetEntProp(client, Prop_Send, "m_iDesiredGizmo", gizmo);
 }
 
 /**

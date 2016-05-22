@@ -110,7 +110,7 @@ public Action:Event_SelectClass(Handle:event, const String:name[], bool:dontBroa
 	{
         	if (IsTooMuchSnipers(client)) 
 		{
-	            	ResetClass(client);
+	            	ResetPlayerClass(client);
 	            	PrintToChat(client, "%s %t.", PREFIX, "Sniper Limit Reached");
 	            	return Plugin_Continue;
         	}
@@ -120,7 +120,7 @@ public Action:Event_SelectClass(Handle:event, const String:name[], bool:dontBroa
 	{
 		if (IsTooMuchStealth(client)) 
 		{
-	            	ResetClass(client);
+	            	ResetPlayerClass(client);
 	            	PrintToChat(client, "%s %t.", PREFIX, "Stealth Limit Reached");
 	            	return Plugin_Continue;
         	}
@@ -130,7 +130,7 @@ public Action:Event_SelectClass(Handle:event, const String:name[], bool:dontBroa
 	{
 		if (IsTooMuchAntiStructure(client)) 
 		{
-	            	ResetClass(client);
+	            	ResetPlayerClass(client);
 	            	PrintToChat(client, "%s %t.", PREFIX, "AntiStructure Limit Reached");
 	            	return Plugin_Continue;
         	}
@@ -328,13 +328,9 @@ GetMinStealthValue(team)
 	return ValidTeamCount(team) < 7 ? MIN_STEALTH_LOW_VALUE : MIN_STEALTH_HIGH_VALUE; 
 }
 
-ResetClass(client) 
+ResetPlayerClass(client) 
 {
-	SetEntProp(client, Prop_Send, "m_iPlayerClass", MAIN_CLASS_ASSAULT);
-    	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", ASSAULT_CLASS_INFANTRY);
-	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", MAIN_CLASS_ASSAULT);
-	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", ASSAULT_CLASS_INFANTRY);
-	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0);
+	ResetClass(client, MAIN_CLASS_ASSAULT, ASSAULT_CLASS_INFANTRY, 0);
 }
 
 SetUnitLimit(team, type, value)
