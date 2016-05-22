@@ -37,31 +37,30 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_ontakedamage_fix/nd_ontakedamage_fix.txt"
 #include "updater/standard.sp"
 
+ConVar UseClassRefresh;
+
 public OnPluginStart()
 {
-	HookEvent("player_changeclass", Event_BlockGizmo, EventHookMode_Pre);
-	HookEvent("player_spawn", Event_BlockGizmo, EventHookMode_Pre);
-	HookEvent("structure_damage_sparse", Event_StructDamageSparse, EventHookMode_Pre);
-	
+	HookEvent("player_changeclass", Event_ChangeClass, EventHookMode_Pre);
+	HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Pre);
+
 	AddCommandListener(CommandListener:CMD_JoinClass, "joinclass");	
 	AddCommandListener(CommandListener:CMD_JoinSquad, "joinsquad");
 	
 	AddUpdaterLibrary(); //for updater support
+	
+	UseClassRefresh = CreateConVar("sm_otdf_refresh", "0", "Use class refresh feature");
 }
 
-public Action:Event_BlockGizmo(Handle:event, const String:name[], bool:dontBroadcast) 
+public Action:Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) 
 {
-	CheckGizmoReset(GetClientOfUserId(GetEventInt(event, "userid")));	
+	CheckGizmoReset(GetClientOfUserId(GetEventInt(event, "userid"))); // CheckGizmoReset(client)
 	return Plugin_Continue;
 }
 
-/* Note: This hook will be removed soon if deemed redundant by further testing */
-public Action:Event_StructDamageSparse(Handle:event, const String:name[], bool:dontBroadcast) 
+public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"));	
-	if (NDC_IsCommander(client) && HasGizmo(client))
-		CheckGizmoReset(client);
-		
+	CheckRefreshClass(GetClientOfUserId(GetEventInt(event, "userid"))); // CheckRefreshClass(client)	
 	return Plugin_Continue;
 }
 
@@ -93,8 +92,36 @@ CheckGizmoReset(client)
 	}
 }
 
-bool:HasGizmo(client)
+#define PROP_REFRESH_COUNT 4
+new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
+	"m_iPlayerClass",
+	"m_iPlayerSubclass",
+	"m_iDesiredPlayerClass",
+	"m_iDesiredPlayerSubclass"
+};
+
+CheckRefreshClass(client) 
 {
-	return 	GetEntProp(client, Prop_Send, "m_iActiveGizmo", 0) != NO_GIZMO || 
-		GetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0) != NO_GIZMO;
+	if (UseClassRefresh.BoolValue && NDC_IsCommander(client))
+	{
+		/* Store the wanted classes */
+		new WantedClass[PROP_REFRESH_COUNT];
+		for (new g = 0; g < PROP_REFRESH_COUNT; g++) {
+			WantedClass[g] = GetEntProp(client, Prop_Send, PropRefreshName[g], 0);
+		}
+		
+		/* Set the gizmo type to none */
+		SetEntProp(client, Prop_Send, "m_iActiveGizmo", NO_GIZMO);
+		SetEntProp(client, Prop_Send, "m_iDesiredGizmo", NO_GIZMO);
+		
+		/* Reset the clients class to fire the class change event */
+		for (new s = 0; s < PROP_REFRESH_COUNT; s++) {
+			SetEntProp(client, Prop_Send, PropRefreshName[s], 0);
+		}
+		
+		/* Restore the class that the client wants */
+		for (new r = 0; r < PROP_REFRESH_COUNT; r++) {
+			SetEntProp(client, Prop_Send, PropRefreshName[r], WantedClass[r]);
+		}
+	}
 }
