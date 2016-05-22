@@ -37,6 +37,8 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_ontakedamage_fix/nd_ontakedamage_fix.txt"
 #include "updater/standard.sp"
 
+ConVar UseClassRefresh;
+
 public OnPluginStart()
 {
 	HookEvent("player_changeclass", Event_ChangeClass, EventHookMode_Pre);
@@ -46,6 +48,8 @@ public OnPluginStart()
 	AddCommandListener(CommandListener:CMD_JoinSquad, "joinsquad");
 	
 	AddUpdaterLibrary(); //for updater support
+	
+	UseClassRefresh = CreateConVar("sm_otdf_refresh", "0", "Use class refresh feature");
 }
 
 public Action:Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) 
@@ -98,7 +102,7 @@ new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
 
 CheckRefreshClass(client) 
 {
-	if (NDC_IsCommander(client))
+	if (UseClassRefresh.BoolValue && NDC_IsCommander(client))
 	{
 		/* Store the wanted classes */
 		new WantedClass[PROP_REFRESH_COUNT];
