@@ -16,10 +16,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <sdktools>
-
-#undef REQUIRE_PLUGIN
+#include <nd_breakdown>
 #include <nd_commander>
-#define REQUIRE_PLUGIN
+
+public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
+{
+	MarkNativeAsOptional("GetCommanderTeam");
+	MarkNativeAsOptional("GetSniperCount");
+	MarkNativeAsOptional("GetStealthCount");
+	MarkNativeAsOptional("GetAntiStructureCount");
+}
 
 //This is a comment to force a plugin rebuild
 //Version is auto-filled by the travis builder
@@ -62,12 +68,15 @@ public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroa
 {
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
-	if (NDC_IsCommander(client))
+	if (UseClassRefresh.BoolValue && NDC_IsCommander(client))
 	{
-		ResetGizmos(client);
-		
-		if (UseClassRefresh.BoolValue && IsClientInGame(client) && IsPlayerAlive(client))
-			return Plugin_Handled;
+		if (!IsPlayerAlive(client))
+			ResetGizmos(client);
+		else
+		{
+			ResetClass(client);
+			PrintToChat(client, "Class Reset");
+		}
 	}
 	
 	return Plugin_Continue;
@@ -104,6 +113,15 @@ ResetGizmos(client)
 {
 	SetEntProp(client, Prop_Send, "m_iActiveGizmo", NO_GIZMO);
 	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", NO_GIZMO);
+}
+
+ResetClass(client) 
+{
+	SetEntProp(client, Prop_Send, "m_iPlayerClass", MAIN_CLASS_ASSAULT);
+    	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", ASSAULT_CLASS_INFANTRY);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", MAIN_CLASS_ASSAULT);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", ASSAULT_CLASS_INFANTRY);
+	ResetGizmos(client);
 }
 
 /*#define PROP_REFRESH_COUNT 4
