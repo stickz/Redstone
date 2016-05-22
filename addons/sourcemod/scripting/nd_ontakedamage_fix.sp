@@ -16,15 +16,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <sdktools>
-//#include <nd_breakdown>
+#include <nd_breakdown>
 #include <nd_commander>
 
 public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 {
 	MarkNativeAsOptional("GetCommanderTeam");
-	/*MarkNativeAsOptional("GetSniperCount");
+	MarkNativeAsOptional("GetSniperCount");
 	MarkNativeAsOptional("GetStealthCount");
-	MarkNativeAsOptional("GetAntiStructureCount");*/
+	MarkNativeAsOptional("GetAntiStructureCount");
 }
 
 //This is a comment to force a plugin rebuild
@@ -72,7 +72,7 @@ public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroa
 		if (!IsPlayerAlive(client))
 			ResetGizmos(client);
 		else
-			CheckRefreshClass(client);
+			ResetClass(client);
 	}
 	
 	return Plugin_Continue;
@@ -105,16 +105,18 @@ ResetGizmos(client)
 	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", NO_GIZMO);
 }
 
-/*ResetClass(client) 
+ResetClass(client) 
 {
 	SetEntProp(client, Prop_Send, "m_iPlayerClass", MAIN_CLASS_ASSAULT);
     	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", ASSAULT_CLASS_INFANTRY);
 	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", MAIN_CLASS_ASSAULT);
 	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", ASSAULT_CLASS_INFANTRY);
 	ResetGizmos(client);
-}*/
+	
+	PrintToChatAll("debug: client class reset");
+}
 
-#define PROP_REFRESH_COUNT 4
+/*#define PROP_REFRESH_COUNT 4
 new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
 	"m_iPlayerClass",
 	"m_iPlayerSubclass",
@@ -140,4 +142,4 @@ CheckRefreshClass(client)
 	}
 
 	PrintToChatAll("debug: client class refreshed");
-}
+}*/
