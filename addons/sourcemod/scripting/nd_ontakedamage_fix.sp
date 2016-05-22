@@ -57,7 +57,33 @@ public OnPluginStart()
 
 public Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
 {
-	CheckCommanderClass(GetClientOfUserId(GetEventInt(event, "userid"))); //CheckCommanderClass(client)
+	if (UseClassReset.BoolValue && NDC_IsCommander(client))
+	{
+		new iClass = GetEntProp(client, Prop_Send, "m_iPlayerClass");
+		new iSubClass = GetEntProp(client, Prop_Send, "m_iPlayerSubclass");
+		
+		new dClass = GetEntProp(client, Prop_Send, "m_iDesiredPlayerClass");
+		new dSubClass = GetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass");
+		
+		if (IsExoSeigeKit(iClass, iSubClass) || IsExoSeigeKit(dClass, dSubClass)) 
+		{
+			ResetClass(client, MAIN_CLASS_EXO, EXO_CLASS_SUPRESSION, 0);
+			return Plugin_Continue;	
+		}
+
+		else if (IsSupportBBQ(iClass, iSubClass) || IsSupportBBQ(dClass, dSubClass))
+		{
+			ResetClass(client, MAIN_CLASS_SUPPORT, SUPPORT_CLASS_ENGINEER, 0);
+			return Plugin_Continue;
+		}
+			
+		else if (IsStealthSab(iClass, iSubClass) || IsStealthSab(dClass, dSubClass))
+		{
+			ResetClass(client, MAIN_CLASS_STEALTH, STEALTH_CLASS_ASSASSIN, 0);
+			return Plugin_Continue;
+		}
+	}
+	
 	return Plugin_Continue;
 }
 
@@ -67,22 +93,4 @@ public Action:CMD_JoinSquad(client, args)
 		return Plugin_Handled;
 		
 	return Plugin_Continue; 
-}
-
-CheckCommanderClass(client)
-{
-	if (UseClassReset.BoolValue && NDC_IsCommander(client))
-	{
-		new iClass = GetEntProp(client, Prop_Send, "m_iPlayerClass");
-		new iSubClass = GetEntProp(client, Prop_Send, "m_iPlayerSubclass");
-		
-		if (IsExoSeigeKit(iClass, iSubClass)) 
-			ResetClass(client, MAIN_CLASS_EXO, EXO_CLASS_SUPRESSION, 0);
-
-		else if (IsSupportBBQ(iClass, iSubClass))
-			ResetClass(client, MAIN_CLASS_SUPPORT, SUPPORT_CLASS_ENGINEER, 0);
-			
-		else if (IsStealthSab(iClass, iSubClass))
-			ResetClass(client, MAIN_CLASS_STEALTH, STEALTH_CLASS_ASSASSIN, 0);
-	}
 }
