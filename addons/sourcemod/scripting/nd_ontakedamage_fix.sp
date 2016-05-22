@@ -41,15 +41,18 @@ public Plugin:myinfo =
 #include "updater/standard.sp"
 
 ConVar UseClassReset;
+ConVar UseSquadBlock;
 
 public OnPluginStart()
 {
 	HookEvent("player_changeclass", Event_ChangeClass, EventHookMode_Pre);
 	HookEvent("player_spawn", Event_ChangeClass, EventHookMode_Pre);
-	AddCommandListener(CommandListener:CMD_JoinSquad, "joinsquad");
 	
+	AddCommandListener(CommandListener:CMD_JoinSquad, "joinsquad");
 	AddUpdaterLibrary(); //for updater support
+	
 	UseClassReset = CreateConVar("sm_otdf_reset", "0", "Use class reset feature");
+	UseSquadBlock = CreateConVar("sm_otdf_sblock", "0", "Use the squad block feature");
 }
 
 public Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
@@ -60,7 +63,7 @@ public Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast)
 
 public Action:CMD_JoinSquad(client, args)
 {
-	if (NDC_IsCommander(client))
+	if (UseSquadBlock.BoolValue && NDC_IsCommander(client))
 		return Plugin_Handled;
 		
 	return Plugin_Continue; 
