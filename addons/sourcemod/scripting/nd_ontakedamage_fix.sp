@@ -118,21 +118,17 @@ CheckRefreshClass(client)
 {
 	if (UseClassRefresh.BoolValue && NDC_IsCommander(client))
 	{
-		/* Store the wanted classes */
 		new WantedClass[PROP_REFRESH_COUNT];
 		for (new g = 0; g < PROP_REFRESH_COUNT; g++) {
 			WantedClass[g] = GetEntProp(client, Prop_Send, PropRefreshName[g], 0);
 		}
 		
-		/* Set the gizmo type to none */
 		ResetGizmos();
 		
-		/* Reset the clients class to fire the class change event */
 		for (new s = 0; s < PROP_REFRESH_COUNT; s++) {
 			SetEntProp(client, Prop_Send, PropRefreshName[s], 0);
 		}
 		
-		/* Restore the class that the client wants */
 		for (new r = 0; r < PROP_REFRESH_COUNT; r++) {
 			SetEntProp(client, Prop_Send, PropRefreshName[r], WantedClass[r]);
 		}
