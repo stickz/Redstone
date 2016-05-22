@@ -40,21 +40,3 @@ stock bool:NDC_IsCommanderOnTeam(client, team)
 		
 	return GetCommanderTeam(client) == team;
 }
-
-public SharedPlugin:__pl_commander =
-{
-	name = "nd_commander",
-	file = "nd_commander_restrictions.smx",
-	#if defined REQUIRE_PLUGIN
-		required = 1
-	#else
-		required = 0
-	#endif
-};
-
-#if !defined REQUIRE_PLUGIN
-public __pl_commander_SetNTVOptional()
-{
-	MarkNativeAsOptional("GetCommanderTeam");
-}
-#endif
