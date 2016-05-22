@@ -51,7 +51,7 @@ public OnPluginStart()
 	AddCommandListener(CommandListener:CMD_JoinSquad, "joinsquad");
 	AddUpdaterLibrary(); //for updater support
 	
-	UseClassReset = CreateConVar("sm_otdf_reset", "0", "Use class reset feature");
+	UseClassReset = CreateConVar("sm_otdf_creset", "0", "Use class reset feature");
 	UseSquadBlock = CreateConVar("sm_otdf_sblock", "0", "Use the squad block feature");
 }
 
