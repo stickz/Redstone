@@ -46,7 +46,6 @@ ConVar UseSquadBlock;
 public OnPluginStart()
 {
 	HookEvent("player_changeclass", Event_ChangeClass, EventHookMode_Pre);
-	HookEvent("player_spawn", Event_ChangeClass, EventHookMode_Pre);
 	
 	AddCommandListener(CommandListener:CMD_JoinSquad, "joinsquad");
 	AddUpdaterLibrary(); //for updater support
@@ -55,9 +54,34 @@ public OnPluginStart()
 	UseSquadBlock = CreateConVar("sm_otdf_sblock", "0", "Use the squad block feature");
 }
 
-public Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
+public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
 {
-	CheckCommanderClass(GetClientOfUserId(GetEventInt(event, "userid"))); //CheckCommanderClass(client)
+	new client = GetClientOfUserId(GetEventInt(event, "userid"));
+	
+	if (UseClassReset.BoolValue && NDC_IsCommander(client))
+	{
+		new iClass = GetEventInt(event, "class");
+    		new iSubClass = GetEventInt(event, "subclass");
+		
+		if (IsExoSeigeKit(iClass, iSubClass)) 
+		{
+			ResetClass(client, MAIN_CLASS_EXO, EXO_CLASS_SUPRESSION, 0);
+			return Plugin_Continue;	
+		}
+
+		else if (IsSupportBBQ(iClass, iSubClass))
+		{
+			ResetClass(client, MAIN_CLASS_SUPPORT, SUPPORT_CLASS_ENGINEER, 0);
+			return Plugin_Continue;
+		}
+			
+		else if (IsStealthSab(iClass, iSubClass))
+		{
+			ResetClass(client, MAIN_CLASS_STEALTH, STEALTH_CLASS_ASSASSIN, 0);
+			return Plugin_Continue;
+		}
+	}
+	
 	return Plugin_Continue;
 }
 
@@ -67,22 +91,4 @@ public Action:CMD_JoinSquad(client, args)
 		return Plugin_Handled;
 		
 	return Plugin_Continue; 
-}
-
-CheckCommanderClass(client)
-{
-	if (UseClassReset.BoolValue && NDC_IsCommander(client))
-	{
-		new iClass = GetEntProp(client, Prop_Send, "m_iPlayerClass");
-		new iSubClass = GetEntProp(client, Prop_Send, "m_iPlayerSubclass");
-		
-		if (IsExoSeigeKit(iClass, iSubClass)) 
-			ResetClass(client, MAIN_CLASS_EXO, EXO_CLASS_SUPRESSION, 0);
-
-		else if (IsSupportBBQ(iClass, iSubClass))
-			ResetClass(client, MAIN_CLASS_SUPPORT, SUPPORT_CLASS_ENGINEER, 0);
-			
-		else if (IsStealthSab(iClass, iSubClass))
-			ResetClass(client, MAIN_CLASS_STEALTH, STEALTH_CLASS_ASSASSIN, 0);
-	}
 }
