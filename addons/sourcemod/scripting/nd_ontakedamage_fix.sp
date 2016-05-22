@@ -27,6 +27,7 @@ public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 	MarkNativeAsOptional("GetAntiStructureCount");
 }
 
+//This is a comment to trigger a plugin rebuild
 //Version is auto-filled by the travis builder
 public Plugin:myinfo =
 {
