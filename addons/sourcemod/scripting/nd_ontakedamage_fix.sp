@@ -56,7 +56,7 @@ public Action:Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroa
 
 public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
 {
-	CheckRefreshClass(GetClientOfUserId(GetEventInt(event, "userid"))); // CheckGizmoReset(client)	
+	CheckRefreshClass(GetClientOfUserId(GetEventInt(event, "userid"))); // CheckRefreshClass(client)	
 	return Plugin_Continue;
 }
 
