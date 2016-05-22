@@ -77,12 +77,12 @@ CheckCommanderClass(client)
 		new iSubClass = GetEntProp(client, Prop_Send, "m_iPlayerSubclass");
 		
 		if (IsExoSeigeKit(iClass, iSubClass)) 
-			ResetClass(client, MAIN_CLASS_EXO, EXO_CLASS_SUPRESSION);
+			ResetClass(client, MAIN_CLASS_EXO, EXO_CLASS_SUPRESSION, 0);
 
 		else if (IsSupportBBQ(iClass, iSubClass))
-			ResetClass(client, MAIN_CLASS_SUPPORT, SUPPORT_CLASS_ENGINEER);
+			ResetClass(client, MAIN_CLASS_SUPPORT, SUPPORT_CLASS_ENGINEER, 0);
 			
 		else if (IsStealthSab(iClass, iSubClass))
-			ResetClass(client, MAIN_CLASS_STEALTH, STEALTH_CLASS_ASSASSIN);
+			ResetClass(client, MAIN_CLASS_STEALTH, STEALTH_CLASS_ASSASSIN, 0);
 	}
 }
