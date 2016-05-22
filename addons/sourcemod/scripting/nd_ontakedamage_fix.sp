@@ -53,7 +53,7 @@ new const String:PropRefreshName[PROP_REFRESH_COUNT][] = {
 	"m_iDesiredPlayerSubclass"
 };
 
-new DesiredClass[2][PROP_REFRESH_COUNT];
+new String:DesiredClass[2][PROP_REFRESH_COUNT];
 new bool:ClassReset[2] = { false , ...};
 
 public OnPluginStart()
