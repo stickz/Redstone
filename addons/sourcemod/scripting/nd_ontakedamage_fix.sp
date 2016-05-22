@@ -57,6 +57,8 @@ public OnPluginStart()
 
 public Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
 {
+	new client = GetClientOfUserId(GetEventInt(event, "userid"));
+	
 	if (UseClassReset.BoolValue && NDC_IsCommander(client))
 	{
 		new iClass = GetEntProp(client, Prop_Send, "m_iPlayerClass");
