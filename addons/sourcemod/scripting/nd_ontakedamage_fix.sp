@@ -75,7 +75,7 @@ public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroa
 		if (!ClassReset[GetClientTeam(client) - 2])
 			ResetClass(client);
 		else 
-			SetWantedClass(client);
+			RefreshClass(client);
 	}
 	
 	return Plugin_Continue;
