@@ -71,3 +71,12 @@ native GetStealthCount(teamIDX);
  * @return        		The number of anti-structure based clients.
  */
 native GetAntiStructureCount(teamIDX);
+
+#if !defined REQUIRE_PLUGIN
+public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
+{
+	MarkNativeAsOptional("GetSniperCount");
+	MarkNativeAsOptional("GetStealthCount");
+	MarkNativeAsOptional("GetAntiStructureCount");
+}
+#endif
