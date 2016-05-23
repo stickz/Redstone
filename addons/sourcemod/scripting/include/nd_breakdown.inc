@@ -55,11 +55,13 @@ stock bool:IsStealthSab(class, subClass)
 	return class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SABATEUR;
 }
 
-stock ResetClass(client, class, subClass, gizmo = -1)
+stock ResetClass(client, mainClass, subClass, gizmo = -1)
 {
-	SetEntProp(client, Prop_Send, "m_iPlayerClass", class);
+	FakeClientCommand(client, "joinclass %d %d", mainClass, subClass);
+	
+	SetEntProp(client, Prop_Send, "m_iPlayerClass", mainClass);
     	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", subClass);
-	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", class);
+	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", mainClass);
 	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", subClass);
 	
 	if (gizmo != -1)

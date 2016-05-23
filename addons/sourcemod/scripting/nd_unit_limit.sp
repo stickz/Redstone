@@ -52,7 +52,6 @@ new Handle:eCommanders = INVALID_HANDLE,
 	UnitLimit[2][3],
 	bool:SetLimit[2][3];
 
-//This is a comment to trigger a plugin rebuild
 //Version is auto-filled by the travis builder
 public Plugin:myinfo = 
 {
