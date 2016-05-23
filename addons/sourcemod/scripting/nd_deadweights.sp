@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <nd_stocks>
 #include <nd_research>
+#include <nd_classes>
 
 #undef REQUIRE_PLUGIN
 #tryinclude <nd_balancer>
