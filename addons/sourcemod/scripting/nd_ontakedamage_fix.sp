@@ -27,7 +27,6 @@ public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 	MarkNativeAsOptional("GetAntiStructureCount");
 }
 
-//This is a comment to trigger a plugin rebuild
 //Version is auto-filled by the travis builder
 public Plugin:myinfo =
 {
@@ -67,19 +66,19 @@ public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroa
 		if (IsExoSeigeKit(iClass, iSubClass)) 
 		{
 			ResetClass(client, MAIN_CLASS_EXO, EXO_CLASS_SUPRESSION, 0);
-			return Plugin_Handled;	
+			return Plugin_Continue;
 		}
 
 		else if (IsSupportBBQ(iClass, iSubClass))
 		{
 			ResetClass(client, MAIN_CLASS_SUPPORT, SUPPORT_CLASS_ENGINEER, 0);
-			return Plugin_Handled;
+			return Plugin_Continue;
 		}
 			
 		else if (IsStealthSab(iClass, iSubClass))
 		{
 			ResetClass(client, MAIN_CLASS_STEALTH, STEALTH_CLASS_ASSASSIN, 0);
-			return Plugin_Handled;
+			return Plugin_Continue;
 		}
 	}
 	
