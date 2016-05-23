@@ -16,15 +16,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <sdktools>
-#include <nd_breakdown>
+#include <nd_classes>
 #include <nd_commander>
 
 public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 {
 	MarkNativeAsOptional("GetCommanderTeam");
-	MarkNativeAsOptional("GetSniperCount");
-	MarkNativeAsOptional("GetStealthCount");
-	MarkNativeAsOptional("GetAntiStructureCount");
 }
 
 //Version is auto-filled by the travis builder
