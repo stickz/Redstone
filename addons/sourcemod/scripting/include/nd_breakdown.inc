@@ -3,8 +3,6 @@
 #endif
 #define _nd_breakdown_included
 
-#include <nd_classes>
-
 /**
  * Retreive the number of snipers on an given team
  *
