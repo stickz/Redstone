@@ -2,76 +2,76 @@
 {
 	"Empire"
 	{
-		"es"		"Empire"
+		"es"		"Imperio"
 	}
 	
 	"Consortium"
 	{
-		"es"		"Consort"
+		"es"		"Consorte"
 	}
 	
 	"Only Commanders"
 	{
-		"es"		"This feature is only available for commanders"
+		"es"		"Esta característica solo está disponible para comandantes"
 	}
 	
 	"Commander Disabled"
 	{
-		"es"		"commander setting of sniper limits are disabled"	
+		"es"		"La configuración del límite de francotiradores del comandante está deshabilitado"	
 	}
 	
 	"Invalid Team"
 	{
-		"es"		"Invalid team (0 = Consort, 1 = Empire)"
+		"es"		"Equipo  (0 = Consorte, 1 = Imperio)"
 	}
 	
 	"Sniper Limit Reached"
 	{
-		"es"		"Sniper limit reached, resetting to Assault"
+		"es"		"Límite de francotiradores alcanzado, cambiando a Asalto"
 	}
 	
 	"Stealth Limit Reached"
 	{
-		"es"		"Stealth limit reached, resetting to Assault"
+		"es"		"Límite de Sigilo alcanzado, cambiando a Asalto"
 	}
 	
 	"AntiStructure Limit Reached"
 	{
-		"es"		"Anti-Structure limit reached, resetting to Assault"
+		"es"		"Límite de Anti-Estructuras alcanzado, cambiando a Asalto"
 	}
 	
 	"Proper Sniper Usage"
 	{
-		"es"		"Usage: !maxsnipers <limit>"
+		"es"		"Uso: !maxsnipers <límite>"
 	}
 	
 	"Proper Stealth Usage"
 	{
-		"es"		"Usage: !maxstealth <limit>"
+		"es"		"Uso: !maxstealth <límite>"
 	}
 	
 	"Proper Structure Usage"
 	{
-		"es"		"Usage: !MaxAntiStructure <percent>"
+		"es"		"Uso: !MaxAntiStructure <porcentaje>"
 	}
 	
 	"Set Sniper Limit"
 	{
-		"es"		"Sniper count limited to {1}"
+		"es"		"Límite de francotiradores establecido a {1}"
 	}
 	
 	"Set Stealth Limit"
 	{
-		"es"		"Stealth count limited to {1}"
+		"es"		"Límite de Sigilo establecido a {1}"
 	}
 	
 	"Set Structure Limit"
 	{
-		"es" 		"Anti-Structure limited to {1} percent"
+		"es" 		"Anti-Estructura limitado a {1} porciento"
 	}
 	
 	"Invalid Args"
 	{
-		"es"		"Invalid number of arguments: <team> <amount>"
+		"es"		"Cantidad de argumentos inválida: <equipo> <cantidad>"
 	}
 }
