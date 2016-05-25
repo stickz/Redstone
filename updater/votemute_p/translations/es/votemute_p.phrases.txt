@@ -2,37 +2,36 @@
 {
 	"Already Muted"
 	{
-		"en"		"This client is already muted"
+		"es"		"This client is already muted"
 	}
 	
 	"Already Gagged"
 	{
-		"en"		"This client is already gagged"
+		"es"		"This client is already gagged"
 	}
 	
 	"Already Silenced"
 	{
-		"en"		"This client is already silenced"
+		"es"		"This client is already silenced"
 	}
 	
 	"Vote in Progress"
 	{
-		"en"		"Please wait for the current server-wide vote to finish"
+		"es"		"Please wait for the current server-wide vote to finish"
 	}
 	
 	"Moderater Only"
 	{
-		"en"		"This command is set to moderators only"
+		"es"		"This command is set to moderators only"
 	}
 	
 	"Silence Use"
 	{
-		"en"		"You cannot use this feature while silenced"
+		"es		"You cannot use this feature while silenced"
 	}
 	
 	"Wait Seconds"
 	{
-		"#format"	"{1:i}"
-		"en"		"Please wait {1} seconds before starting a vote"
+		"es"		"Please wait {1} seconds before starting a vote"
 	}
 }
