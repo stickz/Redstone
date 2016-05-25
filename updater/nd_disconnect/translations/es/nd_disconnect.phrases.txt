@@ -2,12 +2,12 @@
 {
 	"Cookie Lost Connect"
 	{
-		"es"		"D/C Message"
+		"es"		"Mensajes de desconexión"
 	}
 	
 	"Lost Connection"
 	{
 		//{1} = Player Name
-		"es"		"{1} lost connection!"
+		"es"		"{1} perdió la conexión!"
 	}
 }
