@@ -1,80 +1,77 @@
-﻿"Phrases"
+"Phrases"
 {
 	"Empire"
 	{
-		"en"		"Empire"
+		"es"		"Empire"
 	}
 	
 	"Consortium"
 	{
-		"en"		"Consort"
+		"es"		"Consort"
 	}
 	
 	"Only Commanders"
 	{
-		"en"		"This feature is only available for commanders"
+		"es"		"This feature is only available for commanders"
 	}
 	
 	"Commander Disabled"
 	{
-		"en"		"commander setting of sniper limits are disabled"	
+		"es"		"commander setting of sniper limits are disabled"	
 	}
 	
 	"Invalid Team"
 	{
-		"en"		"Invalid team (0 = Consort, 1 = Empire)"
+		"es"		"Invalid team (0 = Consort, 1 = Empire)"
 	}
 	
 	"Sniper Limit Reached"
 	{
-		"en"		"Sniper limit reached, resetting to Assault"
+		"es"		"Sniper limit reached, resetting to Assault"
 	}
 	
 	"Stealth Limit Reached"
 	{
-		"en"		"Stealth limit reached, resetting to Assault"
+		"es"		"Stealth limit reached, resetting to Assault"
 	}
 	
 	"AntiStructure Limit Reached"
 	{
-		"en"		"Anti-Structure limit reached, resetting to Assault"
+		"es"		"Anti-Structure limit reached, resetting to Assault"
 	}
 	
 	"Proper Sniper Usage"
 	{
-		"en"		"Usage: !maxsnipers <limit>"
+		"es"		"Usage: !maxsnipers <limit>"
 	}
 	
 	"Proper Stealth Usage"
 	{
-		"en"		"Usage: !maxstealth <limit>"
+		"es"		"Usage: !maxstealth <limit>"
 	}
 	
 	"Proper Structure Usage"
 	{
-		"en"		"Usage: !MaxAntiStructure <percent>"
+		"es"		"Usage: !MaxAntiStructure <percent>"
 	}
 	
 	"Set Sniper Limit"
 	{
-		"#format"	"{1:s}"
-		"en"		"Sniper count limited to {1}"
+		"es"		"Sniper count limited to {1}"
 	}
 	
 	"Set Stealth Limit"
 	{
-		"#format"	"{1:s}"
-		"en"		"Stealth count limited to {1}"
+		"es"		"Stealth count limited to {1}"
 	}
 	
 	"Set Structure Limit"
 	{
-		"#format"	"{1:i}"
-		"en" 		"Anti-Structure limited to {1} percent"
+		"es" 		"Anti-Structure limited to {1} percent"
 	}
 	
 	"Invalid Args"
 	{
-		"en"		"Invalid number of arguments: <team> <amount>"
+		"es"		"Invalid number of arguments: <team> <amount>"
 	}
 }
