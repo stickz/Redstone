@@ -1,7 +1,7 @@
-﻿"Phrases"
+"Phrases"
 {
 	"Ammo Supply"
 	{
-		"en"		"You cannot place an ammopack beside a supply station"
+		"es"		"You cannot place an ammopack beside a supply station"
 	}
 }

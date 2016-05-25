@@ -1,0 +1,120 @@
+"Phrases"
+{
+	//!settings feature name
+	"Cookie Structure Killings"
+	{
+		"es"		"Structure Killings"
+	}
+	
+	//Building Names
+	"Command Bunker"
+	{
+		"es"		"the Command Bunker"
+	}
+	"MG Turret"
+	{
+		"es"		"a Machine Gun Turret"
+	}
+	"Transport Gate"
+	{
+		"es"		"a Transport Gate"
+	}
+	"Power Station"
+	{
+		"es"		"a Power Station"
+	}
+	"Wireless Repeater"
+	{
+		"es"		"a Wireless Repeater"
+	}
+	"Relay Tower"
+	{
+		"es"		"a Relay Tower"
+	}
+	"Supply Station"
+	{
+		"es"		"a Supply Station"
+	}
+	"Assembler"
+	{
+		"es"		"an Assembler"
+	}
+	"Armory"
+	{
+		"es"		"an Armory"
+	}
+	"Artillery"
+	{
+		"es"		"an Artillery"
+	}
+	"Radar Station"
+	{
+		"es"		"a Radar Station"
+	}
+	"Flamethrower Turret"
+	{
+		"es"		"a Flamethrower Turret"
+	}
+	"Sonic Turret"
+	{
+		"es"		"a Sonic Turret"
+	}
+	"Rocket Turret"
+	{
+		"es"		"a Rocket Turret"
+	}
+	"Wall"
+	{
+		"es"		"a Wall"
+	}
+	"Barrier"
+	{
+		"es"		"a Barrier"
+	}
+	
+	"Building Destoryed"
+	{
+		//{1} = team colour (always keep this first)
+		//{2} = Player's name who destoryed the structure
+		//{3} = The name of the structure destoryed (translated above)
+		"es"		"{1}{2} destroyed {3}"
+	}
+	
+	
+	//Advantage Translations
+	"Empire"
+	{
+		"es"		"Empire"
+	}
+	"Consort"
+	{
+		"es"		"Consortium"
+	}
+	
+	//This message is a complicated mess, so read carefully
+	"Advantage Message"
+	{
+		//{1} changes {2} to the team colour
+		//{2} = Is the player's name
+		
+		//{3} changes the 'just gave' colour to green
+		
+		//{4} changes {5} to the team colour
+		//{5} = Is etheir "Empire" or "Consort" as translated above
+		
+		//{6} changes 'the advantage' colour to green
+		
+		//Ex1. Vertex just gave Consortium the advantage! -without colours
+		//Ex2. {blue} Vertex {green} just gave {blue} Consortium {green} the advantage!
+		//If required, change the number order to suit your needs
+		
+		"es"		"{1}{2} {3}just gave {4}{5} {6}the advantage"
+	}
+	
+	//This message only uses the phrase "Empire" or "Consort"
+	"Advantage Center"
+	{
+		//{1} = Is etheir "Empire" or "Consort" as translated above
+		"es"		"Advantage - {1}"
+	}
+}

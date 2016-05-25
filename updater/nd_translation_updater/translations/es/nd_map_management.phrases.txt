@@ -4,13 +4,11 @@
 	
 	"Not Enough Players"
 	{
-		"#format"	"{1:s},{2:s}"
-		"en"		"Not enough players for {1}! Next map changed to {2}!"
+		"es"		"Not enough players for {1}! Next map changed to {2}!"
 	}
 	
 	"Too Many Players"
 	{
-		"#format"	"{1:s},{2:s}"
-		"en"		"Too many players for {1}! Next map changed to {2}!"	
+		"es"		"Too many players for {1}! Next map changed to {2}!"	
 	}
 }

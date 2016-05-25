@@ -4,6 +4,6 @@
 	{
 		//{1} = A list of player locations
 		"#format"	"{1:s}"
-		"en"		"Player Locations: {1}"
+		"es"		"Player Locations: {1}"
 	}
 }

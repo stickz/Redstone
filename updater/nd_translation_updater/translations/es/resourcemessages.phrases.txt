@@ -3,15 +3,14 @@
 	// !settings menu label
 	"Cookie Resource Messages"
 	{
-		"en"			"Show Resource Messages"
+		"es"			"Show Resource Messages"
 	}
 	
 	//Example: "Cube, MissLiss (+3) have captured the primary!"
 	// {1} are the people capturing plus some
 	"Primary Resource Captured"
 	{
-		"#format"		"{1:s},{2:s}"
-		"en"			"{1} have captured the primary."
+		"es"			"{1} have captured the primary."
 	}
 	
 	//Example: "Cube (+2) has captured north secondary!"
@@ -19,8 +18,7 @@
 	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
 	"Secondary Resource Captured"
 	{
-		"#format"		"{1:s},{2:s}"
-		"en"			"{1} has captured{2} secondary."
+		"es"			"{1} has captured{2} secondary."
 	}
 	
 	//Example: "djfishfish (+2) has captured northeast tertiary!"
@@ -28,66 +26,65 @@
 	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
 	"Tertiary Resource Captured"
 	{
-		"#format"		"{1:s},{2:s}"
-		"en"			"{1} has captured{2} tertiary."
+		"es"			"{1} has captured{2} tertiary."
 	}
 	
 	"Map Area "
 	{
-		"en"			""
+		"es"			""
 	}
 	"Map Area N"
 	{
-		"en"			" north"
+		"es"			" north"
 	}
 	
 	"Map Area NE"
 	{
-		"en"			" northeast"
+		"es"			" northeast"
 	}
 	
 	"Map Area NW"
 	{
-		"en"			" northwest"
+		"es"			" northwest"
 	}
 	
 	"Map Area S"
 	{
-		"en"			" south"
+		"es"			" south"
 	}
 	
 	"Map Area SE"
 	{
-		"en"			" southeast"
+		"es"			" southeast"
 	}
 	
 	"Map Area SW"
 	{
-		"en"			" southwest"
+		"es"			" southwest"
 	}
 	
 	"Map Area E"
 	{
-		"en"			" east"
+		"es"			" east"
 	}
 	
 	"Map Area W"
 	{
-		"en"			" west"
+		"es"			" west"
 	}
 	
 	"Map Area CE"
 	{
-		"en"			" central"
+		"es"			" central"
 	}
 	
 	"Map Area OB"
 	{
-		"en"			" our base"
+		"es"			" our base"
 	}
 	
 	"Map Area EB"
 	{
-		"en"			" enemy base"
+		"es"			" enemy base"
 	}
 }
