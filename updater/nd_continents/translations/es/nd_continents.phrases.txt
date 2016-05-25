@@ -3,6 +3,6 @@
 	"Player Locations"
 	{
 		//{1} = A list of player locations
-		"es"		"Player Locations: {1}"
+		"es"		"Localización de los jugadores: {1}"
 	}
 }
