@@ -12,7 +12,7 @@
 	
 	"Twelve Required"
 	{
-		"es		"Twelve or less players are required for late game map changes"	
+		"es"		"Twelve or less players are required for late game map changes"	
 	}
 	
 	"Too Late"
