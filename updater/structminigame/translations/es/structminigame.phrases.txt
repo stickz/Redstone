@@ -3,73 +3,73 @@
 	//!settings feature name
 	"Cookie Structure Killings"
 	{
-		"es"		"Structure Killings"
+		"es"		"Estructuras Destruidas"
 	}
 	
 	//Building Names
 	"Command Bunker"
 	{
-		"es"		"the Command Bunker"
+		"es"		"la Comandancia"
 	}
 	"MG Turret"
 	{
-		"es"		"a Machine Gun Turret"
+		"es"		"una Torreta Ametralladora"
 	}
 	"Transport Gate"
 	{
-		"es"		"a Transport Gate"
+		"es"		"un Portal de Teletransporte"
 	}
 	"Power Station"
 	{
-		"es"		"a Power Station"
+		"es"		"una Estación de Energía"
 	}
 	"Wireless Repeater"
 	{
-		"es"		"a Wireless Repeater"
+		"es"		"un Repetidor Inalámbrico"
 	}
 	"Relay Tower"
 	{
-		"es"		"a Relay Tower"
+		"es"		"una Torre Relé"
 	}
 	"Supply Station"
 	{
-		"es"		"a Supply Station"
+		"es"		"una Estación de Suministros"
 	}
 	"Assembler"
 	{
-		"es"		"an Assembler"
+		"es"		"un Ensamblador"
 	}
 	"Armory"
 	{
-		"es"		"an Armory"
+		"es"		"una Armería"
 	}
 	"Artillery"
 	{
-		"es"		"an Artillery"
+		"es"		"una Artillería"
 	}
 	"Radar Station"
 	{
-		"es"		"a Radar Station"
+		"es"		"una Estación de Radar"
 	}
 	"Flamethrower Turret"
 	{
-		"es"		"a Flamethrower Turret"
+		"es"		"una Torreta Lanzallamas"
 	}
 	"Sonic Turret"
 	{
-		"es"		"a Sonic Turret"
+		"es"		"una Torreta Sónica"
 	}
 	"Rocket Turret"
 	{
-		"es"		"a Rocket Turret"
+		"es"		"una Torreta Lanzacohetes"
 	}
 	"Wall"
 	{
-		"es"		"a Wall"
+		"es"		"un Muro"
 	}
 	"Barrier"
 	{
-		"es"		"a Barrier"
+		"es"		"una Barrera"
 	}
 	
 	"Building Destoryed"
@@ -77,18 +77,18 @@
 		//{1} = team colour (always keep this first)
 		//{2} = Player's name who destoryed the structure
 		//{3} = The name of the structure destoryed (translated above)
-		"es"		"{1}{2} destroyed {3}"
+		"es"		"{1}{2} ha destruido {3}"
 	}
 	
 	
 	//Advantage Translations
 	"Empire"
 	{
-		"es"		"Empire"
+		"es"		"Imperio"
 	}
 	"Consort"
 	{
-		"es"		"Consortium"
+		"es"		"Consorte"
 	}
 	
 	//This message is a complicated mess, so read carefully
@@ -108,13 +108,13 @@
 		//Ex2. {blue} Vertex {green} just gave {blue} Consortium {green} the advantage!
 		//If required, change the number order to suit your needs
 		
-		"es"		"{1}{2} {3}just gave {4}{5} {6}the advantage"
+		"es"		"{1}{2} {3} le ha dado a {4}{5} {6}la ventaja!"
 	}
 	
 	//This message only uses the phrase "Empire" or "Consort"
 	"Advantage Center"
 	{
 		//{1} = Is etheir "Empire" or "Consort" as translated above
-		"es"		"Advantage - {1}"
+		"es"		"Ventaja - {1}"
 	}
 }
