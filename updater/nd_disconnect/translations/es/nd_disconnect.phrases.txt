@@ -8,7 +8,6 @@
 	"Lost Connection"
 	{
 		//{1} = Player Name
-		"#format"	"{1:s}"
 		"es"		"{1} lost connection!"
 	}
 }
