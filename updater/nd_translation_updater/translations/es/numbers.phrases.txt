@@ -6,7 +6,7 @@
 	}
 	"two"
 	{
-		"es		"two"
+		"es"		"two"
 	}
 	"three"
 	{
