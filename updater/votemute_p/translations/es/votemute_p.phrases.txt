@@ -27,7 +27,7 @@
 	
 	"Silence Use"
 	{
-		"es		"You cannot use this feature while silenced"
+		"es"		"You cannot use this feature while silenced"
 	}
 	
 	"Wait Seconds"
