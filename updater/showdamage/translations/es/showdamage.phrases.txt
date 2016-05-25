@@ -17,6 +17,6 @@
 
 	"Cookie Show Damage"
 	{
-		"es"			"Show Damage"
+		"es"			"Mostrar daño"
 	}
 }
