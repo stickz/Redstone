@@ -1,25 +1,22 @@
-﻿"Phrases"
+"Phrases"
 {
 	"Chat Damage Text"
 	{
-		"#format"		"{1:d}"
-		"en"			"{green}- {1} HP"
+		"es"			"{green}- {1} HP"
 	}
 	
 	"HintText Damage Text"
 	{
-		"#format"		"{1:d}"
-		"en"			"- {1} HP"
+		"es"			"- {1} HP"
 	}
 	
 	"CenterText Damage Text"
 	{
-		"#format"		"{1:d}"
-		"en"			"- {1} HP"
+		"es"			"- {1} HP"
 	}
 
 	"Cookie Show Damage"
 	{
-		"en"			"Show Damage"
+		"es"			"Show Damage"
 	}
 }
