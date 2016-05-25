@@ -2,12 +2,11 @@
 {
 	"Radio Disabled"
 	{
-		"en"		"The radio menu is currently broken or disabled."
+		"es"		"The radio menu is currently broken or disabled."
 	}
 	
 	"Radio Wait"
 	{
-		"#format"	"{1:i}"
-		"en"		"Please wait {1} second(s) before the next radio message."	
+		"es"		"Please wait {1} second(s) before the next radio message."	
 	}
 }
