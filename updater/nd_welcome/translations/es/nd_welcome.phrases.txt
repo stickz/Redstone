@@ -2,11 +2,11 @@
 {
 	"Cookie Welcome Message"
 	{
-		"es"			"Welcome Message"
+		"es"			"Mensaje de bienvenida"
 	}
 
 	"Welcome"
 	{
-		"es"			"Welcome to Redstone, you can customize your stay by typing !settings in chat!!"
+		"es"			"Bienvenido a Redstone, puedes personalizar tu estancia escribiendo !settings en el chat!!"
 	}
 }
