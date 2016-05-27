@@ -48,7 +48,7 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //for updater support
 	
 	UseClassReset = CreateConVar("sm_otdf_creset", "1", "Use class reset feature");
-	UseSquadBlock = CreateConVar("sm_otdf_sblock", "1", "Use the squad block feature");
+	UseSquadBlock = CreateConVar("sm_otdf_sblock", "0", "Use the squad block feature");
 }
 
 public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
