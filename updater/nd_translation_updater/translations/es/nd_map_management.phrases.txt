@@ -4,11 +4,11 @@
 	
 	"Not Enough Players"
 	{
-		"es"		"Not enough players for {1}! Next map changed to {2}!"
+		"es"		"No hay suficientes jugadores para {1}! Siguiente mapa cambiado a {2}!"
 	}
 	
 	"Too Many Players"
 	{
-		"es"		"Too many players for {1}! Next map changed to {2}!"	
+		"es"		"Demasiados jugadores para {1}! Siguiente mapa cambiado a {2}!"	
 	}
 }
