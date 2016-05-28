@@ -2,27 +2,27 @@
 {
 	"Cookie Interp Warning"
 	{
-		"es"		"Interp Warning"
+		"es"		"Alerta de interp"
 	}
 	
 	"Incorrect Interp"
 	{
-		"es"		"Incorrect interps are damaging your hit registration"	
+		"es"		"Interps incorrectos están afectando a tu precisión"	
 	}
 	
 	"Interp GoTo"
 	{
-		"es		"Right Click on ND -> Properties -> Set Launch Options"
+		"es		"Click derecho en ND -> Propiedades -> Definir Parámetros de Lanzamiento"
 	}
 	
 	"Unexpected Interp"
 	{
-		"es"		"Found cl_interp {1}, Expected: cl_interp {2}"	
+		"es"		"Encontrado cl_interp {1}, Se esperaba: cl_interp {2}"	
 	}
 	
 	"Interp Rates"
 	{
 		//{1} = the cl_interp in decimal forum ex. 0.115
-		"es"		"To resolve, add +cl_interp_ratio 1 +cl_interp {1}"	
+		"es"		"Para resolver, añade +cl_interp_ratio 1 +cl_interp {1}"	
 	}	
 }
