@@ -38,27 +38,27 @@
 	// Plugin Messages
 	"Spectate_Force"
 	{
-		"es"		"Forzado el Jugador {1} a estar en espectador."
+		"es"		"Forzado el Jugador {1} a modo espectador."
 	}
 
 	"Spawn_Move_Warning"
 	{
-		"es"		"Advertencia: Si usted no se mueve de su lugar de regeneramiento en {1} segundos, usted será movido a espectador."
+		"es"		"Advertencia: Si no te mueves del punto de reaparición en {1} segundos, serás cambiado a modo espectador."
 	}
 
 	"Move_Warning"
 	{
-		"es"		"Advertencia: Si usted no se mueve en {1} segundos, usted será movido a espectador."
+		"es"		"Advertencia: Si no te mueves en {1} segundos, serás movido a modo espectador."
 	}
 
 	"Spawn_Kick_Warning"
 	{
-		"es"		"Advertencia: Si usted no se mueve de su lugar de regeneramiento en {1} segundos, usted será expulsado."
+		"es"		"Advertencia: Si no te mueves del punto de reaparición en {1} segundos, serás expulsado."
 	}
 
 	"Kick_Warning"
 	{
-		"es"		"Advertencia: Si usted no se mueve en {1} segundos, usted será expulsado."
+		"es"		"Advertencia: Si no te mueves en {1} segundos, serás expulsado."
 	}
 
 	"Move_Announce"
@@ -78,7 +78,7 @@
 
 	"Kick_Message"
 	{
-		"es"		"Usted fue expulsado por estar demasiado tiempo AFK (Lejos del teclado)."
+		"es"		"Has sido expulsado por estar demasiado tiempo ausente (AFK)."
 	}
 
 	"Kick_Log"
