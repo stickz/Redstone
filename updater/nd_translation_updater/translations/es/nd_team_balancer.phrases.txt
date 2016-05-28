@@ -17,72 +17,72 @@
 	
 	"Graduated"	
 	{		
-		"es"		"Felicitaciones soldado, te has graduado de"	
+		"es"		"Felicidades soldado, te has graduado de"	
 	}
 	
 	"Submitted Placement"	
 	{
-		"es"		"Solicitud para separar la colocacion del comandante sometida"	
+		"es"		"Solicitud para separar la colocación del comandante enviada"	
 	}
 	
 	"Revoked Placement"	
 	{
-		"es"		"Solicitud para separar la colocacion del comandante denegada"	
+		"es"		"Solicitud para separar la colocación del comandante denegada"	
 	}
 	
 	"Balancer Running"	
 	{
-		"es"		"No se puede unir a un equipo mientras se balancea los equipos"	
+		"es"		"No te puedes unir a un equipo mientras los equipos se están equilibrando"	
 	}
 	
 	"Resign Switch"	
 	{
-		"es"		"Debe resignar a comandar antes de cambiar de equipo"	
+		"es"		"Debes resignar de comandante antes de cambiar de equipo"	
 	}
 	
 	"Switch Disabled"	
 	{
-		"es"		"Cambio de equipos deshabilitado por unos minutos o hasta haya desblance en los equipos"	
+		"es"		"Cambio de equipos deshabilitado por unos minutos o hasta haya desbalance en los equipos"	
 	}
 	
 	"Retry Placement"	
 	{
-		"es"		"En modo espectador! Por favor someta su solicitud de colocacion de quipo nuevamente"
+		"es"		"En modo espectador! Por favor somete su solicitud de colocación de equipo nuevamente"
 	}
 	
 	"Level Retrieved"	
 	{
-		"es"		"Nivel recuperado con exito, por favor intente de nuevo"	
+		"es"		"Nivel recuperado con éxito, por favor intenta de nuevo"	
 	}
 	
 	"Level Switch Wait"
 	{
-		"es"		"Por favor espesra hasta que el marcador muestre nivel 2+ antes de cambiar de equipo"
+		"es"		"Por favor espera hasta que el marcador muestre nivel 2+ antes de cambiar de equipo"
 	}
 	
 	"Revoke Spectator"
 	{
-		"es"		"Peticion de espectador debe ser declinada antes de unirse"
+		"es"		"Petición de espectador debe ser declinada antes de unirte"
 	}
 	
 	"Spectator Avoid"
 	{	
-		"es"		"No puede utilizar este comando para evitar el balanceador de equipos"
+		"es"		"No puedes utilizar este comando para evitar el balanceador de equipos"
 	}
 	
 	"Spectator Unlocked"
 	{
-		"es"		"Ha sido liberado del modo espectador"	
+		"es"		"Has sido liberado del modo espectador"	
 	}
 	
 	"Spectator Joined"
 	{
-		"es"		"En modo espectador! Para salir escriba !spec."	
+		"es"		"En modo espectador! Para salir escribe !spec."	
 	}
 	
 	"Teamdiff Round Wait"
 	{
-		"es"		"No puede utilizar teamdiff antes que la ronda comience"
+		"es"		"No puedes utilizar teamdiff antes que la ronda comience"
 	}
 	
 	"Ether Team Stack"
@@ -92,27 +92,27 @@
 	
 	"Could Be Switched"
 	{
-		"es"		"Prodria ser cambiado inmediatamente luego de que su nivel se cargue"
+		"es"		"Podrías ser cambiado inmediatamente tras cargar tu nivel"
 	}
 	
 	"Initial Team Lock"
 	{
-		"es"		"Ha sido fijado en el equipo inicia, imposible unirse hasta que haya balanccannot join until balanced"
+		"es"		"Has sido fijado en el equipo inicial, imposible cambiarte hasta que haya balance"
 	}
 	
 	"Separate Placement"	
 	{	
-		"es"		"Colocado separado para asegurar que ambos equipos tengan comandante"
+		"es"		"Colocado en el otro equipo para asegurar que ambos equipos tengan comandante"
 	}
 	
 	"Random Selection"
 	{	
-		"es"		"La seleccion de comandante es aleatoria, pero es muy probable que sera usted el elegido"
+		"es"		"La selección de comandante es aleatoria, pero es muy probable que seas el elegido"
 	}
 	
 	"Balancer Not Run"
 	{	
-		"es"		"Balanceador inicial No puede ejecutarse por falta de jugadores"
+		"es"		"Balanceador inicial no puede ejecutarse por falta de jugadores"
 	}
 	
 	"Balancer Off"
@@ -157,7 +157,7 @@
 	
 	"Slightly Imbalanced"
 	{
-		"es"		"Ligeramente deabalanceado"
+		"es"		"Ligeramente desbalanceado"
 	}
 	
 	"Moderately Imbalanced"
