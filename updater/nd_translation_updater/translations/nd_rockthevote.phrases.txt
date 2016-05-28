@@ -56,7 +56,8 @@
 	"Typed Change Map"
 	{
 		//{1} = Player's Name
-		//{2} = Translated numbers from number.phrases		
+		//{2} = Translated numbers from number.phrases
+		"#format"	"{1:s},{2:s}"
 		"en"		"{1} typed change map: {2} more required."
 	}
 }
