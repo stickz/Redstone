@@ -2,67 +2,67 @@
 {
 	"Cookie TimeLimit Features"
 	{
-		"es"		"TimeLimit Features"
+		"es"		"Características de Tiempo Restante"
 	}
 	
 	"Six Required"
 	{
-		"es"		"Six players are required to use this feature"	
+		"es"		"Hacen falta seis jugadores para usar esta característica"	
 	}
 	
 	"Already Extended"
 	{
-		"es"		"Only one extension is allowed per map"
+		"es"		"Solo una prórroga está permitida por mapa"
 	}
 	
 	"On Team"
 	{
-		"es"		"You must be on a team use to this feature"	
+		"es"		"Debes estar en un equipo para usar esta característica"	
 	}
 	
 	"You Extended"
 	{
-		"es"		"You've already voted to extend the match"
+		"es"		"Ya has votado para prorrogar la partida"
 	}
 	
 	"Round Ended"
 	{
-		"es"		"This feature cannot be used at round end"
+		"es"		"Esta característica no puede ser usada al final de la ronda"
 	}
 	
 	"Wait End"
 	{
-		"es"		"Please wait until the last five minutes before extending"
+		"es"		"Por favor espera al menos hasta los últimos cinco minutos antes de prorrogar"
 	}
 	
 	"Regular Time"
 	{
-		"es"		"The regular time limit is currently being used"
+		"es"		"El límite de tiempo predeterminado está siendo usado actualmente"
 	}
 	
 	"Time Disabled"
 	{
-		"es"		"The time limit is disabled until more players connect"
+		"es"		"El límite de tiempo está deshabilitado hasta que se conecten más jugadores"
 	}
 	 
 	"Time End"
 	{
-		"es"		"Round ended by 1h delayed population time limit"
+		"es"		"Ronda terminada una hora más tarde debido al límite de población"
 	}
 	
 	"Limit Effect"
 	{
-		"es"		"Population timelimit now in effect for 1h"
+		"es"		"Límite de tiempo de población activo por una hora"
 	}
 	
 	"Round Extended"
 	{
-		"es"		"time limit extended by fifteen minutes"
+		"es"		"Tiempo límite extendido por quince minutos"
 	}
 
 	"Extend Availible"
 	{
-		"es"		"Vote extend is now availible"
+		"es"		"Prórroga de tiempo límite está disponible"
 	}
 	
 	
@@ -71,14 +71,14 @@
 	//{2} and/or {3} = team number remaining (1,2,3 etc)
 	"Extend Both"
 	{
-		"es"		"{1} typed extend : {2} Con & {3} Emp required." 	
+		"es"		"{1} decidió prorrogar : {2} Con & {3} Imp requeridos." 	
 	}
 	"Extend Empire"
 	{
-		"es"		"{1} typed extend : {2} empire required."	
+		"es"		"{1} decidió prorrogar : {2} imperio requeridos."	
 	}
 	"Extend Consort"
 	{
-		"es"		"{1} typed extend : {2} consort required."	
+		"es"		"{1} decidió prorrogar : {2} consorte requeridos."	
 	}
 }
