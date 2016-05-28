@@ -2,11 +2,11 @@
 {
 	"Radio Disabled"
 	{
-		"es"		"The radio menu is currently broken or disabled."
+		"es"		"El menú de radio está actualmente roto o desactivado."
 	}
 	
 	"Radio Wait"
 	{
-		"es"		"Please wait {1} second(s) before the next radio message."	
+		"es"		"Por favor espera {1} segundo/s antes del siguiente mensaje de radio."	
 	}
 }
