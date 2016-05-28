@@ -6,7 +6,7 @@
 
 	{
 
-		"es"		"No puede aplicar para comandante luego de haber sido degradado"
+		"es"		"No te puedes aplicar para comandante después de haber sido degradado"
 
 	}
 
@@ -15,7 +15,7 @@
 
 	{
 
-		"es"		"No puede aplicar por 30s luego de resignar un motin"	
+		"es"		"No te puedes aplicar 30s luego de resignar un motín"	
 
 	}
 
@@ -24,7 +24,7 @@
 
 	{
 
-		"es"		"Por favor desplegarse antes de aplicar para comandante!"	
+		"es"		"Por favor despliégate antes de aplicarte para comandante!"	
 
 	}
 
@@ -33,7 +33,7 @@
 
 	{
 
-		"es"		"Jugadores con nivel menor a 10 solo pueden comandar 1-10 jugadores"	
+		"es"		"Jugadores con nivel menor a 10 solo pueden comandar a 1-10 jugadores"	
 
 	}
 
@@ -42,7 +42,7 @@
 
 	{
 
-		"es"		"Nivel 45+ es necesario para comandar grandes cantidades de jugadores (24 o mas)"
+		"es"		"Es necesario nivel 45+ para comandar grandes cantidades de jugadores (24 o más)"
 
 	}
 	
@@ -51,7 +51,7 @@
 
 	{
 
-		"es"		"No puede comandar mas jugadores que su nivel"
+		"es"		"No puedes comandar jugadores de mayor nivel"
 
 	}
 	
@@ -68,7 +68,7 @@
 
 	{
 
-		"es"		"Debe estsar en equipo para votar"
+		"es"		"Debes estar en un equipo para votar"
 
 	}
 
@@ -77,7 +77,7 @@
 
 	{
 
-		"es"		"4 compañero de equipo requerido para utilizar esta opcion"
+		"es"		"Necesitas 4 compañeros de equipo para utilizar esta opción"
 
 	}
 	
@@ -86,7 +86,7 @@
 	
 	{
 
-		"es"		"Ya ha votado para degradar al comandante"
+		"es"		"Ya has votado para degradar al comandante"
 
 	}
 
@@ -95,7 +95,7 @@
 
 	{
 
-		"es"		"No puede utilizar esta opcion luego de terminanda la ronda"
+		"es"		"No puedes utilizar esta opción después de terminar la ronda"
 
 	}
 	
@@ -104,7 +104,7 @@
 
 	{
 
-		"es"		"Por favor espera que comience la ronda antes degradar"	
+		"es"		"Por favor espera a que comience la ronda antes degradar"	
 
 	}
 	
