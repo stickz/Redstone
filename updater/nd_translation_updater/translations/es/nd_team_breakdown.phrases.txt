@@ -2,36 +2,36 @@
 {
 	"Cookie Team Breakdown"
 	{
-		"es"			"Troop Counts"
+		"es"			"Recuento de tropas"
 	}
 	
 	"Combat"
 	{
-		"es"			"Combat"
+		"es"			"Combate"
 	}
 	
 	"Anti-Structure"
 	{
-		"es"			"Anti-Structure"
+		"es"			"Anti-Estructura"
 	}
 	
 	"Sniper"
 	{
-		"es"			"Sniper"		
+		"es"			"Francotirador"		
 	}
 	
 	"Stealth"
 	{
-		"es"			"Stealth"
+		"es"			"Sigilo"
 	}
 	
 	"Medic"
 	{
-		"es"			"Medic"
+		"es"			"Médico"
 	}
 	
 	"Engineer"
 	{
-		"es"			"Engineer"
+		"es"			"Ingeniero"
 	}
 }
