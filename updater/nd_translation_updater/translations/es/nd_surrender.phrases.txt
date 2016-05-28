@@ -2,39 +2,39 @@
 {
 	"Twelve Required"
 	{
-		"es"		"Deben haber almenos 12 jugadores para utilizar esta opcion"
+		"es"		"Debe haber al menos 12 jugadores para utilizar esta opción"
 	}	
 
 	"Ten Required"
 	{
-		"es"		"Deben haber almenos 10 jugadores para utilizar esta opcion"
+		"es"		"Debe haber al menos 10 jugadores para utilizar esta opción"
 	}
 
 	//This phrase is incorrect, translate from this instead
 	//"Four players on your team are required to surrender"
 	"Four Required"
 	{
-		"es"		"Deben haber almenos 8 jugadores para utilizar esta opcion"	
+		"es"		"Se necesitan cuatro jugadores en tu equipo para rendirte"	
 	}	
 	
 	"Too Soon"
 	{
-		"es"		"No puede rendirse tan pronto"
+		"es"		"No puedes rendirte tan pronto"
 	}	
 
 	"Team Surrendered"
 	{
-		"es"		"Su equipo se ha rendido"
+		"es"		"Tu equipo se ha rendido"
 	}
 	
 	"On Team"
 	{
-		"es"		"Debe estar en un equipo para rendirse"
+		"es"		"Debes estar en un equipo para rendirte"
 	}	
 	
 	"You Surrendered"
 	{
-		"es"		"Ya ha votado para rendirse"
+		"es"		"Ya has votado para rendirte"
 	}	
 
 	"Round Ended"
