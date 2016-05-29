@@ -96,5 +96,5 @@ public Action:CMD_JoinSquad(client, args)
 public OnEntityCreated(entity, const String:classname[])
 {
 	if (UseDamageRefire.BoolValue)
-		PrintToChatAll("debug: %s was just created");
+		PrintToChatAll("debug: %s was just created", classname);
 }
