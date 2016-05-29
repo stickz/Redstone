@@ -16,6 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <sdktools>
+#include <sdkhooks>
 #include <nd_classes>
 #include <nd_commander>
 
@@ -37,6 +38,7 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_ontakedamage_fix/nd_ontakedamage_fix.txt"
 #include "updater/standard.sp"
 
+ConVar UseDamageRefire;
 ConVar UseClassReset;
 ConVar UseSquadBlock;
 
@@ -49,6 +51,7 @@ public OnPluginStart()
 	
 	UseClassReset = CreateConVar("sm_otdf_creset", "1", "Use class reset feature");
 	UseSquadBlock = CreateConVar("sm_otdf_sblock", "0", "Use the squad block feature");
+	UseDamageRefire = CreateConVar("sm_otdf_dscale", "0", "Use damage refire solution");
 }
 
 public Action:Event_ChangeClass(Handle:event, const String:name[], bool:dontBroadcast) 
@@ -88,4 +91,10 @@ public Action:CMD_JoinSquad(client, args)
 		return Plugin_Handled;
 		
 	return Plugin_Continue; 
+}
+
+public OnEntityCreated(entity, const String:classname[])
+{
+	if (UseDamageRefire.BoolValue)
+		PrintToChatAll("debug: %s was just created");
 }
