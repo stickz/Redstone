@@ -21,6 +21,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define COMMAND_BUNKER 0
 
+//Version is auto-filled by the travis builder
+public Plugin:myinfo =
+{
+	name 		= "[ND] InitSpeeds Fix",
+	author 		= "Stickz",
+	description 	= "Fixes a server crash exploit",
+	version 	= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
+};
+
 public OnPluginStart()
 {
 	HookEvent("structure_death", Event_StructDeath);
