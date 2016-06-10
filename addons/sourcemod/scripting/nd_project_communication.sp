@@ -38,6 +38,7 @@ public Plugin:myinfo =
 
 /* Include Plugin Segments */
 #include "ndpc/convars.sp"
+#include "ndpc/clientprefs.sp"
 #include "ndpc/stock_functions.sp"
 #include "ndpc/commander_lang.sp"
 #include "ndpc/team_lang.sp"
@@ -52,10 +53,12 @@ public OnPluginStart()
 	
 	AddUpdaterLibrary(); //auto-updater
 	CreateConVars(); //create ConVars (from convars.sp)
+	AddClientPrefsSupport(); //for client prefs
 	
 	/* Add translated phrases */
-	LoadTranslations("structminigame.phrases");
-	LoadTranslations("nd_project_communication.phrases");
+	LoadTranslations("common.phrases"); //for client prefs
+	LoadTranslations("structminigame.phrases"); //building names
+	LoadTranslations("nd_project_communication.phrases"); //plugin phrases
 }
 
 public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast) {
