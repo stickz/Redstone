@@ -20,7 +20,14 @@ RegComLangCommands()
 
 public Action:CMD_PrintCLang(client, args)
 {
-	new commander = ND_GetCommanderBy(client);
+	new team = GetClientTeam(client);
+	if (team != TEAM_CONSORT && team != TEAM_EMPIRE)
+	{
+		PrintToChat(client, "%s%t", CHAT_PREFIX, "Not On Team");
+		return Plugin_Handled;	
+	}
+	
+	new commander = ND_GetCommanderOn(team);
 	if (commander == NO_COMMANDER)
 	{
 		PrintToChat(client, "%s%t", CHAT_PREFIX, "No Team Commander");
