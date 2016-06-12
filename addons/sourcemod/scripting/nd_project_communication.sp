@@ -16,6 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <nd_stocks>
+#include <sdktools>
 
 //Version is auto-filled by the travis builder
 public Plugin:myinfo =
@@ -31,6 +32,7 @@ public Plugin:myinfo =
 #define LANGUAGE_COUNT 		44
 #define MESSAGE_COLOUR		"\x05"
 #define TAG_COLOUR		"\x04"
+#define CHAT_PREFIX		"\x05[xG]"
 
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
@@ -52,6 +54,7 @@ public OnPluginStart()
 	
 	AddUpdaterLibrary(); //auto-updater
 	CreateConVars(); //create ConVars (from convars.sp)
+	RegComLangCommands(); // for commander_lang.sp
 	
 	/* Add translated phrases */
 	LoadTranslations("structminigame.phrases");
