@@ -49,6 +49,14 @@
 	{
 		"en"		"No translation keyword found."
 	}
+	"Not On Team"
+	{
+		"en"		"You must be on a team to use this command"
+	}
+	"No Team Commander"
+	{
+		"en" 		"This team currently doesn't have a commander"
+	}
 	
 	/* Common phrases */
 	"Roof"
