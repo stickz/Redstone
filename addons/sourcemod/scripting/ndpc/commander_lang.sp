@@ -27,7 +27,7 @@ public Action:CMD_PrintCLang(client, args)
 		return Plugin_Handled;
 	}
 	
-	PrintToChat(client, "%s%t", MESSAGE_COLOUR, "Commander Language", GetLanguageName(client));
+	PrintToChat(client, "%s%t", MESSAGE_COLOUR, "Commander Language", GetLanguageName(commander));
 	return Plugin_Handled;
 }
 
