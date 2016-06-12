@@ -1,5 +1,6 @@
 #define STRING_STARTS_WITH 	0
 #define IS_WITHIN_STRING	-1
+#define NO_COMMANDER		-1
 
 stock bool:StrStartsWith(const String:sArgs[], const String:segment[])
 {
