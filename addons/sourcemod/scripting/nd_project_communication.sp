@@ -31,7 +31,7 @@ public Plugin:myinfo =
 #define LANGUAGE_COUNT 		44
 #define MESSAGE_COLOUR		"\x05"
 #define TAG_COLOUR		"\x04"
-#define CHAT_PREFIX		"[xG]"
+#define CHAT_PREFIX		"\x05[xG]"
 
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
