@@ -40,7 +40,9 @@ public Event_CommanderPromo(Handle:event, const String:name[], bool:dontBroadcas
 		
 		if (IsValidClient(client))
 		{
-			new String:langName[32] = GetLanguageName(client);
+			decl String:langName[32];
+			Format(langName, sizeof(langName), GetLanguageName(client));
+
 			if (!StrEqual("english", langName, true))
 				PrintCLangToTeam(team, langName);
 		}
