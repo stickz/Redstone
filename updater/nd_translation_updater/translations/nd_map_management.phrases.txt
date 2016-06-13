@@ -1,13 +1,18 @@
-﻿"Phrases"
+"Phrases"
 {
-	//{1} = Next Map, {2} = Changed map
+	//{1} = Next Map
+	"Retrigger Map Vote"
+	{
+		"#format"	"{1:s}"
+		"en"		"Cycling to {1} canceled by player count thresholds. Map voting will now recommence."
+	}
 	
+	//{1} = Next Map, {2} = Changed map
 	"Not Enough Players"
 	{
 		"#format"	"{1:s},{2:s}"
 		"en"		"Not enough players for {1}! Next map changed to {2}!"
 	}
-	
 	"Too Many Players"
 	{
 		"#format"	"{1:s},{2:s}"
