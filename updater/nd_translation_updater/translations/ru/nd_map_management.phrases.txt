@@ -1,5 +1,11 @@
 "Phrases"
 {
+	"Retrigger Map Vote"
+	{
+		//{1} = Next Map
+		"ru"		"Cycling to {1} canceled by player count thresholds. Map voting will now recommence."
+	}
+	
 	"Coast Exploit"
 	{
 		"ru"		"Пожалуйста не используйте эксплоит, позволяющий строить на крыше или внутри зданий. Спасибо."
