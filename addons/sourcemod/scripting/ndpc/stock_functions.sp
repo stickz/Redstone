@@ -16,13 +16,3 @@ stock bool:IsOnTeam(client, team)
 {
 	return IsValidClient(client) && GetClientTeam(client) == team;
 }
-
-stock ND_GetCommanderOn(team)
-{
-	return GameRules_GetPropEnt("m_hCommanders", team - 2);
-}
-
-stock ND_GetCommanderBy(client)
-{
-	return GameRules_GetPropEnt("m_hCommanders", GetClientTeam(client) - 2);
-}
