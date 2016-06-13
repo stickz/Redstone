@@ -51,7 +51,7 @@
 	{
 		"es"		"una Estación de Radar"
 	}
-	"Flamethrower Turret"
+	"FT Turret"
 	{
 		"es"		"una Torreta Lanzallamas"
 	}
