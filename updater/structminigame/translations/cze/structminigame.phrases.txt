@@ -50,7 +50,7 @@
 	{
 		"cze"		"Radar"
 	}
-	"Flamethrower Turret"
+	"FT Turret"
 	{
 		"cze"		"Plamenometná věž"
 	}
