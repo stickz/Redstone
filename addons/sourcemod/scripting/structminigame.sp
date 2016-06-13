@@ -115,7 +115,7 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 		case 8:	Format(buildingname, sizeof(buildingname), "Armory"); //an Armory
 		case 9:	Format(buildingname, sizeof(buildingname), "Artillery"); //an Artillery
 		case 10: Format(buildingname, sizeof(buildingname), "Radar Station"); //a Radar Station
-		case 11: Format(buildingname, sizeof(buildingname), "Flamethrower Turret"); //a Flamethrower Turret
+		case 11: Format(buildingname, sizeof(buildingname), "FT Turret"); //a Flamethrower Turret
 		case 12: Format(buildingname, sizeof(buildingname), "Sonic Turret"); //a Sonic Turret
 		case 13: Format(buildingname, sizeof(buildingname), "Rocket Turret"); //a Rocket Turret
 		case 14: Format(buildingname, sizeof(buildingname), "Wall"); //a Wall
