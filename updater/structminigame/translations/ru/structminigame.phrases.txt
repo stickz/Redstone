@@ -50,7 +50,7 @@
 	{
 		"ru"		"Радар"
 	}
-	"Flamethrower Turret"
+	"FT Turret"
 	{
 		"ru"		"Огнемётная установка"
 	}
