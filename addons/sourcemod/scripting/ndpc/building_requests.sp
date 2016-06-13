@@ -9,7 +9,7 @@ new const String:nd_request_building[REQUEST_BUILDING_COUNT][] =
 	"Armory",
 	"Artillery",
 	"Radar Station",
-	"Flamethrower Turret",
+	"FT Turret",
 	"Sonic Turret",
 	"Rocket Turret",
 	"Wall",

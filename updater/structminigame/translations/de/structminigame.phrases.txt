@@ -50,7 +50,7 @@
 	{
 		"de"		"a Radar Station"
 	}
-	"Flamethrower Turret"
+	"FT Turret"
 	{
 		"de"		"a Flamethrower Turret"
 	}
