@@ -67,7 +67,7 @@
 		"en" 		"This team currently doesn't have a commander"
 	}
 	
-	/* Common phrases */
+	/* Spot phrases */
 	"Roof"
 	{
 		"en"		"Rooftop"
@@ -88,6 +88,8 @@
 	{
 		"en"		"Secondary"
 	}
+	
+	/* Compass Positions */
 	"North"
 	{
 		"en"		"North"
