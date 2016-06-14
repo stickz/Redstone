@@ -22,7 +22,7 @@
 		"#format"	"{1:s},{2:s}"
 		"en"		"{1} is requesting {2}"
 	}
-	"Extended Building Request"
+	"Extended Spot Request"
 	{
 		//{1} = Player's Name
 		//{2} = Building Name from structminigame.phrases
@@ -31,7 +31,7 @@
 		"en"		"{1} is requesting {2} at {3}"
 	}
 	
-	//Capture request message
+	/* Capture Messages */
 	"Capture Request"
 	{
 		//{1} = Player's name
@@ -39,6 +39,15 @@
 		"#format"	"{1:s},{2:s}"
 		"en"		"{1} says capture {2}"
 	}
+	"Base Tert"
+	{
+		"en"		"Base Tertiary"
+	}
+	"Tert"
+	{
+		"en"		"Tertiaries"
+	}
+	
 	
 	/* Plugin Messages */
 	"Translate Tag"
@@ -61,7 +70,7 @@
 	/* Common phrases */
 	"Roof"
 	{
-		"en"		"the Rooftop"
+		"en"		"Rooftop"
 	}
 	"Base"
 	{
@@ -75,20 +84,32 @@
 	{
 		"en"		"their Standing Positon"
 	}
-	"East Sec"
+	"Sec"
 	{
-		"en"		"Eastern Secondary"
+		"en"		"Secondary"
 	}
-	"West Sec"
+	"North"
 	{
-		"en"		"Western Secondary"
+		"en"		"North"
 	}
-	"Base Tert"
+	"South"
 	{
-		"en"		"Base Tertiary"
+		"en"		"South"
 	}
-	"Tert"
+	"East"
 	{
-		"en"		"Tertiaries"
+		"en"		"East"
+	}
+	"West"
+	{
+		"en"		"West"
+	}
+	"Right"
+	{
+		"en"		"Right"
+	}
+	"Left"
+	{
+		"en"		"Left"
 	}
 }
