@@ -55,13 +55,15 @@ GetSpotByIndex(const String:sArgs[])
 	return LOCATION_NOT_FOUND;
 }
 
-#define REQUEST_COMPASS_COUNT 4
+#define REQUEST_COMPASS_COUNT 6
 new const String:nd_request_compass[REQUEST_LOCATION_COUNT][] =
 {
-	"north",
-	"south",
-	"east",
-	"west"
+	"North",
+	"South",
+	"East",
+	"West",
+	"Left,
+	"Right"
 };
 
 GetCompassByIndex(const String:sArgs[])
