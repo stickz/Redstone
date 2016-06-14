@@ -1,4 +1,7 @@
-//To Update Later
+#define BUILDING_NOT_FOUND -1
+#define LOCATION_NOT_FOUND -1
+#define COMPASS_NOT_FOUND -1
+
 #define REQUEST_BUILDING_COUNT 12
 new const String:nd_request_building[REQUEST_BUILDING_COUNT][] =
 {
@@ -16,17 +19,63 @@ new const String:nd_request_building[REQUEST_BUILDING_COUNT][] =
 	"Barrier"
 };
 
-#define REQUEST_LOCATION_COUNT 7
+GetBuildingByIndex(const String:sArgs[])
+{
+	for (new building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
+	{
+		if (StrIsWithin(sArgs, nd_request_building[building])) //if a building name is within the string
+		{
+			return building;
+		}
+	}
+	
+	return BUILDING_NOT_FOUND;
+}
+
+#define REQUEST_LOCATION_COUNT 5
 new const String:nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
 	"Roof",
-	"Base Tert",
 	"Base",
 	"Prim",
 	"Pos",
-	"East Sec",
-	"West Sec"
+	"Sec"
 };
+
+GetSpotByIndex(const String:sArgs[])
+{
+	for (new location = 0; location < REQUEST_LOCATION_COUNT; location++) //for all the building spots
+	{
+		if (StrIsWithin(sArgs, nd_request_location[location])) //if a location is within the string
+		{
+			return location;	
+		}
+	}
+
+	return LOCATION_NOT_FOUND;
+}
+
+#define REQUEST_COMPASS_COUNT 4
+new const String:nd_request_compass[REQUEST_LOCATION_COUNT][] =
+{
+	"north",
+	"south",
+	"east",
+	"west"
+};
+
+GetCompassByIndex(const String:sArgs[])
+{
+	for (new compass = 0; compass < REQUEST_COMPASS_COUNT; compass++) //for all the compass locations
+	{
+		if (StrIsWithin(sArgs, nd_request_compass[compass])) //if a location is within the string
+		{
+			return compass;	
+		}
+	}
+
+	return COMPASS_NOT_FOUND;
+}
 
 bool:CheckBuildingRequest(client, const String:sArgs[])
 {
@@ -35,22 +84,21 @@ bool:CheckBuildingRequest(client, const String:sArgs[])
 
 	if (StrStartsWith(sArgs, "request")) //if string starts with request
 	{
-		for (new building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
+		new building = GetBuildingByIndex(sArgs);
+		
+		if (building != BUILDING_NOT_FOUND)
 		{
-			if (StrIsWithin(sArgs, nd_request_building[building])) //if a building name is within the string
+			new location = GetSpotByIndex(sArgs);
+			//new compass = GetCompassByIndex(sArgs);
+			
+			if (location != LOCATION_NOT_FOUND)
 			{
-				for (new location = 0; location < REQUEST_LOCATION_COUNT; location++) //for all the locations
-				{
-					if (StrIsWithin(sArgs, nd_request_location[location])) //if a location is within the string
-					{
-						PrintExtendedBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
-						return true;	
-					}
-				}
-					
-				PrintSimpleBuildingRequest(client, nd_request_building[building]);
-				return true;
+				PrintSpotBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
+				return true;	
 			}
+					
+			PrintSimpleBuildingRequest(client, nd_request_building[building]);
+			return true;
 		}
 			
 		PrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", 
@@ -87,7 +135,7 @@ PrintSimpleBuildingRequest(client, const String:bName[])
 	}
 }
 
-PrintExtendedBuildingRequest(client, const String:bName[], const String:lName[])
+PrintSpotBuildingRequest(client, const String:bName[], const String:lName[])
 {
 	if (IsValidClient(client))
 	{
@@ -107,7 +155,7 @@ PrintExtendedBuildingRequest(client, const String:bName[], const String:lName[])
 				Format(location, sizeof(location), "%T", lName, idx);
 				
 				decl String:ToPrint[128];
-				Format(ToPrint, sizeof(ToPrint), "%T", "Extended Building Request", idx, cName, building, location);
+				Format(ToPrint, sizeof(ToPrint), "%T", "Extended Spot Request", idx, cName, building, location);
 			
 				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
 							      MESSAGE_COLOUR, ToPrint); 
