@@ -56,7 +56,7 @@ GetSpotByIndex(const String:sArgs[])
 }
 
 #define REQUEST_COMPASS_COUNT 6
-new const String:nd_request_compass[REQUEST_LOCATION_COUNT][] =
+new const String:nd_request_compass[REQUEST_COMPASS_COUNT][] =
 {
 	"North",
 	"South",
@@ -91,12 +91,25 @@ bool:CheckBuildingRequest(client, const String:sArgs[])
 		if (building != BUILDING_NOT_FOUND)
 		{
 			new location = GetSpotByIndex(sArgs);
-			//new compass = GetCompassByIndex(sArgs);
+			new compass = GetCompassByIndex(sArgs);
 			
 			if (location != LOCATION_NOT_FOUND)
 			{
 				PrintSpotBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
-				return true;	
+				return true;
+				
+				if (compass != COMPASS_NOT_FOUND)
+				{
+					PrintComplexBuildingRequest(client, 	nd_request_building[building], 
+										nd_request_location[location],
+										nd_request_compass[compass]);
+					return true;
+				}
+			}
+			else if (compass != COMPASS_NOT_FOUND)
+			{
+				PrintCompassBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
+				return true;
 			}
 					
 			PrintSimpleBuildingRequest(client, nd_request_building[building]);
@@ -161,6 +174,69 @@ PrintSpotBuildingRequest(client, const String:bName[], const String:lName[])
 			
 				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
 							      MESSAGE_COLOUR, ToPrint); 
+			}
+		}
+	}
+}
+
+PrintCompassBuildingRequest(client, const String:bName[], const String:cName[])
+{
+	if (IsValidClient(client))
+	{
+		new team = GetClientTeam(client);
+		
+		decl String:cName[64];
+		GetClientName(client, cName, sizeof(cName));
+		
+		for (new idx = 0; idx <= MaxClients; idx++)
+		{
+			if (IsOnTeam(idx, team))
+			{
+				decl String:building[64];
+				Format(building, sizeof(building), "%T", bName, idx);
+				
+				decl String:compass[64];
+				Format(compass, sizeof(compass), "%T", clName, idx);
+				
+				decl String:ToPrint[128];
+				Format(ToPrint, sizeof(ToPrint), "%T", "Compass Building Request", 
+								       idx, cName, building, compass);
+								       
+				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
+							      MESSAGE_COLOUR, ToPrint);
+			}
+		}
+	}
+}
+
+PrintComplexBuildingRequest(client, const String:bName[], const String:lName[], const String:cName[])
+{
+	if (IsValidClient(client))
+	{
+		new team = GetClientTeam(client);
+		
+		decl String:cName[64];
+		GetClientName(client, cName, sizeof(cName));
+		
+		for (new idx = 0; idx <= MaxClients; idx++)
+		{
+			if (IsOnTeam(idx, team))
+			{
+				decl String:building[64];
+				Format(building, sizeof(building), "%T", bName, idx);
+				
+				decl String:location[64];
+				Format(location, sizeof(location), "%T", lName, idx);
+				
+				decl String:compass[64];
+				Format(compass, sizeof(compass), "%T", clName, idx);
+				
+				decl String:ToPrint[128];
+				Format(ToPrint, sizeof(ToPrint), "%T", "Complex Building Request", 
+								       idx, cName, building, location, compass);
+								       
+				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
+							      MESSAGE_COLOUR, ToPrint);
 			}
 		}
 	}
