@@ -166,7 +166,7 @@ PrintSpotBuildingRequest(client, const String:bName[], const String:lName[])
 				decl String:building[64];
 				Format(building, sizeof(building), "%T", bName, idx);
 				
-				decl String:location[64];
+				decl String:location[32];
 				Format(location, sizeof(location), "%T", lName, idx);
 				
 				decl String:ToPrint[128];
@@ -195,7 +195,7 @@ PrintCompassBuildingRequest(client, const String:bName[], const String:cName[])
 				decl String:building[64];
 				Format(building, sizeof(building), "%T", bName, idx);
 				
-				decl String:compass[64];
+				decl String:compass[32];
 				Format(compass, sizeof(compass), "%T", clName, idx);
 				
 				decl String:ToPrint[128];
@@ -225,10 +225,10 @@ PrintComplexBuildingRequest(client, const String:bName[], const String:lName[], 
 				decl String:building[64];
 				Format(building, sizeof(building), "%T", bName, idx);
 				
-				decl String:location[64];
+				decl String:location[32];
 				Format(location, sizeof(location), "%T", lName, idx);
 				
-				decl String:compass[64];
+				decl String:compass[32];
 				Format(compass, sizeof(compass), "%T", clName, idx);
 				
 				decl String:ToPrint[128];
