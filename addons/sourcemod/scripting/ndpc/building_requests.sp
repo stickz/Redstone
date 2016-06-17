@@ -108,7 +108,7 @@ bool:CheckBuildingRequest(client, const String:sArgs[])
 			}
 			else if (compass != COMPASS_NOT_FOUND)
 			{
-				PrintCompassBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
+				PrintCompassBuildingRequest(client, nd_request_building[building], nd_request_compass[compass]);
 				return true;
 			}
 					
