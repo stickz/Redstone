@@ -62,7 +62,7 @@ new const String:nd_request_compass[REQUEST_COMPASS_COUNT][] =
 	"South",
 	"East",
 	"West",
-	"Left,
+	"Left",
 	"Right"
 };
 
@@ -95,9 +95,6 @@ bool:CheckBuildingRequest(client, const String:sArgs[])
 			
 			if (location != LOCATION_NOT_FOUND)
 			{
-				PrintSpotBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
-				return true;
-				
 				if (compass != COMPASS_NOT_FOUND)
 				{
 					PrintComplexBuildingRequest(client, 	nd_request_building[building], 
@@ -105,6 +102,9 @@ bool:CheckBuildingRequest(client, const String:sArgs[])
 										nd_request_compass[compass]);
 					return true;
 				}
+				
+				PrintSpotBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
+				return true;
 			}
 			else if (compass != COMPASS_NOT_FOUND)
 			{
@@ -130,8 +130,8 @@ PrintSimpleBuildingRequest(client, const String:bName[])
 	{
 		new team = GetClientTeam(client);
 		
-		decl String:cName[64];
-		GetClientName(client, cName, sizeof(cName));
+		decl String:pName[64];
+		GetClientName(client, pName, sizeof(pName));
 		
 		for (new idx = 0; idx <= MaxClients; idx++)
 		{
@@ -141,7 +141,7 @@ PrintSimpleBuildingRequest(client, const String:bName[])
 				Format(building, sizeof(building), "%T", bName, idx);
 				
 				decl String:ToPrint[128];
-				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, cName, building);
+				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, pName, building);
 				
 				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
 							      MESSAGE_COLOUR, ToPrint); 
@@ -156,8 +156,8 @@ PrintSpotBuildingRequest(client, const String:bName[], const String:lName[])
 	{
 		new team = GetClientTeam(client);
 		
-		decl String:cName[64];
-		GetClientName(client, cName, sizeof(cName));
+		decl String:pName[64];
+		GetClientName(client, pName, sizeof(pName));
 		
 		for (new idx = 0; idx <= MaxClients; idx++)
 		{
@@ -170,7 +170,7 @@ PrintSpotBuildingRequest(client, const String:bName[], const String:lName[])
 				Format(location, sizeof(location), "%T", lName, idx);
 				
 				decl String:ToPrint[128];
-				Format(ToPrint, sizeof(ToPrint), "%T", "Extended Spot Request", idx, cName, building, location);
+				Format(ToPrint, sizeof(ToPrint), "%T", "Extended Spot Request", idx, pName, building, location);
 			
 				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
 							      MESSAGE_COLOUR, ToPrint); 
@@ -185,8 +185,8 @@ PrintCompassBuildingRequest(client, const String:bName[], const String:cName[])
 	{
 		new team = GetClientTeam(client);
 		
-		decl String:cName[64];
-		GetClientName(client, cName, sizeof(cName));
+		decl String:pName[64];
+		GetClientName(client, pName, sizeof(pName));
 		
 		for (new idx = 0; idx <= MaxClients; idx++)
 		{
@@ -196,11 +196,11 @@ PrintCompassBuildingRequest(client, const String:bName[], const String:cName[])
 				Format(building, sizeof(building), "%T", bName, idx);
 				
 				decl String:compass[32];
-				Format(compass, sizeof(compass), "%T", clName, idx);
+				Format(compass, sizeof(compass), "%T", cName, idx);
 				
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Compass Building Request", 
-								       idx, cName, building, compass);
+								       idx, pName, building, compass);
 								       
 				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
 							      MESSAGE_COLOUR, ToPrint);
@@ -215,8 +215,8 @@ PrintComplexBuildingRequest(client, const String:bName[], const String:lName[], 
 	{
 		new team = GetClientTeam(client);
 		
-		decl String:cName[64];
-		GetClientName(client, cName, sizeof(cName));
+		decl String:pName[64];
+		GetClientName(client, pName, sizeof(pName));
 		
 		for (new idx = 0; idx <= MaxClients; idx++)
 		{
@@ -229,11 +229,11 @@ PrintComplexBuildingRequest(client, const String:bName[], const String:lName[], 
 				Format(location, sizeof(location), "%T", lName, idx);
 				
 				decl String:compass[32];
-				Format(compass, sizeof(compass), "%T", clName, idx);
+				Format(compass, sizeof(compass), "%T", cName, idx);
 				
 				decl String:ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Complex Building Request", 
-								       idx, cName, building, location, compass);
+								       idx, pName, building, location, compass);
 								       
 				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
 							      MESSAGE_COLOUR, ToPrint);
