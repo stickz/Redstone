@@ -22,13 +22,33 @@
 		"#format"	"{1:s},{2:s}"
 		"en"		"{1} is requesting {2}"
 	}
-	"Extended Spot Request"
+	
+	"Compass Building Request"
+	{
+		//{1} = Player's Name
+		//{2} = Building Name from structminigame.phrases
+		//{3} = Compass Name (see bellow)
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"{1} is requesting {2} on the {3} side"
+	}
+	
+	"Spot Building Request"
 	{
 		//{1} = Player's Name
 		//{2} = Building Name from structminigame.phrases
 		//{3} = Location Name (see bellow)
 		"#format"	"{1:s},{2:s},{3:s}"
 		"en"		"{1} is requesting {2} at {3}"
+	}
+	
+	"Complex Building Request"
+	{
+		//{1} = Player's Name
+		//{2} = Building Name from structminigame.phrases
+		//{3} = Location Name (see bellow)
+		//{4} = Compass Name (see bellow)
+		"#format"	"{1:s},{2:s},{3:s},{4:s}"
+		"en" 		"{1} is requesting {2} at the {4} {3}"
 	}
 	
 	/* Capture Messages */
@@ -67,7 +87,7 @@
 		"en" 		"This team currently doesn't have a commander"
 	}
 	
-	/* Spot phrases */
+	/* Location phrases */
 	"Roof"
 	{
 		"en"		"Rooftop"
