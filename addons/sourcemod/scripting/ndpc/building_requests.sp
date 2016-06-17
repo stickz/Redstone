@@ -170,7 +170,7 @@ PrintSpotBuildingRequest(client, const String:bName[], const String:lName[])
 				Format(location, sizeof(location), "%T", lName, idx);
 				
 				decl String:ToPrint[128];
-				Format(ToPrint, sizeof(ToPrint), "%T", "Extended Spot Request", idx, pName, building, location);
+				Format(ToPrint, sizeof(ToPrint), "%T", "Spot Building Request", idx, pName, building, location);
 			
 				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
 							      MESSAGE_COLOUR, ToPrint); 
