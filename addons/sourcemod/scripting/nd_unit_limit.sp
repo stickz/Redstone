@@ -49,9 +49,33 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_unit_limit/nd_unit_limit.txt"
 #include "updater/standard.sp"
 
-new Handle:eCommanders = INVALID_HANDLE,
-	UnitLimit[2][3],
+ConVar eCommanders;
+
+new 	UnitLimit[2][3],
 	bool:SetLimit[2][3];
+	
+/* Adstract limiting commands, adjust arrays to add more */
+#define SNIPER_LIMIT_COMMANDS 3
+new const String:sniper_command[SNIPER_LIMIT_COMMANDS][] =
+{
+	"sm_maxsnipers",
+	"sm_maxsniper",
+	"sm_sniperlimit"
+};
+#define STEALTH_LIMIT_COMMANDS 3
+new const String:stealth_command[STEALTH_LIMIT_COMMANDS][] =
+{
+	"sm_maxstealths",
+	"sm_maxstealth",
+	"sm_stealthlimit"
+};
+#define STRUCTURE_LIMIT_COMMANDS 3
+new const String:structure_command[STRUCTURE_LIMIT_COMMANDS][] =
+{
+	"sm_MaxAntiStructures",
+	"sm_MaxAntiStructure",
+	"sm_AntiStructureLimit"
+};
 
 //Version is auto-filled by the travis builder
 public Plugin:myinfo = 
@@ -66,27 +90,38 @@ public Plugin:myinfo =
 public OnPluginStart() 
 {
 	eCommanders = CreateConVar("sm_allow_commander_setting", "1", "Sets wetheir to allow commanders to set their own limits.");
-	
-	RegAdminCmd("sm_maxsnipers_admin", CMD_ChangeSnipersLimit, ADMFLAG_GENERIC, "!maxsnipers_admin <team> <amount>");
-	
-	RegConsoleCmd("sm_maxsnipers", CMD_ChangeTeamSnipersLimit, "Change the maximum number of snipers in the team: !maxsnipers <amount>");
-	RegConsoleCmd("sm_maxsniper", CMD_ChangeTeamSnipersLimit, "Change the maximum number of snipers in the team: !maxsnipers <amount>");
-	
-	RegConsoleCmd("sm_maxstealths", CMD_ChangeTeamStealthLimit, "Change the maximum number of stealth in the team: !maxsteaths <amount>");
-	RegConsoleCmd("sm_maxstealth", CMD_ChangeTeamStealthLimit, "Change the maximum number of stealth in the team: !maxsteaths <amount>");
-	
-	RegConsoleCmd("sm_MaxAntiStructures", CMD_ChangeTeamAntiStructureLimit, "Change the maximum percent of antistrcture in the team: !MaxAntiStructure <amount>");
-	RegConsoleCmd("sm_MaxAntiStructure", CMD_ChangeTeamAntiStructureLimit, "Change the maximum percent of antistrcture in the team: !MaxAntiStructure <amount>");
-
 	HookEvent("player_changeclass", Event_SelectClass, EventHookMode_Pre);
-
-	AddUpdaterLibrary();
+	
+	RegisterCommands(); //register unit limit commands
+	AddUpdaterLibrary(); //add updater support
 	
 	LoadTranslations("nd_unit_limit.phrases");
 	LoadTranslations("numbers.phrases");
 }
 
+RegisterCommands()
+{
+	RegAdminCmd("sm_maxsnipers_admin", CMD_ChangeSnipersLimit, ADMFLAG_GENERIC, "!maxsnipers_admin <team> <amount>");
+	
+	for (new sniper = 0; sniper < SNIPER_LIMIT_COMMANDS; sniper++) { //for sniper commands
+		RegConsoleCmd(sniper_command[sniper], CMD_ChangeTeamSnipersLimit, "Set maximum number of snipers");
+	}
+	
+	for (new stealth = 0; stealth < STEALTH_LIMIT_COMMANDS; stealth++) { //for stealth commands
+		RegConsoleCmd(stealth_command[stealth], CMD_ChangeTeamStealthLimit, "Set maximum number of stealth");
+	}
+	
+	for (new structure = 0; structure < STRUCTURE_LIMIT_COMMANDS; structure++) { //for structure commands
+		RegConsoleCmd(structure_command[structure], CMD_ChangeTeamAntiStructureLimit, "Set maximum percent of anti-structure"); 
+	}
+}
+
 public OnMapStart() 
+{
+	ResetUnitLimits();
+}
+
+ResetUnitLimits()
 {
 	for (new x = 0; x < 2; x++)
 	{
@@ -229,7 +264,7 @@ public Action:CMD_ChangeTeamAntiStructureLimit(client, args)
 
 bool:CheckCommonFailure(client, type, args)
 {
-	if (!GetConVarBool(eCommanders))
+	if (!eCommanders.BoolValue)
 	{
 		PrintToChat(client, "%s %t", PREFIX, "Commander Disabled"); //commander setting of sniper limits are disabled
         	return true;
