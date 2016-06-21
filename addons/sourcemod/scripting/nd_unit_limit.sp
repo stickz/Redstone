@@ -51,26 +51,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 ConVar eCommanders;
 
-int UnitLimit[2][3],
+int UnitLimit[2][3];
 bool SetLimit[2][3];
 	
 /* Adstract limiting commands, adjust arrays to add more */
 #define SNIPER_LIMIT_COMMANDS 3
-new const char sniper_command[SNIPER_LIMIT_COMMANDS][] =
+const char sniper_command[SNIPER_LIMIT_COMMANDS][] =
 {
 	"sm_maxsnipers",
 	"sm_maxsniper",
 	"sm_sniperlimit"
 };
 #define STEALTH_LIMIT_COMMANDS 3
-new const char stealth_command[STEALTH_LIMIT_COMMANDS][] =
+const char stealth_command[STEALTH_LIMIT_COMMANDS][] =
 {
 	"sm_maxstealths",
 	"sm_maxstealth",
 	"sm_stealthlimit"
 };
 #define STRUCTURE_LIMIT_COMMANDS 3
-new const char structure_command[STRUCTURE_LIMIT_COMMANDS][] =
+const char structure_command[STRUCTURE_LIMIT_COMMANDS][] =
 {
 	"sm_MaxAntiStructures",
 	"sm_MaxAntiStructure",
@@ -189,7 +189,7 @@ public Action CMD_ChangeSnipersLimit(int client, int args)
 
 	char strteam[32];
 	GetCmdArg(1, strteam, sizeof(strteam));
-    	int = StringToInt(strteam) + 2;
+    	int team = StringToInt(strteam) + 2;
     	
     	if (team < 2)
     	{
