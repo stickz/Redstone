@@ -208,8 +208,12 @@ Menu CreateGlobalVoteMenu(const char[] name)
 	//Create new menu object
 	Menu menu = new Menu(Handler_VoteCallback, MenuAction:MENU_ACTIONS_ALL);
 	
+	//Set the menu title
+	char tName[32];
+	Format(tName, sizeof(tName), "%s Player:", name);
+	g_hVoteMenu.SetTitle(tName);
+	
 	//Set various menu properties
-	g_hVoteMenu.SetTitle("%s Player:", name);
 	g_hVoteMenu.AddItem(VOTE_YES, "Yes");
 	g_hVoteMenu.AddItem(VOTE_NO, "No");
 	g_hVoteMenu.ExitButton(false);
