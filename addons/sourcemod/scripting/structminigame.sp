@@ -32,7 +32,7 @@ public Plugin myinfo =
 	author 		= "databomb edited by stickz",
 	description 	= "Provides a mini-game and announcement for structure killing",
 	version 	= "dummy",
-	url 		= "vintagejailbreak.org"
+	url 		= "https://github.com/stickz/Redstone/"
 };
 
 /* Auto Updater */
