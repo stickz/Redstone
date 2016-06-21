@@ -56,21 +56,21 @@ bool SetLimit[2][3];
 	
 /* Adstract limiting commands, adjust arrays to add more */
 #define SNIPER_LIMIT_COMMANDS 3
-const char sniper_command[SNIPER_LIMIT_COMMANDS][] =
+char sniper_command[SNIPER_LIMIT_COMMANDS][] =
 {
 	"sm_maxsnipers",
 	"sm_maxsniper",
 	"sm_sniperlimit"
 };
 #define STEALTH_LIMIT_COMMANDS 3
-const char stealth_command[STEALTH_LIMIT_COMMANDS][] =
+char stealth_command[STEALTH_LIMIT_COMMANDS][] =
 {
 	"sm_maxstealths",
 	"sm_maxstealth",
 	"sm_stealthlimit"
 };
 #define STRUCTURE_LIMIT_COMMANDS 3
-const char structure_command[STRUCTURE_LIMIT_COMMANDS][] =
+char structure_command[STRUCTURE_LIMIT_COMMANDS][] =
 {
 	"sm_MaxAntiStructures",
 	"sm_MaxAntiStructure",
