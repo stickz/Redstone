@@ -219,12 +219,12 @@ Menu CreateGlobalVoteMenu(const char[] name)
 	return menu;
 }
 
-void PrintAndLogVoteStart(int client, int target, const char name[])
+void PrintAndLogVoteStart(int client, int target, const char[] name)
 {
-	char Message[64];
-	Format(Message, sizeof(Message), "\"%L\" initiated a %s vote against \"%L\"", client, Name, target);
-	PrintToAdmins(Message, "a");
-	LogAction(client, target, Message);
+	char mssage[64];
+	Format(message, sizeof(message), "\"%L\" initiated a %s vote against \"%L\"", client, name, target);
+	PrintToAdmins(message, "a");
+	LogAction(client, target, message);
 }
 
 void DisplayVoteTargetMenu(int client)
@@ -234,7 +234,7 @@ void DisplayVoteTargetMenu(int client)
 	char title[100];
 	Format(title, sizeof(title), "%s", "Choose player:");
 	menu.SetTitle(title);
-	menu.ExitBackButton(true);
+	menu.ExitBackButton = true;
 	
 	char playername[128], identifier[64];
 	for (int i = 1; i < GetMaxClients(); i++)
