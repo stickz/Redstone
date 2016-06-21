@@ -221,7 +221,7 @@ Menu CreateGlobalVoteMenu(const char[] name)
 
 void PrintAndLogVoteStart(int client, int target, const char[] name)
 {
-	char mssage[64];
+	char message[64];
 	Format(message, sizeof(message), "\"%L\" initiated a %s vote against \"%L\"", client, name, target);
 	PrintToAdmins(message, "a");
 	LogAction(client, target, message);
