@@ -199,7 +199,7 @@ public void Hook_PostThinkPost(int client)
 	if(IsInvalid(iWeapon))
 		return;
 	
-	char Weapon[30];
+	char sWeapon[30];
 	GetEdictClassname(iWeapon, sWeapon, sizeof(sWeapon));
 	if(StrContains(sWeapon, "weapon_", false) != 0)
 		return;
