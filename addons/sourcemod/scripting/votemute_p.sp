@@ -209,11 +209,11 @@ Menu CreateGlobalVoteMenu(const char[] name)
 	Menu menu = new Menu(Handler_VoteCallback, MenuAction:MENU_ACTIONS_ALL);
 	
 	//Set various menu properties
-	g_hVoteMenu.SetTitle("%s Player:", name);
-	g_hVoteMenu.AddItem(VOTE_YES, "Yes");
-	g_hVoteMenu.AddItem(VOTE_NO, "No");
-	g_hVoteMenu.ExitBackButton(false);
-	g_hVoteMenu.DisplayVoteToAll(20);
+	menu.SetTitle("%s Player:", name);
+	menu.AddItem(VOTE_YES, "Yes");
+	menu.AddItem(VOTE_NO, "No");
+	menu.ExitButton(false);
+	menu.DisplayVoteToAll(20);
 	
 	//return the created menu
 	return menu;
