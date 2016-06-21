@@ -12,7 +12,7 @@
  *
  * @return True or False 	Round Started.
  */
-native bool:ND_RoundStarted();
+native bool ND_RoundStarted();
 
 #define NDRS_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStarted") == FeatureStatus_Available)
 
@@ -25,7 +25,7 @@ native bool:ND_RoundStarted();
  *
  * @return True or False 	Round Started.
  */
-native bool:ND_RoundEnded();
+native bool ND_RoundEnded();
 
 #define NDRE_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundEnded") == FeatureStatus_Available)
 
@@ -38,6 +38,6 @@ native bool:ND_RoundEnded();
  *
  * @return True or False 	Map Started.
  */
-native bool:ND_MapStarted();
+native bool ND_MapStarted();
 
 #define NDMS_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStarted") == FeatureStatus_Available)
