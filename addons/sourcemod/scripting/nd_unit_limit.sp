@@ -51,26 +51,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 ConVar eCommanders;
 
-new 	UnitLimit[2][3],
-	bool:SetLimit[2][3];
+int UnitLimit[2][3],
+bool SetLimit[2][3];
 	
 /* Adstract limiting commands, adjust arrays to add more */
 #define SNIPER_LIMIT_COMMANDS 3
-new const String:sniper_command[SNIPER_LIMIT_COMMANDS][] =
+new const char sniper_command[SNIPER_LIMIT_COMMANDS][] =
 {
 	"sm_maxsnipers",
 	"sm_maxsniper",
 	"sm_sniperlimit"
 };
 #define STEALTH_LIMIT_COMMANDS 3
-new const String:stealth_command[STEALTH_LIMIT_COMMANDS][] =
+new const char stealth_command[STEALTH_LIMIT_COMMANDS][] =
 {
 	"sm_maxstealths",
 	"sm_maxstealth",
 	"sm_stealthlimit"
 };
 #define STRUCTURE_LIMIT_COMMANDS 3
-new const String:structure_command[STRUCTURE_LIMIT_COMMANDS][] =
+new const char structure_command[STRUCTURE_LIMIT_COMMANDS][] =
 {
 	"sm_MaxAntiStructures",
 	"sm_MaxAntiStructure",
@@ -78,7 +78,7 @@ new const String:structure_command[STRUCTURE_LIMIT_COMMANDS][] =
 };
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo = 
+public Plugin myinfo = 
 {
 	name		= "[ND] Unit Limiter",
 	author 		= "stickz, yed_",
@@ -87,7 +87,7 @@ public Plugin:myinfo =
 	url 		= "https://github.com/stickz/Redstone/"
 }
 
-public OnPluginStart() 
+public void OnPluginStart() 
 {
 	eCommanders = CreateConVar("sm_allow_commander_setting", "1", "Sets wetheir to allow commanders to set their own limits.");
 	HookEvent("player_changeclass", Event_SelectClass, EventHookMode_Pre);
@@ -99,33 +99,33 @@ public OnPluginStart()
 	LoadTranslations("numbers.phrases");
 }
 
-RegisterCommands()
+void RegisterCommands()
 {
 	RegAdminCmd("sm_maxsnipers_admin", CMD_ChangeSnipersLimit, ADMFLAG_GENERIC, "!maxsnipers_admin <team> <amount>");
 	
-	for (new sniper = 0; sniper < SNIPER_LIMIT_COMMANDS; sniper++) { //for sniper commands
+	for (int sniper = 0; sniper < SNIPER_LIMIT_COMMANDS; sniper++) { //for sniper commands
 		RegConsoleCmd(sniper_command[sniper], CMD_ChangeTeamSnipersLimit, "Set maximum number of snipers");
 	}
 	
-	for (new stealth = 0; stealth < STEALTH_LIMIT_COMMANDS; stealth++) { //for stealth commands
+	for (int stealth = 0; stealth < STEALTH_LIMIT_COMMANDS; stealth++) { //for stealth commands
 		RegConsoleCmd(stealth_command[stealth], CMD_ChangeTeamStealthLimit, "Set maximum number of stealth");
 	}
 	
-	for (new structure = 0; structure < STRUCTURE_LIMIT_COMMANDS; structure++) { //for structure commands
+	for (int structure = 0; structure < STRUCTURE_LIMIT_COMMANDS; structure++) { //for structure commands
 		RegConsoleCmd(structure_command[structure], CMD_ChangeTeamAntiStructureLimit, "Set maximum percent of anti-structure"); 
 	}
 }
 
-public OnMapStart() 
+public void OnMapStart() 
 {
 	ResetUnitLimits();
 }
 
-ResetUnitLimits()
+void ResetUnitLimits()
 {
-	for (new x = 0; x < 2; x++)
+	for (int x = 0; x < 2; x++)
 	{
-		for (new y = 0; y < 2; y++)
+		for (int y = 0; y < 2; y++)
 		{
 			UnitLimit[x][y] = -1;
 			SetLimit[x][y] = false;
@@ -133,14 +133,14 @@ ResetUnitLimits()
 	}
 }
 
-public Action:Event_SelectClass(Handle:event, const String:name[], bool:dontBroadcast) 
+public Action Event_SelectClass(Event event, const char[] name, bool dontBroadcast)
 {
 	if (!ND_RoundStarted())
 		return Plugin_Continue;
 	
-	new client = GetClientOfUserId(GetEventInt(event, "userid"));
-    	new cls = GetEventInt(event, "class");
-    	new subcls = GetEventInt(event, "subclass");
+	int client = GetClientOfUserId(GetEventInt(event, "userid"));
+    	int cls = GetEventInt(event, "class");
+    	int subcls = GetEventInt(event, "subclass");
 
 	if (IsSniperClass(cls, subcls)) 
 	{
@@ -176,7 +176,7 @@ public Action:Event_SelectClass(Handle:event, const String:name[], bool:dontBroa
 }
 
 // CHANGE LIMIT
-public Action:CMD_ChangeSnipersLimit(client, args) 
+public Action CMD_ChangeSnipersLimit(int client, int args) 
 {
 	if (!IsValidClient(client))
         	return Plugin_Handled;    
@@ -187,9 +187,9 @@ public Action:CMD_ChangeSnipersLimit(client, args)
 	 	return Plugin_Handled;
 	}
 
-	decl String:strteam[32];
+	char strteam[32];
 	GetCmdArg(1, strteam, sizeof(strteam));
-    	new team = StringToInt(strteam) + 2;
+    	int = StringToInt(strteam) + 2;
     	
     	if (team < 2)
     	{
@@ -197,22 +197,22 @@ public Action:CMD_ChangeSnipersLimit(client, args)
     		return Plugin_Handled;
     	}
 
-    	decl String:strvalue[32];
+    	char strvalue[32];
 	GetCmdArg(2, strvalue, sizeof(strvalue));
-	new value = StringToInt(strvalue);
+	int value = StringToInt(strvalue);
 
     	SetUnitLimit(team, TYPE_SNIPER, value);
     	return Plugin_Handled;
 }
 
-public Action:CMD_ChangeTeamSnipersLimit(client, args) 
+public Action CMD_ChangeTeamSnipersLimit(int client, int args) 
 {	
 	if (CheckCommonFailure(client, TYPE_SNIPER, args))
 		return Plugin_Handled;
 
-    	decl String:strvalue[32];
+    	char strvalue[32];
 	GetCmdArg(1, strvalue, sizeof(strvalue));
-	new value = StringToInt(strvalue);
+	int value = StringToInt(strvalue);
 	
 	if (value > 10)
         	value = 10;
@@ -224,14 +224,14 @@ public Action:CMD_ChangeTeamSnipersLimit(client, args)
 	return Plugin_Handled;
 }
 
-public Action:CMD_ChangeTeamStealthLimit(client, args) 
+public Action CMD_ChangeTeamStealthLimit(int client, int args) 
 {
 	if (CheckCommonFailure(client, TYPE_STEALTH, args))
 		return Plugin_Handled;
 	
-	decl String:strvalue[32];
+	char strvalue[32];
 	GetCmdArg(1, strvalue, sizeof(strvalue));
-	new value = StringToInt(strvalue);
+	int value = StringToInt(strvalue);
 	
 	if (value > 10)
         	value = 10;
@@ -243,14 +243,14 @@ public Action:CMD_ChangeTeamStealthLimit(client, args)
 	return Plugin_Handled;
 }
 
-public Action:CMD_ChangeTeamAntiStructureLimit(client, args) 
+public Action CMD_ChangeTeamAntiStructureLimit(int client, int args) 
 {
 	if (CheckCommonFailure(client, TYPE_STRUCTURE, args))
 		return Plugin_Handled;
 	
-	decl String:strvalue[32];
+	char strvalue[32];
 	GetCmdArg(1, strvalue, sizeof(strvalue));
-	new value = StringToInt(strvalue);
+	int value = StringToInt(strvalue);
 	
 	if (value > 100)
         	value = 100;
@@ -262,7 +262,7 @@ public Action:CMD_ChangeTeamAntiStructureLimit(client, args)
 	return Plugin_Handled;
 }
 
-bool:CheckCommonFailure(client, type, args)
+bool CheckCommonFailure(int client, int type, int args)
 {
 	if (!eCommanders.BoolValue)
 	{
@@ -273,7 +273,7 @@ bool:CheckCommonFailure(client, type, args)
     	if (!IsValidClient(client))
         	return true;    
 
-    	new client_team = GetClientTeam(client);
+    	int client_team = GetClientTeam(client);
 
     	if (client_team < 2)
     	{
@@ -303,12 +303,12 @@ bool:CheckCommonFailure(client, type, args)
 }
 
 // HELPER FUNCTIONS
-bool:IsTooMuchSnipers(client) 
+bool IsTooMuchSnipers(client) 
 {
-	new clientTeam = GetClientTeam(client);	
-	new clientCount = ValidTeamCount(client);
-	new sniperCount = GetSniperCount(clientTeam);
-	new teamIDX = clientTeam - 2;
+	int clientTeam = GetClientTeam(client);	
+	int clientCount = ValidTeamCount(client);
+	int sniperCount = GetSniperCount(clientTeam);
+	int teamIDX = clientTeam - 2;
 
 	if (!SetLimit[teamIDX][TYPE_SNIPER])
 		return 	clientCount < 6  &&  sniperCount >= LOW_LIMIT || 
@@ -318,60 +318,60 @@ bool:IsTooMuchSnipers(client)
 		return sniperCount >= UnitLimit[teamIDX][TYPE_SNIPER];
 }
 
-bool:IsTooMuchStealth(client)
+bool IsTooMuchStealth(int client)
 {
-	new clientTeam = GetClientTeam(client);	
-	new teamIDX = clientTeam - 2;
+	int clientTeam = GetClientTeam(client);	
+	int teamIDX = clientTeam - 2;
 	
 	if (!SetLimit[teamIDX][TYPE_STEALTH])
 		return false;
 		
-	new stealthCount = GetStealthCount(clientTeam);
-	new unitLimit = UnitLimit[teamIDX][TYPE_STEALTH];
+	int stealthCount = GetStealthCount(clientTeam);
+	int unitLimit = UnitLimit[teamIDX][TYPE_STEALTH];
 	
-	new stealthMin = GetMinStealthValue(clientTeam);
-	new stealthLimit = stealthMin > unitLimit ? stealthMin : unitLimit;
+	int stealthMin = GetMinStealthValue(clientTeam);
+	int stealthLimit = stealthMin > unitLimit ? stealthMin : unitLimit;
 	
 	return stealthCount >= stealthLimit;
 }
 
-bool:IsTooMuchAntiStructure(client)
+bool IsTooMuchAntiStructure(int client)
 {
-	new clientTeam = GetClientTeam(client);	
-	new teamIDX = clientTeam - 2;
+	int clientTeam = GetClientTeam(client);	
+	int teamIDX = clientTeam - 2;
 	
 	if (!SetLimit[teamIDX][TYPE_STRUCTURE])
 		return false;
 	
-	new Float:AntiStructureFloat = float(GetAntiStructureCount(clientTeam));
-	new Float:teamFloat = float(ValidTeamCount(clientTeam));
-	new Float:AntiStructurePercent = (AntiStructureFloat / teamFloat) * 100.0;
+	float AntiStructureFloat = float(GetAntiStructureCount(clientTeam));
+	float teamFloat = float(ValidTeamCount(clientTeam));
+	float AntiStructurePercent = (AntiStructureFloat / teamFloat) * 100.0;
 	
-	new percentLimit = UnitLimit[clientTeam - 2][TYPE_STRUCTURE];
+	int percentLimit = UnitLimit[clientTeam - 2][TYPE_STRUCTURE];
 	
 	return AntiStructurePercent >= percentLimit && AntiStructureFloat > MIN_ANTI_STRUCTURE_VALUE;
 }
 
-bool:IsAntiStructure(class, subClass)
+bool IsAntiStructure(int class, int subClass)
 {
 	return (class == MAIN_CLASS_EXO && subClass == EXO_CLASS_SEIGE_KIT)
 	    || (class == MAIN_CLASS_SUPPORT && subClass == SUPPORT_CLASS_BBQ);
 	    // Don't account for sabeuters or grenadiers becuase they are a mixed unit
 }
 
-GetMinStealthValue(team)
+void GetMinStealthValue(int team)
 {
 	return ValidTeamCount(team) < 7 ? MIN_STEALTH_LOW_VALUE : MIN_STEALTH_HIGH_VALUE; 
 }
 
-ResetPlayerClass(client) 
+void ResetPlayerClass(int client) 
 {
 	ResetClass(client, MAIN_CLASS_ASSAULT, ASSAULT_CLASS_INFANTRY, 0);
 }
 
-SetUnitLimit(team, type, value)
+void SetUnitLimit(team, type, value)
 {
-	new teamIDX = team - 2;
+	int teamIDX = team - 2;
 	
 	UnitLimit[teamIDX][type] = value;
 	SetLimit[teamIDX][type] = true;
@@ -407,11 +407,11 @@ stock String:GetLimitPhrase(type)
         return LimitPhrase;
 }
 
-PrintLimitSet(team, type, limit)
+void PrintLimitSet(int team, int type, int limit)
 {
 	if (type == TYPE_STRUCTURE)
 	{
-		for (new client = 1; client <= MaxClients; client++)
+		for (int client = 1; client <= MaxClients; client++)
 		{
 			if (IsValidClient(client) && GetClientTeam(client) == team)
 			{
@@ -421,17 +421,17 @@ PrintLimitSet(team, type, limit)
 	}
 	else
 	{
-		decl String:Phrase[32];
+		char Phrase[32];
 		Format(Phrase, sizeof(Phrase), GetLimitPhrase(type));
 		
-		for (new client = 1; client <= MaxClients; client++)
+		for (int client = 1; client <= MaxClients; client++)
 		{
 			if (IsValidClient(client) && GetClientTeam(client) == team)
 			{
-				decl String:TranslatedLimit[32];
+				char TranslatedLimit[32];
 				Format(TranslatedLimit, sizeof(TranslatedLimit), "%T", NumberInEnglish(limit), client);
 				
-				decl String:Message[64];
+				char Message[64];
 				Format(Message, sizeof(Message), "%s %T.", PREFIX, Phrase, client, TranslatedLimit);
 				PrintToChat(client, Message);
 			}
