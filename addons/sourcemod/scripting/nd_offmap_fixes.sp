@@ -20,15 +20,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define DEBUG 0
 
-new bool:validMap = false;
+bool validMap = false;
 
-new Handle:HAX = INVALID_HANDLE;
+ArrayList HAX = null;
 
-new tmpAxisCount;
-new tmpAxisViolated;
+int tmpAxisCount;
+int tmpAxisViolated;
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo = 
+public Plugin myinfo = 
 {
 	name 		= "[ND] Off Map Buildings Fixes",
 	author 		= "yed_, stickz",
@@ -40,44 +40,44 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_offmap_fixes/nd_offmap_fixes.txt"
 #include "updater/standard.sp"
 
-public OnPluginStart() 
+public void OnPluginStart() 
 {
-    HAX = CreateArray(4);
+	HAX = ArrayList(4);
     
-    HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
-    HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
+	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
+    	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
-    AddUpdaterLibrary(); //auto-updater
+    	AddUpdaterLibrary(); //auto-updater
 }
 
-public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {
-    decl String:map[64];
-    GetCurrentMap(map, sizeof(map));
+    	char map[64];
+    	GetCurrentMap(map, sizeof(map));
     
-    ClearArray(HAX);
+    	HAX.clear();
 
-    if (StrEqual(map, "hydro")) 
-	HandleHydro();
-    else if (StrEqual(map, "coast"))
-        HandleCoast();
-    else if (StrEqual(map, "gate"))
-        HandleGate();
+    	if (StrEqual(map, "hydro")) 
+		HandleHydro();
+	else if (StrEqual(map, "coast"))
+        	HandleCoast();
+    	else if (StrEqual(map, "gate"))
+        	HandleGate();
   	  	
-    validMap = GetArraySize(HAX) > 0;
+    	validMap = GetArraySize(HAX) > 0;
 }
 
-public Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
-    validMap = false;
+	validMap = false;
 }
 
-public OnMapEnd() 
+public void OnMapEnd() 
 {
-    validMap = false;
+    	validMap = false;
 }
 
-HandleGate() 
+void HandleGate() 
 {
     /*
     +
@@ -97,12 +97,12 @@ HandleGate()
        |
        |
     */
-    new Float:hax[4] = {0.0, ...};
+    float hax[4] = {0.0, ...};
     hax[0] = 4000.0; //minX
-    PushArrayArray(HAX, hax);
+    HAX.PushArray(hax);
 }
 
-HandleHydro() 
+void HandleHydro() 
 {
     /*
     -
@@ -119,10 +119,10 @@ HandleHydro()
         0.0,
         -1000.0     //maxY
     };
-    PushArrayArray(HAX, hax);
+    HAX.PushArray(hax);
 }
 
-HandleCoast() 
+void HandleCoast() 
 {
     /*
     - y +
@@ -139,12 +139,12 @@ HandleCoast()
     w----x
     */
 
-    new Float:hax[4] = {0.0, ...};
+    float hax[4] = {0.0, ...};
     hax[0] = 4466.0;    // minX
     hax[1] = 5246.0;    // maxX
     hax[2] = 0.0;       // minY
     hax[3] = 52.0;      // maxY
-    PushArrayArray(HAX, hax);
+    HAX.PushArray(hax);
 
     /*
     east secondary
@@ -165,10 +165,10 @@ HandleCoast()
     hax[1] = 5217.0;    // maxX
     hax[2] = 6597.0;    // minY
     hax[3] = 0.0;       // maxY
-    PushArrayArray(HAX, hax);
+    HAX.PushArray(hax);
 }
 
-public OnEntityCreated(entity, const String:classname[])
+public void OnEntityCreated(entity, const char[] classname)
 {
     if (!validMap)
     {
@@ -183,7 +183,7 @@ public OnEntityCreated(entity, const String:classname[])
         CreateTimer(0.1, CheckBorders, entity);
 }
 
-public Action:CheckBorders(Handle timer, any entity) 
+public Action CheckBorders(Handle timer, any entity) 
 {
     if (!IsValidEdict(entity))
     	return;
@@ -191,15 +191,15 @@ public Action:CheckBorders(Handle timer, any entity)
     float position[3];
     GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
     //PrintToChatAll("placed location %f - %f - %f", position[0], position[1], position[2]);
-    new Float:hax[4];
+    float hax[4];
     
-    for (new i=0; i<GetArraySize(HAX); i++) 
+    for (int i = 0; i < GetArraySize(HAX); i++) 
     {
         tmpAxisCount = 0;
     	tmpAxisViolated = 0;
     
     	// minX
-    	GetArrayArray(HAX, i, hax);
+    	HAX.GetArray(i, hax);
     	if (hax[0] != 0.0) 
     	{
       	    tmpAxisCount++;
