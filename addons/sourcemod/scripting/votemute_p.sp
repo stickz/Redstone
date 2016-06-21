@@ -11,7 +11,7 @@ ConVar g_Cvar_Limits;
 ConVar g_Cvar_Admins;
 ConVar g_Cvar_Duration;
 
-Menu g_hVoteMenu = null;;
+Menu g_hVoteMenu = null;
 
 #define VOTE_CLIENTID	0
 #define VOTE_USERID		1
@@ -203,10 +203,10 @@ void DisplayVoteMuteMenu(int client, int target)
 	g_hVoteMenu = CreateGlobalVoteMenu(Name);
 }
 
-Menu CreateGlobalVoteMenu(const char name[])
+Menu CreateGlobalVoteMenu(const char[] name)
 {
 	//Create new menu object
-	Menu menu = new Menu(Handler_VoteCallback, MenuAction MENU_ACTIONS_ALL);
+	Menu menu = new Menu(Handler_VoteCallback, MenuAction:MENU_ACTIONS_ALL);
 	
 	//Set various menu properties
 	g_hVoteMenu.SetTitle("%s Player:", name);
