@@ -75,7 +75,9 @@ public int CookieMenuHandler_ShowDamage(int client, CookieMenuAction:action, any
 }
 
 public void OnClientCookiesCached(int client)
+{
 	option_show_damage[client] = GetCookieShowDamage(client);
+}
 
 bool GetCookieShowDamage(int client)
 {
@@ -86,7 +88,9 @@ bool GetCookieShowDamage(int client)
 }
 
 public void OnClientConnected(int client)
+{
 	block_timer[client] = false;
+}
 
 public Action Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 {
