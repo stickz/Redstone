@@ -60,7 +60,7 @@ public void OnMapStart()
 	ClearKills();
 }
 
-public void CookieMenuHandler_StructureKillings(int client, CookieMenuAction action, any info, char buffer[], int maxlen)
+public void CookieMenuHandler_StructureKillings(int client, CookieMenuAction action, any info, char[] buffer, int maxlen)
 {
 	switch (action)
 	{
@@ -81,7 +81,9 @@ public void CookieMenuHandler_StructureKillings(int client, CookieMenuAction act
 }
 
 public void OnClientCookiesCached(client)
+{
 	option_structure_killings[client] = GetCookieStructureKillings(client);
+}
 
 bool GetCookieStructureKillings(int client)
 {
@@ -198,7 +200,7 @@ void AddClientPrefSupport()
 {
 	cookie_structure_killings = RegClientCookie("Structure Killings On/Off", "", CookieAccess_Protected);
 	int info;
-	SetCookieMenuItem(CookieMenuHandler_StructureKillings, any info, "Structure Killings");
+	SetCookieMenuItem(CookieMenuHandler_StructureKillings, info, "Structure Killings");
 	
 	LoadTranslations("common.phrases"); //required for on and off
 }
