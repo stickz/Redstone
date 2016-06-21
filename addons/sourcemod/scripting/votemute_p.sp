@@ -206,7 +206,7 @@ void DisplayVoteMuteMenu(int client, int target)
 Menu CreateGlobalVoteMenu(const char[] name)
 {
 	//Create new menu object
-	Menu menu = new Menu(Handler_VoteCallback, MenuAction:MENU_ACTIONS_ALL);
+	Menu menu = new Menu(Handler_VoteCallback);
 	
 	//Set various menu properties
 	menu.SetTitle("%s Player:", name);
