@@ -258,7 +258,7 @@ public int MenuHandler_Vote(Menu menu, MenuAction action, int param1, int param2
 		case MenuAction_End: delete menu;
 		case MenuAction_Select:
 		{
-			char info[32], String:name[32];
+			char info[32], name[32];
 			menu.GetItem(param2, info, sizeof(info), _, name, sizeof(name));
 			
 			int target = StringToInt(info);
