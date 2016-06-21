@@ -16,11 +16,11 @@
  * @return        		The team number of the commander 
  *				or -1 if the person is not a commander.
  */
-native GetCommanderTeam(clientIDX);
+native int GetCommanderTeam(clientIDX);
 
 #define GCT_LOADED() (GetFeatureStatus(FeatureType_Native, "GetCommanderTeam") == FeatureStatus_Available)
 
-stock bool:NDC_IsCommander(client)
+stock bool NDC_IsCommander(client)
 {
 	/* Use the intensive method if we cannot use the faster method */
 	if (!GCT_LOADED())
@@ -29,12 +29,12 @@ stock bool:NDC_IsCommander(client)
 	return GetCommanderTeam(client) != NOT_COMMANDER;	
 }
 
-stock bool:NDC_IsCommanderOnTeam(client, team)
+stock bool NDC_IsCommanderOnTeam(client, team)
 {
 	/* Use the intensive method if we cannot use the faster method */
 	if (!GCT_LOADED())
 	{
-		new clientTeam = GetClientTeam(client);
+		int clientTeam = GetClientTeam(client);
 		return clientTeam == team && GameRules_GetPropEnt("m_hCommanders", clientTeam - 2) == client;
 	}
 		
