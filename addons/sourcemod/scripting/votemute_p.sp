@@ -11,7 +11,7 @@ ConVar g_Cvar_Limits;
 ConVar g_Cvar_Admins;
 ConVar g_Cvar_Duration;
 
-new Handle:g_hVoteMenu = INVALID_HANDLE;
+Menu g_hVoteMenu = null;;
 
 #define VOTE_CLIENTID	0
 #define VOTE_USERID		1
@@ -26,13 +26,13 @@ new Handle:g_hVoteMenu = INVALID_HANDLE;
 #define INVALID_TARGET -1
 #define PREFIX "\x05[xG]"
 
-new g_voteClient[2];
-new String:g_voteInfo[3][65];
+int g_voteClient[2];
+char g_voteInfo[3][65];
 
-new g_votetype = 0;
+int g_votetype = 0;
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name 		= "Vote Gag, Mute, Silence",
 	author 		= "<eVa>Dog, Stickz",
@@ -45,7 +45,7 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/votemute_p/votemute_p.txt"
 #include "updater/standard.sp"
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	g_Cvar_Limits = CreateConVar("sm_votemute_limit", "0.51", "percent required for successful mute vote or mute silence.");
 	g_Cvar_Admins = CreateConVar("sm_votemute_adminonly", "0", "1= admins only, 0 = regular players allowed");
@@ -64,7 +64,7 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public Action:Command_Votemute(client, args)
+public Action Command_Votemute(int client, int args)
 {
 	if (!CanStartVote(client))
 		return Plugin_Handled;
@@ -76,11 +76,10 @@ public Action:Command_Votemute(client, args)
 	}
 	else
 	{
-		decl String:arg[64];
+		char arg[64];
 		GetCmdArg(1, arg, sizeof(arg));
 		
-		new target = FindTarget(client, arg);
-
+		int target = FindTarget(client, arg);
 		if (target == INVALID_TARGET)
 			return Plugin_Handled;
 
@@ -97,7 +96,7 @@ public Action:Command_Votemute(client, args)
 	return Plugin_Handled;
 }
 
-public Action:Command_Votesilence(client, args)
+public Action Command_Votesilence(int client, int args)
 {
 	if (!CanStartVote(client))
 		return Plugin_Handled;
@@ -109,11 +108,10 @@ public Action:Command_Votesilence(client, args)
 	}
 	else
 	{
-		decl String:arg[64];
+		char arg[64];
 		GetCmdArg(1, arg, sizeof(args));
 		
-		new target = FindTarget(client, arg);
-
+		int target = FindTarget(client, arg);
 		if (target == INVALID_TARGET)
 			return Plugin_Handled;
 
@@ -129,7 +127,7 @@ public Action:Command_Votesilence(client, args)
 	return Plugin_Handled;
 }
 
-public Action:Command_Votegag(client, args)
+public Action Command_Votegag(int client, int args)
 {
 	if (!CanStartVote(client))
 		return Plugin_Handled;
@@ -141,11 +139,10 @@ public Action:Command_Votegag(client, args)
 	}
 	else
 	{
-		decl String:arg[64];
+		char arg[64];
 		GetCmdArg(1, arg, sizeof(arg));
 		
-		new target = FindTarget(client, arg);
-
+		int target = FindTarget(client, arg);
 		if (target == INVALID_TARGET)
 			return Plugin_Handled;
 
@@ -161,7 +158,7 @@ public Action:Command_Votegag(client, args)
 	return Plugin_Handled;
 }
 
-bool:CanStartVote(client)
+bool CanStartVote(int client)
 {
 	if (IsVoteInProgress())
 	{
@@ -187,15 +184,14 @@ bool:CanStartVote(client)
 	return true;
 }
 
-DisplayVoteMuteMenu(client, target)
+void DisplayVoteMuteMenu(int client, int target)
 {
 	g_voteClient[VOTE_CLIENTID] = target;
 	g_voteClient[VOTE_USERID] = GetClientUserId(target);
 
 	GetClientName(target, g_voteInfo[VOTE_NAME], sizeof(g_voteInfo[]));
 	
-	decl String:Name[8];
-	
+	char Name[16];
 	switch (g_votetype)
 	{
 		case VOTE_TYPE_MUTE: 	Format(Name, sizeof(Name), "Mute");
@@ -203,54 +199,69 @@ DisplayVoteMuteMenu(client, target)
 		case VOTE_TYPE_SILENCE: Format(Name, sizeof(Name), "Silence");	
 	}
 	
-	decl String:Message[64];
+	PrintAndLogVoteStart(client, target, Name);
+	g_hVoteMenu = CreateGlobalVoteMenu(Name);
+}
+
+Menu CreateGlobalVoteMenu(const char name[])
+{
+	//Create new menu object
+	Menu menu = new Menu(Handler_VoteCallback, MenuAction MENU_ACTIONS_ALL);
+	
+	//Set various menu properties
+	g_hVoteMenu.SetTitle("%s Player:", name);
+	g_hVoteMenu.AddItem(VOTE_YES, "Yes");
+	g_hVoteMenu.AddItem(VOTE_NO, "No");
+	g_hVoteMenu.ExitButton(false);
+	g_hVoteMenu.DisplayVoteToAll(20);
+	
+	//return the created menu
+	return menu;
+}
+
+void PrintAndLogVoteStart(int client, int target, const char name[])
+{
+	char Message[64];
 	Format(Message, sizeof(Message), "\"%L\" initiated a %s vote against \"%L\"", client, Name, target);
 	PrintToAdmins(Message, "a");
 	LogAction(client, target, Message);
-	
-	g_hVoteMenu = CreateMenu(Handler_VoteCallback, MenuAction:MENU_ACTIONS_ALL);
-	SetMenuTitle(g_hVoteMenu, "%s Player:", Name);	
-	AddMenuItem(g_hVoteMenu, VOTE_YES, "Yes");
-	AddMenuItem(g_hVoteMenu, VOTE_NO, "No");
-	SetMenuExitButton(g_hVoteMenu, false);
-	VoteMenuToAll(g_hVoteMenu, 20);
 }
 
-DisplayVoteTargetMenu(client)
+void DisplayVoteTargetMenu(int client)
 {
-	new Handle:menu = CreateMenu(MenuHandler_Vote);
+	Menu menu = new Menu(MenuHandler_Vote);
 	
-	decl String:title[100];
+	char title[100];
 	Format(title, sizeof(title), "%s", "Choose player:");
-	SetMenuTitle(menu, title);
-	SetMenuExitBackButton(menu, true);
+	menu.SetTitle(title);
+	menu.ExitBackButton(true);
 	
 	char playername[128], identifier[64];
-	for (new i = 1; i < GetMaxClients(); i++)
+	for (int i = 1; i < GetMaxClients(); i++)
 	{
 		if (IsClientInGame(i) && !(GetUserFlagBits(i) & ADMFLAG_CHAT))
 		{
 			GetClientName(i, playername, sizeof(playername));
 			IntToString(i, identifier, sizeof(identifier));
-			AddMenuItem(menu, identifier, playername);
+			menu.AddItem(identifier, playername);
 		}
 	}
 	
-	DisplayMenu(menu, client, MENU_TIME_FOREVER);
+	menu.Display(client, MENU_TIME_FOREVER);
 }
 
 
-public MenuHandler_Vote(Handle:menu, MenuAction:action, param1, param2)
+public int MenuHandler_Vote(Menu menu, MenuAction action, int param1, int param2)
 {
 	switch (action)
 	{
-		case MenuAction_End: CloseHandle(menu);
+		case MenuAction_End: delete menu;
 		case MenuAction_Select:
 		{
-			decl String:info[32], String:name[32];
-			GetMenuItem(menu, param2, info, sizeof(info), _, name, sizeof(name));
+			char info[32], String:name[32];
+			menu.GetItem(param2, info, sizeof(info), _, name, sizeof(name));
 			
-			new target = StringToInt(info);
+			int target = StringToInt(info);
 			if (target == 0)
 				PrintToChat(param1, "[SM] %s", "Player no longer available");
 
@@ -260,32 +271,36 @@ public MenuHandler_Vote(Handle:menu, MenuAction:action, param1, param2)
 	}
 }
 
-public Handler_VoteCallback(Handle:menu, MenuAction:action, param1, param2)
+public int Handler_VoteCallback(Menu menu, MenuAction action, int param1, int param2)
 {
 	switch (action)
 	{
-		case MenuAction_End: VoteMenuClose();
+		case MenuAction_End:
+		{
+			delete(g_hVoteMenu);
+			g_hVoteMenu = null;
+		}
 		
 		case MenuAction_Display:
 		{
-			decl String:title[64];
-			GetMenuTitle(menu, title, sizeof(title));
+			char title[64];
+			menu.GetTitle(title, sizeof(title));
 			
-			decl String:buffer[255];
+			char buffer[255];
 			Format(buffer, sizeof(buffer), "%s %s", title, g_voteInfo[VOTE_NAME]);
 
-			new Handle:panel = Handle:param2;
-			SetPanelTitle(panel, buffer);		
+			Panel panel = Panel param2;
+			panel.SetTitle(buffer);	
 		}
 		
 		case MenuAction_DisplayItem:
 		{
-			decl String:display[64];
-			GetMenuItem(menu, param2, "", 0, _, display, sizeof(display));
+			char display[64];
+			menu.GetItem(param2, "", 0, _, display, sizeof(display));
 		 
 			if (strcmp(display, "No") == 0 || strcmp(display, "Yes") == 0)
 			{
-				decl String:buffer[255];
+				char buffer[255];
 				Format(buffer, sizeof(buffer), "%s", display);
 
 				return RedrawMenuItem(buffer);
@@ -301,17 +316,17 @@ public Handler_VoteCallback(Handle:menu, MenuAction:action, param1, param2)
 		
 		case MenuAction_VoteEnd:
 		{
-			decl String:item[64], String:display[64];
-			new Float:percent, Float:limit, votes, totalVotes;
-
+			char item[64], display[64];
+			float percent, limit;
+			int votes, totalVotes;
+			
 			GetMenuVoteInfo(param2, votes, totalVotes);
-			GetMenuItem(menu, param1, item, sizeof(item), _, display, sizeof(display));
+			menu.GetItem(param1, item, sizeof(item), _, display, sizeof(display));
 			
 			if (strcmp(item, VOTE_NO) == 0 && param1 == 1)
 				votes = totalVotes - votes; // Reverse the votes to be in relation to the Yes option.
 			
 			percent = GetVotePercent(votes, totalVotes);
-			
 			limit = g_Cvar_Limits.FloatValue;
 			
 			if ((strcmp(item, VOTE_YES) == 0 && FloatCompare(percent,limit) < 0 && param1 == 0) || (strcmp(item, VOTE_NO) == 0 && param1 == 1))
@@ -353,25 +368,19 @@ public Handler_VoteCallback(Handle:menu, MenuAction:action, param1, param2)
 	return 0;	
 }
 
-bool:isSilenced(client)
+bool isSilenced(client)
 {
 	return SourceComms_GetClientMuteType(client) != bNot && SourceComms_GetClientGagType(client) != bNot;
 }
 
-VoteMenuClose()
-{
-	CloseHandle(g_hVoteMenu);
-	g_hVoteMenu = INVALID_HANDLE;
-}
-
-Float:GetVotePercent(votes, totalVotes)
+float GetVotePercent(int votes, int totalVotes)
 {
 	return FloatDiv(float(votes),float(totalVotes));
 }
 
-bool:TestVoteDelay(client)
+bool TestVoteDelay(client)
 {
- 	new delay = CheckVoteDelay();
+ 	int delay = CheckVoteDelay();
  	
  	if (delay > 0)
  	{
