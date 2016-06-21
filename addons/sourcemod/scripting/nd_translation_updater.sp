@@ -17,7 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo = 
+public Plugin myinfo = 
 {
 	name 		= "[ND] Translation Updater",
 	author 		= "stickz",
@@ -29,7 +29,7 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_translation_updater/nd_translation_updater.txt"
 #include "updater/standard.sp"
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	AddUpdaterLibrary(); //auto-updater
 }
