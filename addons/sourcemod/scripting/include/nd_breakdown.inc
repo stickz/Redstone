@@ -11,7 +11,7 @@
  * @param teamIDX  		The index of the team.
  * @return        		The number of sniper class clients.
  */
-native GetSniperCount(teamIDX);
+native int GetSniperCount(teamIDX);
 
 /**
  * Retreive the number of stealth on an given team
@@ -21,7 +21,7 @@ native GetSniperCount(teamIDX);
  * @param teamIDX  		The index of the team.
  * @return        		The number of stealth class clients.
  */
-native GetStealthCount(teamIDX);
+native int GetStealthCount(teamIDX);
 
 /**
  * Retreive the number of anti-structure on an given team
@@ -31,4 +31,4 @@ native GetStealthCount(teamIDX);
  * @param teamIDX  		The index of the team.
  * @return        		The number of anti-structure based clients.
  */
-native GetAntiStructureCount(teamIDX);
+native int GetAntiStructureCount(teamIDX);
