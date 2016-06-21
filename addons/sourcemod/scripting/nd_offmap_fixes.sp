@@ -42,7 +42,7 @@ public Plugin myinfo =
 
 public void OnPluginStart() 
 {
-	HAX = ArrayList(4);
+	HAX = new ArrayList(4);
     
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
     	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
@@ -55,7 +55,7 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
     	char map[64];
     	GetCurrentMap(map, sizeof(map));
     
-    	HAX.clear();
+    	HAX.Clear();
 
     	if (StrEqual(map, "hydro")) 
 		HandleHydro();
