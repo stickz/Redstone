@@ -359,7 +359,7 @@ bool IsAntiStructure(int class, int subClass)
 	    // Don't account for sabeuters or grenadiers becuase they are a mixed unit
 }
 
-void GetMinStealthValue(int team)
+int GetMinStealthValue(int team)
 {
 	return ValidTeamCount(team) < 7 ? MIN_STEALTH_LOW_VALUE : MIN_STEALTH_HIGH_VALUE; 
 }
