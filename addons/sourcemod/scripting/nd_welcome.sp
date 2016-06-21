@@ -76,7 +76,9 @@ public int CookieMenuHandler_WelcomeMessage(int client, CookieMenuAction:action,
 }
 
 public void OnClientCookiesCached(int client)
+{
 	option_welcome_message[client] = GetCookieWelcomeMessage(client);
+}
 
 bool GetCookieWelcomeMessage(int client)
 {
