@@ -45,7 +45,7 @@ int StructuresKilled[MAX_TEAMS];
 Handle cookie_structure_killings = INVALID_HANDLE;
 bool option_structure_killings[MAXPLAYERS + 1] = {true,...}; //off by default
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	HookEvent("structure_death", Event_StructDeath);
 	
@@ -56,7 +56,7 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public OnMapStart()
+public void OnMapStart()
 {
 	ClearKills();
 }
@@ -195,7 +195,7 @@ bool GiveAdvantage(int client, int team)
 	return IsClientInGame(client) && IsPlayerAlive(client) && !NDC_IsCommander(client) && GetClientTeam(client) == team;
 }
 
-AddClientPrefSupport()
+void AddClientPrefSupport()
 {
 	cookie_structure_killings = RegClientCookie("Structure Killings On/Off", "", CookieAccess_Protected);
 	int info;
