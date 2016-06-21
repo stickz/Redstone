@@ -206,13 +206,13 @@ void DisplayVoteMuteMenu(int client, int target)
 Menu CreateGlobalVoteMenu(const char[] name)
 {
 	//Create new menu object
-	Menu menu = new Menu(Handler_VoteCallback);
+	Menu menu = new Menu(Handler_VoteCallback, MenuAction:MENU_ACTIONS_ALL);
 	
 	//Set various menu properties
 	menu.SetTitle("%s Player:", name);
 	menu.AddItem(VOTE_YES, "Yes");
 	menu.AddItem(VOTE_NO, "No");
-	menu.ExitButton(false);
+	menu.ExitButton = false;
 	menu.DisplayVoteToAll(20);
 	
 	//return the created menu
