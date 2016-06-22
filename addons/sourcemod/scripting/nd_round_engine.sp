@@ -14,7 +14,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
-public Plugin myinfo =
+public Plugin myinfo = 
 {
 	name 		= "[ND] Round Engine",
 	author 		= "Stickz",
@@ -62,7 +62,7 @@ public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
 }
 
 /* Natives */
-functag NativeCall public(Handle plugin, int numParams);
+//functag NativeCall public(Handle plugin, int numParams);
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
