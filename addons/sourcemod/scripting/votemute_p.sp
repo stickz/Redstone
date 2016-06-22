@@ -289,8 +289,8 @@ public int Handler_VoteCallback(Menu menu, MenuAction action, int param1, int pa
 			char buffer[255];
 			Format(buffer, sizeof(buffer), "%s %s", title, g_voteInfo[VOTE_NAME]);
 
-			Panel panel = new Panel(param2);
-			panel.SetTitle(buffer);	
+			Handle panel = Handle param2;
+			panel.SetTitle(buffer);
 		}
 		
 		case MenuAction_DisplayItem:
