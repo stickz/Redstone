@@ -131,7 +131,7 @@ public void StrToLower(String:arg[])
  * Calls the GetClientName() function, but replaces the name of client 0 (the console)
  * with a small piece of text, instead of the entire server name.
  */
-public ClientName(client, String:name[MAX_NAME_LENGTH])
+public void ClientName(client, String:name[MAX_NAME_LENGTH])
 {
 	if (client == 0)
 	{
@@ -150,7 +150,7 @@ public ClientName(client, String:name[MAX_NAME_LENGTH])
  * @param startIndex	Position in the source string at which copying will start. Zero based.
  * @param endIndex		Position in the source string at which copying will end. This means the character specified by the end index is NOT copied.
  */
-public SubString(const String:text[], String:result[MAX_LINE_LENGTH], startIndex, endIndex)
+public void SubString(const String:text[], String:result[MAX_LINE_LENGTH], startIndex, endIndex)
 {
 	// check input
 	new length = endIndex - startIndex;
