@@ -8,7 +8,7 @@
 #define REQUIRE_EXTENSIONS
 
 /* Plugin Info */
-
+// This is a comment to trigger a plugin rebuild
 public Plugin:myinfo =
 {
 	name = "Plugin Updater",
