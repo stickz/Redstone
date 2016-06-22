@@ -63,7 +63,7 @@ public Action Command_HandleSay(int client, int args)
 		return Plugin_Continue;
 
 	// get argument string
-	decl String:argString[MAX_LINE_LENGTH];
+	char argString[MAX_LINE_LENGTH];
 	GetCmdArgString(argString, sizeof(argString));
 	
 	int upperCount = 0;			// total amount of upper text chars
@@ -119,9 +119,9 @@ public Action Command_HandleSay(int client, int args)
  * Converts a string entirely to lowercase characters
  * @param arg		Text to convert to lowercase
  */
-public void StrToLower(String:arg[])
+public void StrToLower(char[] arg)
 {
-	for (new i = 0; i < strlen(arg); i++)
+	for (int i = 0; i < strlen(arg); i++)
 	{
 		arg[i] = CharToLower(arg[i]);
 	}
@@ -131,7 +131,7 @@ public void StrToLower(String:arg[])
  * Calls the GetClientName() function, but replaces the name of client 0 (the console)
  * with a small piece of text, instead of the entire server name.
  */
-public void ClientName(client, String:name[MAX_NAME_LENGTH])
+public void ClientName(int client, char name[MAX_NAME_LENGTH])
 {
 	if (client == 0)
 	{
@@ -150,15 +150,15 @@ public void ClientName(client, String:name[MAX_NAME_LENGTH])
  * @param startIndex	Position in the source string at which copying will start. Zero based.
  * @param endIndex		Position in the source string at which copying will end. This means the character specified by the end index is NOT copied.
  */
-public void SubString(const String:text[], String:result[MAX_LINE_LENGTH], startIndex, endIndex)
+public void SubString(const char[] text, char result[MAX_LINE_LENGTH], int startIndex, int endIndex)
 {
 	// check input
-	new length = endIndex - startIndex;
+	int length = endIndex - startIndex;
 	if (length <= 0 || startIndex >= strlen(text))
 		return;
 
 	// perform char-by-char copy
-	for(new index = 0; index < length; index++)
+	for(int index = 0; index < length; index++)
 	{
 		result[index] = text[index + startIndex];
 	}
