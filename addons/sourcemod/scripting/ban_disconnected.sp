@@ -178,6 +178,7 @@ void DisplayBanTimeMenu(client, const char[] state_)
 	AddMenuItemWithState(menu, state_, "129600", "3 Months");
 	
 	menu.Display(client, MENU_TIME_FOREVER);
+}
 
 public int MenuHandler_BanTimeList(Menu menu, MenuAction action, int param1, int param2)
 {
