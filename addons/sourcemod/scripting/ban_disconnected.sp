@@ -110,7 +110,7 @@ public AdminMenu_Ban(Handle topmenu, TopMenuAction:action, TopMenuObject:object_
 
 void DisplayBanTargetMenu(int client) 
 {
-	Menu menu = Menu(MenuHandler_BanPlayerList);
+	Menu menu = new Menu(MenuHandler_BanPlayerList);
 	menu.SetTitle("Ban disconnected player");
 	menu.ExitBackButton = true;
 	
@@ -161,7 +161,7 @@ void AddMenuItemWithState(Menu menu, const char[] state_, const char[] addstate,
 
 void DisplayBanTimeMenu(client, const char[] state_) 
 {
-	Menu menu = CreateMenu(MenuHandler_BanTimeList);
+	Menu menu = new Menu(MenuHandler_BanTimeList);
 	menu.SetTitle("Ban disconnected player");
 	menu.ExitBackButton = true;
 	
@@ -200,7 +200,7 @@ public int MenuHandler_BanTimeList(Menu menu, MenuAction action, int param1, int
 
 void DisplayBanReasonMenu(client, const char[] state_) 
 {
-	Menu menu = CreateMenu(MenuHandler_BanReasonList);
+	Menu menu = new Menu(MenuHandler_BanReasonList);
 	menu.SetTitle("Ban reason");
 	menu.ExitBackButton = true;
 	
