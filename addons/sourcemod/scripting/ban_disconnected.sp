@@ -5,39 +5,39 @@
 #define STORED_ENTRIES 100
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo = 
+public Plugin myinfo = 
 {
 	name        = "Ban disconnected players",
-	author      = "mad_hamster",
+	author      = "mad_hamster, stickz",
 	description = "Lets you ban players that recently disconnected",
 	version     = "dummy",
 	url         = "http://pro-css.co.il"
 };
 
-new Handle:hTopMenu = INVALID_HANDLE;
+Handle hTopMenu = INVALID_HANDLE;
 
-static String:disconnected_player_names  [STORED_ENTRIES][32];
-static String:disconnected_player_authids[STORED_ENTRIES][32];
-static disconnected_player_times         [STORED_ENTRIES];
+static char disconnected_player_names   [STORED_ENTRIES][32];
+static char disconnected_player_authids	[STORED_ENTRIES][32];
+static int  disconnected_player_times   [STORED_ENTRIES];
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/ban_disconnected/ban_disconnected.txt"
 #include "updater/standard.sp"
 
-public OnPluginStart() 
+public void OnPluginStart() 
 {
 	RegAdminCmd("sm_bandisconnected", BanDisconnected, ADMFLAG_BAN);
 	HookEvent("player_disconnect", OnEventPlayerDisconnect);
 	
-	new Handle:topmenu;
+	Handle topmenu;
 	if (LibraryExists("adminmenu") && ((topmenu = GetAdminTopMenu()) != INVALID_HANDLE))
 		OnAdminMenuReady(topmenu);
 	
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public Action:OnEventPlayerDisconnect(Handle:event, const String:name[], bool:dont_broadcast) {
-	decl String:steam_id[32];
-	GetEventString(event, "networkid", steam_id, sizeof(steam_id));
+public Action OnEventPlayerDisconnect(Event event, const char[] name, bool dontBroadcast) {
+	char steam_id[32];
+	event.GetString("networkid", steam_id, sizeof(steam_id));
 
 	// Ignore if authid does not start with STEAM_ (possibly bot), or is identical to the last
 	// disconnected steam id, but only if it occured at the same second (duplicate event)
@@ -48,19 +48,19 @@ public Action:OnEventPlayerDisconnect(Handle:event, const String:name[], bool:do
 	        || (   strcmp(steam_id, disconnected_player_authids[queue_translate_pos(queue_get_size()-1)]) != 0
 	            || disconnected_player_times[queue_translate_pos(queue_get_size()-1)] != GetTime())))
 	{
-		new pos = queue_push();
+		int pos = queue_push();
 		strcopy(disconnected_player_authids[pos], sizeof(disconnected_player_authids[]), steam_id);
-		GetEventString(event, "name", disconnected_player_names[pos], sizeof(disconnected_player_names[]));
+		event.GetString("name", disconnected_player_names[pos], sizeof(disconnected_player_names[]));
 		disconnected_player_times[pos] = GetTime();
 	}
 	return Plugin_Continue;
 }
 
-public Action:BanDisconnected(client, args) {
+public Action BanDisconnected(int client, int args) {
 	if (args < 2 || args > 3)
 		ReplyToCommand(client, "[SM] Usage: sm_bandisconnected <\"steamid\"> <minutes|0> [\"reason\"]");
 	else {
-		decl String:steamid[20], String:minutes[10], String:reason[256];
+		char steamid[20], minutes[10], reason[256];
 		GetCmdArg(1, steamid, sizeof(steamid));
 		GetCmdArg(2, minutes, sizeof(minutes));
 		GetCmdArg(3, reason,  sizeof(reason));
@@ -70,14 +70,14 @@ public Action:BanDisconnected(client, args) {
 	return Plugin_Handled;
 }
 
-CheckAndPerformBan(client, const String:steamid[], minutes, const String:reason[]) {
+void CheckAndPerformBan(int client, const char[] steamid, int minutes, const char[] reason) {
 	new AdminId:source_aid = GetUserAdmin(client), AdminId:target_aid;
 	if (   (target_aid = FindAdminByIdentity(AUTHMETHOD_STEAM, steamid)) == INVALID_ADMIN_ID
 		|| CanAdminTarget(source_aid, target_aid))
 	{
 		// Ugly hack: Sourcemod doesn't provide means to run a client command with elevated permissions,
 		// so we briefly grant the admin the root flag
-		new bool:has_root_flag = GetAdminFlag(source_aid, Admin_Root);
+		bool has_root_flag = GetAdminFlag(source_aid, Admin_Root);
 		SetAdminFlag(source_aid, Admin_Root, true);
 		FakeClientCommand(client, "sm_addban %d \"%s\" %s", minutes, steamid, reason);
 		SetAdminFlag(source_aid, Admin_Root, has_root_flag);
@@ -90,7 +90,7 @@ CheckAndPerformBan(client, const String:steamid[], minutes, const String:reason[
 // Menu madness
 ///////////////////////////////////////////////////////////////////////////////
 
-public OnAdminMenuReady(Handle:topmenu) {
+public OnAdminMenuReady(Handle topmenu) {
 	if (topmenu != hTopMenu) {
 		hTopMenu = topmenu;
 		new TopMenuObject:player_commands = FindTopMenuCategory(hTopMenu, ADMINMENU_PLAYERCOMMANDS);
@@ -100,8 +100,7 @@ public OnAdminMenuReady(Handle:topmenu) {
 	}
 }
 
-public AdminMenu_Ban(Handle:topmenu,
-	TopMenuAction:action, TopMenuObject:object_id, param, String:buffer[], maxlength)
+public AdminMenu_Ban(Handle topmenu, TopMenuAction:action, TopMenuObject:object_id, param, char[] buffer, int maxlength)
 {
 	if (action == TopMenuAction_DisplayOption)
 		Format(buffer, maxlength, "Ban disconnected player");
@@ -109,14 +108,17 @@ public AdminMenu_Ban(Handle:topmenu,
 		DisplayBanTargetMenu(param);
 }
 
-DisplayBanTargetMenu(client) {
-	new Handle:menu = CreateMenu(MenuHandler_BanPlayerList);
-	SetMenuTitle(menu, "Ban disconnected player");
-	SetMenuExitBackButton(menu, true);
-	for (new i=queue_get_size()-1; i>=0; --i) {
-		new pos = queue_translate_pos(i);
-		decl String:client_info[100];
-		new delta = GetTime() - disconnected_player_times[pos];
+void DisplayBanTargetMenu(int client) 
+{
+	Menu menu = Menu(MenuHandler_BanPlayerList);
+	menu.SetTitle("Ban disconnected player");
+	menu.ExitBackButton = true;
+	
+	for (int i = queue_get_size() - 1; i >= 0; --i) 
+	{
+		int pos = queue_translate_pos(i);
+		char client_info[100];
+		int delta = GetTime() - disconnected_player_times[pos];
 		Format(client_info, sizeof(client_info), "%s (%s) (%dd:%02dh:%02dm:%02ds ago)",
 			disconnected_player_names[pos],
 			disconnected_player_authids[pos],
@@ -124,16 +126,18 @@ DisplayBanTargetMenu(client) {
 			(delta % (60*60*24)) / (60*60),
 			(delta % (60*60)) / 60,
 			(delta % 60));
-		AddMenuItem(menu, disconnected_player_authids[pos], client_info);
+			
+		menu.AddItem(disconnected_player_authids[pos], client_info);
 	}
-	DisplayMenu(menu, client, MENU_TIME_FOREVER);
+	
+	menu.Display(client, MENU_TIME_FOREVER);
 }
 
-public MenuHandler_BanPlayerList(Handle:menu, MenuAction:action, param1, param2) 
+public int MenuHandler_BanPlayerList(Menu menu, MenuAction action, int param1, int param2)
 {
 	switch (action)
 	{
-		case MenuAction_End: CloseHandle(menu);
+		case MenuAction_End: delete menu;
 		case MenuAction_Cancel:
 		{
 			if (param2 == MenuCancel_ExitBack && hTopMenu != INVALID_HANDLE)
@@ -141,23 +145,26 @@ public MenuHandler_BanPlayerList(Handle:menu, MenuAction:action, param1, param2)
 		}
 		case MenuAction_Select:
 		{
-			decl String:state_[128];
-			GetMenuItem(menu, param2, state_, sizeof(state_));
+			char state_[128];
+			menu.GetItem(param2, state_, sizeof(state_));
 			DisplayBanTimeMenu(param1, state_);
 		}
 	}
 }
 
-AddMenuItemWithState(Handle:menu, const String:state_[], const String:addstate[], const String:display[]) {
-	decl String:newstate[128];
+void AddMenuItemWithState(Menu menu, const char[] state_, const char[] addstate, const char[] display) 
+{
+	char newstate[128];
 	Format(newstate, sizeof(newstate), "%s\n%s", state_, addstate);
-	AddMenuItem(menu, newstate, display);
+	menu.AddItem(newstate, display);
 }
 
-DisplayBanTimeMenu(client, const String:state_[]) {
-	new Handle:menu = CreateMenu(MenuHandler_BanTimeList);
-	SetMenuTitle(menu, "Ban disconnected player");
-	SetMenuExitBackButton(menu, true);
+void DisplayBanTimeMenu(client, const char[] state_) 
+{
+	Menu menu = CreateMenu(MenuHandler_BanTimeList);
+	menu.SetTitle("Ban disconnected player");
+	menu.ExitBackButton = true;
+	
 	AddMenuItemWithState(menu, state_, "0", "Permanent");
 	AddMenuItemWithState(menu, state_, "10", "10 Minutes");
 	AddMenuItemWithState(menu, state_, "30", "30 Minutes");
@@ -169,14 +176,14 @@ DisplayBanTimeMenu(client, const String:state_[]) {
 	AddMenuItemWithState(menu, state_, "30240", "3 Weeks");
 	AddMenuItemWithState(menu, state_, "43200", "1 Month");
 	AddMenuItemWithState(menu, state_, "129600", "3 Months");
-	DisplayMenu(menu, client, MENU_TIME_FOREVER);
-}
+	
+	menu.Display(client, MENU_TIME_FOREVER);
 
-public MenuHandler_BanTimeList(Handle:menu, MenuAction:action, param1, param2) 
+public int MenuHandler_BanTimeList(Menu menu, MenuAction action, int param1, int param2)
 {
 	switch (action)
 	{
-		case MenuAction_End: CloseHandle(menu);
+		case MenuAction_End: delete menu;
 		case MenuAction_Cancel:
 		{
 			if (param2 == MenuCancel_ExitBack && hTopMenu != INVALID_HANDLE)
@@ -184,17 +191,19 @@ public MenuHandler_BanTimeList(Handle:menu, MenuAction:action, param1, param2)
 		}
 		case MenuAction_Select:
 		{
-			decl String:state_[128];
-			GetMenuItem(menu, param2, state_, sizeof(state_));
+			char state_[128];
+			menu.GetItem(param2, state_, sizeof(state_));
 			DisplayBanReasonMenu(param1, state_);
 		}
 	}
 }
 
-DisplayBanReasonMenu(client, const String:state_[]) {
-	new Handle:menu = CreateMenu(MenuHandler_BanReasonList);
-	SetMenuTitle(menu, "Ban reason");
-	SetMenuExitBackButton(menu, true);
+void DisplayBanReasonMenu(client, const char[] state_) 
+{
+	Menu menu = CreateMenu(MenuHandler_BanReasonList);
+	menu.SetTitle("Ban reason");
+	menu.ExitBackButton = true;
+	
 	AddMenuItemWithState(menu, state_, "Abusive", "Abusive");
 	AddMenuItemWithState(menu, state_, "Racism", "Racism");
 	AddMenuItemWithState(menu, state_, "General cheating/exploits", "General cheating/exploits");
@@ -208,14 +217,15 @@ DisplayBanReasonMenu(client, const String:state_[]) {
 	AddMenuItemWithState(menu, state_, "Unacceptable Spray", "Unacceptable Spray");
 	AddMenuItemWithState(menu, state_, "Breaking Server Rules", "Breaking Server Rules");
 	AddMenuItemWithState(menu, state_, "Other", "Other");
-	DisplayMenu(menu, client, MENU_TIME_FOREVER);
+	
+	menu.Display(client, MENU_TIME_FOREVER);
 }
 
-public MenuHandler_BanReasonList(Handle:menu, MenuAction:action, param1, param2) 
+public int MenuHandler_BanReasonList(Menu menu, MenuAction action, int param1, int param2)
 {
 	switch (action)
 	{
-		case MenuAction_End: CloseHandle(menu);
+		case MenuAction_End: delete menu;
 		case MenuAction_Cancel:
 		{
 			if (param2 == MenuCancel_ExitBack && hTopMenu != INVALID_HANDLE)
@@ -223,8 +233,8 @@ public MenuHandler_BanReasonList(Handle:menu, MenuAction:action, param1, param2)
 		}
 		case MenuAction_Select:
 		{
-			decl String:state_[128], String:state_parts[4][32];
-			GetMenuItem(menu, param2, state_, sizeof(state_));
+			char state_[128], state_parts[4][32];
+			menu.GetItem(param2, state_, sizeof(state_));
 			
 			if (ExplodeString(state_, "\n", state_parts, sizeof(state_parts), sizeof(state_parts[])) != 3)
 				SetFailState("Bug in menu handlers");
@@ -238,11 +248,11 @@ public MenuHandler_BanReasonList(Handle:menu, MenuAction:action, param1, param2)
 // A very simple fixed-size queue yielding offsets into cyclic array(s)
 ///////////////////////////////////////////////////////////////////////////////
 
-static queue_max_size = STORED_ENTRIES;
-static queue_size     = 0;
-static queue_start    = 0;
+static int queue_max_size = STORED_ENTRIES;
+static int queue_size     = 0;
+static int queue_start    = 0;
 
-queue_get_size()   { return queue_size; }
+int queue_get_size()   { return queue_size; }
 //queue_is_full()    { return queue_size == queue_max_size; }
 //queue_is_empty()   { return queue_size == 0; }
 //queue_space_left() { return queue_max_size - queue_size; }
@@ -251,7 +261,7 @@ queue_get_size()   { return queue_size; }
 // and queue_size-1 (queue back; newest item), returns the translated position
 // in the cyclic array.
 
-queue_translate_pos(pos) {
+int queue_translate_pos(pos) {
 	pos += queue_start;
 	if (pos >= queue_max_size)
 		return pos - queue_max_size;
@@ -263,7 +273,7 @@ queue_translate_pos(pos) {
 // the queue is full. Returns the translated position of the new item in the
 // cyclic array.
 
-queue_push() {
+int queue_push() {
 	if (queue_size == queue_max_size)
 		queue_pop();
 	return queue_translate_pos(queue_size++);
@@ -273,7 +283,7 @@ queue_push() {
 // Removes an item from the queue, assuming it is non-empty. If it is empty, it
 // will stop the plugin execution!
 
-queue_pop() {
+int queue_pop() {
 	if (queue_size == 0) {
 		SetFailState("Can't pop from an empty queue!");
 		return -1;
