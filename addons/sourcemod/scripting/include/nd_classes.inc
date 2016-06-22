@@ -26,31 +26,31 @@
 #define SUPPORT_CLASS_BBQ		2
 
 /* Player class stock functions */
-stock bool:IsSniperClass(class, subClass) 
+stock bool IsSniperClass(int class, int subClass) 
 {
 	return 	   (class == MAIN_CLASS_ASSAULT && subClass == ASSAULT_CLASS_SNIPER) 
 	        || (class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SNIPER)
 }
-stock bool:IsStealthClass(class)
+stock bool IsStealthClass(int class)
 {
 	return class == MAIN_CLASS_STEALTH;
 }
 
 /* Orginally for the damage fix plugin */
-stock bool:IsExoSeigeKit(class, subClass)
+stock bool IsExoSeigeKit(int class, int subClass)
 {
 	return class == MAIN_CLASS_EXO && subClass == EXO_CLASS_SEIGE_KIT;
 }
-stock bool:IsSupportBBQ(class, subClass)
+stock bool IsSupportBBQ(int class, int subClass)
 {
 	return class == MAIN_CLASS_SUPPORT && subClass == SUPPORT_CLASS_BBQ;
 }
-stock bool:IsStealthSab(class, subClass)
+stock bool IsStealthSab(int class, int subClass)
 {
 	return class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SABATEUR;
 }
 
-stock ResetClass(client, mainClass, subClass, gizmo = -1)
+stock void ResetClass(int client, int mainClass, int subClass, int gizmo = -1)
 {
 	FakeClientCommand(client, "joinclass %d %d", mainClass, subClass);
 	

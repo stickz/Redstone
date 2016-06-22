@@ -16,7 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name = "Auto Reconnect",
 	author = "stickz",
@@ -29,7 +29,7 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/autoreconnect/autoreconnect.txt"
 #include "updater/standard.sp"
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	RegServerCmd("quit", OnDown);
 	RegServerCmd("_restart", OnDown);
@@ -37,9 +37,9 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public Action:OnDown(args)
+public Action OnDown(int args)
 {
-	for(new i = 1; i <= MaxClients; i++)
+	for (int i = 1; i <= MaxClients; i++)
 	{
 		if (IsClientInGame(i) && !IsFakeClient(i))
 		{

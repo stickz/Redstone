@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define PREFIX "\x05[xG]"
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name 		= "[ND] Dead Weights",
 	author 		= "stickz",
@@ -39,15 +39,15 @@ public Plugin:myinfo =
     	url     	= "https://github.com/stickz/Redstone/"
 }
 
-new 	Handle:eDeadWeights = INVALID_HANDLE,
-	Handle:pDeadWeightArray = INVALID_HANDLE,
-	bool:player_forced_seige[MAXPLAYERS + 1] = {false,...},
-	bool:advancedKitsAvailable[2] = {false, ...};
+ConVar eDeadWeights;
+ArrayList pDeadWeightArray;
+bool player_forced_seige[MAXPLAYERS + 1] = {false,...};
+bool advancedKitsAvailable[2] = {false, ...};
 	
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_deadweights/nd_deadweights.txt"
 #include "updater/standard.sp"
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	eDeadWeights = CreateConVar("sm_enable_deadweights", "1", "Sets wetheir to allow commanders to set their own limits.");
 	
@@ -58,16 +58,16 @@ public OnPluginStart()
 	HookEvent("player_death", Event_SetClass, EventHookMode_Post);
 	HookEvent("research_complete", Event_ResearchComplete);
 	
-	pDeadWeightArray = CreateArray(23);
+	pDeadWeightArray = new ArrayList(23);
 	
-	AddUpdaterLibrary();
+	AddUpdaterLibrary(); //add updater support
 	
 	LoadTranslations("nd_dead_weight.phrases");
 }
 
-public OnMapStart()
+public void OnMapStart()
 {
-	ClearArray(pDeadWeightArray);
+	pDeadWeightArray.Clear();
 	
 	advancedKitsAvailable[0] = false;
 	advancedKitsAvailable[1] = false;
@@ -79,7 +79,7 @@ public OnMapStart()
 	}
 }
 
-public OnClientAuthorized(client)
+public void OnClientAuthorized(int client)
 {	
 	ResetVars(client);
 	
@@ -91,14 +91,14 @@ public OnClientAuthorized(client)
 		player_forced_seige[client] = true;	
 }
 
-public OnClientDisconnect(client)
+public void OnClientDisconnect(client)
 {
 	ResetVars(client);
 }
 
-public Action:CMD_LockPlayerSeige(client, args) 
+public Action CMD_LockPlayerSeige(int client, int args) 
 {
-	if (!GetConVarBool(eDeadWeights))
+	if (!eDeadWeights.BoolValue)
 	{
 		PrintToChat(client, "%s %t", PREFIX, "Disabled Feature"); //This feature is currently disabled.
 		return Plugin_Handled;	
@@ -113,7 +113,7 @@ public Action:CMD_LockPlayerSeige(client, args)
 	 	return Plugin_Handled;
 	}
 	
-	new client_team = GetClientTeam(client);
+	int client_team = GetClientTeam(client);
 	if (client_team < 2)
 		return Plugin_Handled;  
 
@@ -124,10 +124,10 @@ public Action:CMD_LockPlayerSeige(client, args)
 	}
 	
 	// Try to find a target player
-	decl String:targetArg[50];
+	char targetArg[50];
 	GetCmdArg(1, targetArg, sizeof(targetArg));
 	
-	new target = FindTarget(client, targetArg);
+	int target = FindTarget(client, targetArg);
 	if (target == -1)
 	{
 		PrintToChat(client, "%s %t", PREFIX, "Cannot Find Player");
@@ -150,7 +150,7 @@ public Action:CMD_LockPlayerSeige(client, args)
 	return Plugin_Handled;
 }
 
-public Action:CMD_SetPlayerClass(client, args) 
+public Action CMD_SetPlayerClass(int client, int args) 
 {
 	if (!IsValidClient(client))
 		return Plugin_Handled; 
@@ -162,10 +162,10 @@ public Action:CMD_SetPlayerClass(client, args)
 	}
 	
 	// Try to find a target player
-	decl String:targetArg[50];
+	char targetArg[50];
 	GetCmdArg(1, targetArg, sizeof(targetArg));
 	
-	new target = FindTarget(client, targetArg);
+	int target = FindTarget(client, targetArg);
 	if (target == -1)
 	{
 		PrintToChat(client, "%s %t", PREFIX, "Cannot Find Player");
@@ -176,11 +176,11 @@ public Action:CMD_SetPlayerClass(client, args)
 	return Plugin_Handled;
 }
 
-public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadcast) 
+public Action Event_SetClass(Event event, const char[] name, bool dontBroadcast)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"));
-	new class = GetEventInt(event, "subclass");
-	new subclass = GetEventInt(event, "subclass");
+	int client = GetClientOfUserId(event.GetInt("userid"));
+	int class = event.GetInt("subclass");
+	int subclass = event.GetInt("subclass");
 	
 	if (player_forced_seige[client])
 	{
@@ -197,10 +197,10 @@ public Action:Event_SetClass(Handle:event, const String:name[], bool:dontBroadca
 	return Plugin_Continue;
 }
 
-public Action:Event_ResearchComplete(Handle:event, const String:name[], bool:dontBroadcast) 
+public Action Event_ResearchComplete(Event event, const char[] name, bool dontBroadcast)
 {
-	new team = GetEventInt(event, "teamid");
-	new researchID = GetEventInt(event, "researchid");
+	int team = event.GetInt("teamid");
+	int researchID = event.GetInt("researchid");
 	
 	#if DEBUG == 1
 	decl String:message[64];
@@ -214,53 +214,48 @@ public Action:Event_ResearchComplete(Handle:event, const String:name[], bool:don
 	return Plugin_Continue;
 }
 
-bool:PlayerIsSeige(class, subclass)
+bool PlayerIsSeige(int class, int subclass)
 {
 	return class == MAIN_CLASS_EXO && subclass == EXO_CLASS_SEIGE_KIT;	
 }
 
-/*bool:CanLockSeige(target)
+/*bool CanLockSeige(int target)
 {
 	return true;
 }*/
 
-SetPlayerSeige(client)
+void SetPlayerSeige(int client)
 {
-	SetEntProp(client, Prop_Send, "m_iPlayerClass", MAIN_CLASS_EXO);
-	SetEntProp(client, Prop_Send, "m_iPlayerSubclass", EXO_CLASS_SEIGE_KIT);
-	SetEntProp(client, Prop_Send, "m_iDesiredPlayerClass", MAIN_CLASS_EXO);
-	SetEntProp(client, Prop_Send, "m_iDesiredPlayerSubclass", EXO_CLASS_SEIGE_KIT);
-	SetEntProp(client, Prop_Send, "m_iDesiredGizmo", 0);
-
+	ResetClass(client, MAIN_CLASS_EXO, EXO_CLASS_SEIGE_KIT, 0);
 	PrintToChat(client, "%s %t.", PREFIX, "Locked Siege");
 }
 
-SeigeLockPlayer(admin, target, bool:AdminUsed = true)
+void SeigeLockPlayer(int admin, int target, bool AdminUsed = true)
 {
 	player_forced_seige[target] = !player_forced_seige[target];
 	
 	/* retrieve client steam-id and store in array */
-	decl String:gAuth[32];
+	char gAuth[32];
 	GetClientAuthId(target, AuthId_Steam2, gAuth, sizeof(gAuth));
 	
 	if (player_forced_seige[target])
 	{
 		PrintToChat(admin, "%s %t.", PREFIX, "Enabled Seige Lock");
 		PrintToChat(target, "%s %t.", PREFIX, AdminUsed ? "Admin Lock Enabled" : "Commander Lock Enabled");
-		PushArrayString(pDeadWeightArray, gAuth);
+		pDeadWeightArray.PushString(gAuth);
 	}
 	else
 	{
 		PrintToChat(admin, "%s %t.", PREFIX, "Disabled Seige Lock");
 		PrintToChat(target, "%s %t.", PREFIX, AdminUsed ? "Admin Lock Disibled" : "Commander Lock Disbled");
 		
-		new ArrayIndex = FindStringInArray(pDeadWeightArray, gAuth);
+		int ArrayIndex = pDeadWeightArray.FindString(gAuth);
 		if (ArrayIndex != -1)
-			RemoveFromArray(pDeadWeightArray, ArrayIndex);		
+			pDeadWeightArray.Erase(ArrayIndex);		
 	}
 }
 
-ResetVars(client)
+void ResetVars(client)
 {
 	player_forced_seige[client] = false;
 }

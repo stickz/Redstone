@@ -41,11 +41,11 @@
  *
  * @return        			The type of server.
  */
-native GameME_GetServerType();
+native int GameME_GetServerType();
 
 #define GST_LOADED() (GetFeatureStatus(FeatureType_Native, "GameME_GetServerType") == FeatureStatus_Available)
 
-stock bool:RegularServerType()
+stock bool RegularServerType()
 {
 	return GST_LOADED() && GameME_GetServerType() == GAMEME_TYPE_REGULAR;
 }
@@ -58,7 +58,7 @@ stock bool:RegularServerType()
  * @param client			The index of the team.
  * @return        			The skill value of the client.
  */
-native GameME_GetClientSkill(client);
+native int GameME_GetClientSkill(client);
 
 /**
  * Retreive the cached gameme client rank value
@@ -68,7 +68,7 @@ native GameME_GetClientSkill(client);
  * @param client	 		The index of the team.
  * @return        			The rank value of the client.
  */
-native GameME_GetClientRank(client);
+native int GameME_GetClientRank(client);
 
 /**
  * Check if the redstone server considers the client an vetern player.
@@ -76,4 +76,4 @@ native GameME_GetClientRank(client);
  * @param clientIDX  	The index of the client.
  * @return        		Is the client in the ranked database?
  */
-native bool:GameME_RankedClient(clientIDX);
+native bool GameME_RankedClient(clientIDX);

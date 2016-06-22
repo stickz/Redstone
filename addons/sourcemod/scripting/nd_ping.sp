@@ -18,7 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name 		= "[ND] Player Ping",
 	author 		= "databomb",
@@ -30,7 +30,7 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_ping/nd_ping.txt"
 #include "updater/standard.sp"
 
-new Handle:gH_Cvar_Type = INVALID_HANDLE;
+ConVar gH_Cvar_Type;
 
 enum MinimapBlipType
 {
@@ -42,7 +42,7 @@ enum MinimapBlipType
 	MINIMAP_BLIP_ENEMY,  // small, red
 }; 
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	RegConsoleCmd("sm_ping", Command_Ping);
 	gH_Cvar_Type = CreateConVar("sm_ping_type", "3", "The type of map blip to use. Check the source for details.", _, true, 0.0);
@@ -50,7 +50,7 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public Action:Command_Ping(client, args)
+public Action Command_Ping(int client, int args)
 {
 	if (!client)
 	{
@@ -64,12 +64,14 @@ public Action:Command_Ping(client, args)
 		return Plugin_Handled;
 	}
 	
-	new Handle:bf = StartMessageAll("MapBlip");
+	Handle bf = StartMessageAll("MapBlip");
 	
-	BfWriteByte(bf, GetConVarInt(gH_Cvar_Type));
-	new Float:v[3];
+	BfWriteByte(bf, gH_Cvar_Type.IntValue);
+	
+	float v[3];
 	GetClientEyePosition(client, v);
 	BfWriteVecCoord(bf, v);
+	
 	EndMessage();
 	
 	ReplyToCommand(client, "Sent a ping to the commander for this location.");

@@ -14,7 +14,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
-public Plugin:myinfo =
+public Plugin myinfo = 
 {
 	name 		= "[ND] Round Engine",
 	author 		= "Stickz",
@@ -26,11 +26,11 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_round_engine/nd_round_engine.txt"
 #include "updater/standard.sp"
 
-new bool:roundStarted = false;
-new bool:roundEnded = false;
-new bool:mapStarted = false;
+bool roundStarted = false;
+bool roundEnded = false;
+bool mapStarted = false;
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
@@ -38,33 +38,33 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public OnMapStart()
+public void OnMapStart()
 {
 	mapStarted = true;
 }
 
-public OnMapEnd()
+public void OnMapEnd()
 {
 	roundStarted = false;
 	mapStarted = false;
 	roundEnded = false;
 }
 
-public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {
 	roundStarted = true;
 }
 
-public Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
 	roundStarted = false;
 	roundEnded = true;
 }
 
 /* Natives */
-functag NativeCall public(Handle:plugin, numParams);
+//functag NativeCall public(Handle plugin, int numParams);
 
-public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_RoundStarted", Native_GetRoundStarted);
 	CreateNative("ND_RoundEnded", Native_GetRoundEnded);
@@ -72,17 +72,17 @@ public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 	return APLRes_Success;
 }
 
-public Native_GetRoundStarted(Handle:plugin, numParams)
+public int Native_GetRoundStarted(Handle plugin, int numParams)
 {
 	return _:roundStarted;
 }
 
-public Native_GetRoundEnded(Handle:plugin, numParams)
+public int Native_GetRoundEnded(Handle plugin, int numParams)
 {
 	return _:roundEnded;
 }
 
-public Native_GetMapStarted(Handle:plugin, numParams)
+public int Native_GetMapStarted(Handle plugin, int numParams)
 {
 	return _:mapStarted;
 }
