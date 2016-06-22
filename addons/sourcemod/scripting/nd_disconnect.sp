@@ -28,7 +28,7 @@ public Plugin myinfo =
 	author 		= "stickz",
 	description 	= "N/A",
 	version 	= "dummy",
-	url 		= "N/A"
+	url 		= "https://github.com/stickz/Redstone/"
 };
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_disconnect/nd_disconnect.txt"
