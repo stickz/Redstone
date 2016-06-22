@@ -289,7 +289,7 @@ public int Handler_VoteCallback(Menu menu, MenuAction action, int param1, int pa
 			char buffer[255];
 			Format(buffer, sizeof(buffer), "%s %s", title, g_voteInfo[VOTE_NAME]);
 
-			Handle panel = Handle param2;
+			Panel panel = Handle:param2;
 			panel.SetTitle(buffer);
 		}
 		
