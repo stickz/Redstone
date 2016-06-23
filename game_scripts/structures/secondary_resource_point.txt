@@ -1,10 +1,10 @@
 "secondary_resource_point"
 {
-	"starting_resources"			"52000"
-	"extract_interval" 			"7.5"		// Length of time in seconds before we hand out more resources
-	"extract_amt"				"195"		// Amount of resources to give in each extraction	
+	"starting_resources"			"44000"
+	"extract_interval" 			"10"		// Length of time in seconds before we hand out more resources
+	"extract_amt"				"275"		// Amount of resources to give in each extraction	
 	
 	"extract_delay"				"0.0"
 	
-	"trickle_multiplier"		"0.35"		// Percentage of extract amount to give when we are "out" of resources
+	"trickle_multiplier"		"0.5"		// Percentage of extract amount to give when we are "out" of resources
 }
