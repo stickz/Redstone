@@ -313,19 +313,6 @@ char ActionToString(Action action)
 	return Action_Name;
 }
 
-bool IsValidClient(int client, bool nobots = true) // Check If A Client ID Is Valid
-{
-    if (client <= 0 || client > MaxClients)
-		return false;
-	else if (!IsClientConnected(client))
-        return false;
-	else if (IsClientSourceTV(client))
-		return false;
-	else if (nobots && IsFakeClient(client))
-		return false;
-    return IsClientInGame(client);
-}
-
 void ResetAttacker(int index)
 {
 	iPlayerAttacker[index] = -1;
