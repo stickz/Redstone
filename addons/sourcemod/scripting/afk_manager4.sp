@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <sdktools>
+#include <nd_stocks>
 
 #pragma semicolon 1
 
