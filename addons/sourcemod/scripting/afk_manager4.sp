@@ -104,7 +104,7 @@ ConVar hCvarPrefixShort;
 ConVar hCvarPrefixColor;
 #endif
 ConVar hCvarLanguage;
-ConVar hCvarLogWarning;
+ConVar hCvarLogWarnings;
 ConVar hCvarLogMoves;
 ConVar hCvarLogKicks;
 ConVar hCvarLogDays;
@@ -527,7 +527,7 @@ void HookConVars() // ConVar Hook Registrations
 		hCvarPrefixShort.AddChangeHook(CvarChange_Status); // Hook Short Prefix Variable
 		bCvarIsHooked[CONVAR_PREFIXSHORT] = true;
 
-		if (hCvarPrefixShort.BooValue)
+		if (hCvarPrefixShort.BoolValue)
 			g_sPrefix = "AFK";
 	}
 #if defined _colors_included
@@ -536,7 +536,7 @@ void HookConVars() // ConVar Hook Registrations
 		hCvarPrefixColor.AddChangeHook(CvarChange_Status); // Hook Color Prefix Variable
 		bCvarIsHooked[CONVAR_PREFIXCOLORS] = true;
 
-		if (hCvarPrefixColor.BooValue)
+		if (hCvarPrefixColor.BoolValue)
 			g_bPrefixColors = true;
 	}
 #endif
@@ -545,7 +545,7 @@ void HookConVars() // ConVar Hook Registrations
 		hCvarLanguage.AddChangeHook(CvarChange_Status); // Hook Language Variable
 		bCvarIsHooked[CONVAR_LANGUAGE] = true;
 
-		if (hCvarLanguage.BooValue)
+		if (hCvarLanguage.BoolValue)
 			g_bForceLanguage = true;
 	}
 	if (!bCvarIsHooked[CONVAR_LOG_WARNINGS])
@@ -553,7 +553,7 @@ void HookConVars() // ConVar Hook Registrations
 		hCvarLogWarnings.AddChangeHook(CvarChange_Status); // Hook Warnings Variable
 		bCvarIsHooked[CONVAR_LOG_WARNINGS] = true;
 
-		if (hCvarLogWarnings.BooValue)
+		if (hCvarLogWarnings.BoolValue)
 			g_bLogWarnings = true;
 	}
 	if (!bCvarIsHooked[CONVAR_TIMETOMOVE])
@@ -575,7 +575,7 @@ void HookConVars() // ConVar Hook Registrations
 		hCvarExcludeDead.AddChangeHook(CvarChange_Status); // Hook Exclude Dead Variable
 		bCvarIsHooked[CONVAR_EXCLUDEDEAD] = true;
 
-		if (hCvarExcludeDead.BooValue)
+		if (hCvarExcludeDead.BoolValue)
 			g_bExcludeDead = true;
 	}
 }
