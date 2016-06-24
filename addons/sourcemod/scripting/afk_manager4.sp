@@ -439,7 +439,7 @@ void CheckMinPlayers()
 }
 
 // Cvar Hooks
-public void CvarChange_Status(ConVar convar, const char[] oldValue, const char[] newValue) // Hook ConVar Status
+public void CvarChange_Status(ConVar convar, const char[] oldvalue, const char[] newvalue) // Hook ConVar Status
 {
 	if (!StrEqual(oldvalue, newvalue))
 	{
@@ -484,7 +484,7 @@ public void CvarChange_Status(ConVar convar, const char[] oldValue, const char[]
 	}
 }
 
-public void CvarChange_Locked(ConVar convar, const char[] oldValue, const char[] newValue) // Lock ConVar
+public void CvarChange_Locked(ConVar convar, const char[] oldvalue, const char[] newvalue) // Lock ConVar
 {
 	if ((cvar == hCvarAFK) && (StringToInt(newvalue) != 0))
 		SetConVarInt(cvar, 0);
@@ -524,7 +524,7 @@ void HookConVars() // ConVar Hook Registrations
 	
 	if (!bCvarIsHooked[CONVAR_PREFIXSHORT])
 	{
-		hCvarPrefixShortAddChangeHook(CvarChange_Status); // Hook Short Prefix Variable
+		hCvarPrefixShort.AddChangeHook(CvarChange_Status); // Hook Short Prefix Variable
 		bCvarIsHooked[CONVAR_PREFIXSHORT] = true;
 
 		if (hCvarPrefixShort.BooValue)
@@ -533,7 +533,7 @@ void HookConVars() // ConVar Hook Registrations
 #if defined _colors_included
 	if (!bCvarIsHooked[CONVAR_PREFIXCOLORS])
 	{
-		hCvarPrefixColorAddChangeHook(CvarChange_Status); // Hook Color Prefix Variable
+		hCvarPrefixColor.AddChangeHook(CvarChange_Status); // Hook Color Prefix Variable
 		bCvarIsHooked[CONVAR_PREFIXCOLORS] = true;
 
 		if (hCvarPrefixColor.BooValue)
@@ -542,7 +542,7 @@ void HookConVars() // ConVar Hook Registrations
 #endif
 	if (!bCvarIsHooked[CONVAR_LANGUAGE])
 	{
-		hCvarLanguageAddChangeHook(CvarChange_Status); // Hook Language Variable
+		hCvarLanguage.AddChangeHook(CvarChange_Status); // Hook Language Variable
 		bCvarIsHooked[CONVAR_LANGUAGE] = true;
 
 		if (hCvarLanguage.BooValue)
@@ -550,7 +550,7 @@ void HookConVars() // ConVar Hook Registrations
 	}
 	if (!bCvarIsHooked[CONVAR_LOG_WARNINGS])
 	{
-		hCvarLogWarningsAddChangeHook(CvarChange_Status); // Hook Warnings Variable
+		hCvarLogWarnings.AddChangeHook(CvarChange_Status); // Hook Warnings Variable
 		bCvarIsHooked[CONVAR_LOG_WARNINGS] = true;
 
 		if (hCvarLogWarnings.BooValue)
@@ -558,21 +558,21 @@ void HookConVars() // ConVar Hook Registrations
 	}
 	if (!bCvarIsHooked[CONVAR_TIMETOMOVE])
 	{
-		hCvarTimeToMoveAddChangeHook(CvarChange_Status); // Hook TimeToMove Variable
+		hCvarTimeToMove.AddChangeHook(CvarChange_Status); // Hook TimeToMove Variable
 		bCvarIsHooked[CONVAR_TIMETOMOVE] = true;
 
 		g_iTimeToMove = hCvarTimeToMove.IntValue;
 	}
 	if (!bCvarIsHooked[CONVAR_TIMETOKICK])
 	{
-		hCvarTimeToKickAddChangeHook(CvarChange_Status); // Hook TimeToKick Variable
+		hCvarTimeToKick.AddChangeHook(CvarChange_Status); // Hook TimeToKick Variable
 		bCvarIsHooked[CONVAR_TIMETOKICK] = true;
 
 		g_iTimeToKick = hCvarTimeToKick.IntValue;
 	}
 	if (!bCvarIsHooked[CONVAR_EXCLUDEDEAD])
 	{
-		hCvarExcludeDeadAddChangeHook(CvarChange_Status); // Hook Exclude Dead Variable
+		hCvarExcludeDead.AddChangeHook(CvarChange_Status); // Hook Exclude Dead Variable
 		bCvarIsHooked[CONVAR_EXCLUDEDEAD] = true;
 
 		if (hCvarExcludeDead.BooValue)
