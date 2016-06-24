@@ -855,18 +855,18 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 
 
 // Game Events
-public Action Event_PlayerTeam(Handle event, const char[] name, bool dontBroadcast)
+public Action Event_PlayerTeam(Event event, const char[] name, bool dontBroadcast)
 {
 	if (g_bEnabled)
 	{
-		int client = GetClientOfUserId(GetEventInt(event, "userid"));
+		int client = GetClientOfUserId(event.GetInt("userid"));
 
 		if (client > 0) // Check the client is not console/world?
 			if (IsValidClient(client))
 			{
 				if (g_hAFKTimer[client] != INVALID_HANDLE)
 				{
-					g_iPlayerTeam[client] = GetEventInt(event, "team");
+					g_iPlayerTeam[client] = event.GetInt("team");
 
 					if (g_iPlayerTeam[client] != g_iSpec_Team)
 					{
@@ -879,11 +879,11 @@ public Action Event_PlayerTeam(Handle event, const char[] name, bool dontBroadca
 	return Plugin_Continue;
 }
 
-public Action Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
+public Action Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 {
 	if (g_bEnabled)
 	{
-		int client = GetClientOfUserId(GetEventInt(event, "userid"));
+		int client = GetClientOfUserId(event.GetInt("userid"));
 
 		if (client > 0) // Check the client is not console/world?
 			if (IsValidClient(client)) // Check client is not a bot or otherwise fake player.
@@ -911,18 +911,18 @@ public Action Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadc
 	return Plugin_Continue;
 }
 
-public Action Event_PlayerDeathPost(Handle event, const char[] name, bool dontBroadcast)
+public Action Event_PlayerDeathPost(Event event, const char[] name, bool dontBroadcast)
 {
 	if (g_bEnabled)
 	{
-		int client = GetClientOfUserId(GetEventInt(event,"userid"));
+		int client = GetClientOfUserId(event.GetInt("userid"));
 
 		if (client > 0) // Check the client is not console/world?
 			if (IsValidClient(client)) // Check client is not a bot or otherwise fake player.
 			{
 				if (g_hAFKTimer[client] != INVALID_HANDLE)
 				{
-					iPlayerAttacker[client] = GetClientOfUserId(GetEventInt(event,"attacker"));
+					iPlayerAttacker[client] = GetClientOfUserId(event.GetInt("attacker"));
 
 					GetClientEyeAngles(client, fEyeAngles[client]);
 					ResetSpawn(client);
