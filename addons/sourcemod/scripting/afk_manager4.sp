@@ -68,7 +68,7 @@ bool bCvarIsHooked[CONVAR_SIZE] =	{false, ...}; // Console Variable Hook Status
 bool g_bLateLoad 		=	false;
 // Console Related Variables
 bool g_bEnabled 		=	false;
-char g_sPrefix[] 		=	"AFK";
+char g_sPrefix[] 		=	"AFK Manager";
 #if defined _colors_included
 bool g_bPrefixColors 		=	false;
 #endif
@@ -89,7 +89,7 @@ int g_iSpec_FLMode 		=	0;
 // Forwards
 Handle g_FWD_hOnAFKEvent 	=	INVALID_HANDLE;
 Handle g_FWD_hOnClientAFK	=	INVALID_HANDLE;
-Handle g_FWD_hOnClientBac 	=	INVALID_HANDLE;
+Handle g_FWD_hOnClientBack 	=	INVALID_HANDLE;
 
 // AFK Manager Console Variables
 ConVar hCvarEnabled;
@@ -999,7 +999,7 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			bool isDeathCam = !IsPlayerAlive(client) && iObserverTarget[client] == client;
 			
 			//if the player has spawned or is a death cam they're not afk; otherwise they are afk.
-			SetClientAFK(client, !(playerHasSpawned || isDeathCam);
+			SetClientAFK(client, !(playerHasSpawned || isDeathCam));
 			return Plugin_Continue;
 		}
 
