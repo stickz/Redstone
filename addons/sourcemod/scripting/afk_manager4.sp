@@ -1036,7 +1036,7 @@ public Action Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadc
 			{
 				if (g_hAFKTimer[client] != INVALID_HANDLE)
 				{
-					if ((!Synergy) && (g_iPlayerTeam[client] == 0)) // Unassigned Team? Fires in CSTRIKE?
+					if (g_iPlayerTeam[client] == 0) // Unassigned Team? Fires in CSTRIKE?
 						return Plugin_Continue;
 
 					if (!IsClientObserver(client)) // Client is not an Observer/Spectator?
@@ -1176,7 +1176,7 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			return Plugin_Continue;
 		}
 
-		if ((Synergy) || ((g_iPlayerTeam[client] != 0) && (g_iPlayerTeam[client] != g_iSpec_Team))) // Make sure player is not Unassigned or Spectator
+		if ((g_iPlayerTeam[client] != 0) && (g_iPlayerTeam[client] != g_iSpec_Team)) // Make sure player is not Unassigned or Spectator
 			if (!IsPlayerAlive(client) && (g_bExcludeDead)) // Excluding Dead players
 			{
 				g_iAFKTime[client]++;
