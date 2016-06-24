@@ -16,86 +16,80 @@
 #define REQUIRE_PLUGIN
 
 //Auto Updater Suport
-#define UPDATE_URL	"https://github.com/stickz/Redstone/blob/build/updater/afk_manager4/translations/afk_manager.phrases.txt"
-#include "updater/standard.sp"
+#define UPDATE_URL	"https://github.com/stickz/Redstone/raw/build/updater/afk_manager4/translations/afk_manager.phrases.txt"
+#include 		"updater/standard.sp"
 
 // Defines
-#define AFK_WARNING_INTERVAL						5
-#define AFK_CHECK_INTERVAL							1.0
+#define AFK_WARNING_INTERVAL		5
+#define AFK_CHECK_INTERVAL		1.0
 
 #if !defined MAX_MESSAGE_LENGTH
-	#define MAX_MESSAGE_LENGTH						250
+	#define MAX_MESSAGE_LENGTH	250
 #endif
 
-#define SECONDS_IN_DAY								86400
+#define SECONDS_IN_DAY			86400
 
-#define ND_TRANSPORT_GATE 2
-#define ND_TRANSPORT_NAME "struct_transport_gate"
+#define ND_TRANSPORT_GATE 		2
+#define ND_TRANSPORT_NAME 		"struct_transport_gate"
 
-#define LOG_FOLDER									"logs"
-#define LOG_PREFIX									"afkm_"
-#define LOG_EXT										"log"
+#define LOG_FOLDER			"logs"
+#define LOG_PREFIX			"afkm_"
+#define LOG_EXT				"log"
 
 // ConVar Defines
-#define CONVAR_ENABLED								1
-#define CONVAR_MOD_AFK								2
-#define CONVAR_PREFIXSHORT							3
-#define CONVAR_PREFIXCOLORS							4
-#define CONVAR_LANGUAGE								5
-#define CONVAR_LOG_WARNINGS							6
-#define CONVAR_TIMETOMOVE							7
-#define CONVAR_TIMETOKICK							8
-#define CONVAR_EXCLUDEDEAD							9
+#define CONVAR_ENABLED			0
+#define CONVAR_PREFIXSHORT		1
+#define CONVAR_PREFIXCOLORS		2
+#define CONVAR_LOG_WARNINGS		3
+#define CONVAR_TIMETOMOVE		4
+#define CONVAR_TIMETOKICK		5
+#define CONVAR_EXCLUDEDEAD		6
+#define CONVAR_SIZE			7
 
 // Arrays
 char AFKM_LogFile[PLATFORM_MAX_PATH]; // Log File
-//Handle g_FWD_hPlugins =								INVALID_HANDLE; // Forward Plugin Handles
-Handle g_hAFKTimer[MAXPLAYERS+1] =					{INVALID_HANDLE, ...}; // AFK Timers
-int g_iAFKTime[MAXPLAYERS+1] =						{-1, ...}; // Initial Time of AFK
-int g_iSpawnTime[MAXPLAYERS+1] =					{-1, ...}; // Time of Spawn
-int iButtons[MAXPLAYERS+1] = 						{0, ...}; // Bitsum of buttons pressed
-int g_iPlayerTeam[MAXPLAYERS+1] =					{-1, ...}; // Player Team
-int iPlayerAttacker[MAXPLAYERS+1] =					{-1, ...}; // Player Attacker
-int iObserverMode[MAXPLAYERS+1] =					{-1, ...}; // Observer Mode
-int iObserverTarget[MAXPLAYERS+1] =					{-1, ...}; // Observer Target
+//Handle g_FWD_hPlugins 		=	INVALID_HANDLE; // Forward Plugin Handles
+Handle g_hAFKTimer[MAXPLAYERS+1] 	=	{INVALID_HANDLE, ...}; // AFK Timers
+int g_iAFKTime[MAXPLAYERS+1] 		=	{-1, ...}; // Initial Time of AFK
+int g_iSpawnTime[MAXPLAYERS+1] 		=	{-1, ...}; // Time of Spawn
+int iButtons[MAXPLAYERS+1] 		=	{0, ...}; // Bitsum of buttons pressed
+int g_iPlayerTeam[MAXPLAYERS+1] 	=	{-1, ...}; // Player Team
+int iPlayerAttacker[MAXPLAYERS+1] 	=	{-1, ...}; // Player Attacker
+int iObserverMode[MAXPLAYERS+1] 	=	{-1, ...}; // Observer Mode
+int iObserverTarget[MAXPLAYERS+1] 	=	{-1, ...}; // Observer Target
 //int iMouse[MAXPLAYERS+1][2]; // X = Vertical, Y = Horizontal
-bool bPlayerAFK[MAXPLAYERS+1] =						{true, ...}; // Player AFK Status
-bool bPlayerDeath[MAXPLAYERS+1] =					{false, ...};
+bool bPlayerAFK[MAXPLAYERS+1] 		=	{true, ...}; // Player AFK Status
+bool bPlayerDeath[MAXPLAYERS+1] 	=	{false, ...};
 float fEyeAngles[MAXPLAYERS+1][3]; // X = Vertical, Y = Height, Z = Horizontal
 
-bool bCvarIsHooked[11] =							{false, ...}; // Console Variable Hook Status
+bool bCvarIsHooked[CONVAR_SIZE] =	{false, ...}; // Console Variable Hook Status
 
 // Global Variables
-bool g_bLateLoad = 									false;
+bool g_bLateLoad 		=	false;
 // Console Related Variables
-bool g_bEnabled =									false;
-char g_sPrefix[] =									"AFK Manager";
+bool g_bEnabled 		=	false;
+char g_sPrefix[] 		=	"AFK";
 #if defined _colors_included
-bool g_bPrefixColors =								false;
+bool g_bPrefixColors 		=	false;
 #endif
-bool g_bForceLanguage =								false;
-bool g_bLogWarnings =								false;
-bool g_bExcludeDead =								false;
-int g_iTimeToMove =									-1;
-int g_iTimeToKick =									-1;
+bool g_bLogWarnings 		=	false;
+bool g_bExcludeDead 		=	false;
+int g_iTimeToMove 		=	-1;
+int g_iTimeToKick 		=	-1;
 
 // Status Variables
-bool bMovePlayers =									true;
-bool bKickPlayers =									true;
-bool g_bWaitRound =									true;
+bool bMovePlayers 		=	true;
+bool bKickPlayers 		=	true;
+bool g_bWaitRound 		=	true;
 
 // Spectator Related Variables
-int g_iSpec_Team =									1;
-int g_iSpec_FLMode =								0;
+int g_iSpec_Team 		=	1;
+int g_iSpec_FLMode 		=	0;
 
-// Mod Based Console Variables
-ConVar hCvarAFK;
-
-// Handles
 // Forwards
-Handle g_FWD_hOnAFKEvent =							INVALID_HANDLE;
-Handle g_FWD_hOnClientAFK =							INVALID_HANDLE;
-Handle g_FWD_hOnClientBack =						INVALID_HANDLE;
+Handle g_FWD_hOnAFKEvent 	=	INVALID_HANDLE;
+Handle g_FWD_hOnClientAFK	=	INVALID_HANDLE;
+Handle g_FWD_hOnClientBac 	=	INVALID_HANDLE;
 
 // AFK Manager Console Variables
 ConVar hCvarEnabled;
@@ -103,7 +97,6 @@ ConVar hCvarPrefixShort;
 #if defined _colors_included
 ConVar hCvarPrefixColor;
 #endif
-ConVar hCvarLanguage;
 ConVar hCvarLogWarnings;
 ConVar hCvarLogMoves;
 ConVar hCvarLogKicks;
@@ -113,11 +106,9 @@ ConVar hCvarMinPlayersKick;
 ConVar hCvarAdminsImmune;
 ConVar hCvarAdminsFlag;
 ConVar hCvarMoveSpec;
-ConVar hCvarMoveAnnounce;
 ConVar hCvarTimeToMove;
 ConVar hCvarWarnTimeToMove;
 ConVar hCvarKickPlayers;
-ConVar hCvarKickAnnounce;
 ConVar hCvarTimeToKick;
 ConVar hCvarWarnTimeToKick;
 ConVar hCvarSpawnTime;
@@ -140,7 +131,6 @@ void API_Init()
 {
 	CreateNative("AFKM_IsClientAFK", Native_IsClientAFK);
 	CreateNative("AFKM_GetClientAFKTime", Native_GetClientAFKTime);
-	//g_FWD_hOnAFKEvent = CreateForward(ET_Event, Param_String, Param_Cell);
 	g_FWD_hOnAFKEvent = CreateGlobalForward("AFKM_OnAFKEvent", ET_Event, Param_String, Param_Cell);
 	g_FWD_hOnClientAFK = CreateGlobalForward("AFKM_OnClientAFK", ET_Ignore, Param_Cell);
 	g_FWD_hOnClientBack = CreateGlobalForward("AFKM_OnClientBack", ET_Ignore, Param_Cell);
@@ -275,10 +265,7 @@ void AFK_PrintToChat(int client, const char[] sMessage, any:...)
 	{
 		if (IsClientInGame(i))
 		{
-			if (g_bForceLanguage)
-				SetGlobalTransTarget(LANG_SERVER);
-			else
-				SetGlobalTransTarget(i);
+			SetGlobalTransTarget(i);
 			VFormat(sBuffer, sizeof(sBuffer), sMessage, 3);
 #if defined _colors_included
 			if (g_bPrefixColors)
@@ -451,8 +438,6 @@ public void CvarChange_Status(ConVar cvar, const char[] oldvalue, const char[] n
 		{
 			if (cvar == hCvarEnabled)
 				EnablePlugin();
-			else if (cvar == hCvarLanguage)
-				g_bForceLanguage = true;
 			else if (cvar == hCvarLogWarnings)
 				g_bLogWarnings = true;
 			else if (cvar == hCvarPrefixShort)
@@ -468,8 +453,6 @@ public void CvarChange_Status(ConVar cvar, const char[] oldvalue, const char[] n
 		{
 			if (cvar == hCvarEnabled)
 				DisablePlugin();
-			else if (cvar == hCvarLanguage)
-				g_bForceLanguage = false;
 			else if (cvar == hCvarLogWarnings)
 				g_bLogWarnings = false;
 			else if (cvar == hCvarPrefixShort)
@@ -484,18 +467,10 @@ public void CvarChange_Status(ConVar cvar, const char[] oldvalue, const char[] n
 	}
 }
 
-public void CvarChange_Locked(ConVar cvar, const char[] oldvalue, const char[] newvalue) // Lock ConVar
-{
-	if ((cvar == hCvarAFK) && (StringToInt(newvalue) != 0))
-		SetConVarInt(cvar, 0);
-}
-
 void HookEvents() // Event Hook Registrations
 {
 	HookEvent("player_team", Event_PlayerTeam);
-
 	HookEvent("player_spawn", Event_PlayerSpawn);
-
 	HookEvent("player_death", Event_PlayerDeathPost, EventHookMode_Post);
 	
 	//Add hooks for Nuclear Dawn
@@ -510,16 +485,6 @@ void HookConVars() // ConVar Hook Registrations
 	{
 		hCvarEnabled.AddChangeHook(CvarChange_Status); // Hook Enabled Variable
 		bCvarIsHooked[CONVAR_ENABLED] = true;
-	}
-	
-	if (hCvarAFK != INVALID_HANDLE)
-	{
-		if (!bCvarIsHooked[CONVAR_MOD_AFK])
-		{
-			hCvarAFK.AddChangeHook(CvarChange_Locked); // Hook AFK Variable
-			bCvarIsHooked[CONVAR_MOD_AFK] = true;
-			SetConVarInt(hCvarAFK, 0);
-		}
 	}
 	
 	if (!bCvarIsHooked[CONVAR_PREFIXSHORT])
@@ -540,14 +505,6 @@ void HookConVars() // ConVar Hook Registrations
 			g_bPrefixColors = true;
 	}
 #endif
-	if (!bCvarIsHooked[CONVAR_LANGUAGE])
-	{
-		hCvarLanguage.AddChangeHook(CvarChange_Status); // Hook Language Variable
-		bCvarIsHooked[CONVAR_LANGUAGE] = true;
-
-		if (hCvarLanguage.BoolValue)
-			g_bForceLanguage = true;
-	}
 	if (!bCvarIsHooked[CONVAR_LOG_WARNINGS])
 	{
 		hCvarLogWarnings.AddChangeHook(CvarChange_Status); // Hook Warnings Variable
@@ -587,7 +544,6 @@ void RegisterCvars() // Cvar Registrations
 #if defined _colors_included
 	hCvarPrefixColor = CreateConVar("sm_afk_prefix_color", "1", "Should the AFK Manager use color for the prefix tag? [0 = DISABLED, 1 = ENABLED, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
 #endif
-	hCvarLanguage = CreateConVar("sm_afk_force_language", "0", "Should the AFK Manager force all message language to the server default? [0 = DISABLED, 1 = ENABLED, DEFAULT: 0]", FCVAR_NONE, true, 0.0, true, 1.0);
 	hCvarLogWarnings = CreateConVar("sm_afk_log_warnings", "1", "Should the AFK Manager log plugin warning messages. [0 = FALSE, 1 = TRUE, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
 	hCvarLogMoves = CreateConVar("sm_afk_log_moves", "1", "Should the AFK Manager log client moves. [0 = FALSE, 1 = TRUE, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
 	hCvarLogKicks = CreateConVar("sm_afk_log_kicks", "1", "Should the AFK Manager log client kicks. [0 = FALSE, 1 = TRUE, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
@@ -597,17 +553,15 @@ void RegisterCvars() // Cvar Registrations
 	hCvarAdminsImmune = CreateConVar("sm_afk_admins_immune", "1", "Should admins be immune to the AFK Manager? [0 = DISABLED, 1 = COMPLETE IMMUNITY, 2 = KICK IMMUNITY, 3 = MOVE IMMUNITY]");
 	hCvarAdminsFlag = CreateConVar("sm_afk_admins_flag", "", "Admin Flag for immunity? Leave Blank for any flag.");
 	hCvarMoveSpec = CreateConVar("sm_afk_move_spec", "1", "Should the AFK Manager move AFK clients to spectator team? [0 = FALSE, 1 = TRUE, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
-	hCvarMoveAnnounce = CreateConVar("sm_afk_move_announce", "1", "Should the AFK Manager announce AFK moves to the server? [0 = DISABLED, 1 = EVERYONE, 2 = ADMINS ONLY, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 2.0);
 	hCvarTimeToMove = CreateConVar("sm_afk_move_time", "60.0", "Time in seconds (total) client must be AFK before being moved to spectator. [0 = DISABLED, DEFAULT: 60.0 seconds]");
 	hCvarWarnTimeToMove = CreateConVar("sm_afk_move_warn_time", "30.0", "Time in seconds remaining, player should be warned before being moved for AFK. [DEFAULT: 30.0 seconds]");
 	hCvarKickPlayers = CreateConVar("sm_afk_kick_players", "1", "Should the AFK Manager kick AFK clients? [0 = DISABLED, 1 = KICK ALL, 2 = ALL EXCEPT SPECTATORS, 3 = SPECTATORS ONLY]");
-	hCvarKickAnnounce = CreateConVar("sm_afk_kick_announce", "1", "Should the AFK Manager announce AFK kicks to the server? [0 = DISABLED, 1 = EVERYONE, 2 = ADMINS ONLY, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 2.0);
 	hCvarTimeToKick = CreateConVar("sm_afk_kick_time", "120.0", "Time in seconds (total) client must be AFK before being kicked. [0 = DISABLED, DEFAULT: 120.0 seconds]");
 	hCvarWarnTimeToKick = CreateConVar("sm_afk_kick_warn_time", "30.0", "Time in seconds remaining, player should be warned before being kicked for AFK. [DEFAULT: 30.0 seconds]");
 	hCvarSpawnTime = CreateConVar("sm_afk_spawn_time", "20.0", "Time in seconds (total) that player should have moved from their spawn position. [0 = DISABLED, DEFAULT: 20.0 seconds]");
 	hCvarWarnSpawnTime = CreateConVar("sm_afk_spawn_warn_time", "15.0", "Time in seconds remaining, player should be warned for being AFK in spawn. [DEFAULT: 15.0 seconds]");
 	hCvarExcludeDead = CreateConVar("sm_afk_exclude_dead", "0", "Should the AFK Manager exclude checking dead players? [0 = FALSE, 1 = TRUE, DEFAULT: 0]", FCVAR_NONE, true, 0.0, true, 1.0);
-	hCvarWarnUnassigned = CreateConVar("sm_afk_move_warn_unassigned", "1", "Should the AFK Manager warn team 0 (Usually unassigned) players? (Disabling may not work for some games) [0 = FALSE, 1 = TRUE, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
+	hCvarWarnUnassigned = CreateConVar("sm_afk_move_warn_unassigned", "1", "Should the AFK Manager warn team unassigned players? [0 = FALSE, 1 = TRUE, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
 }
 
 void RegisterCmds() // Command Hook & Registrations
@@ -970,11 +924,11 @@ bool ND_HasNoTransportGates(team)
 	{
 		if (GetEntProp(loopEntity, Prop_Send, "m_iTeamNum") == team) //if the owner equals the team arg
 		{
-			return true;	
+			return false;	
 		}	
 	}
 	
-	return false;
+	return true;
 }
 
 // Timers
@@ -1024,11 +978,8 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 
 				if (iObserverTarget[client] != m_hObserverTarget) // Player changed Observer Mode
 				{
-					if (!IsValidClient(iObserverTarget[client], false)) // Previous Target is now invalid
-						iObserverTarget[client] = m_hObserverTarget;
-					else if (iObserverTarget[client] == client) // Previous target was the themselves
-						iObserverTarget[client] = m_hObserverTarget;
-					else if (!IsPlayerAlive(iObserverTarget[client])) // Previous target has died
+					// if the previous target is invalid, themselve or has died
+					if (!IsValidClient(iObserverTarget[client], false) ||  iObserverTarget[client] == client || !IsPlayerAlive(iObserverTarget[client]))
 						iObserverTarget[client] = m_hObserverTarget;
 					else
 					{
@@ -1044,13 +995,11 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 		int Time = GetTime();
 		if (!bPlayerAFK[client]) // Player Marked as not AFK?
 		{
-			if ((g_iSpawnTime[client] > 0) && ((Time - g_iSpawnTime[client]) < 2)) // Check if player has just spawned
-				SetClientAFK(client, false);
-			else if ((!IsPlayerAlive(client)) && (iObserverTarget[client] == client)) // Player is in death cam?
-				SetClientAFK(client, false);
-			else
-				SetClientAFK(client);
-
+			bool playerHasSpawned = g_iSpawnTime[client] > 0 && (Time - g_iSpawnTime[client]) < 2;
+			bool isDeathCam = !IsPlayerAlive(client) && iObserverTarget[client] == client;
+			
+			//if the player has spawned or is a death cam they're not afk; otherwise they are afk.
+			SetClientAFK(client, !(playerHasSpawned || isDeathCam);
 			return Plugin_Continue;
 		}
 
@@ -1090,19 +1039,11 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			if (cvarSpawnTime > 0)
 			{
 				AFKSpawnTime = Time - g_iSpawnTime[client];
-				//if (AFKSpawnTime <= 1)
-				//	AFKSpawnTimeleft = cvarSpawnTime;
-				//else
 				AFKSpawnTimeleft = cvarSpawnTime - AFKSpawnTime;
 			}
 		}
 
-		int AFKTime;
-		if (g_iAFKTime[client] >= 0)
-			AFKTime = Time - g_iAFKTime[client];
-		else
-			AFKTime = 0;
-
+		int AFKTime = g_iAFKTime[client] >= 0 ? Time - g_iAFKTime[client] : 0;
 		if (g_iPlayerTeam[client] != g_iSpec_Team) // Check we are not on the Spectator team
 		{
 			if (hCvarMoveSpec.BoolValue)
@@ -1214,10 +1155,8 @@ Action MoveAFKClient(int client, bool Advertise=true) // Move AFK Client to Spec
 {
 	Action ForwardResult = Plugin_Continue;
 
-	if (g_iSpawnTime[client] != -1)
-		ForwardResult = Forward_OnAFKEvent("afk_spawn_move", client);
-	else
-		ForwardResult = Forward_OnAFKEvent("afk_move", client);
+	ForwardResult = g_iSpawnTime[client] != -1 	? Forward_OnAFKEvent("afk_spawn_move", client) 
+						  	: Forward_OnAFKEvent("afk_move", client);
 
 	if (ForwardResult != Plugin_Continue)
 	{
@@ -1234,22 +1173,7 @@ Action MoveAFKClient(int client, bool Advertise=true) // Move AFK Client to Spec
 	GetClientName(client, f_Name, sizeof(f_Name));
 
 	if (Advertise) // Are we announcing the move to everyone?
-	{
-		int Announce = hCvarMoveAnnounce.IntValue;
-
-		if (Announce == 0)
-			AFK_PrintToChat(client, "%t", "Move_Announce", f_Name);
-		else if (Announce == 1)
-			AFK_PrintToChat(0, "%t", "Move_Announce", f_Name);
-		else
-		{
-			for(int i = 1; i <= MaxClients; i++)
-				if (IsClientConnected(i))
-					if (IsClientInGame(i))
-						if ((i == client) || (GetUserAdmin(i) != INVALID_ADMIN_ID))
-							AFK_PrintToChat(i, "%t", "Move_Announce", f_Name);
-		}
-	}
+		AFK_PrintToChat(client, "%t", "Move_Announce", f_Name);
 
 	if (hCvarLogMoves.BoolValue)
 		LogToFile(AFKM_LogFile, "%T", "Move_Log", LANG_SERVER, client);
@@ -1277,25 +1201,10 @@ Action KickAFKClient(int client) // Kick AFK Client
 	char f_Name[MAX_NAME_LENGTH];
 	GetClientName(client, f_Name, sizeof(f_Name));
 
-	int Announce = hCvarKickAnnounce.IntValue;
-	if (Announce == 1)
-		AFK_PrintToChat(0, "%t", "Kick_Announce", f_Name);
-	else if (Announce == 2)
-	{
-		for(int i = 1; i <= MaxClients; i++)
-			if (IsClientConnected(i))
-				if (IsClientInGame(i))
-					if (GetUserAdmin(i) != INVALID_ADMIN_ID)
-						AFK_PrintToChat(i, "%t", "Kick_Announce", f_Name);
-	}
-
 	if (hCvarLogKicks.BoolValue)
 		LogToFile(AFKM_LogFile, "%T", "Kick_Log", LANG_SERVER, client);
 
-	if (g_bForceLanguage)
-		KickClient(client, "[%s] %T", g_sPrefix, "Kick_Message", LANG_SERVER);
-	else
-		KickClient(client, "[%s] %t", g_sPrefix, "Kick_Message");
+	KickClient(client, "[%s] %t", g_sPrefix, "Kick_Message");
 	return Plugin_Continue;
 }
 
