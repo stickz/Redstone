@@ -14,19 +14,11 @@
 #tryinclude <updater>
 #define REQUIRE_PLUGIN
 
-#pragma newdecls required
+/* Auto Updater */
+#define UPDATE_URL	"https://github.com/stickz/Redstone/blob/build/updater/afk_manager4/translations/afk_manager.phrases.txt"
+#include "updater/standard.sp"
 
 // Defines
-#if defined _updater_included
-#define UPDATE_URL									"https://github.com/stickz/Redstone/blob/build/updater/afk_manager4/translations/afk_manager.phrases.txt"
-#endif
-
-// TO DO:
-// Fix WFP Events
-// Add Sound?
-// Add AFK Menu?
-// Check ND Support?
-
 #define AFK_WARNING_INTERVAL						5
 #define AFK_CHECK_INTERVAL							1.0
 
@@ -35,6 +27,9 @@
 #endif
 
 #define SECONDS_IN_DAY								86400
+
+#define ND_TRANSPORT_GATE 2
+#define ND_TRANSPORT_NAME "struct_transport_gate"
 
 #define LOG_FOLDER									"logs"
 #define LOG_PREFIX									"afkm_"
@@ -103,7 +98,6 @@ Handle g_FWD_hOnClientBack =						INVALID_HANDLE;
 
 // AFK Manager Console Variables
 Handle hCvarEnabled =								INVALID_HANDLE;
-Handle hCvarAutoUpdate =							INVALID_HANDLE;
 Handle hCvarPrefixShort =							INVALID_HANDLE;
 #if defined _colors_included
 Handle hCvarPrefixColor =							INVALID_HANDLE;
@@ -188,63 +182,6 @@ void Forward_OnClientBack(int client) // forward void AFKM_OnClientBack(int clie
 	Call_PushCell(client);
 	Call_Finish();
 }
-
-/*
-Action Forward_Event(const char[] name, int client) // Internal Function to Loop Forward_OnAFKEvent()
-{
-	Action result = Plugin_Continue;
-
-	int maxPlugins = GetMaxPlugins();
-	for (int i = 0; i < maxPlugins; i++)
-	{
-		result = Forward_OnAFKEvent(g_FWD_hPlugins[i], name, client);
-		if (result != Plugin_Continue)
-		{
-			char Action_Name[64];
-			switch (result)
-			{
-				case Plugin_Continue:
-					Action_Name = "Plugin_Continue";
-				case Plugin_Changed:
-					Action_Name = "Plugin_Changed";
-				case Plugin_Handled:
-					Action_Name = "Plugin_Handled";
-				case Plugin_Stop:
-					Action_Name = "Plugin_Stop";
-				default:
-					Action_Name = "Plugin_Error";
-			}
-			char Plugin_Name[256],
-			GetPluginInfo(g_FWD_hPlugins[i], PlInfo_Name, Plugin_Name, sizeof(Plugin_Name));
-			LogToFile(AFKM_LogFile, "AFK Manager Event: %s has been requested to: %s by Plugin: %s this action will affect the plugin/event outcome.", name, Action_Name, Plugin_Name);
-			return result;
-		}
-	}
-
-	return Plugin_Continue;
-}
-
-Action Forward_OnAFKEvent(Handle plugin, const char[] name, int client) // forward Action AFKM_OnAFKEvent(const char[] name, int client);
-{
-	Action result = Plugin_Continue;
-	Function func = GetFunctionByName(plugin, "AFKM_OnAFKEvent");
-
-	if (func != INVALID_FUNCTION)
-	{
-		if (AddToForward(g_FWD_hOnAFKEvent, plugin, func))
-		{
-			Call_StartForward(g_FWD_hOnAFKEvent); // Start Forward
-			Call_PushString(name);
-			Call_PushCell(client);
-			Call_Finish(result);
-			RemoveAllFromForward(g_FWD_hOnAFKEvent, plugin);
-		}
-	} else
-		RemovePlugin(plugin); // Function is Invalid Remove Plugin
-
-	return result;
-}
-*/
 
 Action Forward_OnAFKEvent(const char[] name, int client) // forward Action AFKM_OnAFKEvent(const char[] name, int client);
 {
@@ -541,22 +478,6 @@ void CheckMinPlayers()
 	}
 }
 
-// Auto Update Functions
-#if defined _updater_included
-public Action Updater_OnPluginChecking()
-{
-	if (!GetConVarBool(hCvarAutoUpdate))
-		return Plugin_Handled;
-	return Plugin_Continue;
-}
-
-public int Updater_OnPluginUpdated()
-{
-	LogToFile(AFKM_LogFile, "AFK Manager has just been updated to a new version");
-	ReloadPlugin();
-}
-#endif
-
 // Cvar Hooks
 public void CvarChange_Status(Handle cvar, const char[] oldvalue, const char[] newvalue) // Hook ConVar Status
 {
@@ -616,6 +537,11 @@ void HookEvents() // Event Hook Registrations
 	HookEvent("player_spawn", Event_PlayerSpawn);
 
 	HookEvent("player_death", Event_PlayerDeathPost, EventHookMode_Post);
+	
+	/* Added functions for Nuclear Dawn */
+	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
+	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
+	HookEvent("structure_death", Event_StructDeath);
 }
 
 void HookConVars() // ConVar Hook Registrations
@@ -697,7 +623,6 @@ void HookConVars() // ConVar Hook Registrations
 void RegisterCvars() // Cvar Registrations
 {
 	hCvarEnabled = CreateConVar("sm_afk_enable", "1", "Is the AFK Manager enabled or disabled? [0 = FALSE, 1 = TRUE, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
-	hCvarAutoUpdate = CreateConVar("sm_afk_autoupdate", "1", "Is the AFK Manager automatic plugin update enabled or disabled? (Requires SourceMod Autoupdate plugin) [0 = FALSE, 1 = TRUE]", FCVAR_NONE, true, 0.0, true, 1.0);
 	hCvarPrefixShort = CreateConVar("sm_afk_prefix_short", "0", "Should the AFK Manager use a short prefix? [0 = FALSE, 1 = TRUE, DEFAULT: 0]", FCVAR_NONE, true, 0.0, true, 1.0);
 #if defined _colors_included
 	hCvarPrefixColor = CreateConVar("sm_afk_prefix_color", "1", "Should the AFK Manager use color for the prefix tag? [0 = DISABLED, 1 = ENABLED, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
@@ -868,22 +793,8 @@ public void OnPluginStart() // AFK Manager Plugin has started
 
 	if (g_bLateLoad) // Account for Late Loading
 		g_bWaitRound = false;
-}
-
-public void OnAllPluginsLoaded() // All Plugins have been loaded
-{
-#if defined _updater_included
-	if (LibraryExists("updater"))
-		Updater_AddPlugin(UPDATE_URL);
-#endif
-}
-
-public void OnLibraryAdded(const char[] name)
-{
-#if defined _updater_included
-	if (StrEqual(name, "updater"))
-		Updater_AddPlugin(UPDATE_URL);
-#endif
+		
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public void OnMapStart()
@@ -894,24 +805,7 @@ public void OnMapStart()
 		if (GetConVarInt(hCvarLogDays) > 0)
 			PurgeOldLogs(); // Purge Old Log Files
 
-	if (GetConVarBool(hCvarAutoUpdate))
-	{
-#if defined _updater_included
-		if (LibraryExists("updater") && !GetConVarBool(FindConVar("sv_lan")))
-		{
-			Updater_ForceUpdate();
-		}
-#endif
-	}
-
 	AutoExecConfig(true, "afk_manager"); // Execute Config
-
-	g_bWaitRound = false; // Un-Pause Plugin on Map Start
-}
-
-public void OnMapEnd()
-{
-	g_bWaitRound = true; // Pause Plugin During Map Transitions?
 }
 
 public void OnClientPutInServer(int client) // Client has joined server
@@ -1085,7 +979,43 @@ public Action Event_PlayerDeathPost(Handle event, const char[] name, bool dontBr
 	return Plugin_Continue;
 }
 
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
+{
+	g_bWaitRound = false; // Un-Pause Plugin on Map Start
+}
 
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
+{
+	g_bWaitRound = true; // Pause Plugin During Map Transitions?
+}
+
+//Look for if a team has any transport gates left, if not pause the plugin
+public Action Event_StructDeath(Event event, const char[] name, bool dontBroadcast)
+{
+	if (event.GetInt("type") == ND_TRANSPORT_GATE)
+	{
+		int 	client = GetClientOfUserId(event.GetInt("attacker")),	
+			team = getOtherTeam(GetClientTeam(client));
+		
+		if (ND_HasNoTransportGates(team))
+			g_bWaitRound = true; // Pause Plugin When all Transport Gates Die
+	}
+}
+
+bool ND_HasNoTransportGates(team)
+{
+	// loop through all entities finding transport gates
+	new loopEntity = INVALID_ENT_REFERENCE;
+	while ((loopEntity = FindEntityByClassname(loopEntity, ND_TRANSPORT_NAME)) != INVALID_ENT_REFERENCE)
+	{
+		if (GetEntProp(loopEntity, Prop_Send, "m_iTeamNum") == team) //if the owner equals the team arg
+		{
+			return true;	
+		}	
+	}
+	
+	return false;
+}
 
 // Timers
 public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
