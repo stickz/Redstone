@@ -439,7 +439,7 @@ void CheckMinPlayers()
 }
 
 // Cvar Hooks
-public void CvarChange_Status(ConVar convar, const char[] oldvalue, const char[] newvalue) // Hook ConVar Status
+public void CvarChange_Status(ConVar cvar, const char[] oldvalue, const char[] newvalue) // Hook ConVar Status
 {
 	if (!StrEqual(oldvalue, newvalue))
 	{
@@ -484,7 +484,7 @@ public void CvarChange_Status(ConVar convar, const char[] oldvalue, const char[]
 	}
 }
 
-public void CvarChange_Locked(ConVar convar, const char[] oldvalue, const char[] newvalue) // Lock ConVar
+public void CvarChange_Locked(ConVar cvar, const char[] oldvalue, const char[] newvalue) // Lock ConVar
 {
 	if ((cvar == hCvarAFK) && (StringToInt(newvalue) != 0))
 		SetConVarInt(cvar, 0);
