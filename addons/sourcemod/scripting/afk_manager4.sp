@@ -15,7 +15,7 @@
 #tryinclude <updater>
 #define REQUIRE_PLUGIN
 
-/* Auto Updater */
+//Auto Updater Suport
 #define UPDATE_URL	"https://github.com/stickz/Redstone/blob/build/updater/afk_manager4/translations/afk_manager.phrases.txt"
 #include "updater/standard.sp"
 
@@ -293,34 +293,6 @@ void AFK_PrintToChat(int client, const char[] sMessage, any:...)
 }
 
 
-// Native Functions
-/*
-int GetMaxPlugins()
-{
-	return GetArraySize(g_FWD_hPlugins);
-}
-
-void AddPlugin(Handle plugin)
-{
-	int maxPlugins = GetMaxPlugins();
-	for (int i = 0; i < maxPlugins; i++)
-		if (plugin == GetArrayCell(g_FWD_hPlugins, i)) // Plugin Already Exists?
-			return;
-
-	PushArrayCell(g_FWD_hPlugins, plugin);
-}
-
-
-void RemovePlugin(Handle plugin)
-{
-	int maxPlugins = GetMaxPlugins();
-	for (int i = 0; i < maxPlugins; i++)
-		if (plugin == GetArrayCell(g_FWD_hPlugins, i))
-			RemoveFromArray(g_FWD_hPlugins, i);
-}
-*/
-
-
 // General Functions
 char ActionToString(Action action)
 {
@@ -539,7 +511,7 @@ void HookEvents() // Event Hook Registrations
 
 	HookEvent("player_death", Event_PlayerDeathPost, EventHookMode_Post);
 	
-	/* Added functions for Nuclear Dawn */
+	//Add hooks for Nuclear Dawn
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	HookEvent("structure_death", Event_StructDeath);
