@@ -6,14 +6,7 @@
 #pragma semicolon 1
 
 #undef REQUIRE_PLUGIN
-#tryinclude <multicolors>
-#if !defined _mutlicolors_included
-	#tryinclude <morecolors>
-#endif
-#if ((!defined _mutlicolors_included) && (!defined _colors_included))
-	#tryinclude <colors>
-#endif
-#tryinclude <updater>
+#tryinclude <colors>
 #define REQUIRE_PLUGIN
 
 //Auto Updater Suport
@@ -83,8 +76,8 @@ bool bKickPlayers 		=	true;
 bool g_bWaitRound 		=	true;
 
 // Spectator Related Variables
-int g_iSpec_Team 		=	1;
-int g_iSpec_FLMode 		=	0;
+#define g_iSpec_Team 1;
+#define g_iSpec_FLMode 6;
 
 // Forwards
 Handle g_FWD_hOnAFKEvent 	=	INVALID_HANDLE;
@@ -138,24 +131,16 @@ void API_Init()
 // Natives
 public int Native_IsClientAFK(Handle plugin, int numParams) // native bool AFKM_IsClientAFK(int client);
 {
-	int client = GetNativeCell(1);
-
-	if (client < 1 || client > MaxClients)
-		return ThrowNativeError(SP_ERROR_NATIVE, "Invalid client index (%d)", client);
-	else
-		return bPlayerAFK[client];
+	// bPlayerAFK[client], No redundant error catching.
+	// Call IsValidClient() before the native.
+	return bPlayerAFK[GetNativeCell(1)];
 }
 
 public int Native_GetClientAFKTime(Handle plugin, int numParams) // native int AFKM_GetClientAFKTime(int client);
 {
+	// No redundant error catching. Call IsValidClient() before the native
 	int client = GetNativeCell(1);
-
-	if (client < 1 || client > MaxClients)
-		return ThrowNativeError(SP_ERROR_NATIVE, "Invalid client index (%d)", client);
-	else if (g_iAFKTime[client] == -1)
-		return g_iAFKTime[client];
-	else
-		return (GetTime() - g_iAFKTime[client]);
+	return g_iAFKTime[client] == -1 ? g_iAFKTime[client] : (GetTime() - g_iAFKTime[client]);
 }
 
 // Forwards
@@ -562,11 +547,6 @@ void RegisterCvars() // Cvar Registrations
 	hCvarExcludeDead = CreateConVar("sm_afk_exclude_dead", "0", "Should the AFK Manager exclude checking dead players? [0 = FALSE, 1 = TRUE, DEFAULT: 0]", FCVAR_NONE, true, 0.0, true, 1.0);
 }
 
-void RegisterCmds() // Command Hook & Registrations
-{
-	RegAdminCmd("sm_afk_spec", Command_Spec, ADMFLAG_KICK, "sm_afk_spec <#userid|name>");
-}
-
 void EnablePlugin() // Enable Plugin Function
 {
 	g_bEnabled = true;
@@ -583,64 +563,6 @@ void DisablePlugin() // Disable Plugin Function
 
 	for(int i = 1; i <= MaxClients; i++) // Stop timers for all players
 		UnInitializePlayer(i);
-}
-
-public Action Command_Spec(int client, int args) // Admin Spectate Move Command
-{
-	if (args < 1)
-	{
-		ReplyToCommand(client, "[AFK Manager] Usage: sm_afk_spec <#userid|name>");
-		return Plugin_Handled;
-	}
-
-	char arg[65];
-	GetCmdArg(1, arg, sizeof(arg));
-
-	char target_name[MAX_TARGET_LENGTH];
-	int target_list[MAXPLAYERS], target_count;
-	bool tn_is_ml;
-
-	if ((target_count = ProcessTargetString(
-			arg,
-			client,
-			target_list,
-			MAXPLAYERS,
-			COMMAND_FILTER_ALIVE,
-			target_name,
-			sizeof(target_name),
-			tn_is_ml)) <= 0)
-	{
-		ReplyToTargetError(client, target_count);
-		return Plugin_Handled;
-	}
-
-	for (int i = 0; i < target_count; i++)
-	{
-		if (MoveAFKClient(target_list[i]) == Plugin_Stop)
-			if (g_hAFKTimer[target_list[i]] != INVALID_HANDLE)
-			{
-				CloseHandle(g_hAFKTimer[target_list[i]]);
-				g_hAFKTimer[target_list[i]] = INVALID_HANDLE;
-			}
-	}
-
-	if (tn_is_ml)
-	{
-		if (hCvarPrefixShort.BoolValue)
-			ShowActivity2(client, "[AFK] ", "%t", "Spectate_Force", target_name);
-		else
-			ShowActivity2(client, "[AFK Manager] ", "%t", "Spectate_Force", target_name);
-		LogToFile(AFKM_LogFile, "%L: %T", client, "Spectate_Force", LANG_SERVER, target_name);
-	}
-	else
-	{
-		if (hCvarPrefixShort.BoolValue)
-			ShowActivity2(client, "[AFK] ", "%t", "Spectate_Force", "_s", target_name);
-		else
-			ShowActivity2(client, "[AFK Manager] ", "%t", "Spectate_Force", "_s", target_name);
-		LogToFile(AFKM_LogFile, "%L: %T", client, "Spectate_Force", LANG_SERVER, "_s", target_name);
-	}
-	return Plugin_Handled;
 }
 
 // SourceMod Events
@@ -662,31 +584,6 @@ public void OnPluginStart() // AFK Manager Plugin has started
 	LoadTranslations("common.phrases");
 	LoadTranslations("afk_manager.phrases");
 
-	// Initialize Arrays
-	//g_FWD_hPlugins = CreateArray();
-
-	// Game Engine Detection
-#if defined NEW_ENGINE_DETECTION
-	if ( CanTestFeatures() && (GetFeatureStatus(FeatureType_Native, "GetEngineVersion") == FeatureStatus_Available) )
-	{
-		new EngineVersion:g_EngineVersion = Engine_Unknown;
-
-		g_EngineVersion = GetEngineVersion();
-
-		switch (g_EngineVersion)
-		{
-			case Engine_Original: // Original Source Engine (used by The Ship)
-				g_iSpec_FLMode = 5;
-			case Engine_SourceSDK2006: // Episode 1 Source Engine (second major SDK)
-				g_iSpec_FLMode = 5;
-			case Engine_DarkMessiah: // Dark Messiah Multiplayer (based on original engine)
-				g_iSpec_FLMode = 5;
-			default:
-				g_iSpec_FLMode = 6;
-		}
-	}
-#endif
-
 	RegisterCvars(); // Register Cvars
 	SetConVarInt(hCvarLogWarnings, 0);
 	SetConVarInt(hCvarEnabled, 0);
@@ -695,8 +592,6 @@ public void OnPluginStart() // AFK Manager Plugin has started
 	HookEvents(); // Hook Events
 
 	AutoExecConfig(true, "afk_manager");
-
-	RegisterCmds(); // Register Commands
 
 	if (hCvarLogDays != INVALID_HANDLE)
 		if (hCvarLogDays.IntValue > 0)
@@ -963,9 +858,10 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 						iObserverTarget[client] = m_hObserverTarget;
 						return Plugin_Continue;
 					}
-					else
-						iObserverTarget[client] = m_hObserverTarget;
+					
+					iObserverTarget[client] = m_hObserverTarget;
 				}
+				
 				SetClientAFK(client);
 				return Plugin_Continue;
 			}
@@ -1000,31 +896,16 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			return Plugin_Continue;
 		}
 
-		if (g_bWaitRound) // Are we waiting for the round to start
+		if (SkipAfkCheck(client))
 		{
 			g_iAFKTime[client]++;
 			return Plugin_Continue;
 		}
-
-		if ((bMovePlayers == false) && (bKickPlayers == false)) // Do we have enough players to start taking action
-		{
-			g_iAFKTime[client]++;
-			return Plugin_Continue;
-		}
-
-		if ((g_iPlayerTeam[client] != 0) && (g_iPlayerTeam[client] != g_iSpec_Team)) // Make sure player is not Unassigned or Spectator
-			if (!IsPlayerAlive(client) && (g_bExcludeDead)) // Excluding Dead players
-			{
-				g_iAFKTime[client]++;
-				return Plugin_Continue;
-			}
-
 
 		int AdminsImmune = hCvarAdminsImmune.IntValue;
 
 		int AFKSpawnTimeleft = -1;
-		int AFKSpawnTime;
-		int cvarSpawnTime;
+		int AFKSpawnTime, cvarSpawnTime;
 
 		if ((g_iSpawnTime[client] > 0) && (!IsPlayerAlive(client))) // Check Spawn Time and Player Alive
 			ResetSpawn(client);
@@ -1138,7 +1019,17 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 	//g_hAFKTimer[client] = INVALID_HANDLE;
 	return Plugin_Continue;
 }
-
+// Helper Function for above
+bool SkipAfkCheck(int client)
+{
+	// Make sure player is on a team and not dead
+	if ((g_iPlayerTeam[client] != 0) && (g_iPlayerTeam[client] != g_iSpec_Team))
+		return !IsPlayerAlive(client) && (g_bExcludeDead);
+		
+	// Are we waiting for the round to start
+	// Do we have enough players to start taking action
+	return g_bWaitRound || ((bMovePlayers == false) && (bKickPlayers == false));
+}
 
 // Move/Kick Functions
 Action MoveAFKClient(int client) // Move AFK Client to Spectator Team
@@ -1208,15 +1099,10 @@ bool CheckAdminImmunity(int client) // Check Admin Immunity
 		AdminFlag flag;
 
 		hCvarAdminsFlag.GetString(flags, sizeof(flags));
-
-		if (!StrEqual(flags, "", false)) // Are we checking for specific admin flags?
-		{
-			if (FindFlagByChar(flags[0], flag)) // Is the admin flag we are checking valid?
-				if (GetAdminFlag(admin, flag)) // Check if the admin has the correct immunity flag.
-					return true;
-		}
-		else
-			return true;
+		
+		// Are we checking for specific admin flags?
+		// If so, Is the admin flag valid with the correct immunity?
+		return StrEqual(flags, "", false) || (FindFlagByChar(flags[0], flag) && GetAdminFlag(admin, flag));
 	}
 	return false;
 }
