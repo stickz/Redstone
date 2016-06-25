@@ -114,7 +114,6 @@ ConVar hCvarWarnTimeToKick;
 ConVar hCvarSpawnTime;
 ConVar hCvarWarnSpawnTime;
 ConVar hCvarExcludeDead;
-ConVar hCvarWarnUnassigned;
 
 // Plugin Information
 public Plugin myinfo =
@@ -561,7 +560,6 @@ void RegisterCvars() // Cvar Registrations
 	hCvarSpawnTime = CreateConVar("sm_afk_spawn_time", "20.0", "Time in seconds (total) that player should have moved from their spawn position. [0 = DISABLED, DEFAULT: 20.0 seconds]");
 	hCvarWarnSpawnTime = CreateConVar("sm_afk_spawn_warn_time", "15.0", "Time in seconds remaining, player should be warned for being AFK in spawn. [DEFAULT: 15.0 seconds]");
 	hCvarExcludeDead = CreateConVar("sm_afk_exclude_dead", "0", "Should the AFK Manager exclude checking dead players? [0 = FALSE, 1 = TRUE, DEFAULT: 0]", FCVAR_NONE, true, 0.0, true, 1.0);
-	hCvarWarnUnassigned = CreateConVar("sm_afk_move_warn_unassigned", "1", "Should the AFK Manager warn team unassigned players? [0 = FALSE, 1 = TRUE, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
 }
 
 void RegisterCmds() // Command Hook & Registrations
@@ -618,7 +616,7 @@ public Action Command_Spec(int client, int args) // Admin Spectate Move Command
 
 	for (int i = 0; i < target_count; i++)
 	{
-		if (MoveAFKClient(target_list[i], false) == Plugin_Stop)
+		if (MoveAFKClient(target_list[i]) == Plugin_Stop)
 			if (g_hAFKTimer[target_list[i]] != INVALID_HANDLE)
 			{
 				CloseHandle(g_hAFKTimer[target_list[i]]);
@@ -1063,10 +1061,7 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 										if (AFKSpawnTime >= cvarSpawnTime) // Take Action on AFK Spawn Player
 										{
 											ResetSpawn(client);
-											if (g_iPlayerTeam[client] == 0) // Are we moving player from the Unassigned team AKA team 0?
-												return MoveAFKClient(client, hCvarWarnUnassigned.BoolValue); // Are we warning unassigned players?
-											else
-												return MoveAFKClient(client);
+											return MoveAFKClient(client);
 										}
 										else if (AFKSpawnTime%AFK_WARNING_INTERVAL == 0) // Warn AFK Spawn Player
 										{
@@ -1077,12 +1072,8 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 									}
 
 								if (AFKTime >= g_iTimeToMove) // Take Action on AFK Player
-								{
-									if (g_iPlayerTeam[client] == 0) // Are we moving player from the Unassigned team AKA team 0?
-										return MoveAFKClient(client, hCvarWarnUnassigned.BoolValue); // Are we warning unassigned players?
-									else
-										return MoveAFKClient(client);
-								}
+									return MoveAFKClient(client);
+
 								else if (AFKTime%AFK_WARNING_INTERVAL == 0) // Warn AFK Player
 								{
 									if ((g_iTimeToMove - AFKTime) <= hCvarWarnTimeToMove.IntValue)
@@ -1150,7 +1141,7 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 
 
 // Move/Kick Functions
-Action MoveAFKClient(int client, bool Advertise=true) // Move AFK Client to Spectator Team
+Action MoveAFKClient(int client) // Move AFK Client to Spectator Team
 {
 	Action ForwardResult = Plugin_Continue;
 
@@ -1170,9 +1161,6 @@ Action MoveAFKClient(int client, bool Advertise=true) // Move AFK Client to Spec
 
 	char f_Name[MAX_NAME_LENGTH];
 	GetClientName(client, f_Name, sizeof(f_Name));
-
-	if (Advertise) // Are we announcing the move to everyone?
-		AFK_PrintToChat(client, "%t", "Move_Announce", f_Name);
 
 	if (hCvarLogMoves.BoolValue)
 		LogToFile(AFKM_LogFile, "%T", "Move_Log", LANG_SERVER, client);
