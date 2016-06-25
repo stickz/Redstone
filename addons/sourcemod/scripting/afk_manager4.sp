@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <nd_stocks>
+#include <nd_rounds>
 
 #pragma semicolon 1
 
@@ -65,7 +66,6 @@ float fEyeAngles[MAXPLAYERS+1][3]; // X = Vertical, Y = Height, Z = Horizontal
 bool bCvarIsHooked[CONVAR_SIZE] =	{false, ...}; // Console Variable Hook Status
 
 // Global Variables
-bool g_bLateLoad 		=	false;
 // Console Related Variables
 bool g_bEnabled 		=	false;
 char g_sPrefix[] 		=	"AFK Manager";
@@ -648,7 +648,6 @@ public Action Command_Spec(int client, int args) // Admin Spectate Move Command
 // SourceMod Events
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	g_bLateLoad = late; // Detect Late Load
 	API_Init(); // Initialize API
 	RegPluginLibrary("afkmanager"); // Register Plugin
 #if defined _colors_included
@@ -705,7 +704,7 @@ public void OnPluginStart() // AFK Manager Plugin has started
 		if (hCvarLogDays.IntValue > 0)
 			PurgeOldLogs(); // Purge Old Log Files
 
-	if (g_bLateLoad) // Account for Late Loading
+	if (ND_RoundStarted()) // Account for Late Loading
 		g_bWaitRound = false;
 		
 	AddUpdaterLibrary(); //auto-updater
