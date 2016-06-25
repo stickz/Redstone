@@ -76,8 +76,8 @@ bool bKickPlayers 		=	true;
 bool g_bWaitRound 		=	true;
 
 // Spectator Related Variables
-#define g_iSpec_Team 1;
-#define g_iSpec_FLMode 6;
+#define g_iSpec_Team 1
+#define g_iSpec_FLMode 6
 
 // Forwards
 Handle g_FWD_hOnAFKEvent 	=	INVALID_HANDLE;
