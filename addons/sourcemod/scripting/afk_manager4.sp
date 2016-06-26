@@ -99,7 +99,7 @@ enum
 	MoveSpec,
 	TimeToMove,
 	WarnTimeToMove,
-	KickPlayer,
+	KickPlayers,
 	TimeToKick,
 	WarnTimeToKick,
 	SpawnTime,
@@ -843,8 +843,6 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			return Plugin_Continue;
 		}
 
-		int AdminsImmune = g_cvar[AdminsImmune].IntValue;
-
 		int AFKSpawnTimeleft = -1;
 		int AFKSpawnTime, cvarSpawnTime;
 
@@ -963,10 +961,12 @@ bool SkipAfkCheck(int client)
 }
 bool IsNotAdminImmune(int client, bool:moveType)
 {
-	if ((moveType && AdminsImmune == 2) || AdminsImmune == 3)
+	int adminImmune = g_cvar[AdminsImmune].IntValue;
+	
+	if ((moveType && adminImmune == 2) || adminImmune == 3)
 		return true;
 	
-	return AdminsImmune == 0 || !CheckAdminImmunity(client);
+	return adminImmune == 0 || !CheckAdminImmunity(client);
 }
 
 // Move/Kick Functions
