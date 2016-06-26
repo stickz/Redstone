@@ -79,8 +79,8 @@ bool g_bWaitRound 		=	true;
 
 enum
 {
-	hOnAFKEvent 
-	hOnClientAFK
+	hOnAFKEvent, 
+	hOnClientAFK,
 	hOnClientBack,
 	forwards
 };
