@@ -963,7 +963,7 @@ bool IsNotAdminImmune(int client, bool:moveType)
 {
 	int adminImmune = g_cvar[AdminsImmune].IntValue;
 	
-	if ((moveType && adminImmune == 2) || adminImmune == 3)
+	if ((moveType && adminImmune == 2) || (!moveType && adminImmune == 3))
 		return true;
 	
 	return adminImmune == 0 || !CheckAdminImmunity(client);
