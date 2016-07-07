@@ -2,8 +2,8 @@
 #include <nd_stocks>
 #include <SteamWorks>
 
-#define GAME_APPID 17710
-#define ND_MAXPLAYERS 33
+#define GAME_APPID 	17710
+#define ND_MAXPLAYERS 	33
 
 #define ASSAULT_EXP 	"Assault.accum.experience"
 #define EXO_EXP		"Exo.accum.experience"
@@ -17,7 +17,7 @@
 public Plugin myinfo =
 {
 	name 		= "[ND] Stats Retrieval",
-	author 		= "SM9, Stickz",
+	author 		= "stickz",
 	description 	= "Retrieves a player's exp from steam stats",
 	version		= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
@@ -25,9 +25,9 @@ public Plugin myinfo =
 
 int gI_totalPlayerExp[ND_MAXPLAYERS] = {-1, ...};
 
-public OnClientPutInServer()
+public void OnClientPutInServer(int iClient)
 {
-	CacheClientStats();
+	CachePlayerStats(iClient);
 }
  
 public void OnPluginStart()
