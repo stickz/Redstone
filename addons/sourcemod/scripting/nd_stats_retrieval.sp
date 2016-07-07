@@ -6,7 +6,8 @@
 DEFINES
 *****************************************************************************************************/
 //#define LoopValidClients(%1) for(int %1 = 1; %1 <= MaxClients; %1++) if(IsValidClient(%1))
-#define ND_APPID "17710"
+#define sND_APPID "17710"
+#define iND_APPID 17710
 
 /****************************************************************************************************
 ETIQUETTE.
@@ -61,17 +62,21 @@ public Action CMD_GetStatsInfoDeux(int iClient, int iArgs)
 
 public void RequestPlayerStatsDeux(int iClient)
 {
-	if (SteamWorks_RequestStats(iClient, ND_APPID))
+	if (SteamWorks_RequestStats(iClient, iND_APPID))
 	{
-		int iAssaultEXP = SteamWorks_GetStatCell(iClient, "Assault.accum.experience");
-		int iExoEXP = SteamWorks_GetStatCell(iClient "Exo.accum.experience");
-		int iStealthEXP = SteamWorks_GetStatCell(iClient "Stealth.accum.experience");
-		int iSupportEXP = SteamWorks_GetStatCell(iClient "Support.accum.experience");
+		int iAssaultEXP, iExoEXP, iStealthEXP, iSupportEXP;
+		
+		SteamWorks_GetStatCell(iClient, "Assault.accum.experience", iAssaultEXP);
+		SteamWorks_GetStatCell(iClient, "Exo.accum.experience", iExoEXP);
+		SteamWorks_GetStatCell(iClient, "Stealth.accum.experience", iStealthEXP);
+		SteamWorks_GetStatCell(iClient, "Support.accum.experience", iSupportEXP);
 		
 		PrintToChat(iClient, "Exp: %d, %d, %d, %d", iAssaultEXP, iExoEXP, iStealthEXP, iSupportEXP);
 	}
-	else 
+	else
+	{
 		PrintToChat(iClient, "Failed to request client stats");
+	}
 	
 	return Plugin_Handled;
 }
@@ -89,7 +94,7 @@ public void RequestPlayerStats(int iClient)
 	SteamWorks_SetHTTPRequestGetOrPostParameter(hRequest, "key", authKey);
 	SteamWorks_SetHTTPRequestGetOrPostParameter(hRequest, "steamid", chSteamId64);
 	SteamWorks_SetHTTPRequestGetOrPostParameter(hRequest, "format", "vdf");
-	SteamWorks_SetHTTPRequestGetOrPostParameter(hRequest, "appid", ND_APPID);
+	SteamWorks_SetHTTPRequestGetOrPostParameter(hRequest, "appid", sND_APPID);
 	
 	SteamWorks_SetHTTPRequestNetworkActivityTimeout(hRequest, 5);
 	SteamWorks_SetHTTPCallbacks(hRequest, StatsRequestComplete);
