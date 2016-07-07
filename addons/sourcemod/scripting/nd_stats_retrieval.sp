@@ -1,6 +1,7 @@
 #include <sourcemod>
-#include <steamworks>
- 
+#include <nd_stocks>
+#include <SteamWorks>
+
 /****************************************************************************************************
 DEFINES
 *****************************************************************************************************/
@@ -9,19 +10,39 @@ DEFINES
 /****************************************************************************************************
 ETIQUETTE.
 *****************************************************************************************************/
-#pragma newdecls required
+//#pragma newdecls required
 #pragma semicolon 1
 
 /****************************************************************************************************
 CONVARS
 *****************************************************************************************************/
 ConVar SteamAuthKey;
+
+/****************************************************************************************************
+Auto-Updater Support
+*****************************************************************************************************/
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/nd_stats_retrieval/nd_stats_retrieval.txt"
+#include 		"updater/standard.sp"
+
+/****************************************************************************************************
+Plugin Info 
+*****************************************************************************************************/
+public Plugin myinfo =
+{
+	name 		= "[ND] Stats Retrieval",
+	author 		= "SM9, Stickz",
+	description 	= "Retrieves a player's exp from steam stats",
+	version		= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
+};
  
 public void OnPluginStart()
 {
 	RegAdminCmd("sm_GetStatsInfo", CMD_GetStatsInfo, ADMFLAG_KICK, "Get's a players stats info");	
 	
 	SteamAuthKey = CreateConVar("sm_steam_auth_key", "INSERT_WEB_AUTH_KEY", "Set's a steam auth key for retreiving information");
+	
+	AddUpdaterLibrary(); //auto-updater
 } 
  
 public Action CMD_GetStatsInfo(int iClient, int iArgs)
@@ -98,17 +119,4 @@ public int StatsRequestComplete(Handle hRequest, bool bFailure, bool bRequestSuc
 	
 	CloseHandle(hRequest);
 	CloseHandle(hKv);
-}
- 
-stock bool IsValidClient(int iClient)
-{
-	if (iClient <= 0 || iClient > MaxClients) {
-		return false;
-	}
-	
-	if(IsFakeClient(iClient) || IsClientSourceTV(iClient) || IsClientReplay(iClient)) {
-		return false;
-	}
-	
-	return IsClientInGame(iClient);
 }
