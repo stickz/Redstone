@@ -10,7 +10,7 @@
 #define REQUIRE_PLUGIN
 
 //Auto Updater Suport
-#define UPDATE_URL	"https://github.com/stickz/Redstone/raw/build/updater/afk_manager4/translations/afk_manager.phrases.txt"
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/afk_manager4/afk_manager4.txt"
 #include 		"updater/standard.sp"
 
 // Defines
