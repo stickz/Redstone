@@ -23,6 +23,18 @@ Auto-Updater Support
 *****************************************************************************************************/
 #define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/nd_stats_retrieval/nd_stats_retrieval.txt"
 #include 		"updater/standard.sp"
+
+/****************************************************************************************************
+Plugin Info 
+*****************************************************************************************************/
+public Plugin myinfo =
+{
+	name 		= "[ND] Stats Retrieval",
+	author 		= "SM9, Stickz",
+	description 	= "Retrieves a player's exp from steam stats",
+	version		= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
+};
  
 public void OnPluginStart()
 {
