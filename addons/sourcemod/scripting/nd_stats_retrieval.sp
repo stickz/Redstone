@@ -1,6 +1,7 @@
 #include <sourcemod>
+#include <nd_stocks>
 #include <steamworks>
- 
+
 /****************************************************************************************************
 DEFINES
 *****************************************************************************************************/
@@ -16,6 +17,12 @@ ETIQUETTE.
 CONVARS
 *****************************************************************************************************/
 ConVar SteamAuthKey;
+
+/****************************************************************************************************
+Auto-Updater Support
+*****************************************************************************************************/
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/nd_stats_retrieval/nd_stats_retrieval.txt"
+#include 		"updater/standard.sp"
  
 public void OnPluginStart()
 {
@@ -98,17 +105,4 @@ public int StatsRequestComplete(Handle hRequest, bool bFailure, bool bRequestSuc
 	
 	CloseHandle(hRequest);
 	CloseHandle(hKv);
-}
- 
-stock bool IsValidClient(int iClient)
-{
-	if (iClient <= 0 || iClient > MaxClients) {
-		return false;
-	}
-	
-	if(IsFakeClient(iClient) || IsClientSourceTV(iClient) || IsClientReplay(iClient)) {
-		return false;
-	}
-	
-	return IsClientInGame(iClient);
 }
