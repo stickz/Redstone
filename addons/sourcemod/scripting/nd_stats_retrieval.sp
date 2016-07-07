@@ -6,6 +6,7 @@
 DEFINES
 *****************************************************************************************************/
 //#define LoopValidClients(%1) for(int %1 = 1; %1 <= MaxClients; %1++) if(IsValidClient(%1))
+#define ND_APPID "17710"
 
 /****************************************************************************************************
 ETIQUETTE.
@@ -39,6 +40,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	RegAdminCmd("sm_GetStatsInfo", CMD_GetStatsInfo, ADMFLAG_KICK, "Get's a players stats info");	
+	RegAdminCmd("sm_GetStatsInfoDeux", CMD_GetStatsInfoDeux, ADMFLAG_KICK, "Get's a players stats info deux");
 	
 	SteamAuthKey = CreateConVar("sm_steam_auth_key", "INSERT_WEB_AUTH_KEY", "Set's a steam auth key for retreiving information");
 	
@@ -50,6 +52,29 @@ public Action CMD_GetStatsInfo(int iClient, int iArgs)
 	RequestPlayerStats(iClient);
 	return Plugin_Handled;
 } 
+
+public Action CMD_GetStatsInfoDeux(int iClient, int iArgs)
+{
+	RequestPlayerStatsDeux(iClient);
+	return Plugin_Handled;
+}
+
+public void RequestPlayerStatsDeux(int iClient)
+{
+	if (SteamWorks_RequestStats(iClient, ND_APPID))
+	{
+		int iAssaultEXP = SteamWorks_GetStatCell(iClient, "Assault.accum.experience");
+		int iExoEXP = SteamWorks_GetStatCell(iClient "Exo.accum.experience");
+		int iStealthEXP = SteamWorks_GetStatCell(iClient "Stealth.accum.experience");
+		int iSupportEXP = SteamWorks_GetStatCell(iClient "Support.accum.experience");
+		
+		PrintToChat(iClient, "Exp: %d, %d, %d, %d", iAssaultEXP, iExoEXP, iStealthEXP, iSupportEXP);
+	}
+	else 
+		PrintToChat(iClient, "Failed to request client stats");
+	
+	return Plugin_Handled;
+}
 
 public void RequestPlayerStats(int iClient)
 {
@@ -64,7 +89,7 @@ public void RequestPlayerStats(int iClient)
 	SteamWorks_SetHTTPRequestGetOrPostParameter(hRequest, "key", authKey);
 	SteamWorks_SetHTTPRequestGetOrPostParameter(hRequest, "steamid", chSteamId64);
 	SteamWorks_SetHTTPRequestGetOrPostParameter(hRequest, "format", "vdf");
-	SteamWorks_SetHTTPRequestGetOrPostParameter(hRequest, "appid", "17710");
+	SteamWorks_SetHTTPRequestGetOrPostParameter(hRequest, "appid", ND_APPID);
 	
 	SteamWorks_SetHTTPRequestNetworkActivityTimeout(hRequest, 5);
 	SteamWorks_SetHTTPCallbacks(hRequest, StatsRequestComplete);
