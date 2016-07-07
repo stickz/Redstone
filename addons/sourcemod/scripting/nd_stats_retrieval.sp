@@ -29,6 +29,8 @@ public void OnPluginStart()
 	RegAdminCmd("sm_GetStatsInfo", CMD_GetStatsInfo, ADMFLAG_KICK, "Get's a players stats info");	
 	
 	SteamAuthKey = CreateConVar("sm_steam_auth_key", "INSERT_WEB_AUTH_KEY", "Set's a steam auth key for retreiving information");
+	
+	AddUpdaterLibrary(); //auto-updater
 } 
  
 public Action CMD_GetStatsInfo(int iClient, int iArgs)
