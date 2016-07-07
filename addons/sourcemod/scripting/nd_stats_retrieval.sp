@@ -115,7 +115,7 @@ public int StatsRequestComplete(Handle hRequest, bool bFailure, bool bRequestSuc
 	int iStealthEXP = KvGetNum(hKv, "Stealth.accum.experience");
 	int iSupportEXP = KvGetNum(hKv, "Support.accum.experience");
 	
-	PrintToChat(iClient, "Your Assault EXP is %d", iAssaultEXP);
+	PrintToChat(iClient, "Exp: %d, %d, %d, %d", iAssaultEXP, iExoEXP, iStealthEXP, iSupportEXP);
 	
 	CloseHandle(hRequest);
 	CloseHandle(hKv);
