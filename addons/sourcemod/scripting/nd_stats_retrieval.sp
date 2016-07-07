@@ -1,6 +1,6 @@
 #include <sourcemod>
 #include <nd_stocks>
-#include <steamworks>
+#include <SteamWorks>
 
 /****************************************************************************************************
 DEFINES
