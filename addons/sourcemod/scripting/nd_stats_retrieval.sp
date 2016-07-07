@@ -63,10 +63,12 @@ public void RequestPlayerStatsDeux(int iClient)
 {
 	if (SteamWorks_RequestStats(iClient, ND_APPID))
 	{
-		int iAssaultEXP = SteamWorks_GetStatCell(iClient, "Assault.accum.experience");
-		int iExoEXP = SteamWorks_GetStatCell(iClient "Exo.accum.experience");
-		int iStealthEXP = SteamWorks_GetStatCell(iClient "Stealth.accum.experience");
-		int iSupportEXP = SteamWorks_GetStatCell(iClient "Support.accum.experience");
+		int iAssaultEXP, iExoEXP, iStealthEXP, iSupportEXP;
+		
+		SteamWorks_GetStatCell(iClient, "Assault.accum.experience", iAssaultEXP);
+		SteamWorks_GetStatCell(iClient "Exo.accum.experience", iExoEXP);
+		SteamWorks_GetStatCell(iClient "Stealth.accum.experience", iStealthEXP);
+		SteamWorks_GetStatCell(iClient "Support.accum.experience", iSupportEXP);
 		
 		PrintToChat(iClient, "Exp: %d, %d, %d, %d", iAssaultEXP, iExoEXP, iStealthEXP, iSupportEXP);
 	}
