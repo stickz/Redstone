@@ -1,17 +1,19 @@
 #include <sourcemod>
 #include <sdktools>
 #include <nd_stocks>
-#include <nd_rounds>
 
-#pragma semicolon 1
+/* Auto Updater Suport */
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/afk_manager4/afk_manager4.txt"
+#include 		"updater/standard.sp"
 
 #undef REQUIRE_PLUGIN
 #tryinclude <colors>
 #define REQUIRE_PLUGIN
 
-//Auto Updater Suport
-#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/afk_manager4/afk_manager4.txt"
-#include 		"updater/standard.sp"
+#pragma newdecls required
+#include <nd_rounds>
+
+#pragma semicolon 1
 
 // Defines
 #define AFK_WARNING_INTERVAL		5
@@ -266,22 +268,6 @@ void AFK_PrintToChat(int client, const char[] sMessage, any:...)
 #endif
 		}
 	}
-}
-
-
-// General Functions
-char ActionToString(Action action)
-{
-	char Action_Name[32];
-	switch (action)
-	{
-		case Plugin_Continue:	Action_Name = "Plugin_Continue";
-		case Plugin_Changed: 	Action_Name = "Plugin_Changed";
-		case Plugin_Handled:	Action_Name = "Plugin_Handled";
-		case Plugin_Stop:	Action_Name = "Plugin_Stop";
-		default:		Action_Name = "Plugin_Error";
-	}
-	return Action_Name;
 }
 
 void ResetAttacker(int index)
@@ -749,10 +735,10 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 	}
 }
 
-bool ND_HasNoTransportGates(team)
+bool ND_HasNoTransportGates(int team)
 {
 	// loop through all entities finding transport gates
-	new loopEntity = INVALID_ENT_REFERENCE;
+	int loopEntity = INVALID_ENT_REFERENCE;
 	while ((loopEntity = FindEntityByClassname(loopEntity, ND_TRANSPORT_NAME)) != INVALID_ENT_REFERENCE)
 	{
 		if (GetEntProp(loopEntity, Prop_Send, "m_iTeamNum") == team) //if the owner equals the team arg
@@ -898,11 +884,11 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			}
 		}
 	
-		int KickPlayers = g_cvar[KickPlayers].IntValue;
-		if (KickPlayers && bKickPlayers)
+		int iKickPlayers = g_cvar[KickPlayers].IntValue;
+		if (iKickPlayers && bKickPlayers)
 		{
 			// Kicking is set to exclude spectators. Player is on the spectator team. Spectators should not be kicked.
-			if ((KickPlayers == 2) && (g_iPlayerTeam[client] == g_iSpec_Team))
+			if ((iKickPlayers == 2) && (g_iPlayerTeam[client] == g_iSpec_Team))
 				return Plugin_Continue;
 			else if ( IsNotAdminImmune(client, false) && g_iTimeToKick > 0 )
 			{
@@ -959,7 +945,7 @@ bool SkipAfkCheck(int client)
 	// Do we have enough players to start taking action
 	return g_bWaitRound || ((bMovePlayers == false) && (bKickPlayers == false));
 }
-bool IsNotAdminImmune(int client, bool:moveType)
+bool IsNotAdminImmune(int client, bool moveType)
 {
 	int adminImmune = g_cvar[AdminsImmune].IntValue;
 	
