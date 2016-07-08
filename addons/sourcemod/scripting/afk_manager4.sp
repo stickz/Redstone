@@ -884,11 +884,11 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			}
 		}
 	
-		int KickPlayers = g_cvar[KickPlayers].IntValue;
-		if (KickPlayers && bKickPlayers)
+		int iKickPlayers = g_cvar[KickPlayers].IntValue;
+		if (iKickPlayers && bKickPlayers)
 		{
 			// Kicking is set to exclude spectators. Player is on the spectator team. Spectators should not be kicked.
-			if ((KickPlayers == 2) && (g_iPlayerTeam[client] == g_iSpec_Team))
+			if ((iKickPlayers == 2) && (g_iPlayerTeam[client] == g_iSpec_Team))
 				return Plugin_Continue;
 			else if ( IsNotAdminImmune(client, false) && g_iTimeToKick > 0 )
 			{
