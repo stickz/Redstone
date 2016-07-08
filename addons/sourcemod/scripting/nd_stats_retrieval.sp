@@ -1,3 +1,5 @@
+#pragma newdecls required
+
 #include <sourcemod>
 #include <nd_stocks>
 #include <SteamWorks>
