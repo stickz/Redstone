@@ -34,7 +34,7 @@ public void OnClientPutInServer(int iClient)
 
 public void OnClientDisconnect(int iClient)
 {
-	ResetVarriables();
+	ResetVarriables(iClient);
 }
  
 public void OnPluginStart()
