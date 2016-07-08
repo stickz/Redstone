@@ -64,7 +64,7 @@ public Action Event_PlayerDisconnected(Event event, const char[] name, bool dont
 	}
 }
 
-void PrintLostConnection(client)
+void PrintLostConnection(int client)
 {
 	char clientName[64];
 	GetClientName(client, clientName, sizeof(clientName))
@@ -78,7 +78,7 @@ void PrintLostConnection(client)
 	}
 }
 
-public CookieMenuHandler_LostConnectionMessage(int client, CookieMenuAction:action, any:info, char[] buffer, int maxlen)
+public CookieMenuHandler_LostConnectionMessage(int client, CookieMenuAction action, any info, char[] buffer, int maxlen)
 {
 	switch (action)
 	{
@@ -98,12 +98,12 @@ public CookieMenuHandler_LostConnectionMessage(int client, CookieMenuAction:acti
 	}
 }
 
-public OnClientCookiesCached(client)
+public OnClientCookiesCached(int client)
 {
 	option_lost_connection_message[client] = GetCookieLostConnectionMessage(client);
 }
 
-bool GetCookieLostConnectionMessage(client)
+bool GetCookieLostConnectionMessage(int client)
 {
 	char buffer[10];
 	GetClientCookie(client, cookie_lost_connection_message, buffer, sizeof(buffer));
