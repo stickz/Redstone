@@ -464,7 +464,7 @@ void RegisterCvars() // Cvar Registrations
 	g_cvar[LogKicks] 	= CreateConVar("sm_afk_log_kicks", "1", "Should the AFK Manager log client kicks. [0 = FALSE, 1 = TRUE, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
 	g_cvar[LogDays] 	= CreateConVar("sm_afk_log_days", "0", "How many days should we keep AFK Manager log files. [0 = INFINITE, DEFAULT: 0]");
 	g_cvar[MinPlayersMove] 	= CreateConVar("sm_afk_move_min_players", "4", "Minimum number of connected clients required for AFK move to be enabled. [DEFAULT: 4]");
-	g_cvar[MinPlayersKick] 	= CreateConVar("sm_afk_kick_min_players", "6", "Minimum number of connected clients required for AFK kick to be enabled. [DEFAULT: 6]");
+	g_cvar[MinPlayersKick] 	= CreateConVar("sm_afk_kick_min_players", "18", "Minimum number of connected clients required for AFK kick to be enabled. [DEFAULT: 6]");
 	g_cvar[AdminsImmune] 	= CreateConVar("sm_afk_admins_immune", "1", "Should admins be immune to the AFK Manager? [0 = DISABLED, 1 = COMPLETE IMMUNITY, 2 = KICK IMMUNITY, 3 = MOVE IMMUNITY]");
 	g_cvar[AdminsFlag]	= CreateConVar("sm_afk_admins_flag", "", "Admin Flag for immunity? Leave Blank for any flag.");
 	g_cvar[MoveSpec] 	= CreateConVar("sm_afk_move_spec", "1", "Should the AFK Manager move AFK clients to spectator team? [0 = FALSE, 1 = TRUE, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
