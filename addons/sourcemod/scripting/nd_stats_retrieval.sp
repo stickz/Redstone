@@ -4,6 +4,7 @@
 
 #define GAME_APPID 	17710
 #define ND_MAXPLAYERS 	33
+#define EXP_NOT_FOUND	-1
 
 #define ASSAULT_EXP 	"Assault.accum.experience"
 #define EXO_EXP		"Exo.accum.experience"
@@ -27,27 +28,43 @@ int gI_totalPlayerExp[ND_MAXPLAYERS] = {-1, ...};
 
 public void OnClientPutInServer(int iClient)
 {
-	CachePlayerStats(iClient);
+	ResetVarriables(iClient);
+	RequestPlayerStats(iClient);
+}
+
+public void OnClientDisconnect(int iClient)
+{
+	ResetVarriables(iClient);
 }
  
 public void OnPluginStart()
 {
 	AddUpdaterLibrary(); //auto-updater
-} 
+}
+
+int GetClientExp(int iClient)
+{
+	int iAssaultEXP, iExoEXP, iStealthEXP, iSupportEXP;
+		
+	SteamWorks_GetStatCell(iClient, ASSAULT_EXP, iAssaultEXP);
+	SteamWorks_GetStatCell(iClient, EXO_EXP, iExoEXP);
+	SteamWorks_GetStatCell(iClient, STEALTH_EXP, iStealthEXP);
+	SteamWorks_GetStatCell(iClient, SUPPORT_EXP, iSupportEXP);
+	
+	return (iAssaultEXP + iExoEXP + iStealthEXP + iSupportEXP);
+}
  
-public void CachePlayerStats(int iClient)
+void RequestPlayerStats(int iClient)
 {
 	if (SteamWorks_RequestStats(iClient, GAME_APPID))
 	{
-		int iAssaultEXP, iExoEXP, iStealthEXP, iSupportEXP;
-		
-		SteamWorks_GetStatCell(iClient, ASSAULT_EXP, iAssaultEXP);
-		SteamWorks_GetStatCell(iClient, EXO_EXP, iExoEXP);
-		SteamWorks_GetStatCell(iClient, STEALTH_EXP, iStealthEXP);
-		SteamWorks_GetStatCell(iClient, SUPPORT_EXP, iSupportEXP);
-		
-		gI_totalPlayerExp[iClient] = iAssaultEXP + iExoEXP + iStealthEXP + iSupportEXP;
+		gI_totalPlayerExp[iClient] = GetClientExp(iClient);
 	}
+}
+
+void ResetVarriables(int iClient)
+{
+	gI_totalPlayerExp[iClient] = -1;
 }
 
 /* Natives */
@@ -61,6 +78,12 @@ public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 
 public int Native_GetClientEXP(Handle:plugin, numParams)
 {
-	//aka gI_totalPlayerExp[client], but shorter
-	return gI_totalPlayerExp[GetNativeCell(1)];
+	int iClient = GetNativeCell(1);
+	
+	if (gI_totalPlayerExp[iClient] == EXP_NOT_FOUND)
+	{
+		RequestPlayerStats(iClient);
+	}
+
+	return gI_totalPlayerExp[iClient];
 }
