@@ -382,9 +382,9 @@ void SetUnitLimit(team, type, value)
 	PrintLimitSet(team, type, value);
 }
 
-stock String:GetTypeName(type)
+stock char GetTypeName(int type)
 {
-	new String:typeName[32];
+	char typeName[32];
 	
 	switch (type)
         {
@@ -396,9 +396,9 @@ stock String:GetTypeName(type)
         return typeName;
 }
 
-stock String:GetLimitPhrase(type)
+stock char GetLimitPhrase(int type)
 {
-	new String:LimitPhrase[32];
+	char LimitPhrase[32];
 	
 	switch (type)
         {
