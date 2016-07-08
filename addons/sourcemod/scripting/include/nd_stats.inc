@@ -11,4 +11,4 @@
  *
  * @return integer 			Client Expereince
  */
-native int ND_GetClientEXP();
+native int ND_GetClientEXP(int client);
