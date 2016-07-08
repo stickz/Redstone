@@ -2,6 +2,12 @@
 #include <adminmenu>
 #include <sdktools>
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/ban_disconnected/ban_disconnected.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
+
 #define STORED_ENTRIES 100
 
 //Version is auto-filled by the travis builder
@@ -19,9 +25,6 @@ Handle hTopMenu = INVALID_HANDLE;
 static char disconnected_player_names   [STORED_ENTRIES][32];
 static char disconnected_player_authids	[STORED_ENTRIES][32];
 static int  disconnected_player_times   [STORED_ENTRIES];
-
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/ban_disconnected/ban_disconnected.txt"
-#include "updater/standard.sp"
 
 public void OnPluginStart() 
 {
