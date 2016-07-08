@@ -89,7 +89,7 @@ public bool isContinentEmpty(int contientNumber)
 	return contientNumber == 0;
 }
 
-char conientIntegerTOName(value)
+char conientIntegerTOName(int value)
 {
 	char Name[2];
 	switch(value)
