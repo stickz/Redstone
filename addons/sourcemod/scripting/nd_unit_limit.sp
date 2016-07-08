@@ -141,9 +141,9 @@ public Action Event_SelectClass(Event event, const char[] name, bool dontBroadca
 	if (!ND_RoundStarted())
 		return Plugin_Continue;
 	
-	int client = GetClientOfUserId(GetEventInt(event, "userid"));
-    	int cls = GetEventInt(event, "class");
-    	int subcls = GetEventInt(event, "subclass");
+	int client = GetClientOfUserId(event.GetInt("userid"));
+    	int cls = event.GetInt("class");
+    	int subcls = event.GetInt("subclass");
 
 	if (IsSniperClass(cls, subcls)) 
 	{
