@@ -18,6 +18,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <SteamWorks>
 
+/* Auto-Updater Support */
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/nd_stats_retrieval/nd_stats_retrieval.txt"
+#include 		"updater/standard.sp"
+
 #pragma newdecls required
 
 #define GAME_APPID 	17710
@@ -28,10 +32,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define EXO_EXP		"Exo.accum.experience"
 #define STEALTH_EXP	"Stealth.accum.experience"
 #define SUPPORT_EXP	"Support.accum.experience"
-
-/* Auto-Updater Support */
-#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/nd_stats_retrieval/nd_stats_retrieval.txt"
-#include 		"updater/standard.sp"
 
 public Plugin myinfo =
 {
