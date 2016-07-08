@@ -18,6 +18,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <clientprefs>
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_disconnect/nd_disconnect.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
+
 Handle cookie_lost_connection_message = INVALID_HANDLE;
 bool option_lost_connection_message[MAXPLAYERS + 1] = {true,...}; //off by default
 
@@ -30,9 +36,6 @@ public Plugin myinfo =
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
-
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_disconnect/nd_disconnect.txt"
-#include "updater/standard.sp"
 
 public void OnPluginStart()
 {
