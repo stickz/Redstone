@@ -16,6 +16,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/autoreconnect/autoreconnect.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
+
 public Plugin myinfo =
 {
 	name = "Auto Reconnect",
@@ -24,10 +30,6 @@ public Plugin myinfo =
 	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 };
-
-/* Auto Updater */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/autoreconnect/autoreconnect.txt"
-#include "updater/standard.sp"
 
 public void OnPluginStart()
 {

@@ -1,6 +1,28 @@
+/*
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
 #include <sourcemod>
 #include <nd_stocks>
 #include <SteamWorks>
+
+/* Auto-Updater Support */
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/nd_stats_retrieval/nd_stats_retrieval.txt"
+#include 		"updater/standard.sp"
+
+#pragma newdecls required
 
 #define GAME_APPID 	17710
 #define ND_MAXPLAYERS 	33
@@ -10,10 +32,6 @@
 #define EXO_EXP		"Exo.accum.experience"
 #define STEALTH_EXP	"Stealth.accum.experience"
 #define SUPPORT_EXP	"Support.accum.experience"
-
-/* Auto-Updater Support */
-#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/nd_stats_retrieval/nd_stats_retrieval.txt"
-#include 		"updater/standard.sp"
 
 public Plugin myinfo =
 {
@@ -68,15 +86,15 @@ void ResetVarriables(int iClient)
 }
 
 /* Natives */
-functag NativeCall public(Handle:plugin, numParams);
+typedef NativeCall = function int (Handle plugin, int numParams);
 
-public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_GetClientEXP", Native_GetClientEXP);
 	return APLRes_Success;
 }
 
-public int Native_GetClientEXP(Handle:plugin, numParams)
+public int Native_GetClientEXP(Handle plugin, int numParams)
 {
 	int iClient = GetNativeCell(1);
 	

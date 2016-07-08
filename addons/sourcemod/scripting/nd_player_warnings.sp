@@ -15,6 +15,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 #include <sourcemod>
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_player_warnings/nd_player_warnings.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
+
 #define WARN_TYPE_RESPECT 0
 #define WARN_TYPE_ADVERTISE 1
 #define WARN_TYPE_SPAWNSELL 2
@@ -28,9 +34,6 @@ public Plugin myinfo =
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
-
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_player_warnings/nd_player_warnings.txt"
-#include "updater/standard.sp"
 
 public void OnPluginStart()
 {

@@ -16,14 +16,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <sdktools>
-#include <nd_classes>
-#include <nd_breakdown>
 #include <nd_stocks>
-#include <nd_rounds>
 
 #undef REQUIRE_PLUGIN
 #tryinclude <nd_commander>
 #define REQUIRE_PLUGIN
+
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_unit_limit/nd_unit_limit.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
+
+#include <nd_breakdown>
+#include <nd_rounds>
+#include <nd_classes>
 
 #define TYPE_SNIPER 	0
 #define TYPE_STEALTH 	1
@@ -45,9 +52,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define m_iDesiredPlayerClass(%1) (GetEntProp(%1, Prop_Send, "m_iDesiredPlayerClass"))
 #define m_iDesiredPlayerSubclass(%1) (GetEntProp(%1, Prop_Send, "m_iDesiredPlayerSubclass"))
-
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_unit_limit/nd_unit_limit.txt"
-#include "updater/standard.sp"
 
 ConVar eCommanders;
 
@@ -138,9 +142,9 @@ public Action Event_SelectClass(Event event, const char[] name, bool dontBroadca
 	if (!ND_RoundStarted())
 		return Plugin_Continue;
 	
-	int client = GetClientOfUserId(GetEventInt(event, "userid"));
-    	int cls = GetEventInt(event, "class");
-    	int subcls = GetEventInt(event, "subclass");
+	int client = GetClientOfUserId(event.GetInt("userid"));
+    	int cls = event.GetInt("class");
+    	int subcls = event.GetInt("subclass");
 
 	if (IsSniperClass(cls, subcls)) 
 	{
@@ -303,7 +307,7 @@ bool CheckCommonFailure(int client, int type, int args)
 }
 
 // HELPER FUNCTIONS
-bool IsTooMuchSnipers(client) 
+bool IsTooMuchSnipers(int client) 
 {
 	int clientTeam = GetClientTeam(client);	
 	int clientCount = ValidTeamCount(client);
@@ -369,7 +373,7 @@ void ResetPlayerClass(int client)
 	ResetClass(client, MAIN_CLASS_ASSAULT, ASSAULT_CLASS_INFANTRY, 0);
 }
 
-void SetUnitLimit(team, type, value)
+void SetUnitLimit(int team, int type, int value)
 {
 	int teamIDX = team - 2;
 	
@@ -379,9 +383,9 @@ void SetUnitLimit(team, type, value)
 	PrintLimitSet(team, type, value);
 }
 
-stock String:GetTypeName(type)
+stock char GetTypeName(int type)
 {
-	new String:typeName[32];
+	char typeName[32];
 	
 	switch (type)
         {
@@ -393,9 +397,9 @@ stock String:GetTypeName(type)
         return typeName;
 }
 
-stock String:GetLimitPhrase(type)
+stock char GetLimitPhrase(int type)
 {
-	new String:LimitPhrase[32];
+	char LimitPhrase[32];
 	
 	switch (type)
         {

@@ -18,6 +18,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <clientprefs>
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_disconnect/nd_disconnect.txt"
+#include "updater/standard.sp"
+
 Handle cookie_lost_connection_message = INVALID_HANDLE;
 bool option_lost_connection_message[MAXPLAYERS + 1] = {true,...}; //off by default
 
@@ -30,9 +34,6 @@ public Plugin myinfo =
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
-
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_disconnect/nd_disconnect.txt"
-#include "updater/standard.sp"
 
 public void OnPluginStart()
 {
@@ -61,7 +62,7 @@ public Action Event_PlayerDisconnected(Event event, const char[] name, bool dont
 	}
 }
 
-void PrintLostConnection(client)
+void PrintLostConnection(int client)
 {
 	char clientName[64];
 	GetClientName(client, clientName, sizeof(clientName))
@@ -95,12 +96,12 @@ public CookieMenuHandler_LostConnectionMessage(int client, CookieMenuAction:acti
 	}
 }
 
-public OnClientCookiesCached(client)
+public OnClientCookiesCached(int client)
 {
 	option_lost_connection_message[client] = GetCookieLostConnectionMessage(client);
 }
 
-bool GetCookieLostConnectionMessage(client)
+bool GetCookieLostConnectionMessage(int client)
 {
 	char buffer[10];
 	GetClientCookie(client, cookie_lost_connection_message, buffer, sizeof(buffer));
