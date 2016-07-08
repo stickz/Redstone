@@ -70,15 +70,15 @@ void ResetVarriables(int iClient)
 }
 
 /* Natives */
-functag NativeCall public(Handle:plugin, numParams);
+typedef NativeCall = function int (Handle plugin, int numParams);
 
-public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_GetClientEXP", Native_GetClientEXP);
 	return APLRes_Success;
 }
 
-public int Native_GetClientEXP(Handle:plugin, numParams)
+public int Native_GetClientEXP(Handle plugin, int numParams)
 {
 	int iClient = GetNativeCell(1);
 	
