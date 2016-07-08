@@ -372,7 +372,7 @@ void ResetPlayerClass(int client)
 	ResetClass(client, MAIN_CLASS_ASSAULT, ASSAULT_CLASS_INFANTRY, 0);
 }
 
-void SetUnitLimit(team, type, value)
+void SetUnitLimit(int team, int type, int value)
 {
 	int teamIDX = team - 2;
 	
