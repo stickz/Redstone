@@ -17,6 +17,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <geoip>
 #include <nd_stocks>
+
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_continents/nd_continents.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
      
 // possible values are:
 //AF = Africa
@@ -44,9 +49,6 @@ public Plugin myinfo =
 	version		= "dummy",
 	url		= "https://github.com/stickz/Redstone/"
 };
-
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_continents/nd_continents.txt"
-#include "updater/standard.sp"
 
 public void OnPluginStart()
 {
