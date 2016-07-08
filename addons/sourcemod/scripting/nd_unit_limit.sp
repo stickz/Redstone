@@ -16,10 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <sdktools>
-#include <nd_classes>
-#include <nd_breakdown>
 #include <nd_stocks>
-#include <nd_rounds>
 
 #undef REQUIRE_PLUGIN
 #tryinclude <nd_commander>
@@ -30,6 +27,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "updater/standard.sp"
 
 #pragma newdecls required
+
+#include <nd_breakdown>
+#include <nd_rounds>
+#include <nd_classes>
 
 #define TYPE_SNIPER 	0
 #define TYPE_STEALTH 	1
@@ -306,7 +307,7 @@ bool CheckCommonFailure(int client, int type, int args)
 }
 
 // HELPER FUNCTIONS
-bool IsTooMuchSnipers(client) 
+bool IsTooMuchSnipers(int client) 
 {
 	int clientTeam = GetClientTeam(client);	
 	int clientCount = ValidTeamCount(client);
