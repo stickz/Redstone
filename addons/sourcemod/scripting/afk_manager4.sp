@@ -6,14 +6,14 @@
 #define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/afk_manager4/afk_manager4.txt"
 #include 		"updater/standard.sp"
 
+#undef REQUIRE_PLUGIN
+#tryinclude <colors>
+#define REQUIRE_PLUGIN
+
 #pragma newdecls required
 #include <nd_rounds>
 
 #pragma semicolon 1
-
-#undef REQUIRE_PLUGIN
-#tryinclude <colors>
-#define REQUIRE_PLUGIN
 
 // Defines
 #define AFK_WARNING_INTERVAL		5
