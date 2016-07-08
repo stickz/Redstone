@@ -17,6 +17,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 
+/* Auto Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_ping/nd_ping.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
+
 //Version is auto-filled by the travis builder
 public Plugin myinfo =
 {
@@ -26,9 +32,6 @@ public Plugin myinfo =
 	version 	= "dummy",
 	url 		= "vintagejailbreak.org"
 };
-
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_ping/nd_ping.txt"
-#include "updater/standard.sp"
 
 ConVar gH_Cvar_Type;
 
