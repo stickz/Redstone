@@ -89,9 +89,9 @@ public bool isContinentEmpty(int contientNumber)
 	return contientNumber == 0;
 }
 
-String:conientIntegerTOName(value)
+char conientIntegerTOName(value)
 {
-	decl String:Name[2];
+	char Name[2];
 	switch(value)
 	{
 		case 0: Name = "XX";
@@ -105,7 +105,7 @@ String:conientIntegerTOName(value)
 	return Name;
 }
 
-int contientTOInteger(String:contString[2])
+int contientTOInteger(char contString[2])
 {
 	if (StrEqual(contString, "EU"))
 		return 1;			
@@ -125,18 +125,18 @@ int contientTOInteger(String:contString[2])
 	return 0;
 }
 
-String:getContient(client)
+char getContient(int client)
 {
-	decl String:code[2];
+	char code[2];
 	
-	decl String:clientIp[16];			
+	char clientIp[16];			
 	if(!GetClientIP(client, clientIp, sizeof(clientIp), true)) //failed to get IP of client, do not procede further
 	{
 		code = "XX";
 		return code;
 	}
                        
-	decl String:countryCode[3];
+	char countryCode[3];
 	if (!GeoipCode2(clientIp, countryCode))  //failed to get Geo Location of client, do not procede further
 	{
 		code = "XX";
@@ -144,7 +144,7 @@ String:getContient(client)
 	}
         
     //check Europe Array
-	for(new i=0;i<sizeof(aEurope)-1;i++)
+	for(int i=0;i<sizeof(aEurope)-1;i++)
 		if(StrEqual(aEurope[i],countryCode))
 		{
 			code = "EU";
@@ -152,7 +152,7 @@ String:getContient(client)
 		}
 	
 	//check North America array
-	for(new i=0;i<sizeof(aNorthAmerica)-1;i++)	
+	for(int i=0;i<sizeof(aNorthAmerica)-1;i++)	
 		if(StrEqual(aNorthAmerica[i],countryCode))
 		{
 			code = "NA";
@@ -160,7 +160,7 @@ String:getContient(client)
 		}
 	
 	//check Australia array
-	for(new i=0;i<sizeof(aAustralia)-1;i++)
+	for(int i=0;i<sizeof(aAustralia)-1;i++)
 		if(StrEqual(aAustralia[i],countryCode))                                   
 		{
 			code = "AU";
@@ -168,7 +168,7 @@ String:getContient(client)
 		}
 	
 	//check Asia array
-	for(new i=0;i<sizeof(aAsia)-1;i++)
+	for(int i=0;i<sizeof(aAsia)-1;i++)
 		if(StrEqual(aAsia[i],countryCode))
 		{
 			code = "AS";
@@ -176,7 +176,7 @@ String:getContient(client)
 		}
 	
 	//check South America array
-	for(new i=0;i<sizeof(aSouthAmerica)-1;i++)
+	for(int i=0;i<sizeof(aSouthAmerica)-1;i++)
 		if(StrEqual(aSouthAmerica[i],countryCode))
 		{
 			code = "SA";
@@ -184,7 +184,7 @@ String:getContient(client)
 		}
 	
 	//check Africa array
-	for(new i=0;i<sizeof(aAfrica)-1;i++)
+	for(int i=0;i<sizeof(aAfrica)-1;i++)
 		if(StrEqual(aAfrica[i],countryCode))
 		{
 			code = "AF";
@@ -192,7 +192,7 @@ String:getContient(client)
 		}
 	
 	//check Antarctica array
-	for(new i=0;i<sizeof(aAntarctica)-1;i++)
+	for(int i=0;i<sizeof(aAntarctica)-1;i++)
 		if(StrEqual(aAntarctica[i],countryCode))
 		{
 			code = "AN";
