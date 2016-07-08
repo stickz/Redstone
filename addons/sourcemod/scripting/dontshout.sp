@@ -18,6 +18,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/dontshout/dontshout.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
+
 #define MAX_LINE_LENGTH			   192		// maximum length of a single line of text
 #define PLUGIN_DEBUG				 1		// debug mode enabled when set
 
@@ -34,9 +39,6 @@ public Plugin myinfo =
 	version 	= "dummy",
 	url 		= "http://"	
 };
-
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/dontshout/dontshout.txt"
-#include "updater/standard.sp"
 
 public void OnPluginStart()
 {
