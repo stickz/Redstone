@@ -6,7 +6,7 @@
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/ban_disconnected/ban_disconnected.txt"
 #include "updater/standard.sp"
 
-#pragma newdecls required
+//#pragma newdecls required
 
 #define STORED_ENTRIES 100
 
