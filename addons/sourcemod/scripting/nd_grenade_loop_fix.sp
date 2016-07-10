@@ -39,7 +39,7 @@ public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadca
 	CreateTimer(0.5, TIMER_TellSoundToStopRingingEars, event.GetInt("userid"), TIMER_FLAG_NO_MAPCHANGE);	
 }
 
-public Action TIMER_TellSoundToStopRingingEars(Handle timer, any:userid)
+public Action TIMER_TellSoundToStopRingingEars(Handle timer, any userid)
 {
 	int client = GetClientOfUserId(userid)
 	
