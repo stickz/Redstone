@@ -757,7 +757,7 @@ public Action Timer_MoveClientsToSpectate(Handle Timer) // General AFK Timers
 	{
 		if (IsValidClient(client) && GetClientTeam(client) == 0)
 		{
-			SetClientTeam(client, g_iSpec_Team);
+			ChangeClientTeam(client, g_iSpec_Team);
 		}
 	}
 	
