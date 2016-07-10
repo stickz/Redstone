@@ -715,6 +715,7 @@ public Action Event_PlayerDeathPost(Event event, const char[] name, bool dontBro
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {
 	g_bWaitRound = false; // Un-Pause Plugin on Map Start
+	CreateTimer(3.0, Timer_MoveClientsToSpectate, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
@@ -748,6 +749,19 @@ bool ND_HasNoTransportGates(int team)
 	}
 	
 	return true;
+}
+
+public Action Timer_MoveClientsToSpectate(Handle Timer) // General AFK Timers
+{
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		if (IsValidClient(client) && GetClientTeam(client) == 0)
+		{
+			SetClientTeam(client, g_iSpec_Team);
+		}
+	}
+	
+	return Plugin_Handled;
 }
 
 // Timers
