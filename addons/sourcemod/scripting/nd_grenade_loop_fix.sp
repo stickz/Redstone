@@ -21,10 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #pragma newdecls required
 
-#define BYE_BYE_GRENADE_LOOP 	"0"
 #define INVALID_USERID		0
-
-Handle EarRingingConVar = INVALID_HANDLE;
 
 public Plugin myinfo =
 {
@@ -37,17 +34,8 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	if ((EarRingingConVar = FindConVar("dsp_player")) == INVALID_HANDLE)
-		SetFailState("client convar dsp_player not found"); 
-	
 	HookEvent("player_death", Event_PlayerDeath, EventHookMode_Post);
-	
 	AddUpdaterLibrary(); //auto-updater
-}
-
-public void OnPluginEnd()
-{
-	CloseHandle(EarRingingConVar);
 }
 
 public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast)
@@ -58,10 +46,9 @@ public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadca
 public Action TIMER_TellSoundToStopRingingEars(Handle timer, any userid)
 {
 	int client = GetClientOfUserId(userid)
-	
-	if (client == INVALID_USERID) //invalid userid
+	if (client == INVALID_USERID)
 		return Plugin_Handled;
 	
-	SendConVarValue(client, EarRingingConVar, BYE_BYE_GRENADE_LOOP);	
+	FakeClientCommand(client, "dsp_player 0");	
 	return Plugin_Handled;
 }
