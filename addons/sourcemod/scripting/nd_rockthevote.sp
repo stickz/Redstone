@@ -41,7 +41,7 @@ enum Bools
 
 #define PREFIX "\x05[xG]"
 
-const char nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
+char nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
 {
 	"rtv",
 	"change map",
