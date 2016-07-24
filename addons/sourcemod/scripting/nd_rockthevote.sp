@@ -81,7 +81,7 @@ public void OnPluginStart()
 	}
 }
 
-public Event_RoundStart(Event event, char[] name, bool dontBroadcast)
+public Action Event_RoundStart(Event event, char[] name, bool dontBroadcast)
 {	
 	StartRTVDisableTimer();
 }
@@ -94,19 +94,18 @@ public Action OnClientSayCommand(int client, char[] command, char[] sArgs)
 		{
 			if (strcmp(sArgs, nd_rtv_commands[idx], false) == 0) 
 			{
-				new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
-	
+				//new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
+				//SetCmdReplySource(old);
+				
 				callRockTheVote(client);
-					
-				SetCmdReplySource(old);
-				return Plugin_Stop;				
+				return Plugin_Handled;				
 			}
 		}
 	}	
 	return Plugin_Continue;
 }
 
-public Event_RoundEnd(Event event, char[] name, bool dontBroadcast)
+public Action Event_RoundEnd(Event event, char[] name, bool dontBroadcast)
 {
 	if (!g_Bool[enableRTV] && RtvDisableTimer != INVALID_HANDLE)
 		CloseHandle(RtvDisableTimer);
