@@ -41,7 +41,7 @@ enum Bools
 
 #define PREFIX "\x05[xG]"
 
-char nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
+const char nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
 {
 	"rtv",
 	"change map",
@@ -81,12 +81,12 @@ public void OnPluginStart()
 	}
 }
 
-public Action Event_RoundStart(Event event, char[] name, bool dontBroadcast)
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {	
 	StartRTVDisableTimer();
 }
 
-public Action OnClientSayCommand(int client, char[] command, char[] sArgs)
+public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
 {
 	if (client)
 	{
