@@ -18,6 +18,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <mapchooser>
 #include <nd_stocks>
 
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_rockthevote/nd_rockthevote.txt"
+#include "updater/standard.sp"
+
 #pragma newdecls required
 #include <nd_rounds>
 #include <nd_redstone>
@@ -57,10 +61,6 @@ public Plugin myinfo =
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
-
-/* Auto Updater */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_rockthevote/nd_rockthevote.txt"
-#include "updater/standard.sp"
 
 public void OnPluginStart()
 {
