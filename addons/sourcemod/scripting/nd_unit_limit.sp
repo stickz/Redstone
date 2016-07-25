@@ -14,9 +14,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <sourcemod>
 #include <sdktools>
-#include <nd_stocks>
 
 #undef REQUIRE_PLUGIN
 #tryinclude <nd_commander>
@@ -27,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "updater/standard.sp"
 
 #pragma newdecls required
+#include <sourcemod>
+#include <nd_stocks>
 
 #include <nd_breakdown>
 #include <nd_rounds>
