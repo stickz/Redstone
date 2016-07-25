@@ -14,7 +14,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <sourcemod>
 #include <sdktools>
 
 /* Auto Updater Support */
@@ -22,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "updater/standard.sp"
 
 #pragma newdecls required
+#include <sourcemod>
 
 //Version is auto-filled by the travis builder
 public Plugin myinfo =
