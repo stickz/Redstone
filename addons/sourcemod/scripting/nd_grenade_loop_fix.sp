@@ -14,12 +14,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <sourcemod>
-
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_grenade_loop_fix/nd_grenade_loop_fix.txt"
 #include "updater/standard.sp"
 
 #pragma newdecls required
+#include <sourcemod>
 
 #define INVALID_USERID		0
 
