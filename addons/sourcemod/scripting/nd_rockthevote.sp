@@ -187,7 +187,8 @@ void resetValues(int client)
 	if (g_hasVoted[client])
 	{
 		g_hasVoted[client] = false;
-		checkForPass(ValidClientCount(true));
+		int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
+		checkForPass(clientCount);
 	}
 }
 
