@@ -14,8 +14,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <sourcemod>
-#include <nd_stocks>
 #include <SteamWorks>
 
 /* Auto-Updater Support */
@@ -23,6 +21,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include 		"updater/standard.sp"
 
 #pragma newdecls required
+#include <sourcemod>
+#include <nd_stocks>
 
 #define GAME_APPID 	17710
 #define ND_MAXPLAYERS 	33
