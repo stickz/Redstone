@@ -29,15 +29,15 @@ enum Colors
 }
 
 /* Colors' properties */
-char[][] CTag = {"{default}", "{green}", "{lightgreen}", "{red}", "{blue}", "{olive}"};
-char[][] CTagCode = {"\x01", "\x04", "\x03", "\x03", "\x03", "\x05"};
-bool[] CTagReqSayText2 = {false, false, true, true, true, false};
+char CTag[MAX_COLORS][] = {"{default}", "{green}", "{lightgreen}", "{red}", "{blue}", "{olive}"};
+char CTagCode[MAX_COLORS][] = {"\x01", "\x04", "\x03", "\x03", "\x03", "\x05"};
+bool CTagReqSayText2[MAX_COLORS] = {false, false, true, true, true, false};
 bool CEventIsHooked = false;
 bool CSkipList[MAXPLAYERS+1] = {false,...};
 
 /* Game default profile */
-bool[] CProfile_Colors = {true, true, false, false, false, false};
-int[] CProfile_TeamIndex = {NO_INDEX, NO_INDEX, NO_INDEX, NO_INDEX, NO_INDEX, NO_INDEX};
+bool CProfile_Colors[MAX_COLORS] = {true, true, false, false, false, false};
+int CProfile_TeamIndex[MAX_COLORS] = {NO_INDEX, NO_INDEX, NO_INDEX, NO_INDEX, NO_INDEX, NO_INDEX};
 bool CProfile_SayText2 = false;
 
 /**
