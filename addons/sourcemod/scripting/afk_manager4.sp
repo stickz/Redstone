@@ -1,4 +1,3 @@
-#include <sourcemod>
 #include <sdktools>
 
 /* Auto Updater Suport */
@@ -10,6 +9,7 @@
 #define REQUIRE_PLUGIN
 
 #pragma newdecls required
+#include <sourcemod>
 #include <nd_stocks>
 #include <nd_rounds>
 
