@@ -52,7 +52,7 @@ stock char ND_GetTeamName(int team)
 	return TeamName;
 }
 
-stock char GetTransNumber(value)
+stock char GetTransNumber(int value)
 {
 	char number[32];
 	
