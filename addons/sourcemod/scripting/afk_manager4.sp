@@ -4,11 +4,12 @@
 #define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/afk_manager4/afk_manager4.txt"
 #include 		"updater/standard.sp"
 
+#pragma newdecls required
+
 #undef REQUIRE_PLUGIN
 #tryinclude <colors>
 #define REQUIRE_PLUGIN
 
-#pragma newdecls required
 #include <sourcemod>
 #include <nd_stocks>
 #include <nd_rounds>
