@@ -234,3 +234,23 @@ void StartRTVDisableTimer()
 {
 	RtvDisableTimer = CreateTimer(480.0, TIMER_DisableRTV, _, TIMER_FLAG_NO_MAPCHANGE);
 }
+
+/* Natives */
+typedef NativeCall = function int (Handle plugin, int numParams);
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	CreateNative("ND_GetRtvStatus", Native_GetRtvStatus);
+	CreateNative("ND_ToogleRtvStatus", Native_ToogleRtvStatus);
+	return APLRes_Success;
+}
+
+public int Native_GetRtvStatus(Handle plugin, int numParams)
+{
+	return g_Bool[enableRTV];
+}
+
+public int Native_ToogleRtvStatus(Handle plugin, int numParams)
+{
+	g_Bool[enableRTV] = GetNativeCell(1);
+}
