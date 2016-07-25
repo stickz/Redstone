@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #pragma newdecls required
 #include <sourcemod>
-#include <geoip>
+#include <geoip2>
 #include <nd_stocks>
      
 // possible values are:
