@@ -13,13 +13,13 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-#include <sourcemod>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_player_warnings/nd_player_warnings.txt"
 #include "updater/standard.sp"
 
 #pragma newdecls required
+#include <sourcemod>
 
 #define WARN_TYPE_RESPECT 0
 #define WARN_TYPE_ADVERTISE 1
