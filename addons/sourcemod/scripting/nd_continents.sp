@@ -14,14 +14,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <sourcemod>
-#include <geoip>
-#include <nd_stocks>
-
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_continents/nd_continents.txt"
 #include "updater/standard.sp"
 
 #pragma newdecls required
+#include <sourcemod>
+#include <geoip2>
+#include <nd_stocks>
      
 // possible values are:
 //AF = Africa

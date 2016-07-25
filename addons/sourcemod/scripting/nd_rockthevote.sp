@@ -14,15 +14,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <sourcemod>
 #include <mapchooser>
-#include <nd_stocks>
 
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_rockthevote/nd_rockthevote.txt"
 #include "updater/standard.sp"
 
 #pragma newdecls required
+#include <sourcemod>
+#include <nd_stocks>
 #include <nd_rounds>
 #include <nd_redstone>
 
@@ -187,7 +187,8 @@ void resetValues(int client)
 	if (g_hasVoted[client])
 	{
 		g_hasVoted[client] = false;
-		checkForPass(ValidClientCount(true));
+		int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
+		checkForPass(clientCount);
 	}
 }
 
