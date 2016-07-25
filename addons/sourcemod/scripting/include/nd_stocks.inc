@@ -9,9 +9,9 @@
 #define TEAM_CONSORT		2
 #define TEAM_EMPIRE		3
 
-stock String:NumberInEnglish(num)
+stock char NumberInEnglish(int num)
 {
-	decl String:englishNumber[16];
+	char englishNumber[16];
 	switch (num)
 	{
 		case 1: Format(englishNumber, sizeof(englishNumber), "one");
@@ -36,9 +36,9 @@ stock String:NumberInEnglish(num)
  * @error			Invalid team index.
  */
 
-stock String:ND_GetTeamName(team)
+stock char ND_GetTeamName(int team)
 {
-	new String:TeamName[12];
+	char TeamName[12];
 	
 	switch(team)
 	{
@@ -52,9 +52,9 @@ stock String:ND_GetTeamName(team)
 	return TeamName;
 }
 
-stock String:GetTransNumber(value)
+stock char GetTransNumber(value)
 {
-	new String:number[32];
+	char number[32];
 	
 	switch (value)
 	{
@@ -75,7 +75,7 @@ stock String:GetTransNumber(value)
 	return number;
 }
 
-stock bool:IsValidClient(client, bool:nobots = true)
+stock bool IsValidClient(int client, bool nobots = true)
 { 
     if (client <= 0 || client > MaxClients || !IsClientConnected(client) || (nobots && IsFakeClient(client)))
         return false;
@@ -83,15 +83,15 @@ stock bool:IsValidClient(client, bool:nobots = true)
     return IsClientInGame(client); 
 } 
 
-stock bool:IsValidAdmin(client, const String:flags[]) 
+stock bool IsValidAdmin(int client, const char[] flags) 
 { 
 	new ibFlags = ReadFlagString(flags); 
 	return ((GetUserFlagBits(client) & ibFlags) == ibFlags || GetUserFlagBits(client) & ADMFLAG_ROOT);
 }  
 
-stock PrintToAdmins(const String:message[], const String:flags[]) 
+stock void PrintToAdmins(const char[] message, const char[] flags) 
 { 
-    for (new x = 1; x <= MaxClients; x++) 
+    for (int x = 1; x <= MaxClients; x++) 
     { 
         if (IsValidClient(x) && IsValidAdmin(x, flags)) 
         { 
@@ -108,7 +108,7 @@ stock PrintToAdmins(const String:message[], const String:flags[])
  * @error			Unloaded level or level less than 2.
  */
  
-stock ND_RetreiveLevel(client)
+stock int ND_RetreiveLevel(int client)
 {
 	return GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iPlayerRank", 1, client);
 }
@@ -120,64 +120,64 @@ stock ND_RetreiveLevel(client)
  * @return			The current score of the client
  */
 
-stock ND_RetrieveScore(client)
+stock int ND_RetrieveScore(int client)
 {
 	return GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iScore", 1, client);
 }
 
 /* Count Constants */
 
-stock ValidClientCount(bool:PlaceHolder = false)
+stock int ValidClientCount()
 {
-	new clientCount;
+	int clientCount = 0;
 	
-	for (new idx = 1; idx <= MaxClients; idx++) 
+	for (int idx = 1; idx <= MaxClients; idx++) 
 		if (IsValidClient(idx))
 			clientCount++;
 	
 	return clientCount;
 }
 
-stock ReadyToBalanceCount()
+stock int ReadyToBalanceCount()
 {
-	new clientCount;
-	for (new idx = 1; idx <= MaxClients; idx++) 
+	int clientCount = 0;
+	for (int idx = 1; idx <= MaxClients; idx++) 
 		if (IsValidClient(idx) && GetClientTeam(idx) > 0)
 			clientCount++;
 			
 	return clientCount;
 }
 
-stock OnTeamCount()
+stock int OnTeamCount()
 {
-	new clientCount;
-	for (new idx = 1; idx <= MaxClients; idx++) 
+	int clientCount = 0;
+	for (int idx = 1; idx <= MaxClients; idx++) 
 		if (IsValidClient(idx) && GetClientTeam(idx) > 1)
 			clientCount++;
 			
 	return clientCount;
 }
 
-stock OnTeamCountEx()
+stock int OnTeamCountEx()
 {
 	return GetTeamClientCount(3) + GetTeamClientCount(2);
 }
 
-stock ValidTeamCount(teamName)
+stock int ValidTeamCount(int teamName)
 {
-	new clientCount;
-	for (new idx = 1; idx <= MaxClients; idx++) 
+	int clientCount = 0;
+	for (int idx = 1; idx <= MaxClients; idx++) 
 		if (IsValidClient(idx) && GetClientTeam(idx) == teamName)
 			clientCount++;
 	
 	return clientCount;
 }
 
-stock getOverBalance()
+stock int getOverBalance()
 {
-	new clientCount[2], team;
+	int clientCount[2], team;
 	
-	for (new idx = 1; idx <= MaxClients; idx++) 
+	for (int idx = 1; idx <= MaxClients; idx++) 
 		if (IsValidClient(idx))
 		{
 			team = GetClientTeam(idx);
@@ -188,9 +188,9 @@ stock getOverBalance()
 	return clientCount[1] - clientCount[0];
 }
 
-stock getPositiveOverBalance()
+stock int getPositiveOverBalance()
 {
-	new overBalance = getOverBalance();
+	int overBalance = getOverBalance();
 	
 	if (overBalance < 0)
 		overBalance *= -1;
@@ -200,27 +200,28 @@ stock getPositiveOverBalance()
 
 /* Team Constants */
 
-stock getOtherTeam(team)
+stock int getOtherTeam(int team)
 {
 	//consort = 2, empire = 3	
 	return team == 2 ? 3 : 2;
 }
 
-stock bool:isOnTeam(client)
+stock bool isOnTeam(int client)
 {	
 	return IsClientInGame(client) && GetClientTeam(client) > 1;
 }
 
-stock getLeastStackedTeam(Float:teamdiff)
+stock int getLeastStackedTeam(float teamdiff)
 {
 	return teamdiff > 0 ? 3 : 2;
 }
 
-stock getStackedTeam(Float:teamdiff)
+stock int getStackedTeam(float teamdiff)
 {
 	return teamdiff > 0 ? 2 : 3;
 }
 
-stock getRandomTeam() {
+stock int getRandomTeam() 
+{
 	return GetRandomInt(2, 3);
 }
