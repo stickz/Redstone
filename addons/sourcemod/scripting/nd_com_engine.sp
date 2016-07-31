@@ -28,7 +28,7 @@ public Plugin myinfo =
 };
 
 /* Auto-Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/dontshout/dontshout.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_com_engine/nd_com_engine.txt"
 #include "updater/standard.sp"
 
 bool InCommanderMode[2] = {false, ...};
