@@ -27,7 +27,7 @@ public Plugin myinfo =
 	url 		= "https://github.com/stickz/Redstone/"	
 };
 
-/* Auto-Updater Support
+/* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/dontshout/dontshout.txt"
 #include "updater/standard.sp"
 
