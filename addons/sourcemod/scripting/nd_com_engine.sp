@@ -14,6 +14,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_com_engine/nd_com_engine.txt"
+#include "updater/standard.sp"
+
 #pragma newdecls required
 
 #include <sourcemod>
@@ -26,10 +30,6 @@ public Plugin myinfo =
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"	
 };
-
-/* Auto-Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_com_engine/nd_com_engine.txt"
-#include "updater/standard.sp"
 
 bool InCommanderMode[2] = {false, ...};
 
