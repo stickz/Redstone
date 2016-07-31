@@ -83,6 +83,11 @@ stock bool IsValidClient(int client, bool nobots = true)
     return IsClientInGame(client); 
 } 
 
+stock bool IsValidBounds(int client)
+{
+	return client > 0 && client <= MaxClients;
+} 
+
 stock bool IsValidAdmin(int client, const char[] flags) 
 { 
 	new ibFlags = ReadFlagString(flags); 
