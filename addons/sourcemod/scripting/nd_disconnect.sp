@@ -17,6 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <clientprefs>
 #include <nd_redstone>
+#include <nd_stocks>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_disconnect/nd_disconnect.txt"
@@ -72,7 +73,7 @@ void PrintLostConnection(int client)
 	
 	for (int idx = 1; idx <= MaxClients; idx++)
 	{
-		if (RED_IsValidClient(idx) && option_lost_connection_message[idx])
+		if (IsValidClient(idx) && option_lost_connection_message[idx])
 		{
 			PrintToChat(idx, "\x05%t", "Lost Connection", clientName);
 		}
