@@ -25,6 +25,11 @@ native int RED_ClientCount();
  * @parm1 ClientIDX 'index of client'
  * @return bool true false.
  */
-native bool RED_IsValidClient(int ClientIDX);
+native bool RED_ValidClient(int ClientIDX);
 
-#define RED_IVC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "RED_IsValidClient") == FeatureStatus_Available)
+#define RED_VC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "RED_ValidClient") == FeatureStatus_Available)
+
+stock bool RED_IsValidClient(int ClientIDX)
+{
+	return RED_VC_AVAILABLE() && RED_ValidClient(ClientIDX);
+}
