@@ -54,7 +54,7 @@ public Action Event_PlayerDisconnected(Event event, const char[] name, bool dont
 	{
 		int client = GetClientOfUserId(event.GetInt("userid"));	
 		
-		if (RED_IsValidClient(idx))
+		if (RED_IsValidClient(client))
 		{
 			char reason[64];
 			GetEventString(event, "reason", reason, sizeof(reason));
