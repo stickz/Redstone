@@ -15,8 +15,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include <sourcemod>
-#include <nd_stocks>
 #include <clientprefs>
+#include <nd_redstone>
+#include <nd_stocks>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_disconnect/nd_disconnect.txt"
@@ -52,13 +53,16 @@ public Action Event_PlayerDisconnected(Event event, const char[] name, bool dont
 	
 	if (strncmp(steam_id, "STEAM_", 6) == 0)
 	{
-		int client = GetClientOfUserId(event.GetInt("userid"));		
+		int client = GetClientOfUserId(event.GetInt("userid"));	
 		
-		char reason[64];
-		GetEventString(event, "reason", reason, sizeof(reason));
-		
-		if(StrContains(reason, "timed out", false) != -1)
-			PrintLostConnection(client);	
+		if (RED_IsValidClient(client))
+		{
+			char reason[64];
+			GetEventString(event, "reason", reason, sizeof(reason));
+			
+			if(StrContains(reason, "timed out", false) != -1)
+				PrintLostConnection(client);
+		}
 	}
 }
 
