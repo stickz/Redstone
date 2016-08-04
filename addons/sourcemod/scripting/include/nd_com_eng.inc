@@ -15,4 +15,9 @@
 
 native bool ND_IsInCommanderMode(int clientIDX);
 
-#define RED_CC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_IsInCommanderMode") == FeatureStatus_Available)
+#define ND_IICM_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_IsInCommanderMode") == FeatureStatus_Available)
+
+stock bool ND_InCommanderMode(int clientIDX)
+{
+	return ND_IICM_AVAILABLE() && ND_IsInCommanderMode(clientIDX);
+}
