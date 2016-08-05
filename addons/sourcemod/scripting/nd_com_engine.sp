@@ -53,7 +53,7 @@ public Action Event_CommanderModeLeft(Event event, const char[] name, bool dontB
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	
 	int team = GetClientTeam(client) - 2;
-	if (team < 2) InCommanderMode[team] = false;	
+	if (team > 0) InCommanderMode[team] = false;	
 		
 	return Plugin_Continue;
 }
@@ -73,5 +73,5 @@ public int Native_InCommanderMode(Handle plugin, int numParams)
 	int client = GetNativeCell(1);
 	int team = GetClientTeam(client) - 2;
 	
-	return team < 2 && InCommanderMode[team];
+	return team > 0 && InCommanderMode[team];
 }
