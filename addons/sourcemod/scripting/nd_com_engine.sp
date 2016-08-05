@@ -18,6 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_com_engine/nd_com_engine.txt"
 #include "updater/standard.sp"
 
+#include <nd_stocks>
+
 #pragma newdecls required
 
 #include <sourcemod>
@@ -51,7 +53,10 @@ public Action Event_CommanderModeEnter(Event event, const char[] name, bool dont
 public Action Event_CommanderModeLeft(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
-	InCommanderMode[GetClientTeam(client) - 2] = false;	
+	
+	int team = GetClientTeam(client) - 2;
+	if (team > 1) InCommanderMode[team] = false;	
+		
 	return Plugin_Continue;
 }
 
@@ -68,5 +73,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public int Native_InCommanderMode(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
-	return InCommanderMode[GetClientTeam(client) - 2];
+	int team = GetClientTeam(client) - 2;
+	
+	return team > 1 && InCommanderMode[team];
 }
