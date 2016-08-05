@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #pragma newdecls required
 #include <sourcemod>
 #include <geoip2>
-#include <nd_stocks>
+#include <nd_redstone>
      
 // possible values are:
 //AF = Africa
@@ -63,7 +63,7 @@ public Action CMD_CheckLocations(int client, int args)
 	char playerContinent[MAXPLAYERS + 1][2]; 
 	
 	for (int idx = 0; idx <= MaxClients; idx++)
-		if (IsValidClient(idx))
+		if (RED_IsValidClient(idx))
 		{
 			playerContinent[idx] = getContient(idx);	
 			counter[contientTOInteger(playerContinent[idx])]++;
