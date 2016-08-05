@@ -18,8 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_com_engine/nd_com_engine.txt"
 #include "updater/standard.sp"
 
-#include <nd_stocks>
-
 #pragma newdecls required
 
 #include <sourcemod>
