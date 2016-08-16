@@ -59,26 +59,32 @@ int UnitLimit[2][3];
 bool SetLimit[2][3];
 	
 /* Adstract limiting commands, adjust arrays to add more */
-#define SNIPER_LIMIT_COMMANDS 3
+#define SNIPER_LIMIT_COMMANDS 5
 char sniper_command[SNIPER_LIMIT_COMMANDS][] =
 {
 	"sm_maxsnipers",
 	"sm_maxsniper",
-	"sm_sniperlimit"
+	"sm_sniperlimit",
+	"sm_limitsniper",
+	"sm_limitsnipers"
 };
-#define STEALTH_LIMIT_COMMANDS 3
+#define STEALTH_LIMIT_COMMANDS 5
 char stealth_command[STEALTH_LIMIT_COMMANDS][] =
 {
 	"sm_maxstealths",
 	"sm_maxstealth",
 	"sm_stealthlimit"
+	"sm_limitstealth",
+	"sm_limitstealths"
 };
-#define STRUCTURE_LIMIT_COMMANDS 3
+#define STRUCTURE_LIMIT_COMMANDS 5
 char structure_command[STRUCTURE_LIMIT_COMMANDS][] =
 {
 	"sm_MaxAntiStructures",
 	"sm_MaxAntiStructure",
 	"sm_AntiStructureLimit"
+	"sm_LimitAntiStructure",
+	"sm_LimitAntiStructures",
 };
 
 //Version is auto-filled by the travis builder
