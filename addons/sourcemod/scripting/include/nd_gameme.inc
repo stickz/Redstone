@@ -55,25 +55,25 @@ stock bool RegularServerType()
  *
  * If data is not cached, will return 0
  *
- * @param client			The index of the team.
+ * @param client			The index of the client.
  * @return        			The skill value of the client.
  */
-native int GameME_GetClientSkill(client);
+native int GameME_GetClientSkill(int client);
 
 /**
  * Retreive the cached gameme client rank value
  *
  * If data is not cached, will return 0
  *
- * @param client	 		The index of the team.
+ * @param client	 		The index of the client.
  * @return        			The rank value of the client.
  */
-native int GameME_GetClientRank(client);
+native int GameME_GetClientRank(int client);
 
 /**
  * Check if the redstone server considers the client an vetern player.
  *
- * @param clientIDX  	The index of the client.
- * @return        		Is the client in the ranked database?
+ * @param clientIDX  			The index of the client.
+ * @return        			Is the client in the ranked database?
  */
-native bool GameME_RankedClient(clientIDX);
+native bool GameME_RankedClient(int clientIDX);
