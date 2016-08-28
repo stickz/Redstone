@@ -73,7 +73,7 @@ char stealth_command[STEALTH_LIMIT_COMMANDS][] =
 {
 	"sm_maxstealths",
 	"sm_maxstealth",
-	"sm_stealthlimit"
+	"sm_stealthlimit",
 	"sm_limitstealth",
 	"sm_limitstealths"
 };
@@ -82,9 +82,9 @@ char structure_command[STRUCTURE_LIMIT_COMMANDS][] =
 {
 	"sm_MaxAntiStructures",
 	"sm_MaxAntiStructure",
-	"sm_AntiStructureLimit"
+	"sm_AntiStructureLimit",
 	"sm_LimitAntiStructure",
-	"sm_LimitAntiStructures",
+	"sm_LimitAntiStructures"
 };
 
 //Version is auto-filled by the travis builder
