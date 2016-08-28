@@ -25,7 +25,7 @@
 		"de"		"Ungültiges Team (0 = Konsortium, 1 = Imperium)"
 	}
 	
-	"Limit Reached"
+	"Sniper Limit Reached"
 	{
 		"de"		"Heckenschützenlimit erreicht, zu Assault zurückgesetzt"
 	}
