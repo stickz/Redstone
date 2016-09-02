@@ -37,9 +37,9 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	RegAdminCmd("sm_respect", Cmd_WarnRespect, ADMFLAG_BAN, "<Name> - Warns a player to be respectful.");
-	RegAdminCmd("sm_advertise", Cmd_WarnAdvertise, ADMFLAG_BAN, "<Name> - Warns a player to stop advertising.");
-	RegAdminCmd("sm_spawnsell", Cmd_SpawnSell, ADMFLAG_BAN, "<Name> - Warns a player that spawn selling isn't allowed.");
+	RegAdminCmd("sm_respect", Cmd_WarnRespect, ADMFLAG_CUSTOM2, "<Name> - Warns a player to be respectful.");
+	RegAdminCmd("sm_advertise", Cmd_WarnAdvertise, ADMFLAG_CUSTOM2, "<Name> - Warns a player to stop advertising.");
+	RegAdminCmd("sm_spawnsell", Cmd_SpawnSell, ADMFLAG_CUSTOM2, "<Name> - Warns a player that spawn selling isn't allowed.");
 	
 	LoadTranslations("nd_player_warnings.phrases");
 	
