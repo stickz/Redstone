@@ -39,8 +39,6 @@ new Handle:hAdminMenu = INVALID_HANDLE;
 
 public OnPluginStart()
 {
-	CreateConVar("sm_nd_commander_actions_version", PLUGIN_VERSION, PLUGIN_NAME, FCVAR_NOTIFY|FCVAR_REPLICATED);
-	
 	RegAdminCmd("sm_promote", Cmd_SetCommander, ADMFLAG_CUSTOM1, "<Name|#UserID> - Promote a player to commander.");
 	RegAdminCmd("sm_forcedemote", Cmd_Demote, ADMFLAG_CUSTOM1, "<ct | emp> - Remove a team's commander.");	
 	
