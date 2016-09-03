@@ -27,27 +27,27 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"
 }
 
-new Handle:hAdminMenu = INVALID_HANDLE;
+Handle hAdminMenu = INVALID_HANDLE;
 
 /* Auto Updater Suport */
 #define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/nd_commander_actions/nd_commander_actions.txt"
 #include 		"updater/standard.sp"
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	RegAdminCmd("sm_promote", Cmd_SetCommander, ADMFLAG_CUSTOM1, "<Name|#UserID> - Promote a player to commander.");
 	RegAdminCmd("sm_forcedemote", Cmd_Demote, ADMFLAG_CUSTOM1, "<ct | emp> - Remove a team's commander.");	
 	
 	LoadTranslations("common.phrases"); //required for FindTarget	
 	
-	new Handle:topmenu;
+	Handle topmenu;
 	if (LibraryExists("adminmenu") && ((topmenu = GetAdminTopMenu()) != INVALID_HANDLE))
 		OnAdminMenuReady(topmenu);
 		
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public OnLibraryRemoved(const String:name[])
+public void OnLibraryRemoved(const char[] name)
 {
 	if (StrEqual(name, "adminmenu"))
 		hAdminMenu = INVALID_HANDLE;
@@ -65,7 +65,7 @@ public OnAdminMenuReady(Handle:topmenu)
 	AddToTopMenu(topmenu, "Demote Commander", TopMenuObject_Item, CMHandleDEMOTECommander, CMCategory, "sm_demotecommander", ADMFLAG_CUSTOM1);
 }
 
-public Action:Cmd_SetCommander(client, args)
+public Action Cmd_SetCommander(int client, int args)
 {
 	if (!args)
 	{
@@ -73,21 +73,22 @@ public Action:Cmd_SetCommander(client, args)
 		return Plugin_Handled;
 	}
 	
-	decl String:arg1[64]
-	GetCmdArg(1, arg1, sizeof(arg1));
+	char playerName[64]
+	GetCmdArg(1, playerName, sizeof(playerName));
 	
-	new target = FindTarget(client, arg1, true, true);
+	int target = FindTarget(client, playerName, true, true);
 	
 	if (target == -1)
-	{}
+	{
+		ReplyToCommand(client, "[SM] Player not found by name segment %s", playerName);
+		return Plugin_Handled;
+	}
 	
-	else
-		PerformPromote(client, target);
-	
+	PerformPromote(client, target);
 	return Plugin_Handled;
 }
 
-public Action:Cmd_Demote(client, args)
+public Action Cmd_Demote(int client, int args)
 {
 	if (!args)
 	{
@@ -95,24 +96,25 @@ public Action:Cmd_Demote(client, args)
 		return Plugin_Handled;
 	}
 	
-	new target = -1;
-	decl String:arg1[64];
-	GetCmdArg(1, arg1, sizeof(arg1));
+	int target = -1;
 	
-	if (StrEqual(arg1, "ct", false))
+	char teamName[64];
+	GetCmdArg(1, teamName, sizeof(teamName));
+	
+	if (StrContains(teamName, "con", false) > -1)
 		target = GameRules_GetPropEnt("m_hCommanders", 0);
 	
-	else if (StrEqual(arg1, "emp", false))
+	else if (StrContains(teamName, "emp", false) > -1)
 		target = GameRules_GetPropEnt("m_hCommanders", 1);
 	
 	else
 	{
-		ReplyToCommand(client, "[SM] Unknown argument: %s. Usage: sm_demotecommander <ct | emp>", arg1);
+		ReplyToCommand(client, "[SM] Error! Expected: !forcedemote <consort | empire>. Received: !forcedemote %s", teamName);
 		return Plugin_Handled;
 	}	
 	
 	if (target == -1)
-		ReplyToCommand(client, "[SM] No commander on team %s", arg1);
+		ReplyToCommand(client, "[SM] No commander on team %s", teamName);
 	
 	else
 		PerformDemote(client, target);
@@ -120,14 +122,14 @@ public Action:Cmd_Demote(client, args)
 	return Plugin_Handled;
 }
 
-PerformPromote(client, target)
+void PerformPromote(int client, int target)
 {
 	ServerCommand("_promote_to_commander %d", target);
 	LogAction(client, target, "\"%L\" promoted \"%L\" to commander.", client, target);
 	ShowActivity2(client, "[SM] ", "Promoted %N to commander.", target);
 }
 
-PerformDemote(client, target) 
+void PerformDemote(int client, int target) 
 {
 	if (target == -1)
 		return;
@@ -151,6 +153,7 @@ public CategoryHandler(Handle:topmenu,
 	{
 		Format(buffer, maxlength, "Commander Actions:");
 	}
+	
 	else if (action == TopMenuAction_DisplayOption)
 	{
 		Format(buffer, maxlength, "Commander Actions");
@@ -170,13 +173,14 @@ public CMHandleSETCommander(Handle:topmenu,
 	
 	else if (action == TopMenuAction_SelectOption)
 	{
-		new Handle:menu = CreateMenu(Handle_SetCommander_SelectTeam);
+		Handle menu = CreateMenu(Handle_SetCommander_SelectTeam);
 		SetMenuTitle(menu, "Select a Team:");
 		AddMenuItem(menu, "2", "Consortium");
 		AddMenuItem(menu, "3", "Empire");
 		DisplayMenu(menu, param, MENU_TIME_FOREVER);
 	}
 }
+
 public Handle_SetCommander_SelectTeam(Handle:menu, MenuAction:action, param1, param2)
 {
 	if (action == MenuAction_Select)
@@ -185,33 +189,42 @@ public Handle_SetCommander_SelectTeam(Handle:menu, MenuAction:action, param1, pa
 		GetMenuItem(menu, param2, item, sizeof(item));
 		Display_SetCommander_TeamList(param1, StringToInt(item));
 	}
+	
 	else if (action == MenuAction_End)
 		CloseHandle(menu);
 }
-Display_SetCommander_TeamList(client, SelectedTeam)
+
+void Display_SetCommander_TeamList(int client, int SelectedTeam)
 {
-	decl String:UserID[8], String:Name[64]
-	new Handle:menu = CreateMenu(Handle_SetCommander_ClientSelection);
+	char UserID[8];
+	char Name[64];
+	
+	Handle menu = CreateMenu(Handle_SetCommander_ClientSelection);
 	SetMenuTitle(menu, "Select A Player:");
 	
 	for (new i = 1; i <= MaxClients; i++)
-		if (IsClientInGame(i))
-			if (!IsFakeClient(i) && GetClientTeam(i) == SelectedTeam && CanUserTarget(client, i))
+	{
+		if (IsClientInGame(i) && !IsFakeClient(i))
+		{
+			if (GetClientTeam(i) == SelectedTeam && CanUserTarget(client, i))
 			{
 				IntToString(GetClientUserId(i), UserID, sizeof(UserID));
 				GetClientName(i, Name, sizeof(Name));
 				AddMenuItem(menu, UserID, Name);
 			}
+		}
+	}
 
 	DisplayMenu(menu, client, MENU_TIME_FOREVER);
 }
+
 public Handle_SetCommander_ClientSelection(Handle:menu, MenuAction:action, param1, param2)
 {
 	if (action == MenuAction_Select)
 	{
-		decl String:item[8];
+		char item[8];
 		GetMenuItem(menu, param2, item, sizeof(item));
-		new target = StringToInt(item);
+		int target = StringToInt(item);
 		target = GetClientOfUserId(target);
 	
 		if (target)
@@ -237,7 +250,7 @@ public CMHandleDEMOTECommander(Handle:topmenu,
 	
 	else if (action == TopMenuAction_SelectOption)
 	{
-		new Handle:menu = CreateMenu(Handle_DemoteCommander_SelectTeam);
+		Handle menu = CreateMenu(Handle_DemoteCommander_SelectTeam);
 		SetMenuTitle(menu, "Demote Which Commander?");
 		
 		if (GameRules_GetPropEnt("m_hCommanders", 0) == -1)
@@ -255,7 +268,9 @@ public CMHandleDEMOTECommander(Handle:topmenu,
 		DisplayMenu(menu, param, MENU_TIME_FOREVER);
 	}
 }
-public Handle_DemoteCommander_SelectTeam(Handle:menu, MenuAction:action, param1, param2) {
+
+public Handle_DemoteCommander_SelectTeam(Handle:menu, MenuAction:action, param1, param2)
+{
 	if (action == MenuAction_Select)
 	{
 		decl String:item[8];
