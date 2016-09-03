@@ -47,7 +47,7 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnLibraryRemoved(char[] name)
+public void OnLibraryRemoved(const char[] name)
 {
 	if (StrEqual(name, "adminmenu"))
 		hAdminMenu = INVALID_HANDLE;
@@ -101,15 +101,15 @@ public Action Cmd_Demote(int client, int args)
 	char teamName[64];
 	GetCmdArg(1, teamName, sizeof(teamName));
 	
-	if (StrEqual(teamName, "ct", false))
+	if (StrContains(teamName, "con", false) > -1)
 		target = GameRules_GetPropEnt("m_hCommanders", 0);
 	
-	else if (StrEqual(teamName, "emp", false))
+	else if (StrContains(teamName, "emp", false) > -1)
 		target = GameRules_GetPropEnt("m_hCommanders", 1);
 	
 	else
 	{
-		ReplyToCommand(client, "[SM] Unknown argument: %s. Usage: sm_demotecommander <ct | emp>", arg1);
+		ReplyToCommand(client, "[SM] Error! Expected: !forcedemote <consort | empire>. Received: !forcedemote %s", teamName);
 		return Plugin_Handled;
 	}	
 	
