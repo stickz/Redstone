@@ -27,10 +27,6 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"
 }
 
-#define BANTYPE_NOTBANNED -2
-#define BANTYPE_UNKNOWN -1
-#define BANTYPE_PERMANENT 0
-
 new Handle:hAdminMenu = INVALID_HANDLE;
 
 /* Auto Updater Suport */
