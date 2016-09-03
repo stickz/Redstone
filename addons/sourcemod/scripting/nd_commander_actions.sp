@@ -33,10 +33,12 @@ public Plugin myinfo =
 
 new Handle:hAdminMenu = INVALID_HANDLE;
 
+/* Auto Updater Suport */
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/nd_commander_actions/nd_commander_actions.txt"
+#include 		"updater/standard.sp"
+
 public OnPluginStart()
 {
-	CreateConVar("sm_nd_commander_actions_version", PLUGIN_VERSION, PLUGIN_NAME, FCVAR_NOTIFY|FCVAR_REPLICATED);
-	
 	RegAdminCmd("sm_promote", Cmd_SetCommander, ADMFLAG_CUSTOM1, "<Name|#UserID> - Promote a player to commander.");
 	RegAdminCmd("sm_forcedemote", Cmd_Demote, ADMFLAG_CUSTOM1, "<ct | emp> - Remove a team's commander.");	
 	
@@ -45,6 +47,8 @@ public OnPluginStart()
 	new Handle:topmenu;
 	if (LibraryExists("adminmenu") && ((topmenu = GetAdminTopMenu()) != INVALID_HANDLE))
 		OnAdminMenuReady(topmenu);
+		
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public OnLibraryRemoved(const String:name[])
