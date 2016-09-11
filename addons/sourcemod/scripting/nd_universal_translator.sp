@@ -15,7 +15,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 /* Auto Updater */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_universal_translator/nd_universal_translator.txt"
 #include "updater/standard.sp"
 
 #include <sdktools>
