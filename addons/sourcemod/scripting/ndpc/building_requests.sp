@@ -1,5 +1,3 @@
-#pragma newdecls required
-
 #define BUILDING_NOT_FOUND -1
 #define LOCATION_NOT_FOUND -1
 #define COMPASS_NOT_FOUND -1
