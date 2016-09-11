@@ -1,9 +1,10 @@
-enum convars
+enum
 {
-      ConVar:CommanderLang,
-      ConVar:TeamLang,
-      ConVar:BuildingReqs,
-      ConVar:CaptureReqs
+      CommanderLang,
+      TeamLang,
+      BuildingReqs,
+      CaptureReqs,
+      convars
 }
 
 ConVar g_Enable[convars];  
