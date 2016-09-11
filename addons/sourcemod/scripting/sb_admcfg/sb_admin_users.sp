@@ -216,7 +216,7 @@ void ReadUsers()
 	if (err != SMCError_Okay)
 	{
 		char buffer[64];
-		bool errorString = g_hUserParser.GetErrorString(err, buffer, sizeof(buffer));
-		ParseError("%s", errorString ? buffer : "Fatal Parse Error");
+		//bool errorString = g_hUserParser.GetErrorString(err, buffer, sizeof(buffer));
+		ParseError("%s", g_hUserParser.GetErrorString(err, buffer, sizeof(buffer)) ? buffer : "Fatal Parse Error");
 	}
 }
