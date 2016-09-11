@@ -111,7 +111,15 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 						continue;
 					}
 					
+				/* If the sourcemod version is less than or equal to 7 
+				 * The groupid class is not setup properly,
+				 * So we need to acomplish this task differently.
+				 */
+				#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+					SetAdmGroupAddFlag(g_CurGrp, flag, true);
+				#else
 					g_CurGrp.SetFlag(flag, true);
+				#endif
 				}
 			} 
 			
