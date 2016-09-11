@@ -22,7 +22,17 @@
 		"#format"	"{1:s},{2:s}"
 		"en"		"{1} is requesting {2}"
 	}
-	"Extended Building Request"
+	
+	"Compass Building Request"
+	{
+		//{1} = Player's Name
+		//{2} = Building Name from structminigame.phrases
+		//{3} = Compass Name (see bellow)
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"{1} is requesting {2} on the {3} side"
+	}
+	
+	"Spot Building Request"
 	{
 		//{1} = Player's Name
 		//{2} = Building Name from structminigame.phrases
@@ -31,7 +41,17 @@
 		"en"		"{1} is requesting {2} at {3}"
 	}
 	
-	//Capture request message
+	"Complex Building Request"
+	{
+		//{1} = Player's Name
+		//{2} = Building Name from structminigame.phrases
+		//{3} = Location Name (see bellow)
+		//{4} = Compass Name (see bellow)
+		"#format"	"{1:s},{2:s},{3:s},{4:s}"
+		"en" 		"{1} is requesting {2} at the {4} {3}"
+	}
+	
+	/* Capture Messages */
 	"Capture Request"
 	{
 		//{1} = Player's name
@@ -39,6 +59,15 @@
 		"#format"	"{1:s},{2:s}"
 		"en"		"{1} says capture {2}"
 	}
+	"Base Tert"
+	{
+		"en"		"Base Tertiary"
+	}
+	"Tert"
+	{
+		"en"		"Tertiaries"
+	}
+	
 	
 	/* Plugin Messages */
 	"Translate Tag"
@@ -58,10 +87,10 @@
 		"en" 		"This team currently doesn't have a commander"
 	}
 	
-	/* Common phrases */
+	/* Location phrases */
 	"Roof"
 	{
-		"en"		"the Rooftop"
+		"en"		"Rooftop"
 	}
 	"Base"
 	{
@@ -75,20 +104,34 @@
 	{
 		"en"		"their Standing Positon"
 	}
-	"East Sec"
+	"Sec"
 	{
-		"en"		"Eastern Secondary"
+		"en"		"Secondary"
 	}
-	"West Sec"
+	
+	/* Compass Positions */
+	"North"
 	{
-		"en"		"Western Secondary"
+		"en"		"North"
 	}
-	"Base Tert"
+	"South"
 	{
-		"en"		"Base Tertiary"
+		"en"		"South"
 	}
-	"Tert"
+	"East"
 	{
-		"en"		"Tertiaries"
+		"en"		"East"
+	}
+	"West"
+	{
+		"en"		"West"
+	}
+	"Right"
+	{
+		"en"		"Right"
+	}
+	"Left"
+	{
+		"en"		"Left"
 	}
 }
