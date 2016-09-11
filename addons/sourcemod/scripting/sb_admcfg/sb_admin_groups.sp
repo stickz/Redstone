@@ -124,7 +124,11 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 			if (StrEqual(value, "allow", false))
 				rule = Command_Allow;
 
-			g_CurGrp.AddCommandOverride(key[0] == '@' ? key[1] : key , Override_CommandGroup, rule);
+			if (key[0] == '@')
+				g_CurGrp.AddCommandOverride(key[1], Override_CommandGroup, rule);
+				
+			else
+				g_CurGrp.AddCommandOverride(key, Override_Command, rule);
 		}
 	} 
 	
