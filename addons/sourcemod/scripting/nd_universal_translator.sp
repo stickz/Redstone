@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #pragma newdecls required
 #include <sourcemod>
 #include <nd_stocks>
-#include <nd_com_engine>
+#include <nd_com_eng>
 
 //Version is auto-filled by the travis builder
 public Plugin myinfo =
