@@ -28,63 +28,47 @@
 
 #include <sourcemod>
 
-#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
-public Plugin:myinfo = 
-#else
+/* Auto Updater Suport */
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/sb_admcfg/sb_admcfg.txt"
+#include 		"updater/standard.sp"
+
 public Plugin myinfo = 
-#endif 
 {
 	name = "SourceBans: Admin Config Loader", 
 	author = "AlliedModders LLC, Sarabveer(VEER™)", 
 	description = "Reads Admin Files", 
-	version = "(SB++) 1.5.4.6", 
+	version = "dummy", 
 	url = "https://github.com/Sarabveer/SourceBans-Fork"
 };
 
-
 /** Various parsing globals */
-#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
-new bool:g_LoggedFileName = false; /* Whether or not the file name has been logged */
-new g_ErrorCount = 0; /* Current error count */
-new g_IgnoreLevel = 0; /* Nested ignored section count, so users can screw up files safely */
-new g_CurrentLine = 0; /* Current line we're on */
-new String:g_Filename[PLATFORM_MAX_PATH]; /* Used for error messages */
-#else
 bool g_LoggedFileName = false; /* Whether or not the file name has been logged */
 int g_ErrorCount = 0; /* Current error count */
 int g_IgnoreLevel = 0; /* Nested ignored section count, so users can screw up files safely */
 int g_CurrentLine = 0; /* Current line we're on */
 char g_Filename[PLATFORM_MAX_PATH]; /* Used for error messages */
-#endif
 
 #include "sb_admcfg/sb_admin_groups.sp"
 #include "sb_admcfg/sb_admin_users.sp"
 
-#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
-public OnRebuildAdminCache(AdminCachePart:part)
-#else
-public void OnRebuildAdminCache(AdminCachePart part)
-#endif
+public void OnPluginStart()
 {
-	if (part == AdminCache_Groups) {
-		ReadGroups();
-	} else if (part == AdminCache_Admins) {
-		ReadUsers();
-	}
+	AddUpdaterLibrary(); //auto-updater
 }
 
-#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
-ParseError(const String:format[], any:...)
-#else
-void ParseError(const char[] format, any...)
-#endif
+public void OnRebuildAdminCache(AdminCachePart part)
 {
-	#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
-	decl String:buffer[512];
-	#else
+	if (part == AdminCache_Groups) 
+		ReadGroups();
+		
+	else if (part == AdminCache_Admins) 
+		ReadUsers();
+}
+
+void ParseError(const char[] format, any...)
+{
 	char buffer[512];
-	#endif
-	
+
 	if (!g_LoggedFileName)
 	{
 		LogError("Error(s) Detected Parsing %s", g_Filename);
@@ -104,4 +88,4 @@ void InitGlobalStates()
 	g_IgnoreLevel = 0;
 	g_CurrentLine = 0;
 	g_LoggedFileName = false;
-} 
+}
