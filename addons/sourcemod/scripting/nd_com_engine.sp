@@ -40,8 +40,6 @@ public void OnPluginStart()
 	HookEvent("player_left_commander_mode", Event_CommanderModeLeft);
 	HookEvent("promoted_to_commander", Event_CommanderPromo);
 	
-	AddCommandListener(CommandListener:Command_Apply, "applyforcommander");
-	
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -76,11 +74,11 @@ public Action startmutiny(int client, const char[] command, int argc)
 	if (client == 0 || !IsClientInGame(client))
 		return Plugin_Continue;
 	
-	new team = GetClientTeam(client);
+	int team = GetClientTeam(client);
 	if (team < 2) //team != TEAM_CONSORT && team != TEAM_EMPIRE
 		return Plugin_Continue;
 		
-	new commander = GameRules_GetPropEnt("m_hCommanders", team-2);
+	int commander = GameRules_GetPropEnt("m_hCommanders", team-2);
 	if (commander == -1)
 		return Plugin_Continue;
 	
