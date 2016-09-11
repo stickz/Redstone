@@ -47,8 +47,6 @@ public Plugin myinfo =
 #include "ndpc/building_requests.sp"
 #include "ndpc/capture_requests.sp"
 
-#pragma newdecls required
-
 public void OnPluginStart()
 {
 	/* Hook needed events */
@@ -79,7 +77,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 			 * Block the old chat message
 			 * And print the new translated message 
 			 */
-			new view_as<ReplySource>old = SetCmdReplySource(SM_REPLY_TO_CHAT);
+			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
 			SetCmdReplySource(old);
 			return Plugin_Stop; 
 		}
