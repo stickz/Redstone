@@ -32,12 +32,9 @@
 #include <adminmenu>
 #tryinclude <updater>
 
-#define SB_VERSION "1.5.4.6F"
-#define SBR_VERSION "1.5.4.6"
-
-#if defined _updater_included
-#define UPDATE_URL "https://sarabveer.github.io/SourceBans-Fork/updater/updatefile.txt"
-#endif
+/* Auto Updater Suport */
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/sourcebans/sourcebans.txt"
+#include 		"updater/standard.sp"
 
 //GLOBAL DEFINES
 #define YELLOW				0x01
@@ -65,7 +62,6 @@ new g_BanTime[MAXPLAYERS + 1] =  { -1, ... };
 
 new State:ConfigState;
 new Handle:ConfigParser;
-new Handle:updaterCvar = INVALID_HANDLE;
 new Handle:hTopMenu = INVALID_HANDLE;
 
 new const String:Prefix[] = "[SourceBans] ";
@@ -134,7 +130,7 @@ public Plugin:myinfo =
 	name = "SourceBans++", 
 	author = "SourceBans Development Team, Sarabveer(VEER™)", 
 	description = "Advanced ban management for the Source engine", 
-	version = SBR_VERSION, 
+	version = "dummy", 
 	url = "https://sarabveer.github.io/SourceBans-Fork/"
 };
 
@@ -165,8 +161,7 @@ public OnPluginStart()
 	
 	CvarHostIp = FindConVar("hostip");
 	CvarPort = FindConVar("hostport");
-	CreateConVar("sb_version", SB_VERSION, _, FCVAR_SPONLY | FCVAR_REPLICATED | FCVAR_NOTIFY);
-	CreateConVar("sbr_version", SBR_VERSION, _, FCVAR_SPONLY | FCVAR_REPLICATED | FCVAR_NOTIFY);
+
 	RegServerCmd("sm_rehash", sm_rehash, "Reload SQL admins");
 	RegAdminCmd("sm_ban", CommandBan, ADMFLAG_BAN, "sm_ban <#userid|name> <minutes|0> [reason]", "sourcebans");
 	RegAdminCmd("sm_banip", CommandBanIp, ADMFLAG_BAN, "sm_banip <ip|#userid|name> <time> [reason]", "sourcebans");
@@ -227,32 +222,8 @@ public OnPluginStart()
 		AccountForLateLoading();
 	}
 	
-	#if defined _updater_included
-	if (LibraryExists("updater"))
-	{
-		Updater_AddPlugin(UPDATE_URL);
-	}
-	#endif
+	AddUpdaterLibrary(); //auto-updater
 }
-
-#if defined _updater_included
-public Action:Updater_OnPluginDownloading() {
-	if (!GetConVarBool(updaterCvar)) {
-		return Plugin_Handled;
-	}
-	return Plugin_Continue;
-}
-
-public OnLibraryAdded(const String:name[]) {
-	if (StrEqual(name, "updater")) {
-		Updater_AddPlugin(UPDATE_URL);
-	}
-}
-
-public Updater_OnPluginUpdated() {
-	ReloadPlugin();
-}
-#endif
 
 public OnAllPluginsLoaded()
 {
