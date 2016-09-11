@@ -18,8 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_com_engine/nd_com_engine.txt"
 #include "updater/standard.sp"
 
+#include <sdktools>
 #pragma newdecls required
-
 #include <sourcemod>
 
 public Plugin myinfo = 
@@ -32,11 +32,15 @@ public Plugin myinfo =
 };
 
 bool InCommanderMode[2] = {false, ...};
+int TeamCommander[2] = {-1, ...};
 
 public void OnPluginStart()
 {
 	HookEvent("player_entered_commander_mode", Event_CommanderModeEnter);
 	HookEvent("player_left_commander_mode", Event_CommanderModeLeft);
+	HookEvent("promoted_to_commander", Event_CommanderPromo);
+	
+	AddCommandListener(CommandListener:Command_Apply, "applyforcommander");
 	
 	AddUpdaterLibrary(); //auto-updater
 }
@@ -58,6 +62,36 @@ public Action Event_CommanderModeLeft(Event event, const char[] name, bool dontB
 	return Plugin_Continue;
 }
 
+public Action Event_CommanderPromo(Event event, const char[] name, bool dontBroadcast)
+{
+	int client = GetClientOfUserId(event.GetInt("userid"));
+	int team = event.GetInt("teamid") - 2;
+	TeamCommander[team] = client;
+	
+	return Plugin_Continue;
+}
+
+public Action startmutiny(int client, const char[] command, int argc)
+{
+	if (client == 0 || !IsClientInGame(client))
+		return Plugin_Continue;
+	
+	new team = GetClientTeam(client);
+	if (team < 2) //team != TEAM_CONSORT && team != TEAM_EMPIRE
+		return Plugin_Continue;
+		
+	new commander = GameRules_GetPropEnt("m_hCommanders", team-2);
+	if (commander == -1)
+		return Plugin_Continue;
+	
+	if (commander == client)
+	{
+		TeamCommander[team] = -1;
+		return Plugin_Continue;
+	}
+	
+	return Plugin_Continue;
+}
 
 /* Natives */
 typedef NativeCall = function int (Handle plugin, int numParams);
@@ -65,6 +99,8 @@ typedef NativeCall = function int (Handle plugin, int numParams);
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_IsInCommanderMode", Native_InCommanderMode);
+	CreateNative("ND_GetTeamCommander", Native_GetTeamCommander);
+	CreateNative("ND_IsCommanderClient", Native_IsCommanderClient);
 	return APLRes_Success;
 }
 
@@ -74,4 +110,21 @@ public int Native_InCommanderMode(Handle plugin, int numParams)
 	int team = GetClientTeam(client) - 2;
 	
 	return team > 0 && InCommanderMode[team];
+}
+
+public int Native_GetTeamCommander(Handle plugin, int numParams)
+{
+	int team = GetNativeCell(1);
+	return TeamCommander[team];
+}
+
+/* 
+ * This can also be done with a stock function, 
+ * but less abstraction will be present for future purpases,
+ * what if a team can have two commanders in the future?
+ */
+public int Native_IsCommanderClient(Handle plugin, int numParams)
+{
+	int client = GetNativeCell(1);
+	return TeamCommander[0] == client || TeamCommander[1] == client;
 }
