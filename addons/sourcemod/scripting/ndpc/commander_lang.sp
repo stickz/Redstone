@@ -27,7 +27,7 @@ public Action CMD_PrintCLang(int client, int args)
 		return Plugin_Handled;	
 	}
 	
-	int commander = NDC_GetCommanderOn(team);
+	int commander = ND_GetCommanderOnTeam(team);
 	if (commander == NO_COMMANDER)
 	{
 		PrintToChat(client, "%s%t", CHAT_PREFIX, "No Team Commander");

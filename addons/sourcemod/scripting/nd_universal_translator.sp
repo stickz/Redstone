@@ -19,11 +19,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "updater/standard.sp"
 
 #include <sdktools>
-#include <nd_commander>
 
 #pragma newdecls required
 #include <sourcemod>
 #include <nd_stocks>
+#include <nd_com_eng>
 
 //Version is auto-filled by the travis builder
 public Plugin myinfo =
@@ -48,8 +48,6 @@ public Plugin myinfo =
 #include "ndpc/team_lang.sp"
 #include "ndpc/building_requests.sp"
 #include "ndpc/capture_requests.sp"
-
-#pragma newdecls required
 
 public void OnPluginStart()
 {
