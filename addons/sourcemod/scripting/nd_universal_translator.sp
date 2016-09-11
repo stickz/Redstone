@@ -14,13 +14,19 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <sourcemod>
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
+#include "updater/standard.sp"
+
 #include <sdktools>
-#include <nd_stocks>
 #include <nd_commander>
 
+#pragma newdecls required
+#include <sourcemod>
+#include <nd_stocks>
+
 //Version is auto-filled by the travis builder
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name 		= "[ND] Project Communication",
 	author 		= "Stickz",
@@ -35,10 +41,6 @@ public Plugin:myinfo =
 #define TAG_COLOUR		"\x04"
 #define CHAT_PREFIX		"\x05[xG]"
 
-/* Auto Updater */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
-#include "updater/standard.sp"
-
 /* Include Plugin Segments */
 #include "ndpc/convars.sp"
 #include "ndpc/stock_functions.sp"
@@ -47,7 +49,9 @@ public Plugin:myinfo =
 #include "ndpc/building_requests.sp"
 #include "ndpc/capture_requests.sp"
 
-public OnPluginStart()
+#pragma newdecls required
+
+public void OnPluginStart()
 {
 	/* Hook needed events */
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
@@ -62,11 +66,11 @@ public OnPluginStart()
 	LoadTranslations("nd_universal_translator.phrases");
 }
 
-public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast) {
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
 	PrintTeamLanguages(); //print client languages at round start
 }
 
-public Action:OnClientSayCommand(client, const String:command[], const String:sArgs[])
+public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
 {
 	if (client) //is the chat message is triggered by a client?
 	{
@@ -77,7 +81,7 @@ public Action:OnClientSayCommand(client, const String:command[], const String:sA
 			 * Block the old chat message
 			 * And print the new translated message 
 			 */
-			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
+			ReplySource old = SetCmdReplySource(SM_REPLY_TO_CHAT);
 			SetCmdReplySource(old);
 			return Plugin_Stop; 
 		}
