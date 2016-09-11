@@ -30,6 +30,10 @@
 #include <basecomm>
 #include <sourcecomms>
 
+/* Auto Updater Suport */
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/sourcecomms/sourcecomms.txt"
+#include 		"updater/standard.sp"
+
 #undef REQUIRE_PLUGIN
 #include <adminmenu>
 
@@ -42,7 +46,6 @@
 // Do not edit below this line //
 //-----------------------------//
 
-#define PLUGIN_VERSION "(SB++) 1.5.4.6"
 #define PREFIX "\x04[SourceComms]\x01 "
 
 #define MAX_TIME_MULTI 30       // maximum mass-target punishment length
@@ -165,7 +168,7 @@ public Plugin:myinfo =
 	name = "SourceComms", 
 	author = "Alex, Sarabveer(VEER™)", 
 	description = "Advanced punishments management for the Source engine in SourceBans style", 
-	version = PLUGIN_VERSION, 
+	version = "dummy", 
 	url = "https://sarabveer.github.io/SourceBans-Fork/"
 };
 
@@ -192,8 +195,7 @@ public OnPluginStart()
 	CvarHostIp = FindConVar("hostip");
 	CvarPort = FindConVar("hostport");
 	g_hServersWhiteList = CreateArray();
-	
-	CreateConVar("sourcecomms_version", PLUGIN_VERSION, _, FCVAR_SPONLY | FCVAR_REPLICATED | FCVAR_NOTIFY);
+
 	AddCommandListener(CommandCallback, "sm_gag");
 	AddCommandListener(CommandCallback, "sm_mute");
 	AddCommandListener(CommandCallback, "sm_silence");
@@ -211,10 +213,6 @@ public OnPluginStart()
 	BuildPath(Path_SM, logQuery, sizeof(logQuery), "logs/sourcecomms-q.log");
 	#endif
 	
-	#if defined DEBUG
-	PrintToServer("Sourcecomms plugin loading. Version %s", PLUGIN_VERSION);
-	#endif
-	
 	// Catch config error
 	if (!SQL_CheckConfig(DATABASE))
 	{
@@ -226,11 +224,14 @@ public OnPluginStart()
 	
 	ServerInfo();
 	
+	//Late loading support
 	for (new client = 1; client <= MaxClients; client++)
 	{
 		if (IsClientInGame(client) && IsClientAuthorized(client))
 			OnClientPostAdminCheck(client);
 	}
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public OnLibraryRemoved(const String:name[])
