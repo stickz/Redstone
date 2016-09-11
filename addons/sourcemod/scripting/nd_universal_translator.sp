@@ -49,8 +49,6 @@ public Plugin myinfo =
 #include "ndpc/building_requests.sp"
 #include "ndpc/capture_requests.sp"
 
-#pragma newdecls required
-
 public void OnPluginStart()
 {
 	/* Hook needed events */
