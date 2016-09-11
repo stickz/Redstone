@@ -56,7 +56,11 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
+#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+public int OnRebuildAdminCache(AdminCachePart part)
+#else
 public void OnRebuildAdminCache(AdminCachePart part)
+#end
 {
 	if (part == AdminCache_Groups) 
 		ReadGroups();
