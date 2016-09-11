@@ -14,10 +14,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <sourcemod>
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
+#include "updater/standard.sp"
+
 #include <sdktools>
-#include <nd_stocks>
 #include <nd_commander>
+
+#pragma newdecls required
+#include <sourcemod>
+#include <nd_stocks>
 
 //Version is auto-filled by the travis builder
 public Plugin myinfo =
@@ -34,10 +40,6 @@ public Plugin myinfo =
 #define MESSAGE_COLOUR		"\x05"
 #define TAG_COLOUR		"\x04"
 #define CHAT_PREFIX		"\x05[xG]"
-
-/* Auto Updater */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_project_communication/nd_project_communication.txt"
-#include "updater/standard.sp"
 
 /* Include Plugin Segments */
 #include "ndpc/convars.sp"
