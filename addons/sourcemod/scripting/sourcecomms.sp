@@ -30,6 +30,10 @@
 #include <basecomm>
 #include <sourcecomms>
 
+/* Auto Updater Suport */
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/sourcecomms/sourcecomms.txt"
+#include 		"updater/standard.sp"
+
 #undef REQUIRE_PLUGIN
 #include <adminmenu>
 
@@ -41,10 +45,6 @@
 
 // Do not edit below this line //
 //-----------------------------//
-
-/* Auto Updater Suport */
-#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/sourcecomms/sourcecomms.txt"
-#include 		"updater/standard.sp"
 
 #define PREFIX "\x04[SourceComms]\x01 "
 
