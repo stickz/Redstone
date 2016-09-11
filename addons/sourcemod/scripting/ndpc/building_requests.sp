@@ -165,13 +165,13 @@ void PrintSpotBuildingRequest(int client, const char[] bName, const char[] lName
 		{
 			if (IsOnTeam(idx, team))
 			{
-				decl String:building[64];
+				char building[64];
 				Format(building, sizeof(building), "%T", bName, idx);
 				
-				decl String:location[32];
+				char location[32];
 				Format(location, sizeof(location), "%T", lName, idx);
 				
-				decl String:ToPrint[128];
+				char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Spot Building Request", idx, pName, building, location);
 			
 				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
