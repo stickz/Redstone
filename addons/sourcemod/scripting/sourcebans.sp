@@ -1,19 +1,15 @@
 // *************************************************************************
-//  This file is part of SourceBans++.
-//
-//  Copyright (C) 2014-2016 Sarabveer Singh <me@sarabveer.me>
-//
-//  SourceBans++ is free software: you can redistribute it and/or modify
+//  SourceBans is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, per version 3 of the License.
 //
-//  SourceBans++ is distributed in the hope that it will be useful,
+//  SourceBans is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with SourceBans++. If not, see <http://www.gnu.org/licenses/>.
+//  along with SourceBans. If not, see <http://www.gnu.org/licenses/>.
 //
 //  This file is based off work covered by the following copyright(s):  
 //
@@ -22,6 +18,10 @@
 //   Licensed under GNU GPL version 3, or later.
 //   Page: <http://www.sourcebans.net/> - <https://github.com/GameConnect/sourcebansv1>
 //
+//   SourceBans++
+//   Copyright (C) 2014-2016 Sarabveer Singh <me@sarabveer.me
+//   Licensed under GNU GPL version 3, or later.
+//   Page: <https://forums.alliedmods.net/showthread.php?t=263735> - <https://github.com/sbpp/sourcebans-pp>
 // *************************************************************************
 
 #pragma semicolon 1
