@@ -40,3 +40,17 @@ stock bool NDC_IsCommanderOnTeam(client, team)
 		
 	return GetCommanderTeam(client) == team;
 }
+
+stock NDC_GetCommanderOn(team)
+{
+	for (new client = 1; client <= MaxClients; client++)
+		if (IsValidClient(client) && NDC_IsCommanderOnTeam(client, team))
+			return client;
+			
+	return -1;
+}
+
+stock NDC_GetCommanderBy(client)
+{
+	return ND_GetCommanderOn(GetClientTeam(client));
+}

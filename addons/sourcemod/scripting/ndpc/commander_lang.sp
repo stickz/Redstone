@@ -1,6 +1,6 @@
 #define CLANG_PRINTOUT_SIZE 6
 
-new const String:nd_cl_commands[CLANG_PRINTOUT_SIZE][] = 
+char nd_cl_commands[CLANG_PRINTOUT_SIZE][] = 
 {
 	"sm_comlang",
 	"sm_commanderlang",
@@ -10,24 +10,24 @@ new const String:nd_cl_commands[CLANG_PRINTOUT_SIZE][] =
 	"sm_CommanderLanguage"
 };
 
-RegComLangCommands()
+void RegComLangCommands()
 {
-	for (new p = 0; p < CLANG_PRINTOUT_SIZE; p++)
+	for (int p = 0; p < CLANG_PRINTOUT_SIZE; p++)
 	{
 		RegConsoleCmd(nd_cl_commands[p], CMD_PrintCLang);
 	}
 }
 
-public Action:CMD_PrintCLang(client, args)
+public Action CMD_PrintCLang(int client, int args)
 {
-	new team = GetClientTeam(client);
+	int team = GetClientTeam(client);
 	if (team != TEAM_CONSORT && team != TEAM_EMPIRE)
 	{
 		PrintToChat(client, "%s%t", CHAT_PREFIX, "Not On Team");
 		return Plugin_Handled;	
 	}
 	
-	new commander = ND_GetCommanderOn(team);
+	int commander = NDC_GetCommanderOn(team);
 	if (commander == NO_COMMANDER)
 	{
 		PrintToChat(client, "%s%t", CHAT_PREFIX, "No Team Commander");
@@ -38,16 +38,16 @@ public Action:CMD_PrintCLang(client, args)
 	return Plugin_Handled;
 }
 
-public Event_CommanderPromo(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_CommanderPromo(Event event, const char[] name, bool dontBroadcast)
 {
 	if (g_Enable[CommanderLang].BoolValue) //only use feature if enabled
 	{
-		new client = GetClientOfUserId(GetEventInt(event, "userid"));
-		new team = GetEventInt(event, "teamid");
+		int client = GetClientOfUserId(event.GetInt("userid"));
+		int team = event.GetInt("teamid");
 		
 		if (IsValidClient(client))
 		{
-			decl String:langName[32];
+			char langName[32];
 			Format(langName, sizeof(langName), GetLanguageName(client));
 
 			if (!StrEqual("english", langName, true))
@@ -56,9 +56,9 @@ public Event_CommanderPromo(Handle:event, const String:name[], bool:dontBroadcas
 	}
 }
 
-PrintCLangToTeam(team, const String:langName[])
+void PrintCLangToTeam(int team, const char[] langName)
 {
-	for (new client = 1; client <= MaxClients; client++)
+	for (int client = 1; client <= MaxClients; client++)
 	{
 		if (IsOnTeam(client, team))
 		{
@@ -67,11 +67,11 @@ PrintCLangToTeam(team, const String:langName[])
 	}
 }
 
-stock String:GetLanguageName(client)
+stock char GetLanguageName(int client)
 {
-	new String:langName[32];
+	char langName[32];
 	
-	decl String:langCode[8];
+	char langCode[8];
 	GetLanguageInfo(GetClientLanguage(client), langCode, sizeof(langCode), langName, sizeof(langName));
 	
 	return langName;
