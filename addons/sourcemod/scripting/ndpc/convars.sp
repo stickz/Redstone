@@ -9,7 +9,7 @@ enum
 
 ConVar g_Enable[convars];  
 
-CreateConVars()
+void CreateConVars()
 {
 	g_Enable[CommanderLang] = CreateConVar("sm_ndpc_commanderlang", "1", "Enable commander lang", _, true, 0.0, true, 1.0);
 	g_Enable[TeamLang] 	= CreateConVar("sm_ndpc_teamlang", "1", "Enable team lang", _, true, 0.0, true, 1.0);
