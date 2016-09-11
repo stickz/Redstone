@@ -189,9 +189,9 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 					if (id != INVALID_GROUP_ID)
 					{
 					#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
-						g_CurGrp.AddGroupImmunity(id);
-					#else
 						SetAdmGroupImmuneFrom(g_CurGrp, id);
+					#else
+						g_CurGrp.AddGroupImmunity(id);
 					#endif
 					}
 					else 
