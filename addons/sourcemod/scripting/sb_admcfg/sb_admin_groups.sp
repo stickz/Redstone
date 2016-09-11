@@ -107,8 +107,10 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 				for (int i = 0; i < len; i++)
 				{
 					if (!FindFlagByChar(value[i], flag))
+					{
 						continue;
-						
+					}
+					
 					g_CurGrp.SetFlag(flag, true);
 				}
 			} 
