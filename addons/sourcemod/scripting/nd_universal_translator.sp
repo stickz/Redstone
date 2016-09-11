@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_commander>
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name 		= "[ND] Project Communication",
 	author 		= "Stickz",
@@ -47,7 +47,9 @@ public Plugin:myinfo =
 #include "ndpc/building_requests.sp"
 #include "ndpc/capture_requests.sp"
 
-public OnPluginStart()
+#pragma newdecls required
+
+public void OnPluginStart()
 {
 	/* Hook needed events */
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
@@ -62,11 +64,11 @@ public OnPluginStart()
 	LoadTranslations("nd_project_communication.phrases");
 }
 
-public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast) {
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
 	PrintTeamLanguages(); //print client languages at round start
 }
 
-public Action:OnClientSayCommand(client, const String:command[], const String:sArgs[])
+public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
 {
 	if (client) //is the chat message is triggered by a client?
 	{
