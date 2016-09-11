@@ -26,7 +26,10 @@
 
 #include <sourcemod>
 
-#define VERSION "(SB++) 1.5.4.6"
+/* Auto Updater Suport */
+#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/sbchecker/sbchecker.txt"
+#include 		"updater/standard.sp"
+
 #define LISTBANS_USAGE "sm_listsbbans <#userid|name> - Lists a user's prior bans from Sourcebans"
 #define INVALID_TARGET -1
 
@@ -34,14 +37,12 @@ new String:g_DatabasePrefix[10] = "sb";
 new Handle:g_ConfigParser;
 new Handle:g_DB;
 
-ConVar ShortMessage;
-
 public Plugin:myinfo = 
 {
 	name = "SourceBans Checker", 
 	author = "psychonic, Ca$h Munny, Sarabveer(VEER™)", 
 	description = "Notifies admins of prior bans from Sourcebans upon player connect.", 
-	version = VERSION, 
+	version = "dummy", 
 	url = "https://sarabveer.github.io/SourceBans-Fork/"
 };
 
@@ -49,14 +50,12 @@ public OnPluginStart()
 {
 	LoadTranslations("common.phrases");
 	
-	CreateConVar("sbchecker_version", VERSION, "", FCVAR_NOTIFY);
-	
-	ShortMessage = CreateConVar("sb_short_message", "0", "Use shorter message for displying prev bans", _, true, 0.0, true, 1.0);
-	
 	RegAdminCmd("sm_listbans", OnListSourceBansCmd, ADMFLAG_BAN, LISTBANS_USAGE);
 	RegAdminCmd("sb_reload", OnReloadCmd, ADMFLAG_RCON, "Reload sourcebans config and ban reason menu options");
 	
 	SQL_TConnect(OnDatabaseConnected, "sourcebans");
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public OnMapStart()
@@ -103,18 +102,8 @@ public OnConnectBanCheck(Handle:owner, Handle:hndl, const String:error[], any:us
 	
 	new bancount = SQL_FetchInt(hndl, 0);
 	if (bancount > 0)
-	{
-		if (ShortMessage.BoolValue)
-		{
-			PrintToBanAdmins("\x04[SB]\x01Player \"%N\" has %d previous ban%s.", 
-				client, bancount, ((bancount > 0) ? "s":""));
-		}
-		else
-		{
-			PrintToBanAdmins("\x04[SourceBans]\x01 Warning: Player \"%N\" has %d previous ban%s on record.", 
-				client, bancount, ((bancount > 0) ? "s":""));
-		}
-	}
+		PrintToBanAdmins("\x04[SB]\x01Player \"%N\" has %d previous ban%s.", 
+					client, bancount, ((bancount > 0) ? "s":""));
 }
 
 public Action:OnListSourceBansCmd(client, args)
