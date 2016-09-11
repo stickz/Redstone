@@ -119,10 +119,7 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 		
 		else if (g_GroupState == GroupState_Overrides)
 		{
-			OverrideRule rule = Command_Deny;
-			
-			if (StrEqual(value, "allow", false))
-				rule = Command_Allow;
+			OverrideRule rule = StrEqual(value, "allow", false) ? Command_Allow : Command_Deny;
 
 			if (key[0] == '@')
 				g_CurGrp.AddCommandOverride(key[1], Override_CommandGroup, rule);
@@ -221,8 +218,8 @@ static void InternalReadGroups(const char[] path, GroupPass pass)
 	if (err != SMCError_Okay)
 	{
 		char buffer[64];
-		bool bufferError = g_hGroupParser.GetErrorString(err, buffer, sizeof(buffer));
-		ParseError("%s", bufferError ? buffer : "Fatal parse error" );
+		//bool bufferError = g_hGroupParser.GetErrorString(err, buffer, sizeof(buffer));
+		ParseError("%s", g_hGroupParser.GetErrorString(err, buffer, sizeof(buffer)) ? buffer : "Fatal parse error" );
 	}
 }
 
