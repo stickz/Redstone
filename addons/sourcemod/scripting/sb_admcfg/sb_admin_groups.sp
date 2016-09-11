@@ -110,11 +110,7 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 					{
 						continue;
 					}
-					
-				/* If the sourcemod version is less than or equal to 7 
-				 * The groupid class is not setup properly,
-				 * So we need to acomplish this task differently.
-				 */
+
 				#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
 					SetAdmGroupAddFlag(g_CurGrp, flag, true);
 				#else
@@ -132,10 +128,22 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 			OverrideRule rule = StrEqual(value, "allow", false) ? Command_Allow : Command_Deny;
 
 			if (key[0] == '@')
+			{
+			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+				AddAdmGroupCmdOverride(g_CurGrp, key[1], Override_CommandGroup, rule);
+			#else
 				g_CurGrp.AddCommandOverride(key[1], Override_CommandGroup, rule);
+			#endif
+			}
 				
 			else
+			{
+			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+				AddAdmGroupCmdOverride(g_CurGrp, key, Override_Command, rule);
+			#else
 				g_CurGrp.AddCommandOverride(key, Override_Command, rule);
+			#endif
+			}
 		}
 	} 
 	
@@ -146,22 +154,46 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 		{
 			/* If it's a value we know about, use it */
 			if (StrEqual(value, "*"))
+			{
+			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+				SetAdmGroupImmunityLevel(g_CurGrp, 2);
+			#else
 				g_CurGrp.ImmunityLevel = 2;
+			#endif
+			}
 				
 			else if (StrEqual(value, "$")) 
+			{
+			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+				SetAdmGroupImmunityLevel(g_CurGrp, 1);
+			#else	
 				g_CurGrp.ImmunityLevel = 1;
+			#endif
+			}
 				
 			else 
 			{
 				int level;
 				if (StringToIntEx(value, level))
+				{
+				#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+					SetAdmGroupImmunityLevel(g_CurGrp, level);
+				#else
 					g_CurGrp.ImmunityLevel = level;
+				#endif
+				}
 					
 				else 
 				{
 					GroupId id = value[0] == '@' ? FindAdmGroup(value[1]) : FindAdmGroup(value);
 					if (id != INVALID_GROUP_ID)
+					{
+					#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
 						g_CurGrp.AddGroupImmunity(id);
+					#else
+						SetAdmGroupImmuneFrom(g_CurGrp, id);
+					#endif
+					}
 					else 
 						ParseError("Unable to find group: \"%s\"", value);
 				}
