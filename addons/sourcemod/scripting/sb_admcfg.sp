@@ -60,7 +60,7 @@ public void OnPluginStart()
 public int OnRebuildAdminCache(AdminCachePart part)
 #else
 public void OnRebuildAdminCache(AdminCachePart part)
-#end
+#endif
 {
 	if (part == AdminCache_Groups) 
 		ReadGroups();
