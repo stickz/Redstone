@@ -1,9 +1,11 @@
+#pragma newdecls required
+
 #define BUILDING_NOT_FOUND -1
 #define LOCATION_NOT_FOUND -1
 #define COMPASS_NOT_FOUND -1
 
 #define REQUEST_BUILDING_COUNT 12
-new const String:nd_request_building[REQUEST_BUILDING_COUNT][] =
+char nd_request_building[REQUEST_BUILDING_COUNT][] =
 {
 	"Transport Gate",
 	"MG Turret",
@@ -19,9 +21,9 @@ new const String:nd_request_building[REQUEST_BUILDING_COUNT][] =
 	"Barrier"
 };
 
-GetBuildingByIndex(const String:sArgs[])
+int GetBuildingByIndex(const char[] sArgs)
 {
-	for (new building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
+	for (int building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
 	{
 		if (StrIsWithin(sArgs, nd_request_building[building])) //if a building name is within the string
 		{
@@ -33,7 +35,7 @@ GetBuildingByIndex(const String:sArgs[])
 }
 
 #define REQUEST_LOCATION_COUNT 5
-new const String:nd_request_location[REQUEST_LOCATION_COUNT][] =
+char nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
 	"Roof",
 	"Base",
@@ -42,9 +44,9 @@ new const String:nd_request_location[REQUEST_LOCATION_COUNT][] =
 	"Sec"
 };
 
-GetSpotByIndex(const String:sArgs[])
+int GetSpotByIndex(const char[] sArgs)
 {
-	for (new location = 0; location < REQUEST_LOCATION_COUNT; location++) //for all the building spots
+	for (int location = 0; location < REQUEST_LOCATION_COUNT; location++) //for all the building spots
 	{
 		if (StrIsWithin(sArgs, nd_request_location[location])) //if a location is within the string
 		{
@@ -56,7 +58,7 @@ GetSpotByIndex(const String:sArgs[])
 }
 
 #define REQUEST_COMPASS_COUNT 6
-new const String:nd_request_compass[REQUEST_COMPASS_COUNT][] =
+char nd_request_compass[REQUEST_COMPASS_COUNT][] =
 {
 	"North",
 	"South",
@@ -66,9 +68,9 @@ new const String:nd_request_compass[REQUEST_COMPASS_COUNT][] =
 	"Right"
 };
 
-GetCompassByIndex(const String:sArgs[])
+int GetCompassByIndex(const char[] sArgs)
 {
-	for (new compass = 0; compass < REQUEST_COMPASS_COUNT; compass++) //for all the compass locations
+	for (int compass = 0; compass < REQUEST_COMPASS_COUNT; compass++) //for all the compass locations
 	{
 		if (StrIsWithin(sArgs, nd_request_compass[compass])) //if a location is within the string
 		{
@@ -79,19 +81,19 @@ GetCompassByIndex(const String:sArgs[])
 	return COMPASS_NOT_FOUND;
 }
 
-bool:CheckBuildingRequest(client, const String:sArgs[])
+bool CheckBuildingRequest(int client, const char[] sArgs)
 {
 	if (!g_Enable[BuildingReqs].BoolValue) 
 		return false; //don't use feature if not enabled
 
 	if (StrStartsWith(sArgs, "build")) //if string starts with build
 	{
-		new building = GetBuildingByIndex(sArgs);
+		int building = GetBuildingByIndex(sArgs);
 		
 		if (building != BUILDING_NOT_FOUND)
 		{
-			new location = GetSpotByIndex(sArgs);
-			new compass = GetCompassByIndex(sArgs);
+			int location = GetSpotByIndex(sArgs);
+			int compass = GetCompassByIndex(sArgs);
 			
 			if (location != LOCATION_NOT_FOUND)
 			{
@@ -124,23 +126,23 @@ bool:CheckBuildingRequest(client, const String:sArgs[])
 	return false;
 }
 
-PrintSimpleBuildingRequest(client, const String:bName[])
+void PrintSimpleBuildingRequest(int client, const char[] bName)
 {
 	if (IsValidClient(client))
 	{
-		new team = GetClientTeam(client);
+		int team = GetClientTeam(client);
 		
-		decl String:pName[64];
+		char pName[64];
 		GetClientName(client, pName, sizeof(pName));
 		
-		for (new idx = 0; idx <= MaxClients; idx++)
+		for (int idx = 0; idx <= MaxClients; idx++)
 		{
 			if (IsOnTeam(idx, team))
 			{
-				decl String:building[64];
+				char building[64];
 				Format(building, sizeof(building), "%T", bName, idx);
 				
-				decl String:ToPrint[128];
+				char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, pName, building);
 				
 				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
@@ -150,16 +152,16 @@ PrintSimpleBuildingRequest(client, const String:bName[])
 	}
 }
 
-PrintSpotBuildingRequest(client, const String:bName[], const String:lName[])
+void PrintSpotBuildingRequest(int client, const char[] bName, const char[] lName)
 {
 	if (IsValidClient(client))
 	{
-		new team = GetClientTeam(client);
+		int team = GetClientTeam(client);
 		
-		decl String:pName[64];
+		char pName[64];
 		GetClientName(client, pName, sizeof(pName));
 		
-		for (new idx = 0; idx <= MaxClients; idx++)
+		for (int idx = 0; idx <= MaxClients; idx++)
 		{
 			if (IsOnTeam(idx, team))
 			{
@@ -179,26 +181,26 @@ PrintSpotBuildingRequest(client, const String:bName[], const String:lName[])
 	}
 }
 
-PrintCompassBuildingRequest(client, const String:bName[], const String:cName[])
+void PrintCompassBuildingRequest(int client, const char[] bName, const char[] cName)
 {
 	if (IsValidClient(client))
 	{
-		new team = GetClientTeam(client);
+		int team = GetClientTeam(client);
 		
-		decl String:pName[64];
+		char pName[64];
 		GetClientName(client, pName, sizeof(pName));
 		
-		for (new idx = 0; idx <= MaxClients; idx++)
+		for (int idx = 0; idx <= MaxClients; idx++)
 		{
 			if (IsOnTeam(idx, team))
 			{
-				decl String:building[64];
+				char building[64];
 				Format(building, sizeof(building), "%T", bName, idx);
 				
-				decl String:compass[32];
+				char compass[32];
 				Format(compass, sizeof(compass), "%T", cName, idx);
 				
-				decl String:ToPrint[128];
+				char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Compass Building Request", 
 								       idx, pName, building, compass);
 								       
@@ -209,29 +211,29 @@ PrintCompassBuildingRequest(client, const String:bName[], const String:cName[])
 	}
 }
 
-PrintComplexBuildingRequest(client, const String:bName[], const String:lName[], const String:cName[])
+void PrintComplexBuildingRequest(int client, const char[] bName, const char[] lName, const char[] cName)
 {
 	if (IsValidClient(client))
 	{
-		new team = GetClientTeam(client);
+		int team = GetClientTeam(client);
 		
-		decl String:pName[64];
+		char pName[64];
 		GetClientName(client, pName, sizeof(pName));
 		
-		for (new idx = 0; idx <= MaxClients; idx++)
+		for (int idx = 0; idx <= MaxClients; idx++)
 		{
 			if (IsOnTeam(idx, team))
 			{
-				decl String:building[64];
+				char building[64];
 				Format(building, sizeof(building), "%T", bName, idx);
 				
-				decl String:location[32];
+				char location[32];
 				Format(location, sizeof(location), "%T", lName, idx);
 				
-				decl String:compass[32];
+				char compass[32];
 				Format(compass, sizeof(compass), "%T", cName, idx);
 				
-				decl String:ToPrint[128];
+				char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Complex Building Request", 
 								       idx, pName, building, location, compass);
 								       
