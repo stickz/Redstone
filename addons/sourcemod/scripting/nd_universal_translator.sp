@@ -59,7 +59,7 @@ public OnPluginStart()
 	
 	/* Add translated phrases */
 	LoadTranslations("structminigame.phrases");
-	LoadTranslations("nd_project_communication.phrases");
+	LoadTranslations("nd_universal_translator.phrases");
 }
 
 public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast) {
