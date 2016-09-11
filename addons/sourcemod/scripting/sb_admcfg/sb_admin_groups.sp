@@ -111,7 +111,7 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 						continue;
 					}
 
-				#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+				#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR <= 7
 					SetAdmGroupAddFlag(g_CurGrp, flag, true);
 				#else
 					g_CurGrp.SetFlag(flag, true);
@@ -129,7 +129,7 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 
 			if (key[0] == '@')
 			{
-			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR <= 7
 				AddAdmGroupCmdOverride(g_CurGrp, key[1], Override_CommandGroup, rule);
 			#else
 				g_CurGrp.AddCommandOverride(key[1], Override_CommandGroup, rule);
@@ -138,7 +138,7 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 				
 			else
 			{
-			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR <= 7
 				AddAdmGroupCmdOverride(g_CurGrp, key, Override_Command, rule);
 			#else
 				g_CurGrp.AddCommandOverride(key, Override_Command, rule);
@@ -155,7 +155,7 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 			/* If it's a value we know about, use it */
 			if (StrEqual(value, "*"))
 			{
-			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR <= 7
 				SetAdmGroupImmunityLevel(g_CurGrp, 2);
 			#else
 				g_CurGrp.ImmunityLevel = 2;
@@ -164,7 +164,7 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 				
 			else if (StrEqual(value, "$")) 
 			{
-			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+			#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR <= 7
 				SetAdmGroupImmunityLevel(g_CurGrp, 1);
 			#else	
 				g_CurGrp.ImmunityLevel = 1;
@@ -176,7 +176,7 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 				int level;
 				if (StringToIntEx(value, level))
 				{
-				#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+				#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR <= 7
 					SetAdmGroupImmunityLevel(g_CurGrp, level);
 				#else
 					g_CurGrp.ImmunityLevel = level;
@@ -188,7 +188,7 @@ public SMCResult ReadGroups_KeyValue(	SMCParser smc,
 					GroupId id = value[0] == '@' ? FindAdmGroup(value[1]) : FindAdmGroup(value);
 					if (id != INVALID_GROUP_ID)
 					{
-					#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 7
+					#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR <= 7
 						SetAdmGroupImmuneFrom(g_CurGrp, id);
 					#else
 						g_CurGrp.AddGroupImmunity(id);
