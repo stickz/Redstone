@@ -28,13 +28,12 @@
 #include <sourcemod>
 #include <sourcebans>
 
-#undef REQUIRE_PLUGIN
-#include <adminmenu>
-#tryinclude <updater>
-
 /* Auto Updater Suport */
 #define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/sourcebans/sourcebans.txt"
 #include 		"updater/standard.sp"
+
+#undef REQUIRE_PLUGIN
+#include <adminmenu>
 
 //GLOBAL DEFINES
 #define YELLOW				0x01
