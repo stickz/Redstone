@@ -13,12 +13,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-
 #include <sourcemod>
 #include <clientprefs>
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo = 
+public Plugin myinfo = 
 {
 	name 		= "Show Damage",
 	author 		= "exvel, stickz",
@@ -27,12 +26,12 @@ public Plugin:myinfo =
 	url 		= "www.sourcemod.net"
 }
 
-new player_damage[MAXPLAYERS + 1];
-new bool:block_timer[MAXPLAYERS + 1] = {false,...};
-new String:DamageEventName[16];
-new MaxDamage = 10000000;
-new bool:option_show_damage[MAXPLAYERS + 1] = {true,...};
-new Handle:cookie_show_damage = INVALID_HANDLE;
+int player_damage[MAXPLAYERS + 1];
+bool block_timer[MAXPLAYERS + 1] = {false,...};
+char DamageEventName[16];
+int MaxDamage = 10000000;
+bool option_show_damage[MAXPLAYERS + 1] = {true,...};
+Handle cookie_show_damage = INVALID_HANDLE;
 
 //CVars' handles
 ConVar gcvar_enabled;
@@ -43,7 +42,7 @@ ConVar gcvar_text_area;
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/showdamage/showdamage.txt"
 #include "updater/standard.sp"
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	CreateConvars(); //plugin controls
 	
@@ -58,11 +57,11 @@ public OnPluginStart()
 	SetupEvents(); //add needed event hooks and damage things
 }
 
-public CookieMenuHandler_ShowDamage(client, CookieMenuAction:action, any:info, String:buffer[], maxlen)
+public int CookieMenuHandler_ShowDamage(int client, CookieMenuAction:action, any:info, char[] buffer, int maxlen)
 {
 	if (action == CookieMenuAction_DisplayOption)
 	{
-		decl String:status[10];
+		char status[10];
 		Format(status, sizeof(status), "%T", option_show_damage[client] ? "On" : "Off", client);
 		Format(buffer, maxlen, "%T: %s", "Cookie Show Damage", client, status);
 	}
@@ -75,29 +74,32 @@ public CookieMenuHandler_ShowDamage(client, CookieMenuAction:action, any:info, S
 	}
 }
 
-public OnClientCookiesCached(client)
-	option_show_damage[client] = GetCookieShowDamage(client);
-
-bool:GetCookieShowDamage(client)
+public void OnClientCookiesCached(int client)
 {
-	decl String:buffer[10];
+	option_show_damage[client] = GetCookieShowDamage(client);
+}
+
+bool GetCookieShowDamage(int client)
+{
+	char buffer[10];
 	GetClientCookie(client, cookie_show_damage, buffer, sizeof(buffer));
 	
 	return !StrEqual(buffer, "Off");
 }
 
-public OnClientConnected(client)
-	block_timer[client] = false;
-
-public Action:Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
+public void OnClientConnected(int client)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"));
 	block_timer[client] = false;
-	
+}
+
+public Action Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast)
+{
+	// The syntax is shortened from block_timer[client]
+	block_timer[GetClientOfUserId(event.GetInt("userid"))] = false;
 	return Plugin_Continue;
 }
 
-public Action:ShowDamage(Handle:timer, any:client)
+public Action ShowDamage(Handle timer, int client)
 {
 	block_timer[client] = false;
 	
@@ -114,58 +116,60 @@ public Action:ShowDamage(Handle:timer, any:client)
 	player_damage[client] = 0;
 }
 
-public Action:Event_PlayerHurt(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_PlayerHurt(Event event, const char[] name, bool dontBroadcast)
 {	
-	new client_attacker = GetClientOfUserId(GetEventInt(event, "attacker")),
-	client = GetClientOfUserId(GetEventInt(event, "userid")),
-	damage = GetEventInt(event, DamageEventName);
+	int 	attacker = GetClientOfUserId(event.GetInt("attacker")),
+		client 	= GetClientOfUserId(event.GetInt("userid")),
+		damage = event.GetInt(DamageEventName);
 	
-	CalcDamage(client, client_attacker, damage);
+	CalcDamage(client, attacker, damage);
 	return Plugin_Continue;
 }
 
-public Action:Event_InfectedHurt(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_InfectedHurt(Event event, const char[] name, bool dontBroadcast)
 {	
-	new client_attacker = GetClientOfUserId(GetEventInt(event, "attacker")),
-	damage = GetEventInt(event, "amount");
-	CalcDamage(0, client_attacker, damage);
+	int 	attacker = GetClientOfUserId(event.GetInt("attacker")),
+		damage = event.GetInt("amount");
+		
+	CalcDamage(0, attacker, damage);
 	return Plugin_Continue;
 }
 
-CalcDamage(client, client_attacker, damage)
+void CalcDamage(int client, int attacker, int damage)
 {
-	if (!gcvar_enabled.BoolValue || !option_show_damage[client_attacker] || client_attacker == 0 || IsFakeClient(client_attacker) || !IsClientInGame(client_attacker) || damage > MaxDamage)
+	if (!gcvar_enabled.BoolValue || !option_show_damage[attacker] || attacker == 0 
+	|| IsFakeClient(attacker) || !IsClientInGame(attacker) || damage > MaxDamage)
 		return;
 	
 	//If client == 0 than skip this verifying. It can be an infected or something else without client index.
 	if (client != 0)
 	{
-		if (client == client_attacker && !gcvar_own_dmg.BoolValue)
+		if (client == attacker && !gcvar_own_dmg.BoolValue)
 			return;
 
-		else if (GetClientTeam(client) == GetClientTeam(client_attacker) && !gcvar_ff.BoolValue)
+		else if (GetClientTeam(client) == GetClientTeam(attacker) && !gcvar_ff.BoolValue)
 			return;
 	}
 	
-	player_damage[client_attacker] += damage;
+	player_damage[attacker] += damage;
 	
-	if (block_timer[client_attacker])
+	if (block_timer[attacker])
 		return;
 	
-	CreateTimer(0.01, ShowDamage, client_attacker);
-	block_timer[client_attacker] = true;
+	CreateTimer(0.01, ShowDamage, attacker);
+	block_timer[attacker] = true;
 }
 
-AddClientPrefs()
+void AddClientPrefs()
 {
 	LoadTranslations("common.phrases");
 	
 	cookie_show_damage = RegClientCookie("Show Damage On/Off", "", CookieAccess_Protected);
-	new info;
-	SetCookieMenuItem(CookieMenuHandler_ShowDamage, any:info, "Show Damage");
+	int info;
+	SetCookieMenuItem(CookieMenuHandler_ShowDamage, info, "Show Damage");
 }
 
-CreateConvars()
+void CreateConvars()
 {
 	gcvar_enabled = CreateConVar("sm_show_damage", "1", "Enabled/Disabled show damage functionality, 0 = off/1 = on", _, true, 0.0, true, 1.0);
 	gcvar_ff = CreateConVar("sm_show_damage_ff", "0", "Show friendly fire damage, 0 = off/1 = on", _, true, 0.0, true, 1.0);
@@ -173,12 +177,12 @@ CreateConvars()
 	gcvar_text_area = CreateConVar("sm_show_damage_text_area", "1", "Defines the area for damage text:\n 1 = in the center of the screen\n 2 = in the hint text area \n 3 = in chat area of screen", _, true, 1.0, true, 3.0);
 }
 
-SetupEvents()
+void SetupEvents()
 {
 	HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Post);
 	HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
 	
-	decl String:gameName[80];
+	char gameName[80];
 	GetGameFolderName(gameName, 80);
 	
 	if (StrEqual(gameName, "left4dead") || StrEqual(gameName, "left4dead2"))

@@ -14,37 +14,40 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-/* Auto Updater */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/autoreconnect/autoreconnect.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_grenade_loop_fix/nd_grenade_loop_fix.txt"
 #include "updater/standard.sp"
 
 #pragma newdecls required
 #include <sourcemod>
 
+#define INVALID_USERID		0
+
 public Plugin myinfo =
 {
-	name = "Auto Reconnect",
-	author = "stickz",
-	description = "Sends client command retry on server restart",
-	version = "dummy",
-	url = "https://github.com/stickz/Redstone/"
-};
+	name 			= "[ND] Grenade Loop Fix",
+	author 			= "Stickz",
+	description 		= "Fixes an issue with grenade lopping",
+	version 		= "dummy",
+	url 			= "https://github.com/stickz/Redstone/"
+};	
 
 public void OnPluginStart()
 {
-	RegServerCmd("quit", OnDown);
-	RegServerCmd("_restart", OnDown);
-	
+	HookEvent("player_death", Event_PlayerDeath, EventHookMode_Post);
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public Action OnDown(int args)
+public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast)
 {
-	for (int i = 1; i <= MaxClients; i++)
-	{
-		if (IsClientInGame(i) && !IsFakeClient(i))
-		{
-           		ClientCommand(i, "retry"); // force retry
-           	}
-        }
+	CreateTimer(0.5, TIMER_TellSoundToStopRingingEars, event.GetInt("userid"), TIMER_FLAG_NO_MAPCHANGE);	
+}
+
+public Action TIMER_TellSoundToStopRingingEars(Handle timer, any userid)
+{
+	int client = GetClientOfUserId(userid)
+	if (client == INVALID_USERID)
+		return Plugin_Handled;
+	
+	FakeClientCommand(client, "dsp_player 0");	
+	return Plugin_Handled;
 }

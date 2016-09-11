@@ -16,7 +16,7 @@ forward OnTeamDiffUpdated();
  *
  * @return the skill difference on the teams
  */
-native Float:GetTeamDifference();
+native float GetTeamDifference();
 
 /**
  * Retreive the average skill on the server
@@ -24,7 +24,7 @@ native Float:GetTeamDifference();
  *
  * @return the average skill as a float value
  */
-native Float:GetAverageSkill();
+native float GetAverageSkill();
 
 #define GAS_AVAILBLE() (GetFeatureStatus(FeatureType_Native, "GetAverageSkill") == FeatureStatus_Available)
 
@@ -32,7 +32,7 @@ native Float:GetAverageSkill();
  * Run the warmup team balancer
  *
  */
-native WB_BalanceTeams();
+native void WB_BalanceTeams();
 
 #define BT_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "WB_BalanceTeams") == FeatureStatus_Available)
 
@@ -40,7 +40,7 @@ native WB_BalanceTeams();
  * Refresh the team balancer cache
  *
  */
-native RefreshTBCache();
+native void RefreshTBCache();
 
 #define RTBC_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "RefreshTBCache") == FeatureStatus_Available)
 

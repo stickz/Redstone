@@ -17,10 +17,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <clientprefs>
 
-new Handle:cookie_welcome_message = INVALID_HANDLE;
-new bool:option_welcome_message[MAXPLAYERS + 1] = {true,...}; //off by default
+Handle cookie_welcome_message = INVALID_HANDLE;
+bool option_welcome_message[MAXPLAYERS + 1] = {true,...}; //off by default
 
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name 		= "Welcome Features",
 	author 		= "Stickz",
@@ -33,7 +33,7 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_welcome/nd_welcome.txt"
 #include "updater/standard.sp"
 
-public OnPluginStart() 
+public void OnPluginStart() 
 {	
 	LoadTranslations("nd_welcome.phrases");
 	
@@ -42,12 +42,12 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //Add updater support if included
 }
 
-public OnClientPutInServer(client) 
+public void OnClientPutInServer(int client) 
 {
 	CreateTimer(5.0, Timer_WelcomeMessage, client);
 }
 
-public Action:Timer_WelcomeMessage(Handle:timer, any:client) 
+public Action Timer_WelcomeMessage(Handle timer, int client) 
 {
 	if (IsClientConnected(client) && IsClientInGame(client) && !IsFakeClient(client) && option_welcome_message[client])
 		PrintToChat(client, "\x04%t", "Welcome", client);
@@ -55,13 +55,13 @@ public Action:Timer_WelcomeMessage(Handle:timer, any:client)
 	return Plugin_Handled;
 }
 
-public CookieMenuHandler_WelcomeMessage(client, CookieMenuAction:action, any:info, String:buffer[], maxlen)
+public int CookieMenuHandler_WelcomeMessage(int client, CookieMenuAction:action, any:info, char[] buffer, int maxlen)
 {
 	switch (action)
 	{
 		case CookieMenuAction_DisplayOption:
 		{
-			decl String:status[10];
+			char status[10];
 			Format(status, sizeof(status), "%T", option_welcome_message[client] ? "On" : "Off", client);		
 			Format(buffer, maxlen, "%T: %s", "Cookie Welcome Message", client, status);		
 		}
@@ -75,12 +75,14 @@ public CookieMenuHandler_WelcomeMessage(client, CookieMenuAction:action, any:inf
 	}
 }
 
-public OnClientCookiesCached(client)
-	option_welcome_message[client] = GetCookieWelcomeMessage(client);
-
-bool:GetCookieWelcomeMessage(client)
+public void OnClientCookiesCached(int client)
 {
-	decl String:buffer[10];
+	option_welcome_message[client] = GetCookieWelcomeMessage(client);
+}
+
+bool GetCookieWelcomeMessage(int client)
+{
+	char buffer[10];
 	GetClientCookie(client, cookie_welcome_message, buffer, sizeof(buffer));
 	
 	return !StrEqual(buffer, "Off");

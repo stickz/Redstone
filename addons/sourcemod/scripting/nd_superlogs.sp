@@ -32,8 +32,8 @@
 
 #define BUNKER_DAMAGE_TIMES 10
 
-new g_weapon_stats[MAXPLAYERS+1][MAX_LOG_WEAPONS][15];
-new const String:g_weapon_list[MAX_LOG_WEAPONS][MAX_WEAPON_LEN] = {
+int g_weapon_stats[MAXPLAYERS+1][MAX_LOG_WEAPONS][15];
+char g_weapon_list[MAX_LOG_WEAPONS][MAX_WEAPON_LEN] = {
 									"avenger", 
 									"bag90",
 									"chaingun", 
@@ -67,10 +67,10 @@ new const String:g_weapon_list[MAX_LOG_WEAPONS][MAX_WEAPON_LEN] = {
 #include <loghelper>
 #include <wstatshelper>
 
-new g_bReadyToShoot[MAXPLAYERS+1] = {false,...};
-new g_iBunkerAttacked[2] = {0,...};
+bool g_bReadyToShoot[MAXPLAYERS+1] = {false,...};
+int g_iBunkerAttacked[2] = {0,...};
 
-public Plugin:myinfo = 
+public Plugin myinfo = 
 {
 	name 		= "[ND] Superlogs",
 	author 		= "Peace-Maker, stickz",
@@ -83,7 +83,7 @@ public Plugin:myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_superlogs/nd_superlogs.txt"
 #include "updater/standard.sp"
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	CreatePopulateWeaponTrie();
 
@@ -98,7 +98,7 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //Add updater support if included
 }
 
-public OnMapStart()
+public void OnMapStart()
 {
 	SetupTeams();
 	
@@ -106,7 +106,7 @@ public OnMapStart()
 	g_iBunkerAttacked[1] = 0;
 }
 
-public OnClientPutInServer(client)
+public void OnClientPutInServer(int client)
 {
 	g_bReadyToShoot[client] = false;
 	if (!IsFakeClient(client))
@@ -118,13 +118,13 @@ public OnClientPutInServer(client)
 	reset_player_stats(client);
 }
 
-public Action:Event_PlayerDeathPre(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_PlayerDeathPre(Event event, const char[] name, bool dontBroadcast)
 {
-	new victim   = GetClientOfUserId(GetEventInt(event, "userid"));
-	new attacker = GetClientOfUserId(GetEventInt(event, "attacker"));
+	int victim   = GetClientOfUserId(event.GetInt("userid"));
+	int attacker = GetClientOfUserId(event.GetInt("attacker"));
 	
-	decl String:weapon[MAX_WEAPON_LEN];
-	GetEventString(event, "weapon", weapon, sizeof(weapon));
+	char weapon[MAX_WEAPON_LEN];
+	event.GetString("weapon", weapon, sizeof(weapon));
 	
 	if (attacker <= 0 || victim <= 0)
 		return Plugin_Continue;
@@ -132,20 +132,20 @@ public Action:Event_PlayerDeathPre(Handle:event, const String:name[], bool:dontB
 	// Which commander ablilty?!
 	if(StrEqual(weapon, "commander ability"))
 	{
-		new damagebits = GetEventInt(event, "damagebits");
+		int damagebits = event.GetInt("damagebits");
 		if(damagebits & DMG_ENERGYBEAM)
 		{
 			Format(weapon, sizeof(weapon), "commander poison");
-			SetEventString(event, "weapon", weapon);
+			event.SetString("weapon", weapon);
 		}
 		else if(damagebits & DMG_BLAST)
 		{
 			Format(weapon, sizeof(weapon), "commander damage");
-			SetEventString(event, "weapon", weapon);
+			event.SetString("weapon", weapon);
 		}
 	}
 	
-	new victim_team = GetClientTeam(victim);
+	int victim_team = GetClientTeam(victim);
 	
 	if(attacker != victim)
 	{
@@ -154,7 +154,7 @@ public Action:Event_PlayerDeathPre(Handle:event, const String:name[], bool:dontB
 			LogPlayerEvent(attacker, "triggered", "killed_commander");
 	}
 	
-	new weapon_index = get_weapon_index(weapon);
+	int weapon_index = get_weapon_index(weapon);
 	if (weapon_index > -1)
 	{
 		g_weapon_stats[attacker][weapon_index][LOG_HIT_KILLS]++;
@@ -169,19 +169,19 @@ public Action:Event_PlayerDeathPre(Handle:event, const String:name[], bool:dontB
 	return Plugin_Continue;
 }
 
-public Hook_PostThink(client)
+public void Hook_PostThink(int client)
 {
 	if(!IsPlayerAlive(client))
 		return;
 	
-	new iWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
+	int iWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
 	if(IsInvalid(iWeapon))
 	{
 		g_bReadyToShoot[client] = false;
 		return;
 	}
 	
-	decl String:sWeapon[32];
+	char sWeapon[32];
 	GetEdictClassname(iWeapon, sWeapon, sizeof(sWeapon));
 	if(StrContains(sWeapon, "weapon_", false) != 0)
 		return;
@@ -190,16 +190,16 @@ public Hook_PostThink(client)
 				&& GetEntProp(iWeapon, Prop_Send, "m_iClip1") > 0;
 }
 
-public Hook_PostThinkPost(client)
+public void Hook_PostThinkPost(int client)
 {
 	if(!IsPlayerAlive(client))
 		return;
 	
-	new iWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
+	int iWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
 	if(IsInvalid(iWeapon))
 		return;
 	
-	decl String:sWeapon[30];
+	char sWeapon[30];
 	GetEdictClassname(iWeapon, sWeapon, sizeof(sWeapon));
 	if(StrContains(sWeapon, "weapon_", false) != 0)
 		return;
@@ -209,7 +209,7 @@ public Hook_PostThinkPost(client)
 	
 	if(g_bReadyToShoot[client] && GetEntPropFloat(iWeapon, Prop_Send, "m_flNextPrimaryAttack") > GetGameTime())
 	{
-		new weapon_index = get_weapon_index(sWeapon);
+		int weapon_index = get_weapon_index(sWeapon);
 		if (weapon_index > -1 && weapon_index < IGNORE_SHOTS_START)
 			g_weapon_stats[client][weapon_index][LOG_HIT_SHOTS]++;
 			
@@ -217,21 +217,22 @@ public Hook_PostThinkPost(client)
 	}
 }
 
-public Hook_TraceAttackPost(victim, attacker, inflictor, Float:damage, damagetype, ammotype, hitbox, hitgroup)
+public void Hook_TraceAttackPost(int victim, int attacker, int inflictor, float damage, 
+				 int damagetype, int ammotype, int hitbox, int hitgroup)
 {
 	if(IsClientInGame(victim))
 	{
 		if(1 <= attacker <= MaxClients && IsClientInGame(attacker))
 		{
-			new iWeapon = GetEntPropEnt(attacker, Prop_Send, "m_hActiveWeapon");
-			new String:sWeapon[64];
+			int iWeapon = GetEntPropEnt(attacker, Prop_Send, "m_hActiveWeapon");
+			char sWeapon[64];
 			if(iWeapon > 0)
 				GetEdictClassname(iWeapon, sWeapon, sizeof(sWeapon));
 			
 			ReplaceString(sWeapon, sizeof(sWeapon), "weapon_", "", false);
 			FixWeaponLoggingName(sWeapon, sizeof(sWeapon));
 			
-			new weapon_index = get_weapon_index(sWeapon);
+			int weapon_index = get_weapon_index(sWeapon);
 			
 			// player_death
 			if((GetClientHealth(victim) - RoundToCeil(damage)) < 0)
@@ -260,25 +261,25 @@ public Hook_TraceAttackPost(victim, attacker, inflictor, Float:damage, damagetyp
 	}
 }
 
-public Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 {
-	// "userid"        "short"         // user ID on server          
-
-	new client = GetClientOfUserId(GetEventInt(event, "userid"));
+	// "userid"        "short"         // user ID on server 
+	int client = GetClientOfUserId(event.GetInt("userid"));
+	
 	if (client > 0)
 		reset_player_stats(client);
 }
 
-public Action:Event_PlayerDisconnect(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_PlayerDisconnect(Event event, const char[] name, bool dontBroadcast)
 {
 	//This calls OnPlayerDisconnect(client) forward
-	OnPlayerDisconnect(GetClientOfUserId(GetEventInt(event, "userid")));
+	OnPlayerDisconnect(GetClientOfUserId((event.GetInt("userid"))));
 	return Plugin_Continue;
 }
 
-public Event_RoundWin(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_RoundWin(Event event, const char[] name, bool dontBroadcast)
 {
-	new team = GetEventInt(event, "team");
+	int team = event.GetInt("team");
 	if(team >= 2)
 	{
 		LogTeamEvent(team, "triggered", "round_win");
@@ -290,24 +291,25 @@ public Event_RoundWin(Handle:event, const String:name[], bool:dontBroadcast)
 	WstatsDumpAll();
 }
 
-public Event_PromotedToCommander(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_PromotedToCommander(Event event, const char[] name, bool dontBroadcast)
 {
-	LogPlayerEvent(GetClientOfUserId(GetEventInt(event, "userid")), "triggered", "promoted_to_commander");
+	//LogPlayerEvent(client, "triggered, "promoted_to_commander)
+	LogPlayerEvent(GetClientOfUserId(event.GetInt("userid")), "triggered", "promoted_to_commander");
 }
 
-public Event_ResourceCaptured(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBroadcast)
 {
-	new team = GetEventInt(event, "team");
+	int team = event.GetInt("team");
 	if(team >= 2)
 		LogTeamEvent(team, "triggered", "resource_captured");
 }
 
-public Event_StructureDamageSparse(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_StructureDamageSparse(Event event, const char[] name, bool dontBroadcast)
 {
-	if(!GetEventBool(event, "bunker"))
+	if(!event.GetBool("bunker"))
 		return;
 		
-	new team = GetEventInt(event, "ownerteam");
+	int team = event.GetInt("ownerteam");
 	if(team >= 2)
 	{
 		g_iBunkerAttacked[team-2]++;
@@ -320,53 +322,46 @@ public Event_StructureDamageSparse(Handle:event, const String:name[], bool:dontB
 	}
 }
 
-public Event_StructureDeath(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_StructureDeath(Event event, const char[] name, bool dontBroadcast)
 {
-	new iEnt = GetEventInt(event, "entindex");
-	new iAttacker = GetClientOfUserId(GetEventInt(event, "attacker"));
+	int iEnt = event.GetInt("entindex");
+	int iAttacker = GetClientOfUserId(event.GetInt("attacker"));
 	if(iAttacker > 0 && iAttacker <= MaxClients && iEnt != -1 && IsValidEntity(iEnt))
 	{
-		new type = GetEventInt(event, "type");
-		
-		switch (type) // get building name
+		switch (event.GetInt("type")) // get building name
 		{
 			//case 0: Command Bunker
-			case 1:	LogPlayerEvent(iAttacker, "triggered", "machineguneturret_destroyed");
-			case 2:	LogPlayerEvent(iAttacker, "triggered", "transportgate_destroyed");
-			case 3:	LogPlayerEvent(iAttacker, "triggered", "powerstation_destroyed");
-			case 4:	LogPlayerEvent(iAttacker, "triggered", "wirelessrepeater_destroyed");
-			case 5:	LogPlayerEvent(iAttacker, "triggered", "powerrelay_destroyed");
-			case 6:	LogPlayerEvent(iAttacker, "triggered", "supply_destroyed");
-			case 7:	LogPlayerEvent(iAttacker, "triggered", "assembler_destroyed");
-			case 8:	LogPlayerEvent(iAttacker, "triggered", "armoury_destroyed");
-			case 9:	LogPlayerEvent(iAttacker, "triggered", "artillery_destroyed");
+			case 1:	 LogPlayerEvent(iAttacker, "triggered", "machineguneturret_destroyed");
+			case 2:	 LogPlayerEvent(iAttacker, "triggered", "transportgate_destroyed");
+			case 3:	 LogPlayerEvent(iAttacker, "triggered", "powerstation_destroyed");
+			case 4:	 LogPlayerEvent(iAttacker, "triggered", "wirelessrepeater_destroyed");
+			case 5:	 LogPlayerEvent(iAttacker, "triggered", "powerrelay_destroyed");
+			case 6:	 LogPlayerEvent(iAttacker, "triggered", "supply_destroyed");
+			case 7:	 LogPlayerEvent(iAttacker, "triggered", "assembler_destroyed");
+			case 8:	 LogPlayerEvent(iAttacker, "triggered", "armoury_destroyed");
+			case 9:	 LogPlayerEvent(iAttacker, "triggered", "artillery_destroyed");
 			case 10: LogPlayerEvent(iAttacker, "triggered", "radar_destroyed");
 			case 11: LogPlayerEvent(iAttacker, "triggered", "flamethrowerturret_destroyed");
 			case 12: LogPlayerEvent(iAttacker, "triggered", "sonicturret_destroyed");
 			case 13: LogPlayerEvent(iAttacker, "triggered", "rocketturret_destroyed");
 			case 14: LogPlayerEvent(iAttacker, "triggered", "wall_destroyed"); //not sure if this is correct
 			case 15: LogPlayerEvent(iAttacker, "triggered", "barrier_destroyed"); //not sure if this is correct
-			//default: Format(buildingname, sizeof(buildingname), "a %d (?)", type);
-		}		
-		
-		/*decl String:sBuffer[32];
-		GetEdictClassname(iEnt, sBuffer, sizeof(sBuffer));
-		PrintToChatAll("%N destroyed %s", iAttacker, sBuffer);*/
+		}	
 	}
 }
 
-public Action:LogMap(Handle:timer)
+public Action LogMap(Handle timer)
 {
 	// Called 1 second after OnPluginStart since srcds does not log the first map loaded. Idea from Stormtrooper's "mapfix.sp" for psychostats
 	LogMapLoad();
 }
 
-bool:IsInvalid(iWeapon)
+bool IsInvalid(iWeapon)
 {
 	return iWeapon == -1 || !IsValidEdict(iWeapon);
 }
 
-stock FixWeaponLoggingName(String:sWeapon[], maxlength)
+stock void FixWeaponLoggingName(char[] sWeapon, maxlength)
 {
 	if(StrEqual(sWeapon, "daisycutter"))
 		strcopy(sWeapon, maxlength, "daisy cutter");
@@ -386,7 +381,7 @@ stock FixWeaponLoggingName(String:sWeapon[], maxlength)
 		strcopy(sWeapon, maxlength, "u23 grenade");
 }
 
-HookEvents()
+void HookEvents()
 {
 	HookEvent("player_death", Event_PlayerDeathPre, EventHookMode_Pre);
 	HookEvent("promoted_to_commander", Event_PromotedToCommander);
@@ -400,7 +395,7 @@ HookEvents()
 	HookEvent("player_disconnect", Event_PlayerDisconnect, EventHookMode_Pre);
 }
 
-SetupTeams()
+void SetupTeams()
 {
 	GetTeams();
 	
@@ -409,9 +404,9 @@ SetupTeams()
 	strcopy(g_team_list[TEAM_EMPIRE], sizeof(g_team_list[]), "EMPIRE");
 }
 
-AccountForLateLoading()
+void AccountForLateLoading()
 {
-	for(new i=1;i<=MaxClients;i++)
+	for (int i = 1; i <= MaxClients; i++)
 	{
 		if(IsClientInGame(i))
 			OnClientPutInServer(i);

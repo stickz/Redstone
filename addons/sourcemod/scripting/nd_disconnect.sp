@@ -15,26 +15,28 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include <sourcemod>
-#include <nd_stocks>
 #include <clientprefs>
+#include <nd_redstone>
+#include <nd_stocks>
 
-new Handle:cookie_lost_connection_message = INVALID_HANDLE;
-new bool:option_lost_connection_message[MAXPLAYERS + 1] = {true,...}; //off by default
-
-//Version is auto-filled by the travis builder
-public Plugin:myinfo = 
-{
-	name 		= "[ND] Disconnect Messages",
-	author 		= "stickz",
-	description = "N/A",
-	version 	= "dummy",
-	url 		= "N/A"
-};
-
+/* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_disconnect/nd_disconnect.txt"
 #include "updater/standard.sp"
 
-public OnPluginStart()
+Handle cookie_lost_connection_message = INVALID_HANDLE;
+bool option_lost_connection_message[MAXPLAYERS + 1] = {true,...}; //off by default
+
+//Version is auto-filled by the travis builder
+public Plugin myinfo = 
+{
+	name 		= "[ND] Disconnect Messages",
+	author 		= "stickz",
+	description 	= "Displays a message when a client loses connection",
+	version 	= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
+};
+
+public void OnPluginStart()
 {
 	HookEvent("player_disconnect", Event_PlayerDisconnected, EventHookMode_Pre);
 	LoadTranslations("nd_disconnect.phrases");
@@ -44,29 +46,32 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public Event_PlayerDisconnected(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_PlayerDisconnected(Event event, const char[] name, bool dontBroadcast)
 {
-	decl String:steam_id[32];
-	GetEventString(event, "networkid", steam_id, sizeof(steam_id));
+	char steam_id[32];
+	event.GetString("networkid", steam_id, sizeof(steam_id));
 	
 	if (strncmp(steam_id, "STEAM_", 6) == 0)
 	{
-		new client = GetClientOfUserId(GetEventInt(event,"userid"));		
+		int client = GetClientOfUserId(event.GetInt("userid"));	
 		
-		decl String:reason[64];
-		GetEventString(event, "reason", reason, sizeof(reason));
-		
-		if(StrContains(reason, "timed out", false) != -1)
-			PrintLostConnection(client);	
+		if (RED_IsValidClient(client))
+		{
+			char reason[64];
+			GetEventString(event, "reason", reason, sizeof(reason));
+			
+			if(StrContains(reason, "timed out", false) != -1)
+				PrintLostConnection(client);
+		}
 	}
 }
 
-PrintLostConnection(client)
+void PrintLostConnection(int client)
 {
-	decl String:clientName[64];
+	char clientName[64];
 	GetClientName(client, clientName, sizeof(clientName))
 	
-	for (new idx = 1; idx <= MaxClients; idx++)
+	for (int idx = 1; idx <= MaxClients; idx++)
 	{
 		if (IsValidClient(idx) && option_lost_connection_message[idx])
 		{
@@ -75,13 +80,13 @@ PrintLostConnection(client)
 	}
 }
 
-public CookieMenuHandler_LostConnectionMessage(client, CookieMenuAction:action, any:info, String:buffer[], maxlen)
+public CookieMenuHandler_LostConnectionMessage(int client, CookieMenuAction:action, any:info, char[] buffer, int maxlen)
 {
 	switch (action)
 	{
 		case CookieMenuAction_DisplayOption:
 		{
-			decl String:status[10];
+			char status[10];
 			Format(status, sizeof(status), "%T", option_lost_connection_message[client] ? "On" : "Off", client);		
 			Format(buffer, maxlen, "%T: %s", "Cookie Lost Connect", client, status);		
 		}
@@ -95,22 +100,24 @@ public CookieMenuHandler_LostConnectionMessage(client, CookieMenuAction:action, 
 	}
 }
 
-public OnClientCookiesCached(client)
-	option_lost_connection_message[client] = GetCookieLostConnectionMessage(client);
-
-bool:GetCookieLostConnectionMessage(client)
+public OnClientCookiesCached(int client)
 {
-	decl String:buffer[10];
+	option_lost_connection_message[client] = GetCookieLostConnectionMessage(client);
+}
+
+bool GetCookieLostConnectionMessage(int client)
+{
+	char buffer[10];
 	GetClientCookie(client, cookie_lost_connection_message, buffer, sizeof(buffer));
 	
 	return !StrEqual(buffer, "Off");
 }
 
-AddClientPrefsSupport()
+void AddClientPrefsSupport()
 {
 	LoadTranslations("common.phrases"); //required for on and off
 	
 	cookie_lost_connection_message = RegClientCookie("Lost Connection Message On/Off", "", CookieAccess_Protected);
-	new info;
-	SetCookieMenuItem(CookieMenuHandler_LostConnectionMessage, any:info, "Lost Connection Message");
+	int info;
+	SetCookieMenuItem(CookieMenuHandler_LostConnectionMessage, info, "Lost Connection Message");
 }

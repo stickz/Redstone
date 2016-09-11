@@ -14,6 +14,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_player_warnings/nd_player_warnings.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
 #include <sourcemod>
 
 #define WARN_TYPE_RESPECT 0
@@ -21,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define WARN_TYPE_SPAWNSELL 2
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name 		= "Player Warnings",
 	author		= "Stickz",
@@ -30,21 +35,18 @@ public Plugin:myinfo =
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_player_warnings/nd_player_warnings.txt"
-#include "updater/standard.sp"
-
-public OnPluginStart()
+public void OnPluginStart()
 {
-	RegAdminCmd("sm_respect", Cmd_WarnRespect, ADMFLAG_BAN, "<Name> - Warns a player to be respectful.");
-	RegAdminCmd("sm_advertise", Cmd_WarnAdvertise, ADMFLAG_BAN, "<Name> - Warns a player to stop advertising.");
-	RegAdminCmd("sm_spawnsell", Cmd_SpawnSell, ADMFLAG_BAN, "<Name> - Warns a player that spawn selling isn't allowed.");
+	RegAdminCmd("sm_respect", Cmd_WarnRespect, ADMFLAG_CUSTOM2, "<Name> - Warns a player to be respectful.");
+	RegAdminCmd("sm_advertise", Cmd_WarnAdvertise, ADMFLAG_CUSTOM2, "<Name> - Warns a player to stop advertising.");
+	RegAdminCmd("sm_spawnsell", Cmd_SpawnSell, ADMFLAG_CUSTOM2, "<Name> - Warns a player that spawn selling isn't allowed.");
 	
 	LoadTranslations("nd_player_warnings.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public Action:Cmd_WarnRespect(client, args)
+public Action Cmd_WarnRespect(int client, int args)
 {
 	if (!args)
 	{
@@ -52,9 +54,9 @@ public Action:Cmd_WarnRespect(client, args)
 		return Plugin_Handled;
 	}
 	
-	decl String:arg1[64]
+	char arg1[64]
 	GetCmdArg(1, arg1, sizeof(arg1));	
-	new target = FindTarget(client, arg1, true, true);
+	int target = FindTarget(client, arg1, true, true);
 	
 	if (target == -1)
 	{
@@ -67,7 +69,7 @@ public Action:Cmd_WarnRespect(client, args)
 	return Plugin_Handled;
 }
 
-public Action:Cmd_WarnAdvertise(client, args)
+public Action Cmd_WarnAdvertise(int client, int args)
 {
 	if (!args)
 	{
@@ -75,9 +77,9 @@ public Action:Cmd_WarnAdvertise(client, args)
 		return Plugin_Handled;
 	}
 	
-	decl String:arg1[64]
+	char arg1[64]
 	GetCmdArg(1, arg1, sizeof(arg1));	
-	new target = FindTarget(client, arg1, true, true);
+	int target = FindTarget(client, arg1, true, true);
 	
 	if (target == -1)
 	{
@@ -90,7 +92,7 @@ public Action:Cmd_WarnAdvertise(client, args)
 	return Plugin_Handled;
 }
 
-public Action:Cmd_SpawnSell(client, args)
+public Action Cmd_SpawnSell(int client, int args)
 {
 	if (!args)
 	{
@@ -98,9 +100,9 @@ public Action:Cmd_SpawnSell(client, args)
 		return Plugin_Handled;
 	}
 	
-	decl String:arg1[64]
+	char arg1[64]
 	GetCmdArg(1, arg1, sizeof(arg1));	
-	new target = FindTarget(client, arg1, true, true);
+	int target = FindTarget(client, arg1, true, true);
 	
 	if (target == -1)
 	{
@@ -113,10 +115,10 @@ public Action:Cmd_SpawnSell(client, args)
 	return Plugin_Handled;
 }
 
-WarnPlayer(WarnType, Moderator, Offender)
+void WarnPlayer(int WarnType, int Moderator, int Offender)
 {
 	/* Get Client Name */	
-	decl String:OffenderName[32];
+	char OffenderName[32];
 	GetClientName(Offender, OffenderName, sizeof(OffenderName));
 	
 	switch (WarnType)

@@ -25,13 +25,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define REQUIRE_PLUGIN
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name 		= "[ND] Structure Killings",
 	author 		= "databomb edited by stickz",
 	description 	= "Provides a mini-game and announcement for structure killing",
 	version 	= "dummy",
-	url 		= "vintagejailbreak.org"
+	url 		= "https://github.com/stickz/Redstone/"
 };
 
 /* Auto Updater */
@@ -40,11 +40,11 @@ public Plugin:myinfo =
 
 #define MAX_TEAMS 		4
 
-new StructuresKilled[MAX_TEAMS];
-new Handle:cookie_structure_killings = INVALID_HANDLE;
-new bool:option_structure_killings[MAXPLAYERS + 1] = {true,...}; //off by default
+int StructuresKilled[MAX_TEAMS];
+Handle cookie_structure_killings = INVALID_HANDLE;
+bool option_structure_killings[MAXPLAYERS + 1] = {true,...}; //off by default
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	HookEvent("structure_death", Event_StructDeath);
 	
@@ -55,18 +55,18 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public OnMapStart()
+public void OnMapStart()
 {
 	ClearKills();
 }
 
-public CookieMenuHandler_StructureKillings(client, CookieMenuAction:action, any:info, String:buffer[], maxlen)
+public void CookieMenuHandler_StructureKillings(int client, CookieMenuAction action, any info, char[] buffer, int maxlen)
 {
 	switch (action)
 	{
 		case CookieMenuAction_DisplayOption:
 		{
-			decl String:status[10];
+			char status[10];
 			Format(status, sizeof(status), "%T", !option_structure_killings[client] ? "On" : "Off", client);		
 			Format(buffer, maxlen, "%T: %s", "Cookie Structure Killings", client, status);		
 		}
@@ -80,28 +80,30 @@ public CookieMenuHandler_StructureKillings(client, CookieMenuAction:action, any:
 	}
 }
 
-public OnClientCookiesCached(client)
-	option_structure_killings[client] = GetCookieStructureKillings(client);
-
-bool:GetCookieStructureKillings(client)
+public void OnClientCookiesCached(client)
 {
-	decl String:buffer[10];
+	option_structure_killings[client] = GetCookieStructureKillings(client);
+}
+
+bool GetCookieStructureKillings(int client)
+{
+	char buffer[10];
 	GetClientCookie(client, cookie_structure_killings, buffer, sizeof(buffer));
 	
 	return !StrEqual(buffer, "Off");
 } 
 
 ClearKills()
-	for (new idx = 0; idx < MAX_TEAMS; idx++)
+	for (int idx = 0; idx < MAX_TEAMS; idx++)
 		StructuresKilled[idx] = 0;
-		
-public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
+
+public Action Event_StructDeath(Event event, const char[] name, bool dontBroadcast)
 {
-	new attacker = GetClientOfUserId(GetEventInt(event, "attacker")),	
+	int attacker = GetClientOfUserId(event.GetInt("attacker")),	
 	team = GetClientTeam(attacker), 
-	type = GetEventInt(event, "type");
+	type = event.GetInt("type");
 	
-	decl String:buildingname[32];
+	char buildingname[32];
 	switch (type) // get building name
 	{
 		case 0:	Format(buildingname, sizeof(buildingname), "Command Bunker"); //the Command Bunker
@@ -125,23 +127,23 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	
 	StructuresKilled[team]++;
 	
-	decl String:attackerName[128];
+	char attackerName[128];
 	GetClientName(attacker, attackerName, sizeof(attackerName));
 	
-	decl String:teamColour[16];
+	char teamColour[16];
 	switch (team)
 	{
 		case TEAM_CONSORT: Format(teamColour, sizeof(teamColour), "{red}");
 		case TEAM_EMPIRE: Format(teamColour, sizeof(teamColour), "{blue}");
 	}
 
-	for (new client = 1; client <= MaxClients; client++)
+	for (int client = 1; client <= MaxClients; client++)
 		if (IsValidClient(client) && !option_structure_killings[client])
 		{
-			decl String:structure[32];
+			char structure[32];
 			Format(structure, sizeof(structure), "%T", buildingname, client);
 			
-			decl String:message[128];
+			char message[128];
 			Format(message, sizeof(message), "%T", "Building Destoryed", client, teamColour, attackerName, structure);
 			
 			CPrintToChat(client, message);
@@ -152,32 +154,32 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	{
 		ClearKills();
 
-		decl String:teamTrans[16];
+		char teamTrans[16];
 		switch (team)
 		{
 			case TEAM_CONSORT: Format(teamTrans, sizeof(teamTrans), "Consort");  
 			case TEAM_EMPIRE:  Format(teamTrans, sizeof(teamTrans), "Empire");
 		}
 		
-		decl String:colourGreen[32];
+		char colourGreen[32];
 		Format(colourGreen, sizeof(colourGreen), "{lightgreen}");
 		
-		for (new client = 1; client <= MaxClients; client++)
+		for (int client = 1; client <= MaxClients; client++)
 			if (IsValidClient(client))
 			{
-				decl String:teamName[32];
+				char teamName[32];
 				Format(teamName, sizeof(teamName), "%T", teamTrans, client);
 				
-				decl String:chatMessage[128];
+				char chatMessage[128];
 				Format(chatMessage, sizeof(chatMessage), "%T", "Advantage Message", client, teamColour, attackerName, colourGreen, teamColour, teamName, colourGreen);
 				CPrintToChat(client, chatMessage);
 				
-				decl String:centerMessage[64];
+				char centerMessage[64];
 				Format(centerMessage, sizeof(centerMessage), "%T", "Advantage Center", client, teamName);
 				PrintCenterText(client, centerMessage);
 			}		
 
-		for (new idx = 1; idx <= MaxClients; idx++)
+		for (int idx = 1; idx <= MaxClients; idx++)
 		{
 			if (GiveAdvantage(idx, team)) 
 			{
@@ -189,16 +191,16 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	}
 }
 
-bool:GiveAdvantage(client, team)
+bool GiveAdvantage(int client, int team)
 {
 	return IsClientInGame(client) && IsPlayerAlive(client) && !NDC_IsCommander(client) && GetClientTeam(client) == team;
 }
 
-AddClientPrefSupport()
+void AddClientPrefSupport()
 {
 	cookie_structure_killings = RegClientCookie("Structure Killings On/Off", "", CookieAccess_Protected);
-	new info;
-	SetCookieMenuItem(CookieMenuHandler_StructureKillings, any:info, "Structure Killings");
+	int info;
+	SetCookieMenuItem(CookieMenuHandler_StructureKillings, info, "Structure Killings");
 	
 	LoadTranslations("common.phrases"); //required for on and off
 }

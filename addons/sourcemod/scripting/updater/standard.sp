@@ -3,14 +3,14 @@
 #define REQUIRE_PLUGIN
 
 #if defined _updater_included
-public OnLibraryAdded(const String:name[])
+public OnLibraryAdded(const char[] name)
 {
     if (StrEqual(name, "updater"))
         Updater_AddPlugin(UPDATE_URL);
 }
 #endif
 
-AddUpdaterLibrary()
+void AddUpdaterLibrary()
 {
 	#if defined _updater_included
 	if (LibraryExists("updater"))

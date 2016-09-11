@@ -16,6 +16,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #pragma semicolon 1
 
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/dontshout/dontshout.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
 #include <sourcemod>
 
 #define MAX_LINE_LENGTH			   192		// maximum length of a single line of text
@@ -26,19 +30,16 @@ ConVar g_maxPercent;			// Maximum percent of characters thay may be uppercase
 ConVar g_isEnabled;			// Var for storing whether the plugin is enabled
 
 //Version is auto-filled by the travis builder
-public Plugin:myinfo = 
+public Plugin myinfo = 
 {
 	name 		= "Don't Shout",
-	author		= "Brainstorm",
+	author		= "Brainstorm, stickz",
 	description 	= "Changes chat messages to lowercase when they are (almost) fully in uppercase",
 	version 	= "dummy",
 	url 		= "http://"	
 };
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/dontshout/dontshout.txt"
-#include "updater/standard.sp"
-
-public OnPluginStart()
+public void OnPluginStart()
 {
 	// load translation files
 	LoadTranslations("common.phrases");
@@ -56,19 +57,19 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public Action:Command_HandleSay(client, args)
+public Action Command_HandleSay(int client, int args)
 {
 	// do not handle console stuff and do not work when the plugin is disabled
 	if (client < 1 || !g_isEnabled.BoolValue)
 		return Plugin_Continue;
 
 	// get argument string
-	decl String:argString[MAX_LINE_LENGTH];
+	char argString[MAX_LINE_LENGTH];
 	GetCmdArgString(argString, sizeof(argString));
 	
-	new upperCount = 0;			// total amount of upper text chars
-	new totalCount = 0;			// total amount of text chars (no numeric or other chars)
-	for (new i = 0; i < strlen(argString); i++)
+	int upperCount = 0;			// total amount of upper text chars
+	int totalCount = 0;			// total amount of text chars (no numeric or other chars)
+	for (int i = 0; i < strlen(argString); i++)
 	{
 		if (IsCharAlpha(argString[i]))
 		{
@@ -81,7 +82,7 @@ public Action:Command_HandleSay(client, args)
 	}
 	
 	// calculate percentage of characters that is uppercase
-	new Float:percentageUpper = float(upperCount) / float(totalCount);
+	float percentageUpper = float(upperCount) / float(totalCount);
 
 	if (totalCount >= g_minAlphaCount.IntValue && percentageUpper >= g_maxPercent.FloatValue)
 	{
@@ -93,7 +94,7 @@ public Action:Command_HandleSay(client, args)
 		}
 		
 		// replace all alphanumeric chars, except the first char
-		for (new i=1; i < strlen(argString); i++)
+		for (int i = 1; i < strlen(argString); i++)
 		{
 			if (IsCharAlpha(argString[i]))
 			{
@@ -102,7 +103,7 @@ public Action:Command_HandleSay(client, args)
 		}
 		
 		// get the original command
-		decl String:command[20];
+		char command[20];
 		GetCmdArg(0, command, sizeof(command));
 
 		// Have the client say the altered text.
@@ -119,9 +120,9 @@ public Action:Command_HandleSay(client, args)
  * Converts a string entirely to lowercase characters
  * @param arg		Text to convert to lowercase
  */
-public StrToLower(String:arg[])
+public void StrToLower(char[] arg)
 {
-	for (new i = 0; i < strlen(arg); i++)
+	for (int i = 0; i < strlen(arg); i++)
 	{
 		arg[i] = CharToLower(arg[i]);
 	}
@@ -131,7 +132,7 @@ public StrToLower(String:arg[])
  * Calls the GetClientName() function, but replaces the name of client 0 (the console)
  * with a small piece of text, instead of the entire server name.
  */
-public ClientName(client, String:name[MAX_NAME_LENGTH])
+public void ClientName(int client, char name[MAX_NAME_LENGTH])
 {
 	if (client == 0)
 	{
@@ -150,15 +151,15 @@ public ClientName(client, String:name[MAX_NAME_LENGTH])
  * @param startIndex	Position in the source string at which copying will start. Zero based.
  * @param endIndex		Position in the source string at which copying will end. This means the character specified by the end index is NOT copied.
  */
-public SubString(const String:text[], String:result[MAX_LINE_LENGTH], startIndex, endIndex)
+public void SubString(const char[] text, char result[MAX_LINE_LENGTH], int startIndex, int endIndex)
 {
 	// check input
-	new length = endIndex - startIndex;
+	int length = endIndex - startIndex;
 	if (length <= 0 || startIndex >= strlen(text))
 		return;
 
 	// perform char-by-char copy
-	for(new index = 0; index < length; index++)
+	for(int index = 0; index < length; index++)
 	{
 		result[index] = text[index + startIndex];
 	}

@@ -21,14 +21,14 @@ WeaponData
 		{
 			"weapon_overrides"
 			{
-				"damage"			"210"
+				"damage_factor"			"2.95"
 			}
 		}
 		"adv_munitions_2"
 		{
 			"weapon_overrides"
 			{
-				"damage"			"215"
+				"damage_factor"			"3.0"
 			}
 		}
 		"support_warfare"
@@ -38,7 +38,7 @@ WeaponData
 				"damage"			"235"
 			}
 		}
-	}	
+	}		
 
 	
 	"PlayerClassArms"
@@ -76,7 +76,7 @@ WeaponData
 	"weight"			"1"
 	"item_flags"			"18"	// ITEM_FLAG_NOAUTORELOAD | ITEM_FLAG_EXHAUSTIBLE
 	"damage"			"205"
-	"damage_factor"			"2.6"
+	"damage_factor"			"2.9"
 	"exo_multiplier"		"1.5"
 
 	GrenadeLauncherData

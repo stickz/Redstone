@@ -14,7 +14,7 @@
  *
  * @parm 1: The index of the client 
  */
-native ND_BackupClientType(client);
+native int ND_BackupClientType(client);
 
 #define NDBCT_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_BackupClientType") == FeatureStatus_Available)
 
@@ -24,7 +24,7 @@ native ND_BackupClientType(client);
  *
  * @parm 1: The index of the client 
  */
-native ND_BackupPosition(client);
+native int ND_BackupPosition(client);
 
 #define NDBP_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_BackupPosition") == FeatureStatus_Available)
 
@@ -34,6 +34,6 @@ native ND_BackupPosition(client);
  * @parm 1: The index of the client 
  * @return The Client's type by array presance
  */
-native ND_IsDonar(client);
+native bool ND_IsDonar(client);
 
 #define NDID_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_IsDonar") == FeatureStatus_Available)

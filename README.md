@@ -5,7 +5,7 @@ See the startup scripts folder here: https://github.com/stickz/Redstone/tree/mas
 # Useful Information
 Get Started Using Github Here: https://guides.github.com/activities/hello-world/
 
-The current stable build environment for this github is sourcemod 1.7 build 5255.
+The current stable build environment for this github is sourcemod 1.7 build 5294.
 
 Compile checks are run with sourcemod 1.8 dev to point out future issues.
 

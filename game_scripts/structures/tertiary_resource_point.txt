@@ -1,6 +1,6 @@
 "tertiary_resource_point"
 {
-	"starting_resources"			"15000"
+	"starting_resources"			"16000"
 	"extract_interval" 			"5"		// Length of time in seconds before we hand out more resources
 	"extract_amt"				"50"		// Amount of resources to give in each extraction
 	

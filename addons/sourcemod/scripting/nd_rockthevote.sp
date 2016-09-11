@@ -14,10 +14,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <sourcemod>
 #include <mapchooser>
+
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_rockthevote/nd_rockthevote.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
+#include <sourcemod>
 #include <nd_stocks>
 #include <nd_rounds>
+#include <nd_redstone>
 
 enum Bools
 {
@@ -34,19 +41,19 @@ enum Bools
 
 #define PREFIX "\x05[xG]"
 
-new const String:nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
+char nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
 {
 	"rtv",
 	"change map",
 	"changemap"
 };
 
-new 	voteCount,	
-	bool:g_Bool[Bools],
-	bool:g_hasVoted[MAXPLAYERS+1] = {false, ... },
-	Handle:RtvDisableTimer = INVALID_HANDLE;
+int voteCount;	
+bool g_Bool[Bools];
+bool g_hasVoted[MAXPLAYERS+1] = {false, ... };
+Handle RtvDisableTimer = INVALID_HANDLE;
 
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name 		= "[ND] Rock the Vote",
 	author 		= "Stickz",
@@ -55,11 +62,7 @@ public Plugin:myinfo =
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
-/* Auto Updater */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_rockthevote/nd_rockthevote.txt"
-#include "updater/standard.sp"
-
-public OnPluginStart()
+public void OnPluginStart()
 {
 	RegConsoleCmd("sm_rtv", CMD_RockTheVote);
 	RegConsoleCmd("sm_changemap", CMD_RockTheVote);
@@ -78,68 +81,67 @@ public OnPluginStart()
 	}
 }
 
-public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {	
 	StartRTVDisableTimer();
 }
 
-public Action:OnClientSayCommand(client, const String:command[], const String:sArgs[])
+public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
 {
 	if (client)
 	{
-		for (new idx = 0; idx < RTV_COMMANDS_SIZE; idx++)
+		for (int idx = 0; idx < RTV_COMMANDS_SIZE; idx++)
 		{
 			if (strcmp(sArgs, nd_rtv_commands[idx], false) == 0) 
 			{
-				new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
-	
+				//new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
+				//SetCmdReplySource(old);
+				
 				callRockTheVote(client);
-					
-				SetCmdReplySource(old);
-				return Plugin_Stop;				
+				return Plugin_Handled;				
 			}
 		}
 	}	
 	return Plugin_Continue;
 }
 
-public Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
 	if (!g_Bool[enableRTV] && RtvDisableTimer != INVALID_HANDLE)
 		CloseHandle(RtvDisableTimer);
 }
 
-public OnMapStart()
+public void OnMapStart()
 {
 	voteCount 		= 0;
 	g_Bool[enableRTV] 	= true;
 	g_Bool[hasPassedRTV] 	= false;
 	
-	for (new client = 1; client <= MaxClients; client++)
+	for (int client = 1; client <= MaxClients; client++)
 	{
 		g_hasVoted[client] = false;	
 	}
 }
 
-public Action:CMD_RockTheVote(client, args)
+public Action CMD_RockTheVote(int client, int args)
 {
 	callRockTheVote(client);
 	return Plugin_Handled;
 }
 
-public OnClientDisconnected(client)
+public void OnClientDisconnected(int client)
 {
 	resetValues(client);
 }
 
-public Action:TIMER_DisableRTV(Handle:timer)
+public Action TIMER_DisableRTV(Handle timer)
 {
 	g_Bool[enableRTV] = false;
 }
 
-callRockTheVote(client)
+void callRockTheVote(int client)
 {
-	new clientCount = ValidClientCount(true); 
+	int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
 	
 	if (!g_Bool[enableRTV])
 	{
@@ -168,10 +170,10 @@ callRockTheVote(client)
 	}
 }
 
-checkForPass(clientCount, bool:display = false, client = -1)
+void checkForPass(int clientCount, bool display = false, int client = -1)
 {
-	new Float:countFloat = clientCount * 0.51,
-		Remainder = RoundToNearest(countFloat) - voteCount;
+	float countFloat = clientCount * 0.51;
+	int Remainder = RoundToNearest(countFloat) - voteCount;
 		
 	if (Remainder <= 0)
 		prepMapChange();
@@ -180,16 +182,17 @@ checkForPass(clientCount, bool:display = false, client = -1)
 		displayVotes(Remainder, client);
 }
 
-resetValues(client)
+void resetValues(int client)
 {
 	if (g_hasVoted[client])
 	{
 		g_hasVoted[client] = false;
-		checkForPass(ValidClientCount(true));
+		int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
+		checkForPass(clientCount);
 	}
 }
 
-prepMapChange()
+void prepMapChange()
 {
 	g_Bool[hasPassedRTV] = true;
 	
@@ -202,7 +205,7 @@ prepMapChange()
 		FiveSecondChange();
 }
 
-public Action:Timer_DelayMapChange(Handle:timer)
+public Action Timer_DelayMapChange(Handle timer)
 {
 	if (!CanMapChooserStartVote())
 		return Plugin_Continue;
@@ -214,21 +217,41 @@ public Action:Timer_DelayMapChange(Handle:timer)
 	}
 }
 
-FiveSecondChange()
+void FiveSecondChange()
 {
 	ServerCommand("mp_roundtime 1");
 	PrintToChatAll("%s %t", PREFIX, "RTV Changing"); //RTV Successful: Map will change in five seconds.
 }
 
-displayVotes(Remainder, client)
+void displayVotes(int Remainder, int client)
 {	
-	decl String:name[64];
+	char name[64];
 	GetClientName(client, name, sizeof(name));
 	
 	PrintToChatAll("\x05%t", "Typed Change Map", name, NumberInEnglish(Remainder));
 }
 
-StartRTVDisableTimer()
+void StartRTVDisableTimer()
 {
 	RtvDisableTimer = CreateTimer(480.0, TIMER_DisableRTV, _, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+/* Natives */
+typedef NativeCall = function int (Handle plugin, int numParams);
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	CreateNative("ND_GetRtvStatus", Native_GetRtvStatus);
+	CreateNative("ND_ToogleRtvStatus", Native_ToogleRtvStatus);
+	return APLRes_Success;
+}
+
+public int Native_GetRtvStatus(Handle plugin, int numParams)
+{
+	return g_Bool[enableRTV];
+}
+
+public int Native_ToogleRtvStatus(Handle plugin, int numParams)
+{
+	g_Bool[enableRTV] = GetNativeCell(1);
 }
