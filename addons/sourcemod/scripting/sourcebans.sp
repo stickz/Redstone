@@ -307,7 +307,7 @@ public void OnClientAuthorized(int client, const char[] auth)
 	SQL_TQuery(DB, VerifyBan, Query, GetClientUserId(client), DBPrio_High);
 }
 
-public void OnRebuildAdminCache(AdminCachePart:part)
+public int OnRebuildAdminCache(AdminCachePart:part)
 {
 	loadPart = part;
 	switch (loadPart)
@@ -502,9 +502,7 @@ public Action CommandBanIp(int client, int args)
 	dataPack.WriteString(adminIp);
 	
 	char Query[256];
-	FormatEx(Query, sizeof(Query), "SELECT bid FROM %s_bans WHERE type = 1 AND ip = '%s' 
-								AND (length = 0 OR ends > UNIX_TIMESTAMP()) 
-								AND RemoveType IS NULL", DatabasePrefix, arg);
+	FormatEx(Query, sizeof(Query), "SELECT bid FROM %s_bans WHERE type = 1 AND ip = '%s' AND (length = 0 OR ends > UNIX_TIMESTAMP()) AND RemoveType IS NULL", DatabasePrefix, arg);
 	
 	SQL_TQuery(DB, SelectBanIpCallback, Query, dataPack, DBPrio_High);
 	return Plugin_Handled;
