@@ -3,7 +3,7 @@
 	"Retrigger Map Vote"
 	{
 		//{1} = Next Map
-		"es"		"Cycling to {1} canceled by player count thresholds. Map voting will now recommence."
+		"es"		"Ciclo a {1} cancelado por umbral de recuento de jugadores. La nueva votación comenzará ahora."
 	}
 	
 	//{1} = Next Map, {2} = Changed map
