@@ -1087,7 +1087,7 @@ public VerifyInsert(Handle owner, Handle hndl, const char[] error, any:dataPack)
 	
 	ReadPackCell(dataPack); // admin userid
 	int UserId = ReadPackCell(dataPack);
-	int time = ReadPackCell(dataPack);
+	new time = ReadPackCell(dataPack);
 	Handle ReasonPack = Handle:ReadPackCell(dataPack);
 	
 	char Name[64];
@@ -2371,7 +2371,7 @@ stock void UTIL_InsertTempBan(int time, const char[] name, const char[] auth, co
 	ReadPackCell(dataPack); // target userid
 	ReadPackCell(dataPack); // time
 	
-	Handle reasonPack = Handle ReadPackCell(dataPack);
+	Handle reasonPack = Handle:ReadPackCell(dataPack);
 	if (reasonPack != INVALID_HANDLE)
 		CloseHandle(reasonPack);
 		
@@ -2450,12 +2450,11 @@ stock void PrepareBan(int client, int target, int time, char[] reason, int size)
 		
 	GetClientName(target, name, sizeof(name));
 	
-	
 	if (CreateBan(client, target, time, reason))
 	{
 		if (!time)
 		{
-			ShowActivity(client, "%t", reason[0] == '\0' 	? ("Permabanned player", name) 
+			ShowActivity(client, "%t", (reason[0] == '\0') 	? ("Permabanned player", name) 
 									: ("Permabanned player reason", name, reason));
 		} 
 		
