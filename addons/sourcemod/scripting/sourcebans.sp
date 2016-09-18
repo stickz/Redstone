@@ -1051,7 +1051,7 @@ public VerifyInsert(Handle owner, Handle hndl, const char[] error, any:dataPack)
 		
 		int time = ReadPackCell(dataPack);
 		
-		Handle reasonPack = Handle ReadPackCell(dataPack);
+		Handle reasonPack = Handle:ReadPackCell(dataPack);
 		
 		char reason[128];
 		ReadPackString(reasonPack, reason, sizeof(reason));
@@ -1101,7 +1101,7 @@ public VerifyInsert(Handle owner, Handle hndl, const char[] error, any:dataPack)
 		ShowActivityEx(admin, Prefix, "%t", (Reason[0] == '\0') ? ("Permabanned player", Name) 
 									: ("Permabanned player reason", Name, Reason) );
 	} else	{
-		ShowActivityEx(admin, Prefix, "%t", Reason[0] == '\0' ? ("Banned player", Name, time) 
+		ShowActivityEx(admin, Prefix, "%t", (Reason[0] == '\0') ? ("Banned player", Name, time) 
 								      : ("Banned player reason", Name, time, Reason) );
 	}
 	
@@ -1222,7 +1222,7 @@ public SelectUnbanCallback(Handle owner, Handle hndl, const char[] error, any:da
 {
 	ResetPack(data);
 	
-	int admin = ReadPackCell(data);;
+	int admin = ReadPackCell(data);
 
 	char reason[128];
 	ReadPackString(data, reason, sizeof(reason));
@@ -1311,7 +1311,7 @@ public SelectAddbanCallback(Handle owner, Handle hndl, const char[] error, any:d
 {
 	ResetPack(data);
 	
-	int admin = ReadPackCell(data);;
+	int admin = ReadPackCell(data);
 	int minutes = ReadPackCell(data);
 
 	char reason[128];
@@ -1367,8 +1367,8 @@ public InsertAddbanCallback(Handle owner, Handle hndl, const char[] error, any:d
 {
 	ResetPack(data);
 	
-	int admin = ReadPackCell(data);;
-	int minutes = ReadPackCell(data);;
+	int admin = ReadPackCell(data);
+	int minutes = ReadPackCell(data);
 	
 	char authid[20];
 	ReadPackString(data, authid, sizeof(authid));
@@ -1457,7 +1457,7 @@ public ProcessQueueCallback(Handle owner, Handle hndl, const char[] error, any:d
 					DatabasePrefix, ip, auth, banName, startTime, startTime + time * 60, time * 60, banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, serverID);
 			}
 			
-			DataPack() authPack = new DataPack();
+			DataPack authPack = new DataPack();
 			authPack.WriteString(auth);
 			ResetPack(authPack);
 			SQL_TQuery(DB, AddedFromSQLiteCallback, query, authPack);
