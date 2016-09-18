@@ -19,6 +19,8 @@
 	{
 		//{1} = Player's Name
 		//{2} = Building Name from structminigame.phrases
+		//
+		//Example: Vertex is requesting a supply station.
 		"#format"	"{1:s},{2:s}"
 		"en"		"{1} is requesting {2}"
 	}
@@ -28,6 +30,8 @@
 		//{1} = Player's Name
 		//{2} = Building Name from structminigame.phrases
 		//{3} = Compass Name (see bellow)
+		//
+		//Example: Vertex is requesting a Supply Station on the west side.
 		"#format"	"{1:s},{2:s},{3:s}"
 		"en"		"{1} is requesting {2} on the {3} side"
 	}
@@ -37,6 +41,8 @@
 		//{1} = Player's Name
 		//{2} = Building Name from structminigame.phrases
 		//{3} = Location Name (see bellow)
+		//
+		//Example: Vertex is requesting a Transport Gate at base.
 		"#format"	"{1:s},{2:s},{3:s}"
 		"en"		"{1} is requesting {2} at {3}"
 	}
@@ -47,6 +53,8 @@
 		//{2} = Building Name from structminigame.phrases
 		//{3} = Location Name (see bellow)
 		//{4} = Compass Name (see bellow)
+		//
+		//Example: Vertex is requesting a Relay Tower at the north secondary
 		"#format"	"{1:s},{2:s},{3:s},{4:s}"
 		"en" 		"{1} is requesting {2} at the {4} {3}"
 	}
@@ -56,6 +64,8 @@
 	{
 		//{1} = Player's name
 		//{2} = Resource Name (see bellow)
+		//
+		//Example: Vertex says capture secondary
 		"#format"	"{1:s},{2:s}"
 		"en"		"{1} says capture {2}"
 	}
