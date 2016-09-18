@@ -1,0 +1,126 @@
+// Exported from SourceMod Translator
+// Date: 2016-09-18 20:58:39 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/260
+//
+"Phrases"
+{
+
+	"Team Languages"
+	{
+		"ru"		"Язык игры команды"
+	}
+
+	"Commander Language"
+	{
+		"ru"		"Язык игры командира {1}"
+	}
+
+	"Simple Building Request"
+	{
+		"ru"		"{1} просит {2}"
+	}
+
+	"Spot Building Request"
+	{
+		"ru"		"{1} просит {2} на {3}"
+	}
+
+	"Complex Building Request"
+	{
+		"ru"		"{1} просит {2} у {4} {3}"
+	}
+
+	"Capture Request"
+	{
+		"ru"		"{1} приказ захватиь {2}"
+	}
+
+	"Base Tert"
+	{
+		"ru"		"Маленький ресурс на базе"
+	}
+
+	"Tert"
+	{
+		"ru"		"Маленький ресурс"
+	}
+
+	"Translate Tag"
+	{
+		"ru"		"Переводчик"
+	}
+
+	"No Translate Keyword"
+	{
+		"ru"		"Нет перевода слова"
+	}
+
+	"Not On Team"
+	{
+		"ru"		"Вы должны играть в команде, чтобы использовать эту команду"
+	}
+
+	"No Team Commander"
+	{
+		"ru"		"Команде нужен командир"
+	}
+
+	"Roof"
+	{
+		"ru"		"На крыше"
+	}
+
+	"Base"
+	{
+		"ru"		"базе"
+	}
+
+	"Prim"
+	{
+		"ru"		"Основной ресурс"
+	}
+
+	"Pos"
+	{
+		"ru"		"Их расположение"
+	}
+
+	"Sec"
+	{
+		"ru"		"Второстепенный ресурс"
+	}
+
+	"North"
+	{
+		"ru"		"Север"
+	}
+
+	"South"
+	{
+		"ru"		"Юг"
+	}
+
+	"East"
+	{
+		"ru"		"Восток"
+	}
+
+	"West"
+	{
+		"ru"		"Запад"
+	}
+
+	"Right"
+	{
+		"ru"		"Справа"
+	}
+
+	"Left"
+	{
+		"ru"		"Слева"
+	}
+
+}

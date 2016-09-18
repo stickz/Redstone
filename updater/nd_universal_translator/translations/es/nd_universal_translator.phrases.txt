@@ -1,0 +1,131 @@
+// Exported from SourceMod Translator
+// Date: 2016-09-18 20:58:39 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/260
+//
+"Phrases"
+{
+
+	"Team Languages"
+	{
+		"es"		"Idiomas de equipo: {1}"
+	}
+
+	"Commander Language"
+	{
+		"es"		"El idioma del cliente de juego del comandante es {1}."
+	}
+
+	"Simple Building Request"
+	{
+		"es"		" {1} está solicitando {2} "
+	}
+
+	"Compass Building Request"
+	{
+		"es"		"{1} está solicitando {2} en el lado {3}"
+	}
+
+	"Spot Building Request"
+	{
+		"es"		" {1} solicita {2} en {3} "
+	}
+
+	"Complex Building Request"
+	{
+		"es"		" {1} está solicitando {2} en el {4} {3} "
+	}
+
+	"Capture Request"
+	{
+		"es"		" {1} dice: capturar {2} "
+	}
+
+	"Base Tert"
+	{
+		"es"		"Terciario de la base"
+	}
+
+	"Tert"
+	{
+		"es"		"Terciarios"
+	}
+
+	"Translate Tag"
+	{
+		"es"		"(Traductor)"
+	}
+
+	"No Translate Keyword"
+	{
+		"es"		"No se ha encontrado la traducción."
+	}
+
+	"Not On Team"
+	{
+		"es"		"Debes estar en un equipo para usar este comando"
+	}
+
+	"No Team Commander"
+	{
+		"es"		"Este equipo no tiene un comandante actualmente"
+	}
+
+	"Roof"
+	{
+		"es"		"Azotea"
+	}
+
+	"Base"
+	{
+		"es"		"Base"
+	}
+
+	"Prim"
+	{
+		"es"		"Primario"
+	}
+
+	"Pos"
+	{
+		"es"		"su posición actual"
+	}
+
+	"Sec"
+	{
+		"es"		"Secundario"
+	}
+
+	"North"
+	{
+		"es"		"Norte"
+	}
+
+	"South"
+	{
+		"es"		"Sur"
+	}
+
+	"East"
+	{
+		"es"		"Este"
+	}
+
+	"West"
+	{
+		"es"		"Oeste"
+	}
+
+	"Right"
+	{
+		"es"		"Derecha"
+	}
+
+	"Left"
+	{
+		"es"		"Izquierda"
+	}
+
+}
