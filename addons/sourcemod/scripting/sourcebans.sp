@@ -552,14 +552,10 @@ public Action CommandUnban(int client, int args)
 	char query[200];
 	
 	if (strncmp(arg, "STEAM_", 6) == 0)
-		Format(query, sizeof(query), "SELECT bid FROM %s_bans WHERE (type = 0 AND authid = '%s') 
-									AND (length = '0' OR ends > UNIX_TIMESTAMP()) 
-									AND RemoveType IS NULL", DatabasePrefix, arg);
+		Format(query, sizeof(query), "SELECT bid FROM %s_bans WHERE (type = 0 AND authid = '%s') AND (length = '0' OR ends > UNIX_TIMESTAMP()) AND RemoveType IS NULL", DatabasePrefix, arg);
 
 	else 
-		Format(query, sizeof(query), "SELECT bid FROM %s_bans WHERE (type = 1 AND ip = '%s') 
-									AND (length = '0' OR ends > UNIX_TIMESTAMP()) 
-									AND RemoveType IS NULL", DatabasePrefix, arg);
+		Format(query, sizeof(query), "SELECT bid FROM %s_bans WHERE (type = 1 AND ip = '%s') AND (length = '0' OR ends > UNIX_TIMESTAMP()) AND RemoveType IS NULL", DatabasePrefix, arg);
 	
 	SQL_TQuery(DB, SelectUnbanCallback, query, dataPack);
 	return Plugin_Handled;
@@ -636,9 +632,7 @@ public Action CommandAddBan(int client, int args)
 	dataPack.WriteString(adminIp);
 
 	char Query[256];
-	FormatEx(Query, sizeof(Query), "SELECT bid FROM %s_bans WHERE type = 0 AND authid = '%s' 
-								AND (length = 0 OR ends > UNIX_TIMESTAMP())
-								AND RemoveType IS NULL", DatabasePrefix, authid);
+	FormatEx(Query, sizeof(Query), "SELECT bid FROM %s_bans WHERE type = 0 AND authid = '%s' AND (length = 0 OR ends > UNIX_TIMESTAMP()) AND RemoveType IS NULL", DatabasePrefix, authid);
 	
 	SQL_TQuery(DB, SelectAddbanCallback, Query, dataPack, DBPrio_High);
 	return Plugin_Handled;
