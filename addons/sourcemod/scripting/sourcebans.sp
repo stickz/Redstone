@@ -283,7 +283,7 @@ public void OnClientDisconnect(int client)
 	g_ownReasons[client] = false;
 }
 
-public bool OnClientConnect(int client, char rejectmsg[], maxlen)
+public bool OnClientConnect(int client, char[] rejectmsg, int maxlen)
 {
 	PlayerStatus[client] = false;
 	return true;
@@ -302,9 +302,7 @@ public void OnClientAuthorized(int client, const char[] auth)
 	GetClientIP(client, ip, sizeof(ip));
 	
 	char Query[256];
-	FormatEx(Query, sizeof(Query), "SELECT bid FROM %s_bans WHERE 	((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR 
-									(type = 1 AND ip = '%s')) AND (length = '0' OR 
-									ends > UNIX_TIMESTAMP()) AND RemoveType IS NULL", DatabasePrefix, auth[8], ip);
+	FormatEx(Query, sizeof(Query), "SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND (length = '0' OR ends > UNIX_TIMESTAMP()) AND RemoveType IS NULL", DatabasePrefix, auth[8], ip);
 
 	SQL_TQuery(DB, VerifyBan, Query, GetClientUserId(client), DBPrio_High);
 }
