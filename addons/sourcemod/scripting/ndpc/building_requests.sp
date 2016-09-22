@@ -84,7 +84,7 @@ bool CheckBuildingRequest(int client, const char[] sArgs)
 	if (!g_Enable[BuildingReqs].BoolValue) 
 		return false; //don't use feature if not enabled
 
-	if (StrStartsWith(sArgs, "request")) //if string starts with build
+	if (StrStartsWith(sArgs, "build")) //if string starts with build
 	{
 		int building = GetBuildingByIndex(sArgs);
 		
