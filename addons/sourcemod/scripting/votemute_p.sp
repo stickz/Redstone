@@ -115,7 +115,7 @@ public Action Command_Votesilence(int client, int args)
 		if (target == INVALID_TARGET)
 			return Plugin_Handled;
 
-		else if (isSilenced(target))
+		else if (IsSourceCommSilenced(target))
 		{
 			PrintToChat(client, "%s %t!", PREFIX, "Already Silenced"); //This client is already silenced
 			return Plugin_Handled;		
@@ -175,7 +175,7 @@ bool CanStartVote(int client)
 	if (!TestVoteDelay(client))
 		return false;
 		
-	if (isSilenced(client))
+	if (IsSourceCommSilenced(client))
 	{
 		PrintToChat(client, "%s %t!", PREFIX, "Silence Use"); //You cannot use this feature while silenced
 		return false;				
@@ -366,11 +366,6 @@ public int Handler_VoteCallback(Menu menu, MenuAction action, int param1, int pa
 		}	
 	}
 	return 0;	
-}
-
-bool isSilenced(client)
-{
-	return SourceComms_GetClientMuteType(client) != bNot && SourceComms_GetClientGagType(client) != bNot;
 }
 
 float GetVotePercent(int votes, int totalVotes)
