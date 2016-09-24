@@ -32,9 +32,17 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	AddUpdaterLibrary(); //auto-updater
+	
+	HookEvent("round_win", Event_RoundEnd, EventHookMode_Pre);
+	HookEvent("timeleft_5s", Event_RoundEnd, EventHookMode_PostNoCopy);
 }
 
 public Updater_OnPluginUpdated()
 {
 	PrintToChatAll("\x05[xG] Server translations updated from github!");
+}
+
+public Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
+{
+	ServerCommand("sm_updater_check");
 }
