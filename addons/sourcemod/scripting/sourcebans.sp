@@ -354,7 +354,7 @@ public Action ChatHook(client, args)
 		
 		g_ownReasons[client] = false;
 		
-		if (StrEqual(reason[0]; "!noreason"))
+		if (StrEqual(reason[0], "!noreason"))
 		{
 			PrintToChat(client, "%c[%cSourceBans%c]%c %t", GREEN, NAMECOLOR, GREEN, NAMECOLOR, "Chat Reason Aborted");
 			return Plugin_Handled;
