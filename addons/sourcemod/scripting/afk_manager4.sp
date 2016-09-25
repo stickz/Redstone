@@ -13,6 +13,7 @@
 #include <sourcemod>
 #include <nd_stocks>
 #include <nd_rounds>
+#include <nd_redstone>
 
 #pragma semicolon 1
 
@@ -352,7 +353,7 @@ int AFK_GetClientCount(bool inGameOnly = true)
 
 void CheckMinPlayers()
 {
-	int players = AFK_GetClientCount();
+	int players = RED_CC_AVAILABLE() ? RED_ClientCount() : AFK_GetClientCount();
 	bMovePlayers = players >= g_cvar[MinPlayersMove].IntValue;
 	bKickPlayers = players >= g_cvar[MinPlayersKick].IntValue;
 }
