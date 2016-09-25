@@ -269,7 +269,7 @@ public OnClientDisconnect(client)
 	CloseGagExpireTimer(client);
 }
 
-public bool OnClientConnect(client, char rejectmsg[], maxlen)
+public bool OnClientConnect(client, char[] rejectmsg, maxlen)
 {
 	g_bPlayerStatus[client] = false;
 	return true;
@@ -589,18 +589,16 @@ public OnAdminMenuReady(Handle topmenu)
 	AddToTopMenu(hTopMenu, "sourcecomm_list", TopMenuObject_Item, Handle_MenuList, MenuObject, "sm_commlist", ADMFLAG_CHAT);
 }
 
-public Handle_Commands(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char buffer[], maxlength)
+public Handle_Commands(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char[] buffer, maxlength)
 {
 	switch (action)
 	{
-		case TopMenuAction_DisplayOption:
-		Format(buffer, maxlength, "%T", "AdminMenu_Main", param1);
-		case TopMenuAction_DisplayTitle:
-		Format(buffer, maxlength, "%T", "AdminMenu_Select_Main", param1);
+		case TopMenuAction_DisplayOption: Format(buffer, maxlength, "%T", "AdminMenu_Main", param1);
+		case TopMenuAction_DisplayTitle: Format(buffer, maxlength, "%T", "AdminMenu_Select_Main", param1);
 	}
 }
 
-public Handle_MenuGag(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char buffer[], maxlength)
+public Handle_MenuGag(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char[] buffer, maxlength)
 {
 	if (action == TopMenuAction_DisplayOption)
 		Format(buffer, maxlength, "%T", "AdminMenu_Gag", param1);
@@ -608,7 +606,7 @@ public Handle_MenuGag(Handle menu, TopMenuAction action, TopMenuObject:object_id
 		AdminMenu_Target(param1, TYPE_GAG);
 }
 
-public Handle_MenuUnGag(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char buffer[], maxlength)
+public Handle_MenuUnGag(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char[] buffer, maxlength)
 {
 	if (action == TopMenuAction_DisplayOption)
 		Format(buffer, maxlength, "%T", "AdminMenu_UnGag", param1);
@@ -616,7 +614,7 @@ public Handle_MenuUnGag(Handle menu, TopMenuAction action, TopMenuObject:object_
 		AdminMenu_Target(param1, TYPE_UNGAG);
 }
 
-public Handle_MenuMute(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char buffer[], maxlength)
+public Handle_MenuMute(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char[] buffer, maxlength)
 {
 	if (action == TopMenuAction_DisplayOption)
 		Format(buffer, maxlength, "%T", "AdminMenu_Mute", param1);
@@ -624,7 +622,7 @@ public Handle_MenuMute(Handle menu, TopMenuAction action, TopMenuObject:object_i
 		AdminMenu_Target(param1, TYPE_MUTE);
 }
 
-public Handle_MenuUnMute(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char buffer[], maxlength)
+public Handle_MenuUnMute(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char[] buffer, maxlength)
 {
 	if (action == TopMenuAction_DisplayOption)
 		Format(buffer, maxlength, "%T", "AdminMenu_UnMute", param1);
@@ -632,7 +630,7 @@ public Handle_MenuUnMute(Handle menu, TopMenuAction action, TopMenuObject:object
 		AdminMenu_Target(param1, TYPE_UNMUTE);
 }
 
-public Handle_MenuSilence(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char buffer[], maxlength)
+public Handle_MenuSilence(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char[] buffer, maxlength)
 {
 	if (action == TopMenuAction_DisplayOption)
 		Format(buffer, maxlength, "%T", "AdminMenu_Silence", param1);
@@ -640,7 +638,7 @@ public Handle_MenuSilence(Handle menu, TopMenuAction action, TopMenuObject:objec
 		AdminMenu_Target(param1, TYPE_SILENCE);
 }
 
-public Handle_MenuUnSilence(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char buffer[], maxlength)
+public Handle_MenuUnSilence(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char[] buffer, maxlength)
 {
 	if (action == TopMenuAction_DisplayOption)
 		Format(buffer, maxlength, "%T", "AdminMenu_UnSilence", param1);
@@ -648,7 +646,7 @@ public Handle_MenuUnSilence(Handle menu, TopMenuAction action, TopMenuObject:obj
 		AdminMenu_Target(param1, TYPE_UNSILENCE);
 }
 
-public Handle_MenuList(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char buffer[], maxlength)
+public Handle_MenuList(Handle menu, TopMenuAction action, TopMenuObject:object_id, param1, char[] buffer, maxlength)
 {
 	if (action == TopMenuAction_DisplayOption)
 		Format(buffer, maxlength, "%T", "AdminMenu_List", param1);
@@ -659,7 +657,7 @@ public Handle_MenuList(Handle menu, TopMenuAction action, TopMenuObject:object_i
 	}
 }
 
-AdminMenu_Target(client, type)
+AdminMenu_Target(int client, int type)
 {
 	char Title[192];
 	char Option[32];
@@ -778,7 +776,7 @@ public MenuHandler_MenuTarget(Handle menu, MenuAction action, param1, param2)
 		}
 		case MenuAction_Select:
 		{
-			char Option[32], char Temp[2][8];
+			char Option[32]; char Temp[2][8];
 			GetMenuItem(menu, param2, Option, sizeof(Option));
 			ExplodeString(Option, " ", Temp, 2, 8);
 			int target = GetClientOfUserId(StringToInt(Temp[0]));
@@ -798,7 +796,7 @@ public MenuHandler_MenuTarget(Handle menu, MenuAction action, param1, param2)
 AdminMenu_Duration(client, target, type)
 {
 	Handle hMenu = CreateMenu(MenuHandler_MenuDuration);
-	char sBuffer[192], char sTemp[64];
+	char sBuffer[192]; char sTemp[64];
 	Format(sBuffer, sizeof(sBuffer), "%T", "AdminMenu_Title_Durations", client);
 	SetMenuTitle(hMenu, sBuffer);
 	SetMenuExitBackButton(hMenu, true);
@@ -828,7 +826,7 @@ public MenuHandler_MenuDuration(Handle menu, MenuAction action, param1, param2)
 		}
 		case MenuAction_Select:
 		{
-			char sOption[32], char sTemp[3][8];
+			char sOption[32]; char sTemp[3][8];
 			GetMenuItem(menu, param2, sOption, sizeof(sOption));
 			ExplodeString(sOption, " ", sTemp, 3, 8);
 			// TargetID TYPE_BLOCK index_of_Time
@@ -851,7 +849,7 @@ public MenuHandler_MenuDuration(Handle menu, MenuAction action, param1, param2)
 AdminMenu_Reason(client, target, type, lengthIndex)
 {
 	Handle hMenu = CreateMenu(MenuHandler_MenuReason);
-	char sBuffer[192], char sTemp[64];
+	char sBuffer[192]; char sTemp[64];
 	Format(sBuffer, sizeof(sBuffer), "%T", "AdminMenu_Title_Reasons", client);
 	SetMenuTitle(hMenu, sBuffer);
 	SetMenuExitBackButton(hMenu, true);
