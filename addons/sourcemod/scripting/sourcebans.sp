@@ -46,6 +46,8 @@
 
 #define FLAG_LETTERS_SIZE 26
 
+#define Prefix "[SourceBans] "
+
 //#define DEBUG
 
 enum State/* ConfigState */
@@ -62,8 +64,6 @@ int g_BanTime[MAXPLAYERS + 1] =  { -1, ... };
 new State:ConfigState;
 Handle ConfigParser;
 Handle hTopMenu = INVALID_HANDLE;
-
-char Prefix = "[SourceBans] ";
 
 char ServerIp[24];
 char ServerPort[7];
@@ -134,9 +134,9 @@ public Plugin myinfo =
 };
 
 #if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 3
-public APLRes AskPluginLoad2(Handle myself, bool late, char error, err_max)
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, err_max)
 #else
-public bool AskPluginLoad(Handle myself, bool late, char error, err_max)
+public bool AskPluginLoad(Handle myself, bool late, char[] error, err_max)
 #endif
 {
 	RegPluginLibrary("sourcebans");
@@ -291,7 +291,7 @@ public OnClientDisconnect(client)
 	g_ownReasons[client] = false;
 }
 
-public bool OnClientConnect(client, char rejectmsg, maxlen)
+public bool OnClientConnect(client, char[] rejectmsg, maxlen)
 {
 	PlayerStatus[client] = false;
 	return true;
@@ -309,7 +309,7 @@ public OnClientAuthorized(client, const char[] auth)
 	char Query[256]; 
 	char ip[30];
 	GetClientIP(client, ip, sizeof(ip));
-	FormatEx(Query, sizeof(Query), "SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND (length = '0' OR ends > UNIX_TIMESTAMP()) AND RemoveType IS NULL", DatabasePrefix, auth[8]; ip);
+	FormatEx(Query, sizeof(Query), "SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND (length = '0' OR ends > UNIX_TIMESTAMP()) AND RemoveType IS NULL", DatabasePrefix, auth[8], ip);
 	#if defined DEBUG
 	LogToFile(logFile, "Checking ban for: %s", auth);
 	#endif
