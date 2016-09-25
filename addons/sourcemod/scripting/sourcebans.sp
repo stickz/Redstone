@@ -224,11 +224,10 @@ public OnPluginStart()
 
 public OnAllPluginsLoaded()
 {
-	Handle:topmenu;
+	Handle tMenu;
 	
-	if (LibraryExists("adminmenu") && ((topmenu = GetAdminTopMenu()) != INVALID_HANDLE))
-	{
-		OnAdminMenuReady(topmenu);
+	if (LibraryExists("adminmenu") && ((tMenu = GetAdminTopMenu()) != INVALID_HANDLE)) {
+		OnAdminMenuReady(tMenu);
 	}
 }
 
