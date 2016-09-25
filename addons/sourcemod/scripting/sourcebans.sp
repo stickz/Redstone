@@ -48,8 +48,6 @@
 
 #define Prefix "[SourceBans] "
 
-//#define DEBUG
-
 enum State/* ConfigState */
 {
 	ConfigStateNone = 0, 
@@ -226,10 +224,7 @@ public OnPluginStart()
 
 public OnAllPluginsLoaded()
 {
-	Handle topmenu;
-	#if defined DEBUG
-	LogToFile(logFile, "OnAllPluginsLoaded()");
-	#endif
+	Handle:topmenu;
 	
 	if (LibraryExists("adminmenu") && ((topmenu = GetAdminTopMenu()) != INVALID_HANDLE))
 	{
@@ -310,10 +305,6 @@ public OnClientAuthorized(client, const char[] auth)
 	char ip[30];
 	GetClientIP(client, ip, sizeof(ip));
 	FormatEx(Query, sizeof(Query), "SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND (length = '0' OR ends > UNIX_TIMESTAMP()) AND RemoveType IS NULL", DatabasePrefix, auth[8], ip);
-	#if defined DEBUG
-	LogToFile(logFile, "Checking ban for: %s", auth);
-	#endif
-	
 	SQL_TQuery(DB, VerifyBan, Query, GetClientUserId(client), DBPrio_High);
 }
 
@@ -648,17 +639,11 @@ public Action sm_rehash(args)
 
 // MENU CODE //
 
-public OnAdminMenuReady(Handle topmenu)
+public OnAdminMenuReady(Handle:topmenu)
 {
-	#if defined DEBUG
-	LogToFile(logFile, "OnAdminMenuReady()");
-	#endif
-	
 	/* Block us from being called twice */
 	if (topmenu == hTopMenu)
-	{
 		return;
-	}
 	
 	/* Save the Handle */
 	hTopMenu = topmenu;
@@ -671,14 +656,10 @@ public OnAdminMenuReady(Handle topmenu)
 	}
 }
 
-public AdminMenu_Ban(Handle topmenu, TopMenuAction:action, TopMenuObject:object_id, param, char buffer, maxlength)
+public AdminMenu_Ban(Handle:topmenu, TopMenuAction:action, TopMenuObject:object_id, param, char buffer, maxlength)
 {
 	/* Clear the Ownreason bool, so he is able to chat again;) */
 	g_ownReasons[param] = false;
-	
-	#if defined DEBUG
-	LogToFile(logFile, "AdminMenu_Ban()");
-	#endif
 	
 	switch (action)
 	{
@@ -686,19 +667,11 @@ public AdminMenu_Ban(Handle topmenu, TopMenuAction:action, TopMenuObject:object_
 		case TopMenuAction_DisplayOption:
 		{
 			Format(buffer, maxlength, "%T", "Ban player", param);
-			
-			#if defined DEBUG
-			LogToFile(logFile, "AdminMenu_Ban() -> Formatted the Ban option text");
-			#endif
 		}
 		
 		case TopMenuAction_SelectOption:
 		{
-			DisplayBanTargetMenu(param); // Someone chose to ban someone, show the list of users menu
-			
-			#if defined DEBUG
-			LogToFile(logFile, "AdminMenu_Ban() -> DisplayBanTargetMenu()");
-			#endif
+			DisplayBanTargetMenu(param); // Someone chose to ban someone, show the list of users menu		
 		}
 	}
 }
@@ -795,10 +768,6 @@ public HackingSelected(Handle menu, MenuAction:action, param1, param2)
 
 public MenuHandler_BanPlayerList(Handle menu, MenuAction:action, param1, param2)
 {
-	#if defined DEBUG
-	LogToFile(logFile, "MenuHandler_BanPlayerList()");
-	#endif
-	
 	switch (action)
 	{
 		case MenuAction_End:
@@ -838,10 +807,6 @@ public MenuHandler_BanPlayerList(Handle menu, MenuAction:action, param1, param2)
 
 public MenuHandler_BanTimeList(Handle menu, MenuAction:action, param1, param2)
 {
-	#if defined DEBUG
-	LogToFile(logFile, "MenuHandler_BanTimeList()");
-	#endif
-	
 	switch (action)
 	{
 		case MenuAction_End:
@@ -872,9 +837,6 @@ public MenuHandler_BanTimeList(Handle menu, MenuAction:action, param1, param2)
 
 stock DisplayBanTargetMenu(client)
 {
-	#if defined DEBUG
-	LogToFile(logFile, "DisplayBanTargetMenu()");
-	#endif
 	Handle menu = CreateMenu(MenuHandler_BanPlayerList); // Create a int menu, pass it the handler.
 	
 	char title[100];
@@ -890,10 +852,6 @@ stock DisplayBanTargetMenu(client)
 
 stock DisplayBanTimeMenu(client)
 {
-	#if defined DEBUG
-	LogToFile(logFile, "DisplayBanTimeMenu()");
-	#endif
-	
 	Handle menu = CreateMenu(MenuHandler_BanTimeList);
 	
 	char title[100];
@@ -959,9 +917,6 @@ public GotDatabase(Handle owner, Handle hndl, const char[] error, any:data)
 		curLoading++;
 		SQL_TQuery(DB, GroupsDone, query);
 		
-		#if defined DEBUG
-		LogToFile(logFile, "Fetching Group List");
-		#endif
 		loadGroups = false;
 	}
 	
@@ -992,11 +947,7 @@ public GotDatabase(Handle owner, Handle hndl, const char[] error, any:data)
 		}
 		curLoading++;
 		SQL_TQuery(DB, AdminsDone, query);
-		
-		#if defined DEBUG
-		LogToFile(logFile, "Fetching Admin List");
-		LogToFile(logFile, query);
-		#endif
+
 		loadAdmins = false;
 	}
 	g_bConnecting = false;
@@ -1507,9 +1458,6 @@ public VerifyBan(Handle owner, Handle hndl, const char[] error, any:userid)
 		KickClient(client, "%t", "Banned Check Site", WebsiteAddress);
 		return;
 	}
-	#if defined DEBUG
-	LogToFile(logFile, "%s is NOT banned.", clientAuth);
-	#endif
 	
 	PlayerStatus[client] = true;
 }
@@ -1590,10 +1538,6 @@ public AdminsDone(Handle owner, Handle hndl, const char[] error, any:data)
 			}
 		}
 		
-		#if defined DEBUG
-		LogToFile(logFile, "Given %s (%s) admin", name, identity);
-		#endif
-		
 		int curPos = 0;
 		new GroupId:curGrp = INVALID_GROUP_ID;
 		int numGroups;
@@ -1657,17 +1601,10 @@ public AdminsDone(Handle owner, Handle hndl, const char[] error, any:data)
 				
 				// Only try to inherit the group, if it's a int one.
 				if (numGroups != -2 && !AdminInheritGroup(curAdm, curGrp))
-				{
 					LogToFile(logFile, "Unable to inherit group \"%s\"", groups[curPos]);
-				}
 				
 				if (GetAdminImmunityLevel(curAdm) < Immunity)
-				{
 					SetAdminImmunityLevel(curAdm, Immunity);
-				}
-				#if defined DEBUG
-				LogToFile(logFile, "Admin %s (%s) has %d immunity", name, identity, Immunity);
-				#endif
 			}
 		}
 		
@@ -1690,10 +1627,6 @@ public AdminsDone(Handle owner, Handle hndl, const char[] error, any:data)
 	if (backupConfig)
 		KeyValuesToFile(adminsKV, adminsLoc);
 	CloseHandle(adminsKV);
-	
-	#if defined DEBUG
-	LogToFile(logFile, "Finished loading %i admins.", admCount);
-	#endif
 	
 	--curLoading;
 	CheckLoadAdmins();
@@ -1764,12 +1697,7 @@ public GroupsDone(Handle owner, Handle hndl, const char[] error, any:data)
 		
 		// Set the group immunity.
 		if (Immunity > 0)
-		{
 			SetAdmGroupImmunityLevel(curGrp, Immunity);
-			#if defined DEBUG
-			LogToFile(logFile, "Group %s has %d immunity", grpName, Immunity);
-			#endif
-		}
 		
 		grpCount++;
 	}
@@ -1777,10 +1705,6 @@ public GroupsDone(Handle owner, Handle hndl, const char[] error, any:data)
 	if (backupConfig)
 		KeyValuesToFile(groupsKV, groupsLoc);
 	CloseHandle(groupsKV);
-	
-	#if defined DEBUG
-	LogToFile(logFile, "Finished loading %i groups.", grpCount);
-	#endif
 	
 	// Load the group overrides
 	char query[512];
@@ -1836,11 +1760,7 @@ public GroupsSecondPass(Handle owner, Handle hndl, const char[] error, any:data)
 		if (immuneGrp == INVALID_GROUP_ID)
 			continue;
 		
-		SetAdmGroupImmuneFrom(curGrp, immuneGrp);
-		
-		#if defined DEBUG
-		LogToFile(logFile, "Group %s inhertied immunity from group %s", grpName, immunityGrpName);
-		#endif
+		SetAdmGroupImmuneFrom(curGrp, immuneGrp);		
 	}
 	--curLoading;
 	CheckLoadAdmins();
@@ -1883,10 +1803,6 @@ public LoadGroupsOverrides(Handle owner, Handle hndl, const char[] error, any:da
 		
 		iRule = StrEqual(sAllowed, "allow") ? Command_Allow : Command_Deny;
 		iType = StrEqual(sType, "group") ? Override_CommandGroup : Override_Command;
-		
-		#if defined DEBUG
-		PrintToServer("AddAdmGroupCmdOverride(%i, %s, %i, %i)", curGrp, sCommand, iType, iRule);
-		#endif
 		
 		// Save overrides into admin_groups.cfg backup
 		if (KvJumpToKey(groupsKV, sGroupName))
@@ -1936,10 +1852,6 @@ public OverridesDone(Handle owner, Handle hndl, const char[] error, any:data)
 			sFlags[0] = ' ';
 			sFlags[1] = '\0';
 		}
-		
-		#if defined DEBUG
-		LogToFile(logFile, "Adding override (%s, %s, %s)", sType, sName, sFlags);
-		#endif
 		
 		if (StrEqual(sType, "command"))
 		{
@@ -2353,9 +2265,6 @@ stock InsertServerInfo()
 
 void PrepareBan(int client, int target, int time, char[] reason, int size)
 {
-	#if defined DEBUG
-	LogToFile(logFile, "PrepareBan()");
-	#endif
 	if (!target || !IsClientInGame(target))
 		return;
 	char authid[64]; char name[32]; char bannedSite[512];
@@ -2369,19 +2278,19 @@ void PrepareBan(int client, int target, int time, char[] reason, int size)
 		if (!time)
 		{
 			if (reason[0] == '\0')
-			{
 				ShowActivity(client, "%t", "Permabanned player", name);
-			} else {
-				ShowActivity(client, "%t", "Permabanned player reason", name, reason);
-			}
-		} else {
+			else
+				ShowActivity(client, "%t", "Permabanned player reason", name, reason);			
+		} 
+
+		else 
+		{
 			if (reason[0] == '\0')
-			{
 				ShowActivity(client, "%t", "Banned player", name, time);
-			} else {
-				ShowActivity(client, "%t", "Banned player reason", name, time, reason);
-			}
+			else
+				ShowActivity(client, "%t", "Banned player reason", name, time, reason);			
 		}
+
 		LogAction(client, target, "\"%L\" banned \"%L\" (minutes \"%d\") (reason \"%s\")", client, target, time, reason);
 		
 		if (time > 5 || time == 0)
@@ -2454,9 +2363,6 @@ stock ParseBackupConfig_Overrides()
 				KvGetSectionName(hKV, sName, sizeof(sName));
 				KvGetString(hKV, NULL_STRING, sFlags, sizeof(sFlags));
 				AddCommandOverride(sName, type, ReadFlagString(sFlags));
-				#if defined _DEBUG
-				PrintToServer("Adding override (%s, %s, %s)", sSection, sName, sFlags);
-				#endif
 			} while (KvGotoNextKey(hKV, false));
 			KvGoBack(hKV);
 		}
