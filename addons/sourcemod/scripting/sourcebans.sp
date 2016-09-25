@@ -736,7 +736,7 @@ public HackingSelected(Handle:menu, MenuAction:action, param1, param2)
 		{
 			if (param2 == MenuCancel_Disconnected)
 			{
-				Handle:Pack = PlayerDataPack[param1];
+				new Handle:Pack = PlayerDataPack[param1];
 				
 				if (Pack != INVALID_HANDLE)
 				{
@@ -747,8 +747,7 @@ public HackingSelected(Handle:menu, MenuAction:action, param1, param2)
 					ReadPackCell(Pack); // time
 					new Handle:ReasonPack = Handle:ReadPackCell(Pack);
 					
-					if (ReasonPack != INVALID_HANDLE)
-					{
+					if (ReasonPack != INVALID_HANDLE) {
 						CloseHandle(ReasonPack);
 					}
 					
@@ -967,7 +966,7 @@ public VerifyInsert(Handle owner, Handle hndl, const char[] error, any:dataPack)
 		ReadPackCell(dataPack); // admin userid
 		ReadPackCell(dataPack); // target userid
 		int time = ReadPackCell(dataPack);
-		Handle:reasonPack = Handle:ReadPackCell(dataPack);
+		new Handle:reasonPack = Handle:ReadPackCell(dataPack);
 		char reason[128];
 		ReadPackString(reasonPack, reason, sizeof(reason));
 		char name[50];
