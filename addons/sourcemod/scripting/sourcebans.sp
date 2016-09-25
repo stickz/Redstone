@@ -131,21 +131,13 @@ public Plugin myinfo =
 	url = "https://sarabveer.github.io/SourceBans-Fork/"
 };
 
-#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 3
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, err_max)
-#else
-public bool AskPluginLoad(Handle myself, bool late, char[] error, err_max)
-#endif
 {
 	RegPluginLibrary("sourcebans");
 	CreateNative("SBBanPlayer", Native_SBBanPlayer);
 	LateLoaded = late;
 	
-	#if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 3
 	return APLRes_Success;
-	#else
-	return true;
-	#endif
 }
 
 public OnPluginStart()
