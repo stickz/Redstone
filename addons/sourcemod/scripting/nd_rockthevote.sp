@@ -58,7 +58,7 @@ public Plugin myinfo =
 	name 		= "[ND] Rock the Vote",
 	author 		= "Stickz",
 	description 	= "Vote to change map on ND",
-	version 	= "dummy",
+	version 	= "rebuild",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
