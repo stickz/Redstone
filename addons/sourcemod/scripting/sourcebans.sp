@@ -361,7 +361,7 @@ public Action ChatHook(client, args)
 		}
 		
 		// ban him!
-		PrepareBan(client, g_BanTarget[client]; g_BanTime[client]; reason, sizeof(reason));
+		PrepareBan(client, g_BanTarget[client], g_BanTime[client], reason, sizeof(reason));
 		
 		// block the reason to be sent in chat
 		return Plugin_Handled;
@@ -450,7 +450,7 @@ public Action CommandBanIp(client, args)
 	GetCmdArgString(Arguments, sizeof(Arguments));
 	len = BreakString(Arguments, arg, sizeof(arg));
 	
-	if ((next_len = BreakString(Arguments[len]; time, sizeof(time))) != -1)
+	if ((next_len = BreakString(Arguments[len], time, sizeof(time))) != -1)
 	{
 		len += next_len;
 	}
@@ -592,7 +592,7 @@ public Action CommandAddBan(client, args)
 	total_len += len;
 	
 	/* Get steamid */
-	if ((len = BreakString(arg_string[total_len]; authid, sizeof(authid))) != -1)
+	if ((len = BreakString(arg_string[total_len], authid, sizeof(authid))) != -1)
 	{
 		total_len += len;
 	}
@@ -753,7 +753,7 @@ public ReasonSelected(Handle menu, MenuAction action, param1, param2)
 			}
 			
 			else if (g_BanTarget[param1] != -1 && g_BanTime[param1] != -1)
-				PrepareBan(param1, g_BanTarget[param1]; g_BanTime[param1]; info, sizeof(info));
+				PrepareBan(param1, g_BanTarget[param1], g_BanTime[param1], info, sizeof(info));
 		}
 		
 		case MenuAction_Cancel:
@@ -785,7 +785,7 @@ public HackingSelected(Handle menu, MenuAction action, param1, param2)
 			GetMenuItem(menu, param2, key, sizeof(key), _, info, sizeof(info));
 			
 			if (g_BanTarget[param1] != -1 && g_BanTime[param1] != -1)
-				PrepareBan(param1, g_BanTarget[param1]; g_BanTime[param1]; info, sizeof(info));
+				PrepareBan(param1, g_BanTarget[param1], g_BanTime[param1], info, sizeof(info));
 		}
 		
 		case MenuAction_Cancel:
@@ -1158,12 +1158,12 @@ public SelectBanIpCallback(Handle owner, Handle hndl, const char[] error, any:da
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (type, ip, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						(1, '%s', '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						(SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1), ' ')", 
-			DatabasePrefix, ip, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, DatabasePrefix, ServerIp, ServerPort);
+			DatabasePrefix, ip, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, DatabasePrefix, ServerIp, ServerPort);
 	} else {
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (type, ip, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						(1, '%s', '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						%d, ' ')", 
-			DatabasePrefix, ip, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, serverID);
+			DatabasePrefix, ip, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, serverID);
 	}
 	
 	SQL_TQuery(DB, InsertBanIpCallback, Query, data, DBPrio_High);
@@ -1252,7 +1252,7 @@ public SelectUnbanCallback(Handle owner, Handle hndl, const char[] error, any:da
 		
 		char query[1000];
 		Format(query, sizeof(query), "UPDATE %s_bans SET RemovedBy = (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), RemoveType = 'U', RemovedOn = UNIX_TIMESTAMP(), ureason = '%s' WHERE bid = %d", 
-			DatabasePrefix, DatabasePrefix, adminAuth, adminAuth[8]; unbanReason, bid);
+			DatabasePrefix, DatabasePrefix, adminAuth, adminAuth[8], unbanReason, bid);
 		
 		SQL_TQuery(DB, InsertUnbanCallback, query, data);
 	}
@@ -1331,12 +1331,12 @@ public SelectAddbanCallback(Handle owner, Handle hndl, const char[] error, any:d
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (authid, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						('%s', '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						(SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1), ' ')", 
-			DatabasePrefix, authid, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, DatabasePrefix, ServerIp, ServerPort);
+			DatabasePrefix, authid, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, DatabasePrefix, ServerIp, ServerPort);
 	} else {
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (authid, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						('%s', '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						%d, ' ')", 
-			DatabasePrefix, authid, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, serverID);
+			DatabasePrefix, authid, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, serverID);
 	}
 	
 	SQL_TQuery(DB, InsertAddbanCallback, Query, data, DBPrio_High);
@@ -1424,7 +1424,7 @@ public ProcessQueueCallback(Handle owner, Handle hndl, const char[] error, any:d
 					"INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid) VALUES  \
 						('%s', '%s', '%s', %d, %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						(SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1))", 
-					DatabasePrefix, ip, auth, banName, startTime, startTime + time * 60, time * 60, banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, DatabasePrefix, ServerIp, ServerPort);
+					DatabasePrefix, ip, auth, banName, startTime, startTime + time * 60, time * 60, banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, DatabasePrefix, ServerIp, ServerPort);
 			}
 			else
 			{
@@ -1432,7 +1432,7 @@ public ProcessQueueCallback(Handle owner, Handle hndl, const char[] error, any:d
 					"INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid) VALUES  \
 						('%s', '%s', '%s', %d, %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						%d)", 
-					DatabasePrefix, ip, auth, banName, startTime, startTime + time * 60, time * 60, banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, serverID);
+					DatabasePrefix, ip, auth, banName, startTime, startTime + time * 60, time * 60, banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, serverID);
 			}
 			Handle authPack = CreateDataPack();
 			WritePackString(authPack, auth);
@@ -1528,14 +1528,14 @@ public VerifyBan(Handle owner, Handle hndl, const char[] error, any:userid)
 			FormatEx(Query, sizeof(Query), "INSERT INTO %s_banlog (sid ,time ,name ,bid) VALUES  \
 				((SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1), UNIX_TIMESTAMP(), '%s', \
 				(SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND RemoveType IS NULL LIMIT 0,1))", 
-				DatabasePrefix, DatabasePrefix, ServerIp, ServerPort, Name, DatabasePrefix, clientAuth[8]; clientIp);
+				DatabasePrefix, DatabasePrefix, ServerIp, ServerPort, Name, DatabasePrefix, clientAuth[8], clientIp);
 		}
 		else
 		{
 			FormatEx(Query, sizeof(Query), "INSERT INTO %s_banlog (sid ,time ,name ,bid) VALUES  \
 				(%d, UNIX_TIMESTAMP(), '%s', \
 				(SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND RemoveType IS NULL LIMIT 0,1))", 
-				DatabasePrefix, serverID, Name, DatabasePrefix, clientAuth[8]; clientIp);
+				DatabasePrefix, serverID, Name, DatabasePrefix, clientAuth[8], clientIp);
 		}
 		
 		SQL_TQuery(DB, ErrorCheckCallback, Query, client, DBPrio_High);
@@ -1640,7 +1640,7 @@ public AdminsDone(Handle owner, Handle hndl, const char[] error, any:data)
 		/*
 		char grp[64];
 		int nextPos = 0;
-		while ((nextPos = SplitString(groups[curPos];",",grp,64)) != -1)
+		while ((nextPos = SplitString(groups[curPos],",",grp,64)) != -1)
 		{
 			curPos += nextPos;
 			curGrp = FindAdmGroup(grp);
@@ -1670,7 +1670,7 @@ public AdminsDone(Handle owner, Handle hndl, const char[] error, any:data)
 			}
 		}*/
 		
-		if (strcmp(groups[curPos]; "") != 0)
+		if (strcmp(groups[curPos], "") != 0)
 		{
 			curGrp = FindAdmGroup(groups[curPos]);
 			if (curGrp == INVALID_GROUP_ID)
@@ -1719,7 +1719,7 @@ public AdminsDone(Handle owner, Handle hndl, const char[] error, any:data)
 			if (g_FlagLetters[flags[i]-'a'] < Admin_Reservation)
 				continue;
 			
-			SetAdminFlag(curAdm, g_FlagLetters[flags[i]-'a']; true);
+			SetAdminFlag(curAdm, g_FlagLetters[flags[i]-'a'], true);
 		}
 		++admCount;
 	}
@@ -1796,7 +1796,7 @@ public GroupsDone(Handle owner, Handle hndl, const char[] error, any:data)
 			if (g_FlagLetters[grpFlags[i]-'a'] < Admin_Reservation)
 				continue;
 			
-			SetAdmGroupAddFlag(curGrp, g_FlagLetters[grpFlags[i]-'a']; true);
+			SetAdmGroupAddFlag(curGrp, g_FlagLetters[grpFlags[i]-'a'], true);
 		}
 		
 		// Set the group immunity.
@@ -2311,12 +2311,12 @@ stock UTIL_InsertBan(time, const char[] Name, const char[] Authid, const char[] 
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						('%s', '%s', '%s', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', IFNULL((SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'),'0'), '%s', \
 						(SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1), ' ')", 
-			DatabasePrefix, Ip, Authid, banName, (time * 60), (time * 60), banReason, DatabasePrefix, AdminAuthid, AdminAuthid[8]; AdminIp, DatabasePrefix, ServerIp, ServerPort);
+			DatabasePrefix, Ip, Authid, banName, (time * 60), (time * 60), banReason, DatabasePrefix, AdminAuthid, AdminAuthid[8], AdminIp, DatabasePrefix, ServerIp, ServerPort);
 	} else {
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						('%s', '%s', '%s', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', IFNULL((SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'),'0'), '%s', \
 						%d, ' ')", 
-			DatabasePrefix, Ip, Authid, banName, (time * 60), (time * 60), banReason, DatabasePrefix, AdminAuthid, AdminAuthid[8]; AdminIp, serverID);
+			DatabasePrefix, Ip, Authid, banName, (time * 60), (time * 60), banReason, DatabasePrefix, AdminAuthid, AdminAuthid[8], AdminIp, serverID);
 	}
 	
 	SQL_TQuery(DB, VerifyInsert, Query, Pack, DBPrio_High);
@@ -2378,7 +2378,7 @@ stock InsertServerInfo()
 	pieces[1] = (longip >> 16) & 0x000000FF;
 	pieces[2] = (longip >> 8) & 0x000000FF;
 	pieces[3] = longip & 0x000000FF;
-	FormatEx(ServerIp, sizeof(ServerIp), "%d.%d.%d.%d", pieces[0]; pieces[1]; pieces[2]; pieces[3]);
+	FormatEx(ServerIp, sizeof(ServerIp), "%d.%d.%d.%d", pieces[0], pieces[1], pieces[2], pieces[3]);
 	GetConVarString(CvarPort, ServerPort, sizeof(ServerPort));
 	
 	if (AutoAdd != false)
