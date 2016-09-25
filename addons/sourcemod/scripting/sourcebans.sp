@@ -666,39 +666,12 @@ public OnAdminMenuReady(Handle topmenu)
 	/* Find the "Player Commands" category */
 	new TopMenuObject:player_commands = FindTopMenuCategory(hTopMenu, ADMINMENU_PLAYERCOMMANDS);
 	
-	if (player_commands != INVALID_TOPMENUOBJECT)
-	{
-		// just to avoid "unused variable 'res'" warning
-		#if defined DEBUG
-		new TopMenuObject:res = AddToTopMenu(hTopMenu, 
-			"sm_ban",  // Name
-			TopMenuObject_Item,  // We are a submenu
-			AdminMenu_Ban,  // Handler function
-			player_commands,  // We are a submenu of Player Commands
-			"sm_ban",  // The command to be finally called (Override checks)
-			ADMFLAG_BAN); // What flag do we need to see the menu option
-		char temp[125];
-		Format(temp, 125, "Result of AddToTopMenu: %d", res);
-		LogToFile(logFile, temp);
-		LogToFile(logFile, "Added Ban option to admin menu");
-		#else
-		AddToTopMenu(hTopMenu, 
-			"sm_ban",  // Name
-			TopMenuObject_Item,  // We are a submenu
-			AdminMenu_Ban,  // Handler function
-			player_commands,  // We are a submenu of Player Commands
-			"sm_ban",  // The command to be finally called (Override checks)
-			ADMFLAG_BAN); // What flag do we need to see the menu option
-		#endif
+	if (player_commands != INVALID_TOPMENUOBJECT) {
+		AddToTopMenu(hTopMenu, "sm_ban", TopMenuObject_Item, AdminMenu_Ban, player_commands, "sm_ban", ADMFLAG_BAN);
 	}
 }
 
-public AdminMenu_Ban(Handle topmenu, 
-	TopMenuAction action,  // Action being performed
-	TopMenuObject:object_id,  // The object ID (if used)
-	param,  // client idx of admin who chose the option (if used)
-	char buffer,  // Output buffer (if used)
-	maxlength) // Output buffer (if used)
+public AdminMenu_Ban(Handle topmenu, TopMenuAction:action, TopMenuObject:object_id, param, char buffer, maxlength)
 {
 	/* Clear the Ownreason bool, so he is able to chat again;) */
 	g_ownReasons[param] = false;
@@ -730,7 +703,7 @@ public AdminMenu_Ban(Handle topmenu,
 	}
 }
 
-public ReasonSelected(Handle menu, MenuAction action, param1, param2)
+public ReasonSelected(Handle menu, MenuAction:action, param1, param2)
 {
 	switch (action)
 	{
@@ -775,7 +748,7 @@ public ReasonSelected(Handle menu, MenuAction action, param1, param2)
 	}
 }
 
-public HackingSelected(Handle menu, MenuAction action, param1, param2)
+public HackingSelected(Handle menu, MenuAction:action, param1, param2)
 {
 	switch (action)
 	{
@@ -813,15 +786,14 @@ public HackingSelected(Handle menu, MenuAction action, param1, param2)
 				}
 			}
 			
-			else
-			{
+			else {
 				DisplayMenu(ReasonMenuHandle, param1, MENU_TIME_FOREVER);
 			}
 		}
 	}
 }
 
-public MenuHandler_BanPlayerList(Handle menu, MenuAction action, param1, param2)
+public MenuHandler_BanPlayerList(Handle menu, MenuAction:action, param1, param2)
 {
 	#if defined DEBUG
 	LogToFile(logFile, "MenuHandler_BanPlayerList()");
@@ -836,8 +808,7 @@ public MenuHandler_BanPlayerList(Handle menu, MenuAction action, param1, param2)
 		
 		case MenuAction_Cancel:
 		{
-			if (param2 == MenuCancel_ExitBack && hTopMenu != INVALID_HANDLE)
-			{
+			if (param2 == MenuCancel_ExitBack && hTopMenu != INVALID_HANDLE) {
 				DisplayTopMenu(hTopMenu, param1, TopMenuPosition_LastCategory);
 			}
 		}
@@ -851,13 +822,11 @@ public MenuHandler_BanPlayerList(Handle menu, MenuAction action, param1, param2)
 			userid = StringToInt(info);
 			
 			if ((target = GetClientOfUserId(userid)) == 0)
-			{
 				PrintToChat(param1, "%s%t", Prefix, "Player no longer available");
-			}
+
 			else if (!CanUserTarget(param1, target))
-			{
 				PrintToChat(param1, "%s%t", Prefix, "Unable to target");
-			}
+
 			else
 			{
 				g_BanTarget[param1] = target;
@@ -867,7 +836,7 @@ public MenuHandler_BanPlayerList(Handle menu, MenuAction action, param1, param2)
 	}
 }
 
-public MenuHandler_BanTimeList(Handle menu, MenuAction action, param1, param2)
+public MenuHandler_BanTimeList(Handle menu, MenuAction:action, param1, param2)
 {
 	#if defined DEBUG
 	LogToFile(logFile, "MenuHandler_BanTimeList()");
@@ -915,11 +884,7 @@ stock DisplayBanTargetMenu(client)
 	SetMenuTitle(menu, title); // Set the title
 	SetMenuExitBackButton(menu, true); // Yes we want back/exit
 	
-	AddTargetsToMenu(menu,  // Add clients to our menu
-		client,  // The client that called the display
-		false,  // We want to see people connecting
-		false); // And dead people
-	
+	AddTargetsToMenu(menu, client, false, false);	
 	DisplayMenu(menu, client, MENU_TIME_FOREVER); // Show the menu to the client FOREVER!
 }
 
@@ -951,8 +916,7 @@ stock DisplayBanTimeMenu(client)
 
 stock ResetMenu()
 {
-	if (ReasonMenuHandle != INVALID_HANDLE)
-	{
+	if (ReasonMenuHandle != INVALID_HANDLE) {
 		RemoveAllMenuItems(ReasonMenuHandle);
 	}
 }
@@ -1095,18 +1059,17 @@ public VerifyInsert(Handle owner, Handle hndl, const char[] error, any:dataPack)
 	if (!time)
 	{
 		if (Reason[0] == '\0')
-		{
 			ShowActivityEx(admin, Prefix, "%t", "Permabanned player", Name);
-		} else {
-			ShowActivityEx(admin, Prefix, "%t", "Permabanned player reason", Name, Reason);
-		}
-	} else {
+		else 
+			ShowActivityEx(admin, Prefix, "%t", "Permabanned player reason", Name, Reason);		
+	} 
+
+	else 
+	{
 		if (Reason[0] == '\0')
-		{
 			ShowActivityEx(admin, Prefix, "%t", "Banned player", Name, time);
-		} else {
-			ShowActivityEx(admin, Prefix, "%t", "Banned player reason", Name, time, Reason);
-		}
+		else
+			ShowActivityEx(admin, Prefix, "%t", "Banned player reason", Name, time, Reason);		
 	}
 	
 	LogAction(admin, client, "\"%L\" banned \"%L\" (minutes \"%d\") (reason \"%s\")", admin, client, time, Reason);
@@ -2388,7 +2351,7 @@ stock InsertServerInfo()
 	}
 }
 
-stock PrepareBan(client, target, time, char reason, size)
+void PrepareBan(int client, int target, int time, char[] reason, int size)
 {
 	#if defined DEBUG
 	LogToFile(logFile, "PrepareBan()");
