@@ -68,10 +68,12 @@
 #define REASON_SIZE 192
 
 int iNumReasons;
-char g_sReasonDisplays[MAX_REASONS][DISPLAY_SIZE], char g_sReasonKey[MAX_REASONS][REASON_SIZE];
+char g_sReasonDisplays[MAX_REASONS][DISPLAY_SIZE];
+char g_sReasonKey[MAX_REASONS][REASON_SIZE];
 
 #define MAX_TIMES 32
-int iNumTimes, g_iTimeMinutes[MAX_TIMES];
+int iNumTimes;
+int g_iTimeMinutes[MAX_TIMES];
 char g_sTimeDisplays[MAX_TIMES][DISPLAY_SIZE];
 
 enum State/* ConfigState */
@@ -123,7 +125,7 @@ Handle g_hMuteExpireTimer[MAXPLAYERS + 1] =  { INVALID_HANDLE, ... };
 char logQuery[256];
 #endif
 
-int float RetryTime = 15.0;
+float RetryTime = 15.0;
 int DefaultTime = 30;
 int DisUBImCheck = 0;
 int ConsoleImmunity = 0;
@@ -172,7 +174,7 @@ public Plugin myinfo =
 	url = "https://sarabveer.github.io/SourceBans-Fork/"
 };
 
-public APLRes AskPluginLoad2(Handle myself, bool late, char error[], err_max)
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, err_max)
 {
 	CreateNative("SourceComms_SetClientMute", Native_SetClientMute);
 	CreateNative("SourceComms_SetClientGag", Native_SetClientGag);
@@ -659,21 +661,16 @@ public Handle_MenuList(Handle menu, TopMenuAction action, TopMenuObject:object_i
 
 AdminMenu_Target(client, type)
 {
-	char Title[192], char Option[32];
+	char Title[192];
+	char Option[32];
 	switch (type)
 	{
-		case TYPE_GAG:
-		Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Gag", client);
-		case TYPE_MUTE:
-		Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Mute", client);
-		case TYPE_SILENCE:
-		Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Silence", client);
-		case TYPE_UNGAG:
-		Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Ungag", client);
-		case TYPE_UNMUTE:
-		Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Unmute", client);
-		case TYPE_UNSILENCE:
-		Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Unsilence", client);
+		case TYPE_GAG: Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Gag", client);
+		case TYPE_MUTE: Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Mute", client);
+		case TYPE_SILENCE: Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Silence", client);
+		case TYPE_UNGAG: Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Ungag", client);
+		case TYPE_UNMUTE: Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Unmute", client);
+		case TYPE_UNSILENCE: Format(Title, sizeof(Title), "%T", "AdminMenu_Select_Unsilence", client);
 	}
 	
 	Handle hMenu = CreateMenu(MenuHandler_MenuTarget); // Common menu - players list. Almost full for blocking, and almost empty for unblocking
