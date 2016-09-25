@@ -719,7 +719,7 @@ public ReasonSelected(Handle menu, MenuAction:action, param1, param2)
 	}
 }
 
-public HackingSelected(Handle menu, MenuAction:action, param1, param2)
+public HackingSelected(Handle:menu, MenuAction:action, param1, param2)
 {
 	switch (action)
 	{
@@ -736,7 +736,7 @@ public HackingSelected(Handle menu, MenuAction:action, param1, param2)
 		{
 			if (param2 == MenuCancel_Disconnected)
 			{
-				Handle Pack = PlayerDataPack[param1];
+				Handle:Pack = PlayerDataPack[param1];
 				
 				if (Pack != INVALID_HANDLE)
 				{
@@ -745,7 +745,7 @@ public HackingSelected(Handle menu, MenuAction:action, param1, param2)
 					ReadPackCell(Pack); // admin userid
 					ReadPackCell(Pack); // target userid
 					ReadPackCell(Pack); // time
-					Handle:ReasonPack = Handle:ReadPackCell(Pack);
+					new Handle:ReasonPack = Handle:ReadPackCell(Pack);
 					
 					if (ReasonPack != INVALID_HANDLE)
 					{
@@ -997,7 +997,7 @@ public VerifyInsert(Handle owner, Handle hndl, const char[] error, any:dataPack)
 	ReadPackCell(dataPack); // admin userid
 	int UserId = ReadPackCell(dataPack);
 	int time = ReadPackCell(dataPack);
-	Handle ReasonPack = Handle ReadPackCell(dataPack);
+	new Handle:ReasonPack = Handle:ReadPackCell(dataPack);
 	
 	char Name[64];
 	char Reason[128];
@@ -1733,7 +1733,7 @@ public LoadGroupsOverrides(Handle owner, Handle hndl, const char[] error, any:da
 	Handle groupsKV = CreateKeyValues("Groups");
 	FileToKeyValues(groupsKV, groupsLoc);
 	
-	int GroupId:curGrp = INVALID_GROUP_ID;
+	new GroupId:curGrp = INVALID_GROUP_ID;
 	while (SQL_MoreRows(hndl))
 	{
 		SQL_FetchRow(hndl);
@@ -2039,7 +2039,7 @@ public InitializeBackupDB()
 	SQL_UnlockDatabase(SQLiteDB);
 }
 
-public bool CreateBan(client, target, time, char reason[])
+public bool CreateBan(client, target, time, char[] reason)
 {
 	char adminIp[24]; char adminAuth[64];
 	int admin = client;
@@ -2143,7 +2143,7 @@ stock UTIL_InsertTempBan(time, const char[] name, const char[] auth, const char[
 	ReadPackCell(dataPack); // admin userid
 	ReadPackCell(dataPack); // target userid
 	ReadPackCell(dataPack); // time
-	Handle reasonPack = Handle ReadPackCell(dataPack);
+	new Handle:reasonPack = Handle:ReadPackCell(dataPack);
 	if (reasonPack != INVALID_HANDLE)
 	{
 		CloseHandle(reasonPack);
@@ -2186,7 +2186,7 @@ stock InsertServerInfo()
 		return;
 	}
 	
-	char query[100]; pieces[4];
+	char query[100]; int pieces[4];
 	int longip = GetConVarInt(CvarHostIp);
 	pieces[0] = (longip >> 24) & 0x000000FF;
 	pieces[1] = (longip >> 16) & 0x000000FF;
