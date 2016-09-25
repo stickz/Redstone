@@ -876,7 +876,7 @@ public MenuHandler_MenuReason(Handle menu, MenuAction action, param1, param2)
 		}
 		case MenuAction_Select:
 		{
-			char sOption[64], char sTemp[4][8];
+			char sOption[64]; char sTemp[4][8];
 			GetMenuItem(menu, param2, sOption, sizeof(sOption));
 			ExplodeString(sOption, " ", sTemp, 4, 8);
 			// TargetID TYPE_BLOCK ReasonIndex LenghtIndex
@@ -904,7 +904,7 @@ public MenuHandler_MenuReason(Handle menu, MenuAction action, param1, param2)
 
 AdminMenu_List(client, index)
 {
-	char sTitle[192], char sOption[32];
+	char sTitle[192]; char sOption[32];
 	Format(sTitle, sizeof(sTitle), "%T", "AdminMenu_Select_List", client);
 	int iClients, Handle hMenu = CreateMenu(MenuHandler_MenuList);
 	SetMenuTitle(hMenu, sTitle);
@@ -961,7 +961,7 @@ public MenuHandler_MenuList(Handle menu, MenuAction action, param1, param2)
 AdminMenu_ListTarget(client, target, index, viewMute = 0, viewGag = 0)
 {
 	int userid = GetClientUserId(target), Handle hMenu = CreateMenu(MenuHandler_MenuListTarget);
-	char sBuffer[192], char sOption[32];
+	char sBuffer[192]; char sOption[32];
 	SetMenuTitle(hMenu, g_sName[target]);
 	SetMenuPagination(hMenu, MENU_NO_PAGINATION);
 	SetMenuExitButton(hMenu, true);
@@ -978,7 +978,7 @@ AdminMenu_ListTarget(client, target, index, viewMute = 0, viewGag = 0)
 			Format(sBuffer, sizeof(sBuffer), "%T", "ListMenu_Option_Admin", client, g_sMuteAdminName[target]);
 			AddMenuItem(hMenu, "", sBuffer, ITEMDRAW_DISABLED);
 			
-			char sMuteTemp[192], char _sMuteTime[192];
+			char sMuteTemp[192]; char _sMuteTime[192];
 			Format(sMuteTemp, sizeof(sMuteTemp), "%T", "ListMenu_Option_Duration", client);
 			switch (g_MuteType[target])
 			{
@@ -1032,7 +1032,7 @@ AdminMenu_ListTarget(client, target, index, viewMute = 0, viewGag = 0)
 			Format(sBuffer, sizeof(sBuffer), "%T", "ListMenu_Option_Admin", client, g_sGagAdminName[target]);
 			AddMenuItem(hMenu, "", sBuffer, ITEMDRAW_DISABLED);
 			
-			char sGagTemp[192], char _sGagTime[192];
+			char sGagTemp[192]; char _sGagTime[192];
 			Format(sGagTemp, sizeof(sGagTemp), "%T", "ListMenu_Option_Duration", client);
 			
 			switch (g_GagType[target])
@@ -1099,7 +1099,7 @@ public MenuHandler_MenuListTarget(Handle menu, MenuAction action, param1, param2
 		}
 		case MenuAction_Select:
 		{
-			char sOption[64], char sTemp[5][8];
+			char sOption[64]; char sTemp[5][8];
 			GetMenuItem(menu, param2, sOption, sizeof(sOption));
 			ExplodeString(sOption, " ", sTemp, 5, 8);
 			
@@ -1242,7 +1242,7 @@ public Query_AddBlockInsert(Handle owner, Handle hndl, const char[] error, any:d
 		ResetPack(data);
 		int length = ReadPackCell(data);
 		int type = ReadPackCell(data);
-		char name[MAX_NAME_LENGTH], char auth[64], char adminAuth[32], char adminIp[20];
+		char name[MAX_NAME_LENGTH]; char auth[64]; char adminAuth[32]; char adminIp[20];
 		char reason[256];
 		ReadPackString(data, name, sizeof(name));
 		ReadPackString(data, auth, sizeof(auth));
@@ -1257,7 +1257,7 @@ public Query_AddBlockInsert(Handle owner, Handle hndl, const char[] error, any:d
 
 public Query_UnBlockSelect(Handle owner, Handle hndl, const char[] error, any:data)
 {
-	char adminAuth[30], char targetAuth[30];
+	char adminAuth[30]; char targetAuth[30];
 	char reason[256];
 	
 	ResetPack(data);
@@ -1461,7 +1461,7 @@ public Query_UnBlockSelect(Handle owner, Handle hndl, const char[] error, any:da
 public Query_UnBlockUpdate(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	int admin, type;
-	char targetName[MAX_NAME_LENGTH], char targetAuth[30];
+	char targetName[MAX_NAME_LENGTH]; char targetAuth[30];
 	
 	ResetPack(data);
 	admin = GetClientOfUserId(ReadPackCell(data));
@@ -1524,7 +1524,8 @@ public Query_ProcessQueue(Handle owner, Handle hndl, const char[] error, any:dat
 	char auth[64];
 	char name[MAX_NAME_LENGTH];
 	char reason[256];
-	char adminAuth[64], char adminIp[20];
+	char adminAuth[64];
+	char adminIp[20];
 	char query[4096];
 	
 	while (SQL_MoreRows(hndl))
@@ -1592,7 +1593,7 @@ public Query_AddBlockFromQueue(Handle owner, Handle hndl, const char[] error, an
 	}
 }
 
-public Query_ErrorCheck(Handle owner, Handle hndl, const char[] error[], any:data)
+public Query_ErrorCheck(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	if (DB_Conn_Lost(hndl) || error[0])
 		LogError("%T (%s)", "Failed to query database", LANG_SERVER, error);
@@ -1632,7 +1633,8 @@ public Query_VerifyBlock(Handle owner, Handle hndl, const char[] error, any:user
 			if (NotApplyToThisServer(SQL_FetchInt(hndl, 8)))
 				continue;
 			
-			char sAdmName[MAX_NAME_LENGTH], char sAdmAuth[64];
+			char sAdmName[MAX_NAME_LENGTH];
+			char sAdmAuth[64];
 			char sReason[256];
 			int remaining_time = SQL_FetchInt(hndl, 0);
 			int length = SQL_FetchInt(hndl, 1);
@@ -2006,7 +2008,7 @@ stock CreateBlock(client, targetId = 0, length = -1, type, const char[] sReason 
 	PrintToServer("CreateBlock(admin: %d, target: %d, length: %d, type: %d, reason: %s, args: %s)", client, targetId, length, type, sReason, sArgs);
 	#endif
 	
-	decl target_list[MAXPLAYERS], target_count, bool tn_is_ml, char target_name[MAX_NAME_LENGTH];
+	decl target_list[MAXPLAYERS], target_count, bool tn_is_ml; char target_name[MAX_NAME_LENGTH];
 	char reason[256];
 	bool skipped = false;
 	
@@ -2435,7 +2437,8 @@ stock ProcessUnBlock(client, targetId = 0, type, char sReason = "", const char[]
 
 stock bool TempUnBlock(Handle data)
 {
-	char adminAuth[30], char targetAuth[30];
+	char adminAuth[30];
+	char targetAuth[30];
 	char reason[256];
 	ResetPack(data);
 	int adminUserID = ReadPackCell(data);
@@ -2541,8 +2544,10 @@ stock InsertTempBlock(length, type, const char[] name, const char[] auth, const 
 	char banReason[256 * 2 + 1];
 	char sAuthEscaped[64 * 2 + 1];
 	char sAdminAuthEscaped[64 * 2 + 1];
-	char sQuery[4096], char sQueryVal[2048];
-	char sQueryMute[2048], char sQueryGag[2048];
+	char sQuery[4096]; 
+	char sQueryVal[2048];
+	char sQueryMute[2048]; 
+	char sQueryGag[2048];
 	
 	// escaping everything
 	SQL_EscapeString(SQLiteDB, name, banName, sizeof(banName));
@@ -2644,7 +2649,7 @@ stock ReadConfig()
 
 // some more
 
-AdminMenu_GetPunishPhrase(client, target, char name[], length)
+AdminMenu_GetPunishPhrase(client, target, char[] name, length)
 {
 	char Buffer[192];
 	if (g_MuteType[target] > bNot && g_GagType[target] > bNot)
@@ -2910,8 +2915,11 @@ stock SavePunishment(admin = 0, target, type, length = -1, const char[] reason =
 		char sAuthidEscaped[64 * 2 + 1];
 		char sAdminAuthIdEscaped[64 * 2 + 1];
 		char sAdminAuthIdYZEscaped[64 * 2 + 1];
-		char sQuery[4096], char sQueryAdm[512], char sQueryVal[1024];
-		char sQueryMute[1024], char sQueryGag[1024];
+		char sQuery[4096];
+		char sQueryAdm[512];
+		char sQueryVal[1024];
+		char sQueryMute[1024];
+		char sQueryGag[1024];
 		
 		// escaping everything
 		SQL_EscapeString(g_hDatabase, sName, banName, sizeof(banName));
@@ -2966,14 +2974,15 @@ stock SavePunishment(admin = 0, target, type, length = -1, const char[] reason =
 		InsertTempBlock(length, type, sName, targetAuth, reason, adminAuth, adminIp);
 }
 
-stock ShowActivityToServer(admin, type, length = 0, char reason[] = "", char targetName[], bool ml = false)
+stock ShowActivityToServer(admin, type, length = 0, char[] reason = "", char[] targetName, bool ml = false)
 {
 	#if defined DEBUG
 	PrintToServer("ShowActivityToServer(admin: %d, type: %d, length: %d, reason: %s, name: %s, ml: %b", 
 		admin, type, length, reason, targetName, ml);
 	#endif
 	
-	char actionName[32], char translationName[64];
+	char actionName[32]; 
+	char translationName[64];
 	switch (type)
 	{
 		case TYPE_MUTE:
