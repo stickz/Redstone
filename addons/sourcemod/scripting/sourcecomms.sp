@@ -2605,12 +2605,12 @@ stock ReadConfig()
 	InitializeConfigParser();
 	
 	if (ConfigParser == INVALID_HANDLE)
-	{
 		return;
-	}
 	
-	char ConfigFile1[PLATFORM_MAX_PATH], char ConfigFile2[PLATFORM_MAX_PATH];
+	char ConfigFile1[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, ConfigFile1, sizeof(ConfigFile1), "configs/sourcebans/sourcebans.cfg");
+	
+	char ConfigFile2[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, ConfigFile2, sizeof(ConfigFile2), "configs/sourcebans/sourcecomms.cfg");
 	
 	if (FileExists(ConfigFile1))
@@ -2618,10 +2618,9 @@ stock ReadConfig()
 		PrintToServer("%sLoading configs/sourcebans/sourcebans.cfg config file", PREFIX);
 		InternalReadConfig(ConfigFile1);
 	}
-	else
-	{
+	else 
 		SetFailState("FATAL *** ERROR *** can't find %s", ConfigFile1);
-	}
+	
 	if (FileExists(ConfigFile2))
 	{
 		PrintToServer("%sLoading configs/sourcecomms.cfg config file", PREFIX);
@@ -2643,9 +2642,8 @@ stock ReadConfig()
 		}
 	}
 	else
-	{
 		SetFailState("FATAL *** ERROR *** can't find %s", ConfigFile2);
-	}
+
 	#if defined DEBUG
 	PrintToServer("Loaded DefaultTime value: %d", DefaultTime);
 	PrintToServer("Loaded DisableUnblockImmunityCheck value: %d", DisUBImCheck);
