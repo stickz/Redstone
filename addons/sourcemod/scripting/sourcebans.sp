@@ -642,12 +642,19 @@ public OnAdminMenuReady(Handle:topmenu)
 	/* Find the "Player Commands" category */
 	new TopMenuObject:player_commands = FindTopMenuCategory(hTopMenu, ADMINMENU_PLAYERCOMMANDS);
 	
-	if (player_commands != INVALID_TOPMENUOBJECT) {
-		AddToTopMenu(hTopMenu, "sm_ban", TopMenuObject_Item, AdminMenu_Ban, player_commands, "sm_ban", ADMFLAG_BAN);
+	if (player_commands != INVALID_TOPMENUOBJECT) 
+	{		
+		AddToTopMenu(hTopMenu, 
+			"sm_ban",  // Name
+			TopMenuObject_Item,  // We are a submenu
+			AdminMenu_Ban,  // Handler function
+			player_commands,  // We are a submenu of Player Commands
+			"sm_ban",  // The command to be finally called (Override checks)
+			ADMFLAG_BAN); // What flag do we need to see the menu option
 	}
 }
 
-public AdminMenu_Ban(Handle:topmenu, TopMenuAction:action, TopMenuObject:object_id, param, char buffer, maxlength)
+public AdminMenu_Ban(Handle:topmenu, TopMenuAction:action, TopMenuObject:object_id, param, char[] buffer, maxlength)
 {
 	/* Clear the Ownreason bool, so he is able to chat again;) */
 	g_ownReasons[param] = false;
@@ -738,7 +745,7 @@ public HackingSelected(Handle menu, MenuAction:action, param1, param2)
 					ReadPackCell(Pack); // admin userid
 					ReadPackCell(Pack); // target userid
 					ReadPackCell(Pack); // time
-					Handle ReasonPack = Handle ReadPackCell(Pack);
+					Handle:ReasonPack = Handle:ReadPackCell(Pack);
 					
 					if (ReasonPack != INVALID_HANDLE)
 					{
@@ -960,7 +967,7 @@ public VerifyInsert(Handle owner, Handle hndl, const char[] error, any:dataPack)
 		ReadPackCell(dataPack); // admin userid
 		ReadPackCell(dataPack); // target userid
 		int time = ReadPackCell(dataPack);
-		Handle reasonPack = Handle ReadPackCell(dataPack);
+		Handle:reasonPack = Handle:ReadPackCell(dataPack);
 		char reason[128];
 		ReadPackString(reasonPack, reason, sizeof(reason));
 		char name[50];
@@ -977,7 +984,7 @@ public VerifyInsert(Handle owner, Handle hndl, const char[] error, any:dataPack)
 		ResetPack(reasonPack);
 		
 		PlayerDataPack[admin] = INVALID_HANDLE;
-		UTIL_InsertTempBan(time, name, auth, ip, reason, adminAuth, adminIp, Handle dataPack);
+		UTIL_InsertTempBan(time, name, auth, ip, reason, adminAuth, adminIp, Handle:dataPack);
 		return;
 	}
 	
