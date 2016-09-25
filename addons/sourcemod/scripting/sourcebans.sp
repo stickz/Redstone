@@ -1543,40 +1543,6 @@ public AdminsDone(Handle owner, Handle hndl, const char[] error, any:data)
 		int numGroups;
 		char iterGroupName[64];
 		
-		// Who thought this comma seperated group parsing would be a good idea?!
-		/*
-		char grp[64];
-		int nextPos = 0;
-		while ((nextPos = SplitString(groups[curPos],",",grp,64)) != -1)
-		{
-			curPos += nextPos;
-			curGrp = FindAdmGroup(grp);
-			if (curGrp == INVALID_GROUP_ID)
-			{
-				LogToFile(logFile, "Unknown group \"%s\"",grp);
-			}
-			else
-			{
-				// Check, if he's not in the group already.
-				numGroups = GetAdminGroupCount(curAdm);
-				for(int i=0;i<numGroups;i++)
-				{
-					GetAdminGroup(curAdm, i, iterGroupName, sizeof(iterGroupName));
-					// Admin is already part of the group, so don't try to inherit its permissions.
-					if(StrEqual(iterGroupName, grp))
-					{
-						numGroups = -2;
-						break;
-					}
-				}
-				// Only try to inherit the group, if it's a int one.
-				if (numGroups != -2 && !AdminInheritGroup(curAdm,curGrp))
-				{
-					LogToFile(logFile, "Unable to inherit group \"%s\"",grp);
-				}
-			}
-		}*/
-		
 		if (strcmp(groups[curPos], "") != 0)
 		{
 			curGrp = FindAdmGroup(groups[curPos]);
@@ -1710,18 +1676,6 @@ public GroupsDone(Handle owner, Handle hndl, const char[] error, any:data)
 	char query[512];
 	FormatEx(query, 512, "SELECT sg.name, so.type, so.name, so.access FROM %s_srvgroups_overrides so LEFT JOIN %s_srvgroups sg ON sg.id = so.group_id ORDER BY sg.id", DatabasePrefix, DatabasePrefix);
 	SQL_TQuery(DB, LoadGroupsOverrides, query);
-	
-	/*if (reparse)
-	{
-		char query[512];
-		FormatEx(query,512,"SELECT name, immunity, groups_immune FROM %s_srvgroups ORDER BY id",DatabasePrefix);
-		SQL_TQuery(DB,GroupsSecondPass,query);
-	}
-	else
-	{
-		curLoading--;
-		CheckLoadAdmins();
-	}*/
 }
 
 // Reparse to apply inherited immunity
@@ -1889,19 +1843,6 @@ public Action ClientRecheck(Handle timer, any:client)
 	PlayerRecheck[client] = INVALID_HANDLE;
 	return Plugin_Stop;
 }
-
-/*
-public Action PruneBans(Handle timer)
-{
-	char Query[512];
-	FormatEx(Query, sizeof(Query),
-			"UPDATE %s_bans SET RemovedBy = 0, RemoveType = 'E', RemovedOn = UNIX_TIMESTAMP() WHERE length != '0' AND ends < UNIX_TIMESTAMP()",
-			DatabasePrefix);
-
-	SQL_TQuery(DB, ErrorCheckCallback, Query);
-	return Plugin_Continue;
-}
-*/
 
 public Action ProcessQueue(Handle timer, any:data)
 {
