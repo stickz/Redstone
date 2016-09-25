@@ -906,7 +906,8 @@ AdminMenu_List(client, index)
 {
 	char sTitle[192]; char sOption[32];
 	Format(sTitle, sizeof(sTitle), "%T", "AdminMenu_Select_List", client);
-	int iClients, Handle hMenu = CreateMenu(MenuHandler_MenuList);
+	int iClients;
+	Handle hMenu = CreateMenu(MenuHandler_MenuList);
 	SetMenuTitle(hMenu, sTitle);
 	if (!g_iPeskyPanels[client][viewingList])
 		SetMenuExitBackButton(hMenu, true);
@@ -936,8 +937,7 @@ public MenuHandler_MenuList(Handle menu, MenuAction action, param1, param2)
 {
 	switch (action)
 	{
-		case MenuAction_End:
-		CloseHandle(menu);
+		case MenuAction_End: CloseHandle(menu);
 		case MenuAction_Cancel:
 		{
 			if (!g_iPeskyPanels[param1][viewingList])
@@ -960,7 +960,8 @@ public MenuHandler_MenuList(Handle menu, MenuAction action, param1, param2)
 
 AdminMenu_ListTarget(client, target, index, viewMute = 0, viewGag = 0)
 {
-	int userid = GetClientUserId(target), Handle hMenu = CreateMenu(MenuHandler_MenuListTarget);
+	int userid = GetClientUserId(target);
+	Handle hMenu = CreateMenu(MenuHandler_MenuListTarget);
 	char sBuffer[192]; char sOption[32];
 	SetMenuTitle(hMenu, g_sName[target]);
 	SetMenuPagination(hMenu, MENU_NO_PAGINATION);
