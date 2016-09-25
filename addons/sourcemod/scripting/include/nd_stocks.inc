@@ -24,6 +24,8 @@ stock char NumberInEnglish(int num)
 		case 8: Format(englishNumber, sizeof(englishNumber), "eight");
 		case 9: Format(englishNumber, sizeof(englishNumber), "nine");
 		case 10: Format(englishNumber, sizeof(englishNumber), "ten");
+		case 11: Format(englishNumber, sizeof(englishNumber), "eleven");
+		case 12: Format(englishNumber, sizeof(englishNumber), "twelve");
 	}	
 	return englishNumber;
 }
