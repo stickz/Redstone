@@ -56,75 +56,75 @@ enum State/* ConfigState */
 	ConfigStateHacking
 }
 
-new g_BanTarget[MAXPLAYERS + 1] =  { -1, ... };
-new g_BanTime[MAXPLAYERS + 1] =  { -1, ... };
+int g_BanTarget[MAXPLAYERS + 1] =  { -1, ... };
+int g_BanTime[MAXPLAYERS + 1] =  { -1, ... };
 
 new State:ConfigState;
-new Handle:ConfigParser;
-new Handle:hTopMenu = INVALID_HANDLE;
+Handle ConfigParser;
+Handle hTopMenu = INVALID_HANDLE;
 
-new const String:Prefix[] = "[SourceBans] ";
+char Prefix = "[SourceBans] ";
 
-new String:ServerIp[24];
-new String:ServerPort[7];
-new String:DatabasePrefix[10] = "sb";
-new String:WebsiteAddress[128];
+char ServerIp[24];
+char ServerPort[7];
+char DatabasePrefix[10] = "sb";
+char WebsiteAddress[128];
 
 /* Admin Stuff*/
 new AdminCachePart:loadPart;
-new bool:loadAdmins;
-new bool:loadGroups;
-new bool:loadOverrides;
-new curLoading = 0;
+bool loadAdmins;
+bool loadGroups;
+bool loadOverrides;
+int curLoading = 0;
 new AdminFlag:g_FlagLetters[FLAG_LETTERS_SIZE];
 
 /* Admin KeyValues */
-new String:groupsLoc[128];
-new String:adminsLoc[128];
-new String:overridesLoc[128];
+char groupsLoc[128];
+char adminsLoc[128];
+char overridesLoc[128];
 
 /* Cvar handle*/
-new Handle:CvarHostIp;
-new Handle:CvarPort;
+Handle CvarHostIp;
+Handle CvarPort;
 
 /* Database handle */
-new Handle:DB;
-new Handle:SQLiteDB;
+Handle DB;
+Handle SQLiteDB;
 
 /* Menu file globals */
-new Handle:ReasonMenuHandle;
-new Handle:HackingMenuHandle;
+Handle ReasonMenuHandle;
+Handle HackingMenuHandle;
 
 /* Datapack and Timer handles */
-new Handle:PlayerRecheck[MAXPLAYERS + 1] =  { INVALID_HANDLE, ... };
-new Handle:PlayerDataPack[MAXPLAYERS + 1] =  { INVALID_HANDLE, ... };
+Handle PlayerRecheck[MAXPLAYERS + 1] =  { INVALID_HANDLE, ... };
+Handle PlayerDataPack[MAXPLAYERS + 1] =  { INVALID_HANDLE, ... };
 
 /* Player ban check status */
-new bool:PlayerStatus[MAXPLAYERS + 1];
+bool PlayerStatus[MAXPLAYERS + 1];
 
 /* Disable of addban and unban */
-new CommandDisable;
-new bool:backupConfig = true;
-new bool:enableAdmins = true;
+int CommandDisable;
+bool backupConfig = true;
+bool enableAdmins = true;
 
 /* Require a lastvisited from SB site */
-new bool:requireSiteLogin = false;
+bool requireSiteLogin = false;
 
 /* Log Stuff */
-new String:logFile[256];
+char logFile[256];
 
 /* Own Chat Reason */
-new g_ownReasons[MAXPLAYERS + 1] =  { false, ... };
+int g_ownReasons[MAXPLAYERS + 1] =  { false, ... };
 
-new Float:RetryTime = 15.0;
-new ProcessQueueTime = 5;
-new bool:LateLoaded;
-new bool:AutoAdd;
-new bool:g_bConnecting = false;
+float RetryTime = 15.0;
+int ProcessQueueTime = 5;
+bool LateLoaded;
+bool AutoAdd;
+bool g_bConnecting = false;
 
-new serverID = -1;
+int serverID = -1;
 
-public Plugin:myinfo = 
+public Plugin myinfo = 
 {
 	name = "SourceBans++", 
 	author = "SourceBans Development Team, Sarabveer(VEER™)", 
@@ -134,9 +134,9 @@ public Plugin:myinfo =
 };
 
 #if SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 3
-public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
+public APLRes AskPluginLoad2(Handle myself, bool late, char error, err_max)
 #else
-public bool:AskPluginLoad(Handle:myself, bool:late, String:error[], err_max)
+public bool AskPluginLoad(Handle myself, bool late, char error, err_max)
 #endif
 {
 	RegPluginLibrary("sourcebans");
@@ -226,7 +226,7 @@ public OnPluginStart()
 
 public OnAllPluginsLoaded()
 {
-	new Handle:topmenu;
+	Handle topmenu;
 	#if defined DEBUG
 	LogToFile(logFile, "OnAllPluginsLoaded()");
 	#endif
@@ -243,12 +243,12 @@ public OnConfigsExecuted()
 	BuildPath(Path_SM, filename, sizeof(filename), "plugins/basebans.smx");
 	if (FileExists(filename))
 	{
-		char newfilename[200];
-		BuildPath(Path_SM, newfilename, sizeof(newfilename), "plugins/disabled/basebans.smx");
+		char intfilename[200];
+		BuildPath(Path_SM, intfilename, sizeof(intfilename), "plugins/disabled/basebans.smx");
 		ServerCommand("sm plugins unload basebans");
-		if (FileExists(newfilename))
-			DeleteFile(newfilename);
-		RenameFile(newfilename, filename);
+		if (FileExists(intfilename))
+			DeleteFile(intfilename);
+		RenameFile(intfilename, filename);
 		LogToFile(logFile, "plugins/basebans.smx was unloaded and moved to plugins/disabled/basebans.smx");
 	}
 }
@@ -260,7 +260,7 @@ public OnMapStart()
 
 public OnMapEnd()
 {
-	for (new i = 0; i <= MaxClients; i++)
+	for (int i = 0; i <= MaxClients; i++)
 	{
 		if (PlayerDataPack[i] != INVALID_HANDLE)
 		{
@@ -273,7 +273,7 @@ public OnMapEnd()
 
 // CLIENT CONNECTION FUNCTIONS //
 
-public Action:OnClientPreAdminCheck(client)
+public Action OnClientPreAdminCheck(client)
 {
 	if (!DB || GetUserAdmin(client) != INVALID_ADMIN_ID)
 		return Plugin_Continue;
@@ -291,13 +291,13 @@ public OnClientDisconnect(client)
 	g_ownReasons[client] = false;
 }
 
-public bool:OnClientConnect(client, String:rejectmsg[], maxlen)
+public bool OnClientConnect(client, char rejectmsg, maxlen)
 {
 	PlayerStatus[client] = false;
 	return true;
 }
 
-public OnClientAuthorized(client, const String:auth[])
+public OnClientAuthorized(client, const char[] auth)
 {
 	/* Do not check bots nor check player with lan steamid. */
 	if (auth[0] == 'B' || auth[9] == 'L' || DB == INVALID_HANDLE)
@@ -306,9 +306,10 @@ public OnClientAuthorized(client, const String:auth[])
 		return;
 	}
 	
-	char Query[256], String:ip[30];
+	char Query[256]; 
+	char ip[30];
 	GetClientIP(client, ip, sizeof(ip));
-	FormatEx(Query, sizeof(Query), "SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND (length = '0' OR ends > UNIX_TIMESTAMP()) AND RemoveType IS NULL", DatabasePrefix, auth[8], ip);
+	FormatEx(Query, sizeof(Query), "SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND (length = '0' OR ends > UNIX_TIMESTAMP()) AND RemoveType IS NULL", DatabasePrefix, auth[8]; ip);
 	#if defined DEBUG
 	LogToFile(logFile, "Checking ban for: %s", auth);
 	#endif
@@ -341,26 +342,26 @@ public OnRebuildAdminCache(AdminCachePart:part)
 
 // COMMAND CODE //
 
-public Action:ChatHook(client, args)
+public Action ChatHook(client, args)
 {
 	// is this player preparing to ban someone
 	if (g_ownReasons[client])
 	{
 		// get the reason
-		new String:reason[512];
+		char reason[512];
 		GetCmdArgString(reason, sizeof(reason));
 		StripQuotes(reason);
 		
 		g_ownReasons[client] = false;
 		
-		if (StrEqual(reason[0], "!noreason"))
+		if (StrEqual(reason[0]; "!noreason"))
 		{
 			PrintToChat(client, "%c[%cSourceBans%c]%c %t", GREEN, NAMECOLOR, GREEN, NAMECOLOR, "Chat Reason Aborted");
 			return Plugin_Handled;
 		}
 		
 		// ban him!
-		PrepareBan(client, g_BanTarget[client], g_BanTime[client], reason, sizeof(reason));
+		PrepareBan(client, g_BanTarget[client]; g_BanTime[client]; reason, sizeof(reason));
 		
 		// block the reason to be sent in chat
 		return Plugin_Handled;
@@ -368,13 +369,13 @@ public Action:ChatHook(client, args)
 	return Plugin_Continue;
 }
 
-public Action:_CmdReload(client, args)
+public Action _CmdReload(client, args)
 {
 	ResetSettings();
 	return Plugin_Handled;
 }
 
-public Action:CommandBan(client, args)
+public Action CommandBan(client, args)
 {
 	if (args < 2)
 	{
@@ -383,12 +384,12 @@ public Action:CommandBan(client, args)
 	}
 	
 	// This is mainly for me sanity since client used to be called admin and target used to be called client
-	new admin = client;
+	int admin = client;
 	
 	// Get the target, find target returns a message on failure so we do not
 	char buffer[100];
 	GetCmdArg(1, buffer, sizeof(buffer));
-	new target = FindTarget(client, buffer, true);
+	int target = FindTarget(client, buffer, true);
 	if (target == -1)
 	{
 		return Plugin_Handled;
@@ -396,7 +397,7 @@ public Action:CommandBan(client, args)
 	
 	// Get the ban time
 	GetCmdArg(2, buffer, sizeof(buffer));
-	new time = StringToInt(buffer);
+	int time = StringToInt(buffer);
 	if (!time && client && !(CheckCommandAccess(client, "sm_unban", ADMFLAG_UNBAN | ADMFLAG_ROOT)))
 	{
 		ReplyToCommand(client, "You do not have Perm Ban Permission");
@@ -404,11 +405,11 @@ public Action:CommandBan(client, args)
 	}
 	
 	// Get the reason
-	new String:reason[128];
+	char reason[128];
 	if (args >= 3)
 	{
 		GetCmdArg(3, reason, sizeof(reason));
-		for (new i = 4; i <= args; i++)
+		for (int i = 4; i <= args; i++)
 		{
 			GetCmdArg(i, buffer, sizeof(buffer));
 			Format(reason, sizeof(reason), "%s %s", reason, buffer);
@@ -434,7 +435,7 @@ public Action:CommandBan(client, args)
 	return Plugin_Handled;
 }
 
-public Action:CommandBanIp(client, args)
+public Action CommandBanIp(client, args)
 {
 	if (args < 2)
 	{
@@ -442,14 +443,14 @@ public Action:CommandBanIp(client, args)
 		return Plugin_Handled;
 	}
 	
-	decl len, next_len;
+	int len; int next_len;
 	char Arguments[256];
-	char arg[50], String:time[20];
+	char arg[50]; char time[20];
 	
 	GetCmdArgString(Arguments, sizeof(Arguments));
 	len = BreakString(Arguments, arg, sizeof(arg));
 	
-	if ((next_len = BreakString(Arguments[len], time, sizeof(time))) != -1)
+	if ((next_len = BreakString(Arguments[len]; time, sizeof(time))) != -1)
 	{
 		len += next_len;
 	}
@@ -460,8 +461,8 @@ public Action:CommandBanIp(client, args)
 	}
 	
 	char target_name[MAX_TARGET_LENGTH];
-	decl target_list[1], bool:tn_is_ml;
-	new target = -1;
+	int target_list[1]; bool tn_is_ml;
+	int target = -1;
 	
 	if (ProcessTargetString(
 			arg, 
@@ -479,8 +480,8 @@ public Action:CommandBanIp(client, args)
 			GetClientIP(target, arg, sizeof(arg));
 	}
 	
-	char adminIp[24], String:adminAuth[64];
-	new minutes = StringToInt(time);
+	char adminIp[24]; char adminAuth[64];
+	int minutes = StringToInt(time);
 	if (!minutes && client && !(CheckCommandAccess(client, "sm_unban", ADMFLAG_UNBAN | ADMFLAG_ROOT)))
 	{
 		ReplyToCommand(client, "You do not have Perm Ban Permission");
@@ -497,7 +498,7 @@ public Action:CommandBanIp(client, args)
 	}
 	
 	// Pack everything into a data pack so we can retain it
-	new Handle:dataPack = CreateDataPack();
+	Handle dataPack = CreateDataPack();
 	WritePackCell(dataPack, client);
 	WritePackCell(dataPack, minutes);
 	WritePackString(dataPack, Arguments[len]);
@@ -513,7 +514,7 @@ public Action:CommandBanIp(client, args)
 	return Plugin_Handled;
 }
 
-public Action:CommandUnban(client, args)
+public Action CommandUnban(client, args)
 {
 	if (args < 1)
 	{
@@ -528,7 +529,7 @@ public Action:CommandUnban(client, args)
 		return Plugin_Handled;
 	}
 	
-	decl len, String:Arguments[256], String:arg[50], String:adminAuth[64];
+	int len; char Arguments[256]; char arg[50]; char adminAuth[64];
 	GetCmdArgString(Arguments, sizeof(Arguments));
 	
 	if ((len = BreakString(Arguments, arg, sizeof(arg))) == -1)
@@ -545,7 +546,7 @@ public Action:CommandUnban(client, args)
 	}
 	
 	// Pack everything into a data pack so we can retain it
-	new Handle:dataPack = CreateDataPack();
+	Handle dataPack = CreateDataPack();
 	WritePackCell(dataPack, client);
 	WritePackString(dataPack, Arguments[len]);
 	WritePackString(dataPack, arg);
@@ -562,7 +563,7 @@ public Action:CommandUnban(client, args)
 	return Plugin_Handled;
 }
 
-public Action:CommandAddBan(client, args)
+public Action CommandAddBan(client, args)
 {
 	if (args < 2)
 	{
@@ -577,10 +578,10 @@ public Action:CommandAddBan(client, args)
 		return Plugin_Handled;
 	}
 	
-	char arg_string[256], String:time[50], String:authid[50];
+	char arg_string[256]; char time[50]; char authid[50];
 	GetCmdArgString(arg_string, sizeof(arg_string));
 	
-	new len, total_len;
+	int len, total_len;
 	
 	/* Get time */
 	if ((len = BreakString(arg_string, time, sizeof(time))) == -1)
@@ -591,7 +592,7 @@ public Action:CommandAddBan(client, args)
 	total_len += len;
 	
 	/* Get steamid */
-	if ((len = BreakString(arg_string[total_len], authid, sizeof(authid))) != -1)
+	if ((len = BreakString(arg_string[total_len]; authid, sizeof(authid))) != -1)
 	{
 		total_len += len;
 	}
@@ -601,8 +602,8 @@ public Action:CommandAddBan(client, args)
 		arg_string[0] = '\0';
 	}
 	
-	char adminIp[24], String:adminAuth[64];
-	new minutes = StringToInt(time);
+	char adminIp[24]; char adminAuth[64];
+	int minutes = StringToInt(time);
 	if (!minutes && client && !(CheckCommandAccess(client, "sm_unban", ADMFLAG_UNBAN | ADMFLAG_ROOT)))
 	{
 		ReplyToCommand(client, "You do not have Perm Ban Permission");
@@ -619,7 +620,7 @@ public Action:CommandAddBan(client, args)
 	}
 	
 	// Pack everything into a data pack so we can retain it
-	new Handle:dataPack = CreateDataPack();
+	Handle dataPack = CreateDataPack();
 	WritePackCell(dataPack, client);
 	WritePackCell(dataPack, minutes);
 	WritePackString(dataPack, arg_string[total_len]);
@@ -635,7 +636,7 @@ public Action:CommandAddBan(client, args)
 	return Plugin_Handled;
 }
 
-public Action:sm_rehash(args)
+public Action sm_rehash(args)
 {
 	if (enableAdmins)
 		DumpAdminCache(AdminCache_Groups, true);
@@ -647,7 +648,7 @@ public Action:sm_rehash(args)
 
 // MENU CODE //
 
-public OnAdminMenuReady(Handle:topmenu)
+public OnAdminMenuReady(Handle topmenu)
 {
 	#if defined DEBUG
 	LogToFile(logFile, "OnAdminMenuReady()");
@@ -692,11 +693,11 @@ public OnAdminMenuReady(Handle:topmenu)
 	}
 }
 
-public AdminMenu_Ban(Handle:topmenu, 
-	TopMenuAction:action,  // Action being performed
+public AdminMenu_Ban(Handle topmenu, 
+	TopMenuAction action,  // Action being performed
 	TopMenuObject:object_id,  // The object ID (if used)
 	param,  // client idx of admin who chose the option (if used)
-	String:buffer[],  // Output buffer (if used)
+	char buffer,  // Output buffer (if used)
 	maxlength) // Output buffer (if used)
 {
 	/* Clear the Ownreason bool, so he is able to chat again;) */
@@ -729,13 +730,13 @@ public AdminMenu_Ban(Handle:topmenu,
 	}
 }
 
-public ReasonSelected(Handle:menu, MenuAction:action, param1, param2)
+public ReasonSelected(Handle menu, MenuAction action, param1, param2)
 {
 	switch (action)
 	{
 		case MenuAction_Select:
 		{
-			char info[128], String:key[128];
+			char info[128]; char key[128];
 			GetMenuItem(menu, param2, key, sizeof(key), _, info, sizeof(info));
 			
 			if (StrEqual("Hacking", key))
@@ -752,7 +753,7 @@ public ReasonSelected(Handle:menu, MenuAction:action, param1, param2)
 			}
 			
 			else if (g_BanTarget[param1] != -1 && g_BanTime[param1] != -1)
-				PrepareBan(param1, g_BanTarget[param1], g_BanTime[param1], info, sizeof(info));
+				PrepareBan(param1, g_BanTarget[param1]; g_BanTime[param1]; info, sizeof(info));
 		}
 		
 		case MenuAction_Cancel:
@@ -774,24 +775,24 @@ public ReasonSelected(Handle:menu, MenuAction:action, param1, param2)
 	}
 }
 
-public HackingSelected(Handle:menu, MenuAction:action, param1, param2)
+public HackingSelected(Handle menu, MenuAction action, param1, param2)
 {
 	switch (action)
 	{
 		case MenuAction_Select:
 		{
-			char info[128], String:key[128];
+			char info[128]; char key[128];
 			GetMenuItem(menu, param2, key, sizeof(key), _, info, sizeof(info));
 			
 			if (g_BanTarget[param1] != -1 && g_BanTime[param1] != -1)
-				PrepareBan(param1, g_BanTarget[param1], g_BanTime[param1], info, sizeof(info));
+				PrepareBan(param1, g_BanTarget[param1]; g_BanTime[param1]; info, sizeof(info));
 		}
 		
 		case MenuAction_Cancel:
 		{
 			if (param2 == MenuCancel_Disconnected)
 			{
-				new Handle:Pack = PlayerDataPack[param1];
+				Handle Pack = PlayerDataPack[param1];
 				
 				if (Pack != INVALID_HANDLE)
 				{
@@ -800,7 +801,7 @@ public HackingSelected(Handle:menu, MenuAction:action, param1, param2)
 					ReadPackCell(Pack); // admin userid
 					ReadPackCell(Pack); // target userid
 					ReadPackCell(Pack); // time
-					new Handle:ReasonPack = Handle:ReadPackCell(Pack);
+					Handle ReasonPack = Handle ReadPackCell(Pack);
 					
 					if (ReasonPack != INVALID_HANDLE)
 					{
@@ -820,7 +821,7 @@ public HackingSelected(Handle:menu, MenuAction:action, param1, param2)
 	}
 }
 
-public MenuHandler_BanPlayerList(Handle:menu, MenuAction:action, param1, param2)
+public MenuHandler_BanPlayerList(Handle menu, MenuAction action, param1, param2)
 {
 	#if defined DEBUG
 	LogToFile(logFile, "MenuHandler_BanPlayerList()");
@@ -843,8 +844,8 @@ public MenuHandler_BanPlayerList(Handle:menu, MenuAction:action, param1, param2)
 		
 		case MenuAction_Select:
 		{
-			char info[32], String:name[32];
-			new userid, target;
+			char info[32]; char name[32];
+			int userid, target;
 			
 			GetMenuItem(menu, param2, info, sizeof(info), _, name, sizeof(name));
 			userid = StringToInt(info);
@@ -866,7 +867,7 @@ public MenuHandler_BanPlayerList(Handle:menu, MenuAction:action, param1, param2)
 	}
 }
 
-public MenuHandler_BanTimeList(Handle:menu, MenuAction:action, param1, param2)
+public MenuHandler_BanTimeList(Handle menu, MenuAction action, param1, param2)
 {
 	#if defined DEBUG
 	LogToFile(logFile, "MenuHandler_BanTimeList()");
@@ -905,7 +906,7 @@ stock DisplayBanTargetMenu(client)
 	#if defined DEBUG
 	LogToFile(logFile, "DisplayBanTargetMenu()");
 	#endif
-	new Handle:menu = CreateMenu(MenuHandler_BanPlayerList); // Create a new menu, pass it the handler.
+	Handle menu = CreateMenu(MenuHandler_BanPlayerList); // Create a int menu, pass it the handler.
 	
 	char title[100];
 	Format(title, sizeof(title), "%T:", "Ban player", client);
@@ -928,7 +929,7 @@ stock DisplayBanTimeMenu(client)
 	LogToFile(logFile, "DisplayBanTimeMenu()");
 	#endif
 	
-	new Handle:menu = CreateMenu(MenuHandler_BanTimeList);
+	Handle menu = CreateMenu(MenuHandler_BanTimeList);
 	
 	char title[100];
 	Format(title, sizeof(title), "%T:", "Ban player", client);
@@ -958,7 +959,7 @@ stock ResetMenu()
 
 // QUERY CALL BACKS //
 
-public GotDatabase(Handle:owner, Handle:hndl, const String:error[], any:data)
+public GotDatabase(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	if (hndl == INVALID_HANDLE)
 	{
@@ -1002,7 +1003,7 @@ public GotDatabase(Handle:owner, Handle:hndl, const String:error[], any:data)
 	
 	if (loadAdmins && enableAdmins)
 	{
-		new String:queryLastLogin[50] = "";
+		char queryLastLogin[50] = "";
 		
 		if (requireSiteLogin)
 			queryLastLogin = "lastvisit IS NOT NULL AND lastvisit != '' AND";
@@ -1037,7 +1038,7 @@ public GotDatabase(Handle:owner, Handle:hndl, const String:error[], any:data)
 	g_bConnecting = false;
 }
 
-public VerifyInsert(Handle:owner, Handle:hndl, const String:error[], any:dataPack)
+public VerifyInsert(Handle owner, Handle hndl, const char[] error, any:dataPack)
 {
 	if (dataPack == INVALID_HANDLE)
 	{
@@ -1048,13 +1049,13 @@ public VerifyInsert(Handle:owner, Handle:hndl, const String:error[], any:dataPac
 	if (hndl == INVALID_HANDLE || error[0])
 	{
 		LogToFile(logFile, "Verify Insert Query Failed: %s", error);
-		new admin = ReadPackCell(dataPack);
+		int admin = ReadPackCell(dataPack);
 		ReadPackCell(dataPack); // target
 		ReadPackCell(dataPack); // admin userid
 		ReadPackCell(dataPack); // target userid
-		new time = ReadPackCell(dataPack);
-		new Handle:reasonPack = Handle:ReadPackCell(dataPack);
-		new String:reason[128];
+		int time = ReadPackCell(dataPack);
+		Handle reasonPack = Handle ReadPackCell(dataPack);
+		char reason[128];
 		ReadPackString(reasonPack, reason, sizeof(reason));
 		char name[50];
 		ReadPackString(dataPack, name, sizeof(name));
@@ -1070,23 +1071,23 @@ public VerifyInsert(Handle:owner, Handle:hndl, const String:error[], any:dataPac
 		ResetPack(reasonPack);
 		
 		PlayerDataPack[admin] = INVALID_HANDLE;
-		UTIL_InsertTempBan(time, name, auth, ip, reason, adminAuth, adminIp, Handle:dataPack);
+		UTIL_InsertTempBan(time, name, auth, ip, reason, adminAuth, adminIp, Handle dataPack);
 		return;
 	}
 	
-	new admin = ReadPackCell(dataPack);
-	new client = ReadPackCell(dataPack);
+	int admin = ReadPackCell(dataPack);
+	int client = ReadPackCell(dataPack);
 	
 	if (!IsClientConnected(client) || IsFakeClient(client))
 		return;
 	
 	ReadPackCell(dataPack); // admin userid
-	new UserId = ReadPackCell(dataPack);
-	new time = ReadPackCell(dataPack);
-	new Handle:ReasonPack = Handle:ReadPackCell(dataPack);
+	int UserId = ReadPackCell(dataPack);
+	int time = ReadPackCell(dataPack);
+	Handle ReasonPack = Handle ReadPackCell(dataPack);
 	
 	char Name[64];
-	new String:Reason[128];
+	char Reason[128];
 	
 	ReadPackString(dataPack, Name, sizeof(Name));
 	ReadPackString(ReasonPack, Reason, sizeof(Reason));
@@ -1122,10 +1123,10 @@ public VerifyInsert(Handle:owner, Handle:hndl, const String:error[], any:dataPac
 		KickClient(client, "%t", "Banned Check Site", WebsiteAddress);
 }
 
-public SelectBanIpCallback(Handle:owner, Handle:hndl, const String:error[], any:data)
+public SelectBanIpCallback(Handle owner, Handle hndl, const char[] error, any:data)
 {
-	decl admin, minutes, String:adminAuth[30], String:adminIp[30], String:banReason[256], String:ip[16], String:Query[512];
-	new String:reason[128];
+	int admin; int minutes; char adminAuth[30]; char adminIp[30]; char banReason[256]; char ip[16]; char Query[512];
+	char reason[128];
 	ResetPack(data);
 	admin = ReadPackCell(data);
 	minutes = ReadPackCell(data);
@@ -1157,22 +1158,22 @@ public SelectBanIpCallback(Handle:owner, Handle:hndl, const String:error[], any:
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (type, ip, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						(1, '%s', '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						(SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1), ' ')", 
-			DatabasePrefix, ip, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, DatabasePrefix, ServerIp, ServerPort);
+			DatabasePrefix, ip, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, DatabasePrefix, ServerIp, ServerPort);
 	} else {
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (type, ip, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						(1, '%s', '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						%d, ' ')", 
-			DatabasePrefix, ip, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, serverID);
+			DatabasePrefix, ip, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, serverID);
 	}
 	
 	SQL_TQuery(DB, InsertBanIpCallback, Query, data, DBPrio_High);
 }
 
-public InsertBanIpCallback(Handle:owner, Handle:hndl, const String:error[], any:data)
+public InsertBanIpCallback(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	// if the pack is good unpack it and close the handle
-	new admin, minutes;
-	new String:reason[128];
+	int admin, minutes;
+	char reason[128];
 	char arg[30];
 	if (data != INVALID_HANDLE)
 	{
@@ -1209,10 +1210,10 @@ public InsertBanIpCallback(Handle:owner, Handle:hndl, const String:error[], any:
 		PrintToServer("%s%s successfully banned", Prefix, arg);
 }
 
-public SelectUnbanCallback(Handle:owner, Handle:hndl, const String:error[], any:data)
+public SelectUnbanCallback(Handle owner, Handle hndl, const char[] error, any:data)
 {
-	decl admin, String:arg[30], String:adminAuth[30], String:unbanReason[256];
-	new String:reason[128];
+	int admin; char arg[30]; char adminAuth[30]; char unbanReason[256];
+	char reason[128];
 	ResetPack(data);
 	admin = ReadPackCell(data);
 	ReadPackString(data, reason, sizeof(reason));
@@ -1247,22 +1248,22 @@ public SelectUnbanCallback(Handle:owner, Handle:hndl, const String:error[], any:
 	if (hndl != INVALID_HANDLE && SQL_FetchRow(hndl))
 	{
 		// Get the values from the existing ban record
-		new bid = SQL_FetchInt(hndl, 0);
+		int bid = SQL_FetchInt(hndl, 0);
 		
 		char query[1000];
 		Format(query, sizeof(query), "UPDATE %s_bans SET RemovedBy = (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), RemoveType = 'U', RemovedOn = UNIX_TIMESTAMP(), ureason = '%s' WHERE bid = %d", 
-			DatabasePrefix, DatabasePrefix, adminAuth, adminAuth[8], unbanReason, bid);
+			DatabasePrefix, DatabasePrefix, adminAuth, adminAuth[8]; unbanReason, bid);
 		
 		SQL_TQuery(DB, InsertUnbanCallback, query, data);
 	}
 	return;
 }
 
-public InsertUnbanCallback(Handle:owner, Handle:hndl, const String:error[], any:data)
+public InsertUnbanCallback(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	// if the pack is good unpack it and close the handle
-	decl admin, String:arg[30];
-	new String:reason[128];
+	int admin; char arg[30];
+	char reason[128];
 	if (data != INVALID_HANDLE)
 	{
 		ResetPack(data);
@@ -1295,10 +1296,10 @@ public InsertUnbanCallback(Handle:owner, Handle:hndl, const String:error[], any:
 	}
 }
 
-public SelectAddbanCallback(Handle:owner, Handle:hndl, const String:error[], any:data)
+public SelectAddbanCallback(Handle owner, Handle hndl, const char[] error, any:data)
 {
-	decl admin, minutes, String:adminAuth[30], String:adminIp[30], String:authid[20], String:banReason[256], String:Query[512];
-	new String:reason[128];
+	int admin; int minutes; char adminAuth[30]; char adminIp[30]; char authid[20]; char banReason[256]; char Query[512];
+	char reason[128];
 	ResetPack(data);
 	admin = ReadPackCell(data);
 	minutes = ReadPackCell(data);
@@ -1330,21 +1331,21 @@ public SelectAddbanCallback(Handle:owner, Handle:hndl, const String:error[], any
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (authid, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						('%s', '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						(SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1), ' ')", 
-			DatabasePrefix, authid, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, DatabasePrefix, ServerIp, ServerPort);
+			DatabasePrefix, authid, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, DatabasePrefix, ServerIp, ServerPort);
 	} else {
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (authid, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						('%s', '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						%d, ' ')", 
-			DatabasePrefix, authid, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, serverID);
+			DatabasePrefix, authid, (minutes * 60), (minutes * 60), banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, serverID);
 	}
 	
 	SQL_TQuery(DB, InsertAddbanCallback, Query, data, DBPrio_High);
 }
 
-public InsertAddbanCallback(Handle:owner, Handle:hndl, const String:error[], any:data)
+public InsertAddbanCallback(Handle owner, Handle hndl, const char[] error, any:data)
 {
-	decl admin, minutes, String:authid[20];
-	new String:reason[128];
+	int admin; int minutes; char authid[20];
+	char reason[128];
 	ResetPack(data);
 	admin = ReadPackCell(data);
 	minutes = ReadPackCell(data);
@@ -1378,7 +1379,7 @@ public InsertAddbanCallback(Handle:owner, Handle:hndl, const String:error[], any
 }
 
 // ProcessQueueCallback is called as the result of selecting all the rows from the queue table
-public ProcessQueueCallback(Handle:owner, Handle:hndl, const String:error[], any:data)
+public ProcessQueueCallback(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	if (hndl == INVALID_HANDLE || strlen(error) > 0)
 	{
@@ -1387,9 +1388,9 @@ public ProcessQueueCallback(Handle:owner, Handle:hndl, const String:error[], any
 	}
 	
 	char auth[30];
-	decl time;
-	decl startTime;
-	new String:reason[128];
+	int time;
+	int startTime;
+	char reason[128];
 	char name[64];
 	char ip[20];
 	char adminAuth[30];
@@ -1423,7 +1424,7 @@ public ProcessQueueCallback(Handle:owner, Handle:hndl, const String:error[], any
 					"INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid) VALUES  \
 						('%s', '%s', '%s', %d, %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						(SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1))", 
-					DatabasePrefix, ip, auth, banName, startTime, startTime + time * 60, time * 60, banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, DatabasePrefix, ServerIp, ServerPort);
+					DatabasePrefix, ip, auth, banName, startTime, startTime + time * 60, time * 60, banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, DatabasePrefix, ServerIp, ServerPort);
 			}
 			else
 			{
@@ -1431,9 +1432,9 @@ public ProcessQueueCallback(Handle:owner, Handle:hndl, const String:error[], any
 					"INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid) VALUES  \
 						('%s', '%s', '%s', %d, %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						%d)", 
-					DatabasePrefix, ip, auth, banName, startTime, startTime + time * 60, time * 60, banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, serverID);
+					DatabasePrefix, ip, auth, banName, startTime, startTime + time * 60, time * 60, banReason, DatabasePrefix, adminAuth, adminAuth[8]; adminIp, serverID);
 			}
-			new Handle:authPack = CreateDataPack();
+			Handle authPack = CreateDataPack();
 			WritePackString(authPack, auth);
 			ResetPack(authPack);
 			SQL_TQuery(DB, AddedFromSQLiteCallback, query, authPack);
@@ -1447,7 +1448,7 @@ public ProcessQueueCallback(Handle:owner, Handle:hndl, const String:error[], any
 	CreateTimer(float(ProcessQueueTime * 60), ProcessQueue);
 }
 
-public AddedFromSQLiteCallback(Handle:owner, Handle:hndl, const String:error[], any:data)
+public AddedFromSQLiteCallback(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	char buffer[512];
 	char auth[40];
@@ -1469,7 +1470,7 @@ public AddedFromSQLiteCallback(Handle:owner, Handle:hndl, const String:error[], 
 	CloseHandle(data);
 }
 
-public ServerInfoCallback(Handle:owner, Handle:hndl, const String:error[], any:data)
+public ServerInfoCallback(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	if (error[0])
 	{
@@ -1480,14 +1481,14 @@ public ServerInfoCallback(Handle:owner, Handle:hndl, const String:error[], any:d
 	if (hndl == INVALID_HANDLE || SQL_GetRowCount(hndl) == 0)
 	{
 		// get the game folder name used to determine the mod
-		char desc[64], String:query[200];
+		char desc[64]; char query[200];
 		GetGameFolderName(desc, sizeof(desc));
 		FormatEx(query, sizeof(query), "INSERT INTO %s_servers (ip, port, rcon, modid) VALUES ('%s', '%s', '', (SELECT mid FROM %s_mods WHERE modfolder = '%s'))", DatabasePrefix, ServerIp, ServerPort, DatabasePrefix, desc);
 		SQL_TQuery(DB, ErrorCheckCallback, query);
 	}
 }
 
-public ErrorCheckCallback(Handle:owner, Handle:hndle, const String:error[], any:data)
+public ErrorCheckCallback(Handle owner, Handle hndle, const char[] error, any:data)
 {
 	if (error[0])
 	{
@@ -1495,12 +1496,12 @@ public ErrorCheckCallback(Handle:owner, Handle:hndle, const String:error[], any:
 	}
 }
 
-public VerifyBan(Handle:owner, Handle:hndl, const String:error[], any:userid)
+public VerifyBan(Handle owner, Handle hndl, const char[] error, any:userid)
 {
 	char clientName[64];
 	char clientAuth[64];
 	char clientIp[64];
-	new client = GetClientOfUserId(userid);
+	int client = GetClientOfUserId(userid);
 	
 	if (!client)
 		return;
@@ -1527,14 +1528,14 @@ public VerifyBan(Handle:owner, Handle:hndl, const String:error[], any:userid)
 			FormatEx(Query, sizeof(Query), "INSERT INTO %s_banlog (sid ,time ,name ,bid) VALUES  \
 				((SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1), UNIX_TIMESTAMP(), '%s', \
 				(SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND RemoveType IS NULL LIMIT 0,1))", 
-				DatabasePrefix, DatabasePrefix, ServerIp, ServerPort, Name, DatabasePrefix, clientAuth[8], clientIp);
+				DatabasePrefix, DatabasePrefix, ServerIp, ServerPort, Name, DatabasePrefix, clientAuth[8]; clientIp);
 		}
 		else
 		{
 			FormatEx(Query, sizeof(Query), "INSERT INTO %s_banlog (sid ,time ,name ,bid) VALUES  \
 				(%d, UNIX_TIMESTAMP(), '%s', \
 				(SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND RemoveType IS NULL LIMIT 0,1))", 
-				DatabasePrefix, serverID, Name, DatabasePrefix, clientAuth[8], clientIp);
+				DatabasePrefix, serverID, Name, DatabasePrefix, clientAuth[8]; clientIp);
 		}
 		
 		SQL_TQuery(DB, ErrorCheckCallback, Query, client, DBPrio_High);
@@ -1550,7 +1551,7 @@ public VerifyBan(Handle:owner, Handle:hndl, const String:error[], any:userid)
 	PlayerStatus[client] = true;
 }
 
-public AdminsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
+public AdminsDone(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	//SELECT authid, srv_password , srv_group, srv_flags, user
 	if (hndl == INVALID_HANDLE || strlen(error) > 0)
@@ -1566,10 +1567,10 @@ public AdminsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 	char groups[256];
 	char flags[32];
 	char name[66];
-	new admCount = 0;
-	new Immunity = 0;
+	int admCount = 0;
+	int Immunity = 0;
 	new AdminId:curAdm = INVALID_ADMIN_ID;
-	new Handle:adminsKV = CreateKeyValues("Admins");
+	Handle adminsKV = CreateKeyValues("Admins");
 	
 	while (SQL_MoreRows(hndl))
 	{
@@ -1630,16 +1631,16 @@ public AdminsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 		LogToFile(logFile, "Given %s (%s) admin", name, identity);
 		#endif
 		
-		new curPos = 0;
+		int curPos = 0;
 		new GroupId:curGrp = INVALID_GROUP_ID;
-		new numGroups;
+		int numGroups;
 		char iterGroupName[64];
 		
 		// Who thought this comma seperated group parsing would be a good idea?!
 		/*
 		char grp[64];
-		new nextPos = 0;
-		while ((nextPos = SplitString(groups[curPos],",",grp,64)) != -1)
+		int nextPos = 0;
+		while ((nextPos = SplitString(groups[curPos];",",grp,64)) != -1)
 		{
 			curPos += nextPos;
 			curGrp = FindAdmGroup(grp);
@@ -1651,7 +1652,7 @@ public AdminsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 			{
 				// Check, if he's not in the group already.
 				numGroups = GetAdminGroupCount(curAdm);
-				for(new i=0;i<numGroups;i++)
+				for(int i=0;i<numGroups;i++)
 				{
 					GetAdminGroup(curAdm, i, iterGroupName, sizeof(iterGroupName));
 					// Admin is already part of the group, so don't try to inherit its permissions.
@@ -1661,7 +1662,7 @@ public AdminsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 						break;
 					}
 				}
-				// Only try to inherit the group, if it's a new one.
+				// Only try to inherit the group, if it's a int one.
 				if (numGroups != -2 && !AdminInheritGroup(curAdm,curGrp))
 				{
 					LogToFile(logFile, "Unable to inherit group \"%s\"",grp);
@@ -1669,7 +1670,7 @@ public AdminsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 			}
 		}*/
 		
-		if (strcmp(groups[curPos], "") != 0)
+		if (strcmp(groups[curPos]; "") != 0)
 		{
 			curGrp = FindAdmGroup(groups[curPos]);
 			if (curGrp == INVALID_GROUP_ID)
@@ -1680,7 +1681,7 @@ public AdminsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 			{
 				// Check, if he's not in the group already.
 				numGroups = GetAdminGroupCount(curAdm);
-				for (new i = 0; i < numGroups; i++)
+				for (int i = 0; i < numGroups; i++)
 				{
 					GetAdminGroup(curAdm, i, iterGroupName, sizeof(iterGroupName));
 					// Admin is already part of the group, so don't try to inherit its permissions.
@@ -1691,7 +1692,7 @@ public AdminsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 					}
 				}
 				
-				// Only try to inherit the group, if it's a new one.
+				// Only try to inherit the group, if it's a int one.
 				if (numGroups != -2 && !AdminInheritGroup(curAdm, curGrp))
 				{
 					LogToFile(logFile, "Unable to inherit group \"%s\"", groups[curPos]);
@@ -1710,7 +1711,7 @@ public AdminsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 		if (strlen(password) > 0)
 			SetAdminPassword(curAdm, password);
 		
-		for (new i = 0; i < strlen(flags); ++i)
+		for (int i = 0; i < strlen(flags); ++i)
 		{
 			if (flags[i] < 'a' || flags[i] > 'z')
 				continue;
@@ -1718,7 +1719,7 @@ public AdminsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 			if (g_FlagLetters[flags[i]-'a'] < Admin_Reservation)
 				continue;
 			
-			SetAdminFlag(curAdm, g_FlagLetters[flags[i]-'a'], true);
+			SetAdminFlag(curAdm, g_FlagLetters[flags[i]-'a']; true);
 		}
 		++admCount;
 	}
@@ -1735,7 +1736,7 @@ public AdminsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 	CheckLoadAdmins();
 }
 
-public GroupsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
+public GroupsDone(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	if (hndl == INVALID_HANDLE)
 	{
@@ -1744,11 +1745,11 @@ public GroupsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 		LogToFile(logFile, "Failed to retrieve groups from the database, %s", error);
 		return;
 	}
-	char grpName[128], String:immuneGrpName[128];
+	char grpName[128]; char immuneGrpName[128];
 	char grpFlags[32];
-	new Immunity;
-	new grpCount = 0;
-	new Handle:groupsKV = CreateKeyValues("Groups");
+	int Immunity;
+	int grpCount = 0;
+	Handle groupsKV = CreateKeyValues("Groups");
 	
 	new GroupId:curGrp = INVALID_GROUP_ID;
 	while (SQL_MoreRows(hndl))
@@ -1787,7 +1788,7 @@ public GroupsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 			curGrp = FindAdmGroup(grpName);
 		}
 		
-		for (new i = 0; i < strlen(grpFlags); ++i)
+		for (int i = 0; i < strlen(grpFlags); ++i)
 		{
 			if (grpFlags[i] < 'a' || grpFlags[i] > 'z')
 				continue;
@@ -1795,7 +1796,7 @@ public GroupsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 			if (g_FlagLetters[grpFlags[i]-'a'] < Admin_Reservation)
 				continue;
 			
-			SetAdmGroupAddFlag(curGrp, g_FlagLetters[grpFlags[i]-'a'], true);
+			SetAdmGroupAddFlag(curGrp, g_FlagLetters[grpFlags[i]-'a']; true);
 		}
 		
 		// Set the group immunity.
@@ -1837,7 +1838,7 @@ public GroupsDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 }
 
 // Reparse to apply inherited immunity
-public GroupsSecondPass(Handle:owner, Handle:hndl, const String:error[], any:data)
+public GroupsSecondPass(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	if (hndl == INVALID_HANDLE)
 	{
@@ -1846,7 +1847,7 @@ public GroupsSecondPass(Handle:owner, Handle:hndl, const String:error[], any:dat
 		LogToFile(logFile, "Failed to retrieve groups from the database, %s", error);
 		return;
 	}
-	char grpName[128], String:immunityGrpName[128];
+	char grpName[128]; char immunityGrpName[128];
 	
 	new GroupId:curGrp = INVALID_GROUP_ID;
 	new GroupId:immuneGrp = INVALID_GROUP_ID;
@@ -1882,7 +1883,7 @@ public GroupsSecondPass(Handle:owner, Handle:hndl, const String:error[], any:dat
 	CheckLoadAdmins();
 }
 
-public LoadGroupsOverrides(Handle:owner, Handle:hndl, const String:error[], any:data)
+public LoadGroupsOverrides(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	if (hndl == INVALID_HANDLE)
 	{
@@ -1891,13 +1892,13 @@ public LoadGroupsOverrides(Handle:owner, Handle:hndl, const String:error[], any:
 		LogToFile(logFile, "Failed to retrieve group overrides from the database, %s", error);
 		return;
 	}
-	char sGroupName[128], String:sType[16], String:sCommand[64], String:sAllowed[16];
+	char sGroupName[128]; char sType[16]; char sCommand[64]; char sAllowed[16];
 	decl OverrideRule:iRule, OverrideType:iType;
 	
-	new Handle:groupsKV = CreateKeyValues("Groups");
+	Handle groupsKV = CreateKeyValues("Groups");
 	FileToKeyValues(groupsKV, groupsLoc);
 	
-	new GroupId:curGrp = INVALID_GROUP_ID;
+	int GroupId:curGrp = INVALID_GROUP_ID;
 	while (SQL_MoreRows(hndl))
 	{
 		SQL_FetchRow(hndl);
@@ -1948,7 +1949,7 @@ public LoadGroupsOverrides(Handle:owner, Handle:hndl, const String:error[], any:
 	CloseHandle(groupsKV);
 }
 
-public OverridesDone(Handle:owner, Handle:hndl, const String:error[], any:data)
+public OverridesDone(Handle owner, Handle hndl, const char[] error, any:data)
 {
 	if (hndl == INVALID_HANDLE)
 	{
@@ -1957,9 +1958,9 @@ public OverridesDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 		return;
 	}
 	
-	new Handle:hKV = CreateKeyValues("SB_Overrides");
+	Handle hKV = CreateKeyValues("SB_Overrides");
 	
-	char sFlags[32], String:sName[64], String:sType[64];
+	char sFlags[32]; char sName[64]; char sType[64];
 	while (SQL_FetchRow(hndl))
 	{
 		SQL_FetchString(hndl, 0, sType, sizeof(sType));
@@ -2002,7 +2003,7 @@ public OverridesDone(Handle:owner, Handle:hndl, const String:error[], any:data)
 
 // TIMER CALL BACKS //
 
-public Action:ClientRecheck(Handle:timer, any:client)
+public Action ClientRecheck(Handle timer, any:client)
 {
 	char Authid[64];
 	if (!PlayerStatus[client] && IsClientConnected(client) && GetClientAuthId(client, AuthId_Steam2, Authid, sizeof(Authid)))
@@ -2015,7 +2016,7 @@ public Action:ClientRecheck(Handle:timer, any:client)
 }
 
 /*
-public Action:PruneBans(Handle:timer)
+public Action PruneBans(Handle timer)
 {
 	char Query[512];
 	FormatEx(Query, sizeof(Query),
@@ -2027,7 +2028,7 @@ public Action:PruneBans(Handle:timer)
 }
 */
 
-public Action:ProcessQueue(Handle:timer, any:data)
+public Action ProcessQueue(Handle timer, any:data)
 {
 	char buffer[512];
 	Format(buffer, sizeof(buffer), "SELECT steam_id, time, start_time, reason, name, ip, admin_id, admin_ip FROM queue");
@@ -2041,11 +2042,11 @@ static InitializeConfigParser()
 	if (ConfigParser == INVALID_HANDLE)
 	{
 		ConfigParser = SMC_CreateParser();
-		SMC_SetReaders(ConfigParser, ReadConfig_NewSection, ReadConfig_KeyValue, ReadConfig_EndSection);
+		SMC_SetReaders(ConfigParser, ReadConfig_intSection, ReadConfig_KeyValue, ReadConfig_EndSection);
 	}
 }
 
-static InternalReadConfig(const String:path[])
+static InternalReadConfig(const char[] path)
 {
 	ConfigState = ConfigStateNone;
 	
@@ -2058,7 +2059,7 @@ static InternalReadConfig(const String:path[])
 	}
 }
 
-public SMCResult:ReadConfig_NewSection(Handle:smc, const String:name[], bool:opt_quotes)
+public SMCResult:ReadConfig_intSection(Handle smc, const char[] name, bool opt_quotes)
 {
 	if (name[0])
 	{
@@ -2074,7 +2075,7 @@ public SMCResult:ReadConfig_NewSection(Handle:smc, const String:name[], bool:opt
 	return SMCParse_Continue;
 }
 
-public SMCResult:ReadConfig_KeyValue(Handle:smc, const String:key[], const String:value[], bool:key_quotes, bool:value_quotes)
+public SMCResult:ReadConfig_KeyValue(Handle smc, const char[] key, const char[] value, bool key_quotes, bool value_quotes)
 {
 	if (!key[0])
 		return SMCParse_Continue;
@@ -2164,7 +2165,7 @@ public SMCResult:ReadConfig_KeyValue(Handle:smc, const String:key[], const Strin
 	return SMCParse_Continue;
 }
 
-public SMCResult:ReadConfig_EndSection(Handle:smc)
+public SMCResult:ReadConfig_EndSection(Handle smc)
 {
 	return SMCParse_Continue;
 }
@@ -2178,12 +2179,12 @@ public SMCResult:ReadConfig_EndSection(Handle:smc)
  * @param reason	The reason to ban the player from the server
  * @noreturn
  *********************************************************/
-public Native_SBBanPlayer(Handle:plugin, numParams)
+public Native_SBBanPlayer(Handle plugin, numParams)
 {
-	new client = GetNativeCell(1);
-	new target = GetNativeCell(2);
-	new time = GetNativeCell(3);
-	new String:reason[128];
+	int client = GetNativeCell(1);
+	int target = GetNativeCell(2);
+	int time = GetNativeCell(3);
+	char reason[128];
 	GetNativeString(4, reason, 128);
 	
 	if (reason[0] == '\0')
@@ -2224,10 +2225,10 @@ public InitializeBackupDB()
 	SQL_UnlockDatabase(SQLiteDB);
 }
 
-public bool:CreateBan(client, target, time, String:reason[])
+public bool CreateBan(client, target, time, char reason[])
 {
-	char adminIp[24], String:adminAuth[64];
-	new admin = client;
+	char adminIp[24]; char adminAuth[64];
+	int admin = client;
 	
 	// The server is the one calling the ban
 	if (!admin)
@@ -2248,18 +2249,18 @@ public bool:CreateBan(client, target, time, String:reason[])
 	}
 	
 	// target information
-	char ip[24], String:auth[64], String:name[64];
+	char ip[24]; char auth[64]; char name[64];
 	
 	GetClientName(target, name, sizeof(name));
 	GetClientIP(target, ip, sizeof(ip));
 	if (!GetClientAuthId(target, AuthId_Steam2, auth, sizeof(auth)))
 		return false;
 	
-	new userid = admin ? GetClientUserId(admin) : 0;
+	int userid = admin ? GetClientUserId(admin) : 0;
 	
 	// Pack everything into a data pack so we can retain it
-	new Handle:dataPack = CreateDataPack();
-	new Handle:reasonPack = CreateDataPack();
+	Handle dataPack = CreateDataPack();
+	Handle reasonPack = CreateDataPack();
 	WritePackString(reasonPack, reason);
 	
 	WritePackCell(dataPack, admin);
@@ -2296,9 +2297,9 @@ public bool:CreateBan(client, target, time, String:reason[])
 	return true;
 }
 
-stock UTIL_InsertBan(time, const String:Name[], const String:Authid[], const String:Ip[], const String:Reason[], const String:AdminAuthid[], const String:AdminIp[], Handle:Pack)
+stock UTIL_InsertBan(time, const char[] Name, const char[] Authid, const char[] Ip, const char[] Reason, const char[] AdminAuthid, const char[] AdminIp, Handle Pack)
 {
-	//new Handle:dummy;
+	//Handle dummy;
 	//PruneBans(dummy);
 	char banName[128];
 	char banReason[256];
@@ -2310,25 +2311,25 @@ stock UTIL_InsertBan(time, const String:Name[], const String:Authid[], const Str
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						('%s', '%s', '%s', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', IFNULL((SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'),'0'), '%s', \
 						(SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1), ' ')", 
-			DatabasePrefix, Ip, Authid, banName, (time * 60), (time * 60), banReason, DatabasePrefix, AdminAuthid, AdminAuthid[8], AdminIp, DatabasePrefix, ServerIp, ServerPort);
+			DatabasePrefix, Ip, Authid, banName, (time * 60), (time * 60), banReason, DatabasePrefix, AdminAuthid, AdminAuthid[8]; AdminIp, DatabasePrefix, ServerIp, ServerPort);
 	} else {
 		FormatEx(Query, sizeof(Query), "INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid, country) VALUES \
 						('%s', '%s', '%s', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', IFNULL((SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'),'0'), '%s', \
 						%d, ' ')", 
-			DatabasePrefix, Ip, Authid, banName, (time * 60), (time * 60), banReason, DatabasePrefix, AdminAuthid, AdminAuthid[8], AdminIp, serverID);
+			DatabasePrefix, Ip, Authid, banName, (time * 60), (time * 60), banReason, DatabasePrefix, AdminAuthid, AdminAuthid[8]; AdminIp, serverID);
 	}
 	
 	SQL_TQuery(DB, VerifyInsert, Query, Pack, DBPrio_High);
 }
 
-stock UTIL_InsertTempBan(time, const String:name[], const String:auth[], const String:ip[], const String:reason[], const String:adminAuth[], const String:adminIp[], Handle:dataPack)
+stock UTIL_InsertTempBan(time, const char[] name, const char[] auth, const char[] ip, const char[] reason, const char[] adminAuth, const char[] adminIp, Handle dataPack)
 {
 	ReadPackCell(dataPack); // admin index
-	new client = ReadPackCell(dataPack);
+	int client = ReadPackCell(dataPack);
 	ReadPackCell(dataPack); // admin userid
 	ReadPackCell(dataPack); // target userid
 	ReadPackCell(dataPack); // time
-	new Handle:reasonPack = Handle:ReadPackCell(dataPack);
+	Handle reasonPack = Handle ReadPackCell(dataPack);
 	if (reasonPack != INVALID_HANDLE)
 	{
 		CloseHandle(reasonPack);
@@ -2354,7 +2355,7 @@ stock UTIL_InsertTempBan(time, const String:name[], const String:auth[], const S
 
 stock CheckLoadAdmins()
 {
-	for (new i = 1; i <= MaxClients; i++)
+	for (int i = 1; i <= MaxClients; i++)
 	{
 		if (IsClientInGame(i) && IsClientAuthorized(i))
 		{
@@ -2371,13 +2372,13 @@ stock InsertServerInfo()
 		return;
 	}
 	
-	char query[100], pieces[4];
-	new longip = GetConVarInt(CvarHostIp);
+	char query[100]; pieces[4];
+	int longip = GetConVarInt(CvarHostIp);
 	pieces[0] = (longip >> 24) & 0x000000FF;
 	pieces[1] = (longip >> 16) & 0x000000FF;
 	pieces[2] = (longip >> 8) & 0x000000FF;
 	pieces[3] = longip & 0x000000FF;
-	FormatEx(ServerIp, sizeof(ServerIp), "%d.%d.%d.%d", pieces[0], pieces[1], pieces[2], pieces[3]);
+	FormatEx(ServerIp, sizeof(ServerIp), "%d.%d.%d.%d", pieces[0]; pieces[1]; pieces[2]; pieces[3]);
 	GetConVarString(CvarPort, ServerPort, sizeof(ServerPort));
 	
 	if (AutoAdd != false)
@@ -2387,14 +2388,14 @@ stock InsertServerInfo()
 	}
 }
 
-stock PrepareBan(client, target, time, String:reason[], size)
+stock PrepareBan(client, target, time, char reason, size)
 {
 	#if defined DEBUG
 	LogToFile(logFile, "PrepareBan()");
 	#endif
 	if (!target || !IsClientInGame(target))
 		return;
-	char authid[64], String:name[32], String:bannedSite[512];
+	char authid[64]; char name[32]; char bannedSite[512];
 	if (!GetClientAuthId(target, AuthId_Steam2, authid, sizeof(authid)))
 		return;
 	GetClientName(target, name, sizeof(name));
@@ -2464,14 +2465,14 @@ stock ResetSettings()
 
 stock ParseBackupConfig_Overrides()
 {
-	new Handle:hKV = CreateKeyValues("SB_Overrides");
+	Handle hKV = CreateKeyValues("SB_Overrides");
 	if (!FileToKeyValues(hKV, overridesLoc))
 		return;
 	
 	if (!KvGotoFirstSubKey(hKV))
 		return;
 	
-	char sSection[16], String:sFlags[32], String:sName[64];
+	char sSection[16]; char sFlags[32]; char sName[64];
 	decl OverrideType:type;
 	do
 	{
@@ -2533,7 +2534,7 @@ stock AdminFlag:CreateFlagLetters()
 stock AccountForLateLoading()
 {
 	char auth[30];
-	for (new i = 1; i <= GetMaxClients(); i++)
+	for (int i = 1; i <= GetMaxClients(); i++)
 	{
 		if (IsClientConnected(i) && !IsFakeClient(i))
 		{
