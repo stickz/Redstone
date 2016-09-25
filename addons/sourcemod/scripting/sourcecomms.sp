@@ -1126,7 +1126,8 @@ public MenuHandler_MenuListTarget(Handle menu, MenuAction action, param1, param2
 
 AdminMenu_ListTargetReason(client, target, showMute, showGag)
 {
-	char sTemp[192], char sBuffer[192];
+	char sTemp[192];
+	char sBuffer[192];
 	Handle hPanel = CreatePanel();
 	SetPanelTitle(hPanel, g_sName[target]);
 	DrawPanelItem(hPanel, " ", ITEMDRAW_SPACER | ITEMDRAW_RAWLINE);
@@ -2009,7 +2010,9 @@ stock CreateBlock(client, targetId = 0, length = -1, type, const char[] sReason 
 	PrintToServer("CreateBlock(admin: %d, target: %d, length: %d, type: %d, reason: %s, args: %s)", client, targetId, length, type, sReason, sArgs);
 	#endif
 	
-	decl target_list[MAXPLAYERS], target_count, bool tn_is_ml; char target_name[MAX_NAME_LENGTH];
+	decl target_list[MAXPLAYERS], target_count; 
+	bool tn_is_ml; 
+	char target_name[MAX_NAME_LENGTH];
 	char reason[256];
 	bool skipped = false;
 	
@@ -2199,7 +2202,7 @@ stock CreateBlock(client, targetId = 0, length = -1, type, const char[] sReason 
 	return;
 }
 
-stock ProcessUnBlock(client, targetId = 0, type, char sReason = "", const char[] sArgs = "")
+stock ProcessUnBlock(client, targetId = 0, type, char[] sReason = "", const char[] sArgs = "")
 {
 	#if defined DEBUG
 	PrintToServer("ProcessUnBlock(admin: %d, target: %d, type: %d, reason: %s, args: %s)", client, targetId, type, sReason, sArgs);
