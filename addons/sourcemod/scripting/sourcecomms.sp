@@ -2208,7 +2208,9 @@ stock ProcessUnBlock(client, targetId = 0, type, char[] sReason = "", const char
 	PrintToServer("ProcessUnBlock(admin: %d, target: %d, type: %d, reason: %s, args: %s)", client, targetId, type, sReason, sArgs);
 	#endif
 	
-	decl target_list[MAXPLAYERS], target_count, bool tn_is_ml, char target_name[MAX_NAME_LENGTH];
+	decl target_list[MAXPLAYERS], target_count;
+	bool tn_is_ml;
+	char target_name[MAX_NAME_LENGTH];
 	char reason[256];
 	
 	if (targetId)
