@@ -10,27 +10,27 @@
 	{
 		"cze"		"Velitelský bunkr"
 	}
-	"MG Turret"
+	"MG"
 	{
 		"cze"		"Kulometná věž"
 	}
-	"Transport Gate"
+	"Transport"
 	{
 		"cze"		"Transportní brána"
 	}
-	"Power Station"
+	"Power"
 	{
 		"cze"		"Elektrárna"
 	}
-	"Wireless Repeater"
+	"Repeater"
 	{
 		"cze"		"Bezdrátový přenašeč"
 	}
-	"Relay Tower"
+	"Relay"
 	{
 		"cze"		"Přenašeč"
 	}
-	"Supply Station"
+	"Supply"
 	{
 		"cze"		"podpůrná stanice"
 	}
@@ -46,19 +46,19 @@
 	{
 		"cze"		"Artilérie"
 	}
-	"Radar Station"
+	"Radar"
 	{
 		"cze"		"Radar"
 	}
-	"FT Turret"
+	"Flame"
 	{
 		"cze"		"Plamenometná věž"
 	}
-	"Sonic Turret"
+	"Sonic"
 	{
 		"cze"		"Sonická věž"
 	}
-	"Rocket Turret"
+	"Rocket"
 	{
 		"cze"		"Raketometná věž"
 	}
