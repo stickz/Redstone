@@ -2,7 +2,7 @@
 #define LOCATION_NOT_FOUND -1
 #define COMPASS_NOT_FOUND -1
 
-#define REQUEST_BUILDING_COUNT 12
+#define REQUEST_BUILDING_COUNT 14
 char nd_request_building[REQUEST_BUILDING_COUNT][] =
 {
 	"Transport",
@@ -16,7 +16,9 @@ char nd_request_building[REQUEST_BUILDING_COUNT][] =
 	"Sonic",
 	"Rocket",
 	"Wall",
-	"Barrier"
+	"Barrier",
+	"Relay",
+	"Repeater"
 };
 
 int GetBuildingByIndex(const char[] sArgs)
