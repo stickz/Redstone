@@ -11,27 +11,27 @@
 	{
 		"en"		"the Command Bunker"
 	}
-	"MG Turret"
+	"MG"
 	{
 		"en"		"a Machine Gun Turret"
 	}
-	"Transport Gate"
+	"Transport"
 	{
 		"en"		"a Transport Gate"
 	}
-	"Power Station"
+	"Power"
 	{
 		"en"		"a Power Station"
 	}
-	"Wireless Repeater"
+	"Repeater"
 	{
 		"en"		"a Wireless Repeater"
 	}
-	"Relay Tower"
+	"Relay"
 	{
 		"en"		"a Relay Tower"
 	}
-	"Supply Station"
+	"Supply"
 	{
 		"en"		"a Supply Station"
 	}
@@ -47,19 +47,19 @@
 	{
 		"en"		"an Artillery"
 	}
-	"Radar Station"
+	"Radar"
 	{
 		"en"		"a Radar Station"
 	}
-	"FT Turret"
+	"Flame"
 	{
 		"en"		"a Flamethrower Turret"
 	}
-	"Sonic Turret"
+	"Sonic"
 	{
 		"en"		"a Sonic Turret"
 	}
-	"Rocket Turret"
+	"Rocket"
 	{
 		"en"		"a Rocket Turret"
 	}

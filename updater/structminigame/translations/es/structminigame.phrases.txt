@@ -11,27 +11,27 @@
 	{
 		"es"		"la Comandancia"
 	}
-	"MG Turret"
+	"MG"
 	{
 		"es"		"una Torreta Ametralladora"
 	}
-	"Transport Gate"
+	"Transport"
 	{
 		"es"		"un Portal de Teletransporte"
 	}
-	"Power Station"
+	"Power"
 	{
 		"es"		"una Estación de Energía"
 	}
-	"Wireless Repeater"
+	"Repeater"
 	{
 		"es"		"un Repetidor Inalámbrico"
 	}
-	"Relay Tower"
+	"Relay"
 	{
 		"es"		"una Torre Relé"
 	}
-	"Supply Station"
+	"Supply"
 	{
 		"es"		"una Estación de Suministros"
 	}
@@ -47,19 +47,19 @@
 	{
 		"es"		"una Artillería"
 	}
-	"Radar Station"
+	"Radar"
 	{
 		"es"		"una Estación de Radar"
 	}
-	"FT Turret"
+	"Flame"
 	{
 		"es"		"una Torreta Lanzallamas"
 	}
-	"Sonic Turret"
+	"Sonic"
 	{
 		"es"		"una Torreta Sónica"
 	}
-	"Rocket Turret"
+	"Rocket"
 	{
 		"es"		"una Torreta Lanzacohetes"
 	}

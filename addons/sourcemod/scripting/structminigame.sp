@@ -107,19 +107,19 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 	switch (type) // get building name
 	{
 		case 0:	Format(buildingname, sizeof(buildingname), "Command Bunker"); //the Command Bunker
-		case 1:	Format(buildingname, sizeof(buildingname), "MG Turret"); //a Machine Gun Turret
-		case 2:	Format(buildingname, sizeof(buildingname), "Transport Gate"); //a Transport Gate
-		case 3:	Format(buildingname, sizeof(buildingname), "Power Station"); //a Power Station
-		case 4:	Format(buildingname, sizeof(buildingname), "Wireless Repeater"); //a Wireless Repeater
-		case 5:	Format(buildingname, sizeof(buildingname), "Relay Tower"); //a Relay Tower
-		case 6:	Format(buildingname, sizeof(buildingname), "Supply Station"); //a Supply Station
+		case 1:	Format(buildingname, sizeof(buildingname), "MG"); //a Machine Gun Turret
+		case 2:	Format(buildingname, sizeof(buildingname), "Transport"); //a Transport Gate
+		case 3:	Format(buildingname, sizeof(buildingname), "Power"); //a Power Station
+		case 4:	Format(buildingname, sizeof(buildingname), "Repeater"); //a Wireless Repeater
+		case 5:	Format(buildingname, sizeof(buildingname), "Relay"); //a Relay Tower
+		case 6:	Format(buildingname, sizeof(buildingname), "Supply"); //a Supply Station
 		case 7:	Format(buildingname, sizeof(buildingname), "Assembler"); //an Assembler
 		case 8:	Format(buildingname, sizeof(buildingname), "Armory"); //an Armory
 		case 9:	Format(buildingname, sizeof(buildingname), "Artillery"); //an Artillery
-		case 10: Format(buildingname, sizeof(buildingname), "Radar Station"); //a Radar Station
-		case 11: Format(buildingname, sizeof(buildingname), "FT Turret"); //a Flamethrower Turret
-		case 12: Format(buildingname, sizeof(buildingname), "Sonic Turret"); //a Sonic Turret
-		case 13: Format(buildingname, sizeof(buildingname), "Rocket Turret"); //a Rocket Turret
+		case 10: Format(buildingname, sizeof(buildingname), "Radar"); //a Radar Station
+		case 11: Format(buildingname, sizeof(buildingname), "Flame"); //a Flamethrower Turret
+		case 12: Format(buildingname, sizeof(buildingname), "Sonic"); //a Sonic Turret
+		case 13: Format(buildingname, sizeof(buildingname), "Rocket"); //a Rocket Turret
 		case 14: Format(buildingname, sizeof(buildingname), "Wall"); //a Wall
 		case 15: Format(buildingname, sizeof(buildingname), "Barrier"); //a Barrier
 		//default: Format(buildingname, sizeof(buildingname), "a %d (?)", type); //a %d (?)

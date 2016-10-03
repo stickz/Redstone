@@ -1,4 +1,4 @@
-﻿"Phrases"
+"Phrases"
 {
 	"Cookie Structure Killings"
 	{
@@ -10,27 +10,27 @@
 	{
 		"de"		"the Command Bunker"
 	}
-	"MG Turret"
+	"MG"
 	{
 		"de"		"a Machine Gun Turret"
 	}
-	"Transport Gate"
+	"Transport"
 	{
 		"de"		"a Transport Gate"
 	}
-	"Power Station"
+	"Power"
 	{
 		"de"		"a Power Station"
 	}
-	"Wireless Repeater"
+	"Repeater"
 	{
 		"de"		"a Wireless Repeater"
 	}
-	"Relay Tower"
+	"Relay"
 	{
 		"de"		"a Relay Tower"
 	}
-	"Supply Station"
+	"Supply"
 	{
 		"de"		"a Supply Station"
 	}
@@ -46,19 +46,19 @@
 	{
 		"de"		"an Artillery"
 	}
-	"Radar Station"
+	"Radar"
 	{
 		"de"		"a Radar Station"
 	}
-	"FT Turret"
+	"Flame"
 	{
 		"de"		"a Flamethrower Turret"
 	}
-	"Sonic Turret"
+	"Sonic"
 	{
 		"de"		"a Sonic Turret"
 	}
-	"Rocket Turret"
+	"Rocket"
 	{
 		"de"		"a Rocket Turret"
 	}
