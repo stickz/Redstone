@@ -1,4 +1,4 @@
-﻿"Phrases"
+"Phrases"
 {
 	"Cookie Structure Killings"
 	{
@@ -10,27 +10,27 @@
 	{
 		"ru"		"Командный бункер"
 	}
-	"MG Turret"
+	"MG"
 	{
 		"ru"		"Пулемётная установка"
 	}
-	"Transport Gate"
+	"Transport"
 	{
 		"ru"		"Телепорт"
 	}
-	"Power Station"
+	"Power"
 	{
 		"ru"		"Генератор"
 	}
-	"Wireless Repeater"
+	"Repeater"
 	{
 		"ru"		"Репитер"
 	}
-	"Relay Tower"
+	"Relay"
 	{
 		"ru"		"Проводник энергии"
 	}
-	"Supply Station"
+	"Supply"
 	{
 		"ru"		"Боеприпасы"
 	}
@@ -46,19 +46,19 @@
 	{
 		"ru"		"Артиллерия"
 	}
-	"Radar Station"
+	"Radar"
 	{
 		"ru"		"Радар"
 	}
-	"FT Turret"
+	"Flame"
 	{
 		"ru"		"Огнемётная установка"
 	}
-	"Sonic Turret"
+	"Sonic"
 	{
 		"ru"		"Огнемётная установка"
 	}
-	"Rocket Turret"
+	"Rocket"
 	{
 		"ru"		"Ракетная установка"
 	}
