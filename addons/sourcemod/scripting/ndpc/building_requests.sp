@@ -5,16 +5,16 @@
 #define REQUEST_BUILDING_COUNT 12
 char nd_request_building[REQUEST_BUILDING_COUNT][] =
 {
-	"Transport Gate",
-	"MG Turret",
-	"Power Station",
-	"Supply Station",
+	"Transport",
+	"MG",
+	"Power",
+	"Supply",
 	"Armory",
 	"Artillery",
-	"Radar Station",
-	"FT Turret",
-	"Sonic Turret",
-	"Rocket Turret",
+	"Radar",
+	"Flame",
+	"Sonic",
+	"Rocket",
 	"Wall",
 	"Barrier"
 };
