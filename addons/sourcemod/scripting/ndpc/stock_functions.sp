@@ -12,7 +12,7 @@ stock bool StrIsWithin(const char[] sArgs, const char[] segment)
 	return StrContains(sArgs, segment, false) > IS_WITHIN_STRING;
 }
 
-stool bool StrIsWithinArray(const char[] sArgs, const char[][] bArray)
+stock bool StrIsWithinArray(const char[] sArgs, const char[][] bArray)
 {
 	int arraySize = sizeof(bArray);
 	
