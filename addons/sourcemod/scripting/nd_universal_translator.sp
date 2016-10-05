@@ -58,6 +58,7 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 	CreateConVars(); //create ConVars (from convars.sp)
 	RegComLangCommands(); // for commander_lang.sp
+	createAliasesForBuildings(); // for building_requests.sp
 	
 	/* Add translated phrases */
 	LoadTranslations("structminigame.phrases");
