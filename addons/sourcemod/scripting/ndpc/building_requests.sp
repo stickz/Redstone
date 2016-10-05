@@ -21,6 +21,22 @@ char nd_request_building[REQUEST_BUILDING_COUNT][] =
 	"Repeater"
 };
 
+enum nd_balias {
+	Transport_Gate,
+	MG_Turrent,
+	Power_Plant,
+	Supply_Station,
+	Artillery,
+	Radar_Station,
+	Flame_Turrent,
+	Sonic_Turrent,
+	Rocket_Turrent,
+	Wall,
+	Barrier,
+	Relay_Tower,
+	Wireless_Repeater
+};
+
 int GetBuildingByIndex(const char[] sArgs)
 {
 	for (int building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
