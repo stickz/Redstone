@@ -21,29 +21,55 @@ char nd_request_building[REQUEST_BUILDING_COUNT][] =
 	"Repeater"
 };
 
-enum nd_balias {
-	Transport_Gate,
+enum {
+	Transport_Gate = 0,
 	MG_Turrent,
 	Power_Plant,
 	Supply_Station,
 	Artillery,
 	Radar_Station,
-	Flame_Turrent,
-	Sonic_Turrent,
-	Rocket_Turrent,
+	Flame_Turret,
+	Sonic_Turret,
+	Rocket_Turret,
 	Wall,
 	Barrier,
 	Relay_Tower,
 	Wireless_Repeater
 };
 
+char nd_building_aliases[REQUEST_BUILDING_COUNT][3][16];
+
+void createAliasesForBuildings()
+{
+	nd_building_aliases[Transport_Gate][0] = "gate";
+	nd_building_aliases[Transport_Gate][1] = "tg";
+	nd_building_aliases[Transport_Gate][2] = "spawn";
+	
+	nd_building_aliases[MG_Turrent][0] = "machine";
+	nd_building_aliases[MG_Turrent][1] = "gun";
+	
+	nd_building_aliases[Power_Plant][0] = "plant";
+	nd_building_aliases[Power_Plant][1] = "pp";
+	
+	nd_building_aliases[Supply_Station][0] = "sup";
+	
+	nd_building_aliases[Artillery][0] = "arty";
+	
+	nd_building_aliases[Flame_Turret][0] = "ft";
+	
+	nd_building_aliases[Sonic_Turret][0] = "son";
+	
+	nd_building_aliases[Rocket_Turret][0] = "rt";	
+}
+
 int GetBuildingByIndex(const char[] sArgs)
 {
 	for (int building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
 	{
-		if (StrIsWithin(sArgs, nd_request_building[building])) //if a building name is within the string
-		{
-			return building;
+		//if a building name or it's alias is within the string
+		if (	StrIsWithin(sArgs, nd_request_building[building]) || 
+			StrIsWithinArray(sArgs, nd_building_aliases[building])) {
+				return building;
 		}
 	}
 	
