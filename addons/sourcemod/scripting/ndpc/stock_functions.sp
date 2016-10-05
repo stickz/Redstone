@@ -12,6 +12,22 @@ stock bool StrIsWithin(const char[] sArgs, const char[] segment)
 	return StrContains(sArgs, segment, false) > IS_WITHIN_STRING;
 }
 
+stool bool StrIsWithinArray(const char[] sArgs, const char[][] bArray)
+{
+	int arraySize = sizeof(bArray);
+	
+	if (arraySize == 0)
+		return false;
+	
+	for (int building = 0; building < arraySize; building++)
+	{
+		if (StrContains(sArgs, bArray[building]))
+			return true;	
+	}
+	
+	return false;
+}
+
 stock bool IsOnTeam(int client, int team)
 {
 	return IsValidClient(client) && GetClientTeam(client) == team;
