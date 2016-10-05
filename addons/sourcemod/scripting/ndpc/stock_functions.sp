@@ -21,7 +21,7 @@ stool bool StrIsWithinArray(const char[] sArgs, const char[][] bArray)
 	
 	for (int building = 0; building < arraySize; building++)
 	{
-		if (StrContains(sArgs, bArray[building], false))
+		if (StrContains(sArgs, bArray[building], false) > IS_WITHIN_STRING)
 			return true;	
 	}
 	
