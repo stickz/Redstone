@@ -37,7 +37,8 @@ enum {
 	Wireless_Repeater
 };
 
-char nd_building_aliases[REQUEST_BUILDING_COUNT][3][16];
+#define B_ALIAS_COUNT 3
+char nd_building_aliases[REQUEST_BUILDING_COUNT][B_ALIAS_COUNT][16];
 
 void createAliasesForBuildings()
 {
@@ -68,7 +69,7 @@ int GetBuildingByIndex(const char[] sArgs)
 	{
 		//if a building name or it's alias is within the string
 		if (	StrIsWithin(sArgs, nd_request_building[building]) || 
-			StrIsWithinArray(sArgs, nd_building_aliases[building])) {
+			StrIsWithinArray(sArgs, nd_building_aliases[building], B_ALIAS_COUNT)) {
 				return building;
 		}
 	}
