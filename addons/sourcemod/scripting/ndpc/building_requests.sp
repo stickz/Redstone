@@ -40,6 +40,25 @@ enum {
 #define B_ALIAS_COUNT 3
 char nd_building_aliases[REQUEST_BUILDING_COUNT][B_ALIAS_COUNT][16];
 
+/* How to add new building aliases to the plugin
+ *
+ * Step 1: Find the exact building name from the enum on line 24.
+ *
+ * Step 2: Write out a new alias in 'void createAliasesForBuildings()'
+ * Example: nd_building_aliases[Transport_Gate]
+ *
+ * Step 3: Increment the second number by 1 (use 0 if no aliases are present)
+ * Example1: nd_building_aliases[Transport_Gate][3]
+ * Example2: nd_building_aliases[Wireless_Repeater][0]
+ *
+ * Step 4: Add the alias to the string you just created
+ * Example: nd_building_aliases[Transport_Gate][2] = "spawn";
+ *
+ * Step 5: If [number] + 1 is greater than B_ALIAS_COUNT on line 40, change B_ALIAS_COUNT; otherwise DO NOT touch it.
+ * Example: nd_building_aliases[Transport_Gate][3]
+ * #define B_ALIAS_COUNT 4
+ */
+
 void createAliasesForBuildings()
 {
 	nd_building_aliases[Transport_Gate][0] = "gate";
