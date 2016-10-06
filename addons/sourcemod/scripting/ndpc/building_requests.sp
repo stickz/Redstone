@@ -105,9 +105,9 @@ int GetBuildingByIndex(const char[] sArgs)
 	// then do the building aliases next
 	for (int building2 = 0; building2 < REQUEST_BUILDING_COUNT; building2++)
 	{
-		if (StrIsWithinArray(sArgs, nd_building_aliases[building], B_ALIAS_COUNT))
+		if (StrIsWithinArray(sArgs, nd_building_aliases[building2], B_ALIAS_COUNT))
 		{
-			return building;  //the index building in nd_request_building
+			return building2;  //the index building in nd_request_building
 		}
 	}
 	
