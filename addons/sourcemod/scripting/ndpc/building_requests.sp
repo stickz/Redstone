@@ -2,6 +2,7 @@
 #define LOCATION_NOT_FOUND -1
 #define COMPASS_NOT_FOUND -1
 
+// A list of buildings by their translation phrase
 #define REQUEST_BUILDING_COUNT 14
 char nd_request_building[REQUEST_BUILDING_COUNT][] =
 {
@@ -21,6 +22,7 @@ char nd_request_building[REQUEST_BUILDING_COUNT][] =
 	"Repeater"
 };
 
+// A enumerated list of building for indexing from an array
 enum {
 	Transport_Gate = 0,
 	MG_Turrent,
@@ -37,12 +39,13 @@ enum {
 	Wireless_Repeater
 };
 
+//A three dimensional array for to store building aliases
 #define B_ALIAS_COUNT 3
 char nd_building_aliases[REQUEST_BUILDING_COUNT][B_ALIAS_COUNT][16];
 
 /* How to add new building aliases to the plugin
  *
- * Step 1: Find the exact building name from the enum on line 24.
+ * Step 1: Find the exact building name from the enum on line 26.
  *
  * Step 2: Write out a new alias in 'void createAliasesForBuildings()'
  * Example: nd_building_aliases[Transport_Gate]
@@ -61,15 +64,20 @@ char nd_building_aliases[REQUEST_BUILDING_COUNT][B_ALIAS_COUNT][16];
 
 void createAliasesForBuildings()
 {
+	/* Transport Gate */
 	nd_building_aliases[Transport_Gate][0] = "gate";
 	nd_building_aliases[Transport_Gate][1] = "tg";
 	nd_building_aliases[Transport_Gate][2] = "spawn";
 	
+	/* Machine Gun Turret */
 	nd_building_aliases[MG_Turrent][0] = "machine";
 	nd_building_aliases[MG_Turrent][1] = "gun";
 	
+	/* Power Plant */
 	nd_building_aliases[Power_Plant][0] = "plant";
 	nd_building_aliases[Power_Plant][1] = "pp";
+	
+	/* Etc */	
 	
 	nd_building_aliases[Supply_Station][0] = "sup";
 	
@@ -89,13 +97,14 @@ int GetBuildingByIndex(const char[] sArgs)
 		//if a building name or it's alias is within the string
 		if (	StrIsWithin(sArgs, nd_request_building[building]) || 
 			StrIsWithinArray(sArgs, nd_building_aliases[building], B_ALIAS_COUNT)) {
-				return building;
+				return building; //the index building in nd_request_building
 		}
 	}
 	
 	return BUILDING_NOT_FOUND;
 }
 
+// A list of locations by their translation phrase
 #define REQUEST_LOCATION_COUNT 5
 char nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
@@ -112,13 +121,14 @@ int GetSpotByIndex(const char[] sArgs)
 	{
 		if (StrIsWithin(sArgs, nd_request_location[location])) //if a location is within the string
 		{
-			return location;	
+			return location; //index of the location in nd_request_location 	
 		}
 	}
 
 	return LOCATION_NOT_FOUND;
 }
 
+//A list of compass positions by their translation phrase
 #define REQUEST_COMPASS_COUNT 6
 char nd_request_compass[REQUEST_COMPASS_COUNT][] =
 {
@@ -136,30 +146,40 @@ int GetCompassByIndex(const char[] sArgs)
 	{
 		if (StrIsWithin(sArgs, nd_request_compass[compass])) //if a location is within the string
 		{
-			return compass;	
+			return compass;	//the index of compass in nd_request_compass
 		}
 	}
 
 	return COMPASS_NOT_FOUND;
 }
 
+// Check if the user is inputing a building request in chat
 bool CheckBuildingRequest(int client, const char[] sArgs)
 {
+	//If building requests are disabled on the server end, don't use them
 	if (!g_Enable[BuildingReqs].BoolValue) 
-		return false; //don't use feature if not enabled
+		return false;
 
-	if (StrStartsWith(sArgs, "build")) //if string starts with build
+	//If the chat messages starts with the word "build"
+	if (StrStartsWith(sArgs, "build"))
 	{
+		//Get the building the user is asking for
 		int building = GetBuildingByIndex(sArgs);
 		
-		if (building != BUILDING_NOT_FOUND)
+		//If a valid building name or alasis is found
+		if (foundInChatMessage(building))
 		{
+			//optionally, check if the user is asking for a location or compass
 			int location = GetSpotByIndex(sArgs);
 			int compass = GetCompassByIndex(sArgs);
 			
-			if (location != LOCATION_NOT_FOUND)
+			bool foundCompassName = foundInChatMessage(compass);
+			
+			//If a valid location is found
+			if (foundInChatMessage(location))
 			{
-				if (compass != COMPASS_NOT_FOUND)
+				//if a valid compass position is found
+				if (foundCompassName)
 				{
 					PrintComplexBuildingRequest(client, 	nd_request_building[building], 
 										nd_request_location[location],
@@ -170,7 +190,8 @@ bool CheckBuildingRequest(int client, const char[] sArgs)
 				PrintSpotBuildingRequest(client, nd_request_building[building], nd_request_location[location]);
 				return true;
 			}
-			else if (compass != COMPASS_NOT_FOUND)
+			//if a valid compass position is found
+			else if (foundCompassName)
 			{
 				PrintCompassBuildingRequest(client, nd_request_building[building], nd_request_compass[compass]);
 				return true;
