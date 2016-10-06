@@ -33,8 +33,9 @@ public void OnPluginStart()
 {
 	AddUpdaterLibrary(); //auto-updater
 	
-	HookEvent("round_win", Event_RoundEnd, EventHookMode_Pre);
+	HookEvent("round_win", Event_RoundEnd, EventHookMode_PostNoCopy);
 	HookEvent("timeleft_5s", Event_RoundEnd, EventHookMode_PostNoCopy);
+	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 }
 
 public Updater_OnPluginUpdated()
