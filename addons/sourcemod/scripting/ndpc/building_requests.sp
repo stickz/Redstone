@@ -3,7 +3,7 @@
 #define COMPASS_NOT_FOUND -1
 
 // A list of buildings by their translation phrase
-#define REQUEST_BUILDING_COUNT 14
+#define REQUEST_BUILDING_COUNT 15
 char nd_request_building[REQUEST_BUILDING_COUNT][] =
 {
 	"Transport",
@@ -19,7 +19,8 @@ char nd_request_building[REQUEST_BUILDING_COUNT][] =
 	"Wall",
 	"Barrier",
 	"Relay",
-	"Repeater"
+	"Repeater",
+	"Assembler"
 };
 
 // A enumerated list of building for indexing from an array
@@ -36,7 +37,8 @@ enum {
 	Wall,
 	Barrier,
 	Relay_Tower,
-	Wireless_Repeater
+	Wireless_Repeater,
+	Assembler
 };
 
 //A three dimensional array for to store building aliases
@@ -88,6 +90,8 @@ void createAliasesForBuildings()
 	nd_building_aliases[Sonic_Turret][0] = "son";
 	
 	nd_building_aliases[Rocket_Turret][0] = "rt";	
+	
+	nd_building_aliases[Assembler][0} = "ass";
 }
 
 int GetBuildingByIndex(const char[] sArgs)
