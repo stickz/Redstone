@@ -91,7 +91,7 @@ void createAliasesForBuildings()
 	
 	nd_building_aliases[Rocket_Turret][0] = "rt";	
 	
-	nd_building_aliases[Assembler][0} = "ass";
+	nd_building_aliases[Assembler][0] = "ass";
 }
 
 int GetBuildingByIndex(const char[] sArgs)
