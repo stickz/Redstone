@@ -92,12 +92,22 @@ void createAliasesForBuildings()
 
 int GetBuildingByIndex(const char[] sArgs)
 {
+	//for normal requests (so they can't be overwritten by alaises
 	for (int building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
 	{
 		//if a building name or it's alias is within the string
-		if (	StrIsWithin(sArgs, nd_request_building[building]) || 
-			StrIsWithinArray(sArgs, nd_building_aliases[building], B_ALIAS_COUNT)) {
-				return building; //the index building in nd_request_building
+		if (StrIsWithin(sArgs, nd_request_building[building])) 
+		{
+			return building; //the index building in nd_request_building
+		}
+	}
+	
+	// then do the building aliases next
+	for (int building2 = 0; building2 < REQUEST_BUILDING_COUNT; building2++)
+	{
+		if (StrIsWithinArray(sArgs, nd_building_aliases[building2], B_ALIAS_COUNT))
+		{
+			return building2;  //the index building in nd_request_building
 		}
 	}
 	
