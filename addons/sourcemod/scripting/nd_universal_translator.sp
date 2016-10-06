@@ -115,5 +115,5 @@ void BuildLogFilePath() // Build Log File System Path
 void NoTranslationFound(int client, const char[] sArgs)
 {
 	PrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", MESSAGE_COLOUR, "No Translate Keyword");
-	LogToFile(NDPC_LogFile, "No Keyword Found: %"s, sArgs);
+	LogToFile(NDPC_LogFile, "No Keyword Found: %s", sArgs);
 }
