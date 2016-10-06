@@ -199,10 +199,9 @@ bool CheckBuildingRequest(int client, const char[] sArgs)
 					
 			PrintSimpleBuildingRequest(client, nd_request_building[building]);
 			return true;
-		}
+		}			
 			
-		PrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", 
-					 	  MESSAGE_COLOUR, "No Translate Keyword");
+		NoTranslationFound(client, sArgs);
 		return true;
 	}
 	
