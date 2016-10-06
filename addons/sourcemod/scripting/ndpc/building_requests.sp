@@ -29,6 +29,7 @@ enum {
 	MG_Turrent,
 	Power_Plant,
 	Supply_Station,
+	Armory,
 	Artillery,
 	Radar_Station,
 	Flame_Turret,
@@ -82,6 +83,8 @@ void createAliasesForBuildings()
 	/* Etc */	
 	
 	nd_building_aliases[Supply_Station][0] = "sup";
+	
+	nd_building_aliases[Armory][0] = "arm";
 	
 	nd_building_aliases[Artillery][0] = "arty";
 	
