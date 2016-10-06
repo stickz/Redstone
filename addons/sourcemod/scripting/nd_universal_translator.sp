@@ -25,7 +25,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <nd_com_eng>
 
-//rebuild plugin
 public Plugin myinfo =
 {
 	name 		= "[ND] Project Communication",
@@ -108,8 +107,14 @@ void BuildLogFilePath() // Build Log File System Path
 
 	char cTime[64];
 	FormatTime(cTime, sizeof(cTime), "%Y%m");
+	
+	char sLogFile[PLATFORM_MAX_PATH];
+	sLogFile = NDPC_LogFile;
 
 	BuildPath(Path_SM, NDPC_LogFile, sizeof(NDPC_LogFile), "%s/%s%s.%s", LOG_FOLDER, LOG_PREFIX, cTime, LOG_EXT);
+	
+	if (!StrEqual(NDPC_LogFile, sLogFile))
+		LogAction(0, -1, "[NDPC] Log File: %s", NDPC_LogFile);
 }
 
 void NoTranslationFound(int client, const char[] sArgs)
