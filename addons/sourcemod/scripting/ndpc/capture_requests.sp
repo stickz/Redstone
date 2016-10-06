@@ -24,8 +24,7 @@ bool CheckCaptureRequest(int client, const char[] sArgs)
 			}
 		}
 		
-		PrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", 
-						  MESSAGE_COLOUR, "No Translate Keyword");
+		NoTranslationFound(client, sArgs);
 		return true;
 	}
 	
