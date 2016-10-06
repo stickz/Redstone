@@ -107,7 +107,7 @@ void BuildLogFilePath() // Build Log File System Path
 		CreateDirectory(sLogPath, 511);
 
 	char cTime[64];
-	FormatTime(cTime, sizeof(cTime), "%Y%m%d");
+	FormatTime(cTime, sizeof(cTime), "%Y%m");
 
 	BuildPath(Path_SM, NDPC_LogFile, sizeof(NDPC_LogFile), "%s/%s%s.%s", LOG_FOLDER, LOG_PREFIX, cTime, LOG_EXT);
 }
