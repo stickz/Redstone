@@ -14,7 +14,7 @@ stock bool StrIsWithinArray(const char[] sArgs, const char[][] bArray, const int
 {
 	for (int building = 0; building < arraySize; building++)
 	{
-		if (!bArray[building])
+		if (!bArray[building][0])
 			return false;
 		
 		if (StrContains(sArgs, bArray[building], false) > IS_WITHIN_STRING)
