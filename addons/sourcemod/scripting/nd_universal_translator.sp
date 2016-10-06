@@ -41,6 +41,12 @@ public Plugin myinfo =
 #define TAG_COLOUR		"\x04"
 #define CHAT_PREFIX		"\x05[xG]"
 
+// Logging stuff for plugin
+char NDPC_LogFile[PLATFORM_MAX_PATH]; 
+#define LOG_FOLDER			"logs"
+#define LOG_PREFIX			"ndpc_"
+#define LOG_EXT				"log"
+
 /* Include Plugin Segments */
 #include "ndpc/convars.sp"
 #include "ndpc/stock_functions.sp"
@@ -59,6 +65,8 @@ public void OnPluginStart()
 	CreateConVars(); //create ConVars (from convars.sp)
 	RegComLangCommands(); // for commander_lang.sp
 	createAliasesForBuildings(); // for building_requests.sp
+	
+	BuildLogFilePath(); // for logging plugin actions
 	
 	/* Add translated phrases */
 	LoadTranslations("structminigame.phrases");
@@ -87,4 +95,25 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	}
 	
 	return Plugin_Continue;
+}
+
+// Log Functions
+void BuildLogFilePath() // Build Log File System Path
+{
+	char sLogPath[PLATFORM_MAX_PATH];
+	BuildPath(Path_SM, sLogPath, sizeof(sLogPath), LOG_FOLDER);
+
+	if ( !DirExists(sLogPath) ) // Check if SourceMod Log Folder Exists Otherwise Create One
+		CreateDirectory(sLogPath, 511);
+
+	char cTime[64];
+	FormatTime(cTime, sizeof(cTime), "%Y%m%d");
+
+	BuildPath(Path_SM, NDPC_LogFile, sizeof(NDPC_LogFile), "%s/%s%s.%s", LOG_FOLDER, LOG_PREFIX, cTime, LOG_EXT);
+}
+
+void NoTranslationFound(int client, const char[] sArgs)
+{
+	PrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", MESSAGE_COLOUR, "No Translate Keyword");
+	LogToFile(NDPC_LogFile, "No Keyword Found: %s, sArgs);
 }
