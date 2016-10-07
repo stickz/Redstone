@@ -29,7 +29,7 @@ public Plugin myinfo =
 {
 	name 		= "[ND] Project Communication",
 	author 		= "Stickz",
-	description 	= "Breaks Communication Barriers",
+	description = "Breaks Communication Barriers",
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
@@ -40,19 +40,19 @@ public Plugin myinfo =
 #define TAG_COLOUR		"\x04"
 #define CHAT_PREFIX		"\x05[xG]"
 
-// Logging stuff for plugin
-char NDPC_LogFile[PLATFORM_MAX_PATH]; 
-#define LOG_FOLDER			"logs"
-#define LOG_PREFIX			"ndpc_"
-#define LOG_EXT				"log"
-
-/* Include Plugin Segments */
-#include "ndpc/convars.sp"
+/* Include First Abstraction Layer */ 
 #include "ndpc/stock_functions.sp"
-#include "ndpc/commander_lang.sp"
-#include "ndpc/team_lang.sp"
-#include "ndpc/building_requests.sp"
-#include "ndpc/capture_requests.sp"
+#include "ndpc/convars.sp"
+
+/* Include Various Plugin Features */
+#include "ndpc/features/commander_lang.sp"
+#include "ndpc/features/file_logging.sp"
+#include "ndpc/features/team_lang.sp"
+
+/* Include Chat Request Segments */
+#include "ndpc/requests/requests.sp"
+#include "ndpc/requests/build_req.sp"
+#include "ndpc/requests/capture_req.sp"
 
 public void OnPluginStart()
 {
@@ -94,35 +94,4 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	}
 	
 	return Plugin_Continue;
-}
-
-// Log Functions
-void BuildLogFilePath() // Build Log File System Path
-{
-	char sLogPath[PLATFORM_MAX_PATH];
-	BuildPath(Path_SM, sLogPath, sizeof(sLogPath), LOG_FOLDER);
-
-	if ( !DirExists(sLogPath) ) // Check if SourceMod Log Folder Exists Otherwise Create One
-		CreateDirectory(sLogPath, 511);
-
-	char cTime[64];
-	FormatTime(cTime, sizeof(cTime), "%Y%m");
-	
-	char sLogFile[PLATFORM_MAX_PATH];
-	sLogFile = NDPC_LogFile;
-
-	BuildPath(Path_SM, NDPC_LogFile, sizeof(NDPC_LogFile), "%s/%s%s.%s", LOG_FOLDER, LOG_PREFIX, cTime, LOG_EXT);
-	
-	if (!StrEqual(NDPC_LogFile, sLogFile))
-		LogAction(0, -1, "[NDPC] Log File: %s", NDPC_LogFile);
-}
-
-void NoTranslationFound(int client, const char[] sArgs)
-{
-	PrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", MESSAGE_COLOUR, "No Translate Keyword");
-	
-	char toLog[32];
-	Format(toLog, sizeof(toLog), "[Not a Keyword] %s", sArgs);
-	
-	LogToFile(NDPC_LogFile, "%s", toLog);
 }

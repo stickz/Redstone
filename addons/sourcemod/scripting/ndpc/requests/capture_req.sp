@@ -1,13 +1,3 @@
-#define REQUEST_CAPTURE_COUNT 5
-char nd_request_capture[REQUEST_CAPTURE_COUNT][] =
-{
-	"Prim",
-	"East Sec",
-	"West Sec",
-	"Base Tert",
-	"Tert"
-};
-
 bool CheckCaptureRequest(int client, const char[] sArgs)
 {
 	if (!g_Enable[CaptureReqs].BoolValue)
@@ -15,15 +5,23 @@ bool CheckCaptureRequest(int client, const char[] sArgs)
 	
 	if (StrStartsWith(sArgs, "capture")) //if the string starts with capture
 	{
-		for (int resource = 0; resource < REQUEST_CAPTURE_COUNT; resource++) //for all the resoruce points
+		int resource = GetCaptureByIndex(sArgs);
+		
+		if (foundInChatMessage(resource))
 		{
-			if (StrIsWithin(sArgs, nd_request_capture[resource])) //if a resource point is within the string
+			int compass = GetCompassByIndex(sArgs);
+			
+			if (foundInChatMessage(compass))
 			{
+				// To Do: Make a new phrase to include compass position in chat requests
 				PrintCaptureRequest(client, nd_request_capture[resource]);
 				return true;
 			}
-		}
 		
+			PrintCaptureRequest(client, nd_request_capture[resource]);
+			return true;
+		}
+
 		NoTranslationFound(client, sArgs);
 		return true;
 	}

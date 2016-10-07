@@ -1,28 +1,3 @@
-#define BUILDING_NOT_FOUND -1
-#define LOCATION_NOT_FOUND -1
-#define COMPASS_NOT_FOUND -1
-
-// A list of buildings by their translation phrase
-#define REQUEST_BUILDING_COUNT 15
-char nd_request_building[REQUEST_BUILDING_COUNT][] =
-{
-	"Transport",
-	"MG",
-	"Power",
-	"Supply",
-	"Armory",
-	"Artillery",
-	"Radar",
-	"Flame",
-	"Sonic",
-	"Rocket",
-	"Wall",
-	"Barrier",
-	"Relay",
-	"Repeater",
-	"Assembler"
-};
-
 // A enumerated list of building for indexing from an array
 enum {
 	Transport_Gate = 0,
@@ -97,19 +72,12 @@ void createAliasesForBuildings()
 	nd_building_aliases[Assembler][0] = "ass";
 }
 
-int GetBuildingByIndex(const char[] sArgs)
+int GetBuildingByIndexEx(const char[] sArgs)
 {
-	//for normal requests (so they can't be overwritten by alaises
-	for (int building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
-	{
-		//if a building name or it's alias is within the string
-		if (StrIsWithin(sArgs, nd_request_building[building])) 
-		{
-			return building; //the index building in nd_request_building
-		}
-	}
+	int index = GetBuildingByIndex(sArgs);
+	if (index != BUILDING_NOT_FOUND) { return index; }
 	
-	// then do the building aliases next
+	// After normal building requests, do aliases
 	for (int building2 = 0; building2 < REQUEST_BUILDING_COUNT; building2++)
 	{
 		if (StrIsWithinArray(sArgs, nd_building_aliases[building2], B_ALIAS_COUNT))
@@ -119,55 +87,6 @@ int GetBuildingByIndex(const char[] sArgs)
 	}
 	
 	return BUILDING_NOT_FOUND;
-}
-
-// A list of locations by their translation phrase
-#define REQUEST_LOCATION_COUNT 5
-char nd_request_location[REQUEST_LOCATION_COUNT][] =
-{
-	"Roof",
-	"Base",
-	"Prim",
-	"Pos",
-	"Sec"
-};
-
-int GetSpotByIndex(const char[] sArgs)
-{
-	for (int location = 0; location < REQUEST_LOCATION_COUNT; location++) //for all the building spots
-	{
-		if (StrIsWithin(sArgs, nd_request_location[location])) //if a location is within the string
-		{
-			return location; //index of the location in nd_request_location 	
-		}
-	}
-
-	return LOCATION_NOT_FOUND;
-}
-
-//A list of compass positions by their translation phrase
-#define REQUEST_COMPASS_COUNT 6
-char nd_request_compass[REQUEST_COMPASS_COUNT][] =
-{
-	"North",
-	"South",
-	"East",
-	"West",
-	"Left",
-	"Right"
-};
-
-int GetCompassByIndex(const char[] sArgs)
-{
-	for (int compass = 0; compass < REQUEST_COMPASS_COUNT; compass++) //for all the compass locations
-	{
-		if (StrIsWithin(sArgs, nd_request_compass[compass])) //if a location is within the string
-		{
-			return compass;	//the index of compass in nd_request_compass
-		}
-	}
-
-	return COMPASS_NOT_FOUND;
 }
 
 // Check if the user is inputing a building request in chat
@@ -181,7 +100,7 @@ bool CheckBuildingRequest(int client, const char[] sArgs)
 	if (StrStartsWith(sArgs, "build"))
 	{
 		//Get the building the user is asking for
-		int building = GetBuildingByIndex(sArgs);
+		int building = GetBuildingByIndexEx(sArgs);
 		
 		//If a valid building name or alasis is found
 		if (foundInChatMessage(building))
