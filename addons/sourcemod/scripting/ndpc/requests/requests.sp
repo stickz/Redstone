@@ -87,7 +87,7 @@ int GetCompassByIndex(const char[] sArgs)
 	return COMPASS_NOT_FOUND;
 }
 
-#define REQUEST_CAPTURE_COUNT 5
+#define REQUEST_CAPTURE_COUNT 4
 char nd_request_capture[REQUEST_CAPTURE_COUNT][] =
 {
 	"Prim",
