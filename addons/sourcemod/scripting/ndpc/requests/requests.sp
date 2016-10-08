@@ -116,7 +116,7 @@ int GetStringSpaceCount(const char[] sArgs)
 	for (int idx = 0; idx < sizeof(sArgs); idx++)
 	{
 		if (IsCharSpace(sArgs[idx]))
-			wordCount++;
+			spaceCount++;
 	}
 	
 	return spaceCount;
