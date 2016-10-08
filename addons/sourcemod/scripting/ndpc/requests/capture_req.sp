@@ -60,7 +60,7 @@ void PrintSimpleCaptureRequest(int client, const char[] rName)
 	}
 }
 
-void PrintExtendedCaptureRequest(int client, const char[] rName, const char[] cName)
+void PrintExtendedCaptureRequest(int client, const char[] rName, const char[] lName)
 {
 	if (IsValidClient(client))
 	{
@@ -77,7 +77,7 @@ void PrintExtendedCaptureRequest(int client, const char[] rName, const char[] cN
 				Format(resource, sizeof(resource), "%T", rName, idx);
 				
 				char compass[32];
-				Format(compass, sizeof(compass), "%T", cName, idx);
+				Format(compass, sizeof(compass), "%T", lName, idx);
 				
 				char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Extended Capture Request", idx, cName, compass, resource);
