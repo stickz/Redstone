@@ -45,21 +45,24 @@ Handle cookie_structure_killings = INVALID_HANDLE;
 bool option_structure_killings[MAXPLAYERS + 1] = {true,...}; //off by default
 
 ConVar g_cvarTeamOnly;
+ConVar g_CvarUseAdvantage;
 
 public void OnPluginStart()
 {
 	HookEvent("structure_death", Event_StructDeath);
 	g_cvarTeamOnly = CreateConVar("sm_structminigame_teamonly", "1", "Display structure messages to your team other");
+	g_CvarUseAdvantage = CreateConVar("sm_structminigame_advantage", "1", "Decide wether or not to use the advantage");
 	
 	AddClientPrefSupport();
 
 	LoadTranslations("structminigame.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
+	
+	AutoExecConfig(true, "nd_structminigame");
 }
 
-public void OnMapStart()
-{
+public void OnMapStart() {
 	ClearKills();
 }
 
@@ -83,8 +86,7 @@ public void CookieMenuHandler_StructureKillings(int client, CookieMenuAction act
 	}
 }
 
-public void OnClientCookiesCached(client)
-{
+public void OnClientCookiesCached(client) {
 	option_structure_killings[client] = GetCookieStructureKillings(client);
 }
 
@@ -96,9 +98,10 @@ bool GetCookieStructureKillings(int client)
 	return !StrEqual(buffer, "Off");
 } 
 
-ClearKills()
+ClearKills() {
 	for (int idx = 0; idx < MAX_TEAMS; idx++)
 		StructuresKilled[idx] = 0;
+}
 
 public Action Event_StructDeath(Event event, const char[] name, bool dontBroadcast)
 {
@@ -154,7 +157,7 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 		}
 	
 	
-	if (StructuresKilled[TEAM_EMPIRE] + StructuresKilled[TEAM_CONSORT] >= 20)
+	if (g_CvarUseAdvantage.BoolValue && StructuresKilled[TEAM_EMPIRE] + StructuresKilled[TEAM_CONSORT] >= 20)
 	{
 		ClearKills();
 
@@ -185,8 +188,7 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 
 		for (int idx = 1; idx <= MaxClients; idx++)
 		{
-			if (GiveAdvantage(idx, team)) 
-			{
+			if (GiveAdvantage(idx, team)) {
 				SetEntityHealth(idx, GetClientHealth(idx) + 175);
 			}
 		}
@@ -195,8 +197,7 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 	}
 }
 
-bool GiveAdvantage(int client, int team)
-{
+bool GiveAdvantage(int client, int team) {
 	return IsClientInGame(client) && IsPlayerAlive(client) && !NDC_IsCommander(client) && GetClientTeam(client) == team;
 }
 
