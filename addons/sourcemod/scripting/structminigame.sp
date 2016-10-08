@@ -45,11 +45,13 @@ Handle cookie_structure_killings = INVALID_HANDLE;
 bool option_structure_killings[MAXPLAYERS + 1] = {true,...}; //off by default
 
 ConVar g_cvarTeamOnly;
+ConVar g_CvarUseAdvantage;
 
 public void OnPluginStart()
 {
 	HookEvent("structure_death", Event_StructDeath);
 	g_cvarTeamOnly = CreateConVar("sm_structminigame_teamonly", "1", "Display structure messages to your team other");
+	g_CvarUseAdvantage = CreateConvar("sm_structminigame_advantage", "1", "Decide wether or not to use the advantage");
 	
 	AddClientPrefSupport();
 
@@ -154,7 +156,7 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 		}
 	
 	
-	if (StructuresKilled[TEAM_EMPIRE] + StructuresKilled[TEAM_CONSORT] >= 20)
+	if (g_CvarUseAdvantage.BoolValue && StructuresKilled[TEAM_EMPIRE] + StructuresKilled[TEAM_CONSORT] >= 20)
 	{
 		ClearKills();
 
