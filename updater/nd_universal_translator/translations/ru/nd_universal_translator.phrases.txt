@@ -33,9 +33,14 @@
 		"ru"		"{1} просит {2} у {4} {3}"
 	}
 
-	"Capture Request"
+	"Simple Capture Request"
 	{
 		"ru"		"{1} приказ захватиь {2}"
+	}
+	
+	"Extended Capture Request"
+	{
+		"ru"		"{1} приказ захватиь {2}{3}"
 	}
 
 	"Base Tert"

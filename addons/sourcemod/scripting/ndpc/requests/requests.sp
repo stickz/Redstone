@@ -108,3 +108,16 @@ int GetCaptureByIndex(const char[] sArgs)
 
 	return LOCATION_NOT_FOUND;
 }
+
+int GetStringSpaceCount(const char[] sArgs)
+{
+	int spaceCount = 0;
+	
+	for (int idx = 0; idx < strlen(sArgs); idx++)
+	{
+		if (IsCharSpace(sArgs[idx]))
+			spaceCount++;
+	}
+	
+	return spaceCount;
+}
