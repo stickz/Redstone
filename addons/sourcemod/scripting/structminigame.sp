@@ -58,6 +58,8 @@ public void OnPluginStart()
 	LoadTranslations("structminigame.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
+	
+	AutoExecConfig(true, "nd_structminigame");
 }
 
 public void OnMapStart()
