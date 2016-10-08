@@ -71,6 +71,8 @@ void createAliasesForBuildings()
 	
 	nd_building_aliases[Rocket_Turret][0] = "rt";	
 	
+	nd_building_aliases[Relay_Tower][0] = "tower";
+	
 	nd_building_aliases[Assembler][0] = "ass";
 }
 
