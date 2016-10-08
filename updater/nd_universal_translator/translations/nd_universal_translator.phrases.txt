@@ -60,7 +60,7 @@
 	}
 	
 	/* Capture Messages */
-	"Capture Request"
+	"Simple Capture Request"
 	{
 		//{1} = Player's name
 		//{2} = Resource Name (see bellow)
@@ -69,6 +69,18 @@
 		"#format"	"{1:s},{2:s}"
 		"en"		"{1} says capture {2}"
 	}
+	
+	"Extended Capture Request"
+	{
+		//{1} = Player's name
+		//{2} = Compass Position (see bellow)
+		//{3} = Resource Name (see bellow)
+		//
+		//Example: Vertex says capture secondary
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"{1} says capture {2}{3}"
+	}
+	
 	"Base Tert"
 	{
 		"en"		"Base Tertiary"
