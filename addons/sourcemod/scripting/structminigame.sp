@@ -188,8 +188,7 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 
 		for (int idx = 1; idx <= MaxClients; idx++)
 		{
-			if (GiveAdvantage(idx, team)) 
-			{
+			if (GiveAdvantage(idx, team)) {
 				SetEntityHealth(idx, GetClientHealth(idx) + 175);
 			}
 		}
@@ -198,8 +197,7 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 	}
 }
 
-bool GiveAdvantage(int client, int team)
-{
+bool GiveAdvantage(int client, int team) {
 	return IsClientInGame(client) && IsPlayerAlive(client) && !NDC_IsCommander(client) && GetClientTeam(client) == team;
 }
 
