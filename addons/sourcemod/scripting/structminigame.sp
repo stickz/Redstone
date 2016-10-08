@@ -44,9 +44,12 @@ int StructuresKilled[MAX_TEAMS];
 Handle cookie_structure_killings = INVALID_HANDLE;
 bool option_structure_killings[MAXPLAYERS + 1] = {true,...}; //off by default
 
+ConVar g_cvarTeamOnly;
+
 public void OnPluginStart()
 {
 	HookEvent("structure_death", Event_StructDeath);
+	g_cvarTeamOnly = CreateConVar("sm_structminigame_teamonly", "1", "Display structure messages to your team other");
 	
 	AddClientPrefSupport();
 
@@ -136,9 +139,10 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 		case TEAM_CONSORT: Format(teamColour, sizeof(teamColour), "{red}");
 		case TEAM_EMPIRE: Format(teamColour, sizeof(teamColour), "{blue}");
 	}
-
+	
+	bool teamOnly = g_cvarTeamOnly.BoolValue;
 	for (int client = 1; client <= MaxClients; client++)
-		if (IsValidClient(client) && !option_structure_killings[client])
+		if (IsValidClient(client) && !option_structure_killings[client] && (!teamOnly || GetClientTeam(client) == team))
 		{
 			char structure[32];
 			Format(structure, sizeof(structure), "%T", buildingname, client);
