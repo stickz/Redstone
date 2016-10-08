@@ -38,9 +38,14 @@
 		"es"		" {1} está solicitando {2} en el {4} {3} "
 	}
 
-	"Capture Request"
+	"Simple Capture Request"
 	{
 		"es"		" {1} dice: capturar {2} "
+	}
+	
+	"Extended Capture Request"
+	{
+		"es"		" {1} dice: capturar {2}{3} "
 	}
 
 	"Base Tert"
