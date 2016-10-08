@@ -51,7 +51,7 @@ public void OnPluginStart()
 {
 	HookEvent("structure_death", Event_StructDeath);
 	g_cvarTeamOnly = CreateConVar("sm_structminigame_teamonly", "1", "Display structure messages to your team other");
-	g_CvarUseAdvantage = CreateConvar("sm_structminigame_advantage", "1", "Decide wether or not to use the advantage");
+	g_CvarUseAdvantage = CreateConVar("sm_structminigame_advantage", "1", "Decide wether or not to use the advantage");
 	
 	AddClientPrefSupport();
 
@@ -62,8 +62,7 @@ public void OnPluginStart()
 	AutoExecConfig(true, "nd_structminigame");
 }
 
-public void OnMapStart()
-{
+public void OnMapStart() {
 	ClearKills();
 }
 
@@ -87,8 +86,7 @@ public void CookieMenuHandler_StructureKillings(int client, CookieMenuAction act
 	}
 }
 
-public void OnClientCookiesCached(client)
-{
+public void OnClientCookiesCached(client) {
 	option_structure_killings[client] = GetCookieStructureKillings(client);
 }
 
@@ -100,9 +98,10 @@ bool GetCookieStructureKillings(int client)
 	return !StrEqual(buffer, "Off");
 } 
 
-ClearKills()
+ClearKills() {
 	for (int idx = 0; idx < MAX_TEAMS; idx++)
 		StructuresKilled[idx] = 0;
+}
 
 public Action Event_StructDeath(Event event, const char[] name, bool dontBroadcast)
 {
