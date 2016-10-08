@@ -1,3 +1,5 @@
+#define MAX_BUILDING_SPACECOUNT 4
+
 // A enumerated list of building for indexing from an array
 enum {
 	Transport_Gate = 0,
@@ -94,6 +96,10 @@ bool CheckBuildingRequest(int client, const char[] sArgs)
 {
 	//If building requests are disabled on the server end, don't use them
 	if (!g_Enable[BuildingReqs].BoolValue) 
+		return false;
+	
+	//If the spacecount is greater than the required amount for building requests
+	if (GetStringSpaceCount(sArgs) > MAX_BUILDING_SPACECOUNT)
 		return false;
 
 	//If the chat messages starts with the word "build"
