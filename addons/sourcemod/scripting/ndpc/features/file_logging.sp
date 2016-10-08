@@ -32,5 +32,5 @@ void NoTranslationFound(int client, const char[] sArgs)
 	char toLog[32];
 	Format(toLog, sizeof(toLog), "[Not a Keyword] %s", sArgs);
 	
-	LogToFile(NDPC_LogFile, "%s", toLog);
+	LogToFileEx(NDPC_LogFile, "%s", toLog);
 }
