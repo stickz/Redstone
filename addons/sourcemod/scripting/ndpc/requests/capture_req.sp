@@ -1,7 +1,13 @@
+#define MAX_CAPTURE_SPACECOUNT 3
+
 bool CheckCaptureRequest(int client, const char[] sArgs)
 {
 	if (!g_Enable[CaptureReqs].BoolValue)
 		return false; //don't use this feature if not enabled
+		
+	//If the spacecount is greater than the required amount for capture requests
+	if (GetStringSpaceCount(sArgs) > MAX_CAPTURE_SPACECOUNT)
+		return false;
 	
 	if (StrStartsWith(sArgs, "capture")) //if the string starts with capture
 	{
