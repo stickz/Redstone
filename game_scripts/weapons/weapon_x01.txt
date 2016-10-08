@@ -137,7 +137,7 @@
 	
 	// X01 specific properties
 	"beam_width"			"3.0"
-	"explosion_radius"		"100"
+	"explosion_radius"		"115"
 	"explosion_damage"		"55"
 
 	//-----------------------------------------------------------------------------
