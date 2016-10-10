@@ -10,7 +10,7 @@ enum enableConvars
       convars
 }
 
-char convarNames[enableConvars][] = {
+char convarNames[enableConvars - 1][] = {
 	"commander_lang",
 	"team_lang",
 	"building_reqs",
