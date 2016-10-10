@@ -45,7 +45,7 @@
 	
 	"Extended Capture Request"
 	{
-		"es"		" {1} dice: capturar {2}{3} "
+		"es"		" {1} dice: capturar {2} {3} "
 	}
 
 	"Base Tert"
