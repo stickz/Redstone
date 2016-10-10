@@ -13,7 +13,7 @@ enum enableConvars
 char convarNames[enableConvars][] = {
 	"commander_lang",
 	"team_lang",
-	"building_reqs,
+	"building_reqs",
 	"capture_reqs",
 	"research_reqs"
 };
