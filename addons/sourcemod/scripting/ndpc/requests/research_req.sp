@@ -51,7 +51,7 @@ enum {
 	Structure_Reinforcement
 }
 
-createAliasesForResearch()
+void createAliasesForResearch()
 {
 	nd_research_aliases[Advanced_Kits][0] = "kits";
 	
