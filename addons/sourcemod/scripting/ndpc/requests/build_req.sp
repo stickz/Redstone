@@ -171,8 +171,7 @@ void PrintSimpleBuildingRequest(int client, const char[] bName)
 				char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, pName, building);
 				
-				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
-							      MESSAGE_COLOUR, ToPrint); 
+				NPDC_PrintToChat(idx, ToPrint);
 			}
 		}
 	}
@@ -200,8 +199,7 @@ void PrintSpotBuildingRequest(int client, const char[] bName, const char[] lName
 				char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Spot Building Request", idx, pName, building, location);
 			
-				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
-							      MESSAGE_COLOUR, ToPrint); 
+				NPDC_PrintToChat(idx, ToPrint); 
 			}
 		}
 	}
@@ -230,8 +228,7 @@ void PrintCompassBuildingRequest(int client, const char[] bName, const char[] cN
 				Format(ToPrint, sizeof(ToPrint), "%T", "Compass Building Request", 
 								       idx, pName, building, compass);
 								       
-				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
-							      MESSAGE_COLOUR, ToPrint);
+				NPDC_PrintToChat(idx, ToPrint);
 			}
 		}
 	}
@@ -263,8 +260,7 @@ void PrintComplexBuildingRequest(int client, const char[] bName, const char[] lN
 				Format(ToPrint, sizeof(ToPrint), "%T", "Complex Building Request", 
 								       idx, pName, building, location, compass);
 								       
-				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
-							      MESSAGE_COLOUR, ToPrint);
+				NPDC_PrintToChat(idx, ToPrint);
 			}
 		}
 	}
