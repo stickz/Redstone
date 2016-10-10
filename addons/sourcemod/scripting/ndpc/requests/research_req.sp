@@ -116,8 +116,7 @@ void PrintSimpleResearchRequest(int client, const char[] rName)
 				char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Research Request", idx, pName, research);
 				
-				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
-							      MESSAGE_COLOUR, ToPrint); 
+				NPDC_PrintToChat(idx, ToPrint); 
 			}
 		}
 	}
