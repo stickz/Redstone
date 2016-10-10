@@ -13,14 +13,14 @@ char nd_request_research[REQUEST_RESEARCH_COUNT][] = {
 	"Structure Reinforcement"
 };
 
-//A three dimensional array for to store building aliases
+//A three dimensional array for to store reserach aliases
 #define R_ALIAS_COUNT 3
 char nd_research_aliases[REQUEST_RESEARCH_COUNT][R_ALIAS_COUNT][16];
 
 int GetResearchByIndex(const char[] sArgs)
 {
 	// for normal requests (so they can't be overwritten by alaises
-	for (int research = 0; research < REQUEST_BUILDING_COUNT; research++) //for all the research
+	for (int research = 0; research < REQUEST_RESEARCH_COUNT; research++) //for all the research
 	{
 		//if a research name is within the string
 		if (StrIsWithin(sArgs, nd_request_research[research])) 
@@ -30,7 +30,7 @@ int GetResearchByIndex(const char[] sArgs)
 	}
 	
 	// for alais requests
-	for (int research2 = 0; research2 < REQUEST_BUILDING_COUNT; research2++)
+	for (int research2 = 0; research2 < REQUEST_RESEARCH_COUNT; research2++)
 	{
 		if (StrIsWithinArray(sArgs, nd_research_aliases[research2], R_ALIAS_COUNT))
 		{
