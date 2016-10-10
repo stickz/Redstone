@@ -84,10 +84,13 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 {
 	if (client) //is the chat message is triggered by a client?
 	{
+		//send the space count to each request
+		int spaces = GetStringSpaceCount(sArgs);
+		
 		//does the chat message contain translatable phrases?
-		if (	CheckBuildingRequest(client, sArgs) ||  
-			CheckCaptureRequest(client, sArgs) || 
-			CheckResearchRequest(client, sArgs))
+		if (	CheckBuildingRequest(client, spaces, sArgs) ||  
+			CheckCaptureRequest(client, spaces, sArgs) || 
+			CheckResearchRequest(client, spaces, sArgs))
 		{
 			/* 
 			 * Block the old chat message
