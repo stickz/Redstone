@@ -95,3 +95,8 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	
 	return Plugin_Continue;
 }
+
+void NDPC_PrintToChat(int client, const char[] sArgs)
+{
+	PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", MESSAGE_COLOUR, sArgs);
+}
