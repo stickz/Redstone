@@ -40,7 +40,7 @@
 	
 	"Extended Capture Request"
 	{
-		"ru"		"{1} приказ захватиь {2}{3}"
+		"ru"		"{1} приказ захватиь {2} {3}"
 	}
 
 	"Base Tert"
