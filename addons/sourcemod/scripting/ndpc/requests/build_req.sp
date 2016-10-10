@@ -94,14 +94,14 @@ int GetBuildingByIndexEx(const char[] sArgs)
 }
 
 // Check if the user is inputing a building request in chat
-bool CheckBuildingRequest(int client, const char[] sArgs)
+bool CheckBuildingRequest(int client, int spacesCount, const char[] sArgs)
 {
 	//If building requests are disabled on the server end, don't use them
 	if (!g_Enable[BuildingReqs].BoolValue) 
 		return false;
 	
 	//If the spacecount is greater than the required amount for building requests
-	if (GetStringSpaceCount(sArgs) > MAX_BUILDING_SPACECOUNT)
+	if (spacesCount > MAX_BUILDING_SPACECOUNT)
 		return false;
 
 	//If the chat messages starts with the word "build"
