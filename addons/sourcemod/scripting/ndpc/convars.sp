@@ -1,16 +1,17 @@
-/* To add an enable convar, simply update the enum and convarNames char
+/* To add an enable convar, increment convar_count then update the enum and convarNames char
  * The abstract code will handle the logistics of creating the convar */
-enum enableConvars
+#define CONVAR_COUNT 5
+
+enum
 {
-      CommanderLang,
+      CommanderLang = 0,
       TeamLang,
       BuildingReqs,
       CaptureReqs,
-      ResearchReqs,
-      convars
+      ResearchReqs
 }
 
-char convarNames[enableConvars - 1][] = {
+char convarNames[CONVAR_COUNT][] = {
 	"commander_lang",
 	"team_lang",
 	"building_reqs",
@@ -21,11 +22,11 @@ char convarNames[enableConvars - 1][] = {
 #define CONVAR_PREFIX "sm_ndpc_"
 #define DESCRIPTION_PREFIX "Enable "
 
-ConVar g_Enable[convars];  
+ConVar g_Enable[CONVAR_COUNT];  
 
 void CreateConVars()
 {
-	for (int convar = 0; convar < enableConvars; convar++)
+	for (int convar = 0; convar < CONVAR_COUNT; convar++)
 	{
 		char cString[32];
 		StrCat(cString, sizeof(cString), CONVAR_PREFIX);
