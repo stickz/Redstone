@@ -73,14 +73,14 @@ void createAliasesForResearch()
 	nd_research_aliases[Structure_Reinforcement][1] = "rein";
 }
 
-bool CheckResearchRequest(int client, const char[] sArgs)
+bool CheckResearchRequest(int client, int spacesCount, const char[] sArgs)
 {
 	//If research requests are disabled on the server end, don't use them
 	if (!g_Enable[ResearchReqs].BoolValue) 
 		return false;
 	
 	//If the spacecount is greater than the required amount for research requests
-	if (GetStringSpaceCount(sArgs) > MAX_RESEARCH_SPACECOUNT)
+	if (spacesCount > MAX_RESEARCH_SPACECOUNT)
 		return false;	
 		
 	//If the chat messages starts with the word "research"
