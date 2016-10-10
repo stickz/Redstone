@@ -34,7 +34,7 @@ int GetResearchByIndex(const char[] sArgs)
 	{
 		if (StrIsWithinArray(sArgs, nd_research_aliases[research2], R_ALIAS_COUNT))
 		{
-			return research; //the index research in nd_request_research
+			return research2; //the index research in nd_request_research
 		}
 	}
 	
@@ -51,7 +51,7 @@ enum {
 	Structure_Reinforcement
 }
 
-createAliasesForResearch()
+void createAliasesForResearch()
 {
 	nd_research_aliases[Advanced_Kits][0] = "kits";
 	
@@ -73,14 +73,14 @@ createAliasesForResearch()
 	nd_research_aliases[Structure_Reinforcement][1] = "rein";
 }
 
-bool CheckResearchRequest(int client, const char[] sArgs)
+bool CheckResearchRequest(int client, int spacesCount, const char[] sArgs)
 {
 	//If research requests are disabled on the server end, don't use them
 	if (!g_Enable[ResearchReqs].BoolValue) 
 		return false;
 	
 	//If the spacecount is greater than the required amount for research requests
-	if (GetStringSpaceCount(sArgs) > MAX_RESEARCH_SPACECOUNT)
+	if (spacesCount > MAX_RESEARCH_SPACECOUNT)
 		return false;	
 		
 	//If the chat messages starts with the word "research"
@@ -93,8 +93,14 @@ bool CheckResearchRequest(int client, const char[] sArgs)
 		if (foundInChatMessage(research))
 		{
 			PrintSimpleResearchRequest(client, nd_request_research[research]);
+			return true;
 		}
-	}
+		
+		NoTranslationFound(client, sArgs);
+		return true;
+	}	
+		
+	return false;
 }
 
 void PrintSimpleResearchRequest(int client, const char[] rName)
@@ -116,8 +122,7 @@ void PrintSimpleResearchRequest(int client, const char[] rName)
 				char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Research Request", idx, pName, research);
 				
-				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag", 
-							      MESSAGE_COLOUR, ToPrint); 
+				NPDC_PrintToChat(idx, ToPrint); 
 			}
 		}
 	}

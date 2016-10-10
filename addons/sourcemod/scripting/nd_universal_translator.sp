@@ -53,6 +53,7 @@ public Plugin myinfo =
 #include "ndpc/requests/requests.sp"
 #include "ndpc/requests/build_req.sp"
 #include "ndpc/requests/capture_req.sp"
+#include "ndpc/requests/research_req.sp"
 
 public void OnPluginStart()
 {
@@ -63,7 +64,10 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 	CreateConVars(); //create ConVars (from convars.sp)
 	RegComLangCommands(); // for commander_lang.sp
-	createAliasesForBuildings(); // for building_requests.sp
+	
+	/* Create alaises for various requests */
+	createAliasesForBuildings();
+	createAliasesForResearch(); 
 	
 	BuildLogFilePath(); // for logging plugin actions
 	
@@ -80,8 +84,13 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 {
 	if (client) //is the chat message is triggered by a client?
 	{
+		//send the space count to each request
+		int spaces = GetStringSpaceCount(sArgs);
+		
 		//does the chat message contain translatable phrases?
-		if (CheckBuildingRequest(client, sArgs) ||  CheckCaptureRequest(client, sArgs))
+		if (	CheckBuildingRequest(client, spaces, sArgs) ||  
+			CheckCaptureRequest(client, spaces, sArgs) || 
+			CheckResearchRequest(client, spaces, sArgs))
 		{
 			/* 
 			 * Block the old chat message
