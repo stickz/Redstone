@@ -42,7 +42,13 @@ public Plugin myinfo =
 
 /* Include First Abstraction Layer */ 
 #include "ndpc/stock_functions.sp"
+#include "ndpc/reg_functions.sp"
 #include "ndpc/convars.sp"
+
+/* Include Phrase Parsing */
+#include "ndpc/phrases/building.sp"
+#include "ndpc/phrases/location.sp"
+#include "ndpc/phrases/research.sp"
 
 /* Include Various Plugin Features */
 #include "ndpc/features/commander_lang.sp"
@@ -50,7 +56,6 @@ public Plugin myinfo =
 #include "ndpc/features/team_lang.sp"
 
 /* Include Chat Request Segments */
-#include "ndpc/requests/requests.sp"
 #include "ndpc/requests/build_req.sp"
 #include "ndpc/requests/capture_req.sp"
 #include "ndpc/requests/research_req.sp"

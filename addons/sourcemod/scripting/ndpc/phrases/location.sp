@@ -1,42 +1,5 @@
-#define BUILDING_NOT_FOUND -1
 #define LOCATION_NOT_FOUND -1
 #define COMPASS_NOT_FOUND -1
-
-// A list of buildings by their translation phrase
-#define REQUEST_BUILDING_COUNT 15
-char nd_request_building[REQUEST_BUILDING_COUNT][] =
-{
-	"Transport",
-	"MG",
-	"Power",
-	"Supply",
-	"Armory",
-	"Artillery",
-	"Radar",
-	"Flame",
-	"Sonic",
-	"Rocket",
-	"Wall",
-	"Barrier",
-	"Relay",
-	"Repeater",
-	"Assembler"
-};
-
-int GetBuildingByIndex(const char[] sArgs)
-{
-	//for normal requests (so they can't be overwritten by alaises
-	for (int building = 0; building < REQUEST_BUILDING_COUNT; building++) //for all the buildings
-	{
-		//if a building name or it's alias is within the string
-		if (StrIsWithin(sArgs, nd_request_building[building])) 
-		{
-			return building; //the index building in nd_request_building
-		}
-	}
-	
-	return BUILDING_NOT_FOUND;
-}
 
 // A list of locations by their translation phrase
 #define REQUEST_LOCATION_COUNT 5
@@ -107,23 +70,4 @@ int GetCaptureByIndex(const char[] sArgs)
 	}
 
 	return LOCATION_NOT_FOUND;
-}
-
-int GetStringSpaceCount(const char[] sArgs)
-{
-	int spaceCount = 0;
-	
-	for (int idx = 0; idx < strlen(sArgs); idx++)
-	{
-		if (IsCharSpace(sArgs[idx]))
-			spaceCount++;
-	}
-	
-	return spaceCount;
-}
-
-/* Wrapper for printing a translation to client chat */
-void NPDC_PrintToChat(int client, const char[] sArgs)
-{
-	PrintToChat(client, "%s%t %s%s", TAG_COLOUR, "Translate Tag", MESSAGE_COLOUR, sArgs);
 }
