@@ -53,8 +53,7 @@ void PrintSimpleCaptureRequest(int client, const char[] rName)
 				char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Capture Request", idx, cName, resource);
 				
-				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag",
-							      MESSAGE_COLOUR, ToPrint); 
+				NPDC_PrintToChat(idx, ToPrint);
 			}
 		}
 	}
@@ -82,8 +81,7 @@ void PrintExtendedCaptureRequest(int client, const char[] rName, const char[] lN
 				char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", "Extended Capture Request", idx, cName, compass, resource);
 				
-				PrintToChat(idx, "%s%t %s%s", TAG_COLOUR, "Translate Tag",
-							      MESSAGE_COLOUR, ToPrint); 
+				NPDC_PrintToChat(idx, ToPrint);
 			}
 		}
 	}
