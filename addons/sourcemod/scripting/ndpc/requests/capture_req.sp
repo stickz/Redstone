@@ -1,6 +1,6 @@
 #define MAX_CAPTURE_SPACECOUNT 3
 
-bool CheckCaptureRequest(int client, int spacesCount const char[] sArgs)
+bool CheckCaptureRequest(int client, int spacesCount, const char[] sArgs)
 {
 	if (!g_Enable[CaptureReqs].BoolValue)
 		return false; //don't use this feature if not enabled
