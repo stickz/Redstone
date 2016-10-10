@@ -59,6 +59,15 @@
 		"en" 		"{1} is requesting {2} at the {4} {3}"
 	}
 	
+	/* Research Messages */
+	"Simple Research Request"
+	{
+		//{1} = Player's Name
+		//{2} = Research Name
+		"#format"	"{1:s},{2:s}"
+		"en"		"{1} is requesting {2} research."
+	}
+	
 	/* Capture Messages */
 	"Simple Capture Request"
 	{
@@ -156,4 +165,40 @@
 	{
 		"en"		"Left"
 	}
+	
+	/* Research phrases */
+	"Advanced Kits"
+	{
+		"en"		"Advanced Kits"
+	}
+	
+	"Field Tactics"
+	{
+		"en"		"Field Tactics"
+	}
+	
+	"Commander Abilities"
+	{
+		"en"		"Commander Abilities"
+	}
+	
+	"Power Modulation"
+	{
+		"en"		"Power Modulation"
+	}
+	
+	"Advanced Manufacturing"
+	{
+		"en"		"Advanced Manufacturing"	
+	}
+	
+	"Infantry Boost"
+	{
+		"en"		"Infantry Boost"
+	}
+	
+	"Structure Reinforcement"
+	{
+		"en" 		"Structure Reinforcement"
+	}	
 }
