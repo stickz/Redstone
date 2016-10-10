@@ -78,7 +78,7 @@
 		//
 		//Example: Vertex says capture secondary
 		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"{1} says capture {2}{3}"
+		"en"		"{1} says capture {2} {3}"
 	}
 	
 	"Base Tert"
