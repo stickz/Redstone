@@ -85,7 +85,9 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	if (client) //is the chat message is triggered by a client?
 	{
 		//does the chat message contain translatable phrases?
-		if (CheckBuildingRequest(client, sArgs) ||  CheckCaptureRequest(client, sArgs))
+		if (	CheckBuildingRequest(client, sArgs) ||  
+			CheckCaptureRequest(client, sArgs) || 
+			CheckResearchRequest(client, sArgs))
 		{
 			/* 
 			 * Block the old chat message
