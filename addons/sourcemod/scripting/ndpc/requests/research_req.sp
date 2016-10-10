@@ -34,7 +34,7 @@ int GetResearchByIndex(const char[] sArgs)
 	{
 		if (StrIsWithinArray(sArgs, nd_research_aliases[research2], R_ALIAS_COUNT))
 		{
-			return research; //the index research in nd_request_research
+			return research2; //the index research in nd_request_research
 		}
 	}
 	
@@ -93,8 +93,14 @@ bool CheckResearchRequest(int client, const char[] sArgs)
 		if (foundInChatMessage(research))
 		{
 			PrintSimpleResearchRequest(client, nd_request_research[research]);
+			return true;
 		}
-	}
+		
+		NoTranslationFound(client, sArgs);
+		return true;
+	}	
+		
+	return false;
 }
 
 void PrintSimpleResearchRequest(int client, const char[] rName)
