@@ -1,101 +1,76 @@
-#define RESEARCH_NOT_FOUND -1
-#define MAX_RESEARCH_SPACECOUNT 3
-#define R_ALIAS_COUNT 3
+#define MAX_REPAIR_SPACECOUNT 4
 
-#define REQUEST_RESEARCH_COUNT 7
-char nd_request_research[REQUEST_RESEARCH_COUNT][] = {
-	"Advanced Kits",
-	"Field Tactics",
-	"Commander Abilities",
-	"Power Modulation",
-	"Advanced Manufacturing",
-	"Infantry Boost",
-	"Structure Reinforcement"
-};
-
-//A three dimensional array for to store reserach aliases
-#define R_ALIAS_COUNT 3
-char nd_research_aliases[REQUEST_RESEARCH_COUNT][R_ALIAS_COUNT][16];
-
-int GetResearchByIndex(const char[] sArgs)
+bool CheckRepairRequest(int client, int spacesCount, const char[] sArgs)
 {
-	// for normal requests (so they can't be overwritten by alaises
-	for (int research = 0; research < REQUEST_RESEARCH_COUNT; research++) //for all the research
-	{
-		//if a research name is within the string
-		if (StrIsWithin(sArgs, nd_request_research[research])) 
-		{
-			return research; //the index research in nd_request_research
-		}
-	}
-	
-	// for alais requests
-	for (int research2 = 0; research2 < REQUEST_RESEARCH_COUNT; research2++)
-	{
-		if (StrIsWithinArray(sArgs, nd_research_aliases[research2], R_ALIAS_COUNT))
-		{
-			return research2; //the index research in nd_request_research
-		}
-	}
-	
-	return RESEARCH_NOT_FOUND;	
-}
-
-enum {
-	Advanced_Kits = 0,
-	Field_Tactics,
-	Commander_Abilities,
-	Power_Modulation,
-	Advanced_Manufacturing,
-	Infantry_Boost,
-	Structure_Reinforcement
-}
-
-void createAliasesForResearch()
-{
-	nd_research_aliases[Advanced_Kits][0] = "kits";
-	
-	nd_research_aliases[Field_Tactics][0] = "field";
-	nd_research_aliases[Field_Tactics][1] = "feild";
-	nd_research_aliases[Field_Tactics][2] = "tact";
-	
-	nd_research_aliases[Commander_Abilities][0] = "Abilit";
-	
-	nd_research_aliases[Power_Modulation][0] = "mod";
-	
-	nd_research_aliases[Advanced_Manufacturing][0] = "man";
-	
-	nd_research_aliases[Infantry_Boost][0] = "ib";
-	nd_research_aliases[Infantry_Boost][1] = "infantry";
-	nd_research_aliases[Infantry_Boost][2] = "boost";
-	
-	nd_research_aliases[Structure_Reinforcement][0] = "struct";
-	nd_research_aliases[Structure_Reinforcement][1] = "rein";
-}
-
-bool CheckResearchRequest(int client, int spacesCount, const char[] sArgs)
-{
-	//If research requests are disabled on the server end, don't use them
-	if (!g_Enable[ResearchReqs].BoolValue) 
+	//If repair requests are disabled on the server end, don't use them
+	if (!g_Enable[RepairReqs].BoolValue) 
 		return false;
 	
-	//If the spacecount is greater than the required amount for research requests
-	if (spacesCount > MAX_RESEARCH_SPACECOUNT)
+	//If the spacecount is greater than the required amount for repair requests
+	if (spacesCount > MAX_REPAIR_SPACECOUNT)
 		return false;	
-		
-	//If the chat messages starts with the word "research"
-	if (StrStartsWith(sArgs, "research"))
+	
+	//If the chat messages starts with the word "repair"
+	if (StrStartsWith(sArgs, "repair"))
 	{	
-		//Get the research the user is asking for
-		int research = GetResearchByIndex(sArgs);
+		//Get the building the user is asking for
+		int building = GetBuildingByIndexEx(sArgs);
+		int compass = GetCompassByIndex(sArgs);
+		int location = GetSpotByIndex(sArgs);
 		
-		//If a valid research name or alasis is found
-		if (foundInChatMessage(research))
+		bool foundCompass = foundInChatMessage(compass);
+		bool foundLocation = foundInChatMessage(location);
+		
+		//If a valid building name or alasis is found
+		if (foundInChatMessage(building))
 		{
-			PrintSimpleResearchRequest(client, nd_request_research[research]);
+			// if building + compass name is found
+			if (foundCompass)
+			{				
+				Print_CompassBuilding_RepairRequest(client, nd_request_building[building], nd_request_compass[compass]);
+				return true;
+				
+				// if building + compass + location name is found
+				if (foundLocation)
+				{
+					PrintExtendedRepairRequest(client, nd_request_building[building], nd_request_compass[compass], nd_request_location[location]);
+					return true;
+				}
+			}
+			
+			// if building + location name is found
+			else if (foundLocation)
+			{
+				Print_LocationBuilding_RepairRequest(client, nd_request_building[building], nd_request_location[location]);
+				return true;			
+			}
+			
+			// if just the building name is found
+			PrintBuildingRepairRequest(client, nd_request_building[building]);
 			return true;
 		}
+		// if compass name is found
+		else if (foundCompass)
+		{
+			// if compass + location name is found
+			if (foundLocation)
+			{
+				Print_CompassLocation_RepairRequest(client, nd_request_compass[compass], nd_request_location[location]);
+				return true;
+			}
+			
+			//if just the compass name is found
+			PrintCompassRepairRequest(client, nd_request_building[building], nd_request_compass[compass]);
+			return true;
+		}
+		// if just the location name is found
+		else if (foundLocation)
+		{
+			PrintLocationRepairRequest(client, nd_request_location[location]);
+			return true;		
+		}			
 		
+		// if no repair keywords are found
 		NoTranslationFound(client, sArgs);
 		return true;
 	}	
@@ -103,7 +78,7 @@ bool CheckResearchRequest(int client, int spacesCount, const char[] sArgs)
 	return false;
 }
 
-void PrintSimpleResearchRequest(int client, const char[] rName)
+void PrintBuildingRepairRequest(int client, const char[] bName)
 {
 	if (IsValidClient(client))
 	{
@@ -116,11 +91,176 @@ void PrintSimpleResearchRequest(int client, const char[] rName)
 		{
 			if (IsOnTeam(idx, team))
 			{
-				char research[64];
-				Format(research, sizeof(research), "%T", rName, idx);
+				char building[64];
+				Format(building, sizeof(building), "%T", bName, idx);
 				
 				char ToPrint[128];
-				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Research Request", idx, pName, research);
+				Format(ToPrint, sizeof(ToPrint), "%T", "Building Repair Request", idx, pName, building);
+				
+				NPDC_PrintToChat(idx, ToPrint); 
+			}
+		}
+	}
+}
+
+void Print_CompassBuilding_RepairRequest(int client, const char[] cName, const char[] bName)
+{
+	if (IsValidClient(client))
+	{
+		int team = GetClientTeam(client);
+		
+		char pName[64];
+		GetClientName(client, pName, sizeof(pName));
+		
+		for (int idx = 0; idx <= MaxClients; idx++)
+		{
+			if (IsOnTeam(idx, team))
+			{				
+				char building[64];
+				Format(building, sizeof(building), "%T", bName, idx);
+				
+				char compass[64];
+				Format(compass, sizeof(compass), "%T", cName, idx);
+				
+				char ToPrint[128];
+				Format(ToPrint, sizeof(ToPrint), "%T", "Build Comp Repair Request", idx, pName, compass, building);
+				
+				NPDC_PrintToChat(idx, ToPrint); 
+			}
+		}
+	}
+}
+
+void PrintCompassRepairRequest(int client, const char[] cName)
+{
+	if (IsValidClient(client))
+	{
+		int team = GetClientTeam(client);
+		
+		char pName[64];
+		GetClientName(client, pName, sizeof(pName));
+		
+		for (int idx = 0; idx <= MaxClients; idx++)
+		{
+			if (IsOnTeam(idx, team))
+			{				
+				char compass[64];
+				Format(compass, sizeof(compass), "%T", cName, idx);
+				
+				char ToPrint[128];
+				Format(ToPrint, sizeof(ToPrint), "%T", "Compass Repair Request", idx, pName, compass);
+				
+				NPDC_PrintToChat(idx, ToPrint); 
+			}
+		}
+	}
+}
+
+void Print_CompassLocation_RepairRequest(int client, const char[] cName, const char[] lName)
+{
+	if (IsValidClient(client))
+	{
+		int team = GetClientTeam(client);
+		
+		char pName[64];
+		GetClientName(client, pName, sizeof(pName));
+		
+		for (int idx = 0; idx <= MaxClients; idx++)
+		{
+			if (IsOnTeam(idx, team))
+			{				
+				char compass[64];
+				Format(compass, sizeof(compass), "%T", cName, idx);
+				
+				char location[64];
+				Format(location, sizeof(location), "%T", lName, idx);
+				
+				char ToPrint[128];
+				Format(ToPrint, sizeof(ToPrint), "%T", "Comp Loc Repair Request", idx, pName, compass, location);
+				
+				NPDC_PrintToChat(idx, ToPrint); 
+			}
+		}
+	}
+}
+
+void PrintLocationRepairRequest(int client, const char[] lName)
+{
+	if (IsValidClient(client))
+	{
+		int team = GetClientTeam(client);
+		
+		char pName[64];
+		GetClientName(client, pName, sizeof(pName));
+		
+		for (int idx = 0; idx <= MaxClients; idx++)
+		{
+			if (IsOnTeam(idx, team))
+			{				
+				char location[64];
+				Format(location, sizeof(location), "%T", lName, idx);
+				
+				char ToPrint[128];
+				Format(ToPrint, sizeof(ToPrint), "%T", "Location Repair Request", idx, pName, location);
+				
+				NPDC_PrintToChat(idx, ToPrint); 
+			}
+		}
+	}
+}
+
+void Print_LocationBuilding_RepairRequest(int client, const char[] bName, const char[] lName)
+{
+	if (IsValidClient(client))
+	{
+		int team = GetClientTeam(client);
+		
+		char pName[64];
+		GetClientName(client, pName, sizeof(pName));
+		
+		for (int idx = 0; idx <= MaxClients; idx++)
+		{
+			if (IsOnTeam(idx, team))
+			{				
+				char building[64];
+				Format(building, sizeof(building), "%T", bName, idx)				
+				
+				char location[64];
+				Format(location, sizeof(location), "%T", lName, idx);
+				
+				char ToPrint[128];
+				Format(ToPrint, sizeof(ToPrint), "%T", "Build Loc Repair Request", idx, pName, location);
+				
+				NPDC_PrintToChat(idx, ToPrint); 
+			}
+		}
+	}
+}
+
+void PrintExtendedRepairRequest(int client, const char[] bName, const char[] cName, const char[] lName)
+{
+	if (IsValidClient(client))
+	{
+		int team = GetClientTeam(client);
+		
+		char pName[64];
+		GetClientName(client, pName, sizeof(pName));
+		
+		for (int idx = 0; idx <= MaxClients; idx++)
+		{
+			if (IsOnTeam(idx, team))
+			{				
+				char building[64];
+				Format(building, sizeof(building), "%T", bName, idx);
+				
+				char compass[64];
+				Format(compass, sizeof(compass), "%T", cName, idx);
+				
+				char location[64];
+				Format(location, sizeof(location), "%T", lName, idx);
+				
+				char ToPrint[128];
+				Format(ToPrint, sizeof(ToPrint), "%T", "Extended Repair Request", idx, pName, compass, location);
 				
 				NPDC_PrintToChat(idx, ToPrint); 
 			}
