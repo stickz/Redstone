@@ -7,7 +7,6 @@
 //
 "Phrases"
 {
-
 	"Team Languages"
 	{
 		"ru"		"Язык игры команды"
