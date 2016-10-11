@@ -7,7 +7,6 @@
 //
 "Phrases"
 {
-
 	"Team Languages"
 	{
 		"es"		"Idiomas de equipo: {1}"
@@ -102,5 +101,4 @@
 	{
 		"es"		"Izquierda"
 	}
-
 }
