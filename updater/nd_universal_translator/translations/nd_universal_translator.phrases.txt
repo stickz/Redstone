@@ -68,6 +68,82 @@
 		"en"		"{1} is requesting {2} research."
 	}
 	
+	/* Repair Requests */	
+	"Building Repair Request"
+	{
+		//{1} = Player Name
+		//{2} = Building Name
+		//
+		//Example: Vertex says repair the transport gate.
+		"#format"	"{1:s},{2:s}"
+		"en"		"{1} says repair the {2}"
+	}
+	
+	"Build Comp Repair Request"
+	{
+		//{1} = Player Name
+		//{2} = Compass Position
+		//{3} = Building Name
+		//
+		//Example: Vertex says repair the north supply station.
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"{1} says repair the {2} {3}"	
+	}
+	
+	"Compass Repair Request"
+	{
+		//{1} = Player Name
+		//{2} = Compass Position
+		//
+		//Example: Vertex is requesting repairs on the south side of the map.
+		"#format"	"{1:s},{2:s}"
+		"en"		"{1} is requesting repairs on the {2} side of the map"		
+	}
+	
+	"Comp Loc Repair Request"
+	{
+		//{1} = Player Name
+		//{2} = Compass Position
+		//{3} = Location Name
+		//
+		//Example: Vertex is requesting repairs at the east secodnary.
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"{1} is requesting repairs at the {2} {3}"		
+	}
+	
+	"Location Repair Request"
+	{
+		//{1} = Player Name
+		//{2} = Location Name
+		//
+		//Example: Vertex is requesting repairs at the rooftop.
+		"#format"	"{1:s},{2:s}"
+		"en"		"{1} is requesting repairs at {2}"
+	}
+	
+	"Build Loc Repair Request"
+	{
+		//{1} = Player Name
+		//{2} = Building Name
+		//{3} = Location Name		
+		//
+		//Example: Vertex says repair the rocket turret at prime.
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"{1} says repair the {2} at {3}"	
+	}
+	
+	"Extended Repair Request"
+	{
+		//{1} = Player Name
+		//{2} = Building Name
+		//{3} = Compass Position
+		//{4} = Location Name
+		//
+		//Example: Vertex says repair the transport gate at west secondary.
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"{1} says repair the {2} at {3} {4}"	
+	}
+	
 	/* Capture Messages */
 	"Simple Capture Request"
 	{
@@ -200,5 +276,5 @@
 	"Structure Reinforcement"
 	{
 		"en" 		"Structure Reinforcement"
-	}	
+	}
 }
