@@ -32,25 +32,22 @@ bool CheckResearchRequest(int client, int spacesCount, const char[] sArgs)
 
 void PrintSimpleResearchRequest(int client, const char[] rName)
 {
-	if (IsValidClient(client))
+	int team = GetClientTeam(client);
+		
+	char pName[64];
+	GetClientName(client, pName, sizeof(pName));
+		
+	for (int idx = 0; idx <= MaxClients; idx++)
 	{
-		int team = GetClientTeam(client);
-		
-		char pName[64];
-		GetClientName(client, pName, sizeof(pName));
-		
-		for (int idx = 0; idx <= MaxClients; idx++)
+		if (IsOnTeam(idx, team))
 		{
-			if (IsOnTeam(idx, team))
-			{
-				char research[64];
-				Format(research, sizeof(research), "%T", rName, idx);
+			char research[64];
+			Format(research, sizeof(research), "%T", rName, idx);
 				
-				char ToPrint[128];
-				Format(ToPrint, sizeof(ToPrint), "%T", "Simple Research Request", idx, pName, research);
+			char ToPrint[128];
+			Format(ToPrint, sizeof(ToPrint), "%T", "Simple Research Request", idx, pName, research);
 				
-				NPDC_PrintToChat(idx, ToPrint); 
-			}
+			NPDC_PrintToChat(idx, ToPrint); 
 		}
 	}
 }
