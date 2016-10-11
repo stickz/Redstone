@@ -4,12 +4,12 @@
 
 enum
 {
-      CommanderLang = 0,
-      TeamLang,
-      BuildingReqs,
-      CaptureReqs,
-      ResearchReqs,
-	  RepairReqs
+    	CommanderLang = 0,
+    	TeamLang,
+	BuildingReqs,
+    	CaptureReqs,
+     	ResearchReqs,
+	RepairReqs
 }
 
 char convarNames[CONVAR_COUNT][] = {
@@ -17,7 +17,7 @@ char convarNames[CONVAR_COUNT][] = {
 	"team_lang",
 	"building_reqs",
 	"capture_reqs",
-	"research_reqs"
+	"research_reqs",
 	"repair_reqs"
 };
 
