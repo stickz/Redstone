@@ -212,7 +212,7 @@ void Print_LocationBuilding_RepairRequest(int client, const char[] bName, const 
 			Format(location, sizeof(location), "%T", lName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Build Loc Repair Request", idx, pName, location);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Build Loc Repair Request", idx, pName, building, location);
 				
 			NPDC_PrintToChat(idx, ToPrint); 
 		}
