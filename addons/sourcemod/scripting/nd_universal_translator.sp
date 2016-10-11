@@ -58,6 +58,7 @@ public Plugin myinfo =
 /* Include Chat Request Segments */
 #include "ndpc/requests/build_req.sp"
 #include "ndpc/requests/capture_req.sp"
+#include "ndpc/requests/repair_req.sp"
 #include "ndpc/requests/research_req.sp"
 
 public void OnPluginStart()
