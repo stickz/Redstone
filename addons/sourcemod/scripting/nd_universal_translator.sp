@@ -87,7 +87,7 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 
 public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
 {
-	if (client) //is the chat message is triggered by a client?
+	if (client && IsValidClient(client)) //is the chat message is triggered by a client?
 	{
 		//send the space count to each request
 		int spaces = GetStringSpaceCount(sArgs);
