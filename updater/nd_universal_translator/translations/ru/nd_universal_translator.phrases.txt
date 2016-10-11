@@ -18,31 +18,6 @@
 		"ru"		"Язык игры командира {1}"
 	}
 
-	"Simple Building Request"
-	{
-		"ru"		"{1} просит {2}"
-	}
-
-	"Spot Building Request"
-	{
-		"ru"		"{1} просит {2} на {3}"
-	}
-
-	"Complex Building Request"
-	{
-		"ru"		"{1} просит {2} у {4} {3}"
-	}
-
-	"Simple Capture Request"
-	{
-		"ru"		"{1} приказ захватиь {2}"
-	}
-	
-	"Extended Capture Request"
-	{
-		"ru"		"{1} приказ захватиь {2} {3}"
-	}
-
 	"Base Tert"
 	{
 		"ru"		"Маленький ресурс на базе"
@@ -127,5 +102,4 @@
 	{
 		"ru"		"Слева"
 	}
-
 }
