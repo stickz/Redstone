@@ -1,6 +1,6 @@
 /* To add an enable convar, increment convar_count then update the enum and convarNames char
  * The abstract code will handle the logistics of creating the convar */
-#define CONVAR_COUNT 5
+#define CONVAR_COUNT 6
 
 enum
 {
@@ -8,7 +8,8 @@ enum
       TeamLang,
       BuildingReqs,
       CaptureReqs,
-      ResearchReqs
+      ResearchReqs,
+	  RepairReqs
 }
 
 char convarNames[CONVAR_COUNT][] = {
@@ -17,6 +18,7 @@ char convarNames[CONVAR_COUNT][] = {
 	"building_reqs",
 	"capture_reqs",
 	"research_reqs"
+	"repair_reqs"
 };
 
 #define CONVAR_PREFIX "sm_ndpc_"
