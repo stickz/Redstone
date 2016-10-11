@@ -26,16 +26,16 @@ bool CheckRepairRequest(int client, int spacesCount, const char[] sArgs)
 		{
 			// if building + compass name is found
 			if (foundCompass)
-			{				
-				Print_CompassBuilding_RepairRequest(client, nd_request_building[building], nd_request_compass[compass]);
-				return true;
-				
+			{			
 				// if building + compass + location name is found
 				if (foundLocation)
 				{
 					PrintExtendedRepairRequest(client, nd_request_building[building], nd_request_compass[compass], nd_request_location[location]);
 					return true;
 				}
+				
+				Print_CompassBuilding_RepairRequest(client, nd_request_building[building], nd_request_compass[compass]);
+				return true;
 			}
 			
 			// if building + location name is found
@@ -60,7 +60,7 @@ bool CheckRepairRequest(int client, int spacesCount, const char[] sArgs)
 			}
 			
 			//if just the compass name is found
-			PrintCompassRepairRequest(client, nd_request_building[building], nd_request_compass[compass]);
+			PrintCompassRepairRequest(client, nd_request_compass[compass]);
 			return true;
 		}
 		// if just the location name is found
