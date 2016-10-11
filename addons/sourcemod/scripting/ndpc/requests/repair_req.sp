@@ -100,7 +100,7 @@ void PrintBuildingRepairRequest(int client, const char[] bName)
 	}
 }
 
-void Print_CompassBuilding_RepairRequest(int client, const char[] cName, const char[] bName)
+void Print_CompassBuilding_RepairRequest(int client, const char[] bName, const char[] cName)
 {
 	int team = GetClientTeam(client);
 	
