@@ -140,7 +140,7 @@
 		//{4} = Location Name
 		//
 		//Example: Vertex says repair the transport gate at west secondary.
-		"#format"	"{1:s},{2:s},{3:s}"
+		"#format"	"{1:s},{2:s},{3:s},{4:s}"
 		"en"		"{1} says repair the {2} at {3} {4}"	
 	}
 	
