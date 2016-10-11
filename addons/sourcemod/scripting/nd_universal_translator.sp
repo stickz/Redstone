@@ -96,7 +96,8 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 		//does the chat message contain translatable phrases?
 		if (	CheckBuildingRequest(client, spaces, sArgs) ||  
 			CheckCaptureRequest(client, spaces, sArgs) || 
-			CheckResearchRequest(client, spaces, sArgs))
+			CheckResearchRequest(client, spaces, sArgs) ||
+			CheckRepairRequest(client, spaces, sArgs))
 		{
 			/* 
 			 * Block the old chat message
