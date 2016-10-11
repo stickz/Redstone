@@ -42,6 +42,11 @@ public Plugin myinfo =
 #define TAG_COLOUR		"{lightgreen}"
 #define CHAT_PREFIX		"{olive}[xG]"
 
+char tColour[2][] = {
+	"{blue}",
+	"{red}"
+};
+
 /* Include First Abstraction Layer */ 
 #include "ndpc/stock_functions.sp"
 #include "ndpc/reg_functions.sp"
