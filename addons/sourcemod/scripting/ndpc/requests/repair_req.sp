@@ -114,7 +114,7 @@ void Print_CompassBuilding_RepairRequest(int client, const char[] bName, const c
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Build Comp Repair Request", idx, compass, building);
 			
-			NPDC_PrintToChat(idx, team, ToPrint); 
+			NDPC_PrintToChat(idx, team, ToPrint); 
 		}
 	}	
 }
@@ -133,7 +133,7 @@ void PrintCompassRepairRequest(int client, const char[] cName)
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Compass Repair Request", idx, compass);
 				
-			NPDC_PrintToChat(idx, team, ToPrint); 
+			NDPC_PrintToChat(idx, team, ToPrint); 
 		}
 	}	
 }
