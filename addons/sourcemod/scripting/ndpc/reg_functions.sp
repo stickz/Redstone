@@ -14,5 +14,5 @@ int GetStringSpaceCount(const char[] sArgs)
 /* Wrapper for printing a translation to client chat */
 void NPDC_PrintToChat(int client, const char[] sArgs)
 {
-	PrintToChat(client, "%s%t %s%s", TAG_COLOUR, "Translate Tag", MESSAGE_COLOUR, sArgs);
+	CPrintToChat(client, "%s%t %s%s", TAG_COLOUR, "Translate Tag", MESSAGE_COLOUR, sArgs);
 }
