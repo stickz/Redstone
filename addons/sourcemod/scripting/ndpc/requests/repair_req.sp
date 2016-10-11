@@ -240,7 +240,7 @@ void PrintExtendedRepairRequest(int client, const char[] bName, const char[] cNa
 			Format(location, sizeof(location), "%T", lName, idx);
 			
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Extended Repair Request", idx, pName, compass, location);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Extended Repair Request", idx, pName, building, compass, location);
 	
 			NPDC_PrintToChat(idx, ToPrint); 
 		}
