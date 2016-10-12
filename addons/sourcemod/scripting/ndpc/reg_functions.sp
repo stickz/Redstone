@@ -1,3 +1,24 @@
+/**
+ * Wrapper for looping clients on team
+ * matching the specified flags.
+ *
+ * @param 1		Name of index varriable (accessible inside the loop)
+ * @param 2		Team varriable check if each client is on.
+ */
+#define LOOP_CLIENT_TEAM(%1, %2) for (int %1 = Client_GetNext(%2); %1 >= 1 && %1 <= MaxClients; %1=Client_GetNext(%2, ++%1))	
+void Client_GetNext(int index = 1, int team)
+{
+	for (new client = index; client <= MaxClients; client++) 
+	{
+		if (IsOnTeam(client, team)) 
+		{
+			return client;
+		}
+	}
+
+	return -1;
+}
+
 /* Get the space count in a given chat message (or string) */
 int GetStringSpaceCount(const char[] sArgs)
 {
