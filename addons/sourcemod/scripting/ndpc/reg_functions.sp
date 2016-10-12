@@ -6,7 +6,7 @@
  * @param 2		Team varriable check if each client is on.
  */
 #define LOOP_CLIENT_TEAM(%1, %2) for (int %1 = Client_GetNext(%2); %1 >= 1 && %1 <= MaxClients; %1=Client_GetNext(%2, ++%1))	
-void Client_GetNext(int index = 1, int team)
+void Client_GetNext(int team, int index = 1)
 {
 	for (new client = index; client <= MaxClients; client++) 
 	{
