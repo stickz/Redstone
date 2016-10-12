@@ -1,4 +1,3 @@
-
 int GetStringSpaceCount(const char[] sArgs)
 {
 	int spaceCount = 0;
@@ -18,7 +17,10 @@ void NDPC_PrintToChat(int client, int team, const char[] sArgs)
 	char pName[64];
 	GetClientName(client, pName, sizeof(pName));
 	
-	CPrintToChat(client, "%s%t %s%s: %s%s", TAG_COLOUR, "Translate Tag", 
+	char transTag[32];
+	Format(transTag, sizeof(transTag), "%T", client, "Translate Tag");
+	
+	CPrintToChat(client, "%s%s %s%s: %s%s", TAG_COLOUR, transTag, 
 						tColour[team - 2], pName,
 						MESSAGE_COLOUR, sArgs);
 }
