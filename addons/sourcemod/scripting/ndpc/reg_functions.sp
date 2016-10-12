@@ -49,23 +49,9 @@ void NDPC_PrintNoTransFound(int client)
 }
 
 /* Translation Strings */
-char GetBuildingTrans(int client, const char[] bName)
+char GetTransString(int client, const char[] tName)
 {
-	char building[64];
-	Format(building, sizeof(building), "%T", bName, client);
-	return building;
-}
-
-char GetLocationTrans(int client, const char[] lName)
-{
-	char location[32];
-	Format(location, sizeof(location), "%T", lName, client);
-	return location;
-}
-
-char GetCompassTrans(int client, const char[] cName)
-{
-	char compass[32];
-	Format(compass, sizeof(compass), "%T", cName, client);
-	return compass;
+	char trans[64];
+	Format(trans, sizeof(trans), "%T", tName, client);
+	return trans;
 }
