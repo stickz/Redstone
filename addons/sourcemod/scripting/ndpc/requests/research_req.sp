@@ -19,7 +19,7 @@ bool CheckResearchRequest(int client, int team, int spacesCount, const char[] pN
 		//If a valid research name or alasis is found
 		if (foundInChatMessage(research))
 		{
-			PrintSimpleResearchRequest(client, team, pName, nd_request_research[research]);
+			PrintSimpleResearchRequest(team, pName, nd_request_research[research]);
 			return true;
 		}
 		
@@ -30,7 +30,7 @@ bool CheckResearchRequest(int client, int team, int spacesCount, const char[] pN
 	return false;
 }
 
-void PrintSimpleResearchRequest(int client, int team, const char[] pName const char[] rName)
+void PrintSimpleResearchRequest(int team, const char[] pName const char[] rName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
