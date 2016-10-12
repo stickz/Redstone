@@ -46,38 +46,38 @@ stock void NDPC_PrintRequestS0(int team, const char[] request, const char[] pNam
 	}	
 }
 
-stock void NDPC_PrintRequestS1(int team, const char[] request, const char[] pName, const char[] phrase)
+stock void NDPC_PrintRequestS1(int team, const char[] request, const char[] pName, const char[] p1)
 {
 	LOOP_TEAM(idx, team) 
 	{
 		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", request, idx, GetTransString(idx, phrase));
+		Format(ToPrint, sizeof(ToPrint), "%T", request, idx, GetTransString(idx, p1));
 		NDPC_PrintToChat(idx, pName, ToPrint);	
 	}
 }
 
-stock void NDPC_PrintRequestS2(int team, const char[] request, const char[] pName, const char[2][] phrase)
+stock void NDPC_PrintRequestS2(int team, const char[] request, const char[] pName, const char[] p1, const char[] p2)
 {
 	LOOP_TEAM(idx, team) 
 	{
 		char ToPrint[128];
 		Format(ToPrint, sizeof(ToPrint), "%T", request, idx, 		
-				GetTransString(idx, phrase[0]),
-				GetTransString(idx, phrase[1]));
+				GetTransString(idx, p1),
+				GetTransString(idx, p2));
 		
 		NDPC_PrintToChat(idx, pName, ToPrint);	
 	}
 }
 
-stock void NDPC_PrintRequestS3(int team, const char[] request, const char[] pName, const char[3][] phrase)
+stock void NDPC_PrintRequestS3(int team, const char[] request, const char[] pName, const char[] p1, const char[] p2, const char[] p3)
 {
 	LOOP_TEAM(idx, team) 
 	{
 		char ToPrint[128];
 				Format(ToPrint, sizeof(ToPrint), "%T", request, idx, 		
-				GetTransString(idx, phrase[0]),
-				GetTransString(idx, phrase[1]),
-				GetTransString(idx, phrase[2]));
+				GetTransString(idx, p1),
+				GetTransString(idx, p2),
+				GetTransString(idx, p2));
 				
 		NDPC_PrintToChat(idx, pName, ToPrint);	
 	}
