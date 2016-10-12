@@ -13,11 +13,8 @@ int GetStringSpaceCount(const char[] sArgs)
 }
 
 /* Wrapper for printing a translation to client chat */
-void NDPC_PrintToChat(int client, int team, const char[] sArgs)
+void NDPC_PrintToChat(int client, const char[] pName, const char[] sArgs)
 {
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));	
-
 	PrintToChat(client, "%s%t %s%s: %s%s",	TAG_COLOUR, "Translate Tag",
 						NAME_COLOUR, pName, 
 						MESSAGE_COLOUR, sArgs);
