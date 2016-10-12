@@ -74,7 +74,7 @@ stock void NDPC_PrintRequestS3(int team, const char[] request, const char[] pNam
 	LOOP_TEAM(idx, team) 
 	{
 		char ToPrint[128];
-				Format(ToPrint, sizeof(ToPrint), "%T", request, idx, 		
+		Format(ToPrint, sizeof(ToPrint), "%T", request, idx, 		
 				GetTransString(idx, p1),
 				GetTransString(idx, p2),
 				GetTransString(idx, p2));
