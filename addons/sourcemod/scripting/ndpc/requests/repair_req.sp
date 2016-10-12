@@ -89,134 +89,113 @@ bool CheckRepairRequest(int client, int team, int spacesCount, const char[] pNam
 
 void PrintBuildingRepairRequest(int team, const char[] pName, const char[] bName)
 {
-	for (int idx = 0; idx <= MaxClients; idx++)
+	LOOP_TEAM(idx, team) 
 	{
-		if (IsOnTeam(idx, team))
-		{
-			char building[64];
-			Format(building, sizeof(building), "%T", bName, idx);
+		char building[64];
+		Format(building, sizeof(building), "%T", bName, idx);
 				
-			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Building Repair Request", idx, building);
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", "Building Repair Request", idx, building);
 			
-			NDPC_PrintToChat(idx, pName, ToPrint); 
-		}
+		NDPC_PrintToChat(idx, pName, ToPrint); 		
 	}
 }
 
 void Print_CompassBuilding_RepairRequest(int team, const char[] pName, const char[] bName, const char[] cName)
 {
-	for (int idx = 0; idx <= MaxClients; idx++)
-	{
-		if (IsOnTeam(idx, team))
-		{				
-			char building[64];
-			Format(building, sizeof(building), "%T", bName, idx);
+	LOOP_TEAM(idx, team) 
+	{			
+		char building[64];
+		Format(building, sizeof(building), "%T", bName, idx);
 			
-			char compass[64];
-			Format(compass, sizeof(compass), "%T", cName, idx);
-				
-			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Build Comp Repair Request", idx, compass, building);
+		char compass[64];
+		Format(compass, sizeof(compass), "%T", cName, idx);
+		
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", "Build Comp Repair Request", idx, compass, building);
 			
-			NDPC_PrintToChat(idx, pName, ToPrint); 
-		}
+		NDPC_PrintToChat(idx, pName, ToPrint); 		
 	}	
 }
 
 void PrintCompassRepairRequest(int team, const char[] pName, const char[] cName)
 {
-	for (int idx = 0; idx <= MaxClients; idx++)
-	{
-		if (IsOnTeam(idx, team))
-		{				
-			char compass[64];
-			Format(compass, sizeof(compass), "%T", cName, idx);
+	LOOP_TEAM(idx, team) 
+	{				
+		char compass[64];
+		Format(compass, sizeof(compass), "%T", cName, idx);
 				
-			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Compass Repair Request", idx, compass);
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", "Compass Repair Request", idx, compass);
 				
-			NDPC_PrintToChat(idx, pName, ToPrint); 
-		}
+		NDPC_PrintToChat(idx, pName, ToPrint); 		
 	}	
 }
 
 void Print_CompassLocation_RepairRequest(int team, const char[] pName, const char[] cName, const char[] lName)
 {
-	for (int idx = 0; idx <= MaxClients; idx++)
-	{
-		if (IsOnTeam(idx, team))
-		{				
-			char compass[64];
-			Format(compass, sizeof(compass), "%T", cName, idx);
+	LOOP_TEAM(idx, team) 
+	{				
+		char compass[64];
+		Format(compass, sizeof(compass), "%T", cName, idx);
 				
-			char location[64];
-			Format(location, sizeof(location), "%T", lName, idx);
+		char location[64];
+		Format(location, sizeof(location), "%T", lName, idx);
 				
-			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Comp Loc Repair Request", idx, compass, location);
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", "Comp Loc Repair Request", idx, compass, location);
 				
-			NDPC_PrintToChat(idx, pName, ToPrint); 
-		}
+		NDPC_PrintToChat(idx, pName, ToPrint); 		
 	}
 }
 
 void PrintLocationRepairRequest(int team, const char[] pName, const char[] lName)
 {
-	for (int idx = 0; idx <= MaxClients; idx++)
-	{
-		if (IsOnTeam(idx, team))
-		{				
-			char location[64];
-			Format(location, sizeof(location), "%T", lName, idx);
+	LOOP_TEAM(idx, team) 
+	{			
+		char location[64];
+		Format(location, sizeof(location), "%T", lName, idx);
 			
-			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Location Repair Request", idx, location);
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", "Location Repair Request", idx, location);
 				
-			NDPC_PrintToChat(idx, pName, ToPrint); 
-		}
+		NDPC_PrintToChat(idx, pName, ToPrint); 		
 	}	
 }
 
 void Print_LocationBuilding_RepairRequest(int team, const char[] pName, const char[] bName, const char[] lName)
 {
-	for (int idx = 0; idx <= MaxClients; idx++)
-	{
-		if (IsOnTeam(idx, team))
-		{				
-			char building[64];
-			Format(building, sizeof(building), "%T", bName, idx)				
+	LOOP_TEAM(idx, team) 
+	{			
+		char building[64];
+		Format(building, sizeof(building), "%T", bName, idx)				
 				
-			char location[64];
-			Format(location, sizeof(location), "%T", lName, idx);
+		char location[64];
+		Format(location, sizeof(location), "%T", lName, idx);
 				
-			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Build Loc Repair Request", idx, building, location);
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", "Build Loc Repair Request", idx, building, location);
 				
-			NDPC_PrintToChat(idx, pName, ToPrint); 
-		}
+		NDPC_PrintToChat(idx, pName, ToPrint); 		
 	}	
 }
 
 void PrintExtendedRepairRequest(int team, const char[] pName, const char[] bName, const char[] cName, const char[] lName)
 {
-	for (int idx = 0; idx <= MaxClients; idx++)
-	{
-		if (IsOnTeam(idx, team))
-		{				
-			char building[64];
-			Format(building, sizeof(building), "%T", bName, idx);
+	LOOP_TEAM(idx, team) 
+	{			
+		char building[64];
+		Format(building, sizeof(building), "%T", bName, idx);
 			
-			char compass[64];
-			Format(compass, sizeof(compass), "%T", cName, idx);
+		char compass[64];
+		Format(compass, sizeof(compass), "%T", cName, idx);
 			
-			char location[64];
-			Format(location, sizeof(location), "%T", lName, idx);
-			
-			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Extended Repair Request", idx, building, compass, location);
+		char location[64];
+		Format(location, sizeof(location), "%T", lName, idx);
+		
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", "Extended Repair Request", idx, building, compass, location);
 	
-			NDPC_PrintToChat(idx, pName, ToPrint); 
-		}
+		NDPC_PrintToChat(idx, pName, ToPrint); 		
 	}	
 }
