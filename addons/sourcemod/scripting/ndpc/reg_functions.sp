@@ -47,3 +47,25 @@ void NDPC_PrintNoTransFound(int client)
 	//First segment is (Translator) in green. Second is "No keyword found" in olive
 	PrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", MESSAGE_COLOUR, "No Translate Keyword");
 }
+
+/* Translation Strings */
+char GetBuildingTrans(int client, const char[] bName)
+{
+	char building[64];
+	Format(building, sizeof(building), "%T", bName, client);
+	return building;
+}
+
+char GetLocationTrans(int client, const char[] lName)
+{
+	char location[32];
+	Format(location, sizeof(location), "%T", lName, client);
+	return location;
+}
+
+char GetCompassTrans(int client, const char[] cName)
+{
+	char compass[32];
+	Format(compass, sizeof(compass), "%T", cName, client);
+	return compass;
+}
