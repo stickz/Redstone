@@ -71,7 +71,7 @@ void PrintTLangToTeam(int team, const char[] printOut)
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Team Languages", client, printOut);
 			
-			CPrintToChat(client, "%s%s", MESSAGE_COLOUR, ToPrint);	
+			PrintToChat(client, "%s%s", MESSAGE_COLOUR, ToPrint);	
 		}
 	}
 }
