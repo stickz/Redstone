@@ -34,7 +34,7 @@ void NDPC_PrintNoTransFound(int client)
 }
 
 /* Convert translator tag phrase to char array (string) */
-char NDPC_GetTransTag(client)
+char NDPC_GetTransTag(int client)
 {
 	char transTag[32];
 	Format(transTag, sizeof(transTag), "%T", client, "Translate Tag");	
