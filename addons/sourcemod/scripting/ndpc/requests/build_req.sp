@@ -68,11 +68,9 @@ void PrintSimpleBuildingRequest(int team, const char[] pName, const char[] bName
 {
 	LOOP_TEAM(idx, team) 
 	{
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx);
-				
 		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, building);
+		Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, 
+							GetBuildingTrans(idx, bName));
 				
 		NDPC_PrintToChat(idx, pName, ToPrint);		
 	}	
@@ -81,15 +79,11 @@ void PrintSimpleBuildingRequest(int team, const char[] pName, const char[] bName
 void PrintSpotBuildingRequest(int team, const char[] pName, const char[] bName, const char[] lName)
 {
 	LOOP_TEAM(idx, team) 
-	{
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx);
-				
-		char location[32];
-		Format(location, sizeof(location), "%T", lName, idx);
-				
+	{			
 		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Spot Building Request", idx, building, location);
+		Format(ToPrint, sizeof(ToPrint), "%T", "Spot Building Request", idx,
+							GetBuildingTrans(idx, bName), 
+							GetLocationTrans(idx, lName));
 			
 		NDPC_PrintToChat(idx, pName, ToPrint);		
 	}	
@@ -99,15 +93,11 @@ void PrintCompassBuildingRequest(int team, const char[] pName, const char[] bNam
 {
 	LOOP_TEAM(idx, team) 
 	{
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx);
-				
-		char compass[32];
-		Format(compass, sizeof(compass), "%T", cName, idx);
-				
 		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Compass Building Request", idx, building, compass);
-								       
+		Format(ToPrint, sizeof(ToPrint), "%T", "Compass Building Request", idx, 
+							GetBuildingTrans(idx, bName), 
+							GetCompassTrans(idx, cName));
+							
 		NDPC_PrintToChat(idx, pName, ToPrint);		
 	}	
 }
@@ -115,19 +105,13 @@ void PrintCompassBuildingRequest(int team, const char[] pName, const char[] bNam
 void PrintComplexBuildingRequest(int team, const char[] pName, const char[] bName, const char[] lName, const char[] cName)
 {
 	LOOP_TEAM(idx, team) 
-	{
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx);
-				
-		char location[32];
-		Format(location, sizeof(location), "%T", lName, idx);
-				
-		char compass[32];
-		Format(compass, sizeof(compass), "%T", cName, idx);
-				
+	{				
 		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Complex Building Request", idx, building, location, compass);
-								       
+		Format(ToPrint, sizeof(ToPrint), "%T", "Complex Building Request", idx, 
+							GetBuildingTrans(idx, bName),
+							GetLocationTrans(idx, lName),
+							GetCompassTrans(idx, cName));
+							
 		NDPC_PrintToChat(idx, pName, ToPrint);		
 	}
 }
