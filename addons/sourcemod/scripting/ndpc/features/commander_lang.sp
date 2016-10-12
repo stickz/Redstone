@@ -23,14 +23,14 @@ public Action CMD_PrintCLang(int client, int args)
 	int team = GetClientTeam(client);
 	if (team != TEAM_CONSORT && team != TEAM_EMPIRE)
 	{
-		CPrintToChat(client, "%s%t", CHAT_PREFIX, "Not On Team");
+		PrintToChat(client, "%s%t", CHAT_PREFIX, "Not On Team");
 		return Plugin_Handled;	
 	}
 	
 	int commander = ND_GetCommanderOnTeam(team);
 	if (commander == NO_COMMANDER)
 	{
-		CPrintToChat(client, "%s%t", CHAT_PREFIX, "No Team Commander");
+		PrintToChat(client, "%s%t", CHAT_PREFIX, "No Team Commander");
 		return Plugin_Handled;
 	}
 	
@@ -62,7 +62,7 @@ void PrintCLangToTeam(int team, const char[] langName)
 	{
 		if (IsOnTeam(client, team))
 		{
-			CPrintToChat(client, "%s%t", MESSAGE_COLOUR, "Commander Language", langName);  
+			PrintToChat(client, "%s%t", MESSAGE_COLOUR, "Commander Language", langName);  
 		}
 	}
 }
