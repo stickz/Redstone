@@ -37,7 +37,7 @@ public Plugin myinfo =
 /* Create Defines */
 #define LANGUAGE_COUNT 		44
 #define MESSAGE_COLOUR		"\x01"
-#define NAME_COLOUR		"\x03"
+#define NAME_COLOUR		"\x05"
 #define TAG_COLOUR		"\x04"
 #define CHAT_PREFIX		"\x05[xG]"
 
