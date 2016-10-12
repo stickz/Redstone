@@ -27,7 +27,7 @@ void BuildLogFilePath() // Build Log File System Path
 
 void NoTranslationFound(int client, const char[] sArgs)
 {
-	CPrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", MESSAGE_COLOUR, "No Translate Keyword");
+	NDPC_PrintNoTransFound(client);
 	
 	char toLog[32];
 	Format(toLog, sizeof(toLog), "[Not a Keyword] %s", sArgs);
