@@ -32,17 +32,14 @@ bool CheckResearchRequest(int client, int team, int spacesCount, const char[] pN
 
 void PrintSimpleResearchRequest(int team, const char[] pName, const char[] rName)
 {
-	for (int idx = 0; idx <= MaxClients; idx++)
+	LOOP_TEAM(idx, team) 
 	{
-		if (IsOnTeam(idx, team))
-		{
-			char research[64];
-			Format(research, sizeof(research), "%T", rName, idx);
+		char research[64];
+		Format(research, sizeof(research), "%T", rName, idx);
 				
-			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Simple Research Request", idx, research);
-				
-			NDPC_PrintToChat(idx, pName, ToPrint); 
-		}
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", "Simple Research Request", idx, research);
+			
+		NDPC_PrintToChat(idx, pName, ToPrint);		
 	}
 }
