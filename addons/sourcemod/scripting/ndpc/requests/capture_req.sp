@@ -19,13 +19,13 @@ bool CheckCaptureRequest(int client, int team, int spacesCount, const char[] pNa
 			
 			if (foundInChatMessage(compass))
 			{
-				PrintExtendedCaptureRequest(	client, team, pName,
+				PrintExtendedCaptureRequest(	team, pName,
 								nd_request_capture[resource], 
 								nd_request_compass[compass]);
 				return true;
 			}
 		
-			PrintSimpleCaptureRequest(client, team, pName, nd_request_capture[resource]);
+			PrintSimpleCaptureRequest(team, pName, nd_request_capture[resource]);
 			return true;
 		}
 
@@ -36,7 +36,7 @@ bool CheckCaptureRequest(int client, int team, int spacesCount, const char[] pNa
 	return false;
 }
 
-void PrintSimpleCaptureRequest(int client, int team, const char[] pName, const char[] rName)
+void PrintSimpleCaptureRequest(int team, const char[] pName, const char[] rName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -53,7 +53,7 @@ void PrintSimpleCaptureRequest(int client, int team, const char[] pName, const c
 	}
 }
 
-void PrintExtendedCaptureRequest(int client, int team, const char[] pName, const char[] rName, const char[] lName)
+void PrintExtendedCaptureRequest(int team, const char[] pName, const char[] rName, const char[] lName)
 {		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
