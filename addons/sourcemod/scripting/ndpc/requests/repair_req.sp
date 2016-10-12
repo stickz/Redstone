@@ -30,14 +30,14 @@ bool CheckRepairRequest(int client, int team, int spacesCount, const char[] pNam
 				// if building + compass + location name is found
 				if (foundLocation)
 				{
-					PrintExtendedRepairRequest(	client, team, pName,
+					PrintExtendedRepairRequest(	team, pName,
 									nd_request_building[building], 
 									nd_request_compass[compass], 
 									nd_request_location[location]);
 					return true;
 				}
 				
-				Print_CompassBuilding_RepairRequest(	client, team, pName, 
+				Print_CompassBuilding_RepairRequest(	team, pName, 
 									nd_request_building[building], 
 									nd_request_compass[compass]);
 				return true;
@@ -46,14 +46,14 @@ bool CheckRepairRequest(int client, int team, int spacesCount, const char[] pNam
 			// if building + location name is found
 			else if (foundLocation)
 			{
-				Print_LocationBuilding_RepairRequest(	client, team, pName, 
+				Print_LocationBuilding_RepairRequest(	team, pName, 
 									nd_request_building[building], 
 									nd_request_location[location]);
 				return true;			
 			}
 			
 			// if just the building name is found
-			PrintBuildingRepairRequest(client, team, pName, nd_request_building[building]);
+			PrintBuildingRepairRequest(team, pName, nd_request_building[building]);
 			return true;
 		}
 		// if compass name is found
@@ -62,20 +62,20 @@ bool CheckRepairRequest(int client, int team, int spacesCount, const char[] pNam
 			// if compass + location name is found
 			if (foundLocation)
 			{
-				Print_CompassLocation_RepairRequest(	client, team, pName, 
+				Print_CompassLocation_RepairRequest(	team, pName, 
 									nd_request_compass[compass], 
 									nd_request_location[location]);
 				return true;
 			}
 			
 			//if just the compass name is found
-			PrintCompassRepairRequest(client, team, pName, nd_request_compass[compass]);
+			PrintCompassRepairRequest(team, pName, nd_request_compass[compass]);
 			return true;
 		}
 		// if just the location name is found
 		else if (foundLocation)
 		{
-			PrintLocationRepairRequest(client, team, pName, nd_request_location[location]);
+			PrintLocationRepairRequest(team, pName, nd_request_location[location]);
 			return true;		
 		}			
 		
@@ -87,7 +87,7 @@ bool CheckRepairRequest(int client, int team, int spacesCount, const char[] pNam
 	return false;
 }
 
-void PrintBuildingRepairRequest(int client, int team, const char[] pName, const char[] bName)
+void PrintBuildingRepairRequest(int team, const char[] pName, const char[] bName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -104,7 +104,7 @@ void PrintBuildingRepairRequest(int client, int team, const char[] pName, const 
 	}
 }
 
-void Print_CompassBuilding_RepairRequest(int client, int team, const char[] pName, const char[] bName, const char[] cName)
+void Print_CompassBuilding_RepairRequest(int team, const char[] pName, const char[] bName, const char[] cName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -124,7 +124,7 @@ void Print_CompassBuilding_RepairRequest(int client, int team, const char[] pNam
 	}	
 }
 
-void PrintCompassRepairRequest(int client, int team, const char[] pName, const char[] cName)
+void PrintCompassRepairRequest(int team, const char[] pName, const char[] cName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -141,7 +141,7 @@ void PrintCompassRepairRequest(int client, int team, const char[] pName, const c
 	}	
 }
 
-void Print_CompassLocation_RepairRequest(int client, int team, const char[] pName, const char[] cName, const char[] lName)
+void Print_CompassLocation_RepairRequest(int team, const char[] pName, const char[] cName, const char[] lName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -161,7 +161,7 @@ void Print_CompassLocation_RepairRequest(int client, int team, const char[] pNam
 	}
 }
 
-void PrintLocationRepairRequest(int client, int team, const char[] pName, const char[] lName)
+void PrintLocationRepairRequest(int team, const char[] pName, const char[] lName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -178,7 +178,7 @@ void PrintLocationRepairRequest(int client, int team, const char[] pName, const 
 	}	
 }
 
-void Print_LocationBuilding_RepairRequest(int client, int team, const char[] pName, const char[] bName, const char[] lName)
+void Print_LocationBuilding_RepairRequest(int team, const char[] pName, const char[] bName, const char[] lName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -198,7 +198,7 @@ void Print_LocationBuilding_RepairRequest(int client, int team, const char[] pNa
 	}	
 }
 
-void PrintExtendedRepairRequest(int client, int team, const char[] pName, const char[] bName, const char[] cName, const char[] lName)
+void PrintExtendedRepairRequest(int team, const char[] pName, const char[] bName, const char[] cName, const char[] lName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
