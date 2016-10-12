@@ -16,11 +16,13 @@ int GetStringSpaceCount(const char[] sArgs)
 void NDPC_PrintToChat(int client, int team, const char[] sArgs)
 {
 	char pName[64];
-	GetClientName(client, pName, sizeof(pName));	
+	GetClientName(client, pName, sizeof(pName));
 	
-	CPrintToChat(client, "%s%s %s%s: %s%s", TAG_COLOUR, NDPC_GetTransTag(client), 
-						tColour[team - 2], pName,
-						MESSAGE_COLOUR, sArgs);
+	char toPrint[128];
+	Format(toPrint, sizeof(toPrint), "%s%s %s%s: %s%s", 	TAG_COLOUR, NDPC_GetTransTag(client),
+								tColour[team - 2], pName, 
+								MESSAGE_COLOUR, sArgs);	
+	CPrintToChat(client, toPrint);
 }
 
 /* Convert no translation keyword phrases found to string, then print using colors wrapper */
@@ -29,8 +31,11 @@ void NDPC_PrintNoTransFound(int client)
 	char noKeyword[32];
 	Format(noKeyword, sizeof(noKeyword), "%T", client, "No Translate Keyword");
 	
+	char toPrint[128];
+	Format(toPrint, sizeof(toPrint), "%s%s %s%s.", TAG_COLOUR, NDPC_GetTransTag(client), MESSAGE_COLOUR, noKeyword);
+	
 	//First segment is (Translator) in green. Second is "No keyword found" in olive
-	CPrintToChat(client, "%s%s %s%s.", TAG_COLOUR, NDPC_GetTransTag(client), MESSAGE_COLOUR, noKeyword);
+	CPrintToChat(client, toPrint);
 }
 
 /* Convert translator tag phrase to char array (string) */
