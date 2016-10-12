@@ -91,14 +91,21 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 {
 	if (client && IsValidClient(client)) //is the chat message is triggered by a client?
 	{
+		//send player team to each request
+		int team = GetClientTeam(client);
+		
 		//send the space count to each request
 		int spaces = GetStringSpaceCount(sArgs);
 		
+		//send player name to each request.
+		char pName[64];
+		GetClientName(client, pName, sizeof(pName));
+		
 		//does the chat message contain translatable phrases?
-		if (	CheckBuildingRequest(client, spaces, sArgs) ||  
-			CheckCaptureRequest(client, spaces, sArgs) || 
-			CheckResearchRequest(client, spaces, sArgs) ||
-			CheckRepairRequest(client, spaces, sArgs))
+		if (	CheckBuildingRequest(client, team, spaces, pName, sArgs) ||  
+			CheckCaptureRequest(client, team, spaces, pName, sArgs) || 
+			CheckResearchRequest(client, team, spaces, pName, sArgs) ||
+			CheckRepairRequest(client, team, spaces, pName, sArgs))
 		{
 			/* 
 			 * Block the old chat message
