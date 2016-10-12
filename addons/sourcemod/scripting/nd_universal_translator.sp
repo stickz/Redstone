@@ -94,6 +94,10 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 		//send player team to each request
 		int team = GetClientTeam(client);
 		
+		//check if players are allowed to spin up requests in spec
+		if (!g_Enable[SpecTesting].BoolValue && team < 2)
+			return Plugin_Continue;
+		
 		//send the space count to each request
 		int spaces = GetStringSpaceCount(sArgs);
 		
