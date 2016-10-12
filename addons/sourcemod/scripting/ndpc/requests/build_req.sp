@@ -32,14 +32,14 @@ bool CheckBuildingRequest(int client, int team, int spacesCount, const char[] pN
 				//if a valid compass position is found
 				if (foundCompassName)
 				{
-					PrintComplexBuildingRequest(	client, team, pName,
+					PrintComplexBuildingRequest(	team, pName,
 									nd_request_building[building], 
 									nd_request_location[location],
 									nd_request_compass[compass]);
 					return true;
 				}
 				
-				PrintSpotBuildingRequest(	client, team, pName,
+				PrintSpotBuildingRequest(	team, pName,
 								nd_request_building[building], 
 								nd_request_location[location]);
 				return true;
@@ -47,13 +47,13 @@ bool CheckBuildingRequest(int client, int team, int spacesCount, const char[] pN
 			//if a valid compass position is found
 			else if (foundCompassName)
 			{
-				PrintCompassBuildingRequest(	client, team, pName, 
+				PrintCompassBuildingRequest(	team, pName, 
 								nd_request_building[building], 
 								nd_request_compass[compass]);
 				return true;
 			}
 					
-			PrintSimpleBuildingRequest(client, team, pName,	nd_request_building[building]);
+			PrintSimpleBuildingRequest(team, pName,	nd_request_building[building]);
 			return true;
 		}			
 			
@@ -64,7 +64,7 @@ bool CheckBuildingRequest(int client, int team, int spacesCount, const char[] pN
 	return false;
 }
 
-void PrintSimpleBuildingRequest(int client, int team, const char[] pName, const char[] bName)
+void PrintSimpleBuildingRequest(int team, const char[] pName, const char[] bName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -81,7 +81,7 @@ void PrintSimpleBuildingRequest(int client, int team, const char[] pName, const 
 	}	
 }
 
-void PrintSpotBuildingRequest(int client, int team, const char[] pName, const char[] bName, const char[] lName)
+void PrintSpotBuildingRequest(int team, const char[] pName, const char[] bName, const char[] lName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -101,7 +101,7 @@ void PrintSpotBuildingRequest(int client, int team, const char[] pName, const ch
 	}	
 }
 
-void PrintCompassBuildingRequest(int client, int team, const char[] pName, const char[] bName, const char[] cName)
+void PrintCompassBuildingRequest(int team, const char[] pName, const char[] bName, const char[] cName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -121,7 +121,7 @@ void PrintCompassBuildingRequest(int client, int team, const char[] pName, const
 	}	
 }
 
-void PrintComplexBuildingRequest(int client, int team, const char[] pName, const char[] bName, const char[] lName, const char[] cName)
+void PrintComplexBuildingRequest(int team, const char[] pName, const char[] bName, const char[] lName, const char[] cName)
 {
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
