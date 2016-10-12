@@ -36,7 +36,7 @@ int GetStringSpaceCount(const char[] sArgs)
 	return spaceCount;
 }
 
-stock void NDPC_PrintSimpleRequest(int team, const char[] request, const char[] pName)
+stock void NDPC_PrintRequestS0(int team, const char[] request, const char[] pName)
 {
 	LOOP_TEAM(idx, team) 
 	{
