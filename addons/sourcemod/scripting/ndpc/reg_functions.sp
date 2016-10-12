@@ -36,7 +36,7 @@ int GetStringSpaceCount(const char[] sArgs)
 	return spaceCount;
 }
 
-void NDPC_PrintRequest(int team, const char[] request, const char[] pName)
+stock void NDPC_PrintSimpleRequest(int team, const char[] request, const char[] pName)
 {
 	LOOP_TEAM(idx, team) 
 	{
@@ -46,27 +46,41 @@ void NDPC_PrintRequest(int team, const char[] request, const char[] pName)
 	}	
 }
 
-void NDPC_PrintRequestEx(int team, const char[] request, const char[] pName, char[][] args)
+stock void NDPC_PrintRequestS1(int team, const char[] request, const char[] pName, const char[] phrase)
 {
-	int size = sizeof(args[]);	
-
-	char transString[size][PHRASE_SIZE];
-	char ToPrint[PRINT_SIZE];	
-	
 	LOOP_TEAM(idx, team) 
 	{
-		Format(transString, sizeof(transSize), GetTransString(client, args));
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", request, idx, GetTransString(idx, phrase));
+		NDPC_PrintToChat(idx, pName, ToPrint);	
+	}
+}
+
+stock void NDPC_PrintRequestS2(int team, const char[] request, const char[] pName, const char[2][] phrase)
+{
+	LOOP_TEAM(idx, team) 
+	{
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", request, idx, 		
+				GetTransString(idx, phrase[0]),
+				GetTransString(idx, phrase[1]));
 		
-		// Reswitching for each client is bad, but it saves ALOT of duplication
-		switch (size)
-		{
-			case 1:	Format(ToPrint, PRINT_SIZE, "%T", request, idx, transString[0]);						
-			case 2:	Format(ToPrint, PRINT_SIZE, "%T", request, idx, transString[0], transString[1]);
-			case 3:	Format(ToPrint, PRINT_SIZE, "%T", request, idx, transString[0], transString[1] ,transString[2]);
-		}
+		NDPC_PrintToChat(idx, pName, ToPrint);	
+	}
+}
+
+stock void NDPC_PrintRequestS3(int team, const char[] request, const char[] pName, const char[3][] phrase)
+{
+	LOOP_TEAM(idx, team) 
+	{
+		char ToPrint[128];
+				Format(ToPrint, sizeof(ToPrint), "%T", request, idx, 		
+				GetTransString(idx, phrase[0]),
+				GetTransString(idx, phrase[1]),
+				GetTransString(idx, phrase[2]));
 				
-		NDPC_PrintToChat(idx, pName, ToPrint);		
-	}	
+		NDPC_PrintToChat(idx, pName, ToPrint);	
+	}
 }
 
 /* Wrapper for printing a translation to client chat */
@@ -85,14 +99,9 @@ void NDPC_PrintNoTransFound(int client)
 }
 
 /* Translation Strings */
-char GetTransString(int client, char[][] args)
+char GetTransString(int client, const char[] tName)
 {
-	int size = sizeof(args[]);	
-	
-	char trans = new char[size][PHRASE_SIZE];	
-	for (int idx = 0; idx < size; idx++) {
-		Format(trans[idx], PHRASE_SIZE, "%T", args[idx], client);	
-	}	
-
+	char trans[PHRASE_SIZE];
+	Format(trans, PHRASE_SIZE, "%T", tName, client);
 	return trans;
 }
