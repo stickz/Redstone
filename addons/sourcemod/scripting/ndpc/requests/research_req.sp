@@ -1,6 +1,6 @@
 #define MAX_RESEARCH_SPACECOUNT 3
 
-bool CheckResearchRequest(int client, int spacesCount, const char[] sArgs)
+bool CheckResearchRequest(int client, int team, int spacesCount, const char[] pName, const char[] sArgs)
 {
 	//If research requests are disabled on the server end, don't use them
 	if (!g_Enable[ResearchReqs].BoolValue) 
@@ -19,7 +19,7 @@ bool CheckResearchRequest(int client, int spacesCount, const char[] sArgs)
 		//If a valid research name or alasis is found
 		if (foundInChatMessage(research))
 		{
-			PrintSimpleResearchRequest(client, nd_request_research[research]);
+			PrintSimpleResearchRequest(client, team, pName, nd_request_research[research]);
 			return true;
 		}
 		
@@ -30,10 +30,8 @@ bool CheckResearchRequest(int client, int spacesCount, const char[] sArgs)
 	return false;
 }
 
-void PrintSimpleResearchRequest(int client, const char[] rName)
+void PrintSimpleResearchRequest(int client, int team, const char[] pName const char[] rName)
 {
-	int team = GetClientTeam(client);
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -44,7 +42,7 @@ void PrintSimpleResearchRequest(int client, const char[] rName)
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Simple Research Request", idx, research);
 				
-			NDPC_PrintToChat(idx, team, ToPrint); 
+			NDPC_PrintToChat(idx, pName, ToPrint); 
 		}
 	}
 }
