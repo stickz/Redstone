@@ -1,6 +1,6 @@
 #define MAX_CAPTURE_SPACECOUNT 3
 
-bool CheckCaptureRequest(int client, int spacesCount, const char[] sArgs)
+bool CheckCaptureRequest(int client, int team, int spacesCount, const char[] pName, const char[] sArgs)
 {
 	if (!g_Enable[CaptureReqs].BoolValue)
 		return false; //don't use this feature if not enabled
@@ -19,11 +19,13 @@ bool CheckCaptureRequest(int client, int spacesCount, const char[] sArgs)
 			
 			if (foundInChatMessage(compass))
 			{
-				PrintExtendedCaptureRequest(client, nd_request_capture[resource], nd_request_compass[compass]);
+				PrintExtendedCaptureRequest(	team, pName,
+								nd_request_capture[resource], 
+								nd_request_compass[compass]);
 				return true;
 			}
 		
-			PrintSimpleCaptureRequest(client, nd_request_capture[resource]);
+			PrintSimpleCaptureRequest(team, pName, nd_request_capture[resource]);
 			return true;
 		}
 
@@ -34,10 +36,8 @@ bool CheckCaptureRequest(int client, int spacesCount, const char[] sArgs)
 	return false;
 }
 
-void PrintSimpleCaptureRequest(int client, const char[] rName)
+void PrintSimpleCaptureRequest(int team, const char[] pName, const char[] rName)
 {
-	int team = GetClientTeam(client);
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -48,15 +48,13 @@ void PrintSimpleCaptureRequest(int client, const char[] rName)
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Simple Capture Request", idx, resource);
 				
-			NDPC_PrintToChat(idx, team, ToPrint);
+			NDPC_PrintToChat(idx, pName, ToPrint);
 		}
 	}
 }
 
-void PrintExtendedCaptureRequest(int client, const char[] rName, const char[] lName)
-{
-	int team = GetClientTeam(client);
-		
+void PrintExtendedCaptureRequest(int team, const char[] pName, const char[] rName, const char[] lName)
+{		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -70,7 +68,7 @@ void PrintExtendedCaptureRequest(int client, const char[] rName, const char[] lN
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Extended Capture Request", idx, compass, resource);
 				
-			NDPC_PrintToChat(idx, team, ToPrint);
+			NDPC_PrintToChat(idx, pName, ToPrint);
 		}
 	}	
 }

@@ -1,6 +1,6 @@
 #define MAX_REPAIR_SPACECOUNT 4
 
-bool CheckRepairRequest(int client, int spacesCount, const char[] sArgs)
+bool CheckRepairRequest(int client, int team, int spacesCount, const char[] pName, const char[] sArgs)
 {
 	//If repair requests are disabled on the server end, don't use them
 	if (!g_Enable[RepairReqs].BoolValue) 
@@ -30,23 +30,30 @@ bool CheckRepairRequest(int client, int spacesCount, const char[] sArgs)
 				// if building + compass + location name is found
 				if (foundLocation)
 				{
-					PrintExtendedRepairRequest(client, nd_request_building[building], nd_request_compass[compass], nd_request_location[location]);
+					PrintExtendedRepairRequest(	team, pName,
+									nd_request_building[building], 
+									nd_request_compass[compass], 
+									nd_request_location[location]);
 					return true;
 				}
 				
-				Print_CompassBuilding_RepairRequest(client, nd_request_building[building], nd_request_compass[compass]);
+				Print_CompassBuilding_RepairRequest(	team, pName, 
+									nd_request_building[building], 
+									nd_request_compass[compass]);
 				return true;
 			}
 			
 			// if building + location name is found
 			else if (foundLocation)
 			{
-				Print_LocationBuilding_RepairRequest(client, nd_request_building[building], nd_request_location[location]);
+				Print_LocationBuilding_RepairRequest(	team, pName, 
+									nd_request_building[building], 
+									nd_request_location[location]);
 				return true;			
 			}
 			
 			// if just the building name is found
-			PrintBuildingRepairRequest(client, nd_request_building[building]);
+			PrintBuildingRepairRequest(team, pName, nd_request_building[building]);
 			return true;
 		}
 		// if compass name is found
@@ -55,18 +62,20 @@ bool CheckRepairRequest(int client, int spacesCount, const char[] sArgs)
 			// if compass + location name is found
 			if (foundLocation)
 			{
-				Print_CompassLocation_RepairRequest(client, nd_request_compass[compass], nd_request_location[location]);
+				Print_CompassLocation_RepairRequest(	team, pName, 
+									nd_request_compass[compass], 
+									nd_request_location[location]);
 				return true;
 			}
 			
 			//if just the compass name is found
-			PrintCompassRepairRequest(client, nd_request_compass[compass]);
+			PrintCompassRepairRequest(team, pName, nd_request_compass[compass]);
 			return true;
 		}
 		// if just the location name is found
 		else if (foundLocation)
 		{
-			PrintLocationRepairRequest(client, nd_request_location[location]);
+			PrintLocationRepairRequest(team, pName, nd_request_location[location]);
 			return true;		
 		}			
 		
@@ -78,10 +87,8 @@ bool CheckRepairRequest(int client, int spacesCount, const char[] sArgs)
 	return false;
 }
 
-void PrintBuildingRepairRequest(int client, const char[] bName)
+void PrintBuildingRepairRequest(int team, const char[] pName, const char[] bName)
 {
-	int team = GetClientTeam(client);
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -92,15 +99,13 @@ void PrintBuildingRepairRequest(int client, const char[] bName)
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Building Repair Request", idx, building);
 			
-			NDPC_PrintToChat(idx, team, ToPrint); 
+			NDPC_PrintToChat(idx, pName, ToPrint); 
 		}
 	}
 }
 
-void Print_CompassBuilding_RepairRequest(int client, const char[] bName, const char[] cName)
+void Print_CompassBuilding_RepairRequest(int team, const char[] pName, const char[] bName, const char[] cName)
 {
-	int team = GetClientTeam(client);
-	
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -114,15 +119,13 @@ void Print_CompassBuilding_RepairRequest(int client, const char[] bName, const c
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Build Comp Repair Request", idx, compass, building);
 			
-			NDPC_PrintToChat(idx, team, ToPrint); 
+			NDPC_PrintToChat(idx, pName, ToPrint); 
 		}
 	}	
 }
 
-void PrintCompassRepairRequest(int client, const char[] cName)
+void PrintCompassRepairRequest(int team, const char[] pName, const char[] cName)
 {
-	int team = GetClientTeam(client);
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -133,15 +136,13 @@ void PrintCompassRepairRequest(int client, const char[] cName)
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Compass Repair Request", idx, compass);
 				
-			NDPC_PrintToChat(idx, team, ToPrint); 
+			NDPC_PrintToChat(idx, pName, ToPrint); 
 		}
 	}	
 }
 
-void Print_CompassLocation_RepairRequest(int client, const char[] cName, const char[] lName)
+void Print_CompassLocation_RepairRequest(int team, const char[] pName, const char[] cName, const char[] lName)
 {
-	int team = GetClientTeam(client);
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -155,15 +156,13 @@ void Print_CompassLocation_RepairRequest(int client, const char[] cName, const c
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Comp Loc Repair Request", idx, compass, location);
 				
-			NDPC_PrintToChat(idx, team, ToPrint); 
+			NDPC_PrintToChat(idx, pName, ToPrint); 
 		}
 	}
 }
 
-void PrintLocationRepairRequest(int client, const char[] lName)
+void PrintLocationRepairRequest(int team, const char[] pName, const char[] lName)
 {
-	int team = GetClientTeam(client);
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -174,15 +173,13 @@ void PrintLocationRepairRequest(int client, const char[] lName)
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Location Repair Request", idx, location);
 				
-			NDPC_PrintToChat(idx, team, ToPrint); 
+			NDPC_PrintToChat(idx, pName, ToPrint); 
 		}
 	}	
 }
 
-void Print_LocationBuilding_RepairRequest(int client, const char[] bName, const char[] lName)
+void Print_LocationBuilding_RepairRequest(int team, const char[] pName, const char[] bName, const char[] lName)
 {
-	int team = GetClientTeam(client);
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -196,15 +193,13 @@ void Print_LocationBuilding_RepairRequest(int client, const char[] bName, const 
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Build Loc Repair Request", idx, building, location);
 				
-			NDPC_PrintToChat(idx, team, ToPrint); 
+			NDPC_PrintToChat(idx, pName, ToPrint); 
 		}
 	}	
 }
 
-void PrintExtendedRepairRequest(int client, const char[] bName, const char[] cName, const char[] lName)
+void PrintExtendedRepairRequest(int team, const char[] pName, const char[] bName, const char[] cName, const char[] lName)
 {
-	int team = GetClientTeam(client);
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -221,7 +216,7 @@ void PrintExtendedRepairRequest(int client, const char[] bName, const char[] cNa
 			char ToPrint[128];
 			Format(ToPrint, sizeof(ToPrint), "%T", "Extended Repair Request", idx, building, compass, location);
 	
-			NDPC_PrintToChat(idx, team, ToPrint); 
+			NDPC_PrintToChat(idx, pName, ToPrint); 
 		}
 	}	
 }
