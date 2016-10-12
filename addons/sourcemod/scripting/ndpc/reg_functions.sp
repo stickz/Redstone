@@ -5,7 +5,7 @@
  * @param 1		Name of index varriable (accessible inside the loop)
  * @param 2		Team varriable check if each client is on.
  */
-#define LOOP_TEAM(%1, %2) for (int %1=Client_GetNext(%2); %1 >= 1 && %1 <= MaxClients; %1=Client_GetNext(%2, ++%1))	
+#define LOOP_TEAM(%1,%2) for (int %1=Client_GetNext(%2); %1 >= 1 && %1 <= MaxClients; %1=Client_GetNext(%2, ++%1))	
 int Client_GetNext(int team, int index = 1)
 {
 	for (int client = index; client <= MaxClients; client++) 
