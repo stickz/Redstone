@@ -46,7 +46,7 @@ void NDPC_PrintRequest(int team, const char[] request, const char[] pName)
 	}	
 }
 
-void NDPC_PrintRequestEx(int team, const char[] request, const char[] pName, const char[][] args)
+void NDPC_PrintRequestEx(int team, const char[] request, const char[] pName, char[][] args)
 {
 	int size = sizeof(args[]);	
 
@@ -85,7 +85,7 @@ void NDPC_PrintNoTransFound(int client)
 }
 
 /* Translation Strings */
-char GetTransString(int client, const char[][] args)
+char GetTransString(int client, char[][] args)
 {
 	int size = sizeof(args[]);	
 	
