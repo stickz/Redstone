@@ -34,9 +34,6 @@ void PrintSimpleResearchRequest(int client, const char[] rName)
 {
 	int team = GetClientTeam(client);
 		
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -45,9 +42,9 @@ void PrintSimpleResearchRequest(int client, const char[] rName)
 			Format(research, sizeof(research), "%T", rName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Simple Research Request", idx, pName, research);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Simple Research Request", idx, research);
 				
-			NPDC_PrintToChat(idx, ToPrint); 
+			NDPC_PrintToChat(idx, team, ToPrint); 
 		}
 	}
 }

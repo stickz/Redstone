@@ -63,9 +63,6 @@ void PrintSimpleBuildingRequest(int client, const char[] bName)
 {
 	int team = GetClientTeam(client);
 		
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
-	
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -74,9 +71,9 @@ void PrintSimpleBuildingRequest(int client, const char[] bName)
 			Format(building, sizeof(building), "%T", bName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, pName, building);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, building);
 				
-			NPDC_PrintToChat(idx, ToPrint);
+			NDPC_PrintToChat(idx, team, ToPrint);
 		}
 	}	
 }
@@ -85,9 +82,6 @@ void PrintSpotBuildingRequest(int client, const char[] bName, const char[] lName
 {
 	int team = GetClientTeam(client);
 		
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
-	
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -99,9 +93,9 @@ void PrintSpotBuildingRequest(int client, const char[] bName, const char[] lName
 			Format(location, sizeof(location), "%T", lName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Spot Building Request", idx, pName, building, location);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Spot Building Request", idx, building, location);
 			
-			NPDC_PrintToChat(idx, ToPrint); 
+			NDPC_PrintToChat(idx, team, ToPrint); 
 		}
 	}	
 }
@@ -110,9 +104,6 @@ void PrintCompassBuildingRequest(int client, const char[] bName, const char[] cN
 {
 	int team = GetClientTeam(client);
 		
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -124,10 +115,9 @@ void PrintCompassBuildingRequest(int client, const char[] bName, const char[] cN
 			Format(compass, sizeof(compass), "%T", cName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Compass Building Request", 
-								idx, pName, building, compass);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Compass Building Request", idx, building, compass);
 								       
-			NPDC_PrintToChat(idx, ToPrint);
+			NDPC_PrintToChat(idx, team, ToPrint);
 		}
 	}	
 }
@@ -136,9 +126,6 @@ void PrintComplexBuildingRequest(int client, const char[] bName, const char[] lN
 {
 	int team = GetClientTeam(client);
 		
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
-	
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -153,10 +140,9 @@ void PrintComplexBuildingRequest(int client, const char[] bName, const char[] lN
 			Format(compass, sizeof(compass), "%T", cName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Complex Building Request", 
-								       idx, pName, building, location, compass);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Complex Building Request", idx, building, location, compass);
 								       
-			NPDC_PrintToChat(idx, ToPrint);
+			NDPC_PrintToChat(idx, team, ToPrint);
 		}
 	}
 }

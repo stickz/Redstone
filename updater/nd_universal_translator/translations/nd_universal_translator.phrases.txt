@@ -17,153 +17,155 @@
 	/* Building request messages */
 	"Simple Building Request"
 	{
-		//{1} = Player's Name
-		//{2} = Building Name from structminigame.phrases
+		//{1} = Building Name from structminigame.phrases
 		//
-		//Example: Vertex is requesting a supply station.
-		"#format"	"{1:s},{2:s}"
-		"en"		"{1} is requesting {2}"
+		//Phrase Ex: Build a supply station.
+		//Final Ex: (Translator) Vertex: Build a supply station.
+		"#format"	"{2:s}"
+		"en"		"Build {1}"
 	}
 	
 	"Compass Building Request"
 	{
-		//{1} = Player's Name
-		//{2} = Building Name from structminigame.phrases
-		//{3} = Compass Name (see bellow)
+		//{1} = Building Name from structminigame.phrases
+		//{2} = Compass Name (see bellow)
 		//
-		//Example: Vertex is requesting a Supply Station on the west side.
-		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"{1} is requesting {2} on the {3} side"
+		//Phrase Ex: Build a Supply Station on the west side
+		//Final Ex: (Translator) Vertex: Build a Supply Station on the west side.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Build {1} on the {2} side"
 	}
 	
 	"Spot Building Request"
 	{
-		//{1} = Player's Name
-		//{2} = Building Name from structminigame.phrases
-		//{3} = Location Name (see bellow)
+		//{1} = Building Name from structminigame.phrases
+		//{2} = Location Name (see bellow)
 		//
-		//Example: Vertex is requesting a Transport Gate at base.
+		//Phrase Ex: Build a Transport Gate at base.
+		//Final Ex: (Translator) Vertex: Build a Transport Gate at base.
 		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"{1} is requesting {2} at {3}"
+		"en"		"Build {2} at {3}"
 	}
 	
 	"Complex Building Request"
 	{
-		//{1} = Player's Name
-		//{2} = Building Name from structminigame.phrases
-		//{3} = Location Name (see bellow)
-		//{4} = Compass Name (see bellow)
+		//{1} = Building Name from structminigame.phrases
+		//{2} = Location Name (see bellow)
+		//{3} = Compass Name (see bellow)
 		//
-		//Example: Vertex is requesting a Relay Tower at the north secondary
-		"#format"	"{1:s},{2:s},{3:s},{4:s}"
-		"en" 		"{1} is requesting {2} at the {4} {3}"
+		//Phrase Ex: Build a Relay Tower at the north secondary
+		//Final Ex: (Translator) Vertex: Build a Relay Tower at the north secondary
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en" 		"Build {1} at the {3} {2}"
 	}
 	
 	/* Research Messages */
 	"Simple Research Request"
 	{
-		//{1} = Player's Name
-		//{2} = Research Name
-		"#format"	"{1:s},{2:s}"
-		"en"		"{1} is requesting {2} research."
+		//{1} = Research Name
+		//
+		//Phrase Ex: Research Advanced Kits.
+		//Final Ex: (Translator) Vertex: Research Advanced Kits.
+		"#format"	"{1:s}"
+		"en"		"Research {1}"
 	}
 	
 	/* Repair Requests */	
 	"Building Repair Request"
 	{
-		//{1} = Player Name
-		//{2} = Building Name
+		//{1} = Building Name
 		//
-		//Example: Vertex says repair the transport gate.
+		//Phrase Ex: Repair the transport gate.
+		//Final Ex: (Translator) Vertex: Repair the transport gate.
 		"#format"	"{1:s},{2:s}"
-		"en"		"{1} says repair the {2}"
+		"en"		"Repair the {1}"
 	}
 	
 	"Build Comp Repair Request"
 	{
-		//{1} = Player Name
-		//{2} = Compass Position
-		//{3} = Building Name
+		//{1} = Compass Position
+		//{2} = Building Name
 		//
-		//Example: Vertex says repair the north supply station.
-		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"{1} says repair the {2} {3}"	
+		//Phrase Ex: Repair the north supply station.
+		//Final Ex: (Translator) Vertex: Repair the north supply station.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Repair the {1} {2}"	
 	}
 	
 	"Compass Repair Request"
 	{
-		//{1} = Player Name
-		//{2} = Compass Position
+		//{1} = Compass Position
 		//
-		//Example: Vertex is requesting repairs on the south side of the map.
-		"#format"	"{1:s},{2:s}"
-		"en"		"{1} is requesting repairs on the {2} side of the map"		
+		//Phrase Ex: Repairs needed on the left side of the map
+		//Final Ex: (Translator) Vertex: Repairs are required on the left side of the map.
+		"#format"	"{1:s}"
+		"en"		"Repairs needed on the {1} side of the map"		
 	}
 	
 	"Comp Loc Repair Request"
 	{
-		//{1} = Player Name
-		//{2} = Compass Position
-		//{3} = Location Name
+		//{1} = Compass Position
+		//{2} = Location Name
 		//
-		//Example: Vertex is requesting repairs at the east secodnary.
-		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"{1} is requesting repairs at the {2} {3}"		
+		//Phrase Ex: Repairs needed at the east secodnary.
+		//Final Ex: (Translator) Vertex: Repairs needed at the east secondary
+		"#format"	"{1:s},{2:s}"
+		"en"		"Repairs needed at the {1} {2}"		
 	}
 	
 	"Location Repair Request"
 	{
-		//{1} = Player Name
-		//{2} = Location Name
+		//{1} = Location Name
 		//
-		//Example: Vertex is requesting repairs at the rooftop.
-		"#format"	"{1:s},{2:s}"
-		"en"		"{1} is requesting repairs at {2}"
+		//Phrase Ex: Repairs needed at secondary.
+		///Final Ex: (Translator) Vertex: Repairs needed at the rooftop.
+		"#format"	"{1:s}"
+		"en"		"Repairs needed at {1}"
 	}
 	
 	"Build Loc Repair Request"
 	{
-		//{1} = Player Name
-		//{2} = Building Name
-		//{3} = Location Name		
+		//{1} = Building Name
+		//{2} = Location Name		
 		//
-		//Example: Vertex says repair the rocket turret at prime.
-		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"{1} says repair the {2} at {3}"	
+		//Phrase Ex: Repair the rocket turret at prime 		
+		///Final Ex: (Translator) Vertex: Repair the rocket turret at prime.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Repair the {1} at {2}"	
 	}
 	
 	"Extended Repair Request"
 	{
-		//{1} = Player Name
-		//{2} = Building Name
-		//{3} = Compass Position
-		//{4} = Location Name
+		//{1} = Building Name
+		//{2} = Compass Position
+		//{3} = Location Name
 		//
-		//Example: Vertex says repair the transport gate at west secondary.
-		"#format"	"{1:s},{2:s},{3:s},{4:s}"
-		"en"		"{1} says repair the {2} at {3} {4}"	
+		//Phrase Ex: Repair the transport gate at west secondary		
+		///Final Ex: (Translator) Vertex: Repair the transport gate at west secondary.
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"Repair the {1} at {2} {3}"
 	}
 	
 	/* Capture Messages */
 	"Simple Capture Request"
 	{
-		//{1} = Player's name
-		//{2} = Resource Name (see bellow)
+		//{1} = Resource Name (see bellow)
 		//
-		//Example: Vertex says capture secondary
-		"#format"	"{1:s},{2:s}"
-		"en"		"{1} says capture {2}"
+		//Phrase Ex: Capture secondary
+		//Final Ex: (Translator) Vertex: Capture Secondary.
+		"#format"	"{1:s}"
+		"en"		"Capture {1}"
 	}
 	
 	"Extended Capture Request"
 	{
-		//{1} = Player's name
-		//{2} = Compass Position (see bellow)
-		//{3} = Resource Name (see bellow)
+		//{1} = Compass Position (see bellow)
+		//{2} = Resource Name (see bellow)
 		//
-		//Example: Vertex says capture secondary
-		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"{1} says capture {2} {3}"
+		//Phrase Ex: Capture East Secondary
+		//Final Ex: (Translator) Vertex: Capture East Secondary.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Capture {1} {2}"
 	}
 	
 	"Base Tert"

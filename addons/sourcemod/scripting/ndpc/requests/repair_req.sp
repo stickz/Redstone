@@ -82,9 +82,6 @@ void PrintBuildingRepairRequest(int client, const char[] bName)
 {
 	int team = GetClientTeam(client);
 		
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -93,9 +90,9 @@ void PrintBuildingRepairRequest(int client, const char[] bName)
 			Format(building, sizeof(building), "%T", bName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Building Repair Request", idx, pName, building);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Building Repair Request", idx, building);
 			
-			NPDC_PrintToChat(idx, ToPrint); 
+			NDPC_PrintToChat(idx, team, ToPrint); 
 		}
 	}
 }
@@ -104,9 +101,6 @@ void Print_CompassBuilding_RepairRequest(int client, const char[] bName, const c
 {
 	int team = GetClientTeam(client);
 	
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -118,9 +112,9 @@ void Print_CompassBuilding_RepairRequest(int client, const char[] bName, const c
 			Format(compass, sizeof(compass), "%T", cName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Build Comp Repair Request", idx, pName, compass, building);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Build Comp Repair Request", idx, compass, building);
 			
-			NPDC_PrintToChat(idx, ToPrint); 
+			NDPC_PrintToChat(idx, team, ToPrint); 
 		}
 	}	
 }
@@ -129,9 +123,6 @@ void PrintCompassRepairRequest(int client, const char[] cName)
 {
 	int team = GetClientTeam(client);
 		
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -140,9 +131,9 @@ void PrintCompassRepairRequest(int client, const char[] cName)
 			Format(compass, sizeof(compass), "%T", cName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Compass Repair Request", idx, pName, compass);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Compass Repair Request", idx, compass);
 				
-			NPDC_PrintToChat(idx, ToPrint); 
+			NDPC_PrintToChat(idx, team, ToPrint); 
 		}
 	}	
 }
@@ -150,9 +141,6 @@ void PrintCompassRepairRequest(int client, const char[] cName)
 void Print_CompassLocation_RepairRequest(int client, const char[] cName, const char[] lName)
 {
 	int team = GetClientTeam(client);
-		
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
 		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -165,9 +153,9 @@ void Print_CompassLocation_RepairRequest(int client, const char[] cName, const c
 			Format(location, sizeof(location), "%T", lName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Comp Loc Repair Request", idx, pName, compass, location);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Comp Loc Repair Request", idx, compass, location);
 				
-			NPDC_PrintToChat(idx, ToPrint); 
+			NDPC_PrintToChat(idx, team, ToPrint); 
 		}
 	}
 }
@@ -175,9 +163,6 @@ void Print_CompassLocation_RepairRequest(int client, const char[] cName, const c
 void PrintLocationRepairRequest(int client, const char[] lName)
 {
 	int team = GetClientTeam(client);
-		
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
 		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -187,9 +172,9 @@ void PrintLocationRepairRequest(int client, const char[] lName)
 			Format(location, sizeof(location), "%T", lName, idx);
 			
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Location Repair Request", idx, pName, location);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Location Repair Request", idx, location);
 				
-			NPDC_PrintToChat(idx, ToPrint); 
+			NDPC_PrintToChat(idx, team, ToPrint); 
 		}
 	}	
 }
@@ -197,9 +182,6 @@ void PrintLocationRepairRequest(int client, const char[] lName)
 void Print_LocationBuilding_RepairRequest(int client, const char[] bName, const char[] lName)
 {
 	int team = GetClientTeam(client);
-		
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
 		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -212,9 +194,9 @@ void Print_LocationBuilding_RepairRequest(int client, const char[] bName, const 
 			Format(location, sizeof(location), "%T", lName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Build Loc Repair Request", idx, pName, building, location);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Build Loc Repair Request", idx, building, location);
 				
-			NPDC_PrintToChat(idx, ToPrint); 
+			NDPC_PrintToChat(idx, team, ToPrint); 
 		}
 	}	
 }
@@ -222,9 +204,6 @@ void Print_LocationBuilding_RepairRequest(int client, const char[] bName, const 
 void PrintExtendedRepairRequest(int client, const char[] bName, const char[] cName, const char[] lName)
 {
 	int team = GetClientTeam(client);
-		
-	char pName[64];
-	GetClientName(client, pName, sizeof(pName));
 		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -240,9 +219,9 @@ void PrintExtendedRepairRequest(int client, const char[] bName, const char[] cNa
 			Format(location, sizeof(location), "%T", lName, idx);
 			
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Extended Repair Request", idx, pName, building, compass, location);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Extended Repair Request", idx, building, compass, location);
 	
-			NPDC_PrintToChat(idx, ToPrint); 
+			NDPC_PrintToChat(idx, team, ToPrint); 
 		}
 	}	
 }

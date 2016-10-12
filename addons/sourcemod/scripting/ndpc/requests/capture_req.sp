@@ -38,9 +38,6 @@ void PrintSimpleCaptureRequest(int client, const char[] rName)
 {
 	int team = GetClientTeam(client);
 		
-	char cName[64];
-	GetClientName(client, cName, sizeof(cName));
-		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
 		if (IsOnTeam(idx, team))
@@ -49,9 +46,9 @@ void PrintSimpleCaptureRequest(int client, const char[] rName)
 			Format(resource, sizeof(resource), "%T", rName, idx);
 			
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Simple Capture Request", idx, cName, resource);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Simple Capture Request", idx, resource);
 				
-			NPDC_PrintToChat(idx, ToPrint);
+			NDPC_PrintToChat(idx, team, ToPrint);
 		}
 	}
 }
@@ -59,9 +56,6 @@ void PrintSimpleCaptureRequest(int client, const char[] rName)
 void PrintExtendedCaptureRequest(int client, const char[] rName, const char[] lName)
 {
 	int team = GetClientTeam(client);
-		
-	char cName[64];
-	GetClientName(client, cName, sizeof(cName));
 		
 	for (int idx = 0; idx <= MaxClients; idx++)
 	{
@@ -74,9 +68,9 @@ void PrintExtendedCaptureRequest(int client, const char[] rName, const char[] lN
 			Format(compass, sizeof(compass), "%T", lName, idx);
 				
 			char ToPrint[128];
-			Format(ToPrint, sizeof(ToPrint), "%T", "Extended Capture Request", idx, cName, compass, resource);
+			Format(ToPrint, sizeof(ToPrint), "%T", "Extended Capture Request", idx, compass, resource);
 				
-			NPDC_PrintToChat(idx, ToPrint);
+			NDPC_PrintToChat(idx, team, ToPrint);
 		}
 	}	
 }

@@ -7,7 +7,6 @@
 //
 "Phrases"
 {
-
 	"Team Languages"
 	{
 		"es"		"Idiomas de equipo: {1}"
@@ -16,36 +15,6 @@
 	"Commander Language"
 	{
 		"es"		"El idioma del cliente de juego del comandante es {1}."
-	}
-
-	"Simple Building Request"
-	{
-		"es"		" {1} está solicitando {2} "
-	}
-
-	"Compass Building Request"
-	{
-		"es"		"{1} está solicitando {2} en el lado {3}"
-	}
-
-	"Spot Building Request"
-	{
-		"es"		" {1} solicita {2} en {3} "
-	}
-
-	"Complex Building Request"
-	{
-		"es"		" {1} está solicitando {2} en el {4} {3} "
-	}
-
-	"Simple Capture Request"
-	{
-		"es"		" {1} dice: capturar {2} "
-	}
-	
-	"Extended Capture Request"
-	{
-		"es"		" {1} dice: capturar {2} {3} "
 	}
 
 	"Base Tert"
@@ -132,5 +101,4 @@
 	{
 		"es"		"Izquierda"
 	}
-
 }
