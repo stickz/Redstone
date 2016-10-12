@@ -86,7 +86,7 @@ char GetTransString(int client, const char[][] args)
 {
 	int size = sizeof(args[]);	
 	
-	char trans[size][64];	
+	char trans = new char[size][64];	
 	for (int idx = 0; idx < size; idx++) {
 		Format(trans[idx], 64, "%T", args[idx], client);	
 	}	
