@@ -70,7 +70,7 @@ void PrintSimpleBuildingRequest(int team, const char[] pName, const char[] bName
 	{
 		char ToPrint[128];
 		Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, 
-							GetBuildingTrans(idx, bName));
+							GetTransString(idx, bName));
 				
 		NDPC_PrintToChat(idx, pName, ToPrint);		
 	}	
@@ -82,8 +82,8 @@ void PrintSpotBuildingRequest(int team, const char[] pName, const char[] bName, 
 	{			
 		char ToPrint[128];
 		Format(ToPrint, sizeof(ToPrint), "%T", "Spot Building Request", idx,
-							GetBuildingTrans(idx, bName), 
-							GetLocationTrans(idx, lName));
+							GetTransString(idx, bName), 
+							GetTransString(idx, lName));
 			
 		NDPC_PrintToChat(idx, pName, ToPrint);		
 	}	
@@ -95,8 +95,8 @@ void PrintCompassBuildingRequest(int team, const char[] pName, const char[] bNam
 	{
 		char ToPrint[128];
 		Format(ToPrint, sizeof(ToPrint), "%T", "Compass Building Request", idx, 
-							GetBuildingTrans(idx, bName), 
-							GetCompassTrans(idx, cName));
+							GetTransString(idx, bName), 
+							GetTransString(idx, cName));
 							
 		NDPC_PrintToChat(idx, pName, ToPrint);		
 	}	
@@ -108,9 +108,9 @@ void PrintComplexBuildingRequest(int team, const char[] pName, const char[] bNam
 	{				
 		char ToPrint[128];
 		Format(ToPrint, sizeof(ToPrint), "%T", "Complex Building Request", idx, 
-							GetBuildingTrans(idx, bName),
-							GetLocationTrans(idx, lName),
-							GetCompassTrans(idx, cName));
+							GetTransString(idx, bName),
+							GetTransString(idx, lName),
+							GetTransString(idx, cName));
 							
 		NDPC_PrintToChat(idx, pName, ToPrint);		
 	}
