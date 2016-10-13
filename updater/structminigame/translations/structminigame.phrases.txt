@@ -9,67 +9,67 @@
 	//Building Names
 	"Command Bunker"
 	{
-		"en"		"the Command Bunker"
+		"en"		"Command Bunker"
 	}
 	"MG"
 	{
-		"en"		"a Machine Gun Turret"
+		"en"		"Machine Gun Turret"
 	}
 	"Transport"
 	{
-		"en"		"a Transport Gate"
+		"en"		"Transport Gate"
 	}
 	"Power"
 	{
-		"en"		"a Power Station"
+		"en"		"Power Station"
 	}
 	"Repeater"
 	{
-		"en"		"a Wireless Repeater"
+		"en"		"Wireless Repeater"
 	}
 	"Relay"
 	{
-		"en"		"a Relay Tower"
+		"en"		"Relay Tower"
 	}
 	"Supply"
 	{
-		"en"		"a Supply Station"
+		"en"		"Supply Station"
 	}
 	"Assembler"
 	{
-		"en"		"an Assembler"
+		"en"		"Assembler"
 	}
 	"Armory"
 	{
-		"en"		"an Armory"
+		"en"		"Armory"
 	}
 	"Artillery"
 	{
-		"en"		"an Artillery"
+		"en"		"Artillery"
 	}
 	"Radar"
 	{
-		"en"		"a Radar Station"
+		"en"		"Radar Station"
 	}
 	"Flame"
 	{
-		"en"		"a Flamethrower Turret"
+		"en"		"Flamethrower Turret"
 	}
 	"Sonic"
 	{
-		"en"		"a Sonic Turret"
+		"en"		"Sonic Turret"
 	}
 	"Rocket"
 	{
-		"en"		"a Rocket Turret"
+		"en"		"Rocket Turret"
 	}
 	"Wall"
 	{
-		"en"		"a Wall"
+		"en"		"Wall"
 	}
 	"Barrier"
 	{
-		"en"		"a Barrier"
+		"en"		"Barrier"
 	}
 	
 	"Building Destoryed"
@@ -78,7 +78,7 @@
 		//{2} = Player's name who destoryed the structure
 		//{3} = The name of the structure destoryed (translated above)
 		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"{1}{2} destroyed {3}"
+		"en"		"{1}{2} destroyed a {3}"
 	}
 	
 	
