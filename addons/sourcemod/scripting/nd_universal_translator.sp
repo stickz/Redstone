@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <nd_com_eng>
 
+//rebuild plugin
 public Plugin myinfo =
 {
 	name 		= "[ND] Project Communication",
