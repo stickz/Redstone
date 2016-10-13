@@ -11,58 +11,28 @@ bool CheckCaptureRequest(int client, int team, int spacesCount, const char[] pNa
 	
 	if (StrStartsWith(sArgs, "capture")) //if the string starts with capture
 	{
-		int resource = GetCaptureByIndex(sArgs);
-		
-		if (foundInChatMessage(resource))
-		{
-			int compass = GetCompassByIndex(sArgs);
-			
-			if (foundInChatMessage(compass))
-			{
-				PrintExtendedCaptureRequest(	team, pName,
-								nd_request_capture[resource], 
-								nd_request_compass[compass]);
-				return true;
-			}
-		
-			PrintSimpleCaptureRequest(team, pName, nd_request_capture[resource]);
-			return true;
-		}
-
-		NoTranslationFound(client, sArgs);
+		cPrintChatMessage(client, team, pName, sArgs);
 		return true;
 	}
 	
 	return false;
 }
 
-void PrintSimpleCaptureRequest(int team, const char[] pName, const char[] rName)
+void cPrintChatMessage(int client, int team, const char[] pName, const char[] sArgs)
 {
-	LOOP_TEAM(idx, team) 
+	int resource = GetCaptureByIndex(sArgs);
+		
+	if (foundInChatMessage(resource))
 	{
-		char resource[64];
-		Format(resource, sizeof(resource), "%T", rName, idx);
-			
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Simple Capture Request", idx, resource);
-				
-		NDPC_PrintToChat(idx, pName, ToPrint);		
+		int compass = GetCompassByIndex(sArgs);		
+		if (foundInChatMessage(compass))
+			NDPC_PrintRequestS2(team, pName, "Extended Capture Request",
+							nd_request_capture[resource], 
+							nd_request_compass[compass]);
+		else		
+			NDPC_PrintRequestS1(team, pName, "Simple Capture Request",
+							nd_request_capture[resource]);	
 	}
-}
-
-void PrintExtendedCaptureRequest(int team, const char[] pName, const char[] rName, const char[] lName)
-{		
-	LOOP_TEAM(idx, team) 
-	{
-		char resource[64];
-		Format(resource, sizeof(resource), "%T", rName, idx);
-				
-		char compass[32];
-		Format(compass, sizeof(compass), "%T", lName, idx);
-				
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Extended Capture Request", idx, compass, resource);
-				
-		NDPC_PrintToChat(idx, pName, ToPrint);		
-	}	
+	else
+		NoTranslationFound(client, sArgs);
 }
