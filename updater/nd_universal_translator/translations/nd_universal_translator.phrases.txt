@@ -21,7 +21,7 @@
 		//
 		//Phrase Ex: Build a supply station.
 		//Final Ex: (Translator) Vertex: Build a supply station.
-		"#format"	"{2:s}"
+		"#format"	"{1:s}"
 		"en"		"Build {1}"
 	}
 	
