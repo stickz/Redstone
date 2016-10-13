@@ -52,7 +52,7 @@ void bPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 		}
 		//if a valid compass position is found
 		else if (foundCompassName)
-			NDPC_PrintRequestS2(team, pName, "Compass Building Request"
+			NDPC_PrintRequestS2(team, pName, "Compass Building Request",
 							nd_request_building[building], 
 							nd_request_compass[compass]);
 		else 				
