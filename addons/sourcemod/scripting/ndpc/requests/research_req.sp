@@ -13,33 +13,22 @@ bool CheckResearchRequest(int client, int team, int spacesCount, const char[] pN
 	//If the chat messages starts with the word "research"
 	if (StrStartsWith(sArgs, "research"))
 	{	
-		//Get the research the user is asking for
-		int research = GetResearchByIndex(sArgs);
-		
-		//If a valid research name or alasis is found
-		if (foundInChatMessage(research))
-		{
-			PrintSimpleResearchRequest(team, pName, nd_request_research[research]);
-			return true;
-		}
-		
-		NoTranslationFound(client, sArgs);
+		resPrintMessage(client, team, pName, sArgs);
 		return true;
 	}	
 		
 	return false;
 }
 
-void PrintSimpleResearchRequest(int team, const char[] pName, const char[] rName)
+void resPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 {
-	LOOP_TEAM(idx, team) 
-	{
-		char research[64];
-		Format(research, sizeof(research), "%T", rName, idx);
-				
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Simple Research Request", idx, research);
-			
-		NDPC_PrintToChat(idx, pName, ToPrint);		
-	}
+	//Get the research the user is asking for
+	int research = GetResearchByIndex(sArgs);
+		
+	//If a valid research name or alasis is found
+	if (foundInChatMessage(research))
+		NDPC_PrintRequestS1(team, pName, "Simple Research Request", 
+						nd_request_research[research]);
+	else
+		NoTranslationFound(client, sArgs);
 }

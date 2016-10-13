@@ -13,189 +13,71 @@ bool CheckRepairRequest(int client, int team, int spacesCount, const char[] pNam
 	//If the chat messages starts with the word "repair"
 	if (StrStartsWith(sArgs, "repair"))
 	{	
-		//Get the building the user is asking for
-		int building = GetBuildingByIndexEx(sArgs);
-		int compass = GetCompassByIndex(sArgs);
-		int location = GetSpotByIndex(sArgs);
-		
-		bool foundCompass = foundInChatMessage(compass);
-		bool foundLocation = foundInChatMessage(location);
-		
-		//If a valid building name or alasis is found
-		if (foundInChatMessage(building))
-		{
-			// if building + compass name is found
-			if (foundCompass)
-			{			
-				// if building + compass + location name is found
-				if (foundLocation)
-				{
-					PrintExtendedRepairRequest(	team, pName,
-									nd_request_building[building], 
-									nd_request_compass[compass], 
-									nd_request_location[location]);
-					return true;
-				}
-				
-				Print_CompassBuilding_RepairRequest(	team, pName, 
-									nd_request_building[building], 
-									nd_request_compass[compass]);
-				return true;
-			}
-			
-			// if building + location name is found
-			else if (foundLocation)
-			{
-				Print_LocationBuilding_RepairRequest(	team, pName, 
-									nd_request_building[building], 
-									nd_request_location[location]);
-				return true;			
-			}
-			
-			// if just the building name is found
-			PrintBuildingRepairRequest(team, pName, nd_request_building[building]);
-			return true;
-		}
-		// if compass name is found
-		else if (foundCompass)
-		{
-			// if compass + location name is found
-			if (foundLocation)
-			{
-				Print_CompassLocation_RepairRequest(	team, pName, 
-									nd_request_compass[compass], 
-									nd_request_location[location]);
-				return true;
-			}
-			
-			//if just the compass name is found
-			PrintCompassRepairRequest(team, pName, nd_request_compass[compass]);
-			return true;
-		}
-		// if just the location name is found
-		else if (foundLocation)
-		{
-			PrintLocationRepairRequest(team, pName, nd_request_location[location]);
-			return true;		
-		}			
-		
-		// if no repair keywords are found
-		NoTranslationFound(client, sArgs);
+		repPrintMessage(client, team, pName, sArgs);
 		return true;
 	}	
 		
 	return false;
 }
 
-void PrintBuildingRepairRequest(int team, const char[] pName, const char[] bName)
+void repPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 {
-	LOOP_TEAM(idx, team) 
+	//Get the building the user is asking for
+	int building = GetBuildingByIndexEx(sArgs);
+	int compass = GetCompassByIndex(sArgs);
+	int location = GetSpotByIndex(sArgs);
+		
+	bool foundCompass = foundInChatMessage(compass);
+	bool foundLocation = foundInChatMessage(location);
+		
+	// if a valid building name or alasis is found
+	if (foundInChatMessage(building))
 	{
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx);
-				
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Building Repair Request", idx, building);
+		// if building + compass name is found
+		if (foundCompass)
+		{			
+			// if building + compass + location name is found
+			if (foundLocation)
+				NDPC_PrintRequestS3(team, pName, "Extended Repair Request",
+								nd_request_building[building], 
+								nd_request_compass[compass], 
+								nd_request_location[location]);
+			else				
+				NDPC_PrintRequestS2(team, pName, "Build Comp Repair Request", 
+								nd_request_building[building], 
+								nd_request_compass[compass]);	
+		}
 			
-		NDPC_PrintToChat(idx, pName, ToPrint); 		
-	}
-}
-
-void Print_CompassBuilding_RepairRequest(int team, const char[] pName, const char[] bName, const char[] cName)
-{
-	LOOP_TEAM(idx, team) 
-	{			
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx);
-			
-		char compass[64];
-		Format(compass, sizeof(compass), "%T", cName, idx);
-		
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Build Comp Repair Request", idx, compass, building);
-			
-		NDPC_PrintToChat(idx, pName, ToPrint); 		
+		// if building + location name is found
+		else if (foundLocation)
+			NDPC_PrintRequestS2(team, pName, "Build Loc Repair Request",
+							nd_request_building[building], 
+							nd_request_location[location]);					
+		// if just the building name is found
+		else			
+			NDPC_PrintRequestS1(team, pName, "Building Repair Request",
+							nd_request_building[building]);
 	}	
-}
-
-void PrintCompassRepairRequest(int team, const char[] pName, const char[] cName)
-{
-	LOOP_TEAM(idx, team) 
-	{				
-		char compass[64];
-		Format(compass, sizeof(compass), "%T", cName, idx);
-				
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Compass Repair Request", idx, compass);
-				
-		NDPC_PrintToChat(idx, pName, ToPrint); 		
-	}	
-}
-
-void Print_CompassLocation_RepairRequest(int team, const char[] pName, const char[] cName, const char[] lName)
-{
-	LOOP_TEAM(idx, team) 
-	{				
-		char compass[64];
-		Format(compass, sizeof(compass), "%T", cName, idx);
-				
-		char location[64];
-		Format(location, sizeof(location), "%T", lName, idx);
-				
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Comp Loc Repair Request", idx, compass, location);
-				
-		NDPC_PrintToChat(idx, pName, ToPrint); 		
-	}
-}
-
-void PrintLocationRepairRequest(int team, const char[] pName, const char[] lName)
-{
-	LOOP_TEAM(idx, team) 
-	{			
-		char location[64];
-		Format(location, sizeof(location), "%T", lName, idx);
-			
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Location Repair Request", idx, location);
-				
-		NDPC_PrintToChat(idx, pName, ToPrint); 		
-	}	
-}
-
-void Print_LocationBuilding_RepairRequest(int team, const char[] pName, const char[] bName, const char[] lName)
-{
-	LOOP_TEAM(idx, team) 
-	{			
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx)				
-				
-		char location[64];
-		Format(location, sizeof(location), "%T", lName, idx);
-				
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Build Loc Repair Request", idx, building, location);
-				
-		NDPC_PrintToChat(idx, pName, ToPrint); 		
-	}	
-}
-
-void PrintExtendedRepairRequest(int team, const char[] pName, const char[] bName, const char[] cName, const char[] lName)
-{
-	LOOP_TEAM(idx, team) 
-	{			
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx);
-			
-		char compass[64];
-		Format(compass, sizeof(compass), "%T", cName, idx);
-			
-		char location[64];
-		Format(location, sizeof(location), "%T", lName, idx);
-		
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Extended Repair Request", idx, building, compass, location);
 	
-		NDPC_PrintToChat(idx, pName, ToPrint); 		
-	}	
+	// if compass name is found
+	else if (foundCompass)
+	{
+		// if compass + location name is found
+		if (foundLocation)
+			NDPC_PrintRequestS2( team, pName, "Comp Loc Repair Request",
+							nd_request_compass[compass], 
+							nd_request_location[location]);
+		//if just the compass name is found
+		else			
+			NDPC_PrintRequestS1(team, pName, "Compass Repair Request",
+							nd_request_compass[compass]);
+	}
+	
+	// if just the location name is found
+	else if (foundLocation)
+		NDPC_PrintRequestS1(team, pName, "Location Repair Request",
+						nd_request_location[location]);
+	// if no repair keywords are found
+	else
+		NoTranslationFound(client, sArgs);		
 }

@@ -14,120 +14,52 @@ bool CheckBuildingRequest(int client, int team, int spacesCount, const char[] pN
 	//If the chat messages starts with the word "build"
 	if (StrStartsWith(sArgs, "build"))
 	{
-		//Get the building the user is asking for
-		int building = GetBuildingByIndexEx(sArgs);
-		
-		//If a valid building name or alasis is found
-		if (foundInChatMessage(building))
-		{
-			//optionally, check if the user is asking for a location or compass
-			int location = GetSpotByIndex(sArgs);
-			int compass = GetCompassByIndex(sArgs);
-			
-			bool foundCompassName = foundInChatMessage(compass);
-			
-			//If a valid location is found
-			if (foundInChatMessage(location))
-			{
-				//if a valid compass position is found
-				if (foundCompassName)
-				{
-					PrintComplexBuildingRequest(	team, pName,
-									nd_request_building[building], 
-									nd_request_location[location],
-									nd_request_compass[compass]);
-					return true;
-				}
-				
-				PrintSpotBuildingRequest(	team, pName,
-								nd_request_building[building], 
-								nd_request_location[location]);
-				return true;
-			}
-			//if a valid compass position is found
-			else if (foundCompassName)
-			{
-				PrintCompassBuildingRequest(	team, pName, 
-								nd_request_building[building], 
-								nd_request_compass[compass]);
-				return true;
-			}
-					
-			PrintSimpleBuildingRequest(team, pName,	nd_request_building[building]);
-			return true;
-		}			
-			
-		NoTranslationFound(client, sArgs);
+		//print a translated building request
+		bPrintMessage(client, team, pName, sArgs);
 		return true;
 	}
 	
 	return false;
 }
 
-void PrintSimpleBuildingRequest(int team, const char[] pName, const char[] bName)
+void bPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 {
-	LOOP_TEAM(idx, team) 
+	//Get the building the user is asking for
+	int building = GetBuildingByIndexEx(sArgs);
+		
+	//If a valid building name or alasis is found
+	if (foundInChatMessage(building))
 	{
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx);
-				
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Simple Building Request", idx, building);
-				
-		NDPC_PrintToChat(idx, pName, ToPrint);		
-	}	
-}
-
-void PrintSpotBuildingRequest(int team, const char[] pName, const char[] bName, const char[] lName)
-{
-	LOOP_TEAM(idx, team) 
-	{
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx);
-				
-		char location[32];
-		Format(location, sizeof(location), "%T", lName, idx);
-				
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Spot Building Request", idx, building, location);
+		//optionally, check if the user is asking for a location or compass
+		int location = GetSpotByIndex(sArgs);
+		int compass = GetCompassByIndex(sArgs);
 			
-		NDPC_PrintToChat(idx, pName, ToPrint);		
-	}	
-}
-
-void PrintCompassBuildingRequest(int team, const char[] pName, const char[] bName, const char[] cName)
-{
-	LOOP_TEAM(idx, team) 
-	{
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx);
-				
-		char compass[32];
-		Format(compass, sizeof(compass), "%T", cName, idx);
-				
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Compass Building Request", idx, building, compass);
-								       
-		NDPC_PrintToChat(idx, pName, ToPrint);		
-	}	
-}
-
-void PrintComplexBuildingRequest(int team, const char[] pName, const char[] bName, const char[] lName, const char[] cName)
-{
-	LOOP_TEAM(idx, team) 
-	{
-		char building[64];
-		Format(building, sizeof(building), "%T", bName, idx);
-				
-		char location[32];
-		Format(location, sizeof(location), "%T", lName, idx);
-				
-		char compass[32];
-		Format(compass, sizeof(compass), "%T", cName, idx);
-				
-		char ToPrint[128];
-		Format(ToPrint, sizeof(ToPrint), "%T", "Complex Building Request", idx, building, location, compass);
-								       
-		NDPC_PrintToChat(idx, pName, ToPrint);		
-	}
+		bool foundCompassName = foundInChatMessage(compass);
+			
+		//If a valid location is found
+		if (foundInChatMessage(location))
+		{
+			//if a valid compass position is found
+			if (foundCompassName)
+				NDPC_PrintRequestS3(team, pName, "Complex Building Request",
+								nd_request_building[building], 
+								nd_request_location[location],
+								nd_request_compass[compass]);		
+			else 			
+				NDPC_PrintRequestS2(team, pName, "Spot Building Request",
+								nd_request_building[building], 
+								nd_request_location[location]);			
+		}
+		//if a valid compass position is found
+		else if (foundCompassName)
+			NDPC_PrintRequestS2(team, pName, "Compass Building Request",
+							nd_request_building[building], 
+							nd_request_compass[compass]);
+		else 				
+			NDPC_PrintRequestS1(team, pName, "Simple Building Request", 
+							nd_request_building[building]);		
+	} 
+	
+	else 			
+		NoTranslationFound(client, sArgs);		
 }

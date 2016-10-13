@@ -19,6 +19,9 @@ int Client_GetNext(int team, int index = 1)
 	return -1;
 }
 
+#define PRINT_SIZE 128
+#define PHRASE_SIZE 64
+
 /* Get the space count in a given chat message (or string) */
 int GetStringSpaceCount(const char[] sArgs)
 {
@@ -31,6 +34,53 @@ int GetStringSpaceCount(const char[] sArgs)
 	}
 	
 	return spaceCount;
+}
+
+stock void NDPC_PrintRequestS0(int team, const char[] request, const char[] pName)
+{
+	LOOP_TEAM(idx, team) 
+	{
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", request, idx);
+		NDPC_PrintToChat(idx, pName, ToPrint);	
+	}	
+}
+
+stock void NDPC_PrintRequestS1(int team, const char[] request, const char[] pName, const char[] p1)
+{
+	LOOP_TEAM(idx, team) 
+	{
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", request, idx, GetTransString(idx, p1));
+		NDPC_PrintToChat(idx, pName, ToPrint);	
+	}
+}
+
+stock void NDPC_PrintRequestS2(int team, const char[] request, const char[] pName, const char[] p1, const char[] p2)
+{
+	LOOP_TEAM(idx, team) 
+	{
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", request, idx, 		
+				GetTransString(idx, p1),
+				GetTransString(idx, p2));
+		
+		NDPC_PrintToChat(idx, pName, ToPrint);	
+	}
+}
+
+stock void NDPC_PrintRequestS3(int team, const char[] request, const char[] pName, const char[] p1, const char[] p2, const char[] p3)
+{
+	LOOP_TEAM(idx, team) 
+	{
+		char ToPrint[128];
+		Format(ToPrint, sizeof(ToPrint), "%T", request, idx, 		
+				GetTransString(idx, p1),
+				GetTransString(idx, p2),
+				GetTransString(idx, p2));
+				
+		NDPC_PrintToChat(idx, pName, ToPrint);	
+	}
 }
 
 /* Wrapper for printing a translation to client chat */
@@ -46,4 +96,12 @@ void NDPC_PrintNoTransFound(int client)
 {	
 	//First segment is (Translator) in green. Second is "No keyword found" in olive
 	PrintToChat(client, "%s%t %s%t.", TAG_COLOUR, "Translate Tag", MESSAGE_COLOUR, "No Translate Keyword");
+}
+
+/* Translation Strings */
+char GetTransString(int client, const char[] tName)
+{
+	char trans[PHRASE_SIZE];
+	Format(trans, PHRASE_SIZE, "%T", tName, client);
+	return trans;
 }
