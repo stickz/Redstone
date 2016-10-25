@@ -389,20 +389,6 @@ void SetUnitLimit(int team, int type, int value)
 	PrintLimitSet(team, type, value);
 }
 
-stock char GetTypeName(int type)
-{
-	char typeName[32];
-	
-	switch (type)
-        {
-        	case TYPE_SNIPER: 	typeName = "Sniper";
-        	case TYPE_STEALTH:	typeName = "Stealth"; 
-        	case TYPE_STRUCTURE: 	typeName = "Anti-Structure";
-        }
-        
-        return typeName;
-}
-
 stock char GetLimitPhrase(int type)
 {
 	char LimitPhrase[32];
