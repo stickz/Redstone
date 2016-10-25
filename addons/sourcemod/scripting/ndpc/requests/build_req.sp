@@ -13,7 +13,7 @@ bool CheckBuildingRequest(int client, int team, int spacesCount, const char[] pN
 	
 	//If the player is commander and the message is "building" let it through
 	bool playerIsCommander = ND_IsCommander(client);
-	if (playerIsCommander && StrEqual(sArgs, "building"))
+	if (playerIsCommander && StrEqual(sArgs, "building", false))
 		return false;	
 
 	//If the chat messages starts with the word "build"
