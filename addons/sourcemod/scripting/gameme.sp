@@ -16,7 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
  
 #pragma semicolon 1
 
@@ -34,17 +33,15 @@
 #include <tf2_stocks>
 #include <socket>
 
-
 // plugin information
-#define GAMEME_PLUGIN_VERSION "4.7.2"
-public Plugin:myinfo = {
+public Plugin:myinfo = 
+{
 	name = "gameME Plugin",
 	author = "TTS Oetzel & Goerz GmbH",
 	description = "gameME Plugin",
-	version = GAMEME_PLUGIN_VERSION,
+	version = "dummy",
 	url = "http://www.gameme.com"
 };
-
 
 // mod information
 #define MOD_CSS 1
