@@ -65,7 +65,7 @@ void bPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 						nd_request_compass[compass]);	
 	else if (foundLocationName)
 		NDPC_PrintRequestS1(team, pName, "Simple Location Request", 
-						nd_request_compass[compass]);	
+						nd_request_location[location]);	
 	else 			
 		NoTranslationFound(client, sArgs);		
 }
