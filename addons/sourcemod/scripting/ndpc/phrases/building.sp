@@ -114,6 +114,8 @@ void createAliasesForBuildings()
 	nd_building_aliases[Wireless_Repeater][0] = "wr";
 	
 	nd_building_aliases[Assembler][0] = "ass";
+	
+	nd_building_aliases[Command_Bunker][0] = "bunk";
 }
 
 int GetBuildingByIndexEx(const char[] sArgs)
