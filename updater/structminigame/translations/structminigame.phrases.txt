@@ -7,7 +7,7 @@
 	}
 	
 	//Building Names
-	"Command Bunker"
+	"Bunker"
 	{
 		"en"		"Command Bunker"
 	}

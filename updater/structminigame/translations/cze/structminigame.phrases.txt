@@ -6,7 +6,7 @@
 	}
 	
 	//Building Names
-	"Command Bunker"
+	"Bunker"
 	{
 		"cze"		"Velitelský bunkr"
 	}

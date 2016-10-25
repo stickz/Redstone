@@ -10,6 +10,11 @@ bool CheckBuildingRequest(int client, int team, int spacesCount, const char[] pN
 	//If the spacecount is greater than the required amount for building requests
 	if (spacesCount > MAX_BUILDING_SPACECOUNT)
 		return false;
+	
+	//If the player is commander and the message is "building" let it through
+	bool playerIsCommander = ND_IsCommander(client);
+	if (playerIsCommander && StrEqual(sArgs, "building", false))
+		return false;	
 
 	//If the chat messages starts with the word "build"
 	if (StrStartsWith(sArgs, "build"))
@@ -24,20 +29,20 @@ bool CheckBuildingRequest(int client, int team, int spacesCount, const char[] pN
 
 void bPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 {
-	//Get the building the user is asking for
+	//Get the phrases the user is asking for
 	int building = GetBuildingByIndexEx(sArgs);
+	int location = GetSpotByIndex(sArgs);
+	int compass = GetCompassByIndex(sArgs);
+	
+	//Cache the result of wether or not a phrase type is found
+	bool foundCompassName = foundInChatMessage(compass);
+	bool foundLocationName = foundInChatMessage(location);
 		
 	//If a valid building name or alasis is found
 	if (foundInChatMessage(building))
 	{
-		//optionally, check if the user is asking for a location or compass
-		int location = GetSpotByIndex(sArgs);
-		int compass = GetCompassByIndex(sArgs);
-			
-		bool foundCompassName = foundInChatMessage(compass);
-			
 		//If a valid location is found
-		if (foundInChatMessage(location))
+		if (foundLocationName)
 		{
 			//if a valid compass position is found
 			if (foundCompassName)
@@ -58,8 +63,14 @@ void bPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 		else 				
 			NDPC_PrintRequestS1(team, pName, "Simple Building Request", 
 							nd_request_building[building]);		
-	} 
+	}
 	
+	else if (foundCompassName)
+		NDPC_PrintRequestS1(team, pName, "Simple Compass Request", 
+						nd_request_compass[compass]);	
+	else if (foundLocationName)
+		NDPC_PrintRequestS1(team, pName, "Simple Location Request", 
+						nd_request_location[location]);	
 	else 			
 		NoTranslationFound(client, sArgs);		
 }

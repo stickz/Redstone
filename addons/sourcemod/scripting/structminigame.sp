@@ -112,7 +112,7 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 	char buildingname[32];
 	switch (type) // get building name
 	{
-		case 0:	Format(buildingname, sizeof(buildingname), "Command Bunker"); //the Command Bunker
+		case 0:	Format(buildingname, sizeof(buildingname), "Bunker"); //the Command Bunker
 		case 1:	Format(buildingname, sizeof(buildingname), "MG"); //a Machine Gun Turret
 		case 2:	Format(buildingname, sizeof(buildingname), "Transport"); //a Transport Gate
 		case 3:	Format(buildingname, sizeof(buildingname), "Power"); //a Power Station

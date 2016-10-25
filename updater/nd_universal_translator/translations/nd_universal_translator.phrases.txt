@@ -25,6 +25,20 @@
 		"en"		"Is requesting a(n) {1}."
 	}
 	
+	"Simple Compass Request"
+	{
+		//{1} = Compass Name (see bellow)
+		"format"	"{1:s}"
+		"en"		"Is recommending to build up {1} side of the map."
+	}
+	
+	"Simple Location Request"
+	{
+		//{1} = Location Name (see bellow)
+		"format"	"{1:s}"
+		"en"		"Is recommending to build things at {1}."
+	}
+	
 	"Compass Building Request"
 	{
 		//{1} = Building Name from structminigame.phrases
@@ -77,7 +91,7 @@
 		//
 		//Phrase Ex: Repair the transport gate.
 		//Final Ex: (Translator) Vertex: Repair the transport gate.
-		"#format"	"{1:s},{2:s}"
+		"#format"	"{1:s}"
 		"en"		"The {1} needs repaired!"
 	}
 	
