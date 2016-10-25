@@ -91,7 +91,7 @@
 		//
 		//Phrase Ex: Repair the transport gate.
 		//Final Ex: (Translator) Vertex: Repair the transport gate.
-		"#format"	"{1:s},{2:s}"
+		"#format"	"{1:s}"
 		"en"		"The {1} needs repaired!"
 	}
 	
