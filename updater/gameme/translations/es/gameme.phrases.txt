@@ -1,6 +1,5 @@
 "Phrases"
 {
-
 	"IngameMenu_Caption"
 	{
 		"es"		"gameME - Menu Principal"
@@ -67,9 +66,8 @@
 	}
 	"IngameMenu_Menu16"
 	{
-		"en"		"Resetear Estadisticas"
-	}
-	
+		"es"		"Resetear Estadisticas"
+	}	
 
 	"AutoMenu_Caption"
 	{
@@ -92,7 +90,6 @@
 		"es"		"Desactivar"
 	}
 
-
 	"ConsoleMenu_Caption"
 	{
 		"es"		"gameME - Avisos en el Chat"
@@ -113,7 +110,6 @@
 	{
 		"es"		"Desactivar Chat Global"
 	}
-
 
 	"DamagePanel_Attackers"
 	{
@@ -152,5 +148,4 @@
 	{
 		"es"		"{1} te ha matado con {2} dmg, {3} vida restante"
 	}
-
 }
