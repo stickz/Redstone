@@ -168,7 +168,7 @@
 		//Phrase Ex: Capture secondary
 		//Final Ex: (Translator) Vertex: Capture Secondary.
 		"#format"	"{1:s}"
-		"en"		"Capture the {1} resource point!"
+		"en"		"Is mentioning the {1} resource point(s) need(s) captured!"
 	}
 	
 	"Extended Capture Request"
@@ -179,7 +179,12 @@
 		//Phrase Ex: Capture East Secondary
 		//Final Ex: (Translator) Vertex: Capture East Secondary.
 		"#format"	"{1:s},{2:s}"
-		"en"		"Capture the {1} {2} resource point!"
+		"en"		"Is mentioning the {1} {2} resource point needs captured!"
+	}
+	
+	"Generic Capture Request"
+	{
+		"en"	"Is mentioning resource points need captured!"	
 	}
 	
 	"Base Tert"
