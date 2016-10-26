@@ -198,15 +198,10 @@
 		"en"	"Is mentioning resource points need captured!"	
 	}
 	
-	"Base Tert"
-	{
-		"en"		"Base Tertiary"
-	}
 	"Tert"
 	{
 		"en"		"Tertiaries"
-	}
-	
+	}	
 	
 	/* Plugin Messages */
 	"Translate Tag"
