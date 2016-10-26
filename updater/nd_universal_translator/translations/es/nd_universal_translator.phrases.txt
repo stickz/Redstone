@@ -17,11 +17,6 @@
 		"es"		"El idioma del cliente de juego del comandante es {1}."
 	}
 
-	"Base Tert"
-	{
-		"es"		"Terciario de la base"
-	}
-
 	"Tert"
 	{
 		"es"		"Terciarios"

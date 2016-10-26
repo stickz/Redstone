@@ -92,7 +92,7 @@
 		//Phrase Ex: Repair the transport gate.
 		//Final Ex: (Translator) Vertex: Repair the transport gate.
 		"#format"	"{1:s}"
-		"en"		"The {1} needs repaired!"
+		"en"		"Is mentioning a {1} needs repaired!"
 	}
 	
 	"Build Comp Repair Request"
@@ -103,7 +103,7 @@
 		//Phrase Ex: Repair the north supply station.
 		//Final Ex: (Translator) Vertex: Repair the north supply station.
 		"#format"	"{1:s},{2:s}"
-		"en"		"The {1} {2} needs repaired!"	
+		"en"		"Is mentioning the {1} {2} needs repaired!"	
 	}
 	
 	"Compass Repair Request"
@@ -113,7 +113,7 @@
 		//Phrase Ex: Repairs needed on the left side of the map
 		//Final Ex: (Translator) Vertex: Repairs are required on the left side of the map.
 		"#format"	"{1:s}"
-		"en"		"Repairs are needed on the {1} side of the map!"		
+		"en"		"Is mentioning buildings need repaired, on the {1} side of the map!"		
 	}
 	
 	"Comp Loc Repair Request"
@@ -124,7 +124,7 @@
 		//Phrase Ex: Repairs needed at the east secodnary.
 		//Final Ex: (Translator) Vertex: Repairs needed at east secondary
 		"#format"	"{1:s},{2:s}"
-		"en"		"Repairs are needed at {1} {2}!"		
+		"en"		"Is mentioning buildings need repaired at {1} {2}!"		
 	}
 	
 	"Location Repair Request"
@@ -134,7 +134,7 @@
 		//Phrase Ex: Repairs needed at secondary.
 		///Final Ex: (Translator) Vertex: Repairs needed at the rooftop.
 		"#format"	"{1:s}"
-		"en"		"Repairs are needed at {1}!"
+		"en"		"Is mentioning buildings need repaired at {1}!"
 	}
 	
 	"Build Loc Repair Request"
@@ -145,7 +145,7 @@
 		//Phrase Ex: Repair the rocket turret at prime 		
 		///Final Ex: (Translator) Vertex: Repair the rocket turret at prime.
 		"#format"	"{1:s},{2:s}"
-		"en"		"The {1} at {2} needs repaired!"	
+		"en"		"Is mentioning the {1} at {2} needs repaired!"	
 	}
 	
 	"Extended Repair Request"
@@ -157,7 +157,7 @@
 		//Phrase Ex: Repair the transport gate at west secondary		
 		///Final Ex: (Translator) Vertex: Repair the transport gate at west secondary.
 		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"The {1} at {2} {3} needs repaired!"
+		"en"		"Is mentioning the {1} at {2} {3} needs repaired!"
 	}
 	
 	/* Capture Messages */
@@ -168,29 +168,40 @@
 		//Phrase Ex: Capture secondary
 		//Final Ex: (Translator) Vertex: Capture Secondary.
 		"#format"	"{1:s}"
-		"en"		"Capture the {1} resource point!"
+		"en"		"Is mentioning the {1} resource point(s) need captured!"
 	}
 	
-	"Extended Capture Request"
+	"Compass Capture Request"
 	{
-		//{1} = Compass Position (see bellow)
-		//{2} = Resource Name (see bellow)
+		//{1} = Resource Name (see bellow)
+		//{2} = Compass Position (see bellow)
 		//
 		//Phrase Ex: Capture East Secondary
 		//Final Ex: (Translator) Vertex: Capture East Secondary.
 		"#format"	"{1:s},{2:s}"
-		"en"		"Capture the {1} {2} resource point!"
+		"en"		"Is mentioning the {2} {1} resource point needs captured!"
 	}
 	
-	"Base Tert"
+	"Location Capture Request"
 	{
-		"en"		"Base Tertiary"
+		//{1} = Resource Name (see bellow)
+		//{2} = Location (see bellow)
+		//
+		//Phrase Ex: Capture East Secondary
+		//Final Ex: (Translator) Vertex: Capture East Secondary.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Is mentioning the {2} {1} resource point needs captured!"
 	}
+	
+	"Generic Capture Request"
+	{
+		"en"	"Is mentioning resource points need captured!"	
+	}
+	
 	"Tert"
 	{
 		"en"		"Tertiaries"
-	}
-	
+	}	
 	
 	/* Plugin Messages */
 	"Translate Tag"
