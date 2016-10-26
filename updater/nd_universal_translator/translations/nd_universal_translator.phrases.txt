@@ -168,7 +168,7 @@
 		//Phrase Ex: Capture secondary
 		//Final Ex: (Translator) Vertex: Capture Secondary.
 		"#format"	"{1:s}"
-		"en"		"Is mentioning the {1} resource point(s) need(s) captured!"
+		"en"		"Is mentioning the {1} resource point(s) need captured!"
 	}
 	
 	"Compass Capture Request"
