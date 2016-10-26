@@ -24,15 +24,23 @@ void cPrintChatMessage(int client, int team, const char[] pName, const char[] sA
 		
 	if (foundInChatMessage(resource))
 	{
-		int compass = GetCompassByIndex(sArgs);		
+		int compass = GetCompassByIndex(sArgs);	
+		int location = GetSpotByIndex(sArgs);
+		
 		if (foundInChatMessage(compass))
-			NDPC_PrintRequestS2(team, pName, "Extended Capture Request",
+			NDPC_PrintRequestS2(team, pName, "Compass Capture Request",
 							nd_request_capture[resource], 
 							nd_request_compass[compass]);
+		else if (foundInChatMessage(location))
+			NDPC_PrintRequestS2(team, pName, "Location Capture Request",
+							nd_request_capture[resource], 
+							nd_request_location[location]);		
 		else		
 			NDPC_PrintRequestS1(team, pName, "Simple Capture Request",
 							nd_request_capture[resource]);	
 	}
+	else if (StrIsWithin(sArgs, "res"))
+		NDPC_PrintRequestS0(team, pName, "Generic Capture Request");
 	else
 		NoTranslationFound(client, sArgs);
 }
