@@ -171,15 +171,26 @@
 		"en"		"Is mentioning the {1} resource point(s) need(s) captured!"
 	}
 	
-	"Extended Capture Request"
+	"Compass Capture Request"
 	{
-		//{1} = Compass Position (see bellow)
-		//{2} = Resource Name (see bellow)
+		//{1} = Resource Name (see bellow)
+		//{2} = Compass Position (see bellow)
 		//
 		//Phrase Ex: Capture East Secondary
 		//Final Ex: (Translator) Vertex: Capture East Secondary.
 		"#format"	"{1:s},{2:s}"
-		"en"		"Is mentioning the {1} {2} resource point needs captured!"
+		"en"		"Is mentioning the {2} {1} resource point needs captured!"
+	}
+	
+	"Location Capture Request"
+	{
+		//{1} = Resource Name (see bellow)
+		//{2} = Location (see bellow)
+		//
+		//Phrase Ex: Capture East Secondary
+		//Final Ex: (Translator) Vertex: Capture East Secondary.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Is mentioning the {2} {1} resource point needs captured!"
 	}
 	
 	"Generic Capture Request"
