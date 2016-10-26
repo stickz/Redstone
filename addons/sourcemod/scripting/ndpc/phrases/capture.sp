@@ -1,9 +1,10 @@
-#define REQUEST_CAPTURE_COUNT 4
+#define RESOURCE_NOT_FOUND -1
+
+#define REQUEST_CAPTURE_COUNT 3
 char nd_request_capture[REQUEST_CAPTURE_COUNT][] =
 {
 	"Prim",
 	"Sec",
-	"Base Tert",
 	"Tert"
 };
 
@@ -17,5 +18,5 @@ int GetCaptureByIndex(const char[] sArgs)
 		}
 	}
 
-	return LOCATION_NOT_FOUND;
+	return RESOURCE_NOT_FOUND;
 }
