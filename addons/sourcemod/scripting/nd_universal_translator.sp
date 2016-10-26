@@ -49,6 +49,7 @@ public Plugin myinfo =
 
 /* Include Phrase Parsing */
 #include "ndpc/phrases/building.sp"
+#include "ndpc/phrases/capture.sp"
 #include "ndpc/phrases/location.sp"
 #include "ndpc/phrases/research.sp"
 
