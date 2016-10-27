@@ -195,13 +195,18 @@
 	
 	"Generic Capture Request"
 	{
-		"en"	"Is mentioning resource points need captured!"	
+		"en"	"Is mentioning resource need captured!"	
 	}
 	
 	"Tert"
 	{
+		"en"		"Tertiary"
+	}
+	
+	"Terts"
+	{
 		"en"		"Tertiaries"
-	}	
+	}
 	
 	/* Plugin Messages */
 	"Translate Tag"
