@@ -97,13 +97,13 @@
 	
 	"Build Comp Repair Request"
 	{
-		//{1} = Compass Position
-		//{2} = Building Name
+		//{1} = Building Name
+		//{2} = Compass Name (see bellow)
 		//
 		//Phrase Ex: Repair the north supply station.
 		//Final Ex: (Translator) Vertex: Repair the north supply station.
 		"#format"	"{1:s},{2:s}"
-		"en"		"Is mentioning the {1} {2} needs repaired!"	
+		"en"		"Is mentioning the {2} {1} needs repaired!"
 	}
 	
 	"Compass Repair Request"
@@ -195,13 +195,18 @@
 	
 	"Generic Capture Request"
 	{
-		"en"	"Is mentioning resource points need captured!"	
+		"en"	"Is mentioning resources need captured!"	
 	}
 	
 	"Tert"
 	{
+		"en"		"Tertiary"
+	}
+	
+	"Terts"
+	{
 		"en"		"Tertiaries"
-	}	
+	}
 	
 	/* Plugin Messages */
 	"Translate Tag"
@@ -246,19 +251,19 @@
 	/* Compass Positions */
 	"North"
 	{
-		"en"		"North"
+		"en"		"Northern"
 	}
 	"South"
 	{
-		"en"		"South"
+		"en"		"Southern"
 	}
 	"East"
 	{
-		"en"		"East"
+		"en"		"Eastern"
 	}
 	"West"
 	{
-		"en"		"West"
+		"en"		"Western"
 	}
 	"Right"
 	{
