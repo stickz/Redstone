@@ -33,13 +33,15 @@
 #include <tf2_stocks>
 #include <socket>
 
+#define GAMEME_PLUGIN_VERSION "4.7.2"
+
 // plugin information
 public Plugin:myinfo = 
 {
 	name = "gameME Plugin",
 	author = "TTS Oetzel & Goerz GmbH",
 	description = "gameME Plugin",
-	version = "dummy",
+	version = GAMEME_PLUGIN_VERSION,
 	url = "http://www.gameme.com"
 };
 
@@ -491,6 +493,8 @@ enum callback_data {callback_data_id, Float: callback_data_time, callback_data_c
 
 public OnPluginStart() 
 {
+	LogToGame("gameME Plugin %s (http://www.gameme.com), copyright (c) 2007-2016 TTS Oetzel & Goerz GmbH", GAMEME_PLUGIN_VERSION);
+	
 	AddUpdaterLibrary(); //auto-updater support
 
 	// setup default values
@@ -638,6 +642,7 @@ public OnPluginStart()
 	SetTrieValue(gameme_plugin[blocked_commands], "/gameme_menu", 1);
 	SetTrieValue(gameme_plugin[blocked_commands], "!gameme_menu", 1);
 
+	CreateConVar("gameme_plugin_version", GAMEME_PLUGIN_VERSION, "gameME Plugin", FCVAR_NOTIFY);
 	CreateConVar("gameme_webpage", "http://www.gameme.com", "http://www.gameme.com", FCVAR_NOTIFY);
 	gameme_plugin[block_chat_commands] = CreateConVar("gameme_block_commands", "1", "If activated gameME commands are blocked from the chat area");
 	gameme_plugin[block_chat_commands_values] = CreateConVar("gameme_block_commands_values", "", "Define which commands should be blocked from the chat area");
