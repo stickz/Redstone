@@ -1,107 +1,76 @@
-﻿"Phrases"
+// Exported from SourceMod Translator
+// Date: 2016-10-27 01:12:38 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/257
+//
+"Phrases"
 {
+
 	"Demotion Reapply"
 	{
-		"de"		"You cannot reapply for commander after being demoted"
+		"de"		"Du darfst dich nicht als Kommandeur bewerben, nachdem du abwählt wurdest"
 	}
 
-	"Resignation Reapply"
-	{
-		"de"		"You cannot reapply for 30s after mutiny resignation"	
-	}
-	
-	"Spawn Before Apply"
-	{
-		"de"		"Please spawn before applying for commander!"	
-	}
-	
 	"Bellow Ten"
 	{
-		"de"		"Players bellow level 10 can only command <10 players or level <25 averages."	
+		"de"		"Spieler unter level 10 können nur <10 Spieler befehligen oder der Durchschnittslevel muss <25 betragen"
 	}
-	
+
 	"Fifty Five Required"
 	{
-		"de"		"Level 40+ commanders are given first pick with 24+ players"
+		"de"		"Level 40+ Spieler werden ab 24 Spielern als Kommandeur bevorzugt"
 	}
-	
+
 	"Total Level"
 	{
-		"de"		"You cannot command more total players than your level"
+		"de"		"Du kannst nicht mehr Spieler befehlen als dein Level zulässt"
 	}
-	
-	"No Commander"
-	{
-		"de"		"There is no commander to demote"
-	}
-	
-	"On Team"
-	{
-		"de"		"You must be on a team to vote demote"
-	}
-	
-	"Four Required"
-	{
-		"de"		"Four team players required to use this feature"
-	}
-	
+
 	"Already Voted"
 	{
-		"de"		"You've already voted to demote the commander"
+		"de"		"Du hast bereits abgestimmt den Kommandeur abzuwählen"
 	}
-	
+
 	"Round End"
 	{
-		"de"		"Cannot use this feature after round end"
+		"de"		"Diese Funktion kann nach dem Ende der Runde nicht benutzt werden."
 	}
-	
+
 	"Round Started"
 	{
-		"de"		"Please wait until round start before demoting"	
+		"de"		"Warte mit dem Absetzen bis die Runde gestartet hat"
 	}
-	
-	"Commander Demoted"
-	{
-		"de"		"Commander demoted successfully"	
-	}
-	
+
 	"Demote Failed"
 	{
-		"de"		"Error! Commander not found for demotion!"
+		"de"		"Fehler! Keinen Kommandeur zum Absetzen gefunden"
 	}
-	
+
 	"Demote First"
 	{
-		"de"		"You cannot cast the first demote vote after demotion"
+		"de"		"Du kannst keine neue Abstimmung nach dem Absetzen starten"
 	}
-	
-	"Silence First"
-	{
-		"de"		"You cannot cast the first demote vote while silenced"
-	}
-	
+
 	"Silence Command"
 	{
-		"de"		"You cannot command while silenced"
+		"de"		"Du kannst nichts befehlen während du stumm bist"
 	}
-	
+
 	"Restrictions Relaxed"
 	{
-		"de"		"Commander restrictions relaxed"
+		"de"		"Kommandeurbeschränkung verringert"
 	}
-	
+
 	"Demote Not Found"
 	{
-		"de"		"Your vote to demote the commander is already reversed or not present."
+		"de"		"Deine Stimme zur Abwahl des Kommandeurs wurde bereits zurückgezogen"
 	}
-	
+
 	"Demote Vote"
 	{
-		"de"		"{1} has voted to !demote the commander. ({2} more required)"
+		"de"		"{1} will den Kommandeur absetzen - !demote. ({2} weitere Stimmen benötigt)"
 	}
-	
-	"Skill Required"
-	{
-		"de"		"{1} skill on server stats required to command!"
-	}
+
 }

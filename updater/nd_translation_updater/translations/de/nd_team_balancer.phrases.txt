@@ -1,187 +1,241 @@
-﻿"Phrases"
+// Exported from SourceMod Translator
+// Date: 2016-10-27 01:15:26 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/252
+//
+"Phrases"
 {
+
 	"Cookie TeamDiff Hints"
 	{
-		"de"		"TeamDiff HUD Display"
+		"de"		"TeamDiff HUD Anzeige"
 	}
+
 	"Cookie TeamBalancer Messages"
 	{
-		"de"		"TeamBalancer Messages"
+		"de"		"Teambalancer Nachrichten"
 	}
+
 	"Choice Granted"
 	{
-		"de"		"Team choice granted due to extremely balanced teams"
+		"de"		"Teamauswahl wegen ausbalancierten Teams gestattet"
 	}
+
 	"TP Spectator"
 	{
-		"de"		"You cannot use this feature while team picking is active"
+		"de"		"Während der Teamauswahl ist diese Funktion gesperrt"
 	}
+
 	"Rookie Only"
 	{
-		"de"		"This server is for rookies players only"	
+		"de"		"Dieser Server ist nur für Anfänger"
 	}
+
 	"Veteran Only"
 	{
-		"de"		"This server is for veteran players only"	
+		"de"		"Dieser Server ist nur für Veteranen"
 	}
+
 	"Graduated"
 	{
-		"de"		"Congratulates soldier, you've graduated from bootcamp"	
+		"de"		"Glückwunsch Soldat, du hast das Trainingslager bestanden."
 	}
+
 	"Submitted Placement"
 	{
-		"de"		"Separate commander placement request submitted"	
+		"de"		"Kommandeurwechsel gewünscht"
 	}
+
 	"Revoked Placement"
 	{
-		"de"		"Separate commander placement request revoked"
+		"de"		"Kommandeurauswahl zurückgezogen"
 	}
+
 	"Balancer Running"
 	{
-		"de"		"Cannot join an team while the warmup balancer is running"	
+		"de"		"Dem Team kann nicht beigetreten werden solange der Aufwärmbalancer läuft"
 	}
+
 	"Resign Switch"
 	{
-		"de"		"You must resign from commander before switching teams"	
+		"de"		"Du musst vom Kommandantenposten zurücktreten, bevor du das Team wechseln kannst."
 	}
+
 	"Switch Disabled"
 	{
-		"de"		"Team switching disabled for afew more minutes or until imbalanced teams"	
+		"de"		"Teamwechsel ist für ein Paar Minuten deaktiviert oder bis die Teams unausgeglichen sind."
 	}
+
 	"Retry Placement"
 	{
-		"de"		"You're now in spectator mode! Please try your team placement request again"	
+		"de"		"Du bist jetzt im Zuschauermodus! Versuche die Teamauswahl nochmal"
 	}
+
 	"Level Retrieved"
 	{
-		"de"		"Level retrieved successfully, please try again"
+		"de"		"Level erfolgreich abgerufen. Bitte nochmal versuchen"
 	}
+
 	"Level Switch Wait"
 	{
-		"de"		"Please wait until the scoreboard shows level 2+ before switching teams"	
+		"de"		"Bitte warte mit dem Teamwechsel bis Level 2+ in den Ergebnissen angezeigt wird "
 	}
+
 	"Revoke Spectator"
 	{
-		"de"		"Spectator request must be revoked before joining"
+		"de"		"Du musst deine Anfrage, ein Zuschauer zu werden, zuerst zurückziehen, bevor du teilnehmen kannst."
 	}
+
 	"Spectator Avoid"
 	{
-		"de"		"Cannot use this command to avoid the team balancer"	
+		"de"		"Dieses Kommando kann nicht benutzt werden um den Teambalancer zu vermeiden"
 	}
+
 	"Spectator Unlocked"
 	{
-		"de"		"You're unlocked from spectator mode"
+		"de"		"Zuschauermodus freigegeben"
 	}
+
 	"Spectator Joined"
 	{
-		"de"		"You're now spectator mode! To exit retype !spec."
+		"de"		"Du bist jetzt Zuschauer. \"!spec\" zum Verlassen eingeben."
 	}
+
 	"Teamdiff Round Wait"
 	{
-		"de"		"Cannot use teamdiff before the round has started"
+		"de"		"Teamdiff kann nicht verwendet werden solange die Runde nicht gestartet wurde"
 	}
+
+	"Teamdiff Round Wait"
+	{
+		"de"		"Teamdiff kann nicht verwendet werden bevor die Runde gestartet wurde"
+	}
+
 	"Ether Team Stack"
 	{
-		"de"		"Joining ether team will cause an stack. Restricted for a few minutes or status change."
+		"de"		"Beide Teams sind voll. Warte bis ein Platz frei wird."
 	}
+
 	"Could Be Switched"
 	{
-		"de"		"You could be switched immediately after your level loads"	
+		"de"		"Du kannst in das andere Team gewechselt werden, nachdem dein Level geladen wurde."
 	}
+
 	"Initial Team Lock"
 	{
-		"de"		"You're locked on initial team due to avoidance, cannot join until balanced"
+		"de"		"Das Team kann nicht gewechselt werden, solange das Spiel unausgeglichen ist"
 	}
+
+	"Initial Team Lock"
+	{
+		"de"		"Das Team kann nicht gewechselt werden, solange beide unausgeglichen sind."
+	}
+
 	"Separate Placement"
 	{
-		"de"		"Placed you separately to ensure both teams have an commander"	
+		"de"		"Teamwechsel ausgeführt, damit beide Teams einen Kommandeur haben"
 	}
+
 	"Random Selection"
 	{
-		"de"		"Commander Selection is random, but it's highly likely you'll be chosen"
+		"de"		"Die Kommandeurauswahl ist zufällig, deine Chance, gewählt zu werden, ist allerdings hoch"
 	}
+
 	"Balancer Not Run"
 	{
-		"de"		"Warm-up balancer NOT run due to lack of players"
+		"de"		"Aufgrund fehlender Spieler wurde der Aufwärmbalancer NICHT ausgeführt"
 	}
+
 	"Balancer Off"
 	{
-		"de"		"Team balancer is currently OFF"
+		"de"		"Teambalancer ist ausgeschaltet"
 	}
+
 	"Waiting"
 	{
-		"de"		"Waiting for Players to Connect"	
+		"de"		"Warte auf Spieler"
 	}
+
 	"Please Wait"
 	{
-		"de"		"Please Wait"
+		"de"		"Bitte warten"
 	}
+
 	"Status"
 	{
 		"de"		"Status"
 	}
+
 	"Excellent"
 	{
-		"de"		"Excellent"	
+		"de"		"Ausgezeichnet"
 	}
+
 	"Good"
 	{
-		"de"		"Good"
+		"de"		"Gut"
 	}
+
 	"Not Bad"
 	{
-		"de"		"Not Bad"
+		"de"		"Nicht schlecht"
 	}
+
 	"Switch Recommended"
 	{
-		"de"		"Switch Recommended"	
+		"de"		"Wechsel empfohlen"
 	}
+
 	"Slightly Imbalanced"
 	{
-		"de"		"Slightly Imbalanced"
+		"de"		"Etwas unausgeglichen"
 	}
+
 	"Moderately Imbalanced"
 	{
-		"de"		"Moderately Imbalanced"
+		"de"		"Einigermaßen unausgeglichen"
 	}
+
 	"Heavily Imbalanced"
 	{
-		"de"		"Heavily Imbalanced"	
+		"de"		"Stark unausgeglichen"
 	}
+
 	"Empire"
 	{
-		"de"		"Imperium"
+		"de"		"Das Reich"
 	}
+
 	"Consortium"
 	{
 		"de"		"Konsortium"
 	}
-	"Skill"	
+
+	"Skill"
 	{
-		"de"		"skill"	
+		"de"		"Können"
 	}
-	
+
 	"Disconnected WB"
 	{
-		//{1} = Player's Name
-		"de"		"{1} disconnected after warmup balance"	
+		"de"		"Die Teams sind nicht mehr ausgeglichen, weil {1} das Match verlassen hat"
 	}
-	
+
 	"Imbalanced Teams"
 	{
-		"de"		"imbalanced teams"	
+		"de"		"Unausgeglichene Teams"
 	}
-	
+
 	"Player Assigned"
 	{
-		//{1} = team name (empire or consort above)
-		//{2} = reason ("imbalanced teams" above is one)
-		"de"		"Assigned you to {1}. ({2})"
+		"de"		"Du wurdest {1} zugewiesen. ({2})"
 	}
-	
+
 	"Skill Averages"
 	{
-		//{1} = Empire Number, {2} = Consort Number
-		"de"		"Skill Averages: Empire: {1}, Consort: {2}"	
+		"de"		"Durchschnittliches Können: Reich: {1}, Konsortium: {2}"
 	}
+
 }
