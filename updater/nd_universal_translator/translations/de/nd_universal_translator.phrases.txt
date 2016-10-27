@@ -17,26 +17,6 @@
 		"de"		"Die Sprache des Kommandeurs ist {1}"
 	}
 
-	"Simple Building Request"
-	{
-		"de"		"{1} fordert {2} an"
-	}
-
-	"Compass Building Request"
-	{
-		"de"		"{1} erfordert {2} im {3}"
-	}
-
-	"Spot Building Request"
-	{
-		"de"		"{1} fordert {2} bei {3} an"
-	}
-
-	"Complex Building Request"
-	{
-		"de"		"{1} fordert {2} bei {4} {3} an"
-	}
-
 	"Tert"
 	{
 		"de"		"Tertiär"
@@ -115,21 +95,6 @@
 	"Left"
 	{
 		"de"		"Links"
-	}
-
-	"Simple Research Request"
-	{
-		"de"		"{1} erbittet Erforschung von {2}"
-	}
-
-	"Simple Capture Request"
-	{
-		"de"		"{1} will {2} einnehmen"
-	}
-
-	"Extended Capture Request"
-	{
-		"de"		"{1} will {2} {3} einnehmen"
 	}
 
 	"Advanced Kits"
