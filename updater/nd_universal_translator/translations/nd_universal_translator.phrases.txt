@@ -195,7 +195,7 @@
 	
 	"Generic Capture Request"
 	{
-		"en"	"Is mentioning resources need captured!"	
+		"en"	"Is mentioning resource points need captured!"	
 	}
 	
 	"Tert"
