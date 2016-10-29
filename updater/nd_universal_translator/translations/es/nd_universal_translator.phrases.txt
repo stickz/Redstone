@@ -1,10 +1,11 @@
 // Exported from SourceMod Translator
-// Date: 2016-09-18 20:58:39 UTC
+// Date: 2016-10-29 21:24:56 UTC
 // Language: Spanish (es)
 // 
 // To view other translations for this plugin, please visit:
 // http://translator.mitchdempsey.com/sourcemod_plugins/260
 //
+
 "Phrases"
 {
 	"Team Languages"
@@ -15,6 +16,26 @@
 	"Commander Language"
 	{
 		"es"		"El idioma del cliente de juego del comandante es {1}."
+	}
+
+	"Simple Building Request"
+	{
+		"es"		"Solicita un(a) {1}."
+	}
+
+	"Compass Building Request"
+	{
+		"es"		"Solicita un(a) {1} en el lado {2}."
+	}
+
+	"Spot Building Request"
+	{
+		"es"		"Solicita un(a) {1} en {2}."
+	}
+
+	"Complex Building Request"
+	{
+		"es"		"Solicita un(a) {1} en el {3} {2}."
 	}
 
 	"Tert"
@@ -95,5 +116,120 @@
 	"Left"
 	{
 		"es"		"Izquierda"
+	}
+
+	"Simple Research Request"
+	{
+		"es"		"Solicita que se investigue {1}."
+	}
+
+	"Simple Capture Request"
+	{
+		"es"		"¡Menciona que los/el punto(s) de recursos {1} debe(n) ser capturado(s)!"
+	}
+
+	"Extended Capture Request"
+	{
+		"es"		" {1} dice capturar {2} {3} "
+	}
+
+	"Advanced Kits"
+	{
+		"es"		"Equipos avanzados"
+	}
+
+	"Field Tactics"
+	{
+		"es"		"Tácticas de campo"
+	}
+
+	"Commander Abilities"
+	{
+		"es"		"Habilidades del comandante"
+	}
+
+	"Power Modulation"
+	{
+		"es"		"Modulación de poder"
+	}
+
+	"Advanced Manufacturing"
+	{
+		"es"		"Fabricación avanzada"
+	}
+
+	"Infantry Boost"
+	{
+		"es"		"Impulso de infantería"
+	}
+
+	"Structure Reinforcement"
+	{
+		"es"		"Refuerzo estructural"
+	}
+
+	"Simple Compass Request"
+	{
+		"es"		"Recomienda construir en el lado {1} del mapa."
+	}
+
+	"Simple Location Request"
+	{
+		"es"		"Recomienda construir cosas en {1}."
+	}
+
+	"Building Repair Request"
+	{
+		"es"		"¡Menciona un {1} que necesita reparaciones!"
+	}
+
+	"Build Comp Repair Request"
+	{
+		"es"		"¡Menciona que el {2} {1} necesita reparaciones!"
+	}
+
+	"Compass Repair Request"
+	{
+		"es"		"¡Menciona construcciones que necesitan reparaciones, en el lado {1} del mapa!"
+	}
+
+	"Comp Loc Repair Request"
+	{
+		"es"		"¡Menciona estructuras que necesitan reparaciones en {1} {2}!"
+	}
+
+	"Location Repair Request"
+	{
+		"es"		"¡Menciona estructuras que necesitan reparaciones en {1}!"
+	}
+
+	"Build Loc Repair Request"
+	{
+		"es"		"¡Menciona que el {1} en {2} necesita reparaciones!"
+	}
+
+	"Extended Repair Request"
+	{
+		"es"		"¡Menciona que el {1} en {2} {3} necesita reparaciones!"
+	}
+
+	"Compass Capture Request"
+	{
+		"es"		"¡Menciona que el punto de recursos {2} {1} necesita ser capturado!"
+	}
+
+	"Location Capture Request"
+	{
+		"es"		"¡Menciona que el punto de recursos {2} {1} necesita ser capturado!"
+	}
+
+	"Generic Capture Request"
+	{
+		"es"		"¡Menciona puntos de recursos que necesitan ser capturados!"
+	}
+
+	"Terts"
+	{
+		"es"		"Terciarios"
 	}
 }
