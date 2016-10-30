@@ -28,14 +28,14 @@
 	"Simple Compass Request"
 	{
 		//{1} = Compass Name (see bellow)
-		"format"	"{1:s}"
-		"en"		"Is recommending to build up {1} side of the map."
+		"#format"	"{1:s}"
+		"en"		"Is recommending to build up the {1} side of the map."
 	}
 	
 	"Simple Location Request"
 	{
 		//{1} = Location Name (see bellow)
-		"format"	"{1:s}"
+		"#format"	"{1:s}"
 		"en"		"Is recommending to build things at {1}."
 	}
 	
