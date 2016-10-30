@@ -1,13 +1,26 @@
+// Exported from SourceMod Translator
+// Date: 2016-10-27 01:14:15 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/244
+//
 "Phrases"
 {
+
 	"Cookie Lost Connect"
 	{
-		"de"		"D/C Message"
+		"de"		"Abbruchsnachricht"
 	}
-	
+
 	"Lost Connection"
 	{
-		//{1} = Player Name
-		"de"		"{1} lost connection!"
+		"de"		"Verbindung von {1} abgebrochen!"
 	}
+
+	"Lost Connection"
+	{
+		"de"		"Verbindung von {1} abgebrochen"
+	}
+
 }
