@@ -63,6 +63,7 @@ public Plugin myinfo =
 #include "ndpc/requests/capture_req.sp"
 #include "ndpc/requests/repair_req.sp"
 #include "ndpc/requests/research_req.sp"
+#include "ndpc/requests/tango_req.sp"
 
 public void OnPluginStart()
 {
