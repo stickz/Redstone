@@ -11,10 +11,13 @@ bool CheckBuildingRequest(int client, int team, int spacesCount, const char[] pN
 	if (spacesCount > MAX_BUILDING_SPACECOUNT)
 		return false;
 	
-	//If the player is commander and the message is "building" let it through
+	//If the player is commander and the message is "building"
 	bool playerIsCommander = ND_IsCommander(client);
 	if (playerIsCommander && StrEqual(sArgs, "building", false))
-		return false;	
+	{
+		NDPC_PrintRequestS0(team, pName, "Building Now");
+		return true;
+	}
 
 	//If the chat messages starts with the word "build"
 	if (StrStartsWith(sArgs, "build"))
