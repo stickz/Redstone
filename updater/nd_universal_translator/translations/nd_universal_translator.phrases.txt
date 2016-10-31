@@ -200,9 +200,47 @@
 	
 	"Generic Capture Request"
 	{
-		"en"	"Is mentioning resource points need captured!"	
+		"en"		"Is mentioning resource points need captured!"	
 	}
 	
+	/* Tango Mentions */
+	"Complex Tango Request"
+	{
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"Is mentioning there's a tango on the {3} {2} {1}."
+	}
+	
+	"Spot Tango Request"
+	{
+		"#format"	"{1:s},{2:s}"
+		"en"		""
+	}
+	
+	"Compass Tango Request"
+	{
+		"#format"	"{1:s},{2:s}"
+		"en"		""
+	}
+	
+	"Tango Building"
+	{
+		"#format"	"{1:s}"
+		"en"		""
+	}
+	
+	"Tango Compass"
+	{
+		"#format"	"{1:s}"
+		"en"		""
+	}
+	
+	"Tango Location"
+	{
+		"#format"	"{1:s}"
+		"en"		""
+	}
+	
+	/* Miscellaneous Phrases */	
 	"Tert"
 	{
 		"en"		"Tertiary"
