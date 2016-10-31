@@ -15,6 +15,11 @@
 	}
 	
 	/* Building request messages */
+	"Building Now"
+	{
+		"en" 		"I'm constructing that building right now."
+	}
+	
 	"Simple Building Request"
 	{
 		//{1} = Building Name from structminigame.phrases
