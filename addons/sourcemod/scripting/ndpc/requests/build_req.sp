@@ -1,4 +1,5 @@
 #define MAX_BUILDING_SPACECOUNT 4
+#define FLANK_REQUEST_POSITION 7
 
 // Check if the user is inputing a building request in chat
 bool CheckBuildingRequest(int client, int team, int spacesCount, const char[] pName, const char[] sArgs)
@@ -16,6 +17,13 @@ bool CheckBuildingRequest(int client, int team, int spacesCount, const char[] pN
 	if (playerIsCommander && StrEqual(sArgs, "building", false))
 	{
 		NDPC_PrintRequestS0(team, pName, "Building Now");
+		return true;
+	}
+	
+	//If the user wants to send a flank request instead
+	if (StrContains(sArgs, "flank", false) == FLANK_REQUEST_POSITION)
+	{
+		NDPC_PrintRequestS0(team, pName, "Build Flanks");
 		return true;
 	}
 
