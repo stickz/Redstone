@@ -20,6 +20,11 @@
 		"en" 		"I'm constructing that building right now."
 	}
 	
+	"Build Flanks"
+	{
+		"en"		"Is recommending to build up empty lanes, where the enemy can slip behind us."
+	}
+	
 	"Simple Building Request"
 	{
 		//{1} = Building Name from structminigame.phrases
