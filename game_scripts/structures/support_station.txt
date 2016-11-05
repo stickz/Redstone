@@ -10,7 +10,7 @@
 
 		"can_user_build"	"1"
 
-		"buildcost"		"2000"
+		"buildcost"		"1750"
 		"hitpoints"		"1350"
 		"cap"			"999"
 		
