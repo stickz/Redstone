@@ -207,37 +207,37 @@
 	"Complex Tango Request"
 	{
 		"#format"	"{1:s},{2:s},{3:s}"
-		"en"		"Is mentioning there's a tango on the {3} {2} {1}."
+		"en"		"Is mentioning there's an enemy on the {3} {2} {1}."
 	}
 	
 	"Spot Tango Request"
 	{
 		"#format"	"{1:s},{2:s}"
-		"en"		""
+		"en"		"Is mentioning there's an enemy on the {2} {1}."
 	}
 	
 	"Compass Tango Request"
 	{
 		"#format"	"{1:s},{2:s}"
-		"en"		""
+		"en"		"Is mentioning there's an enemy on the {2} {1}."
 	}
 	
 	"Tango Building"
 	{
 		"#format"	"{1:s}"
-		"en"		""
+		"en"		"Is mentioning there's an enemy on the {1}."
 	}
 	
 	"Tango Compass"
 	{
 		"#format"	"{1:s}"
-		"en"		""
+		"en"		"Is mentioning there's an enemy on the {1} side of the map."
 	}
 	
 	"Tango Location"
 	{
 		"#format"	"{1:s}"
-		"en"		""
+		"en"		"Is mentioning there's an enemy at the {1}."
 	}
 	
 	/* Miscellaneous Phrases */	
