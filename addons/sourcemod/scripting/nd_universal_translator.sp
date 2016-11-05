@@ -25,7 +25,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <nd_com_eng>
 
-//rebuild plugin
 public Plugin myinfo =
 {
 	name 		= "[ND] Project Communication",
@@ -63,6 +62,7 @@ public Plugin myinfo =
 #include "ndpc/requests/capture_req.sp"
 #include "ndpc/requests/repair_req.sp"
 #include "ndpc/requests/research_req.sp"
+#include "ndpc/requests/tango_req.sp"
 
 public void OnPluginStart()
 {
@@ -111,7 +111,8 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 		if (	CheckBuildingRequest(client, team, spaces, pName, sArgs) ||  
 			CheckCaptureRequest(client, team, spaces, pName, sArgs) || 
 			CheckResearchRequest(client, team, spaces, pName, sArgs) ||
-			CheckRepairRequest(client, team, spaces, pName, sArgs))
+			CheckRepairRequest(client, team, spaces, pName, sArgs) ||
+			CheckTangoRequest(client, team, spaces, pName, sArgs))
 		{
 			/* 
 			 * Block the old chat message

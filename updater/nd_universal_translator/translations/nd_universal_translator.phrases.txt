@@ -1,0 +1,360 @@
+"Phrases"
+{
+	/* Language based features */
+	"Team Languages"
+	{
+		//{1} = A list of team languages
+		"#format"	"{1:s}"
+		"en"		"Team Languages: {1}"
+	}
+	"Commander Language"
+	{
+		//{1} = the comander's language
+		"#format"	"{1:s}"
+		"en"		"The commander's game client language is {1}."
+	}
+	
+	/* Building request messages */
+	"Building Now"
+	{
+		"en" 		"I'm constructing that building right now."
+	}
+	
+	"Build Flanks"
+	{
+		"en"		"Is recommending to build up empty lanes, where the enemy can slip behind us."
+	}
+	
+	"Simple Building Request"
+	{
+		//{1} = Building Name from structminigame.phrases
+		//
+		//Phrase Ex: Build a supply station.
+		//Final Ex: (Translator) Vertex: Build a supply station.
+		"#format"	"{1:s}"
+		"en"		"Is requesting a(n) {1}."
+	}
+	
+	"Simple Compass Request"
+	{
+		//{1} = Compass Name (see bellow)
+		"#format"	"{1:s}"
+		"en"		"Is recommending to build up the {1} side of the map."
+	}
+	
+	"Simple Location Request"
+	{
+		//{1} = Location Name (see bellow)
+		"#format"	"{1:s}"
+		"en"		"Is recommending to build things at {1}."
+	}
+	
+	"Compass Building Request"
+	{
+		//{1} = Building Name from structminigame.phrases
+		//{2} = Compass Name (see bellow)
+		//
+		//Phrase Ex: Build a Supply Station on the west side
+		//Final Ex: (Translator) Vertex: Build a Supply Station on the west side.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Is requesting a(n) {1} on the {2} side."
+	}
+	
+	"Spot Building Request"
+	{
+		//{1} = Building Name from structminigame.phrases
+		//{2} = Location Name (see bellow)
+		//
+		//Phrase Ex: Build a Transport Gate at base.
+		//Final Ex: (Translator) Vertex: Build a Transport Gate at base.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Is requesting a(n) {1} at {2}."
+	}
+	
+	"Complex Building Request"
+	{
+		//{1} = Building Name from structminigame.phrases
+		//{2} = Location Name (see bellow)
+		//{3} = Compass Name (see bellow)
+		//
+		//Phrase Ex: Build a Relay Tower at the north secondary
+		//Final Ex: (Translator) Vertex: Build a Relay Tower at the north secondary
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en" 		"Is requesting a(n) {1} at the {3} {2}."
+	}
+	
+	/* Research Messages */
+	"Simple Research Request"
+	{
+		//{1} = Research Name
+		//
+		//Phrase Ex: Research Advanced Kits.
+		//Final Ex: (Translator) Vertex: Research Advanced Kits.
+		"#format"	"{1:s}"
+		"en"		"Is requesting {1} research."
+	}
+	
+	/* Repair Requests */	
+	"Building Repair Request"
+	{
+		//{1} = Building Name
+		//
+		//Phrase Ex: Repair the transport gate.
+		//Final Ex: (Translator) Vertex: Repair the transport gate.
+		"#format"	"{1:s}"
+		"en"		"Is mentioning a {1} needs repaired!"
+	}
+	
+	"Build Comp Repair Request"
+	{
+		//{1} = Building Name
+		//{2} = Compass Name (see bellow)
+		//
+		//Phrase Ex: Repair the north supply station.
+		//Final Ex: (Translator) Vertex: Repair the north supply station.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Is mentioning the {2} {1} needs repaired!"
+	}
+	
+	"Compass Repair Request"
+	{
+		//{1} = Compass Position
+		//
+		//Phrase Ex: Repairs needed on the left side of the map
+		//Final Ex: (Translator) Vertex: Repairs are required on the left side of the map.
+		"#format"	"{1:s}"
+		"en"		"Is mentioning buildings need repaired, on the {1} side of the map!"		
+	}
+	
+	"Comp Loc Repair Request"
+	{
+		//{1} = Compass Position
+		//{2} = Location Name
+		//
+		//Phrase Ex: Repairs needed at the east secodnary.
+		//Final Ex: (Translator) Vertex: Repairs needed at east secondary
+		"#format"	"{1:s},{2:s}"
+		"en"		"Is mentioning buildings need repaired at {1} {2}!"		
+	}
+	
+	"Location Repair Request"
+	{
+		//{1} = Location Name
+		//
+		//Phrase Ex: Repairs needed at secondary.
+		///Final Ex: (Translator) Vertex: Repairs needed at the rooftop.
+		"#format"	"{1:s}"
+		"en"		"Is mentioning buildings need repaired at {1}!"
+	}
+	
+	"Build Loc Repair Request"
+	{
+		//{1} = Building Name
+		//{2} = Location Name		
+		//
+		//Phrase Ex: Repair the rocket turret at prime 		
+		///Final Ex: (Translator) Vertex: Repair the rocket turret at prime.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Is mentioning the {1} at {2} needs repaired!"	
+	}
+	
+	"Extended Repair Request"
+	{
+		//{1} = Building Name
+		//{2} = Compass Position
+		//{3} = Location Name
+		//
+		//Phrase Ex: Repair the transport gate at west secondary		
+		///Final Ex: (Translator) Vertex: Repair the transport gate at west secondary.
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"Is mentioning the {1} at {2} {3} needs repaired!"
+	}
+	
+	/* Capture Messages */
+	"Simple Capture Request"
+	{
+		//{1} = Resource Name (see bellow)
+		//
+		//Phrase Ex: Capture secondary
+		//Final Ex: (Translator) Vertex: Capture Secondary.
+		"#format"	"{1:s}"
+		"en"		"Is mentioning the {1} resource point(s) need captured!"
+	}
+	
+	"Compass Capture Request"
+	{
+		//{1} = Resource Name (see bellow)
+		//{2} = Compass Position (see bellow)
+		//
+		//Phrase Ex: Capture East Secondary
+		//Final Ex: (Translator) Vertex: Capture East Secondary.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Is mentioning the {2} {1} resource point needs captured!"
+	}
+	
+	"Location Capture Request"
+	{
+		//{1} = Resource Name (see bellow)
+		//{2} = Location (see bellow)
+		//
+		//Phrase Ex: Capture East Secondary
+		//Final Ex: (Translator) Vertex: Capture East Secondary.
+		"#format"	"{1:s},{2:s}"
+		"en"		"Is mentioning the {2} {1} resource point needs captured!"
+	}
+	
+	"Generic Capture Request"
+	{
+		"en"		"Is mentioning resource points need captured!"	
+	}
+	
+	/* Tango Mentions */
+	"Complex Tango Request"
+	{
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"Is mentioning there's an enemy on the {3} {2} {1}."
+	}
+	
+	"Spot Tango Request"
+	{
+		"#format"	"{1:s},{2:s}"
+		"en"		"Is mentioning there's an enemy on the {2} {1}."
+	}
+	
+	"Compass Tango Request"
+	{
+		"#format"	"{1:s},{2:s}"
+		"en"		"Is mentioning there's an enemy on the {2} {1}."
+	}
+	
+	"Tango Building"
+	{
+		"#format"	"{1:s}"
+		"en"		"Is mentioning there's an enemy on the {1}."
+	}
+	
+	"Tango Compass"
+	{
+		"#format"	"{1:s}"
+		"en"		"Is mentioning there's an enemy on the {1} side of the map."
+	}
+	
+	"Tango Location"
+	{
+		"#format"	"{1:s}"
+		"en"		"Is mentioning there's an enemy at the {1}."
+	}
+	
+	/* Miscellaneous Phrases */	
+	"Tert"
+	{
+		"en"		"Tertiary"
+	}
+	
+	"Terts"
+	{
+		"en"		"Tertiaries"
+	}
+	
+	/* Plugin Messages */
+	"Translate Tag"
+	{
+		"en"		"(Translator)"
+	}
+	"No Translate Keyword"
+	{
+		"en"		"No translation keyword found."
+	}
+	"Not On Team"
+	{
+		"en"		"You must be on a team to use this command"
+	}
+	"No Team Commander"
+	{
+		"en" 		"This team currently doesn't have a commander"
+	}
+	
+	/* Location phrases */
+	"Roof"
+	{
+		"en"		"Rooftop"
+	}
+	"Base"
+	{
+		"en"		"Base"
+	}
+	"Prim"
+	{
+		"en"		"Primary"
+	}
+	"Pos"
+	{
+		"en"		"their Standing Positon"
+	}
+	"Sec"
+	{
+		"en"		"Secondary"
+	}
+	
+	/* Compass Positions */
+	"North"
+	{
+		"en"		"Northern"
+	}
+	"South"
+	{
+		"en"		"Southern"
+	}
+	"East"
+	{
+		"en"		"Eastern"
+	}
+	"West"
+	{
+		"en"		"Western"
+	}
+	"Right"
+	{
+		"en"		"Right"
+	}
+	"Left"
+	{
+		"en"		"Left"
+	}
+	
+	/* Research phrases */
+	"Advanced Kits"
+	{
+		"en"		"Advanced Kits"
+	}
+	
+	"Field Tactics"
+	{
+		"en"		"Field Tactics"
+	}
+	
+	"Commander Abilities"
+	{
+		"en"		"Commander Abilities"
+	}
+	
+	"Power Modulation"
+	{
+		"en"		"Power Modulation"
+	}
+	
+	"Advanced Manufacturing"
+	{
+		"en"		"Advanced Manufacturing"	
+	}
+	
+	"Infantry Boost"
+	{
+		"en"		"Infantry Boost"
+	}
+	
+	"Structure Reinforcement"
+	{
+		"en" 		"Structure Reinforcement"
+	}
+}
