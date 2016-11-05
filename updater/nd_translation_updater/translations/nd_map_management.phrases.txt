@@ -8,7 +8,7 @@
 	
 	"Prev Maps Listed"
 	{
-		"en"		"Previous maps listed succesfully. See client console for output."
+		"en"		"Previous maps listed succesfully. See console for output."
 	}
 	
 	//{1} = Next Map
