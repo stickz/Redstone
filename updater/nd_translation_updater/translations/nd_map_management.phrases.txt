@@ -1,5 +1,16 @@
 "Phrases"
 {
+	"Wait Map List"
+	{
+		"#format"	"{1:d}"
+		"en"		"Please wait {1} seconds before listing previous maps again!"	
+	}
+	
+	"Prev Maps Listed"
+	{
+		"en"		"Previous maps listed succesfully. See console for output."
+	}
+	
 	//{1} = Next Map
 	"Retrigger Map Vote"
 	{
