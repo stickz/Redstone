@@ -113,7 +113,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 			CheckCaptureRequest(client, team, spaces, pName, sArgs) || 
 			CheckResearchRequest(client, team, spaces, pName, sArgs) ||
 			CheckRepairRequest(client, team, spaces, pName, sArgs) ||
-			CheckTangoRequest(client, team, space, pName, sArgs))
+			CheckTangoRequest(client, team, spaces, pName, sArgs))
 		{
 			/* 
 			 * Block the old chat message
