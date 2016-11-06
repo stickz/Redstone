@@ -1,5 +1,5 @@
 // Exported from SourceMod Translator
-// Date: 2016-11-06 00:15:50 UTC
+// Date: 2016-11-06 13:15:18 UTC
 // Language: Russian (ru)
 // 
 // To view other translations for this plugin, please visit:
@@ -23,9 +23,19 @@
 		"ru"		"Запрашивает построить {1}."
 	}
 
+	"Compass Building Request"
+	{
+		"ru"		"Запрашивает построить {1} на {2} стороне."
+	}
+
 	"Spot Building Request"
 	{
 		"ru"		"Запрашивает построить {1} у {2}."
+	}
+
+	"Complex Building Request"
+	{
+		"ru"		"Запрашивает построить {1} у {3} {2}."
 	}
 
 	"Tert"
@@ -118,6 +128,11 @@
 		"ru"		"Указывается,что нужно захватить {1} ресурс."
 	}
 
+	"Extended Capture Request"
+	{
+		"ru"		"{1} сказано захватить {2} {3}"
+	}
+
 	"Advanced Kits"
 	{
 		"ru"		"Улучшенные комплекты"
@@ -126,6 +141,11 @@
 	"Field Tactics"
 	{
 		"ru"		"Полевая тактика"
+	}
+
+	"Commander Abilities"
+	{
+		"ru"		"Способности командира "
 	}
 
 	"Power Modulation"
@@ -158,9 +178,44 @@
 		"ru"		"Рекомендует построить сооружения у {1}."
 	}
 
+	"Building Repair Request"
+	{
+		"ru"		"Указывается,что нужно починить {1}!"
+	}
+
+	"Build Comp Repair Request"
+	{
+		"ru"		"Указывается,что нужно починить {2} {1}!"
+	}
+
+	"Compass Repair Request"
+	{
+		"ru"		"Указывается,что нужно отремонтировать постройки, на {1} стороне карты!"
+	}
+
+	"Comp Loc Repair Request"
+	{
+		"ru"		"Указывается,что нужно починить постройки у {1} {2}!"
+	}
+
 	"Location Repair Request"
 	{
 		"ru"		"Указывается,что постройка у {1} нуждаются в ремонте."
+	}
+
+	"Build Loc Repair Request"
+	{
+		"ru"		"Указывается,что нужно починить {1} у {2}!"
+	}
+
+	"Extended Repair Request"
+	{
+		"ru"		"Указывается,что {1} у {2} {3} нужно починить!"
+	}
+
+	"Compass Capture Request"
+	{
+		"ru"		"Указывается,что {2} {1} ресурс нужно захватить! "
 	}
 
 	"Location Capture Request"
@@ -178,9 +233,29 @@
 		"ru"		"Маленькие ресурсы"
 	}
 
+	"Building Now"
+	{
+		"ru"		"Сейчас я строю это сооружение."
+	}
+
+	"Build Flanks"
+	{
+		"ru"		"Рекомендуется застроить пустые проходы, где враг может пройти к нам с фланга."
+	}
+
+	"Complex Tango Request"
+	{
+		"ru"		"Указывается,что враг замечен на {3} {2} {1}."
+	}
+
 	"Spot Tango Request"
 	{
 		"ru"		"Указывается,что враг замечен у {2} {1}."
+	}
+
+	"Compass Tango Request"
+	{
+		"ru"		"Указывается,что враг обнаружен на {2} {1}!"
 	}
 
 	"Tango Building"
