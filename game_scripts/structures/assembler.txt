@@ -7,7 +7,7 @@
 		"power_supply"		"0"
 		"power_radius"		"0"
 
-		"buildcost"		"7000"
+		"buildcost"		"6000"
 		"hitpoints"		"7500"
 		"cap"			"999"
 
