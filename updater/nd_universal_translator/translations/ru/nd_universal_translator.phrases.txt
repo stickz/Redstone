@@ -1,5 +1,5 @@
 // Exported from SourceMod Translator
-// Date: 2016-09-18 20:58:39 UTC
+// Date: 2016-11-06 00:15:50 UTC
 // Language: Russian (ru)
 // 
 // To view other translations for this plugin, please visit:
@@ -7,6 +7,7 @@
 //
 "Phrases"
 {
+
 	"Team Languages"
 	{
 		"ru"		"Язык игры команды"
@@ -17,9 +18,19 @@
 		"ru"		"Язык игры командира {1}"
 	}
 
+	"Simple Building Request"
+	{
+		"ru"		"Запрашивает построить {1}."
+	}
+
+	"Spot Building Request"
+	{
+		"ru"		"Запрашивает построить {1} у {2}."
+	}
+
 	"Tert"
 	{
-		"ru"		"Маленький ресурс"
+		"ru"		"маленьком ресурсе"
 	}
 
 	"Translate Tag"
@@ -44,7 +55,7 @@
 
 	"Roof"
 	{
-		"ru"		"На крыше"
+		"ru"		"крыше"
 	}
 
 	"Base"
@@ -54,46 +65,137 @@
 
 	"Prim"
 	{
-		"ru"		"Основной ресурс"
+		"ru"		"основном ресурсе"
 	}
 
 	"Pos"
 	{
-		"ru"		"Их расположение"
+		"ru"		"их расположении"
 	}
 
 	"Sec"
 	{
-		"ru"		"Второстепенный ресурс"
+		"ru"		"второстепенном ресурсе"
 	}
 
 	"North"
 	{
-		"ru"		"Север"
+		"ru"		"севере"
 	}
 
 	"South"
 	{
-		"ru"		"Юг"
+		"ru"		"юге"
 	}
 
 	"East"
 	{
-		"ru"		"Восток"
+		"ru"		"востоке"
 	}
 
 	"West"
 	{
-		"ru"		"Запад"
+		"ru"		"западе"
 	}
 
 	"Right"
 	{
-		"ru"		"Справа"
+		"ru"		"справа"
 	}
 
 	"Left"
 	{
-		"ru"		"Слева"
+		"ru"		"слева"
 	}
+
+	"Simple Research Request"
+	{
+		"ru"		"Запрашивает провести исследования {1}."
+	}
+
+	"Simple Capture Request"
+	{
+		"ru"		"Указывается,что нужно захватить {1} ресурс."
+	}
+
+	"Advanced Kits"
+	{
+		"ru"		"Улучшенные комплекты"
+	}
+
+	"Field Tactics"
+	{
+		"ru"		"Полевая тактика"
+	}
+
+	"Power Modulation"
+	{
+		"ru"		"Производство электроэнергии"
+	}
+
+	"Advanced Manufacturing"
+	{
+		"ru"		"Улучшенное производство"
+	}
+
+	"Infantry Boost"
+	{
+		"ru"		"Усиление пехоты"
+	}
+
+	"Structure Reinforcement"
+	{
+		"ru"		"Усиление строения"
+	}
+
+	"Simple Compass Request"
+	{
+		"ru"		"Рекомендует построить на {1} стороне карты."
+	}
+
+	"Simple Location Request"
+	{
+		"ru"		"Рекомендует построить сооружения у {1}."
+	}
+
+	"Location Repair Request"
+	{
+		"ru"		"Указывается,что постройка у {1} нуждаются в ремонте."
+	}
+
+	"Location Capture Request"
+	{
+		"ru"		"Указывается,что нужно захватить ресурс {2} {1}!"
+	}
+
+	"Generic Capture Request"
+	{
+		"ru"		"Указывается,что нужно захватить точки  с ресурсами!"
+	}
+
+	"Terts"
+	{
+		"ru"		"Маленькие ресурсы"
+	}
+
+	"Spot Tango Request"
+	{
+		"ru"		"Указывается,что враг замечен у {2} {1}."
+	}
+
+	"Tango Building"
+	{
+		"ru"		"Указывается,что враг замечен у {1} ."
+	}
+
+	"Tango Compass"
+	{
+		"ru"		"Указывается,что враг замечен на {1} стороне карты."
+	}
+
+	"Tango Location"
+	{
+		"ru"		"Указывается,что враг замечен у {1} ."
+	}
+
 }
