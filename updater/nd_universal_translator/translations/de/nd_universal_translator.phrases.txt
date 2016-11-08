@@ -1,10 +1,4 @@
-// Exported from SourceMod Translator
-// Date: 2016-10-27 00:57:09 UTC
-// Language: German (de)
-// 
-// To view other translations for this plugin, please visit:
-// http://translator.mitchdempsey.com/sourcemod_plugins/260
-//
+// Scroll down from incomplete phrases.
 "Phrases"
 {
 	"Team Languages"
