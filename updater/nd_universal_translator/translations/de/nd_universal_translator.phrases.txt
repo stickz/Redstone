@@ -21,6 +21,11 @@
 	{
 		"de"		"Tertiär"
 	}
+	
+	"Terts"
+	{
+		"de"		"Tertiaries"
+	}	
 
 	"Translate Tag"
 	{
@@ -130,5 +135,168 @@
 	"Structure Reinforcement"
 	{
 		"de"		"Strukturelle Verstärkung"
+	}
+	
+	/* Building request messages */
+	"Building Now"
+	{
+		"de" 		"I'm constructing that building right now."
+	}
+	
+	"Build Flanks"
+	{
+		"de"		"Is recommending to build up empty lanes, where the enemy can slip behind us."
+	}
+	
+	"Simple Building Request"
+	{
+		//{1} = Building Name from structminigame.phrases
+		"de"		"Is requesting a(n) {1}."
+	}
+	
+	"Simple Compass Request"
+	{
+		//{1} = Compass Name (see bellow)
+		"de"		"Is recommending to build up the {1} side of the map."
+	}
+	
+	"Simple Location Request"
+	{
+		//{1} = Location Name (see bellow)
+		"de"		"Is recommending to build things at {1}."
+	}
+	
+	"Compass Building Request"
+	{
+		//{1} = Building Name from structminigame.phrases
+		//{2} = Compass Name (see bellow)
+		"de"		"Is requesting a(n) {1} on the {2} side."
+	}
+	
+	"Spot Building Request"
+	{
+		//{1} = Building Name from structminigame.phrases
+		//{2} = Location Name (see bellow)
+		"de"		"Is requesting a(n) {1} at {2}."
+	}
+	
+	"Complex Building Request"
+	{
+		//{1} = Building Name from structminigame.phrases
+		//{2} = Location Name (see bellow)
+		//{3} = Compass Name (see bellow)
+		"de" 		"Is requesting a(n) {1} at the {3} {2}."
+	}
+	
+	/* Research Messages */
+	"Simple Research Request"
+	{
+		//{1} = Research Name
+		"de"		"Is requesting {1} research."
+	}
+	
+	/* Repair Requests */	
+	"Building Repair Request"
+	{
+		//{1} = Building Name
+		"de"		"Is mentioning a {1} needs repaired!"
+	}
+	
+	"Build Comp Repair Request"
+	{
+		//{1} = Building Name
+		//{2} = Compass Name (see bellow)
+		"de"		"Is mentioning the {2} {1} needs repaired!"
+	}
+	
+	"Compass Repair Request"
+	{
+		//{1} = Compass Position
+		"de"		"Is mentioning buildings need repaired, on the {1} side of the map!"		
+	}
+	
+	"Comp Loc Repair Request"
+	{
+		//{1} = Compass Position
+		//{2} = Location Name
+		"de"		"Is mentioning buildings need repaired at {1} {2}!"		
+	}
+	
+	"Location Repair Request"
+	{
+		//{1} = Location Name
+		"de"		"Is mentioning buildings need repaired at {1}!"
+	}
+	
+	"Build Loc Repair Request"
+	{
+		//{1} = Building Name
+		//{2} = Location Name
+		"de"		"Is mentioning the {1} at {2} needs repaired!"	
+	}
+	
+	"Extended Repair Request"
+	{
+		//{1} = Building Name
+		//{2} = Compass Position
+		//{3} = Location Name
+		"de"		"Is mentioning the {1} at {2} {3} needs repaired!"
+	}
+	
+	/* Capture Messages */
+	"Simple Capture Request"
+	{
+		//{1} = Resource Name (see bellow)
+		"de"		"Is mentioning the {1} resource point(s) need captured!"
+	}
+	
+	"Compass Capture Request"
+	{
+		//{1} = Resource Name (see bellow)
+		//{2} = Compass Position (see bellow)
+		"de"		"Is mentioning the {2} {1} resource point needs captured!"
+	}
+	
+	"Location Capture Request"
+	{
+		//{1} = Resource Name (see bellow)
+		//{2} = Location (see bellow)
+		"de"		"Is mentioning the {2} {1} resource point needs captured!"
+	}
+	
+	"Generic Capture Request"
+	{
+		"de"		"Is mentioning resource points need captured!"	
+	}
+	
+	/* Tango Mentions */
+	"Complex Tango Request"
+	{
+		"de"		"Is mentioning there's an enemy on the {3} {2} {1}."
+	}
+	
+	"Spot Tango Request"
+	{
+		"de"		"Is mentioning there's an enemy on the {2} {1}."
+	}
+	
+	"Compass Tango Request"
+	{
+		"de"		"Is mentioning there's an enemy on the {2} {1}."
+	}
+	
+	"Tango Building"
+	{
+		"de"		"Is mentioning there's an enemy on the {1}."
+	}
+	
+	"Tango Compass"
+	{
+		"de"		"Is mentioning there's an enemy on the {1} side of the map."
+	}
+	
+	"Tango Location"
+	{
+		"de"		"Is mentioning there's an enemy at the {1}."
 	}
 }
