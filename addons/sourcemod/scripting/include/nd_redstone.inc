@@ -33,3 +33,21 @@ stock bool RED_IsValidClient(int ClientIDX)
 {
 	return RED_VC_AVAILABLE() && RED_ValidClient(ClientIDX);
 }
+
+stock int RED_GetTeamCount(int team)
+{
+	if (!RED_VC_AVAILABLE())
+		return ValidTeamCount(team);
+		
+	int clientCount = 0;
+	
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		if (RED_ValidClient(client) && GetClientTeam(client) == team)
+		{
+			clientCount++;
+		}	
+	}
+	
+	return clientCount;
+}
