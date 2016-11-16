@@ -19,6 +19,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <nd_redstone>
 
+
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_surrender/nd_surrender.txt"
+#include "updater/standard.sp"
+
 enum Bools
 {
 	enableSurrender,
@@ -59,6 +64,8 @@ public OnPluginStart()
 	
 	LoadTranslations("nd_surrender.phrases"); //for all chat messages
 	LoadTranslations("numbers.phrases"); //for one,two,three etc.
+	
+	AddUpdaterLibrary(); //add updater support
 }
 
 public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
