@@ -38,7 +38,9 @@ bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... };
 bool g_hasVotedConsort[MAXPLAYERS+1] = {false, ... };
 Handle SurrenderDelayTimer = INVALID_HANDLE;
 
-#define SURRENDER_MIN_PLAYERS 4
+ConVar cvarMinPlayers;
+ConVar cvarSurrenderPercent;
+ConVar cvarSurrenderTimeout;
 
 #define PREFIX "\x05[xG]"
 
@@ -53,17 +55,22 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	RegConsoleCmd("sm_surrender", CMD_Surrender);
+	RegConsoleCmd("sm_surrender", CMD_Surrender);	
 	AddCommandListener(PlayerJoinTeam, "jointeam");
+	
+	cvarMinPlayers		= CreateConVar("sm_surrender_minp", "4", "Set's the minimum number of team players required to surrender.");
+	cvarSurrenderPercent 	= CreateConVar("sm_surrender_percent", "51", "Set's the percentage required to surrender.");
+	cvarSurrenderTimeout	= CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
 	
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("round_end", Event_RoundDone, EventHookMode_PostNoCopy);
 	HookEvent("timeleft_5s", Event_RoundDone, EventHookMode_PostNoCopy);
 	
-	LoadTranslations("nd_surrender.phrases"); //for all chat messages
-	LoadTranslations("numbers.phrases"); //for one,two,three etc.
+	LoadTranslations("nd_surrender.phrases"); // for all chat messages
+	LoadTranslations("numbers.phrases"); // for one,two,three etc.
 	
-	AddUpdaterLibrary(); //add updater support
+	AddUpdaterLibrary(); //add updater support	
+	AutoExecConfig(true, "nd_surrender"); // for plugin convars
 }
 
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
@@ -71,7 +78,8 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 	voteCount[0] = 0;
 	voteCount[1] = 0;
 	
-	SurrenderDelayTimer = CreateTimer(480.0, TIMER_surrenderDelay, _, TIMER_FLAG_NO_MAPCHANGE);
+	float surrenderSeconds = cvarSurrenderTimeout.FloatValue * 60;
+	SurrenderDelayTimer = CreateTimer(surrenderSeconds, TIMER_surrenderDelay, _, TIMER_FLAG_NO_MAPCHANGE);
 	
 	g_Bool[enableSurrender] = false;
 	g_Bool[hasSurrendered] = false;
@@ -141,12 +149,16 @@ public Action TIMER_DisplaySurrender(Handle timer, any team)
 	}
 }
 
+float surrenderPercentage() {
+	return cvarSurrenderPercent.FloatValue / 100.0;
+}
+
 void callSurrender(int client)
 {
 	int team = GetClientTeam(client);
 	int teamCount = RED_GetTeamCount(team);
 	
-	if (teamCount < SURRENDER_MIN_PLAYERS)
+	if (teamCount < cvarMinPlayers.IntValue)
 		PrintToChat(client, "%s %t!", PREFIX, "Four Required");
 
 	else if (!g_Bool[enableSurrender])
@@ -167,10 +179,11 @@ void callSurrender(int client)
 	else
 	{
 		int teamIDX = team -2;
-		float teamFloat = teamCount * 0.51;
+		float teamFloat = teamCount * surrenderPercentage();		
+		float minTeamFoat = cvarMinPlayers.FloatValue;
 			
-		if (teamFloat < 4.0)
-			teamFloat = 4.0;
+		if (teamFloat < minTeamFoat)
+			teamFloat = minTeamFoat;
 			
 		voteCount[teamIDX]++;		
 		
@@ -191,7 +204,7 @@ void callSurrender(int client)
 
 void checkQuitSurrender(int team)
 {
-	float teamFloat = ValidTeamCount(team) * 0.51;
+	float teamFloat = ValidTeamCount(team) * surrenderPercentage();
 		
 	int Remainder = RoundToCeil(teamFloat) - voteCount[team -2];
 		
