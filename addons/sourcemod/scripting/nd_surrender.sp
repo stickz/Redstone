@@ -16,14 +16,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sdktools>
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_surrender/nd_surrender.txt"
+#include "updater/standard.sp"
+
 #pragma newdecls required
 #include <sourcemod>
 #include <nd_stocks>
 #include <nd_redstone>
-
-/* Auto-Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_surrender/nd_surrender.txt"
-#include "updater/standard.sp"
 
 enum Bools
 {
@@ -34,8 +34,8 @@ enum Bools
 
 int voteCount[2];
 bool g_Bool[Bools];
-bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... },
-bool g_hasVotedConsort[MAXPLAYERS+1] = {false, ... },
+bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... };
+bool g_hasVotedConsort[MAXPLAYERS+1] = {false, ... };
 Handle SurrenderDelayTimer = INVALID_HANDLE;
 
 #define TEAM_SPEC			1
@@ -48,8 +48,7 @@ Handle SurrenderDelayTimer = INVALID_HANDLE;
 
 public Plugin myinfo =
 {
-	name = "Surrender Feature",
-	author = "Stickz",
+	name = "Surrender Feature",	author = "Stickz",
 	description = "Allow alternative methods of surrendering.",
 	version = VERSION,
 	url = "N/A"
@@ -84,7 +83,7 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 	g_Bool[hasSurrendered] = false;
 	g_Bool[roundHasEnded] = false;
 	
-	for (new client = 1; client <= MaxClients; client++)
+	for (int client = 1; client <= MaxClients; client++)
 	{
 		g_hasVotedEmpire[client] = false;
 		g_hasVotedConsort[client] = false;	
