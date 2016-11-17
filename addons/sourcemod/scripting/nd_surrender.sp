@@ -230,7 +230,7 @@ void resetValues(int client)
 	if (team > TEAM_SPEC)
 	{
 		voteCount[team - 2]--;
-		if (RED_ClientCount() < SURRENDER_MIN_PLAYERS && !g_Bool[roundHasEnded] && !g_Bool[hasSurrendered])
+		if (RED_ClientCount() < cvarMinPlayers.IntValue && !g_Bool[roundHasEnded] && !g_Bool[hasSurrendered])
 			checkQuitSurrender(TEAM_CONSORT);
 	}
 }
