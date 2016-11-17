@@ -44,15 +44,13 @@ Handle SurrenderDelayTimer = INVALID_HANDLE;
 
 #define SURRENDER_MIN_PLAYERS 4
 
-#define VERSION "1.1.4"
-
 public Plugin myinfo =
 {
 	name = "Surrender Feature",	
 	author = "Stickz",
 	description = "Allow alternative methods of surrendering.",
-	version = VERSION,
-	url = "N/A"
+	version = "dummy",
+	url = "https://github.com/stickz/Redstone/"
 };
 
 public void OnPluginStart()
