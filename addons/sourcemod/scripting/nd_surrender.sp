@@ -48,7 +48,8 @@ Handle SurrenderDelayTimer = INVALID_HANDLE;
 
 public Plugin myinfo =
 {
-	name = "Surrender Feature",	author = "Stickz",
+	name = "Surrender Feature",	
+	author = "Stickz",
 	description = "Allow alternative methods of surrendering.",
 	version = VERSION,
 	url = "N/A"
@@ -74,9 +75,6 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 	voteCount[0] = 0;
 	voteCount[1] = 0;
 	
-	//if (SurrenderDelayTimer != INVALID_HANDLE)
-	//	CloseHandle(SurrenderDelayTimer);
-
 	SurrenderDelayTimer = CreateTimer(480.0, TIMER_surrenderDelay, _, TIMER_FLAG_NO_MAPCHANGE);
 	
 	g_Bool[enableSurrender] = false;
