@@ -1,5 +1,27 @@
-#include <sourcemod>
+/*
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
 #include <sdktools>
+
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_surrender/nd_surrender.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
+#include <sourcemod>
 #include <nd_stocks>
 #include <nd_redstone>
 
@@ -10,11 +32,11 @@ enum Bools
 	roundHasEnded
 };
 
-new voteCount[2],	
-	bool:g_Bool[Bools],
-	bool:g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... },
-	bool:g_hasVotedConsort[MAXPLAYERS+1] = {false, ... },
-	Handle:SurrenderDelayTimer = INVALID_HANDLE;
+int voteCount[2];
+bool g_Bool[Bools];
+bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... };
+bool g_hasVotedConsort[MAXPLAYERS+1] = {false, ... };
+Handle SurrenderDelayTimer = INVALID_HANDLE;
 
 #define TEAM_SPEC			1
 #define TEAM_CONSORT		2
@@ -24,77 +46,66 @@ new voteCount[2],
 
 #define VERSION "1.1.4"
 
-public Plugin:myinfo =
+public Plugin myinfo =
 {
-	name = "Surrender Feature",
+	name = "Surrender Feature",	
 	author = "Stickz",
 	description = "Allow alternative methods of surrendering.",
 	version = VERSION,
 	url = "N/A"
 };
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	RegConsoleCmd("sm_surrender", CMD_Surrender);
 	AddCommandListener(PlayerJoinTeam, "jointeam");
+	
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
-	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
-	HookEvent("timeleft_5s", Event_TimeLimit, EventHookMode_PostNoCopy);
+	HookEvent("round_end", Event_RoundDone, EventHookMode_PostNoCopy);
+	HookEvent("timeleft_5s", Event_RoundDone, EventHookMode_PostNoCopy);
 	
 	LoadTranslations("nd_surrender.phrases"); //for all chat messages
 	LoadTranslations("numbers.phrases"); //for one,two,three etc.
+	
+	AddUpdaterLibrary(); //add updater support
 }
 
-public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {
 	voteCount[0] = 0;
 	voteCount[1] = 0;
 	
-	//if (SurrenderDelayTimer != INVALID_HANDLE)
-	//	CloseHandle(SurrenderDelayTimer);
-
 	SurrenderDelayTimer = CreateTimer(480.0, TIMER_surrenderDelay, _, TIMER_FLAG_NO_MAPCHANGE);
 	
 	g_Bool[enableSurrender] = false;
 	g_Bool[hasSurrendered] = false;
 	g_Bool[roundHasEnded] = false;
-	for (new client = 1; client <= MaxClients; client++)
+	
+	for (int client = 1; client <= MaxClients; client++)
 	{
 		g_hasVotedEmpire[client] = false;
 		g_hasVotedConsort[client] = false;	
 	}
 }
 
-public Event_TimeLimit(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_RoundDone(Event event, const char[] name, bool dontBroadcast)
 {
 	if (!g_Bool[roundHasEnded])
 		roundEnd();
 }
 
-public Action:OnClientSayCommand(client, const String:command[], const String:sArgs[])
+public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
 {
-	if (client)
+	if (client && StrContains(sArgs, "surrender", false) == 0)
 	{
-		if (strcmp(sArgs, "surrender", false) == 0 || strcmp(sArgs, "SURRENDER", false) == 0) 
-		{
-			new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
-
-			callSurrender(client);
-				
-			SetCmdReplySource(old);
-			return Plugin_Stop;				
-		}
+		callSurrender(client);		
+		return Plugin_Handled;			
 	}	
+	
 	return Plugin_Continue;
 }
 
-public Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
-{
-	if (!g_Bool[roundHasEnded])
-		roundEnd();
-}
-
-roundEnd()
+void roundEnd()
 {
 	if (!g_Bool[roundHasEnded])
 	{
@@ -105,40 +116,27 @@ roundEnd()
 	}
 }
 
-/*public OnMapStart()
-{
-	g_Integer[consortCount] = 0;
-	g_Integer[empireCount] = 0;
-	CreateTimer(480.0, TIMER_surrenderDelay);
-	g_Bool[enableSurrender] = false;
-	g_Bool[hasSurrendered] = false;
-}*/
-
-public Action:PlayerJoinTeam(client, String:command[], argc)
+public Action PlayerJoinTeam(int client, char[] command, int argc)
 {
 	resetValues(client);	
 	return Plugin_Continue;
 }
 
-public Action:CMD_Surrender(client, args)
+public Action CMD_Surrender(int client, int args)
 {
 	callSurrender(client);
 	return Plugin_Handled;
 }
 
-public OnClientDisconnect(client)
-{
+public void OnClientDisconnect(int client) {
 	resetValues(client);
 }
 
-public Action:TIMER_surrenderDelay(Handle:timer)
-{
+public Action TIMER_surrenderDelay(Handle timer) {
 	g_Bool[enableSurrender] = true;
-	//if (SurrenderDelayTimer != INVALID_HANDLE)
-	//	CloseHandle(SurrenderDelayTimer);
 }
 
-public Action:TIMER_DisplaySurrender(Handle:timer, any:team)
+public Action TIMER_DisplaySurrender(Handle timer, any team)
 {
 	switch (team)
 	{
@@ -147,10 +145,10 @@ public Action:TIMER_DisplaySurrender(Handle:timer, any:team)
 	}
 }
 
-callSurrender(client)
+void callSurrender(int client)
 {
-	new team = GetClientTeam(client),
-		teamCount = RED_GetTeamCount(team);
+	int team = GetClientTeam(client);
+	int teamCount = RED_GetTeamCount(team);
 	
 	if (teamCount < SURRENDER_MIN_PLAYERS)
 		PrintToChat(client, "\x05[xG] %t!", "Four Required");
@@ -172,15 +170,15 @@ callSurrender(client)
 
 	else
 	{
-		new teamIDX = team -2,
-			Float:teamFloat = teamCount * 0.51;
+		int teamIDX = team -2;
+		float teamFloat = teamCount * 0.51;
 			
 		if (teamFloat < 4.0)
 			teamFloat = 4.0;
 			
 		voteCount[teamIDX]++;		
 		
-		new Remainder = RoundToCeil(teamFloat) - voteCount[teamIDX];
+		int Remainder = RoundToCeil(teamFloat) - voteCount[teamIDX];
 		
 		if (Remainder <= 0)
 			endGame(team);
@@ -195,19 +193,19 @@ callSurrender(client)
 	}
 }
 
-checkQuitSurrender(team)
+void checkQuitSurrender(int team)
 {
-	new Float:teamFloat = ValidTeamCount(team) * 0.51;
+	float teamFloat = ValidTeamCount(team) * 0.51;
 		
-	new Remainder = RoundToCeil(teamFloat) - voteCount[team -2];
+	int Remainder = RoundToCeil(teamFloat) - voteCount[team -2];
 		
 	if (Remainder <= 0)
 		endGame(team);
 }
 
-resetValues(client)
+void resetValues(int client)
 {
-	new team;
+	int team;
 	
 	if (g_hasVotedConsort[client])
 	{
@@ -228,7 +226,7 @@ resetValues(client)
 	}
 }
 
-endGame(team)
+void endGame(int team)
 {
 	g_Bool[hasSurrendered] = true;
 	ServerCommand("mp_roundtime 1");
@@ -236,19 +234,17 @@ endGame(team)
 	CreateTimer(0.5, TIMER_DisplaySurrender, team, TIMER_FLAG_NO_MAPCHANGE);	
 }
 
-displayVotes(team, Remainder, client)
+void displayVotes(int team, int Remainder, int client)
 {	
-	decl String:name[64];
+	char name[64];
 	GetClientName(client, name, sizeof(name));
 	
-	decl String:number[32];
+	char number[32];
 	Format(number, sizeof(number), NumberInEnglish(Remainder));
 	
-	for (new idx = 1; idx <= MaxClients; idx++)
+	for (int idx = 1; idx <= MaxClients; idx++)
 	{
 		if (IsValidClient(idx) && GetClientTeam(idx) == team)
-			PrintToChat(idx, "\x05%t", "Typed Surrender", name, number);		
-	
-		//PrintToChat(idx, "\x05%s typed surrender: %s more required.", name, NumberInEnglish(Remainder));
+			PrintToChat(idx, "\x05%t", "Typed Surrender", name, number);
 	}
 }
