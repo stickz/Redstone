@@ -46,9 +46,9 @@ Handle SurrenderDelayTimer = INVALID_HANDLE;
 
 public Plugin myinfo =
 {
-	name = "Surrender Feature",	
+	name = "[ND] Surrender Features",
 	author = "Stickz",
-	description = "Allow alternative methods of surrendering.",
+	description = "Creates an alternative method for surrendering.",
 	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 };
