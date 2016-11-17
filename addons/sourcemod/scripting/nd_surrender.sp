@@ -38,11 +38,9 @@ bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... };
 bool g_hasVotedConsort[MAXPLAYERS+1] = {false, ... };
 Handle SurrenderDelayTimer = INVALID_HANDLE;
 
-#define TEAM_SPEC			1
-#define TEAM_CONSORT		2
-#define TEAM_EMPIRE			3
-
 #define SURRENDER_MIN_PLAYERS 4
+
+#define PREFIX "\x05[xG]"
 
 public Plugin myinfo =
 {
@@ -149,22 +147,22 @@ void callSurrender(int client)
 	int teamCount = RED_GetTeamCount(team);
 	
 	if (teamCount < SURRENDER_MIN_PLAYERS)
-		PrintToChat(client, "\x05[xG] %t!", "Four Required");
+		PrintToChat(client, "%s %t!", PREFIX, "Four Required");
 
 	else if (!g_Bool[enableSurrender])
-		PrintToChat(client, "\x05[xG] %t", "Too Soon");
+		PrintToChat(client, "%s %t", PREFIX, "Too Soon");
 	
 	else if (g_Bool[hasSurrendered])
-		PrintToChat(client, "\x05[xG] %t!", "Team Surrendered");
+		PrintToChat(client, "%s %t!", PREFIX, "Team Surrendered");
 	
 	else if (team < 2)
-		PrintToChat(client, "\x05[xG] %t!", "On Team");
+		PrintToChat(client, "%s %t!", PREFIX, "On Team");
 	
 	else if (g_hasVotedEmpire[client] || g_hasVotedConsort[client])
-		PrintToChat(client, "\x05[xG] %t!", "You Surrendered");
+		PrintToChat(client, "%s %t!", PREFIX, "You Surrendered");
 	
 	else if (g_Bool[roundHasEnded])
-		PrintToChat(client, "\x05[xG] %t!", "Round Ended");
+		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
 
 	else
 	{
