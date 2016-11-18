@@ -134,44 +134,44 @@
 	/* Building request messages */
 	"Building Now"
 	{
-		"de" 		"I'm constructing that building right now."
+		"de" 		"Ich baue jetzt das Gebäude."
 	}
 	
 	"Build Flanks"
 	{
-		"de"		"Is recommending to build up empty lanes, where the enemy can slip behind us."
+		"de"		"empfiehlt entlang leerer Wege zu bauen, wo der Gegner hinter uns schlüpfen kann."
 	}
 	
 	"Simple Building Request"
 	{
 		//{1} = Building Name from structminigame.phrases
-		"de"		"Is requesting a(n) {1}."
+		"de"		"fordert ein {1} an."
 	}
 	
 	"Simple Compass Request"
 	{
 		//{1} = Compass Name (see bellow)
-		"de"		"Is recommending to build up the {1} side of the map."
+		"de"		"empfiehlt im {1} der Karte weiter aufzubauen."
 	}
 	
 	"Simple Location Request"
 	{
 		//{1} = Location Name (see bellow)
-		"de"		"Is recommending to build things at {1}."
+		"de"		"empfiehlt Gebäude bei {1} zu bauen."
 	}
 	
 	"Compass Building Request"
 	{
 		//{1} = Building Name from structminigame.phrases
 		//{2} = Compass Name (see bellow)
-		"de"		"Is requesting a(n) {1} on the {2} side."
+		"de"		"fordert eine {1} im {2} an."
 	}
 	
 	"Spot Building Request"
 	{
 		//{1} = Building Name from structminigame.phrases
 		//{2} = Location Name (see bellow)
-		"de"		"Is requesting a(n) {1} at {2}."
+		"de"		"fordert ein {1} bei {2} an."
 	}
 	
 	"Complex Building Request"
@@ -179,7 +179,7 @@
 		//{1} = Building Name from structminigame.phrases
 		//{2} = Location Name (see bellow)
 		//{3} = Compass Name (see bellow)
-		"de" 		"Is requesting a(n) {1} at the {3} {2}."
+		"de" 		"fordert ein {1} im {3} von {2} an."
 	}
 	
 	/* Research Messages */
