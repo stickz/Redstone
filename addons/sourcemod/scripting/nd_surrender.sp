@@ -88,7 +88,7 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 	for (int client = 1; client <= MaxClients; client++)
 	{
 		g_hasVotedEmpire[client] = false;
-		g_hasVotedConsort[client] = false;	
+		g_hasVotedConsort[client] = false;
 	}
 }
 
@@ -210,7 +210,7 @@ void resetValues(int client)
 	if (g_hasVotedConsort[client])
 	{
 		team = TEAM_CONSORT;
-		g_hasVotedConsort[client] = false;		
+		g_hasVotedConsort[client] = false;
 	}
 	else if (g_hasVotedEmpire[client])
 	{
