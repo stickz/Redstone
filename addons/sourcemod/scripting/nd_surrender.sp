@@ -88,7 +88,7 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 	for (int client = 1; client <= MaxClients; client++)
 	{
 		g_hasVotedEmpire[client] = false;
-		g_hasVotedConsort[client] = false;	
+		g_hasVotedConsort[client] = false;
 	}
 }
 
@@ -149,10 +149,6 @@ public Action TIMER_DisplaySurrender(Handle timer, any team)
 	}
 }
 
-float surrenderPercentage() {
-	return cvarSurrenderPercent.FloatValue / 100.0;
-}
-
 void callSurrender(int client)
 {
 	int team = GetClientTeam(client);
@@ -177,39 +173,34 @@ void callSurrender(int client)
 		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
 
 	else
-	{
-		int teamIDX = team -2;
-		float teamFloat = teamCount * surrenderPercentage();		
-		float minTeamFoat = cvarMinPlayers.FloatValue;
-			
-		if (teamFloat < minTeamFoat)
-			teamFloat = minTeamFoat;
-			
-		voteCount[teamIDX]++;		
-		
-		int Remainder = RoundToCeil(teamFloat) - voteCount[teamIDX];
-		
-		if (Remainder <= 0)
-			endGame(team);
-		else
-			displayVotes(team, Remainder, client);
+	{			
+		voteCount[team -2]++;
 		
 		switch (team)
 		{
 			case TEAM_CONSORT: g_hasVotedConsort[client] = true;
 			case TEAM_EMPIRE: g_hasVotedEmpire[client] = true;
 		}
+		
+		checkSurrender(team, teamCount, true, client);
 	}
 }
 
-void checkQuitSurrender(int team)
+void checkSurrender(int team, int teamCount, bool showVotes = false, int client = -1)
 {
-	float teamFloat = ValidTeamCount(team) * surrenderPercentage();
+	float teamFloat = teamCount * (cvarSurrenderPercent.FloatValue / 100.0);	
+	float minTeamFoat = cvarMinPlayers.FloatValue;
+			
+	if (teamFloat < minTeamFoat)
+		teamFloat = minTeamFoat;
 		
 	int Remainder = RoundToCeil(teamFloat) - voteCount[team -2];
 		
 	if (Remainder <= 0)
 		endGame(team);
+	
+	else if (showVotes)
+		displayVotes(team, Remainder, client);	
 }
 
 void resetValues(int client)
@@ -230,8 +221,9 @@ void resetValues(int client)
 	if (team > TEAM_SPEC)
 	{
 		voteCount[team - 2]--;
-		if (RED_ClientCount() < cvarMinPlayers.IntValue && !g_Bool[roundHasEnded] && !g_Bool[hasSurrendered])
-			checkQuitSurrender(TEAM_CONSORT);
+		int teamCount = RED_GetTeamCount(team);
+		if (teamCount >= cvarMinPlayers.IntValue + 1 && !g_Bool[roundHasEnded] && !g_Bool[hasSurrendered])
+			checkSurrender(team, teamCount);
 	}
 }
 
