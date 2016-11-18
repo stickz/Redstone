@@ -186,7 +186,7 @@ void callSurrender(int client)
 	}
 }
 
-void checkSurrender(int team, int teamCount, bool displayVotes = false, int client = -1)
+void checkSurrender(int team, int teamCount, bool showVotes = false, int client = -1)
 {
 	float teamFloat = teamCount * (cvarSurrenderPercent.FloatValue / 100.0);	
 	float minTeamFoat = cvarMinPlayers.FloatValue;
@@ -199,7 +199,7 @@ void checkSurrender(int team, int teamCount, bool displayVotes = false, int clie
 	if (Remainder <= 0)
 		endGame(team);
 	
-	else if (displayVotes)
+	else if (showVotes)
 		displayVotes(team, Remainder, client);	
 }
 
