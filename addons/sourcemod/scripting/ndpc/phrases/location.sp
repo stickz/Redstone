@@ -5,19 +5,21 @@
 #define REQUEST_LOCATION_COUNT 13
 char nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
-	"Roof",
-	"Stair",
-	"Courtyard",
-	"Truck",
-	"Bulldozer",
-	"Helicopter",
-	"Statue",
-	"Silo",
-	"Tunnel",
 	"Base",
-	"Prim",
+	"Bulldozer",
+	"Courtyard",
+	"Forward",
+	"Garage",
+	"Helicopter",
 	"Pos",
+	"Prime",
+	"Roof",
 	"Sec"
+	"Silo",
+	"Stairs",
+	"Statue",
+	"Truck",
+	"Tunnel",
 };
 
 int GetSpotByIndex(const char[] sArgs)
