@@ -14,7 +14,7 @@ char nd_request_location[REQUEST_LOCATION_COUNT][] =
 	"Pos",
 	"Prime",
 	"Roof",
-	"Sec"
+	"Sec",
 	"Silo",
 	"Stairs",
 	"Statue",
