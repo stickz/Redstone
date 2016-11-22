@@ -2,7 +2,7 @@
 #define COMPASS_NOT_FOUND -1
 
 // A list of locations by their translation phrase
-#define REQUEST_LOCATION_COUNT 13
+#define REQUEST_LOCATION_COUNT 15
 char nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
 	"Base",
