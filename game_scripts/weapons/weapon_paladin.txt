@@ -148,7 +148,7 @@
 	"primary_ammo"				"paladin"
 	"secondary_ammo"			"None"
 	"damage"				"130"
-	"exo_multiplier"			"2.0"
+	"exo_multiplier"			"2.1"
 	"damage_factor"				"0.15"		//Damage multiplier for vehicles/structures
 	"effective_range"			"25000"
 	
