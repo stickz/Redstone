@@ -19,7 +19,7 @@ char nd_request_location[REQUEST_LOCATION_COUNT][] =
 	"Stairs",
 	"Statue",
 	"Truck",
-	"Tunnel",
+	"Tunnel"
 };
 
 int GetSpotByIndex(const char[] sArgs)
