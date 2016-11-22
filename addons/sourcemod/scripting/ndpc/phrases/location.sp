@@ -1,3 +1,4 @@
+
 #define LOCATION_NOT_FOUND -1
 #define COMPASS_NOT_FOUND -1
 
@@ -6,6 +7,11 @@
 char nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
 	"Roof",
+	"Stair",
+	"Courtyard",
+	"Truck",
+	"Bulldozer",
+	"Helicopter",
 	"Base",
 	"Prim",
 	"Pos",
