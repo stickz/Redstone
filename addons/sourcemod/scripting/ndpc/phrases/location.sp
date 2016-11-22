@@ -11,6 +11,7 @@ char nd_request_location[REQUEST_LOCATION_COUNT][] =
 	"Truck",
 	"Bulldozer",
 	"Helicopter",
+	"Statue",
 	"Tunnel",
 	"Base",
 	"Prim",
