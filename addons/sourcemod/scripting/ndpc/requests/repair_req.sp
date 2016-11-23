@@ -25,7 +25,7 @@ void repPrintMessage(int client, int team, const char[] pName, const char[] sArg
 	//Get the building the user is asking for
 	int building = GetBuildingByIndexEx(sArgs);
 	int compass = GetCompassByIndex(sArgs);
-	int location = GetSpotByIndex(sArgs);
+	int location = GetSpotByIndexEx(sArgs);
 		
 	bool foundCompass = foundInChatMessage(compass);
 	bool foundLocation = foundInChatMessage(location);
