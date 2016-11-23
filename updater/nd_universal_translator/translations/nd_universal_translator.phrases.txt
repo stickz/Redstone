@@ -281,7 +281,7 @@
 	}
 	"Base"
 	{
-		"en"		"Base"
+ 		"en"		"Base"
 	}
 	"Prim"
 	{
@@ -333,7 +333,7 @@
 	}
 	"Tunnel"
 	{
-		"en"		"Tunnel"
+		"en"		"Tunnel Entrance"
 	}	
 	
 	/* Compass Positions */
