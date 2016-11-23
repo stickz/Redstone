@@ -281,7 +281,7 @@
 	}
 	"Base"
 	{
-		"en"		"Base"
+ 		"en"		"Base"
 	}
 	"Prim"
 	{
@@ -295,6 +295,46 @@
 	{
 		"en"		"Secondary"
 	}
+	"Bulldozer"
+	{
+		"en"		"Bulldozer"
+	}
+	"Courtyard"
+	{
+		"en"		"Courtyard"
+	}
+	"Forward"
+	{
+		"en"		"Forward Position"
+	}
+	"Garage"
+	{
+		"en"		"Garage"
+	}
+	"Helicopter"
+	{
+		"en"		"Helicopter"	
+	}
+	"Silo"
+	{
+		"en"		"Silo"
+	}
+	"Stairs"
+	{
+		"en"		"Stairs"
+	}
+	"Statue"
+	{
+		"en"		"Statue"
+	}
+	"Truck"
+	{
+		"en"		"Truck"
+	}
+	"Tunnel"
+	{
+		"en"		"Tunnel Entrance"
+	}	
 	
 	/* Compass Positions */
 	"North"

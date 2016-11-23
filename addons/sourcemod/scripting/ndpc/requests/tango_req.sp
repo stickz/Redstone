@@ -26,7 +26,7 @@ void taPrintMessage(int client, int team, const char[] pName, const char[] sArgs
 {
 	//Get the phrases the user is asking for
 	int building = GetBuildingByIndexEx(sArgs);
-	int location = GetSpotByIndex(sArgs);
+	int location = GetSpotByIndexEx(sArgs);
 	int compass = GetCompassByIndex(sArgs);
 	
 	//Cache the result of wether or not a phrase type is found

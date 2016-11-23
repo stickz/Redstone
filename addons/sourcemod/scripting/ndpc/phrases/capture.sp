@@ -34,7 +34,7 @@ char nd_request_location_ex[REQUEST_LOCATION_EX_COUNT][] =
 	"Pos"
 };
 
-int GetSpotByIndexEX(const char[] sArgs)
+int GetSpotByIndexCAP(const char[] sArgs)
 {
 	for (int location = 0; location < REQUEST_LOCATION_EX_COUNT; location++) //for all the building spots
 	{
