@@ -12,7 +12,7 @@ char nd_request_location[REQUEST_LOCATION_COUNT][] =
 	"Garage",
 	"Helicopter",
 	"Pos",
-	"Prime",
+	"Prim",
 	"Roof",
 	"Sec",
 	"Silo",
