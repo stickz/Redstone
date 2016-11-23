@@ -3,7 +3,8 @@
 
 // A list of locations by their translation phrase
 #define REQUEST_LOCATION_COUNT 16
-char nd_request_location[REQUEST_LOCATION_COUNT][] = {
+char nd_request_location[REQUEST_LOCATION_COUNT][] = 
+{
 	"Base",
 	"Bulldozer",
 	"Courtyard",
@@ -71,7 +72,7 @@ int GetSpotByIndex(const char[] sArgs)
 		{
 			return location; //index of the location in nd_request_location 	
 		}
-	}	
+	}
 
 	return LOCATION_NOT_FOUND;
 }
@@ -88,7 +89,7 @@ int GetSpotByIndexEx(const char[] sArgs)
 		{
 			return location;  //the index location in nd_request_location
 		}
-	}	
+	}
 
 	return LOCATION_NOT_FOUND;
 }
