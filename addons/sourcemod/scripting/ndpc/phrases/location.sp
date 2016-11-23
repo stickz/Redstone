@@ -2,22 +2,24 @@
 #define COMPASS_NOT_FOUND -1
 
 // A list of locations by their translation phrase
-#define REQUEST_LOCATION_COUNT 13
+#define REQUEST_LOCATION_COUNT 15
 char nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
-	"Roof",
-	"Stair",
-	"Courtyard",
-	"Truck",
-	"Bulldozer",
-	"Helicopter",
-	"Statue",
-	"Silo",
-	"Tunnel",
 	"Base",
-	"Prim",
+	"Bulldozer",
+	"Courtyard",
+	"Forward",
+	"Garage",
+	"Helicopter",
 	"Pos",
-	"Sec"
+	"Prime",
+	"Roof",
+	"Sec",
+	"Silo",
+	"Stairs",
+	"Statue",
+	"Truck",
+	"Tunnel"
 };
 
 int GetSpotByIndex(const char[] sArgs)
