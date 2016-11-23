@@ -3,7 +3,7 @@
 
 // A list of locations by their translation phrase
 #define REQUEST_LOCATION_COUNT 16
-char nd_request_location[REQUEST_LOCATION_COUNT][] = 
+char nd_request_location[REQUEST_LOCATION_COUNT][] =
 {
 	"Base",
 	"Bulldozer",
