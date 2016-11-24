@@ -155,7 +155,6 @@ PlayerClassDatafile
 				"item"		"weapon_p900"
 				"item"		"weapon_radarkit"
 				"item"		"weapon_frag_grenade"
-				"item"		"weapon_p12_grenade"
 				"primary"	"weapon_nx300"
 			}
 		

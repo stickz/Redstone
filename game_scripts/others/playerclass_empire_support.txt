@@ -162,7 +162,6 @@ PlayerClassDatafile
 				"item"		"weapon_p900"
 				"item"		"weapon_radarkit"
 				"item"		"weapon_frag_grenade"
-				"item"		"weapon_u23_grenade"
 				"primary"	"weapon_nx300"
 			}
 			
