@@ -1,5 +1,5 @@
 // Exported from SourceMod Translator
-// Date: 2016-11-06 13:15:18 UTC
+// Date: 2016-11-24 19:30:18 UTC
 // Language: Russian (ru)
 // 
 // To view other translations for this plugin, please visit:
@@ -271,6 +271,56 @@
 	"Tango Location"
 	{
 		"ru"		"Указывается,что враг замечен у {1} ."
+	}
+
+	"Bulldozer"
+	{
+		"ru"		"Бульдозер"
+	}
+
+	"Courtyard"
+	{
+		"ru"		"Внутренний двор"
+	}
+
+	"Forward"
+	{
+		"ru"		"Передовая позиция"
+	}
+
+	"Garage"
+	{
+		"ru"		"Гараж"
+	}
+
+	"Helicopter"
+	{
+		"ru"		"Вертолет"
+	}
+
+	"Silo"
+	{
+		"ru"		"Шахта"
+	}
+
+	"Stairs"
+	{
+		"ru"		"Лестницы"
+	}
+
+	"Statue"
+	{
+		"ru"		"Статуя"
+	}
+
+	"Truck"
+	{
+		"ru"		"Грузовик"
+	}
+
+	"Tunnel"
+	{
+		"ru"		"Вход в туннель"
 	}
 
 }
