@@ -20,7 +20,7 @@ WeaponData
 			
 			"weapon_overrides"
 			{
-				"default_clip"			"5"
+				"default_clip"			"4"
 			}
 		}
 		"bunny_2"
@@ -28,7 +28,7 @@ WeaponData
 			
 			"weapon_overrides"
 			{
-				"default_clip"			"6"
+				"default_clip"			"5"
 			}
 		}
 		"support_warfare"
@@ -71,7 +71,7 @@ WeaponData
 	"AddonAnglesOffset"		"0 0 0"
 
 	"clip_size"			"-1"
-	"default_clip"			"4"
+	"default_clip"			"3"
 	
 	"refire_delay"			"0.5"
 
