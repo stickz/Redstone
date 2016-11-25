@@ -1,5 +1,5 @@
 // Exported from SourceMod Translator
-// Date: 2016-11-05 17:00:52 UTC
+// Date: 2016-11-25 14:45:21 UTC
 // Language: Spanish (es)
 // 
 // To view other translations for this plugin, please visit:
@@ -271,6 +271,56 @@
 	"Tango Location"
 	{
 		"es"		"Menciona que hay un enemigo en el {1}."
+	}
+
+	"Bulldozer"
+	{
+		"es"		"Buldócer"
+	}
+
+	"Courtyard"
+	{
+		"es"		"Patio"
+	}
+
+	"Forward"
+	{
+		"es"		"Posición avanzada"
+	}
+
+	"Garage"
+	{
+		"es"		"Garaje"
+	}
+
+	"Helicopter"
+	{
+		"es"		"Helicóptero"
+	}
+
+	"Silo"
+	{
+		"es"		"Silo"
+	}
+
+	"Stairs"
+	{
+		"es"		"Escaleras"
+	}
+
+	"Statue"
+	{
+		"es"		"Estatua"
+	}
+
+	"Truck"
+	{
+		"es"		"Camión"
+	}
+
+	"Tunnel"
+	{
+		"es"		"Entrada del túnel"
 	}
 
 }
