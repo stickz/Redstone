@@ -36,7 +36,6 @@ enum Bools
 #define TEAM_CONSORT		2
 #define TEAM_EMPIRE		3
 
-#define RTV_MAX_PLAYERS 	8
 #define RTV_COMMANDS_SIZE 	3
 
 #define PREFIX "\x05[xG]"
@@ -53,12 +52,16 @@ bool g_Bool[Bools];
 bool g_hasVoted[MAXPLAYERS+1] = {false, ... };
 Handle RtvDisableTimer = INVALID_HANDLE;
 
+ConVar cvarMaxPlayers;
+ConVar cvarTimeWindow;
+ConVar cvarPercentPass;
+
 public Plugin myinfo =
 {
 	name 		= "[ND] Rock the Vote",
 	author 		= "Stickz",
 	description 	= "Vote to change map on ND",
-	version 	= "rebuild",
+	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
@@ -74,6 +77,8 @@ public void OnPluginStart()
 	LoadTranslations("numbers.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
+	
+	CreatePluginConvars(); // create convars
 	
 	if (ND_RoundStarted()) 
 	{
@@ -145,7 +150,7 @@ void callRockTheVote(int client)
 	
 	if (!g_Bool[enableRTV])
 	{
-		if (clientCount > RTV_MAX_PLAYERS)
+		if (clientCount > cvarMaxPlayers.FloatValue)
 			PrintToChat(client, "%s %t", PREFIX, "Too Late");
 	}
 	
@@ -172,7 +177,7 @@ void callRockTheVote(int client)
 
 void checkForPass(int clientCount, bool display = false, int client = -1)
 {
-	float countFloat = clientCount * 0.51;
+	float countFloat = clientCount * (cvarPercentPass.FloatValue / 100.0);
 	int Remainder = RoundToNearest(countFloat) - voteCount;
 		
 	if (Remainder <= 0)
@@ -233,7 +238,17 @@ void displayVotes(int Remainder, int client)
 
 void StartRTVDisableTimer()
 {
-	RtvDisableTimer = CreateTimer(480.0, TIMER_DisableRTV, _, TIMER_FLAG_NO_MAPCHANGE);
+	float time = cvarTimeWindow.FloatValue * 60;
+	RtvDisableTimer = CreateTimer(time, TIMER_DisableRTV, _, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+void CreatePluginConvars()
+{
+	cvarMaxPlayers 	= CreateConVar("sm_rtv_maxp", "8", "Set's the max number of players to disable rtv timeouts.");
+	cvarTimeWindow	= CreateConVar("sm_rtv_time", "8", "Set's how many minutes after round start players have to rtv");
+	cvarPercentPass	= CreateConVar("sm_rtv_percent", "51", "Set's percent of players required to change the map");
+	
+	AutoExecConfig(true, "nd_rockthevote");
 }
 
 /* Natives */
