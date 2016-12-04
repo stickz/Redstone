@@ -115,13 +115,8 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 			CheckRepairRequest(client, team, spaces, pName, sArgs) ||
 			CheckTangoRequest(client, team, spaces, pName, sArgs))
 		{
-			/* 
-			 * Block the old chat message
-			 * And print the new translated message 
-			 */
-			ReplySource old = SetCmdReplySource(SM_REPLY_TO_CHAT);
-			SetCmdReplySource(old);
-			return Plugin_Stop; 
+
+			return Plugin_Handled; 
 		}
 	}
 	
