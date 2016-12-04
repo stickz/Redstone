@@ -30,15 +30,14 @@ bool CheckBuildingRequest(int client, int team, int spacesCount, const char[] pN
 	//If the chat messages starts with the word "build"
 	if (StrStartsWith(sArgs, "build"))
 	{
-		//print a translated building request
-		bPrintMessage(client, team, pName, sArgs);
-		return true;
+		//print a translated building request, return false is not found
+		return bPrintMessage(client, team, pName, sArgs);
 	}
 	
 	return false;
 }
 
-void bPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
+bool bPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 {
 	//Get the phrases the user is asking for
 	int building = GetBuildingByIndexEx(sArgs);
@@ -73,15 +72,25 @@ void bPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 							nd_request_compass[compass]);
 		else 				
 			NDPC_PrintRequestS1(team, pName, "Simple Building Request", 
-							nd_request_building[building]);		
+							nd_request_building[building]);
+		return true;
 	}
 	
 	else if (foundCompassName)
+	{
 		NDPC_PrintRequestS1(team, pName, "Simple Compass Request", 
 						nd_request_compass[compass]);	
+		return true;
+	}
 	else if (foundLocationName)
+	{
 		NDPC_PrintRequestS1(team, pName, "Simple Location Request", 
 						nd_request_location[location]);	
-	else 			
-		NoTranslationFound(client, sArgs);		
+		return true;
+	}
+	else 
+	{
+		NoTranslationFound(client, sArgs);
+		return false;	
+	}
 }
