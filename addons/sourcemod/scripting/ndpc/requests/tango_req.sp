@@ -14,15 +14,14 @@ bool CheckTangoRequest(int client, int team, int spacesCount, const char[] pName
 	//If the chat messages starts with the word tango"
 	if (StrStartsWith(sArgs, "tango"))
 	{
-		//print a translated building request
-		taPrintMessage(client, team, pName, sArgs);
-		return true;	
+		//print a translated tango request, return false if not found
+		return taPrintMessage(client, team, pName, sArgs);	
 	}
 	
 	return false;
 }
 
-void taPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
+bool taPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 {
 	//Get the phrases the user is asking for
 	int building = GetBuildingByIndexEx(sArgs);
@@ -48,7 +47,7 @@ void taPrintMessage(int client, int team, const char[] pName, const char[] sArgs
 			else 			
 				NDPC_PrintRequestS2(team, pName, "Spot Tango Request",
 								nd_request_building[building], 
-								nd_request_location[location]);			
+								nd_request_location[location]);
 		}
 		//if a valid compass position is found
 		else if (foundCompassName)
@@ -57,15 +56,26 @@ void taPrintMessage(int client, int team, const char[] pName, const char[] sArgs
 							nd_request_compass[compass]);
 		else 				
 			NDPC_PrintRequestS1(team, pName, "Tango Building", 
-							nd_request_building[building]);		
+							nd_request_building[building]);
+							
+		return true;
 	}
 	
 	else if (foundCompassName)
+	{
 		NDPC_PrintRequestS1(team, pName, "Tango Compass", 
-						nd_request_compass[compass]);	
+						nd_request_compass[compass]);
+		return true;					
+	}
 	else if (foundLocationName)
+	{
 		NDPC_PrintRequestS1(team, pName, "Tango Location", 
 						nd_request_location[location]);	
-	else 			
+		return true;					
+	}
+	else
+	{
 		NoTranslationFound(client, sArgs);
+		return false;
+	}
 }
