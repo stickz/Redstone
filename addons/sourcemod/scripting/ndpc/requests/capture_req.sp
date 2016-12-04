@@ -11,14 +11,14 @@ bool CheckCaptureRequest(int client, int team, int spacesCount, const char[] pNa
 	
 	if (StrStartsWith(sArgs, "capture")) //if the string starts with capture
 	{
-		cPrintChatMessage(client, team, pName, sArgs);
-		return true;
+		// print capture message, return false if keyword not found
+		return cPrintChatMessage(client, team, pName, sArgs);
 	}
 	
 	return false;
 }
 
-void cPrintChatMessage(int client, int team, const char[] pName, const char[] sArgs)
+bool cPrintChatMessage(int client, int team, const char[] pName, const char[] sArgs)
 {
 	int resource = GetCaptureByIndex(sArgs);
 		
@@ -37,10 +37,17 @@ void cPrintChatMessage(int client, int team, const char[] pName, const char[] sA
 							nd_request_location_ex[location]);		
 		else		
 			NDPC_PrintRequestS1(team, pName, "Simple Capture Request",
-							nd_request_capture[resource]);	
+							nd_request_capture[resource]);
+		return true;
 	}
 	else if (StrIsWithin(sArgs, "res"))
+	{
 		NDPC_PrintRequestS0(team, pName, "Generic Capture Request");
+		return true;	
+	}
 	else
+	{
 		NoTranslationFound(client, sArgs);
+		return false;	
+	}
 }
