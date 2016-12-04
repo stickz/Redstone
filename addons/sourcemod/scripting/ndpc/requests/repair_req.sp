@@ -13,14 +13,14 @@ bool CheckRepairRequest(int client, int team, int spacesCount, const char[] pNam
 	//If the chat messages starts with the word "repair"
 	if (StrStartsWith(sArgs, "repair"))
 	{	
-		repPrintMessage(client, team, pName, sArgs);
-		return true;
+		// print repair message, return false if not found
+		return repPrintMessage(client, team, pName, sArgs);
 	}	
 		
 	return false;
 }
 
-void repPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
+bool repPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 {
 	//Get the building the user is asking for
 	int building = GetBuildingByIndexEx(sArgs);
@@ -45,7 +45,7 @@ void repPrintMessage(int client, int team, const char[] pName, const char[] sArg
 			else				
 				NDPC_PrintRequestS2(team, pName, "Build Comp Repair Request", 
 								nd_request_building[building], 
-								nd_request_compass[compass]);	
+								nd_request_compass[compass]);
 		}
 			
 		// if building + location name is found
@@ -57,6 +57,8 @@ void repPrintMessage(int client, int team, const char[] pName, const char[] sArg
 		else			
 			NDPC_PrintRequestS1(team, pName, "Building Repair Request",
 							nd_request_building[building]);
+							
+		return true;
 	}	
 	
 	// if compass name is found
@@ -71,13 +73,21 @@ void repPrintMessage(int client, int team, const char[] pName, const char[] sArg
 		else			
 			NDPC_PrintRequestS1(team, pName, "Compass Repair Request",
 							nd_request_compass[compass]);
+							
+		return true;
 	}
 	
 	// if just the location name is found
 	else if (foundLocation)
+	{
 		NDPC_PrintRequestS1(team, pName, "Location Repair Request",
 						nd_request_location[location]);
+		return true;					
+	}
 	// if no repair keywords are found
 	else
-		NoTranslationFound(client, sArgs);		
+	{
+		NoTranslationFound(client, sArgs);
+		return false;
+	}
 }
