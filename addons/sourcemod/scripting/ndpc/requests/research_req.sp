@@ -13,22 +13,28 @@ bool CheckResearchRequest(int client, int team, int spacesCount, const char[] pN
 	//If the chat messages starts with the word "research"
 	if (StrStartsWith(sArgs, "research"))
 	{	
-		resPrintMessage(client, team, pName, sArgs);
-		return true;
+		// print research message, return false if not found
+		return resPrintMessage(client, team, pName, sArgs);
 	}	
 		
 	return false;
 }
 
-void resPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
+bool resPrintMessage(int client, int team, const char[] pName, const char[] sArgs)
 {
 	//Get the research the user is asking for
 	int research = GetResearchByIndex(sArgs);
 		
 	//If a valid research name or alasis is found
 	if (foundInChatMessage(research))
+	{
 		NDPC_PrintRequestS1(team, pName, "Simple Research Request", 
 						nd_request_research[research]);
+		return true;					
+	}
 	else
+	{
 		NoTranslationFound(client, sArgs);
+		return false;	
+	}
 }
