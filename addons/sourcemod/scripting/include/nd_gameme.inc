@@ -60,6 +60,13 @@ stock bool RegularServerType()
  */
 native int GameME_GetClientSkill(int client);
 
+#define GCS_LOADED() (GetFeatureStatus(FeatureType_Native, "GameME_GetClientSkill") == FeatureStatus_Available)
+
+stock bool GameME_SkillAvailible(int client)
+{
+	return GCS_LOADED() && GameME_GetClientSkill(client) > 0;
+}
+
 /**
  * Retreive the cached gameme client rank value
  *
