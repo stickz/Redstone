@@ -54,3 +54,8 @@ stock NDC_GetCommanderBy(client)
 {
 	return ND_GetCommanderOn(GetClientTeam(client));
 }
+
+stock bool ND_TeamHasCommander(int team)
+{
+	return GetCC_LOADED() && GetCommanderClient(team) > -1;
+}
