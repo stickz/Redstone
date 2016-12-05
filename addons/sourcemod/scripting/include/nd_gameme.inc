@@ -84,3 +84,5 @@ native int GameME_GetClientRank(int client);
  * @return        			Is the client in the ranked database?
  */
 native bool GameME_RankedClient(int clientIDX);
+
+#define GM_RC_LOADED() (GetFeatureStatus(FeatureType_Native, "GameME_RankedClient") == FeatureStatus_Available)
