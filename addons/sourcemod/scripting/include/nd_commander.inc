@@ -57,5 +57,5 @@ stock NDC_GetCommanderBy(client)
 
 stock bool ND_TeamHasCommander(int team)
 {
-	return GetCC_LOADED() && GetCommanderClient(team) > -1;
+	return GCT_LOADED() && GetCommanderClient(team) > -1;
 }
