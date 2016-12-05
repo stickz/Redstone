@@ -14,6 +14,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_commander_restrictions/nd_commander_restrictions.txt"
+#include "updater/standard.sp"
+
 #include <sourcemod>
 #include <sdktools>
 #include <sourcecomms>
@@ -23,8 +27,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_balancer>
 #include <nd_gameme>
 
-#define VERSION "1.3"
-
 #define INVALID_CLIENT 0
 
 public Plugin myinfo =
@@ -32,8 +34,8 @@ public Plugin myinfo =
 	name = "[ND] Commander Restrictions",
 	author = "Stickz",
 	description = "Sets conditions for players to apply for commander",
-	version = VERSION,
-	url = "N/A"
+	version = "dummy",
+	url = "https://github.com/stickz/Redstone/"
 }
 
 enum Bools
@@ -84,6 +86,8 @@ public void OnPluginStart()
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
 	AutoExecConfig(true, "nd_commander_restrictions");
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
