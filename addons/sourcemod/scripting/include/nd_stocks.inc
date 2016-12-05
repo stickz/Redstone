@@ -107,6 +107,21 @@ stock void PrintToAdmins(const char[] message, const char[] flags)
     } 
 }
 
+/* Cache 'FindEntityByClassname(-1, "nd_player_manager")' to varriable and input an argiment when calling in loop
+ * This is a very intensive task, repeating will hinder server performance majorily */
+ 
+stock int RetreiveLevel(int client, int PlayerManEnt = -1)
+{
+	int PlayerManager = PlayerManEnt != -1 ? PlayerManEnt : FindEntityByClassname(-1, "nd_player_manager");	
+	return GetEntProp(PlayerManager, Prop_Send, "m_iPlayerRank", 1, client);
+}
+
+stock int RetrieveScore(int client, int PlayerManEnt = -1)
+{
+	int PlayerManager = PlayerManEnt != -1 ? PlayerManEnt : FindEntityByClassname(-1, "nd_player_manager");	
+	return GetEntProp(PlayerManager, Prop_Send, "m_iScore", 1, client);
+}
+
 /** 
  * Retreives the level of a given client index
  *
