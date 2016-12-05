@@ -27,8 +27,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_redstone>
 #include <nd_rounds>
 
-#define VERSION "1.1"
-
 #define INVALID_CLIENT 0
 
 public Plugin:myinfo =
@@ -36,8 +34,8 @@ public Plugin:myinfo =
 	name = "[ND] Commander Demote",
 	author = "Stickz",
 	description = "Allows demoting a commander through chat",
-	version = VERSION,
-	url = "N/A"
+	version = "dummy",
+	url = "https://github.com/stickz/Redstone/"
 }
 
 int voteCount[2];
