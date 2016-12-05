@@ -14,6 +14,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_commander_demote/nd_commander_demote.txt"
+#include "updater/standard.sp"
+
 #include <sourcemod>
 #include <sdktools>
 #include <sourcecomms>
@@ -74,6 +78,8 @@ public void OnPluginStart()
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
 	AutoExecConfig(true, "nd_commander_demote");
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 void resetForGameStart()
