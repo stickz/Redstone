@@ -35,7 +35,7 @@ WeaponData
 	"bucket_position"		"11"
 
 	"clip_size"			"-1"
-	"default_clip"			"2"
+	"default_clip"			"3"
 	
 	"primary_ammo"			"hypospray"
 	"secondary_ammo"			"hypospray"
