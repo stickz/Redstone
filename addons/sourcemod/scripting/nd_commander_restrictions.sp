@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_gameme>
 
 #define INVALID_CLIENT 0
+#define PREFIX "\x05[xG]"
 
 public Plugin myinfo =
 {
@@ -142,7 +143,7 @@ public Action TIMER_DisableRestrictions(Handle timer)
 		g_Bool[relaxedRestrictions] = true;
 		ServerCommand("nd_commander_mutiny_vote_threshold 65.0");
 		if (RED_OnTeamCount() > 10)
-			PrintToChatAll("\x05[xG] %t!", "Restrictions Relaxed"); //Commander restrictions relaxed
+			PrintToChatAll("%s %t!", PREFIX, "Restrictions Relaxed"); //Commander restrictions relaxed
 			//PrintToChatAll("\x05[xG] Commander restrictions lifted! Mutiny threshold set to 70%! (no commander)");
 	}
 }
@@ -152,7 +153,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 	#if defined _sourcecomms_included
 	if (IsSourceCommSilenced(client))
 	{
-		PrintToChat(client, "\x05[xG] %t!", "Silence Command"); //You cannot command while silenced
+		PrintToChat(client, "%s %t!", PREFIX, "Silence Command"); //You cannot command while silenced
 		return Plugin_Handled;
 	}
 	#endif
@@ -186,12 +187,12 @@ public Action Command_Apply(int client, const char[] command, int argc)
 					
 				else
 				{
-					PrintToChat(client, "\x05[xG] %t.", "Spawn Before Apply");
+					PrintToChat(client, "%s %t.", PREFIX, "Spawn Before Apply");
 					return Plugin_Handled;					
 				}
 				
 				#else
-				PrintToChat(client, "\x05[xG] %t.", "Spawn Before Apply");
+				PrintToChat(client, "%s %t.", PREFIX, "Spawn Before Apply");
 				return Plugin_Handled;				
 				#endif				
 			}
@@ -199,7 +200,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 			{
 				if (count > g_cvar[cRestrictMinLevel].IntValue)
 				{
-					PrintToChat(client, "\x05[xG] %t.", "Bellow Ten");
+					PrintToChat(client, "%s %t.", PREFIX, "Bellow Ten");
 					return Plugin_Handled;	
 				}
 				
@@ -207,7 +208,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 				int lowSkill = g_cvar[cRestrictSkillL].IntValue;			
 				if (GameME_SkillAvailible(client) && GameME_GetClientSkill(client) < lowSkill)
 				{
-					PrintToChat(client, "\x05[xG] %t!", "Skill Required", lowSkill);
+					PrintToChat(client, "%s %t!", PREFIX, "Skill Required", lowSkill);
 					return Plugin_Handled;				
 				}
 				#endif
@@ -221,7 +222,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 				{
 					if (clientLevel < g_cvar[cHighPlayerLevel].IntValue)
 					{
-						PrintToChat(client, "\x05[xG] %t.", "Fifty Five Required");
+						PrintToChat(client, "%s %t.", PREFIX, "Fifty Five Required");
 						return Plugin_Handled;
 					}
 					
@@ -229,7 +230,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 					int highSkill = g_cvar[cRestrictSkillH].IntValue;					
 					if (GameME_SkillAvailible(client) && GameME_GetClientSkill(client) < highSkill)
 					{
-						PrintToChat(client, "\x05[xG] %t!", "Skill Required", highSkill);
+						PrintToChat(client, "%s %t!", PREFIX, "Skill Required", highSkill);
 						return Plugin_Handled;	
 					}
 					#endif
@@ -237,7 +238,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 				
 				else if (clientLevel < count)
 				{
-					PrintToChat(client, "\x05[xG] %t.", "Total Level");
+					PrintToChat(client, "%s %t.", PREFIX, "Total Level");
 					return Plugin_Handled;
 				}
 			}		
