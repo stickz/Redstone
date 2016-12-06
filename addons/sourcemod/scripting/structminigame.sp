@@ -195,7 +195,7 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 }
 
 bool GiveAdvantage(int client, int team) {
-	return IsClientInGame(client) && IsPlayerAlive(client) && !ND_IsCommanderClient(client) && GetClientTeam(client) == team;
+	return IsClientInGame(client) && IsPlayerAlive(client) && !ND_IsCommander(client) && GetClientTeam(client) == team;
 }
 
 void AddClientPrefSupport()
