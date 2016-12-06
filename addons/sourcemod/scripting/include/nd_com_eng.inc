@@ -3,6 +3,8 @@
 #endif
 #define _nd_com_eng_included_
 
+#define NO_COMMANDER -1
+
 /**
  * Gets if the commander is in commander mode
  *
