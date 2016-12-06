@@ -38,6 +38,11 @@ stock int ND_GetCommanderOnTeam(int teamIDX)
 	return !ND_GTC_AVAILABLE() ? -1 : ND_GetTeamCommander(teamIDX);
 }
 
+stock bool ND_TeamHasCommander(int teamIDX)
+{
+	return ND_GetCommanderOnTeam(teamIDX) != -1;	
+}
+
 /**
  * Gets if a given client is a commander
  *
