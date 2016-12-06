@@ -185,8 +185,7 @@ public Action TIMER_CheckCommanderDemote(Handle timer, any:userid)
 }
 
 public Action startmutiny(int client, const char[] command, int argc)
-{
-	if (client == 0 || !IsClientInGame(client))
+{	if (client == 0 || !IsClientInGame(client))
 		return Plugin_Continue;
 	
 	int team = GetClientTeam(client);
@@ -212,8 +211,8 @@ public Action startmutiny(int client, const char[] command, int argc)
 
 void callMutiny(int client, int team)
 {
-	int teamIDX = team - 2,
-		com = ND_GetCommanderOnTeam(team);
+	int teamIDX = team - 2;
+	int com = ND_GetCommanderOnTeam(team);
 	
 	if (com == -1) //The team you're trying to demote has no commander
 		PrintToChat(client, "%s %t.", PREFIX, "No Commander");
