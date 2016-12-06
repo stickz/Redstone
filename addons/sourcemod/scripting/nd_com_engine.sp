@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #pragma newdecls required
 #include <sourcemod>
 
-public Plugin myinfo = 
+ public Plugin myinfo = 
 {
 	name 		= "[ND] Commander Engine",
 	author		= "stickz",
@@ -78,13 +78,15 @@ public Action startmutiny(int client, const char[] command, int argc)
 	if (team < 2) //team != TEAM_CONSORT && team != TEAM_EMPIRE
 		return Plugin_Continue;
 		
-	int commander = GameRules_GetPropEnt("m_hCommanders", team-2);
-	if (commander == -1)
+	int teamIDX = team - 2;		
+	//int commander = GameRules_GetPropEnt("m_hCommanders", teamIDX);
+	
+	if (TeamCommander[teamIDX] == -1)
 		return Plugin_Continue;
 	
 	if (commander == client)
 	{
-		TeamCommander[team] = -1;
+		TeamCommander[teamIDX] = -1;
 		return Plugin_Continue;
 	}
 	
@@ -113,7 +115,7 @@ public int Native_InCommanderMode(Handle plugin, int numParams)
 public int Native_GetTeamCommander(Handle plugin, int numParams)
 {
 	int team = GetNativeCell(1);
-	return TeamCommander[team];
+	return TeamCommander[team - 2];
 }
 
 /* 
