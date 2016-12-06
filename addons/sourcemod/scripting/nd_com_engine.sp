@@ -47,6 +47,8 @@ public void OnPluginStart()
 	g_OnCommanderResignForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell);
 	g_OnCommanderMutinyForward = CreateGlobalForward("ND_OnCommanderMutiny", ET_Event, Param_Cell, Param_Cell, Param_Cell);
 	
+	AddCommandListener(startmutiny, "startmutiny");
+	
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -87,15 +89,9 @@ public Action startmutiny(int client, const char[] command, int argc)
 	int teamIDX = team - 2;	
 	if (TeamCommander[teamIDX] == -1)
 		return Plugin_Continue;
-		
-	PrintToAdmins("heyo! mut event called with commander", "a");
-	
+
 	if (TeamCommander[teamIDX] == client) // When the commander resigns
 	{
-		TeamCommander[teamIDX] = -1; // Mark it in the engine
-		
-		PrintToAdmins("heyo! About to call resign forward", "a");
-		
 		/* Push a commander resigned forward for other plugins */
 		Action blockResign;
 		Call_StartForward(g_OnCommanderResignForward);
@@ -103,16 +99,19 @@ public Action startmutiny(int client, const char[] command, int argc)
 		Call_PushCell(team);
 		
 		/* Does the plugin want to block the commander from resigning? */
-		Call_Finish(blockResign);		
+		Call_Finish(blockResign);
+		
+		if (blockResign == Plugin_Continue)
+			TeamCommander[teamIDX] = -1; // Mark on the engine the commander resigned
+
 		return blockResign;
 	}
 	
-	int commander = -1; // temp hack
 	/* Push a commander mutiny forward for other plugins */
 	Action blockMutiny;
 	Call_StartForward(g_OnCommanderMutinyForward);
 	Call_PushCell(client);
-	Call_PushCell(commander);
+	Call_PushCell(TeamCommander[teamIDX]);
 	Call_PushCell(team);
 	
 	/* Does the plugin want to block the commander munity */
