@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "updater/standard.sp"
 
 #include <sdktools>
+#include <nd_stocks>
 #pragma newdecls required
 #include <sourcemod>
 
@@ -91,6 +92,8 @@ public Action startmutiny(int client, const char[] command, int argc)
 	if (commander == client) // When the commander resigns
 	{
 		TeamCommander[teamIDX] = -1; // Mark it in the engine
+		
+		PrintToAdmins("heyo! About to call resign forward", "a");
 		
 		/* Push a commander resigned forward for other plugins */
 		Action blockResign;
