@@ -45,6 +45,22 @@ stock bool ND_TeamHasCommander(int teamIDX)
 	return ND_GetCommanderOnTeam(teamIDX) != -1;	
 }
 
+stock int ND_GetCommanderCount()
+{
+	int count = 0;
+	
+	// For team consort and team empire
+	for (int team = 2; team < 4; team++)
+	{
+		if (ND_TeamHasCommander(team))
+		{
+			count++;	
+		}
+	}
+	
+	return count;
+}
+
 /**
  * Gets if a given client is a commander
  *
