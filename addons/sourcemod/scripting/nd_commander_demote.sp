@@ -57,12 +57,11 @@ char nd_demote_strings[DEMOTE_SCOUNT][] = {
 
 public void OnPluginStart()
 {
-	tNoBunkerDemoteTime 	= 	CreateConVar("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
+	tNoBunkerDemoteTime 		= 	CreateConVar("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
 	cDemotePercentage		= 	CreateConVar("sm_demote_percent", "51", "Specifies the percent rounded to nearest required for demotion");
 	cDemoteMinValue			= 	CreateConVar("sm_demote_vmin", "3", "Specifies the minimum number of votes required, regardless of percentage");
 	cDemoteMinTeamCount		=	CreateConVar("sm_demote_tmin", "4", "Specifies the minium number of players on a team required for commander demote");
 	
-	AddCommandListener(startmutiny, "startmutiny");
 	AddCommandListener(PlayerJoinTeam, "jointeam");
 	
 	RegConsoleCmd("sm_mutiny", CMD_Demote);
@@ -184,27 +183,15 @@ public Action TIMER_CheckCommanderDemote(Handle timer, any:userid)
 	return Plugin_Handled;
 }
 
-public Action startmutiny(int client, const char[] command, int argc)
-{	if (client == 0 || !IsClientInGame(client))
-		return Plugin_Continue;
-	
-	int team = GetClientTeam(client);
-	if (team < 2) //team != TEAM_CONSORT && team != TEAM_EMPIRE
-		return Plugin_Continue;
+public Action ND_OnCommanderResigned(int client, int team)
+{
+	resetVotes(team);
+	return Plugin_Continue;
+}
 
-	if (!ND_TeamHasCommander(team))
-		return Plugin_Continue;
-	
-	if (ND_IsCommander(client))
-	{
-		/* Note: Need to add a cooldown here for reapplying after resigning 
-		 * This is an exploitable issue commanders can use to reset demote votes
-		 */		
-		
-		resetVotes(team);
-		return Plugin_Continue;	
-	}
-	
+public Action ND_OnCommanderMutiny(int client, int commander, int team)
+{
+	PrintToAdmins("heyo! A commander mutiny vote started!");
 	callMutiny(client, team);	
 	return Plugin_Handled;
 }
