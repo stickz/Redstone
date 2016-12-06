@@ -170,16 +170,16 @@ public void OnClientDisconnect(int client) {
 
 public Action TIMER_CheckCommanderDemote(Handle timer, any:userid)
 {
-	int client = GetClientOfUserId(userid);
-	
+	int client = GetClientOfUserId(userid);	
 	if (client == INVALID_CLIENT)
 		return Plugin_Handled;
 		
-	int commanderTeam = GetCommanderTeam(client);	
-	
-	if (commanderTeam != NOT_COMMANDER)
-		if (!g_hasEnteredBunker[commanderTeam - 2])
-			demoteCommander(commanderTeam);			
+	if (ND_IsCommander(client))
+	{
+		int team = GetClientTeam(client);
+		if (!g_hasEnteredBunker[team - 2])
+			demoteCommander(team);	
+	}		
 		
 	return Plugin_Handled;
 }
@@ -196,7 +196,7 @@ public Action startmutiny(int client, const char[] command, int argc)
 	if (!ND_TeamHasCommander(team))
 		return Plugin_Continue;
 	
-	if (NDC_IsCommander(client))
+	if (ND_IsCommander(client))
 	{
 		/* Note: Need to add a cooldown here for reapplying after resigning 
 		 * This is an exploitable issue commanders can use to reset demote votes
@@ -213,7 +213,7 @@ public Action startmutiny(int client, const char[] command, int argc)
 void callMutiny(int client, int team)
 {
 	int teamIDX = team - 2,
-		com = GetCommanderClient(team);	
+		com = ND_GetCommanderOnTeam(team);
 	
 	if (com == -1) //The team you're trying to demote has no commander
 		PrintToChat(client, "%s %t.", PREFIX, "No Commander");
@@ -275,7 +275,7 @@ void demoteCommander(int team)
 {	
 	int commander = ND_GetTeamCommander(team);
 
-	if (commander != NOT_COMMANDER)
+	if (commander != NO_COMMANDER)
 	{
 		/* Demote the commadner */
 		FakeClientCommand(commander, "startmutiny");
