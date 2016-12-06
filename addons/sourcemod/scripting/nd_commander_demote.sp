@@ -21,10 +21,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <sourcecomms>
+#include <nd_stocks>
 
 #pragma newdecls required
 
-#include <nd_stocks>
 #include <nd_com_eng>
 #include <nd_redstone>
 #include <nd_rounds>
@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define INVALID_CLIENT 0
 #define PREFIX "\x05[xG]"
 
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name = "[ND] Commander Demote",
 	author = "Stickz",
@@ -158,7 +158,7 @@ public Action CMD_Demote(int client, int args)
 	return Plugin_Handled;
 }
 
-public Action:CMD_UnDemote(int client, int args)
+public Action CMD_UnDemote(int client, int args)
 {
 	//ReverseMutiny(client, GetClientTeam(client));
 	PrintToChat(client, "\x05[xG] This feature is incomplete but coming soon!");
@@ -169,7 +169,7 @@ public void OnClientDisconnect(int client) {
 	resetValues(client);
 }
 
-public Action TIMER_CheckCommanderDemote(Handle timer, any:userid)
+public Action TIMER_CheckCommanderDemote(Handle timer, any userid)
 {
 	int client = GetClientOfUserId(userid);	
 	if (client == INVALID_CLIENT)
@@ -311,7 +311,7 @@ void resetVotes(int team)
 	voteCount[teamIDX] = 0;
 }
 
-void displayVotes(int team, int remainder, client)
+void displayVotes(int team, int remainder, int client)
 {
 	char name[64];
 	GetClientName(client, name, sizeof(name));
