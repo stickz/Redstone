@@ -55,8 +55,7 @@ public Action Event_CommanderModeLeft(Event event, const char[] name, bool dontB
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	
 	int team = GetClientTeam(client) - 2;
-	if (team > 0) InCommanderMode[team] = false;	
-		
+	if (team > 0) InCommanderMode[team] = false;			
 	return Plugin_Continue;
 }
 
@@ -78,12 +77,11 @@ public Action startmutiny(int client, const char[] command, int argc)
 	if (team < 2) //team != TEAM_CONSORT && team != TEAM_EMPIRE
 		return Plugin_Continue;
 		
-	int teamIDX = team - 2;		
-	//int commander = GameRules_GetPropEnt("m_hCommanders", teamIDX);
-	
+	int teamIDX = team - 2;	
 	if (TeamCommander[teamIDX] == -1)
 		return Plugin_Continue;
 	
+	int commander = GameRules_GetPropEnt("m_hCommanders", teamIDX);
 	if (commander == client)
 	{
 		TeamCommander[teamIDX] = -1;
