@@ -55,6 +55,11 @@ stock NDC_GetCommanderBy(client)
 	return ND_GetCommanderOn(GetClientTeam(client));
 }
 
+/* */
+native int GetCommanderClient(int team);
+
+#define GetCC_LOADED() (GetFeatureStatus(FeatureType_Native, "GetCommanderClient") == FeatureStatus_Available)
+
 stock bool ND_TeamHasCommander(int team)
 {
 	return GetCC_LOADED() && GetCommanderClient(team) > -1;

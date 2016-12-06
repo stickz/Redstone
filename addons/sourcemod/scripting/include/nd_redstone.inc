@@ -51,3 +51,21 @@ stock int RED_GetTeamCount(int team)
 	
 	return clientCount;
 }
+
+stock int RED_OnTeamCount()
+{
+	if (!RED_VC_AVAILABLE())
+		return OnTeamCount();
+		
+	int clientCount = 0;
+	
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		if (RED_ValidClient(client) && GetClientTeam(client) > TEAM_SPEC)
+		{
+			clientCount++;
+		}	
+	}
+	
+	return clientCount;
+}

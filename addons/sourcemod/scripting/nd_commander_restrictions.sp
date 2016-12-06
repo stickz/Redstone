@@ -1,3 +1,23 @@
+/*
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_commander_restrictions/nd_commander_restrictions.txt"
+#include "updater/standard.sp"
+
 #include <sourcemod>
 #include <sdktools>
 #include <sourcecomms>
@@ -7,17 +27,16 @@
 #include <nd_balancer>
 #include <nd_gameme>
 
-#define VERSION "1.3"
-
 #define INVALID_CLIENT 0
+#define PREFIX "\x05[xG]"
 
 public Plugin myinfo =
 {
 	name = "[ND] Commander Restrictions",
 	author = "Stickz",
 	description = "Sets conditions for players to apply for commander",
-	version = VERSION,
-	url = "N/A"
+	version = "dummy",
+	url = "https://github.com/stickz/Redstone/"
 }
 
 enum Bools
@@ -68,6 +87,8 @@ public void OnPluginStart()
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
 	AutoExecConfig(true, "nd_commander_restrictions");
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
@@ -122,7 +143,7 @@ public Action TIMER_DisableRestrictions(Handle timer)
 		g_Bool[relaxedRestrictions] = true;
 		ServerCommand("nd_commander_mutiny_vote_threshold 65.0");
 		if (RED_OnTeamCount() > 10)
-			PrintToChatAll("\x05[xG] %t!", "Restrictions Relaxed"); //Commander restrictions relaxed
+			PrintToChatAll("%s %t!", PREFIX, "Restrictions Relaxed"); //Commander restrictions relaxed
 			//PrintToChatAll("\x05[xG] Commander restrictions lifted! Mutiny threshold set to 70%! (no commander)");
 	}
 }
@@ -132,7 +153,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 	#if defined _sourcecomms_included
 	if (IsSourceCommSilenced(client))
 	{
-		PrintToChat(client, "\x05[xG] %t!", "Silence Command"); //You cannot command while silenced
+		PrintToChat(client, "%s %t!", PREFIX, "Silence Command"); //You cannot command while silenced
 		return Plugin_Handled;
 	}
 	#endif
@@ -166,12 +187,12 @@ public Action Command_Apply(int client, const char[] command, int argc)
 					
 				else
 				{
-					PrintToChat(client, "\x05[xG] %t.", "Spawn Before Apply");
+					PrintToChat(client, "%s %t.", PREFIX, "Spawn Before Apply");
 					return Plugin_Handled;					
 				}
 				
 				#else
-				PrintToChat(client, "\x05[xG] %t.", "Spawn Before Apply");
+				PrintToChat(client, "%s %t.", PREFIX, "Spawn Before Apply");
 				return Plugin_Handled;				
 				#endif				
 			}
@@ -179,7 +200,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 			{
 				if (count > g_cvar[cRestrictMinLevel].IntValue)
 				{
-					PrintToChat(client, "\x05[xG] %t.", "Bellow Ten");
+					PrintToChat(client, "%s %t.", PREFIX, "Bellow Ten");
 					return Plugin_Handled;	
 				}
 				
@@ -187,7 +208,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 				int lowSkill = g_cvar[cRestrictSkillL].IntValue;			
 				if (GameME_SkillAvailible(client) && GameME_GetClientSkill(client) < lowSkill)
 				{
-					PrintToChat(client, "\x05[xG] %t!", "Skill Required", lowSkill);
+					PrintToChat(client, "%s %t!", PREFIX, "Skill Required", lowSkill);
 					return Plugin_Handled;				
 				}
 				#endif
@@ -201,7 +222,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 				{
 					if (clientLevel < g_cvar[cHighPlayerLevel].IntValue)
 					{
-						PrintToChat(client, "\x05[xG] %t.", "Fifty Five Required");
+						PrintToChat(client, "%s %t.", PREFIX, "Fifty Five Required");
 						return Plugin_Handled;
 					}
 					
@@ -209,7 +230,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 					int highSkill = g_cvar[cRestrictSkillH].IntValue;					
 					if (GameME_SkillAvailible(client) && GameME_GetClientSkill(client) < highSkill)
 					{
-						PrintToChat(client, "\x05[xG] %t!", "Skill Required", highSkill);
+						PrintToChat(client, "%s %t!", PREFIX, "Skill Required", highSkill);
 						return Plugin_Handled;	
 					}
 					#endif
@@ -217,7 +238,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 				
 				else if (clientLevel < count)
 				{
-					PrintToChat(client, "\x05[xG] %t.", "Total Level");
+					PrintToChat(client, "%s %t.", PREFIX, "Total Level");
 					return Plugin_Handled;
 				}
 			}		
