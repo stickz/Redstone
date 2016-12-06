@@ -43,23 +43,3 @@ native void WB_BalanceTeams();
 native void RefreshTBCache();
 
 #define RTBC_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "RefreshTBCache") == FeatureStatus_Available)
-
-public SharedPlugin:__pl_balancer =
-{
-	name = "nd_balance",
-	file = "nd_team_balancer.smx",
-	#if defined REQUIRE_PLUGIN
-		required = 1
-	#else
-		required = 0
-	#endif
-};
-
-#if !defined REQUIRE_PLUGIN
-public __pl_balancer_SetNTVOptional()
-{
-	MarkNativeAsOptional("GetAverageSkill");
-	MarkNativeAsOptional("WB_BalanceTeams");
-	MarkNativeAsOptional("RefreshTBCache");
-}
-#endif
