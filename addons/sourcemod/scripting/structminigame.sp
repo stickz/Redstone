@@ -19,10 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <colors>
 #include <clientprefs>
-
-#undef REQUIRE_PLUGIN
-#tryinclude <nd_commander>
-#define REQUIRE_PLUGIN
+#include <nd_com_eng>
 
 //Version is auto-filled by the travis builder
 public Plugin myinfo =
