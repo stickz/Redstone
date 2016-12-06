@@ -44,7 +44,7 @@ public void OnPluginStart()
 	HookEvent("promoted_to_commander", Event_CommanderPromo);
 	
 	g_OnCommanderResignForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell);
-	g_OnCommanderMutinyForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell, Param_Cell);
+	g_OnCommanderMutinyForward = CreateGlobalForward("ND_OnCommanderMutiny", ET_Event, Param_Cell, Param_Cell, Param_Cell);
 	
 	AddUpdaterLibrary(); //auto-updater
 }
