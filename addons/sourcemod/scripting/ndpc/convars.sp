@@ -25,6 +25,10 @@ char convarNames[CONVAR_COUNT][] = {
 	"spec_testing"
 };
 
+/* That's all, the algorithum is bellow this line which creates the convars
+ * And autoexecs them from a cfg file on the gameserver
+ */
+
 #define CONVAR_PREFIX "sm_ndpc_"
 #define DESCRIPTION_PREFIX "Enable "
 

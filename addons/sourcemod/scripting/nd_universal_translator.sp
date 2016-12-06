@@ -77,7 +77,8 @@ public void OnPluginStart()
 	
 	/* Create alaises for various requests */
 	createAliasesForBuildings();
-	createAliasesForResearch(); 
+	createAliasesForResearch();
+	createAliasesForLocations();
 	
 	BuildLogFilePath(); // for logging plugin actions
 	
