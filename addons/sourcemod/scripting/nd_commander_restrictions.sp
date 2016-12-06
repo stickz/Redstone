@@ -217,5 +217,6 @@ public Action ND_OnCommanderResigned(int client, int team)
 	if (GetConVarBool(g_cvar[eRestrictions]) && !g_Bool[relaxedRestrictions])
 		CreateTimer(60.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
 		
+	PrintToAdmins("heyo! the commander resigned", "a");		
 	return Plugin_Continue;
 }
