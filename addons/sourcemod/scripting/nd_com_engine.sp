@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #pragma newdecls required
 #include <sourcemod>
 
- public Plugin myinfo = 
+public Plugin myinfo = 
 {
 	name 		= "[ND] Commander Engine",
 	author		= "stickz",
@@ -34,11 +34,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 bool InCommanderMode[2] = {false, ...};
 int TeamCommander[2] = {-1, ...};
 
+Handle g_OnCommanderResignForward;
+Handle g_OnCommanderMutinyForward;
+
 public void OnPluginStart()
 {
 	HookEvent("player_entered_commander_mode", Event_CommanderModeEnter);
 	HookEvent("player_left_commander_mode", Event_CommanderModeLeft);
 	HookEvent("promoted_to_commander", Event_CommanderPromo);
+	
+	g_OnCommanderResignForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell);
+	g_OnCommanderMutinyForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell, Param_Cell);
 	
 	AddUpdaterLibrary(); //auto-updater
 }
@@ -82,13 +88,31 @@ public Action startmutiny(int client, const char[] command, int argc)
 		return Plugin_Continue;
 	
 	int commander = GameRules_GetPropEnt("m_hCommanders", teamIDX);
-	if (commander == client)
+	if (commander == client) // When the commander resigns
 	{
-		TeamCommander[teamIDX] = -1;
-		return Plugin_Continue;
+		TeamCommander[teamIDX] = -1; // Mark it in the engine
+		
+		/* Push a commander resigned forward for other plugins */
+		Action blockResign;
+		Call_StartForward(g_OnCommanderResignForward);
+		Call_PushCell(client);
+		Call_PushCell(team);
+		
+		/* Does the plugin want to block the commander from resigning? */
+		Call_Finish(blockResign);		
+		return blockResign;
 	}
 	
-	return Plugin_Continue;
+	/* Push a commander mutiny forward for other plugins */
+	Action blockMutiny;
+	Call_StartForward(g_OnCommanderMutinyForward);
+	Call_PushCell(client);
+	Call_PushCell(commander);
+	Call_PushCell(team);
+	
+	/* Does the plugin want to block the commander munity */
+	Call_Finish(blockMutiny);	
+	return blockMutiny;
 }
 
 /* Natives */
