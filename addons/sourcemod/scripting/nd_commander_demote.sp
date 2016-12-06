@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcecomms>
 
 #include <nd_stocks>
-#include <nd_commander>
+#include <nd_com_eng>
 #include <nd_redstone>
 #include <nd_rounds>
 
@@ -273,7 +273,7 @@ void castDemoteVote(int team, int teamIDX, int client)
 
 void demoteCommander(int team)
 {	
-	int commander = GetCommanderClient(team);
+	int commander = ND_GetTeamCommander(team);
 
 	if (commander != NOT_COMMANDER)
 	{
