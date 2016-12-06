@@ -43,7 +43,6 @@ public Plugin myinfo =
 
 enum Bools
 {
-	enableDemote,
 	relaxedRestrictions,
 	timeOut
 };
