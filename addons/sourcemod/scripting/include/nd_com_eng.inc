@@ -45,6 +45,22 @@ stock bool ND_TeamHasCommander(int teamIDX)
 	return ND_GetCommanderOnTeam(teamIDX) != -1;	
 }
 
+stock int ND_GetCommanderCount()
+{
+	int count = 0;
+	
+	// For team consort and team empire
+	for (int team = 2; team < 4; team++)
+	{
+		if (ND_TeamHasCommander(team))
+		{
+			count++;	
+		}
+	}
+	
+	return count;
+}
+
 /**
  * Gets if a given client is a commander
  *
@@ -60,3 +76,7 @@ stock bool ND_IsCommander(int clientIDX)
 {
 	return !ND_ICC_AVAILABLE() ? false : ND_IsCommanderClient(clientIDX);
 }
+
+/* A couple forwards */
+forward Action ND_OnCommanderResigned(int client, int team)
+forward Action ND_OnCommanderMutiny(int client, int commander, int team)

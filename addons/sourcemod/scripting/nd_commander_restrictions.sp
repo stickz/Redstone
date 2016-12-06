@@ -26,6 +26,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_redstone>
 #include <nd_balancer>
 #include <nd_gameme>
+#include <nd_com_eng>
+#include <nd_rounds>
 
 #define INVALID_CLIENT 0
 #define PREFIX "\x05[xG]"
@@ -41,9 +43,6 @@ public Plugin myinfo =
 
 enum Bools
 {
-	enableDemote,
-	roundHasEnded,
-	roundHasStarted,
 	relaxedRestrictions,
 	timeOut
 };
@@ -61,10 +60,7 @@ enum convars
 };
 
 ConVar g_cvar[convars];
-int commander[2];
-
 bool g_Bool[Bools];
-bool g_isCommander[MAXPLAYERS+1] = {false, ...};
 
 public void OnPluginStart()
 {
@@ -82,8 +78,6 @@ public void OnPluginStart()
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
-	HookEvent("promoted_to_commander", Event_CommanderPromo);
-	
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
 	AutoExecConfig(true, "nd_commander_restrictions");
@@ -91,53 +85,24 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
-{
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
 	CreateTimer(105.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
-	
-	g_Bool[roundHasStarted] = true;
-	g_Bool[roundHasEnded] = false;
 }
 
-void resetForGameStart()
-{
-	g_Bool[timeOut] = false;	
-	
-	commander[0] = -1;
-	commander[1] = -1;
-
-	for (int client = 1; client <= MaxClients; client++)
-	{
-		g_isCommander[client] = false;
-	}
-}
-
-public void OnMapStart()
-{
-	resetForGameStart();
+public void OnMapStart() {
+	g_Bool[timeOut] = false;
 }
 
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
 {		
-	g_Bool[roundHasStarted] = false;
 	g_Bool[relaxedRestrictions] = false;
-	g_Bool[roundHasEnded] = true;
 	g_Bool[timeOut] = false;
-}
-
-public Action Event_CommanderPromo(Event event, const char[] name, bool dontBroadcast)
-{
-	int client = GetClientOfUserId(GetEventInt(event, "userid"));
-	int team = GetEventInt(event, "teamid") -2;
-	
-	commander[team] = client;
-	g_isCommander[client] = true;
 }
 
 public Action TIMER_DisableRestrictions(Handle timer)
 {	
 	/* If both teams don't have an commander */
-	if (getCommanderCount() != 2)
+	if (ND_GetCommanderCount() != 2)
 	{
 		g_Bool[timeOut] = true;
 		g_Bool[relaxedRestrictions] = true;
@@ -166,12 +131,11 @@ public Action Command_Apply(int client, const char[] command, int argc)
 		#endif
 		
 		#if defined _nd_balancer_included
-		if (g_Bool[roundHasStarted] && GAS_AVAILBLE() && GetAverageSkill() < g_cvar[aRestrictDisable].IntValue)
+		if (ND_RoundStarted() && GAS_AVAILBLE() && GetAverageSkill() < g_cvar[aRestrictDisable].IntValue)
 			return Plugin_Continue;
 		#endif
 
 		int count = RED_OnTeamCount();
-
 		if (count < g_cvar[disRestrictions].IntValue)
 			return Plugin_Continue;		
 			
@@ -247,76 +211,11 @@ public Action Command_Apply(int client, const char[] command, int argc)
 	return Plugin_Continue;
 }
 
-public Action startmutiny(int client, const char[] command, int argc)
+public Action ND_OnCommanderResigned(int client, int team)
 {
-	if (client == 0 || !IsClientInGame(client))
-		return Plugin_Continue;
-	
-	int team = GetClientTeam(client);
-	if (team < 2) //team != TEAM_CONSORT && team != TEAM_EMPIRE
-		return Plugin_Continue;
-	
-	int teamIDX = team - 2;
-	
-	if (commander[teamIDX] == -1)
-		return Plugin_Continue;
-	
-	if (g_isCommander[client])
-	{
-		setCommanderStatus(false, client, teamIDX);
+	if (GetConVarBool(g_cvar[eRestrictions]) && !g_Bool[relaxedRestrictions])
+		CreateTimer(60.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
 		
-		if (GetConVarBool(g_cvar[eRestrictions]) && !g_Bool[relaxedRestrictions])
-			CreateTimer(60.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
-	}
-	
+	PrintToAdmins("heyo! the commander resigned", "a");		
 	return Plugin_Continue;
-}
-
-void setCommanderStatus(bool status, int client, int teamIDX)
-{
-	g_isCommander[client] = status;	
-	commander[teamIDX] = status ? client : -1;
-}
-
-int getCommanderCount()
-{
-	int commanderCount;
-	
-	for (int client = 1; client <= MaxClients; client++)
-		if (RED_IsValidClient(client))
-		{
-			if (client == commander[0] || client == commander[1])
-				commanderCount++;
-		}
-			
-	return commanderCount;
-}
-
-int getCommanderTeam(int client) {
-	return g_isCommander[client] ? GetClientTeam(client) : -1;
-}
-
-functag NativeCall public(Handle:plugin, numParams);
-
-/* Natives */
-public Native_GetCommanderTeam(Handle:plugin, numParams)
-{
-	/* Retrieve the parameter */
-	new client = GetNativeCell(1);
-	return getCommanderTeam(client);
-}
-
-public Native_GetCommanderClient(Handle:plugin, numParams)
-{
-	/* Retrieve the parameter */
-	new team = GetNativeCell(1);
-	return commander[team - 2];
-}
-
-public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
-{
-   CreateNative("GetCommanderTeam", Native_GetCommanderTeam);
-   CreateNative("GetCommanderClient", Native_GetCommanderClient);
-
-   return APLRes_Success;
 }
