@@ -87,9 +87,10 @@ public Action startmutiny(int client, const char[] command, int argc)
 	int teamIDX = team - 2;	
 	if (TeamCommander[teamIDX] == -1)
 		return Plugin_Continue;
+		
+	PrintToAdmins("heyo! mut event called with commander", "a");
 	
-	int commander = GameRules_GetPropEnt("m_hCommanders", teamIDX);
-	if (commander == client) // When the commander resigns
+	if (TeamCommander[teamIDX] == client) // When the commander resigns
 	{
 		TeamCommander[teamIDX] = -1; // Mark it in the engine
 		
@@ -106,6 +107,7 @@ public Action startmutiny(int client, const char[] command, int argc)
 		return blockResign;
 	}
 	
+	int commander = -1; // temp hack
 	/* Push a commander mutiny forward for other plugins */
 	Action blockMutiny;
 	Call_StartForward(g_OnCommanderMutinyForward);
