@@ -212,20 +212,10 @@ public Action Command_Apply(int client, const char[] command, int argc)
 	return Plugin_Continue;
 }
 
-public Action startmutiny(int client, const char[] command, int argc)
+public Action ND_OnCommanderResigned(int client, int team)
 {
-	if (client == 0 || !IsClientInGame(client))
-		return Plugin_Continue;
-	
-	int team = GetClientTeam(client);
-	if (team < 2 || !ND_TeamHasCommander(team))
-		return Plugin_Continue;
-	
-	if (!ND_IsCommander(client)) // When the commander resigns
-	{
-		if (GetConVarBool(g_cvar[eRestrictions]) && !g_Bool[relaxedRestrictions])
-			CreateTimer(60.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
-	}
-	
+	if (GetConVarBool(g_cvar[eRestrictions]) && !g_Bool[relaxedRestrictions])
+		CreateTimer(60.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
+		
 	return Plugin_Continue;
 }
