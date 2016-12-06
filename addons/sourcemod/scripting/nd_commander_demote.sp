@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_rounds>
 
 #define INVALID_CLIENT 0
+#define PREFIX "\x05[xG]"
 
 public Plugin:myinfo =
 {
@@ -215,33 +216,33 @@ void callMutiny(int client, int team)
 		com = GetCommanderClient(team);	
 	
 	if (com == -1) //The team you're trying to demote has no commander
-		PrintToChat(client, "\x05[xG] %t.", "No Commander");
+		PrintToChat(client, "%s %t.", PREFIX, "No Commander");
 	
 	else if (CheckCommandAccess(com, "mutiny_immunity", ADMFLAG_GENERIC, true))
 		return; //Server adminisators can't be demoted, to prevent conflicts of interest with moderation
 	
 	else if (team < 2)
-		PrintToChat(client, "\x05[xG] %t.", "On Team"); //You must be on a team, to vote commander demote
+		PrintToChat(client, "%s %t.", PREFIX, "On Team"); //You must be on a team, to vote commander demote
 		
 	else if (g_hasVoted[teamIDX][client])
-		PrintToChat(client, "\x05[xG] %t.", "Already Voted"); //You've already voted to demote the commander
+		PrintToChat(client, "%s %t.", PREFIX, "Already Voted"); //You've already voted to demote the commander
 	
 	else if (ND_RoundEnded())
-		PrintToChat(client, "\x05[xG] %t.", "Round End"); //You cannot demote after the round has ended
+		PrintToChat(client, "%s %t.", PREFIX, "Round End"); //You cannot demote after the round has ended
 	
 	else if (!ND_RoundStarted())
-		PrintToChat(client, "\x05[xG] %t.", "Round Started"); //You cannot demote before the round has started
+		PrintToChat(client, "%s %t.", PREFIX, "Round Started"); //You cannot demote before the round has started
 	
 	else if (g_hasBeenDemoted[client] && voteCount[teamIDX] == 0)
-		PrintToChat(client, "\x05[xG] %t!", "Demote First"); //You cannot cast the first demote vote after demotion
+		PrintToChat(client, "%s %t!", PREFIX, "Demote First"); //You cannot cast the first demote vote after demotion
 		
 	#if defined _sourcecomms_included
 	else if (IsSourceCommSilenced(client) && voteCount[teamIDX] == 0)
-		PrintToChat(client, "\x05[xG] %t!", "Silence First"); //You cannot cast the first demote vote while silenced
+		PrintToChat(client, "%s %t!", PREFIX, "Silence First"); //You cannot cast the first demote vote while silenced
 	#endif
 	
 	else if (RED_GetTeamCount(team) < cDemoteMinTeamCount.IntValue)
-		PrintToChat(client, "\x05[xG] %t.", "Four Required"); //x amount team players required to vote demote. phrase needs fixed.
+		PrintToChat(client, "%s %t.", PREFIX, "Four Required"); //x amount team players required to vote demote. phrase needs fixed.
 
 	else
 		castDemoteVote(team, teamIDX, client); //Cast the vote to demote the commander
