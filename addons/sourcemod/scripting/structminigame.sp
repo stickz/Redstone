@@ -27,7 +27,7 @@ public Plugin myinfo =
 	name 		= "[ND] Structure Killings",
 	author 		= "databomb edited by stickz",
 	description 	= "Provides a mini-game and announcement for structure killing",
-	version 	= "dummy",
+	version 	= "rebuild",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
