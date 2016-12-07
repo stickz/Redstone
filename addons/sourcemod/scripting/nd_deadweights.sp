@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_research>
 #include <nd_classes>
 #include <nd_balancer>
-#include <nd_com_engine>
+#include <nd_com_eng>
 #include <nd_breakdown>
 
 #define DEBUG 0
