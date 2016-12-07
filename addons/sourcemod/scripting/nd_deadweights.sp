@@ -33,7 +33,7 @@ public Plugin myinfo =
 	name 		= "[ND] Dead Weights",
 	author 		= "stickz",
 	description 	= "Allows assigning players to exo seige kit",
-    	version 	= "dummy",
+    	version 	= "rebuild",
     	url     	= "https://github.com/stickz/Redstone/"
 }
 
