@@ -303,7 +303,7 @@ bool CheckCommonFailure(int client, int type, int args)
         	return true;
     	}
     	
-    	if (!NDC_IsCommander(client)) 
+    	if (!ND_IsCommander(client)) 
 	{
 		PrintToChat(client, "%s %t", PREFIX, "Only Commanders"); //snipers limiting is available only for Commander
 		return true;
