@@ -16,15 +16,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <sdktools>
+
 #include <nd_stocks>
 #include <nd_research>
 #include <nd_classes>
-
-#undef REQUIRE_PLUGIN
-#tryinclude <nd_balancer>
-#tryinclude <nd_commander>
-#tryinclude <nd_breakdown>
-#define REQUIRE_PLUGIN
+#include <nd_balancer>
+#include <nd_com_engine>
+#include <nd_breakdown>
 
 #define DEBUG 0
 #define PREFIX "\x05[xG]"
