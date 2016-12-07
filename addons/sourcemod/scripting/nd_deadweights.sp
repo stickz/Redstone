@@ -117,7 +117,7 @@ public Action CMD_LockPlayerSeige(int client, int args)
 	if (client_team < 2)
 		return Plugin_Handled;  
 
-	if (!NDC_IsCommander(client)) 
+	if (!ND_IsCommander(client))
 	{
 		PrintToChat(client, "%s %t", PREFIX, "Only Commanders"); //Player Seige locking is available only for Commander
 		return Plugin_Handled;
