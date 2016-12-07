@@ -19,8 +19,7 @@ native bool ND_IsInCommanderMode(int clientIDX);
 
 #define ND_IICM_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_IsInCommanderMode") == FeatureStatus_Available)
 
-stock bool ND_InCommanderMode(int clientIDX)
-{
+stock bool ND_InCommanderMode(int clientIDX) {
 	return ND_IICM_AVAILABLE() && ND_IsInCommanderMode(clientIDX);
 }
 
@@ -33,15 +32,13 @@ stock bool ND_InCommanderMode(int clientIDX)
  * @return clientIDX of commander.
  */
 native int ND_GetTeamCommander(int teamIDX);
-#define ND_GTC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_IsInCommanderMode") == FeatureStatus_Available)
+#define ND_GTC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_GetTeamCommander") == FeatureStatus_Available)
 
-stock int ND_GetCommanderOnTeam(int teamIDX)
-{
+stock int ND_GetCommanderOnTeam(int teamIDX) {
 	return !ND_GTC_AVAILABLE() ? -1 : ND_GetTeamCommander(teamIDX);
 }
 
-stock bool ND_TeamHasCommander(int teamIDX)
-{
+stock bool ND_TeamHasCommander(int teamIDX) {
 	return ND_GetCommanderOnTeam(teamIDX) != -1;	
 }
 
@@ -70,11 +67,10 @@ stock int ND_GetCommanderCount()
  * @return bool (true, false).
  */
 native bool ND_IsCommanderClient(int clientIDX);
-#define ND_ICC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_IsInCommanderMode") == FeatureStatus_Available)
+#define ND_ICC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_IsCommanderClient") == FeatureStatus_Available)
 
-stock bool ND_IsCommander(int clientIDX)
-{
-	return !ND_ICC_AVAILABLE() ? false : ND_IsCommanderClient(clientIDX);
+stock bool ND_IsCommander(int clientIDX) {
+	return ND_ICC_AVAILABLE() && ND_IsCommanderClient(clientIDX);
 }
 
 /* A couple forwards */
