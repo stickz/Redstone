@@ -193,7 +193,6 @@ public Action ND_OnCommanderResigned(int client, int team)
 
 public Action ND_OnCommanderMutiny(int client, int commander, int team)
 {
-	PrintToAdmins("heyo! A commander mutiny vote started!", "a");
 	callMutiny(client, team);	
 	return Plugin_Handled;
 }
