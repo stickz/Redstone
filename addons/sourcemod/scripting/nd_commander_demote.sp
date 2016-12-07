@@ -86,7 +86,7 @@ void resetForGameStart()
 {
 	for (int i = 0; i < 2; i++)
 	{
-		voteCount[i] = -1;
+		voteCount[i] = 0;
 		g_hasEnteredBunker[i] = false;
 	}
 
@@ -246,7 +246,7 @@ void castDemoteVote(int team, int teamIDX, int client)
 	
 	/* Enforce a minium number of votes required for demote, regardless of percent */
 	int minDemoteCount = cDemoteMinValue.IntValue;
-	int demoteCount = demotePercent < minDemoteCount ? minDemoteCount : demotePercent;
+	int demoteCount = minDemoteCount > demotePercent ? minDemoteCount : demotePercent;
 
 	/* Get the remainder of votes needed to demote the commander */
 	int Remainder = demoteCount - voteCount[teamIDX];
