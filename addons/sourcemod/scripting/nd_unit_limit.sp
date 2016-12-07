@@ -90,7 +90,7 @@ public Plugin myinfo =
 	name		= "[ND] Unit Limiter",
 	author 		= "stickz, yed_",
 	description 	= "Limit the number of units by class type on a team",
-	version		= "dummy",
+	version		= "rebuild",
 	url 		= "https://github.com/stickz/Redstone/"
 }
 
