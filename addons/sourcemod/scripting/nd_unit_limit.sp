@@ -15,10 +15,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include <sdktools>
-
-#undef REQUIRE_PLUGIN
-#tryinclude <nd_commander>
-#define REQUIRE_PLUGIN
+#include <nd_com_engine>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_unit_limit/nd_unit_limit.txt"
