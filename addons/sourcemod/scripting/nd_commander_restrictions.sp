@@ -1,6 +1,7 @@
 /*
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
+
 as published by the Free Software Foundation; either version 2
 of the License, or (at your option) any later version.
 
@@ -21,10 +22,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <sourcecomms>
+#include <nd_balancer>
+#pragma newdecls required
 
 #include <nd_stocks>
 #include <nd_redstone>
-#include <nd_balancer>
 #include <nd_gameme>
 #include <nd_com_eng>
 #include <nd_rounds>
@@ -73,7 +75,7 @@ public void OnPluginStart()
 	g_cvar[cRestrictSkillH]		=	CreateConVar("sm_commander_hskill", "15000", "Sets the maximum skill threshold required to command");
 	g_cvar[disRestrictions]		= 	CreateConVar("sm_restrict_enable", "8", "Sets number of players on team to enable commadner restrictions");
 	
-	AddCommandListener(CommandListener:Command_Apply, "applyforcommander");
+	AddCommandListener(view_as<CommandListener>(Command_Apply), "applyforcommander");
 	
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
