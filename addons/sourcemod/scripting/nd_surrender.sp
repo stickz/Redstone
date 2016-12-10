@@ -41,7 +41,6 @@ Handle SurrenderDelayTimer = INVALID_HANDLE;
 ConVar cvarMinPlayers;
 ConVar cvarSurrenderPercent;
 ConVar cvarSurrenderTimeout;
-ConVar 
 
 #define PREFIX "\x05[xG]"
 
