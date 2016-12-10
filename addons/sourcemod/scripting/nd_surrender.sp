@@ -62,7 +62,6 @@ public void OnPluginStart()
 	cvarSurrenderPercent 	= CreateConVar("sm_surrender_percent", "51", "Set's the percentage required to surrender.");
 	cvarSurrenderTimeout	= CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
 	
-	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("round_end", Event_RoundDone, EventHookMode_PostNoCopy);
 	HookEvent("timeleft_5s", Event_RoundDone, EventHookMode_PostNoCopy);
 	
@@ -73,7 +72,7 @@ public void OnPluginStart()
 	AutoExecConfig(true, "nd_surrender"); // for plugin convars
 }
 
-public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
+public void ND_OnRoundStarted()
 {
 	voteCount[0] = 0;
 	voteCount[1] = 0;

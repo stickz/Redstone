@@ -70,7 +70,6 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_rtv", CMD_RockTheVote);
 	RegConsoleCmd("sm_changemap", CMD_RockTheVote);
 	
-	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
 	LoadTranslations("nd_rockthevote.phrases");
@@ -80,14 +79,12 @@ public void OnPluginStart()
 	
 	CreatePluginConvars(); // create convars
 	
-	if (ND_RoundStarted()) 
-	{
+	if (ND_RoundStarted()) {
 		StartRTVDisableTimer();
 	}
 }
 
-public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
-{	
+public void ND_OnRoundStarted() {
 	StartRTVDisableTimer();
 }
 

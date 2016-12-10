@@ -17,6 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <sdkhooks>
+#include <nd_rounds>
 
 #define DEBUG 0
 
@@ -44,13 +45,12 @@ public void OnPluginStart()
 {
 	HAX = new ArrayList(4);
     
-	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
     	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
     	AddUpdaterLibrary(); //auto-updater
 }
 
-public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
+public void ND_OnRoundStarted()
 {
     	char map[64];
     	GetCurrentMap(map, sizeof(map));
