@@ -37,6 +37,7 @@ int TeamCommander[2] = {-1, ...};
 
 Handle g_OnCommanderResignForward;
 Handle g_OnCommanderMutinyForward;
+Handle g_OnCommanderPromotedForward;
 
 public void OnPluginStart()
 {
@@ -46,6 +47,7 @@ public void OnPluginStart()
 	
 	g_OnCommanderResignForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell);
 	g_OnCommanderMutinyForward = CreateGlobalForward("ND_OnCommanderMutiny", ET_Event, Param_Cell, Param_Cell, Param_Cell);
+	g_OnCommanderPromotedForward = CreateGlobalForward("ND_OnCommanderPromoted", ET_Ignore, Param_Cell, Param_Cell);
 	
 	AddCommandListener(startmutiny, "startmutiny");
 	
@@ -73,6 +75,13 @@ public Action Event_CommanderPromo(Event event, const char[] name, bool dontBroa
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	int team = event.GetInt("teamid") - 2;
 	TeamCommander[team] = client;
+	
+	/* Fire a forward when a commander is promoted */
+	Action dummy;
+	Call_StartForward(g_OnCommanderPromotedForward);
+	Call_PushCell(client);
+	Call_PushCell(team);
+	Call_Finish(dummy);
 	
 	return Plugin_Continue;
 }

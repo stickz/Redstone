@@ -25,6 +25,7 @@
 #include <sdktools>
 #include <sdkhooks>
 #include <nd_stocks>
+#include <nd_com_eng>
 
 #define MAX_LOG_WEAPONS 28
 #define IGNORE_SHOTS_START 16
@@ -291,10 +292,8 @@ public Action Event_RoundWin(Event event, const char[] name, bool dontBroadcast)
 	WstatsDumpAll();
 }
 
-public Action Event_PromotedToCommander(Event event, const char[] name, bool dontBroadcast)
-{
-	//LogPlayerEvent(client, "triggered, "promoted_to_commander)
-	LogPlayerEvent(GetClientOfUserId(event.GetInt("userid")), "triggered", "promoted_to_commander");
+public void ND_OnCommanderPromoted(int client, int team) {
+	LogPlayerEvent(client, "triggered", "promoted_to_commander");
 }
 
 public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBroadcast)
@@ -384,7 +383,6 @@ stock void FixWeaponLoggingName(char[] sWeapon, maxlength)
 void HookEvents()
 {
 	HookEvent("player_death", Event_PlayerDeathPre, EventHookMode_Pre);
-	HookEvent("promoted_to_commander", Event_PromotedToCommander);
 	HookEvent("resource_captured", Event_ResourceCaptured);
 	HookEvent("structure_damage_sparse", Event_StructureDamageSparse);
 	HookEvent("structure_death", Event_StructureDeath);
