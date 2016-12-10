@@ -53,6 +53,7 @@ enum {
 void createAliasesForResearch()
 {
 	nd_research_aliases[Advanced_Kits][0] = "kits";
+	nd_research_aliases[Advanced_Kits][1] = "siege";
 	
 	nd_research_aliases[Field_Tactics][0] = "field";
 	nd_research_aliases[Field_Tactics][1] = "feild";
