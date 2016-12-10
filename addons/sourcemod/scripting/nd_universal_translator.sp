@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <nd_stocks>
 #include <nd_com_eng>
+#include <nd_rounds>
 
 public Plugin myinfo =
 {
@@ -68,7 +69,6 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	/* Hook needed events */
-	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("promoted_to_commander", Event_CommanderPromo);
 	
 	AddUpdaterLibrary(); //auto-updater
@@ -87,7 +87,7 @@ public void OnPluginStart()
 	LoadTranslations("nd_universal_translator.phrases");
 }
 
-public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
+public void ND_OnRoundStarted() {
 	PrintTeamLanguages(); //print client languages at round start
 }
 
