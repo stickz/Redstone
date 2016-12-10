@@ -38,13 +38,10 @@ public Action CMD_PrintCLang(int client, int args)
 	return Plugin_Handled;
 }
 
-public Action Event_CommanderPromo(Event event, const char[] name, bool dontBroadcast)
+public void ND_OnCommanderPromoted(int client, int team)
 {
 	if (g_Enable[CommanderLang].BoolValue) //only use feature if enabled
 	{
-		int client = GetClientOfUserId(event.GetInt("userid"));
-		int team = event.GetInt("teamid");
-		
 		if (IsValidClient(client))
 		{
 			char langName[32];
