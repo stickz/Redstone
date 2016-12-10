@@ -41,6 +41,7 @@ Handle SurrenderDelayTimer = INVALID_HANDLE;
 ConVar cvarMinPlayers;
 ConVar cvarSurrenderPercent;
 ConVar cvarSurrenderTimeout;
+ConVar 
 
 #define PREFIX "\x05[xG]"
 
@@ -193,7 +194,7 @@ void checkSurrender(int team, int teamCount, bool showVotes = false, int client 
 	if (teamFloat < minTeamFoat)
 		teamFloat = minTeamFoat;
 		
-	int Remainder = RoundToCeil(teamFloat) - voteCount[team -2];
+	int Remainder = RoundToFloor(teamFloat) - voteCount[team -2];
 		
 	if (Remainder <= 0)
 		endGame(team);
