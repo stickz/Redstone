@@ -77,7 +77,6 @@ public void OnPluginStart()
 	
 	AddCommandListener(view_as<CommandListener>(Command_Apply), "applyforcommander");
 	
-	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
 	LoadTranslations("nd_commander_restrictions.phrases");
@@ -87,7 +86,7 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
+public void ND_OnRoundStarted() {
 	CreateTimer(105.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
