@@ -110,7 +110,7 @@
 	}
 	"structure_boost3"
 	{
-		"cost"	"22500"
+		"cost"	"25000"
 		"time"	"30"
 		"name"			"#ND_Research_Structure_Upgrades3_Name"
 		"description"	"#ND_Research_Structure_Upgrades3_Desc"
