@@ -72,7 +72,6 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_unmutiny", CMD_UnDemote);
 	RegConsoleCmd("sm_undemote", CMD_UnDemote);
 
-	HookEvent("promoted_to_commander", Event_CommanderPromo);
 	HookEvent("player_entered_bunker_building", Event_EnterBunker);
 	
 	LoadTranslations("nd_commander_restrictions.phrases");
@@ -121,12 +120,8 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	return Plugin_Continue;
 }
 
-public Action Event_CommanderPromo(Event event, const char[] name, bool dontBroadcast)
-{
-	int userid = GetEventInt(event, "userid");
-	float demoteTime = tNoBunkerDemoteTime.FloatValue;
-	
-	CreateTimer(demoteTime, TIMER_CheckCommanderDemote, userid, TIMER_FLAG_NO_MAPCHANGE);
+public void ND_OnCommanderPromoted(int client, int team) {
+	CreateTimer(tNoBunkerDemoteTime.FloatValue, TIMER_CheckCommanderDemote, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action Event_EnterBunker(Event event, const char[] name, bool dontBroadcast)
