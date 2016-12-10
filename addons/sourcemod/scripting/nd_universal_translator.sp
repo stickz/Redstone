@@ -68,9 +68,6 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	/* Hook needed events */
-	HookEvent("promoted_to_commander", Event_CommanderPromo);
-	
 	AddUpdaterLibrary(); //auto-updater
 	CreateConVars(); //create ConVars (from convars.sp)
 	RegComLangCommands(); // for commander_lang.sp
