@@ -73,6 +73,7 @@ stock bool ND_IsCommander(int clientIDX) {
 	return ND_ICC_AVAILABLE() && ND_IsCommanderClient(clientIDX);
 }
 
-/* A couple forwards */
+/* A few forwards */
 forward Action ND_OnCommanderResigned(int client, int team);
 forward Action ND_OnCommanderMutiny(int client, int commander, int team);
+forward void ND_OnCommanderPromoted(int client, int team);
