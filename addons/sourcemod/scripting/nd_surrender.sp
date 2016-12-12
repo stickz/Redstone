@@ -206,30 +206,6 @@ void callSurrender(int client)
 	}
 }
 
-void callVeto(int client)
-{
-	if (!ND_IsCommander(client))
-	{
-		PrintToChat(client, "%s %t!", PREFIX, "Veto Commander Only");
-		return;	
-	}
-	
-	int team = GetClientTeam(client);
-	int teamIDX = team -2;
-	
-	else if (g_hasUsedVeto[teamIDX])
-		PrintToChat(client, "%s %t!", PREFIX, "Veto Already Used");
-		
-	else if (g_Bool[roundHasEnded])
-		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
-		
-	else
-	{
-		g_hasUsedVeto[teamIDX] = true;
-		PrintToChatTeam(team, "Commander Used Veto");	
-	}
-}
-
 void checkSurrender(int team, int teamCount, bool showVotes = false, int client = -1)
 {
 	float teamFloat = teamCount * (cvarSurrenderPercent.FloatValue / 100.0);	
@@ -246,6 +222,41 @@ void checkSurrender(int team, int teamCount, bool showVotes = false, int client 
 	
 	else if (showVotes)
 		displayVotes(team, Remainder, client);	
+}
+
+void callVeto(int client)
+{
+	if (!ND_IsCommander(client))
+	{
+		PrintToChat(client, "%s %t!", PREFIX, "Veto Commander Only");
+		return;	
+	}
+	
+	int team = GetClientTeam(client);
+	int teamIDX = team -2;
+	
+	if (g_hasUsedVeto[teamIDX])
+		PrintToChat(client, "%s %t!", PREFIX, "Veto Already Used");
+		
+	else if (g_Bool[roundHasEnded])
+		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
+		
+	else
+	{
+		g_hasUsedVeto[teamIDX] = true;
+		printVetoUsed(team);	
+	}
+}
+
+void printVetoUsed(int team)
+{
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		if (IsValidClient(client) && GetClientTeam(client) == team)
+		{
+			PrintToChat(client, "%s %t", PREFIX, "Commander Used Veto");
+		}
+	}
 }
 
 void resetValues(int client)
