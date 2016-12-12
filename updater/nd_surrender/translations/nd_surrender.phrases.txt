@@ -40,6 +40,11 @@
 		"en"		"The round has already ended"
 	}
 	
+	"Low Bunker Health"
+	{
+		"en"		"You cannot surrender with low bunker health"	
+	}
+	
 	"Consort Surrendered"
 	{
 		"en"		"Consortium has surrendered"
