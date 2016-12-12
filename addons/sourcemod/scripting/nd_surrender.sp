@@ -34,6 +34,7 @@ enum Bools
 };
 
 int voteCount[2];
+int teamBunkers[2];
 bool g_Bool[Bools];
 bool g_hasUsedVeto[2] = {false, ...};
 bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... };
@@ -43,6 +44,7 @@ Handle SurrenderDelayTimer = INVALID_HANDLE;
 ConVar cvarMinPlayers;
 ConVar cvarSurrenderPercent;
 ConVar cvarSurrenderTimeout;
+ConVar cvarLowBunkerHealth;
 
 #define PREFIX "\x05[xG]"
 
@@ -65,9 +67,11 @@ public void OnPluginStart()
 	cvarMinPlayers		= CreateConVar("sm_surrender_minp", "4", "Set's the minimum number of team players required to surrender.");
 	cvarSurrenderPercent 	= CreateConVar("sm_surrender_percent", "51", "Set's the percentage required to surrender.");
 	cvarSurrenderTimeout	= CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
+	cvarLowBunkerHealth	= CreateConVar("sm_surrender_bh", "10000", "Sets the min bunker health required to surrender");
 	
 	HookEvent("round_end", Event_RoundDone, EventHookMode_PostNoCopy);
 	HookEvent("timeleft_5s", Event_RoundDone, EventHookMode_PostNoCopy);
+	HookEvent("structure_damage_sparse", Event_BunkerDamage);
 	
 	LoadTranslations("nd_surrender.phrases"); // for all chat messages
 	LoadTranslations("numbers.phrases"); // for one,two,three etc.
@@ -82,6 +86,7 @@ public void ND_OnRoundStarted()
 	{
 		voteCount[i] = 0;
 		g_hasUsedVeto[i] = false;
+		teamBunkers[i] = -1;
 	}
 	
 	float surrenderSeconds = cvarSurrenderTimeout.FloatValue * 60;
@@ -96,6 +101,8 @@ public void ND_OnRoundStarted()
 		g_hasVotedEmpire[client] = false;
 		g_hasVotedConsort[client] = false;
 	}
+	
+	CreateTimer(1.5, TIMER_SetBunkerEnts, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action CMD_Veto(int client, int args)
@@ -129,17 +136,6 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	return Plugin_Continue;
 }
 
-void roundEnd()
-{
-	if (!g_Bool[roundHasEnded])
-	{
-		if (!g_Bool[enableSurrender] && SurrenderDelayTimer != INVALID_HANDLE)
-			CloseHandle(SurrenderDelayTimer);
-
-		g_Bool[roundHasEnded] = true;
-	}
-}
-
 public Action PlayerJoinTeam(int client, char[] command, int argc)
 {
 	resetValues(client);	
@@ -169,6 +165,37 @@ public Action TIMER_DisplaySurrender(Handle timer, any team)
 	}
 }
 
+public Action TIMER_SetBunkerEnts(Handle timer) {
+	setBunkerEntityIndexs();
+}
+
+bool bunkerHealthTooLow(int team) {
+	return GetEntProp(teamBunkers[team-2], Prop_Send, "m_iHealth") < cvarLowBunkerHealth.IntValue; 
+}
+
+void setBunkerEntityIndexs()
+{	
+	// loop through all entities finding the bunkers
+	int loopEntity = INVALID_ENT_REFERENCE;
+	while ((loopEntity = FindEntityByClassname(loopEntity, "struct_command_bunker")) != INVALID_ENT_REFERENCE)
+	{
+		// cache them, so we can find their health really quick later
+		int team = GetEntProp(loopEntity, Prop_Send, "m_iTeamNum") - 2;
+		teamBunkers[team] = loopEntity;	
+	}
+}
+
+void roundEnd()
+{
+	if (!g_Bool[roundHasEnded])
+	{
+		if (!g_Bool[enableSurrender] && SurrenderDelayTimer != INVALID_HANDLE)
+			CloseHandle(SurrenderDelayTimer);
+
+		g_Bool[roundHasEnded] = true;
+	}
+}
+
 void callSurrender(int client)
 {
 	int team = GetClientTeam(client);
@@ -191,6 +218,9 @@ void callSurrender(int client)
 	
 	else if (g_Bool[roundHasEnded])
 		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
+	
+	else if (bunkerHealthTooLow(team))
+		PrintToChat(client, "%s %t!", PREFIX, "Low Bunker Health");
 
 	else
 	{			
