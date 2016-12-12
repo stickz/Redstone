@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <nd_stocks>
 #include <nd_redstone>
+#include <nd_com_eng>
 
 enum Bools
 {
@@ -34,6 +35,7 @@ enum Bools
 
 int voteCount[2];
 bool g_Bool[Bools];
+bool g_hasUsedVeto[2] = {false, ...};
 bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... };
 bool g_hasVotedConsort[MAXPLAYERS+1] = {false, ... };
 Handle SurrenderDelayTimer = INVALID_HANDLE;
@@ -55,7 +57,9 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	RegConsoleCmd("sm_surrender", CMD_Surrender);	
+	RegConsoleCmd("sm_surrender", CMD_Surrender);
+	RegConsoleCmd("sm_veto", CMD_Veto);
+	
 	AddCommandListener(PlayerJoinTeam, "jointeam");
 	
 	cvarMinPlayers		= CreateConVar("sm_surrender_minp", "4", "Set's the minimum number of team players required to surrender.");
@@ -74,8 +78,11 @@ public void OnPluginStart()
 
 public void ND_OnRoundStarted()
 {
-	voteCount[0] = 0;
-	voteCount[1] = 0;
+	for (int i = 0; i < 2; i++)
+	{
+		voteCount[i] = 0;
+		g_hasUsedVeto[i] = false;
+	}
 	
 	float surrenderSeconds = cvarSurrenderTimeout.FloatValue * 60;
 	SurrenderDelayTimer = CreateTimer(surrenderSeconds, TIMER_surrenderDelay, _, TIMER_FLAG_NO_MAPCHANGE);
@@ -91,6 +98,12 @@ public void ND_OnRoundStarted()
 	}
 }
 
+public Action CMD_Veto(int client, int args)
+{
+	callVeto(client);	
+	return Plugin_Handled;
+}
+
 public Action Event_RoundDone(Event event, const char[] name, bool dontBroadcast)
 {
 	if (!g_Bool[roundHasEnded])
@@ -99,11 +112,19 @@ public Action Event_RoundDone(Event event, const char[] name, bool dontBroadcast
 
 public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
 {
-	if (client && StrContains(sArgs, "surrender", false) == 0)
+	if (client)
 	{
-		callSurrender(client);		
-		return Plugin_Handled;			
-	}	
+		if (StrContains(sArgs, "surrender", false) == 0)
+		{
+			callSurrender(client);		
+			return Plugin_Handled;			
+		}
+		else if (StrContains(sArgs, "veto", false) == 0)
+		{
+			callVeto(client);
+			return Plugin_Handled;
+		}	
+	}
 	
 	return Plugin_Continue;
 }
@@ -185,6 +206,30 @@ void callSurrender(int client)
 	}
 }
 
+void callVeto(int client)
+{
+	if (!ND_IsCommander(client))
+	{
+		PrintToChat(client, "%s %t!", PREFIX, "Veto Commander Only");
+		return;	
+	}
+	
+	int team = GetClientTeam(client);
+	int teamIDX = team -2;
+	
+	else if (g_hasUsedVeto[teamIDX])
+		PrintToChat(client, "%s %t!", PREFIX, "Veto Already Used");
+		
+	else if (g_Bool[roundHasEnded])
+		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
+		
+	else
+	{
+		g_hasUsedVeto[teamIDX] = true;
+		PrintToChatTeam(team, "Commander Used Veto");	
+	}
+}
+
 void checkSurrender(int team, int teamCount, bool showVotes = false, int client = -1)
 {
 	float teamFloat = teamCount * (cvarSurrenderPercent.FloatValue / 100.0);	
@@ -193,7 +238,8 @@ void checkSurrender(int team, int teamCount, bool showVotes = false, int client 
 	if (teamFloat < minTeamFoat)
 		teamFloat = minTeamFoat;
 		
-	int Remainder = RoundToFloor(teamFloat) - voteCount[team -2];
+	int rTeamCount = g_hasUsedVeto[team - 2] ? RoundToCeil(teamFloat) : RoundToFloor(teamFloat);	
+	int Remainder = rTeamCount - voteCount[team -2];
 		
 	if (Remainder <= 0)
 		endGame(team);
