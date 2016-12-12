@@ -201,25 +201,25 @@ void callSurrender(int client)
 	int teamCount = RED_GetTeamCount(team);
 	
 	if (teamCount < cvarMinPlayers.IntValue)
-		PrintToChat(client, "%s %t!", PREFIX, "Four Required");
+		PrintFailure(client, "Four Required");
 
 	else if (!g_Bool[enableSurrender])
-		PrintToChat(client, "%s %t", PREFIX, "Too Soon");
+		PrintFailure(client, "Too Soon");
 	
 	else if (g_Bool[hasSurrendered])
-		PrintToChat(client, "%s %t!", PREFIX, "Team Surrendered");
+		PrintFailure(client, "Team Surrendered");
 	
 	else if (team < 2)
-		PrintToChat(client, "%s %t!", PREFIX, "On Team");
+		PrintFailure(client, "On Team");
 	
 	else if (g_hasVotedEmpire[client] || g_hasVotedConsort[client])
-		PrintToChat(client, "%s %t!", PREFIX, "You Surrendered");
+		PrintFailure(client, "You Surrendered");
 	
 	else if (g_Bool[roundHasEnded])
-		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
+		PrintFailure(client, "Round Ended");
 	
 	else if (bunkerHealthTooLow(team))
-		PrintToChat(client, "%s %t!", PREFIX, "Low Bunker Health");
+		PrintFailure(client, "Low Bunker Health");
 
 	else
 	{			
@@ -257,7 +257,7 @@ void callVeto(int client)
 {
 	if (!ND_IsCommander(client))
 	{
-		PrintToChat(client, "%s %t!", PREFIX, "Veto Commander Only");
+		PrintFailure(client, "Veto Commander Only");
 		return;	
 	}
 	
@@ -265,10 +265,10 @@ void callVeto(int client)
 	int teamIDX = team -2;
 	
 	if (g_hasUsedVeto[teamIDX])
-		PrintToChat(client, "%s %t!", PREFIX, "Veto Already Used");
+		PrintFailure(client, "Veto Already Used");
 		
 	else if (g_Bool[roundHasEnded])
-		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
+		PrintFailure(client, "Round Ended");
 		
 	else
 	{
@@ -283,9 +283,13 @@ void printVetoUsed(int team)
 	{
 		if (IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			PrintToChat(client, "%s %t", PREFIX, "Commander Used Veto");
+			PrintFailure(client, "Commander Used Veto");
 		}
 	}
+}
+
+void PrintFailure(int client, const char[] phrase) {
+	PrintToChat(client, "%s %t!", PREFIX, phrase);
 }
 
 void resetValues(int client)
