@@ -51,7 +51,7 @@
 		}
 		
 		"buildamt"		"125"
-		"repairamt"	"120"
+		"repairamt"	"130"
 		"tabtarget"	"base_structures" // unused?
 		"hotkey"		"T" // unused?
 	}
