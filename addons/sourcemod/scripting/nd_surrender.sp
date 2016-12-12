@@ -71,7 +71,6 @@ public void OnPluginStart()
 	
 	HookEvent("round_end", Event_RoundDone, EventHookMode_PostNoCopy);
 	HookEvent("timeleft_5s", Event_RoundDone, EventHookMode_PostNoCopy);
-	HookEvent("structure_damage_sparse", Event_BunkerDamage);
 	
 	LoadTranslations("nd_surrender.phrases"); // for all chat messages
 	LoadTranslations("numbers.phrases"); // for one,two,three etc.
