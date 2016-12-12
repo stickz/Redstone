@@ -20,7 +20,7 @@
 
 		"description" "#Wall_Description"
 		"buildamt"		"125"
-		"repairamt"	"100"
+		"repairamt"	"110"
 		"tabtarget"	"base_structures"
 		"hotkey"		"M"
 		
