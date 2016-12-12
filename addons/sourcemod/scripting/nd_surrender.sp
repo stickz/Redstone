@@ -296,12 +296,15 @@ void displayVotes(int team, int Remainder, int client)
 	char name[64];
 	GetClientName(client, name, sizeof(name));
 	
-	char number[32];
+	char number[16]
 	Format(number, sizeof(number), NumberInEnglish(Remainder));
-	
+
 	for (int idx = 1; idx <= MaxClients; idx++)
 	{
+		char transNum[16];
+		Format(transNum, sizeof(transNum), "%T", number, idx);
+		
 		if (IsValidClient(idx) && GetClientTeam(idx) == team)
-			PrintToChat(idx, "\x05%t", "Typed Surrender", name, number);
+			PrintToChat(idx, "\x05%t", "Typed Surrender", name, transNum);
 	}
 }
