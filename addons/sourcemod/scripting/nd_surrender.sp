@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <nd_stocks>
 #include <nd_redstone>
+#include <nd_com_eng>
 
 enum Bools
 {
@@ -33,7 +34,9 @@ enum Bools
 };
 
 int voteCount[2];
+int teamBunkers[2];
 bool g_Bool[Bools];
+bool g_hasUsedVeto[2] = {false, ...};
 bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... };
 bool g_hasVotedConsort[MAXPLAYERS+1] = {false, ... };
 Handle SurrenderDelayTimer = INVALID_HANDLE;
@@ -41,6 +44,7 @@ Handle SurrenderDelayTimer = INVALID_HANDLE;
 ConVar cvarMinPlayers;
 ConVar cvarSurrenderPercent;
 ConVar cvarSurrenderTimeout;
+ConVar cvarLowBunkerHealth;
 
 #define PREFIX "\x05[xG]"
 
@@ -55,12 +59,15 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	RegConsoleCmd("sm_surrender", CMD_Surrender);	
+	RegConsoleCmd("sm_surrender", CMD_Surrender);
+	RegConsoleCmd("sm_veto", CMD_Veto);
+	
 	AddCommandListener(PlayerJoinTeam, "jointeam");
 	
 	cvarMinPlayers		= CreateConVar("sm_surrender_minp", "4", "Set's the minimum number of team players required to surrender.");
 	cvarSurrenderPercent 	= CreateConVar("sm_surrender_percent", "51", "Set's the percentage required to surrender.");
 	cvarSurrenderTimeout	= CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
+	cvarLowBunkerHealth	= CreateConVar("sm_surrender_bh", "10000", "Sets the min bunker health required to surrender");
 	
 	HookEvent("round_end", Event_RoundDone, EventHookMode_PostNoCopy);
 	HookEvent("timeleft_5s", Event_RoundDone, EventHookMode_PostNoCopy);
@@ -74,8 +81,12 @@ public void OnPluginStart()
 
 public void ND_OnRoundStarted()
 {
-	voteCount[0] = 0;
-	voteCount[1] = 0;
+	for (int i = 0; i < 2; i++)
+	{
+		voteCount[i] = 0;
+		g_hasUsedVeto[i] = false;
+		teamBunkers[i] = -1;
+	}
 	
 	float surrenderSeconds = cvarSurrenderTimeout.FloatValue * 60;
 	SurrenderDelayTimer = CreateTimer(surrenderSeconds, TIMER_surrenderDelay, _, TIMER_FLAG_NO_MAPCHANGE);
@@ -89,6 +100,14 @@ public void ND_OnRoundStarted()
 		g_hasVotedEmpire[client] = false;
 		g_hasVotedConsort[client] = false;
 	}
+	
+	CreateTimer(1.5, TIMER_SetBunkerEnts, _, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public Action CMD_Veto(int client, int args)
+{
+	callVeto(client);	
+	return Plugin_Handled;
 }
 
 public Action Event_RoundDone(Event event, const char[] name, bool dontBroadcast)
@@ -99,24 +118,21 @@ public Action Event_RoundDone(Event event, const char[] name, bool dontBroadcast
 
 public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
 {
-	if (client && StrContains(sArgs, "surrender", false) == 0)
+	if (client)
 	{
-		callSurrender(client);		
-		return Plugin_Handled;			
-	}	
+		if (StrContains(sArgs, "surrender", false) == 0)
+		{
+			callSurrender(client);		
+			return Plugin_Handled;			
+		}
+		else if (StrContains(sArgs, "veto", false) == 0)
+		{
+			callVeto(client);
+			return Plugin_Handled;
+		}	
+	}
 	
 	return Plugin_Continue;
-}
-
-void roundEnd()
-{
-	if (!g_Bool[roundHasEnded])
-	{
-		if (!g_Bool[enableSurrender] && SurrenderDelayTimer != INVALID_HANDLE)
-			CloseHandle(SurrenderDelayTimer);
-
-		g_Bool[roundHasEnded] = true;
-	}
 }
 
 public Action PlayerJoinTeam(int client, char[] command, int argc)
@@ -148,28 +164,62 @@ public Action TIMER_DisplaySurrender(Handle timer, any team)
 	}
 }
 
+public Action TIMER_SetBunkerEnts(Handle timer) {
+	setBunkerEntityIndexs();
+}
+
+bool bunkerHealthTooLow(int team) {
+	return GetEntProp(teamBunkers[team-2], Prop_Send, "m_iHealth") < cvarLowBunkerHealth.IntValue; 
+}
+
+void setBunkerEntityIndexs()
+{	
+	// loop through all entities finding the bunkers
+	int loopEntity = INVALID_ENT_REFERENCE;
+	while ((loopEntity = FindEntityByClassname(loopEntity, "struct_command_bunker")) != INVALID_ENT_REFERENCE)
+	{
+		// cache them, so we can find their health really quick later
+		int team = GetEntProp(loopEntity, Prop_Send, "m_iTeamNum") - 2;
+		teamBunkers[team] = loopEntity;	
+	}
+}
+
+void roundEnd()
+{
+	if (!g_Bool[roundHasEnded])
+	{
+		if (!g_Bool[enableSurrender] && SurrenderDelayTimer != INVALID_HANDLE)
+			CloseHandle(SurrenderDelayTimer);
+
+		g_Bool[roundHasEnded] = true;
+	}
+}
+
 void callSurrender(int client)
 {
 	int team = GetClientTeam(client);
 	int teamCount = RED_GetTeamCount(team);
 	
 	if (teamCount < cvarMinPlayers.IntValue)
-		PrintToChat(client, "%s %t!", PREFIX, "Four Required");
+		PrintFailure(client, "Four Required");
 
 	else if (!g_Bool[enableSurrender])
-		PrintToChat(client, "%s %t", PREFIX, "Too Soon");
+		PrintFailure(client, "Too Soon");
 	
 	else if (g_Bool[hasSurrendered])
-		PrintToChat(client, "%s %t!", PREFIX, "Team Surrendered");
+		PrintFailure(client, "Team Surrendered");
 	
 	else if (team < 2)
-		PrintToChat(client, "%s %t!", PREFIX, "On Team");
+		PrintFailure(client, "On Team");
 	
 	else if (g_hasVotedEmpire[client] || g_hasVotedConsort[client])
-		PrintToChat(client, "%s %t!", PREFIX, "You Surrendered");
+		PrintFailure(client, "You Surrendered");
 	
 	else if (g_Bool[roundHasEnded])
-		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
+		PrintFailure(client, "Round Ended");
+	
+	else if (bunkerHealthTooLow(team))
+		PrintFailure(client, "Low Bunker Health");
 
 	else
 	{			
@@ -193,13 +243,53 @@ void checkSurrender(int team, int teamCount, bool showVotes = false, int client 
 	if (teamFloat < minTeamFoat)
 		teamFloat = minTeamFoat;
 		
-	int Remainder = RoundToFloor(teamFloat) - voteCount[team -2];
+	int rTeamCount = g_hasUsedVeto[team - 2] ? RoundToCeil(teamFloat) : RoundToFloor(teamFloat);	
+	int Remainder = rTeamCount - voteCount[team -2];
 		
 	if (Remainder <= 0)
 		endGame(team);
 	
 	else if (showVotes)
 		displayVotes(team, Remainder, client);	
+}
+
+void callVeto(int client)
+{
+	if (!ND_IsCommander(client))
+	{
+		PrintFailure(client, "Veto Commander Only");
+		return;	
+	}
+	
+	int team = GetClientTeam(client);
+	int teamIDX = team -2;
+	
+	if (g_hasUsedVeto[teamIDX])
+		PrintFailure(client, "Veto Already Used");
+		
+	else if (g_Bool[roundHasEnded])
+		PrintFailure(client, "Round Ended");
+		
+	else
+	{
+		g_hasUsedVeto[teamIDX] = true;
+		printVetoUsed(team);	
+	}
+}
+
+void printVetoUsed(int team)
+{
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		if (IsValidClient(client) && GetClientTeam(client) == team)
+		{
+			PrintFailure(client, "Commander Used Veto");
+		}
+	}
+}
+
+void PrintFailure(int client, const char[] phrase) {
+	PrintToChat(client, "%s %t!", PREFIX, phrase);
 }
 
 void resetValues(int client)
@@ -239,12 +329,15 @@ void displayVotes(int team, int Remainder, int client)
 	char name[64];
 	GetClientName(client, name, sizeof(name));
 	
-	char number[32];
+	char number[16]
 	Format(number, sizeof(number), NumberInEnglish(Remainder));
-	
+
 	for (int idx = 1; idx <= MaxClients; idx++)
 	{
+		char transNum[16];
+		Format(transNum, sizeof(transNum), "%T", number, idx);
+		
 		if (IsValidClient(idx) && GetClientTeam(idx) == team)
-			PrintToChat(idx, "\x05%t", "Typed Surrender", name, number);
+			PrintToChat(idx, "\x05%t", "Typed Surrender", name, transNum);
 	}
 }

@@ -1,4 +1,4 @@
-﻿"Phrases"
+"Phrases"
 {
 	"Twelve Required"
 	{
@@ -7,17 +7,17 @@
 	
 	"Ten Required"
 	{
-		"en"		"There must be atleast 10 players to use this feature"	
+		"en"		"There must be atleast 10 players to use this feature"
 	}
 	
 	"Four Required"
 	{
-		"en"		"Four players on your team are required to surrender"	
+		"en"		"Four players on your team are required to surrender"
 	}
 	
 	"Too Soon"
 	{
-		"en"		"You cannot surrender so soon into the match"	
+		"en"		"You cannot surrender so soon into the match"
 	}
 	
 	"Team Surrendered"
@@ -27,27 +27,32 @@
 	
 	"On Team"
 	{
-		"en"		"You must be on a team to vote surrender"	
+		"en"		"You must be on a team to vote surrender"
 	}
 	
 	"You Surrendered"
 	{
-		"en"		"You've already voted to surrender"	
+		"en"		"You've already voted to surrender"
 	}
 	
 	"Round Ended"
 	{
-		"en"		"The round has already ended"	
+		"en"		"The round has already ended"
+	}
+	
+	"Low Bunker Health"
+	{
+		"en"		"You cannot surrender with low bunker health"	
 	}
 	
 	"Consort Surrendered"
 	{
-		"en"		"Consortium has surrendered"	
+		"en"		"Consortium has surrendered"
 	}
 	
 	"Empire Surrendered"
 	{
-		"en"		"Empire has surrendered"	
+		"en"		"Empire has surrendered"
 	}
 	
 	//Notice: If the numbers.phrases file isn't translated, it will fill {2} with English
@@ -58,5 +63,21 @@
 		//{2} = Translated numbers from number.phrases		
 		"#format"	"{1:s},{2:s}"
 		"en"		"{1} typed surrender : {2} more required."
+	}
+	
+	// Veto Feature
+	"Veto Already Used"
+	{
+		"en"		"You've already veto'd a quicker surrender"
+	}
+	
+	"Veto Commander Only"
+	{	
+		"en"		"The veto feature is for commanders only!"
+	}
+	
+	"Commander Used Veto"
+	{
+		"en"		"The commander has overturned a quick surrender. A majority is now required to pass it"
 	}
 }
