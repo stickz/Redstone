@@ -198,33 +198,33 @@ void callMutiny(int client, int team)
 	int com = ND_GetCommanderOnTeam(team);
 	
 	if (com == -1) //The team you're trying to demote has no commander
-		PrintToChat(client, "%s %t.", PREFIX, "No Commander");
+		PrintMessage(client, "No Commander");
 	
 	else if (CheckCommandAccess(com, "mutiny_immunity", ADMFLAG_GENERIC, true))
 		return; //Server adminisators can't be demoted, to prevent conflicts of interest with moderation
 	
 	else if (team < 2)
-		PrintToChat(client, "%s %t.", PREFIX, "On Team"); //You must be on a team, to vote commander demote
+		PrintMessage(client, "On Team"); //You must be on a team, to vote commander demote
 		
 	else if (g_hasVoted[teamIDX][client])
-		PrintToChat(client, "%s %t.", PREFIX, "Already Voted"); //You've already voted to demote the commander
+		PrintMessage(client, "Already Voted"); //You've already voted to demote the commander
 	
 	else if (ND_RoundEnded())
-		PrintToChat(client, "%s %t.", PREFIX, "Round End"); //You cannot demote after the round has ended
+		PrintMessage(client, "Round End"); //You cannot demote after the round has ended
 	
 	else if (!ND_RoundStarted())
-		PrintToChat(client, "%s %t.", PREFIX, "Round Started"); //You cannot demote before the round has started
+		PrintMessage(client, "Round Started"); //You cannot demote before the round has started
 	
 	else if (g_hasBeenDemoted[client] && voteCount[teamIDX] == 0)
-		PrintToChat(client, "%s %t!", PREFIX, "Demote First"); //You cannot cast the first demote vote after demotion
+		PrintMessage(client, "Demote First"); //You cannot cast the first demote vote after demotion
 		
 	#if defined _sourcecomms_included
 	else if (IsSourceCommSilenced(client) && voteCount[teamIDX] == 0)
-		PrintToChat(client, "%s %t!", PREFIX, "Silence First"); //You cannot cast the first demote vote while silenced
+		PrintMessage(client, "Silence First"); //You cannot cast the first demote vote while silenced
 	#endif
 	
 	else if (RED_GetTeamCount(team) < cDemoteMinTeamCount.IntValue)
-		PrintToChat(client, "%s %t.", PREFIX, "Four Required"); //x amount team players required to vote demote. phrase needs fixed.
+		PrintMessage(client, "Four Required"); //x amount team players required to vote demote. phrase needs fixed.
 
 	else
 		castDemoteVote(team, teamIDX, client); //Cast the vote to demote the commander
@@ -277,9 +277,13 @@ void PrintCommanderDemoted(int team)
 	{
 		if (RED_IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			PrintToChat(client, "\x05[xG] %t!", "Commander Demoted");
+			PrintMessage(client, "Commander Demoted");
 		}
 	}
+}
+
+void PrintMessage(int client, const char[] phrase) {
+	PrintToChat(client, "%s %t.", PREFIX, phrase);
 }
 
 void resetValues(int client)
