@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <sdkhooks>
 #include <nd_rounds>
+#include <nd_maps>
 
 #define DEBUG 0
 
@@ -49,16 +50,16 @@ public void OnPluginStart()
 
 public void ND_OnRoundStarted()
 {
-    	char map[64];
-    	GetCurrentMap(map, sizeof(map));
+    	char currentMap[64];
+    	GetCurrentMap(currentMap, sizeof(currentMap));
     
     	HAX.Clear();
 
-    	if (StrEqual(map, "hydro")) 
+    	if (StrEqual(currentMap, ND_StockMaps[ND_Hydro])) 
 		HandleHydro();
-	else if (StrEqual(map, "coast"))
+	else if (StrEqual(currentMap, ND_StockMaps[ND_Coast]))
         	HandleCoast();
-    	else if (StrEqual(map, "gate"))
+    	else if (StrEqual(currentMap, ND_StockMaps[ND_Gate]))
         	HandleGate();
   	  	
     	validMap = GetArraySize(HAX) > 0;
