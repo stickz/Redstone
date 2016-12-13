@@ -194,25 +194,25 @@ void callSurrender(int client)
 	int teamCount = RED_GetTeamCount(team);
 	
 	if (teamCount < cvarMinPlayers.IntValue)
-		PrintFailure(client, "Four Required");
+		PrintMessage(client, "Four Required");
 
 	else if (!g_Bool[enableSurrender])
-		PrintFailure(client, "Too Soon");
+		PrintMessage(client, "Too Soon");
 	
 	else if (g_Bool[hasSurrendered])
-		PrintFailure(client, "Team Surrendered");
+		PrintMessage(client, "Team Surrendered");
 	
 	else if (team < 2)
-		PrintFailure(client, "On Team");
+		PrintMessage(client, "On Team");
 	
 	else if (g_hasVotedEmpire[client] || g_hasVotedConsort[client])
-		PrintFailure(client, "You Surrendered");
+		PrintMessage(client, "You Surrendered");
 	
 	else if (ND_RoundEnded())
-		PrintFailure(client, "Round Ended");
+		PrintMessage(client, "Round Ended");
 	
 	else if (bunkerHealthTooLow(team))
-		PrintFailure(client, "Low Bunker Health");
+		PrintMessage(client, "Low Bunker Health");
 
 	else
 	{			
@@ -250,7 +250,7 @@ void callVeto(int client)
 {
 	if (!ND_IsCommander(client))
 	{
-		PrintFailure(client, "Veto Commander Only");
+		PrintMessage(client, "Veto Commander Only");
 		return;	
 	}
 	
@@ -258,10 +258,10 @@ void callVeto(int client)
 	int teamIDX = team -2;
 	
 	if (g_hasUsedVeto[teamIDX])
-		PrintFailure(client, "Veto Already Used");
+		PrintMessage(client, "Veto Already Used");
 		
 	else if (g_Bool[roundHasEnded])
-		PrintFailure(client, "Round Ended");
+		PrintMessage(client, "Round Ended");
 		
 	else
 	{
@@ -276,12 +276,12 @@ void printVetoUsed(int team)
 	{
 		if (IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			PrintFailure(client, "Commander Used Veto");
+			PrintMessage(client, "Commander Used Veto");
 		}
 	}
 }
 
-void PrintFailure(int client, const char[] phrase) {
+void PrintMessage(int client, const char[] phrase) {
 	PrintToChat(client, "%s %t!", PREFIX, phrase);
 }
 
