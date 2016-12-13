@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <nd_com_eng>
 #include <nd_rounds>
+#include <nd_print>
 
 public Plugin myinfo =
 {
@@ -41,7 +42,6 @@ public Plugin myinfo =
 #define MESSAGE_COLOUR		"\x01"
 #define NAME_COLOUR		"\x05"
 #define TAG_COLOUR		"\x04"
-#define CHAT_PREFIX		"\x05[xG]"
 
 /* Include First Abstraction Layer */ 
 #include "ndpc/stock_functions.sp"
