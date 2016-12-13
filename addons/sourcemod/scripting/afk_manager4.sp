@@ -403,7 +403,6 @@ void HookEvents() // Event Hook Registrations
 	HookEvent("player_death", Event_PlayerDeathPost, EventHookMode_Post);
 	
 	//Add hooks for Nuclear Dawn
-	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	HookEvent("structure_death", Event_StructDeath);
 }
 
@@ -719,8 +718,7 @@ public void ND_OnRoundStarted()
 	CreateTimer(3.0, Timer_MoveClientsToSpectate, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
-{
+public void ND_OnRoundEnded() {
 	g_bWaitRound = true; // Pause Plugin During Map Transitions?
 }
 
