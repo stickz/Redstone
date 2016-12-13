@@ -69,9 +69,6 @@ public void OnPluginStart()
 	cvarSurrenderTimeout	= CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
 	cvarLowBunkerHealth	= CreateConVar("sm_surrender_bh", "10000", "Sets the min bunker health required to surrender");
 	
-	HookEvent("round_end", Event_RoundDone, EventHookMode_PostNoCopy);
-	HookEvent("timeleft_5s", Event_RoundDone, EventHookMode_PostNoCopy);
-	
 	LoadTranslations("nd_surrender.phrases"); // for all chat messages
 	LoadTranslations("numbers.phrases"); // for one,two,three etc.
 	
@@ -103,14 +100,15 @@ public void ND_OnRoundStarted()
 	CreateTimer(1.5, TIMER_SetBunkerEnts, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
+public void ND_OnRoundEnded() {
+	if (!g_Bool[enableSurrender] && SurrenderDelayTimer != INVALID_HANDLE)
+		CloseHandle(SurrenderDelayTimer);
+}
+
 public Action CMD_Veto(int client, int args)
 {
 	callVeto(client);	
 	return Plugin_Handled;
-}
-
-public Action Event_RoundDone(Event event, const char[] name, bool dontBroadcast) {
-	roundEnd();
 }
 
 public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
@@ -179,11 +177,6 @@ void setBunkerEntityIndexs()
 		int team = GetEntProp(loopEntity, Prop_Send, "m_iTeamNum") - 2;
 		teamBunkers[team] = loopEntity;	
 	}
-}
-
-void roundEnd() {
-	if (!ND_RoundEnded() && !g_Bool[enableSurrender] && SurrenderDelayTimer != INVALID_HANDLE)
-		CloseHandle(SurrenderDelayTimer);
 }
 
 void callSurrender(int client)
