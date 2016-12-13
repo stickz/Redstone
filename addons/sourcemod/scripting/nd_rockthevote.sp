@@ -107,8 +107,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	return Plugin_Continue;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
-{
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
 	if (!g_Bool[enableRTV] && RtvDisableTimer != INVALID_HANDLE)
 		CloseHandle(RtvDisableTimer);
 }
@@ -119,8 +118,7 @@ public void OnMapStart()
 	g_Bool[enableRTV] 	= true;
 	g_Bool[hasPassedRTV] 	= false;
 	
-	for (int client = 1; client <= MaxClients; client++)
-	{
+	for (int client = 1; client <= MaxClients; client++) {
 		g_hasVoted[client] = false;	
 	}
 }
@@ -131,13 +129,11 @@ public Action CMD_RockTheVote(int client, int args)
 	return Plugin_Handled;
 }
 
-public void OnClientDisconnected(int client)
-{
+public void OnClientDisconnected(int client) {
 	resetValues(client);
 }
 
-public Action TIMER_DisableRTV(Handle timer)
-{
+public Action TIMER_DisableRTV(Handle timer) {
 	g_Bool[enableRTV] = false;
 }
 
@@ -148,20 +144,20 @@ void callRockTheVote(int client)
 	if (!g_Bool[enableRTV])
 	{
 		if (clientCount > cvarMaxPlayers.FloatValue)
-			PrintToChat(client, "%s %t", PREFIX, "Too Late");
+			PrintMessage(client, "Too Late");
 	}
 	
 	else if (g_Bool[hasPassedRTV])
-		PrintToChat(client, "%s %t!", PREFIX, "Already Passed");	
+		PrintMessage(client, "Already Passed");	
 
 	else if (g_hasVoted[client])
-		PrintToChat(client, "%s %t!", PREFIX, "Already RTVed");
+		PrintMessage(client, "Already RTVed");
 	
 	else if (ND_RoundEnded())
-		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
+		PrintMessage(client, "Round Ended");
 		
 	else if (!ND_RoundStarted())
-		PrintToChat(client, "%s %t!", PREFIX, "Round Start");
+		PrintMessage(client, "Round Start");
 
 	else
 	{
@@ -217,6 +213,10 @@ public Action Timer_DelayMapChange(Handle timer)
 		FiveSecondChange();
 		return Plugin_Stop;
 	}
+}
+
+void PrintMessage(int client, const char[] phrase) {
+	PrintToChat(client, "%s %t!", PREFIX, phrase);
 }
 
 void FiveSecondChange()
