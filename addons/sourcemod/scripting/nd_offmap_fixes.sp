@@ -43,10 +43,7 @@ public Plugin myinfo =
 
 public void OnPluginStart() 
 {
-	HAX = new ArrayList(4);
-    
-    	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
-	
+	HAX = new ArrayList(4);	
     	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -67,13 +64,11 @@ public void ND_OnRoundStarted()
     	validMap = GetArraySize(HAX) > 0;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
-{
+public void ND_OnRoundEnd() {
 	validMap = false;
 }
 
-public void OnMapEnd() 
-{
+public void OnMapEnd() {
     	validMap = false;
 }
 
