@@ -96,9 +96,6 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 		{
 			if (strcmp(sArgs, nd_rtv_commands[idx], false) == 0) 
 			{
-				//new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
-				//SetCmdReplySource(old);
-				
 				callRockTheVote(client);
 				return Plugin_Handled;				
 			}
@@ -107,8 +104,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	return Plugin_Continue;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
-{
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
 	if (!g_Bool[enableRTV] && RtvDisableTimer != INVALID_HANDLE)
 		CloseHandle(RtvDisableTimer);
 }
@@ -119,8 +115,7 @@ public void OnMapStart()
 	g_Bool[enableRTV] 	= true;
 	g_Bool[hasPassedRTV] 	= false;
 	
-	for (int client = 1; client <= MaxClients; client++)
-	{
+	for (int client = 1; client <= MaxClients; client++) {
 		g_hasVoted[client] = false;	
 	}
 }
@@ -131,13 +126,11 @@ public Action CMD_RockTheVote(int client, int args)
 	return Plugin_Handled;
 }
 
-public void OnClientDisconnected(int client)
-{
+public void OnClientDisconnected(int client) {
 	resetValues(client);
 }
 
-public Action TIMER_DisableRTV(Handle timer)
-{
+public Action TIMER_DisableRTV(Handle timer) {
 	g_Bool[enableRTV] = false;
 }
 
@@ -148,20 +141,20 @@ void callRockTheVote(int client)
 	if (!g_Bool[enableRTV])
 	{
 		if (clientCount > cvarMaxPlayers.FloatValue)
-			PrintToChat(client, "%s %t", PREFIX, "Too Late");
+			PrintMessage(client, "Too Late");
 	}
 	
 	else if (g_Bool[hasPassedRTV])
-		PrintToChat(client, "%s %t!", PREFIX, "Already Passed");	
+		PrintMessage(client, "Already Passed");	
 
 	else if (g_hasVoted[client])
-		PrintToChat(client, "%s %t!", PREFIX, "Already RTVed");
+		PrintMessage(client, "Already RTVed");
 	
 	else if (ND_RoundEnded())
-		PrintToChat(client, "%s %t!", PREFIX, "Round Ended");
+		PrintMessage(client, "Round Ended");
 		
 	else if (!ND_RoundStarted())
-		PrintToChat(client, "%s %t!", PREFIX, "Round Start");
+		PrintMessage(client, "Round Start");
 
 	else
 	{
@@ -219,6 +212,10 @@ public Action Timer_DelayMapChange(Handle timer)
 	}
 }
 
+void PrintMessage(int client, const char[] phrase) {
+	PrintToChat(client, "%s %t!", PREFIX, phrase);
+}
+
 void FiveSecondChange()
 {
 	ServerCommand("mp_roundtime 1");
@@ -258,12 +255,10 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	return APLRes_Success;
 }
 
-public int Native_GetRtvStatus(Handle plugin, int numParams)
-{
+public int Native_GetRtvStatus(Handle plugin, int numParams) {
 	return g_Bool[enableRTV];
 }
 
-public int Native_ToogleRtvStatus(Handle plugin, int numParams)
-{
+public int Native_ToogleRtvStatus(Handle plugin, int numParams) {
 	g_Bool[enableRTV] = GetNativeCell(1);
 }

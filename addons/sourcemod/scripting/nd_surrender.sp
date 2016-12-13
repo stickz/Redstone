@@ -25,12 +25,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <nd_redstone>
 #include <nd_com_eng>
+#include <nd_rounds>
 
 enum Bools
 {
 	enableSurrender,
-	hasSurrendered,
-	roundHasEnded
+	hasSurrendered
 };
 
 int voteCount[2];
@@ -69,9 +69,6 @@ public void OnPluginStart()
 	cvarSurrenderTimeout	= CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
 	cvarLowBunkerHealth	= CreateConVar("sm_surrender_bh", "10000", "Sets the min bunker health required to surrender");
 	
-	HookEvent("round_end", Event_RoundDone, EventHookMode_PostNoCopy);
-	HookEvent("timeleft_5s", Event_RoundDone, EventHookMode_PostNoCopy);
-	
 	LoadTranslations("nd_surrender.phrases"); // for all chat messages
 	LoadTranslations("numbers.phrases"); // for one,two,three etc.
 	
@@ -93,7 +90,6 @@ public void ND_OnRoundStarted()
 	
 	g_Bool[enableSurrender] = false;
 	g_Bool[hasSurrendered] = false;
-	g_Bool[roundHasEnded] = false;
 	
 	for (int client = 1; client <= MaxClients; client++)
 	{
@@ -104,16 +100,15 @@ public void ND_OnRoundStarted()
 	CreateTimer(1.5, TIMER_SetBunkerEnts, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
+public void ND_OnRoundEnded() {
+	if (!g_Bool[enableSurrender] && SurrenderDelayTimer != INVALID_HANDLE)
+		CloseHandle(SurrenderDelayTimer);
+}
+
 public Action CMD_Veto(int client, int args)
 {
 	callVeto(client);	
 	return Plugin_Handled;
-}
-
-public Action Event_RoundDone(Event event, const char[] name, bool dontBroadcast)
-{
-	if (!g_Bool[roundHasEnded])
-		roundEnd();
 }
 
 public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
@@ -184,42 +179,31 @@ void setBunkerEntityIndexs()
 	}
 }
 
-void roundEnd()
-{
-	if (!g_Bool[roundHasEnded])
-	{
-		if (!g_Bool[enableSurrender] && SurrenderDelayTimer != INVALID_HANDLE)
-			CloseHandle(SurrenderDelayTimer);
-
-		g_Bool[roundHasEnded] = true;
-	}
-}
-
 void callSurrender(int client)
 {
 	int team = GetClientTeam(client);
 	int teamCount = RED_GetTeamCount(team);
 	
 	if (teamCount < cvarMinPlayers.IntValue)
-		PrintFailure(client, "Four Required");
+		PrintMessage(client, "Four Required");
 
 	else if (!g_Bool[enableSurrender])
-		PrintFailure(client, "Too Soon");
+		PrintMessage(client, "Too Soon");
 	
 	else if (g_Bool[hasSurrendered])
-		PrintFailure(client, "Team Surrendered");
+		PrintMessage(client, "Team Surrendered");
 	
 	else if (team < 2)
-		PrintFailure(client, "On Team");
+		PrintMessage(client, "On Team");
 	
 	else if (g_hasVotedEmpire[client] || g_hasVotedConsort[client])
-		PrintFailure(client, "You Surrendered");
+		PrintMessage(client, "You Surrendered");
 	
-	else if (g_Bool[roundHasEnded])
-		PrintFailure(client, "Round Ended");
+	else if (ND_RoundEnded())
+		PrintMessage(client, "Round Ended");
 	
 	else if (bunkerHealthTooLow(team))
-		PrintFailure(client, "Low Bunker Health");
+		PrintMessage(client, "Low Bunker Health");
 
 	else
 	{			
@@ -257,7 +241,7 @@ void callVeto(int client)
 {
 	if (!ND_IsCommander(client))
 	{
-		PrintFailure(client, "Veto Commander Only");
+		PrintMessage(client, "Veto Commander Only");
 		return;	
 	}
 	
@@ -265,10 +249,10 @@ void callVeto(int client)
 	int teamIDX = team -2;
 	
 	if (g_hasUsedVeto[teamIDX])
-		PrintFailure(client, "Veto Already Used");
+		PrintMessage(client, "Veto Already Used");
 		
-	else if (g_Bool[roundHasEnded])
-		PrintFailure(client, "Round Ended");
+	else if (ND_RoundEnded())
+		PrintMessage(client, "Round Ended");
 		
 	else
 	{
@@ -283,12 +267,12 @@ void printVetoUsed(int team)
 	{
 		if (IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			PrintFailure(client, "Commander Used Veto");
+			PrintMessage(client, "Commander Used Veto");
 		}
 	}
 }
 
-void PrintFailure(int client, const char[] phrase) {
+void PrintMessage(int client, const char[] phrase) {
 	PrintToChat(client, "%s %t!", PREFIX, phrase);
 }
 
@@ -311,7 +295,7 @@ void resetValues(int client)
 	{
 		voteCount[team - 2]--;
 		int teamCount = RED_GetTeamCount(team);
-		if (teamCount >= cvarMinPlayers.IntValue + 1 && !g_Bool[roundHasEnded] && !g_Bool[hasSurrendered])
+		if (teamCount >= cvarMinPlayers.IntValue + 1 && !ND_RoundEnded() && !g_Bool[hasSurrendered])
 			checkSurrender(team, teamCount);
 	}
 }

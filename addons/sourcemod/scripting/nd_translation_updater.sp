@@ -15,6 +15,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include <sourcemod>
+#include <nd_rounds>
 
 //push update
 public Plugin myinfo = 
@@ -29,21 +30,14 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_translation_updater/nd_translation_updater.txt"
 #include "updater/standard.sp"
 
-public void OnPluginStart()
-{
+public void OnPluginStart() {
 	AddUpdaterLibrary(); //auto-updater
-	
-	HookEvent("round_win", Event_RoundEnd, EventHookMode_PostNoCopy);
-	HookEvent("timeleft_5s", Event_RoundEnd, EventHookMode_PostNoCopy);
-	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 }
 
-public Updater_OnPluginUpdated()
-{
+public Updater_OnPluginUpdated() {
 	PrintToChatAll("\x05[xG] Server translations updated from github!");
 }
 
-public Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
-{
+public void ND_OnRoundEnded() {
 	ServerCommand("sm_updater_check");
 }

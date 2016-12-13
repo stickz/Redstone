@@ -44,3 +44,4 @@ native bool ND_MapStarted();
 
 /* Round engine forwards */
 forward void ND_OnRoundStarted();
+forward void ND_OnRoundEnded();

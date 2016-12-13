@@ -77,8 +77,6 @@ public void OnPluginStart()
 	
 	AddCommandListener(view_as<CommandListener>(Command_Apply), "applyforcommander");
 	
-	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
-	
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
 	AutoExecConfig(true, "nd_commander_restrictions");
@@ -94,7 +92,7 @@ public void OnMapStart() {
 	g_Bool[timeOut] = false;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
+public void ND_OnRoundEnded()
 {		
 	g_Bool[relaxedRestrictions] = false;
 	g_Bool[timeOut] = false;
