@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <nd_rounds>
 #include <nd_redstone>
+#include <nd_print>
 
 enum Bools
 {
@@ -37,8 +38,6 @@ enum Bools
 #define TEAM_EMPIRE		3
 
 #define RTV_COMMANDS_SIZE 	3
-
-#define PREFIX "\x05[xG]"
 
 char nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
 {
@@ -208,10 +207,6 @@ public Action Timer_DelayMapChange(Handle timer)
 		FiveSecondChange();
 		return Plugin_Stop;
 	}
-}
-
-void PrintMessage(int client, const char[] phrase) {
-	PrintToChat(client, "%s %t!", PREFIX, phrase);
 }
 
 void FiveSecondChange()
