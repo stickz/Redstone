@@ -2,6 +2,7 @@
 #include <sdktools>
 #include <sourcecomms>
 #include <nd_stocks>
+#include <nd_print>
 
 #undef REQUIRE_PLUGIN
 #tryinclude <adminmenu>
@@ -24,7 +25,6 @@ Menu g_hVoteMenu = null;
 #define VOTE_TYPE_SILENCE 2
 
 #define INVALID_TARGET -1
-#define PREFIX "\x05[xG]"
 
 int g_voteClient[2];
 char g_voteInfo[3][65];
@@ -217,10 +217,6 @@ Menu CreateGlobalVoteMenu(const char[] name)
 	
 	//return the created menu
 	return menu;
-}
-
-void PrintMessage(int client, const char[] phrase) {
-	PrintToChat(client, "%s %t!", PREFIX, phrase);
 }
 
 void PrintAndLogVoteStart(int client, int target, const char[] name)
