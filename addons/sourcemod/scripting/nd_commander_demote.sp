@@ -28,9 +28,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_com_eng>
 #include <nd_redstone>
 #include <nd_rounds>
+#include <nd_print>
 
 #define INVALID_CLIENT 0
-#define PREFIX "\x05[xG]"
 
 public Plugin myinfo =
 {
@@ -280,10 +280,6 @@ void PrintCommanderDemoted(int team)
 			PrintMessage(client, "Commander Demoted");
 		}
 	}
-}
-
-void PrintMessage(int client, const char[] phrase) {
-	PrintToChat(client, "%s %t.", PREFIX, phrase);
 }
 
 void resetValues(int client)
