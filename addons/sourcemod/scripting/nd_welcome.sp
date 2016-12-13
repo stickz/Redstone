@@ -22,7 +22,7 @@ bool option_welcome_message[MAXPLAYERS + 1] = {true,...}; //off by default
 
 public Plugin myinfo =
 {
-	name 		= "Welcome Features",
+	name 		= "[ND] Welcome Features",
 	author 		= "Stickz",
 	description 	= "Display a welcome message",
 	version 	= "dummy",
@@ -42,8 +42,7 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //Add updater support if included
 }
 
-public void OnClientPutInServer(int client) 
-{
+public void OnClientPutInServer(int client) {
 	CreateTimer(5.0, Timer_WelcomeMessage, client);
 }
 
@@ -75,8 +74,7 @@ public int CookieMenuHandler_WelcomeMessage(int client, CookieMenuAction:action,
 	}
 }
 
-public void OnClientCookiesCached(int client)
-{
+public void OnClientCookiesCached(int client) {
 	option_welcome_message[client] = GetCookieWelcomeMessage(client);
 }
 
