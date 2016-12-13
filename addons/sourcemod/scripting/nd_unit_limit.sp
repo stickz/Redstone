@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #pragma newdecls required
 #include <sourcemod>
 #include <nd_stocks>
+#include <nd_print>
 
 #include <nd_breakdown>
 #include <nd_rounds>
@@ -123,8 +124,7 @@ void RegisterCommands()
 	}
 }
 
-public void OnMapStart() 
-{
+public void OnMapStart() {
 	ResetUnitLimits();
 }
 
@@ -154,7 +154,7 @@ public Action Event_SelectClass(Event event, const char[] name, bool dontBroadca
         	if (IsTooMuchSnipers(client)) 
 		{
 	            	ResetPlayerClass(client);
-	            	PrintToChat(client, "%s %t.", PREFIX, "Sniper Limit Reached");
+	            	PrintMessage(client, "Sniper Limit Reached");
 	            	return Plugin_Continue;
         	}
 	}
@@ -164,7 +164,7 @@ public Action Event_SelectClass(Event event, const char[] name, bool dontBroadca
 		if (IsTooMuchStealth(client)) 
 		{
 	            	ResetPlayerClass(client);
-	            	PrintToChat(client, "%s %t.", PREFIX, "Stealth Limit Reached");
+	            	PrintMessage(client, "Stealth Limit Reached");
 	            	return Plugin_Continue;
         	}
 	}
@@ -174,7 +174,7 @@ public Action Event_SelectClass(Event event, const char[] name, bool dontBroadca
 		if (IsTooMuchAntiStructure(client)) 
 		{
 	            	ResetPlayerClass(client);
-	            	PrintToChat(client, "%s %t.", PREFIX, "AntiStructure Limit Reached");
+	            	PrintMessage(client, "AntiStructure Limit Reached");
 	            	return Plugin_Continue;
         	}
 	}
@@ -190,19 +190,16 @@ public Action CMD_ChangeSnipersLimit(int client, int args)
 
 	if (args != 2) 
 	{
-		PrintToChat(client, "%s %t", PREFIX, "Invalid Args");
+		PrintMessage(client, "Invalid Args");
 	 	return Plugin_Handled;
 	}
 
 	char strteam[32];
-	GetCmdArg(1, strteam, sizeof(strteam));
+	GetCmdArg(1, strteam, sizeof(strteam));	
     	int team = StringToInt(strteam) + 2;
     	
-    	if (team < 2)
-    	{
-    		PrintToChat(client, "%s %t", PREFIX, "Invalid Team"); 
-    		return Plugin_Handled;
-    	}
+    	if (IsInvalidTeam(client, team))
+		return Plugin_Handled;
 
     	char strvalue[32];
 	GetCmdArg(2, strvalue, sizeof(strvalue));
@@ -273,20 +270,17 @@ bool CheckCommonFailure(int client, int type, int args)
 {
 	if (!eCommanders.BoolValue)
 	{
-		PrintToChat(client, "%s %t", PREFIX, "Commander Disabled"); //commander setting of sniper limits are disabled
+		PrintMessage(client, "Commander Disabled"); //commander setting of sniper limits are disabled
         	return true;
     	}
 
     	if (!IsValidClient(client))
         	return true;    
 
-    	int client_team = GetClientTeam(client);
-
-    	if (client_team < 2)
-    	{
-    		PrintToChat(client, "%s %t", PREFIX, "Invalid Team"); 
+    	int team = GetClientTeam(client);
+	
+	if (IsInvalidTeam(client, team))
 		return true;
-	}
 	
 	if (!args) 
 	{
@@ -302,11 +296,22 @@ bool CheckCommonFailure(int client, int type, int args)
     	
     	if (!ND_IsCommander(client)) 
 	{
-		PrintToChat(client, "%s %t", PREFIX, "Only Commanders"); //snipers limiting is available only for Commander
+		PrintMessage(client, "Only Commanders"); //snipers limiting is available only for Commander
 		return true;
 	}
 	
 	return false;
+}
+
+bool IsInvalidTeam(int client, int team) 
+{
+	if (team < 2)
+	{
+		PrintMessage(client, "Invalid Team"); 
+		return true;
+	}
+	
+	return false
 }
 
 // HELPER FUNCTIONS
@@ -367,13 +372,11 @@ bool IsAntiStructure(int class, int subClass)
 	    // Don't account for sabeuters or grenadiers becuase they are a mixed unit
 }
 
-int GetMinStealthValue(int team)
-{
+int GetMinStealthValue(int team) {
 	return ValidTeamCount(team) < 7 ? MIN_STEALTH_LOW_VALUE : MIN_STEALTH_HIGH_VALUE; 
 }
 
-void ResetPlayerClass(int client) 
-{
+void ResetPlayerClass(int client) {
 	ResetClass(client, MAIN_CLASS_ASSAULT, ASSAULT_CLASS_INFANTRY, 0);
 }
 
