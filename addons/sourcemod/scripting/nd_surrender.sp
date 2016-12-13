@@ -29,8 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 enum Bools
 {
 	enableSurrender,
-	hasSurrendered,
-	roundHasEnded
+	hasSurrendered
 };
 
 int voteCount[2];
@@ -93,7 +92,6 @@ public void ND_OnRoundStarted()
 	
 	g_Bool[enableSurrender] = false;
 	g_Bool[hasSurrendered] = false;
-	g_Bool[roundHasEnded] = false;
 	
 	for (int client = 1; client <= MaxClients; client++)
 	{
@@ -184,15 +182,9 @@ void setBunkerEntityIndexs()
 	}
 }
 
-void roundEnd()
-{
-	if (!g_Bool[roundHasEnded])
-	{
-		if (!g_Bool[enableSurrender] && SurrenderDelayTimer != INVALID_HANDLE)
-			CloseHandle(SurrenderDelayTimer);
-
-		g_Bool[roundHasEnded] = true;
-	}
+void roundEnd() {
+	if (!ND_RoundEnded() && !g_Bool[enableSurrender] && SurrenderDelayTimer != INVALID_HANDLE)
+		CloseHandle(SurrenderDelayTimer);
 }
 
 void callSurrender(int client)
@@ -215,7 +207,7 @@ void callSurrender(int client)
 	else if (g_hasVotedEmpire[client] || g_hasVotedConsort[client])
 		PrintFailure(client, "You Surrendered");
 	
-	else if (g_Bool[roundHasEnded])
+	else if (ND_RoundEnded())
 		PrintFailure(client, "Round Ended");
 	
 	else if (bunkerHealthTooLow(team))
