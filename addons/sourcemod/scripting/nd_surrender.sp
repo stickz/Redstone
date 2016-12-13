@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_redstone>
 #include <nd_com_eng>
 #include <nd_rounds>
+#include <nd_print>
 
 enum Bools
 {
@@ -45,8 +46,6 @@ ConVar cvarMinPlayers;
 ConVar cvarSurrenderPercent;
 ConVar cvarSurrenderTimeout;
 ConVar cvarLowBunkerHealth;
-
-#define PREFIX "\x05[xG]"
 
 public Plugin myinfo =
 {
@@ -270,10 +269,6 @@ void printVetoUsed(int team)
 			PrintMessage(client, "Commander Used Veto");
 		}
 	}
-}
-
-void PrintMessage(int client, const char[] phrase) {
-	PrintToChat(client, "%s %t!", PREFIX, phrase);
 }
 
 void resetValues(int client)
