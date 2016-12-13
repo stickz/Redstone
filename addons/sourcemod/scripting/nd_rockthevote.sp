@@ -70,8 +70,6 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_rtv", CMD_RockTheVote);
 	RegConsoleCmd("sm_changemap", CMD_RockTheVote);
 	
-	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
-	
 	LoadTranslations("nd_rockthevote.phrases");
 	LoadTranslations("numbers.phrases");
 	
@@ -104,7 +102,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	return Plugin_Continue;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
+public void ND_OnRoundEnded() {
 	if (!g_Bool[enableRTV] && RtvDisableTimer != INVALID_HANDLE)
 		CloseHandle(RtvDisableTimer);
 }
