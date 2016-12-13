@@ -327,7 +327,7 @@ bool IsTooMuchSnipers(int client)
 			                     sniperCount >= HIGH_LIMIT;
 
 	int sniperLimit = UnitLimit[teamIDX][TYPE_SNIPER];
-	return sniperLimit == 1 & clientCount >= 10 ? 2 : sniperLimit;
+	return (sniperLimit == 1 && clientCount >= 10) ? 2 : sniperLimit;
 }
 
 bool IsTooMuchStealth(int client)
