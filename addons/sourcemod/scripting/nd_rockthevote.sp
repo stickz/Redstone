@@ -96,9 +96,6 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 		{
 			if (strcmp(sArgs, nd_rtv_commands[idx], false) == 0) 
 			{
-				//new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
-				//SetCmdReplySource(old);
-				
 				callRockTheVote(client);
 				return Plugin_Handled;				
 			}
@@ -258,12 +255,10 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	return APLRes_Success;
 }
 
-public int Native_GetRtvStatus(Handle plugin, int numParams)
-{
+public int Native_GetRtvStatus(Handle plugin, int numParams) {
 	return g_Bool[enableRTV];
 }
 
-public int Native_ToogleRtvStatus(Handle plugin, int numParams)
-{
+public int Native_ToogleRtvStatus(Handle plugin, int numParams) {
 	g_Bool[enableRTV] = GetNativeCell(1);
 }
