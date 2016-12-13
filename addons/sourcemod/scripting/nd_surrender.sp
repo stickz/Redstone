@@ -109,10 +109,8 @@ public Action CMD_Veto(int client, int args)
 	return Plugin_Handled;
 }
 
-public Action Event_RoundDone(Event event, const char[] name, bool dontBroadcast)
-{
-	if (!g_Bool[roundHasEnded])
-		roundEnd();
+public Action Event_RoundDone(Event event, const char[] name, bool dontBroadcast) {
+	roundEnd();
 }
 
 public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
@@ -260,7 +258,7 @@ void callVeto(int client)
 	if (g_hasUsedVeto[teamIDX])
 		PrintMessage(client, "Veto Already Used");
 		
-	else if (g_Bool[roundHasEnded])
+	else if (ND_RoundEnded())
 		PrintMessage(client, "Round Ended");
 		
 	else
@@ -304,7 +302,7 @@ void resetValues(int client)
 	{
 		voteCount[team - 2]--;
 		int teamCount = RED_GetTeamCount(team);
-		if (teamCount >= cvarMinPlayers.IntValue + 1 && !g_Bool[roundHasEnded] && !g_Bool[hasSurrendered])
+		if (teamCount >= cvarMinPlayers.IntValue + 1 && !ND_RoundEnded() && !g_Bool[hasSurrendered])
 			checkSurrender(team, teamCount);
 	}
 }
