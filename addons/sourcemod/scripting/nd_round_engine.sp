@@ -31,6 +31,7 @@ bool roundEnded = false;
 bool mapStarted = false;
 
 Handle g_OnRoundStartedForward;
+Handle g_OnRoundEndedForward;
 
 public void OnPluginStart()
 {
@@ -38,6 +39,7 @@ public void OnPluginStart()
 	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
 	g_OnRoundStartedForward = CreateGlobalForward("ND_OnRoundStarted", ET_Ignore);
+	g_OnRoundEndedForward = CreateGlobalForward("ND_OnRoundEnded", ET_Ignore);
 	
 	AddUpdaterLibrary(); //auto-updater
 }
@@ -67,6 +69,10 @@ public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
 	roundStarted = false;
 	roundEnded = true;
+	
+	Action dummy;
+	Call_StartForward(g_OnRoundEndedForward);
+	Call_Finish(dummy);
 }
 
 /* Natives */
