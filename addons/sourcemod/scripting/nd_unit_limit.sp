@@ -44,7 +44,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LOW_LIMIT 	2
 #define MED_LIMIT 	3
 #define HIGH_LIMIT 	4
-#define MIN_LIMIT	2
+
+#define SNIPER_MIN_LIMIT	2
+#define SNIPER_EPLY_COUNT	10
+#define STEALTH_EPLY_COUNT	7
 
 #define DEBUG 0
 
@@ -328,8 +331,8 @@ bool IsTooMuchSnipers(int client)
 			                     sniperCount >= HIGH_LIMIT;
 
 	int sniperLimit = UnitLimit[teamIDX][TYPE_SNIPER];	
-	if (clientCount >= 10 && sniperLimit == 1)
-		sniperLimit = 2;
+	if (clientCount >= SNIPER_EPLY_COUNT && sniperLimit == 1)
+		sniperLimit = SNIPER_MIN_LIMIT;
 
 	return sniperCount >= sniperLimit;
 }
@@ -376,7 +379,7 @@ bool IsAntiStructure(int class, int subClass)
 }
 
 int GetMinStealthValue(int team) {
-	return ValidTeamCount(team) < 7 ? MIN_STEALTH_LOW_VALUE : MIN_STEALTH_HIGH_VALUE; 
+	return ValidTeamCount(team) < STEALTH_EPLY_COUNT ? MIN_STEALTH_LOW_VALUE : MIN_STEALTH_HIGH_VALUE; 
 }
 
 void ResetPlayerClass(int client) {
