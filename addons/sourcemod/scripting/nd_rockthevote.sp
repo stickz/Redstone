@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_stocks>
 #include <nd_rounds>
 #include <nd_redstone>
+#include <nd_print>
 
 enum Bools
 {
@@ -37,8 +38,6 @@ enum Bools
 #define TEAM_EMPIRE		3
 
 #define RTV_COMMANDS_SIZE 	3
-
-#define PREFIX "\x05[xG]"
 
 char nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
 {
@@ -69,8 +68,6 @@ public void OnPluginStart()
 {
 	RegConsoleCmd("sm_rtv", CMD_RockTheVote);
 	RegConsoleCmd("sm_changemap", CMD_RockTheVote);
-	
-	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
 	LoadTranslations("nd_rockthevote.phrases");
 	LoadTranslations("numbers.phrases");
@@ -104,7 +101,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	return Plugin_Continue;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
+public void ND_OnRoundEnded() {
 	if (!g_Bool[enableRTV] && RtvDisableTimer != INVALID_HANDLE)
 		CloseHandle(RtvDisableTimer);
 }
@@ -210,10 +207,6 @@ public Action Timer_DelayMapChange(Handle timer)
 		FiveSecondChange();
 		return Plugin_Stop;
 	}
-}
-
-void PrintMessage(int client, const char[] phrase) {
-	PrintToChat(client, "%s %t!", PREFIX, phrase);
 }
 
 void FiveSecondChange()

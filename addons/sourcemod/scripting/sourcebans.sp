@@ -343,7 +343,7 @@ public Action ChatHook(client, args)
 		}
 		
 		// ban him!
-		PrepareBan(client, g_BanTarget[client], g_BanTime[client], reason, sizeof(reason));
+		PrepareBan(client, g_BanTarget[client], g_BanTime[client], reason);
 		
 		// block the reason to be sent in chat
 		return Plugin_Handled;
@@ -697,7 +697,7 @@ public ReasonSelected(Handle menu, MenuAction:action, param1, param2)
 			}
 			
 			else if (g_BanTarget[param1] != -1 && g_BanTime[param1] != -1)
-				PrepareBan(param1, g_BanTarget[param1], g_BanTime[param1], info, sizeof(info));
+				PrepareBan(param1, g_BanTarget[param1], g_BanTime[param1], info);
 		}
 		
 		case MenuAction_Cancel:
@@ -729,7 +729,7 @@ public HackingSelected(Handle:menu, MenuAction:action, param1, param2)
 			GetMenuItem(menu, param2, key, sizeof(key), _, info, sizeof(info));
 			
 			if (g_BanTarget[param1] != -1 && g_BanTime[param1] != -1)
-				PrepareBan(param1, g_BanTarget[param1], g_BanTime[param1], info, sizeof(info));
+				PrepareBan(param1, g_BanTarget[param1], g_BanTime[param1], info);
 		}
 		
 		case MenuAction_Cancel:
@@ -2019,7 +2019,7 @@ public Native_SBBanPlayer(Handle plugin, numParams)
 		}
 	}
 	
-	PrepareBan(client, target, time, reason, sizeof(reason));
+	PrepareBan(client, target, time, reason);
 	return true;
 }
 
@@ -2201,7 +2201,7 @@ stock InsertServerInfo()
 	}
 }
 
-void PrepareBan(int client, int target, int time, char[] reason, int size)
+void PrepareBan(int client, int target, int time, char[] reason)
 {
 	if (!target || !IsClientInGame(target))
 		return;

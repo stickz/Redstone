@@ -30,9 +30,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_gameme>
 #include <nd_com_eng>
 #include <nd_rounds>
+#include <nd_print>
 
 #define INVALID_CLIENT 0
-#define PREFIX "\x05[xG]"
 
 public Plugin myinfo =
 {
@@ -150,7 +150,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 					
 				else
 				{
-					PrintToChat(client, "%s %t.", PREFIX, "Spawn Before Apply");
+					PrintMessage(client, "Spawn Before Apply");
 					return Plugin_Handled;					
 				}
 				
@@ -163,7 +163,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 			{
 				if (count > g_cvar[cRestrictMinLevel].IntValue)
 				{
-					PrintToChat(client, "%s %t.", PREFIX, "Bellow Ten");
+					PrintMessage(client, "Bellow Ten");
 					return Plugin_Handled;	
 				}
 				
@@ -172,7 +172,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 				if (GameME_SkillAvailible(client) && GameME_GetClientSkill(client) < lowSkill)
 				{
 					PrintToChat(client, "%s %t!", PREFIX, "Skill Required", lowSkill);
-					return Plugin_Handled;				
+					return Plugin_Handled;		
 				}
 				#endif
 			}
@@ -185,7 +185,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 				{
 					if (clientLevel < g_cvar[cHighPlayerLevel].IntValue)
 					{
-						PrintToChat(client, "%s %t.", PREFIX, "Fifty Five Required");
+						PrintMessage(client, "Fifty Five Required");
 						return Plugin_Handled;
 					}
 					
@@ -201,7 +201,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 				
 				else if (clientLevel < count)
 				{
-					PrintToChat(client, "%s %t.", PREFIX, "Total Level");
+					PrintMessage(client, "Total Level");
 					return Plugin_Handled;
 				}
 			}		

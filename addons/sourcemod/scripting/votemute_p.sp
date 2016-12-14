@@ -2,6 +2,7 @@
 #include <sdktools>
 #include <sourcecomms>
 #include <nd_stocks>
+#include <nd_print>
 
 #undef REQUIRE_PLUGIN
 #tryinclude <adminmenu>
@@ -24,7 +25,6 @@ Menu g_hVoteMenu = null;
 #define VOTE_TYPE_SILENCE 2
 
 #define INVALID_TARGET -1
-#define PREFIX "\x05[xG]"
 
 int g_voteClient[2];
 char g_voteInfo[3][65];
@@ -85,7 +85,7 @@ public Action Command_Votemute(int client, int args)
 
 		else if (SourceComms_GetClientMuteType(target) != bNot)
 		{
-			PrintToChat(client, "%s %t!", PREFIX, "Already Muted"); //This client is already muted!
+			PrintMessage(client, "Already Muted"); //This client is already muted!
 			return Plugin_Handled;
 		}
 
@@ -117,7 +117,7 @@ public Action Command_Votesilence(int client, int args)
 
 		else if (IsSourceCommSilenced(target))
 		{
-			PrintToChat(client, "%s %t!", PREFIX, "Already Silenced"); //This client is already silenced
+			PrintMessage(client, "Already Silenced"); //This client is already silenced
 			return Plugin_Handled;		
 		}
 
@@ -148,7 +148,7 @@ public Action Command_Votegag(int client, int args)
 
 		else if (SourceComms_GetClientGagType(target) != bNot)
 		{
-			PrintToChat(client, "%s %t!", PREFIX, "Already Gagged"); //This client is already gagged
+			PrintMessage(client, "Already Gagged"); //This client is already gagged
 			return Plugin_Handled;
 		}
 		
@@ -162,13 +162,13 @@ bool CanStartVote(int client)
 {
 	if (IsVoteInProgress())
 	{
-		PrintToChat(client, "%s %t.", PREFIX, "Vote in Progress"); //Please wait for the current server-wide vote to finish
+		PrintMessage(client, "Vote in Progress"); //Please wait for the current server-wide vote to finish
 		return false;
 	}
 
 	if (g_Cvar_Admins.BoolValue && !IsValidAdmin(client, "k"))
 	{
-		PrintToChat(client, "%s %t.", PREFIX, "Moderater Only"); //This command is for server moderators only
+		PrintMessage(client, "Moderater Only"); //This command is for server moderators only
 		return false;
 	}		
 	
@@ -177,7 +177,7 @@ bool CanStartVote(int client)
 		
 	if (IsSourceCommSilenced(client))
 	{
-		PrintToChat(client, "%s %t!", PREFIX, "Silence Use"); //You cannot use this feature while silenced
+		PrintMessage(client, "Silence Use"); //You cannot use this feature while silenced
 		return false;				
 	}
 
@@ -368,8 +368,7 @@ public int Handler_VoteCallback(Menu menu, MenuAction action, int param1, int pa
 	return 0;	
 }
 
-float GetVotePercent(int votes, int totalVotes)
-{
+float GetVotePercent(int votes, int totalVotes) {
 	return FloatDiv(float(votes),float(totalVotes));
 }
 
