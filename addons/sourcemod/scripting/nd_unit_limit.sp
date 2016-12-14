@@ -44,6 +44,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LOW_LIMIT 	2
 #define MED_LIMIT 	3
 #define HIGH_LIMIT 	4
+#define MIN_LIMIT	2
 
 #define DEBUG 0
 
@@ -326,8 +327,11 @@ bool IsTooMuchSnipers(int client)
 			clientCount < 13 &&  sniperCount >= MED_LIMIT ||
 			                     sniperCount >= HIGH_LIMIT;
 
-	int sniperLimit = UnitLimit[teamIDX][TYPE_SNIPER];
-	return (sniperLimit == 1 && clientCount >= 10) ? 2 : sniperLimit;
+	int sniperLimit = UnitLimit[teamIDX][TYPE_SNIPER];	
+	if (sniperLimit == 1 && clientCount >= 10)
+		return MIN_LIMIT;
+		
+	return sniperLimit;
 }
 
 bool IsTooMuchStealth(int client)
