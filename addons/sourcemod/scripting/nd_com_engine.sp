@@ -44,6 +44,7 @@ public void OnPluginStart()
 	HookEvent("player_entered_commander_mode", Event_CommanderModeEnter);
 	HookEvent("player_left_commander_mode", Event_CommanderModeLeft);
 	HookEvent("promoted_to_commander", Event_CommanderPromo);
+	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
 	g_OnCommanderResignForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell);
 	g_OnCommanderMutinyForward = CreateGlobalForward("ND_OnCommanderMutiny", ET_Event, Param_Cell, Param_Cell, Param_Cell);
@@ -84,6 +85,15 @@ public Action Event_CommanderPromo(Event event, const char[] name, bool dontBroa
 	Call_Finish(dummy);
 	
 	return Plugin_Continue;
+}
+
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
+{
+	for (int i = 0; i < 2; i++)
+	{
+		InCommanderMode[i] = false;
+		TeamCommander[i] = -1;	
+	}
 }
 
 public Action startmutiny(int client, const char[] command, int argc)
