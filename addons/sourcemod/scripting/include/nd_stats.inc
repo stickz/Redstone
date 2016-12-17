@@ -12,3 +12,5 @@
  * @return integer 			Client Expereince
  */
 native int ND_GetClientEXP(int client);
+
+forward void ND_OnClientExpRetrieved(int client, int exp);
