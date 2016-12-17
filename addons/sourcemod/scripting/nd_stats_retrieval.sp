@@ -33,6 +33,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define STEALTH_EXP	"Stealth.accum.experience"
 #define SUPPORT_EXP	"Support.accum.experience"
 
+Handle g_OnClientExpRetrieved;
+
 public Plugin myinfo =
 {
 	name 		= "[ND] Stats Retrieval",
@@ -58,6 +60,8 @@ public void OnClientDisconnect(int iClient)
 public void OnPluginStart()
 {
 	AddUpdaterLibrary(); //auto-updater
+	
+	g_OnClientExpRetrieved = CreateGlobalForward("ND_OnClientExpRetrieved", ET_Ignore, Param_Cell, Param_Cell);
 }
 
 int GetClientExp(int iClient)
@@ -76,8 +80,19 @@ void RequestPlayerStats(int iClient)
 {
 	if (SteamWorks_RequestStats(iClient, GAME_APPID))
 	{
-		gI_totalPlayerExp[iClient] = GetClientExp(iClient);
+		int iExp = GetClientExp(iClient);
+		gI_totalPlayerExp[iClient] = iExp;
+		FireOnExpRetrievedForward(iClient, iExp);
 	}
+}
+
+void FireOnExpRetrievedForward(int iClient, int iExp)
+{
+	Action dummy;
+	Call_StartForward(g_OnClientExpRetrieved);
+	Call_PushCell(iClient);
+	Call_PushCell(iExp);
+	Call_Finish(dummy);
 }
 
 void ResetVarriables(int iClient)
