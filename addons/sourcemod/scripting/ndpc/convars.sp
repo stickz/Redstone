@@ -33,7 +33,7 @@ char convarNames[CONVAR_COUNT][] = {
 #define CONVAR_PREFIX "sm_ndpc_"
 #define DESCRIPTION_PREFIX "Enable "
 
-ConVar g_Enable[Convars];  
+ConVar g_Enable[CONVAR_COUNT];  
 
 void CreateConVars()
 {
