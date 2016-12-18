@@ -1,7 +1,9 @@
-/* To add an enable convar update the enum and convarNames char
+/* To add an enable convar increment CONVAR_COUNT by one, update the enum and convarNames char
  * The abstract code will handle the logistics of creating the convar */
 
-enum Convars
+#define CONVAR_COUNT 8
+
+enum
 {
     	CommanderLang = 0,
     	TeamLang,
@@ -13,7 +15,7 @@ enum Convars
 	SpecTesting
 }
 
-char convarNames[Convars][] = {
+char convarNames[CONVAR_COUNT][] = {
 	"commander_lang",
 	"team_lang",
 	"building_reqs",
@@ -35,7 +37,7 @@ ConVar g_Enable[Convars];
 
 void CreateConVars()
 {
-	for (int convar = 0; convar < view_as<int>(Convars); convar++)
+	for (int convar = 0; convar < CONVAR_COUNT; convar++)
 	{
 		char cString[32];
 		StrCat(cString, sizeof(cString), CONVAR_PREFIX);
