@@ -13,7 +13,7 @@ enum Convars
 	SpecTesting
 }
 
-char convarNames[CONVAR_COUNT][] = {
+char convarNames[Convars][] = {
 	"commander_lang",
 	"team_lang",
 	"building_reqs",
