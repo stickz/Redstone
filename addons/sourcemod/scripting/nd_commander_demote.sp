@@ -173,7 +173,7 @@ public Action TIMER_CheckCommanderDemote(Handle timer, any userid)
 	if (ND_IsCommander(client))
 	{
 		int team = GetClientTeam(client);
-		if (!g_hasEnteredBunker[team - 2])
+		if (team > 1 && !g_hasEnteredBunker[team - 2])
 			demoteCommander(team);	
 	}		
 		
