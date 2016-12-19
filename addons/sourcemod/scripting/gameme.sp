@@ -5245,10 +5245,8 @@ public gameMEMainCommandHandler(Handle:menu, MenuAction:action, param1, param2)
 						DisplayMenu(gameme_plugin[menu_auto], param1, MENU_TIME_FOREVER);
 					case 4 : 
 						DisplayMenu(gameme_plugin[menu_events], param1, MENU_TIME_FOREVER);
-					case 5 : 
-						make_player_command(param1, "/gameme_hideranking");
-					case 6 : 
-						make_player_command(param1, "/gameme_reset");
+					case 5 : {}
+					case 6 : {}
 				}
 			} else {
 				switch (param2) {
@@ -5276,10 +5274,8 @@ public gameMEMainCommandHandler(Handle:menu, MenuAction:action, param1, param2)
 						make_player_command(param1, "/targets");
 					case 11 : 
 						make_player_command(param1, "/kills");
-					case 12 : 
-						make_player_command(param1, "/gameme_hideranking");
-					case 13 : 
-						make_player_command(param1, "/gameme_reset");
+					case 12 : {}
+					case 13 : {}
 					case 14 : 
 						make_player_command(param1, "/cheaters");
 					case 15 : 
