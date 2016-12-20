@@ -15,12 +15,18 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone"
 };
 
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_team_shuffle/nd_team_shuffle.txt"
+#include "updater/standard.sp"
+
 ArrayList balancedPlayers;
 Handle g_OnTeamsShuffled_Forward;
 
-public void OnPluginStart() {
+public void OnPluginStart() 
+{
 	balancedPlayers = new ArrayList(MaxClients+1);
-	g_OnTeamsShuffled_Forward = CreateGlobalForward("ND_OnTeamsShuffled", ET_Ignore);
+	g_OnTeamsShuffled_Forward = CreateGlobalForward("ND_OnTeamsShuffled", ET_Ignore);	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 void BalanceTeams()
@@ -104,10 +110,6 @@ void FireTeamsShuffledForward()
 	Call_Finish(dummy);	
 }
 
-bool IncludeInBalance(int client, bool roundStarted) {
-	return IsValidClient(client) && IsReadyForBalance(client, roundStarted);	
-}
-
 bool IsReadyForBalance(int client, bool roundStarted)
 {
 	int team = GetClientTeam(client);
@@ -134,8 +136,12 @@ int GetSkillLevel(int client, int playerMan)
 	return RoundFloat(finalSkill);
 }
 
-int GetFinalSkill(int client, bool roundStarted, int resEntity) {
-	return IncludeInBalance(client, roundStarted) ? GetSkillLevel(client, resEntity) : -1;	
+int GetFinalSkill(int client, bool roundStarted, int resEntity) 
+{
+	if (!IsValidClient(client) || !IsReadyForBalance(client, roundStarted))
+		return -1;
+	
+	return GetSkillLevel(client, resEntity);	
 }
 
 /* Natives */
