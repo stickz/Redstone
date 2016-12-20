@@ -128,20 +128,17 @@ bool IsReadyForBalance(int client, bool roundStarted)
 
 int GetSkillLevel(int client, int playerMan)
 {
-	float pSkill[2] = {0.0, ...};
+	float pSkill = 0.0;
+	
+	int level = RetreiveLevel(client, playerMan);	
 	
 	if (GM_GFS_LOADED())
-		pSkill[0] = GameME_GetFinalSkill(client);
+		pSkill = GameME_GetFinalSkill(client);
+		
+	if (pSkill <= 0.0)
+		return level;
 
-	if (GM_GFS_LOADED())
-		pSkill[1] = SteamWorks_GetFinalSkill(client);
-		
-	if (pSkill[0] <= 0.0 && pSkill[1] <= 0.0)
-		return RetreiveLevel(client, playerMan);
-	
-	float finalSkill = pSkill[0] > pSkill[1] ? pSkill[0] : pSkill[1];
-		
-	return RoundFloat(finalSkill);
+	return level > pSkill ? level : RoundFloat(pSkill);
 }
 
 int GetFinalSkill(int client, bool roundStarted, int resEntity) 
