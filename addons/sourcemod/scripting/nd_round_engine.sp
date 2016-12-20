@@ -36,7 +36,7 @@ Handle g_OnRoundEndedForward;
 public void OnPluginStart()
 {
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
-	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
+	HookEvent("round_win", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
 	g_OnRoundStartedForward = CreateGlobalForward("ND_OnRoundStarted", ET_Ignore);
 	g_OnRoundEndedForward = CreateGlobalForward("ND_OnRoundEnded", ET_Ignore);
