@@ -8,11 +8,11 @@
 
 public Plugin myinfo =
 {
-	name = "[ND] Team Shuffle",
-	author = "Stickz",
-	description = "Shuffles teams using a sorting algorithm, against player skill",
-	version = "dummy",
-	url = "https://github.com/stickz/Redstone"
+	name 		= "[ND] Team Shuffle",
+	author 		= "Stickz",
+	description 	= "Shuffles teams using a sorting algorithm, against player skill",
+	version 	= "dummy",
+	url 		= "https://github.com/stickz/Redstone"
 };
 
 /* Auto Updater */
@@ -45,7 +45,7 @@ void BalanceTeams()
 	}
 	
 	int counter = MAX_SKILL;
-	int	team = getRandomTeam();
+	int team = getRandomTeam();
 	
 	bool doublePlace = true;
 	bool firstPlace = true;
@@ -174,4 +174,3 @@ public Native_GetBalancerData(Handle plugin, int numParms)
 	
 	return _:view_as<Handle>(data);
 }
-
