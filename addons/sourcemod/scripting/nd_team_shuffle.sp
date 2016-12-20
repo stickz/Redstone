@@ -1,6 +1,6 @@
 #include <sourcemod>
 #include <sdktools>
-#include <nd_pskill>
+#include <nd_gskill>
 #include <nd_rounds>
 #include <nd_stocks>
 #include <nd_redstone>
