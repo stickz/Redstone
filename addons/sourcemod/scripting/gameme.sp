@@ -803,7 +803,32 @@ public OnPluginStart()
 	gameMEStatsPublicCommandForward = CreateGlobalForward("onGameMEStatsPublicCommand", ET_Event, Param_Cell, Param_Cell, Param_String, Param_Array, Param_Array, Param_Array, Param_Array, Param_String, Param_Array, Param_Array, Param_String);
 	gameMEStatsTop10Forward = CreateGlobalForward("onGameMEStatsTop10", ET_Event, Param_Cell, Param_Cell, Param_String, Param_Array, Param_Array, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String);
 	gameMEStatsNextForward = CreateGlobalForward("onGameMEStatsNext", ET_Event, Param_Cell, Param_Cell, Param_String, Param_Array, Param_Array, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String, Param_String);
+	
+	RegAdminCmd("sm_GameMeUnHide", CMD_Force_Unhide, ADMFLAG_ROOT, "reverses damage players have done with the gameme menu");	
+}
 
+public Action CMD_Force_Unhide(int client, int args)
+{
+	if (!args)
+	{
+		ReplyToCommand(client, "[SM] Usage: sm_GameMeUnHide <Name>");
+		return Plugin_Handled;
+	}
+	
+	char player[64];
+	GetCmdArg(1, player, sizeof(player));
+	
+	int target = FindTarget(client, player, true, true);
+	if (target == -1)
+	{
+		ReplyToCommand(client, "Invalid player name.");
+		return Plugin_Handled;	
+	}
+	
+	make_player_command(target, "/gameme_hideranking");
+	PrintToChat(client, "[xG] Player stats successfully un-hidden");
+	
+	return Plugin_Handled;
 }
 
 
