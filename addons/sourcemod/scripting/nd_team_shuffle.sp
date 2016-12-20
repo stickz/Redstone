@@ -39,11 +39,11 @@ void BalanceTeams()
 	bool roundStarted = ND_RoundStarted();	
 	int resEntity = GetPlayerResourceEntity();
 	
-	// For some reason, we need to do this?
+	int client = 1;
 	players.Set(0, -1);
 	
 	int skill = 0;
-	for (int client = 1; client <= MaxClients; client++){ 
+	for (; client <= MaxClients; client++){ 
 		skill = GetFinalSkill(client, roundStarted, resEntity);
 		players.Set(client, skill);
 	}
@@ -57,7 +57,7 @@ void BalanceTeams()
 	
 	while (counter > -1)
 	{
-		int client = players.FindValue(counter);
+		client = players.FindValue(counter);
 		
 		if (client == -1)
 			counter--;
