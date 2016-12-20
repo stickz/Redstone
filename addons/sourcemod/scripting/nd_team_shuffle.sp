@@ -39,6 +39,9 @@ void BalanceTeams()
 	bool roundStarted = ND_RoundStarted();	
 	int resEntity = GetPlayerResourceEntity();
 	
+	// For some reason, we need to do this?
+	players.Set(0, -1);
+	
 	int skill = 0;
 	for (int client = 1; client <= MaxClients; client++){ 
 		skill = GetFinalSkill(client, roundStarted, resEntity);
