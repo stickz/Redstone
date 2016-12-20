@@ -74,6 +74,7 @@ public Action CMD_DumpPlayerEXP(int client, int args)
 	}
 	
 	DumpPlayerEXP(client);
+	PrintToChat(client, "[xG] Output dummped to client console press ~.");
 	return Plugin_Handled;
 }
 
