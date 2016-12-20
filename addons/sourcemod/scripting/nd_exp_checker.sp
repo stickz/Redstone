@@ -60,7 +60,7 @@ public Action CMD_GetExp(int client, int args)
 	char pName[64];
 	GetClientName(target, pName, sizeof(pName))
 	
-	PrintToChat(client, "\x05[xG] %s's exp is %d", pName, ND_GetClientEXP(target));
+	PrintToChat(client, "\x05%s's exp is %d", pName, ND_GetClientEXP(target));
 	return Plugin_Handled;
 }
 
