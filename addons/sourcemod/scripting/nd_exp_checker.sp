@@ -30,6 +30,7 @@ public void OnPluginStart() {
 	}
 	
 	AddUpdaterLibrary(); // for auto-updater
+	LoadTranslations("common.phrases");
 }
 
 public Action CMD_GetExp(int client, int args)
