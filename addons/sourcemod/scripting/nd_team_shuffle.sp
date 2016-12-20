@@ -3,6 +3,7 @@
 #include <nd_pskill>
 #include <nd_rounds>
 #include <nd_stocks>
+#include <nd_redstone>
 
 #define MAX_SKILL 225
 
@@ -138,7 +139,7 @@ int GetSkillLevel(int client, int playerMan)
 
 int GetFinalSkill(int client, bool roundStarted, int resEntity) 
 {
-	if (!IsValidClient(client) || !IsReadyForBalance(client, roundStarted))
+	if (!RED_IsValidClient(client) || !IsReadyForBalance(client, roundStarted))
 		return -1;
 	
 	return GetSkillLevel(client, resEntity);	
