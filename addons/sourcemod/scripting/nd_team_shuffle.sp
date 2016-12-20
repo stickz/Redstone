@@ -108,7 +108,11 @@ void FireTeamsShuffledForward()
 {
 	Action dummy;
 	Call_StartForward(g_OnTeamsShuffled_Forward);
-	Call_Finish(dummy);	
+	Call_Finish(dummy);
+	
+	/* Start round after call is finished */
+	if (!ND_RoundStarted())
+		ServerCommand("mp_minplayers 1");
 }
 
 bool IsReadyForBalance(int client, bool roundStarted)
