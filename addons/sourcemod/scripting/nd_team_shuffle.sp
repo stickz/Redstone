@@ -23,10 +23,16 @@ public Plugin myinfo =
 ArrayList balancedPlayers;
 Handle g_OnTeamsShuffled_Forward;
 
+ConVar gcLevelEighty;
+
 public void OnPluginStart() 
 {
 	balancedPlayers = new ArrayList(MaxClients+1);
-	g_OnTeamsShuffled_Forward = CreateGlobalForward("ND_OnTeamsShuffled", ET_Ignore);	
+	g_OnTeamsShuffled_Forward = CreateGlobalForward("ND_OnTeamsShuffled", ET_Ignore);
+	
+	gcLevelEighty = CreateConVar("sm_ts_eightyExp", "450000", "Specifies the amount of exp to be considered level 80");	
+	AutoExecConfig(true, "nd_team_shuffle");
+	
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -128,7 +134,11 @@ bool IsReadyForBalance(int client, bool roundStarted)
 
 int GetSkillLevel(int client, int playerMan)
 {
-	int level = RetreiveLevel(client, playerMan);	
+	int level = RetreiveLevel(client, playerMan);
+	
+	/* Load all level 80 clients before they spawn */
+	if (ND_EXPAvailible(client) && ND_GetClientEXP(client) >= gcLevelEighty.IntValue)
+		level = 80;
 	
 	if (GM_GFS_LOADED())
 	{
