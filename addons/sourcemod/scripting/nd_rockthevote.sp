@@ -49,7 +49,6 @@ char nd_rtv_commands[RTV_COMMANDS_SIZE][] =
 int voteCount;	
 bool g_Bool[Bools];
 bool g_hasVoted[MAXPLAYERS+1] = {false, ... };
-Handle RtvDisableTimer = INVALID_HANDLE;
 
 ConVar cvarMaxPlayers;
 ConVar cvarTimeWindow;
@@ -99,11 +98,6 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 		}
 	}	
 	return Plugin_Continue;
-}
-
-public void ND_OnRoundEnded() {
-	if (!g_Bool[enableRTV] && RtvDisableTimer != INVALID_HANDLE)
-		CloseHandle(RtvDisableTimer);
 }
 
 public void OnMapStart()
@@ -226,7 +220,7 @@ void displayVotes(int Remainder, int client)
 void StartRTVDisableTimer()
 {
 	float time = cvarTimeWindow.FloatValue * 60;
-	RtvDisableTimer = CreateTimer(time, TIMER_DisableRTV, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(time, TIMER_DisableRTV, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 void CreatePluginConvars()
