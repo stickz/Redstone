@@ -80,8 +80,12 @@ public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+	CreateNative("ND_RoundStart", Native_GetRoundStarted);
 	CreateNative("ND_RoundStarted", Native_GetRoundStarted);
+	
+	CreateNative("ND_RoundEnd", Native_GetRoundEnded);
 	CreateNative("ND_RoundEnded", Native_GetRoundEnded);
+
 	CreateNative("ND_MapStarted", Native_GetMapStarted)
 	return APLRes_Success;
 }
