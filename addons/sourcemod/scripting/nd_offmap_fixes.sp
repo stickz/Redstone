@@ -65,7 +65,7 @@ public void ND_OnRoundStarted()
     	validMap = GetArraySize(HAX) > 0;
 }
 
-public void ND_OnRoundEnd() {
+public void ND_OnRoundEnded() {
 	validMap = false;
 }
 
