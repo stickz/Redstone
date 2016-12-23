@@ -43,5 +43,8 @@ native bool ND_MapStarted();
 #define NDMS_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStarted") == FeatureStatus_Available)
 
 /* Round engine forwards */
+forward void ND_OnRoundStart();
 forward void ND_OnRoundStarted();
+
+forward void ND_OnRoundEnd();
 forward void ND_OnRoundEnded();
