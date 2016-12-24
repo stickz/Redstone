@@ -37,7 +37,7 @@ enum Bools
 int voteCount[2];
 int teamBunkers[2];
 bool g_Bool[Bools];
-bool g_hasUsedVeto[2] = {false, ...};
+bool g_commanderVoted[2] = {false, ...};
 bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... };
 bool g_hasVotedConsort[MAXPLAYERS+1] = {false, ... };
 Handle SurrenderDelayTimer = INVALID_HANDLE;
@@ -59,7 +59,6 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	RegConsoleCmd("sm_surrender", CMD_Surrender);
-	RegConsoleCmd("sm_veto", CMD_Veto);
 	
 	AddCommandListener(PlayerJoinTeam, "jointeam");
 	
@@ -71,7 +70,7 @@ public void OnPluginStart()
 	LoadTranslations("nd_surrender.phrases"); // for all chat messages
 	LoadTranslations("numbers.phrases"); // for one,two,three etc.
 	
-	AddUpdaterLibrary(); //add updater support	
+	AddUpdaterLibrary(); //add updater support
 	AutoExecConfig(true, "nd_surrender"); // for plugin convars
 }
 
@@ -80,7 +79,7 @@ public void ND_OnRoundStarted()
 	for (int i = 0; i < 2; i++)
 	{
 		voteCount[i] = 0;
-		g_hasUsedVeto[i] = false;
+		g_commanderVoted[i] = false;
 		teamBunkers[i] = -1;
 	}
 	
@@ -104,12 +103,6 @@ public void ND_OnRoundEnded() {
 		CloseHandle(SurrenderDelayTimer);
 }
 
-public Action CMD_Veto(int client, int args)
-{
-	callVeto(client);	
-	return Plugin_Handled;
-}
-
 public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
 {
 	if (client)
@@ -119,11 +112,6 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 			callSurrender(client);		
 			return Plugin_Handled;			
 		}
-		else if (StrContains(sArgs, "veto", false) == 0)
-		{
-			callVeto(client);
-			return Plugin_Handled;
-		}	
 	}
 	
 	return Plugin_Continue;
@@ -206,7 +194,11 @@ void callSurrender(int client)
 
 	else
 	{			
-		voteCount[team -2]++;
+		int teamIDX = team - 2;		
+		voteCount[teamIDX]++;
+		
+		if (ND_IsCommander(client))
+			g_commanderVoted[teamIDX] = true;
 		
 		switch (team)
 		{
@@ -220,61 +212,26 @@ void callSurrender(int client)
 
 void checkSurrender(int team, int teamCount, bool showVotes = false, int client = -1)
 {
-	float teamFloat = teamCount * (cvarSurrenderPercent.FloatValue / 100.0);	
+	float teamFloat = teamCount * (cvarSurrenderPercent.FloatValue / 100.0);
 	float minTeamFoat = cvarMinPlayers.FloatValue;
-			
+
 	if (teamFloat < minTeamFoat)
 		teamFloat = minTeamFoat;
 		
-	int rTeamCount = g_hasUsedVeto[team - 2] ? RoundToCeil(teamFloat) : RoundToFloor(teamFloat);	
+	int rTeamCount = g_commanderVoted[team - 2] ? RoundToCeil(teamFloat) : RoundToFloor(teamFloat);
 	int Remainder = rTeamCount - voteCount[team -2];
-		
+
 	if (Remainder <= 0)
 		endGame(team);
-	
+
 	else if (showVotes)
-		displayVotes(team, Remainder, client);	
-}
-
-void callVeto(int client)
-{
-	if (!ND_IsCommander(client))
-	{
-		PrintMessage(client, "Veto Commander Only");
-		return;	
-	}
-	
-	int team = GetClientTeam(client);
-	int teamIDX = team -2;
-	
-	if (g_hasUsedVeto[teamIDX])
-		PrintMessage(client, "Veto Already Used");
-		
-	else if (ND_RoundEnded())
-		PrintMessage(client, "Round Ended");
-		
-	else
-	{
-		g_hasUsedVeto[teamIDX] = true;
-		printVetoUsed(team);	
-	}
-}
-
-void printVetoUsed(int team)
-{
-	for (int client = 1; client <= MaxClients; client++)
-	{
-		if (IsValidClient(client) && GetClientTeam(client) == team)
-		{
-			PrintMessage(client, "Commander Used Veto");
-		}
-	}
+		displayVotes(team, Remainder, client);
 }
 
 void resetValues(int client)
 {
 	int team;
-	
+
 	if (g_hasVotedConsort[client])
 	{
 		team = TEAM_CONSORT;
@@ -285,7 +242,7 @@ void resetValues(int client)
 		team = TEAM_EMPIRE;
 		g_hasVotedEmpire[client] = false;
 	}
-	
+
 	if (team > TEAM_SPEC)
 	{
 		voteCount[team - 2]--;
@@ -299,23 +256,23 @@ void endGame(int team)
 {
 	g_Bool[hasSurrendered] = true;
 	ServerCommand("mp_roundtime 1");
-	
-	CreateTimer(0.5, TIMER_DisplaySurrender, team, TIMER_FLAG_NO_MAPCHANGE);	
+
+	CreateTimer(0.5, TIMER_DisplaySurrender, team, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 void displayVotes(int team, int Remainder, int client)
-{	
+{
 	char name[64];
 	GetClientName(client, name, sizeof(name));
-	
-	char number[16]
+
+	char number[16];
 	Format(number, sizeof(number), NumberInEnglish(Remainder));
 
 	for (int idx = 1; idx <= MaxClients; idx++)
 	{
 		char transNum[16];
 		Format(transNum, sizeof(transNum), "%T", number, idx);
-		
+
 		if (IsValidClient(idx) && GetClientTeam(idx) == team)
 			PrintToChat(idx, "\x05%t", "Typed Surrender", name, transNum);
 	}
