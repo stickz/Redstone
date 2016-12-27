@@ -62,6 +62,8 @@ void createAliasesForLocations()
 	nd_location_aliases[Helicopter][0] = "heli";
 	nd_location_aliases[Helicopter][1] = "copter";
 	nd_location_aliases[Helicopter][2] = "chopper";
+	
+	nd_location_aliases[Forward][0] = "fwd";
 }
 
 int GetSpotByIndex(const char[] sArgs)
