@@ -218,7 +218,7 @@ void checkSurrender(int team, int teamCount, bool showVotes = false, int client 
 	if (teamFloat < minTeamFoat)
 		teamFloat = minTeamFoat;
 		
-	int rTeamCount = g_commanderVoted[team - 2] ? RoundToCeil(teamFloat) : RoundToFloor(teamFloat);
+	int rTeamCount = !g_commanderVoted[team - 2] ? RoundToCeil(teamFloat) : RoundToFloor(teamFloat);
 	int Remainder = rTeamCount - voteCount[team -2];
 
 	if (Remainder <= 0)
