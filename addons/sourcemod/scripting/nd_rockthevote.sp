@@ -51,6 +51,7 @@ bool g_Bool[Bools];
 bool g_hasVoted[MAXPLAYERS+1] = {false, ... };
 
 ConVar cvarMaxPlayers;
+ConVar cvarMinPlayers;
 ConVar cvarTimeWindow;
 ConVar cvarPercentPass;
 
@@ -159,7 +160,13 @@ void callRockTheVote(int client)
 void checkForPass(int clientCount, bool display = false, int client = -1)
 {
 	float countFloat = clientCount * (cvarPercentPass.FloatValue / 100.0);
-	int Remainder = RoundToNearest(countFloat) - voteCount;
+
+	/* Set min votes for rtv or percentage (which ever is greater) */
+	int rCount = RoundToNearest(countFloat);
+	int mCount = cvarMinPlayers.IntValue;
+	int reqVotes = rCount > mCount ? rCount : mCount;
+	
+	int Remainder = reqVotes - voteCount;
 		
 	if (Remainder <= 0)
 		prepMapChange();
@@ -226,6 +233,7 @@ void StartRTVDisableTimer()
 void CreatePluginConvars()
 {
 	cvarMaxPlayers 	= CreateConVar("sm_rtv_maxp", "8", "Set's the max number of players to disable rtv timeouts.");
+	cvarMinPlayers	= CreateConVar("sm_rtv_minp", "4", "Set's the min players to pass rtv regardless of player count.");	
 	cvarTimeWindow	= CreateConVar("sm_rtv_time", "8", "Set's how many minutes after round start players have to rtv");
 	cvarPercentPass	= CreateConVar("sm_rtv_percent", "51", "Set's percent of players required to change the map");
 	
