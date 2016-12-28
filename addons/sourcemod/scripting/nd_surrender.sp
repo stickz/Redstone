@@ -202,13 +202,13 @@ void callSurrender(int client)
 			case TEAM_EMPIRE: g_hasVotedEmpire[client] = true;
 		}
 		
-		checkSurrender(team, true, client);
+		checkSurrender(team, RED_GetTeamCount(team), true, client);
 	}
 }
 
-void checkSurrender(int team, bool showVotes = false, int client = -1)
+void checkSurrender(int team, int teamCount, bool showVotes = false, int client = -1)
 {
-	float teamFloat = RED_GetTeamCount(team) * (cvarSurrenderPercent.FloatValue / 100.0);
+	float teamFloat = teamCount * (cvarSurrenderPercent.FloatValue / 100.0);
 	float minTeamFoat = cvarMinPlayers.FloatValue;
 
 	if (teamFloat < minTeamFoat)
