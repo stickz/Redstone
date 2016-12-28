@@ -169,12 +169,8 @@ void setBunkerEntityIndexs()
 void callSurrender(int client)
 {
 	int team = GetClientTeam(client);
-	int teamCount = RED_GetTeamCount(team);
 	
-	if (teamCount < cvarMinPlayers.IntValue)
-		PrintMessage(client, "Four Required");
-
-	else if (!g_Bool[enableSurrender])
+	if (!g_Bool[enableSurrender])
 		PrintMessage(client, "Too Soon");
 	
 	else if (g_Bool[hasSurrendered])
@@ -206,7 +202,7 @@ void callSurrender(int client)
 			case TEAM_EMPIRE: g_hasVotedEmpire[client] = true;
 		}
 		
-		checkSurrender(team, teamCount, true, client);
+		checkSurrender(team, RED_GetTeamCount(team), true, client);
 	}
 }
 
