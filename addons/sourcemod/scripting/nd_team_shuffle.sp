@@ -5,6 +5,7 @@
 #include <nd_rounds>
 #include <nd_stocks>
 #include <nd_redstone>
+#include <nd_aweight>
 
 #define MAX_SKILL 225
 
@@ -136,14 +137,19 @@ bool IsReadyForBalance(int client, bool roundStarted)
 int GetSkillLevel(int client, int playerMan)
 {
 	int level = RetreiveLevel(client, playerMan);
+	int sFloor = ND_GetSkillFloor(client);
+	
+	/* Load all skill floored clients before they spawn */
+	if (sFloor > level)
+		level = sFloor;
 	
 	/* Load all level 80 clients before they spawn */
-	if (ND_EXPAvailible(client) && ND_GetClientEXP(client) >= gcLevelEighty.IntValue)
+	else if (ND_EXPAvailible(client) && ND_GetClientEXP(client) >= gcLevelEighty.IntValue)
 		level = 80;
 	
 	if (GM_GFS_LOADED())
 	{
-		float pSkill = GameME_GetFinalSkill(client);
+		float pSkill = GameME_GetFinalSkill(client);		
 		return level > pSkill ? level : RoundFloat(pSkill);
 	}
 	
