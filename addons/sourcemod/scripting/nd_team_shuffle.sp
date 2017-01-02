@@ -140,7 +140,7 @@ int GetSkillLevel(int client, int playerMan)
 	int sFloor = ND_GetSkillFloor(client);
 	
 	/* Load all skill floored clients before they spawn */
-	if (sFloor > level)
+	if (sFloor >= 80)
 		level = sFloor;
 	
 	/* Load all level 80 clients before they spawn */
