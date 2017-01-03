@@ -106,7 +106,7 @@
 	}
 	"Balancer Off"
 	{
-		"en"		"Team balancer is currently OFF"
+		"en"		"There was NOT enough players, to run the warmup-round shuffle"
 	}
 	"Waiting"
 	{
