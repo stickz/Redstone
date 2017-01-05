@@ -7,6 +7,14 @@
 #define _DEBUG 0
 #define MAX_INGAME_LEVEL 80.0
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_gameme_skill/nd_gameme_skill.txt"
+#include "updater/standard.sp"
+
+/* This plugin proccess data from server statistics and creates a skill level for each player.
+ * The skill value is then passes onto other plugins such as nd_team_shuffle for team balance.
+ */
+
 /* Include Base Requirements */
 #include "nd_gskill/convars.sp"
 
@@ -46,6 +54,8 @@ public void OnPluginStart()
 	/* Recalculate skill if plugin loaded late */
 	if (ND_MapStarted())
 		GameMe_RecalculateSkill();
+		
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public bool OnClientConnect(int client, char[] rejectmsg, int maxlen) {
