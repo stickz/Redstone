@@ -24,8 +24,8 @@ float EXP_CalculateSkill(int value, int base, float multipler, float growth) {
 }
 
 /* Include GameMe Features */
-#include "nd_gskill/GameMe/GameMe.sp"
-#include "nd_gskill/GameMe/kill_stats.sp"
+#include "nd_gskill/gameme/gameme.sp"
+#include "nd_gskill/gameme/kill_stats.sp"
 
 /* Include natives & test commands */
 #include "nd_gskill/commands.sp"
