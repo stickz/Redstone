@@ -13,10 +13,23 @@ float GameME_GetKpdFactor(int client)
 	
 	if (!kdrChanged && GameME_UseHPK_Modifier(client))
 	{		
-		/* To Do: Don't use for loop intervals to set a kdr floor based on hpk
-		 * An equation would be better, but how can this relationally be done?
-		 */
-		float tempKdr;			
+		/* If the client kdr and hpk is greater than the min check floor */
+		float minKdr = 1.5; float minHpk = 10;
+		if (ClientKdr > minKdr && GameME_HPK[client] > minHpk)
+		{
+			/* Calculate the percent the kdr and hpk is from the floor */
+			float percentKdr = ClientKdr / minKdr;
+			float percentHpk = GameME_HPK[client] / minHpk;			
+			
+			/* If there's an imbalance between the client kdr and hpk */
+			if (percentKdr > percentHpk)
+			{
+				/* Take the difference off the client's kdr */
+				ClientKdr *= percentHpk / percentKdr;
+			}
+		}
+		
+		/*float tempKdr;
 		for (int i = 0; i < 3; i++)
 		{
 			tempKdr = 1.5 + (i * 0.5);
@@ -27,7 +40,7 @@ float GameME_GetKpdFactor(int client)
 				ClientKdr = (tempKdr * gc_GameMe[kdrImbalanceOffset].FloatValue);
 				break;
 			}
-		}		
+		}*/	
 	}
 	
 	if (ClientKdr < 1.0)
@@ -48,11 +61,27 @@ float GameME_GetHpkFactor(int client)
 	float ClientHpk = GameME_HPK[client] / 100.0;
 	
 	if (GameME_UseKDR_Modifier(client))
-	{
+	{		
+		/* If the client kdr and hpk is greater than the min check floor */
+		float minHpk = 15 / 100.0; float minKdr = 1.5;		
+		if (GameME_KDR[client] > minKdr && ClientHpk > minHpk)
+		{
+			/* Calculate the percent the kdr and hpk is from the floor */
+			float percentKdr = GameME_KDR[client] / minKdr;
+			float percentHpk = ClientHpk / minHpk;
+			
+			/* If there's an imbalance between the client kdr and hpk */
+			if (percentHpk > percentKdr)
+			{
+				/* Take the difference off the client's hpk */
+				ClientHpk *= percentKdr / percentHpk;
+			}		
+		}		
+		
 		/* To Do: Don't use for loop intervals to set a hpk floor based on kdr
 		 * An equation would be better, but how can this relationally be done?
 		 */
-		float tempHpk;			
+		/*float tempHpk;			
 		for (int i = 0; i < 15; i++)
 		{
 			tempHpk = 0.15 + (i * 0.01);
@@ -62,7 +91,7 @@ float GameME_GetHpkFactor(int client)
 				ClientHpk = tempHpk;
 				break;
 			}
-		}
+		}*/
 	}
 	
 	//turn convars values into a decimal for the calculation
