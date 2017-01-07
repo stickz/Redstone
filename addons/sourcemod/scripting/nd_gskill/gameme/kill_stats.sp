@@ -78,9 +78,6 @@ float GameME_GetHpkFactor(int client)
 			}		
 		}		
 		
-		/* To Do: Don't use for loop intervals to set a hpk floor based on kdr
-		 * An equation would be better, but how can this relationally be done?
-		 */
 		/*float tempHpk;			
 		for (int i = 0; i < 15; i++)
 		{
