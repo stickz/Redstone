@@ -62,14 +62,22 @@ GameME_AddConvarChangeHooks()
 	gc_GameMe[gmSkillTeirTwo].AddChangeHook(GameME_RefireSRForwards);
 	gc_GameMe[gmBaseMulitpler].AddChangeHook(GameME_RefireSRForwards);
 	
-	/* GameMe hpk/kdr convars */
+	/* GameMe hpk convars */
 	gc_GameMe[hpkPositiveBoost].AddChangeHook(GameME_RefireSRForwards);
 	gc_GameMe[hpkNegativeDrop].AddChangeHook(GameME_RefireSRForwards);
 	gc_GameMe[hpkMiddleTendency].AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe[hpkImbalanceBaseHpk].AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe[hpkImbalanceBaseKdr].AddChangeHook(GameME_RefireSRForwards);
+	
+	/* GameMe kdr convars */
 	gc_GameMe[kdrPositiveDivider].AddChangeHook(GameME_RefireSRForwards);
 	gc_GameMe[kdrNegativeBase].AddChangeHook(GameME_RefireSRForwards);
 	gc_GameMe[kdrMinSetValue].AddChangeHook(GameME_RefireSRForwards);
 	gc_GameMe[kdrImbalanceOffset].AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe[kdrImbalanceBaseHpk].AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe[kdrImbalanceBaseKdr].AddChangeHook(GameME_RefireSRForwards);
+	
+	/* GameMe use convars */
 	gc_GameMe[killRequirement].AddChangeHook(GameME_RefireSRForwards);
 	gc_GameMe[deathRequirement].AddChangeHook(GameME_RefireSRForwards);
 	gc_GameMe[hsRequirement].AddChangeHook(GameME_RefireSRForwards);
