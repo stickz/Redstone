@@ -32,7 +32,7 @@ float GameME_GetModifiedKdr(int client)
 	{
 		/* Calculate the percent the kdr and hpk is from the floor */
 		float percentKdr = ClientKdr / gc_GameMe[kdrImbalanceBaseKdr].FloatValue;
-		float percentHpk = GameME_HPK[client] / gc_GameMe[kdrImbalanceBaseHpk].FloatValue;		
+		float percentHpk = (GameME_GetModifiedHpk(client) * 100.0) / gc_GameMe[kdrImbalanceBaseHpk].FloatValue;		
 			
 		/* If there's an imbalance between the client kdr and hpk */
 		if (percentKdr > percentHpk)
@@ -68,7 +68,7 @@ float GameME_GetModifiedHpk(int client)
 	if (GameME_UseKDR_Modifier(client))
 	{		
 		/* Calculate the percent the kdr and hpk is from the floor */
-		float percentKdr = GameME_KDR[client] / gc_GameMe[hpkImbalanceBaseKdr].FloatValue;
+		float percentKdr = GameME_GetModifiedKdr(client) / gc_GameMe[hpkImbalanceBaseKdr].FloatValue;
 		float percentHpk = ClientHpk / percentToDecimal(gc_GameMe[hpkImbalanceBaseHpk].FloatValue);
 			
 		/* If there's an imbalance between the client kdr and hpk */
