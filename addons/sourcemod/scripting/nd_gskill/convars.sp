@@ -23,7 +23,7 @@ enum GMConvars
 	
 	ConVar:killRequirement,
 	ConVar:deathRequirement,
-	ConVar:hsRequirement,
+	ConVar:hsRequirement
 };
 ConVar gc_GameMe[GMConvars];
 
