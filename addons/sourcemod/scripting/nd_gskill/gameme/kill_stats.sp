@@ -63,25 +63,20 @@ float GameME_GetHpkFactor(int client)
 /* This function returns an imbalance calculated final hpk */
 float GameME_GetModifiedHpk(int client)
 {
-	float ClientHpk = GameME_HPK[client] / 100.0;
+	float ClientHpk = percentToDecimal(GameME_HPK[client]);
 	
 	if (GameME_UseKDR_Modifier(client))
 	{		
-		/* If the client hpk is greater than the min check floor */
-		float minHpk = gc_GameMe[hpkImbalanceBaseHpk].FloatValue / 100.0;		
-		if (ClientHpk > minHpk)
-		{
-			/* Calculate the percent the kdr and hpk is from the floor */
-			float percentKdr = GameME_KDR[client] / gc_GameMe[hpkImbalanceBaseKdr].FloatValue;
-			float percentHpk = ClientHpk / minHpk;
+		/* Calculate the percent the kdr and hpk is from the floor */
+		float percentKdr = GameME_KDR[client] / gc_GameMe[hpkImbalanceBaseKdr].FloatValue;
+		float percentHpk = ClientHpk / percentToDecimal(gc_GameMe[hpkImbalanceBaseHpk].FloatValue);
 			
-			/* If there's an imbalance between the client kdr and hpk */
-			if (percentHpk > percentKdr)
-			{
-				/* Take the difference off the client's hpk */
-				ClientHpk *= percentKdr / percentHpk;
-			}		
-		}
+		/* If there's an imbalance between the client kdr and hpk */
+		if (percentHpk > percentKdr)
+		{
+			/* Take the difference off the client's hpk */
+			ClientHpk *= percentKdr / percentHpk;
+		}		
 	}
 	
 	return ClientHpk;
