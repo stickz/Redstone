@@ -13,7 +13,7 @@ float GameME_GetKpdFactor(int client)
 	
 	if (!kdrChanged && GameME_UseHPK_Modifier(client))
 	{		
-		/* If the client kdr and hpk is greater than the min check floor */
+		/* If the client kdr is greater than the min check floor */
 		float minKdr = gc_GameMe[kdrImbalanceBaseKdr].FloatValue;
 		if (ClientKdr > minKdr)
 		{
@@ -27,20 +27,7 @@ float GameME_GetKpdFactor(int client)
 				/* Take the difference off the client's kdr */
 				ClientKdr *= percentHpk / percentKdr;
 			}
-		}
-		
-		/*float tempKdr;
-		for (int i = 0; i < 3; i++)
-		{
-			tempKdr = 1.5 + (i * 0.5);
-				
-			if (ClientKdr > tempKdr && GameME_HPK[client] < 10 + (i * 1.5))
-			{
-				// Decrease imbalanced kdr by an additional amount
-				ClientKdr = (tempKdr * gc_GameMe[kdrImbalanceOffset].FloatValue);
-				break;
-			}
-		}*/	
+		}	
 	}
 	
 	if (ClientKdr < 1.0)
@@ -76,19 +63,7 @@ float GameME_GetHpkFactor(int client)
 				/* Take the difference off the client's hpk */
 				ClientHpk *= percentKdr / percentHpk;
 			}		
-		}		
-		
-		/*float tempHpk;			
-		for (int i = 0; i < 15; i++)
-		{
-			tempHpk = 0.15 + (i * 0.01);
-			
-			if (ClientHpk > tempHpk && GameME_KDR[client] < 1.5 + (i * 0.1))
-			{
-				ClientHpk = tempHpk;
-				break;
-			}
-		}*/
+		}
 	}
 	
 	//turn convars values into a decimal for the calculation
