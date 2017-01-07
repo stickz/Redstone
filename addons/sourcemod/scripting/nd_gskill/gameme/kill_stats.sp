@@ -14,12 +14,12 @@ float GameME_GetKpdFactor(int client)
 	if (!kdrChanged && GameME_UseHPK_Modifier(client))
 	{		
 		/* If the client kdr and hpk is greater than the min check floor */
-		float minKdr = 1.5; float minHpk = 10;
-		if (ClientKdr > minKdr && GameME_HPK[client] > minHpk)
+		float minKdr = 1.5;
+		if (ClientKdr > minKdr)
 		{
 			/* Calculate the percent the kdr and hpk is from the floor */
 			float percentKdr = ClientKdr / minKdr;
-			float percentHpk = GameME_HPK[client] / minHpk;			
+			float percentHpk = GameME_HPK[client] / 10; //10 = minHpk		
 			
 			/* If there's an imbalance between the client kdr and hpk */
 			if (percentKdr > percentHpk)
@@ -62,12 +62,12 @@ float GameME_GetHpkFactor(int client)
 	
 	if (GameME_UseKDR_Modifier(client))
 	{		
-		/* If the client kdr and hpk is greater than the min check floor */
-		float minHpk = 15 / 100.0; float minKdr = 1.5;		
-		if (GameME_KDR[client] > minKdr && ClientHpk > minHpk)
+		/* If the client hpk is greater than the min check floor */
+		float minHpk = 15 / 100.0;		
+		if (ClientHpk > minHpk)
 		{
 			/* Calculate the percent the kdr and hpk is from the floor */
-			float percentKdr = GameME_KDR[client] / minKdr;
+			float percentKdr = GameME_KDR[client] / 1.5; //1.5 = minKdr
 			float percentHpk = ClientHpk / minHpk;
 			
 			/* If there's an imbalance between the client kdr and hpk */
