@@ -49,7 +49,7 @@ void GameME_CreateConvars()
 	gc_GameMe[kdrMinSetValue]		=	CreateConVar("sm_gameme_kdr_minvalue", "0.65", "Set's the min value for client kdrs to be classifed as");
 	gc_GameMe[kdrImbalanceOffset]		=	CreateConVar("sm_gameme_kdr_oImbalance", "0.92", "Factor to additionally decrease imbalanced commander kdrs by");
 	gc_GameMe[kdrImbalanceBaseHpk]		=	CreateConVar("sm_gameme_kdr_ibhpk", "10", "Specifies the imbalance hpk value for kdr calculations.");
-	gc_GameMe[kdrImbalanceBaseKdr]		=	CreateConVar("sm_gameme_kdr_ibkdr", "1.5", "Specifies the imbalance hpk value for kdr calculations.");
+	gc_GameMe[kdrImbalanceBaseKdr]		=	CreateConVar("sm_gameme_kdr_ibkdr", "1.5", "Specifies the imbalance kdr value for kdr calculations.");
 	
 	gc_GameMe[killRequirement] 		=	CreateConVar("sm_gameme_killReq", "3000", "Specifies how many kills are required to use kdr factors.");
 	gc_GameMe[deathRequirement] 		=	CreateConVar("sm_gameme_deathReq", "3000", "Specifies how many kills are required to use kdr factors.");
