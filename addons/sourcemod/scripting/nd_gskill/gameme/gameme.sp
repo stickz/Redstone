@@ -206,7 +206,7 @@ void GameME_AddInSkillModifiers(int client)
 	
 	// Decide if we need to take an average or only factor in one of them
 	if (useModifers[KDR_MOD] && useModifers[HPK_MOD])
-		GameME_FinalSkill[client] *= ((GameME_GetKpdFactor(client) + GameME_GetHpkFactor(client)) / 2.0));
+		GameME_FinalSkill[client] *= ((GameME_GetKpdFactor(client) + GameME_GetHpkFactor(client)) / 2.0);
 	else if (useModifers[KDR_MOD])
 		GameME_FinalSkill[client] *= GameME_GetKpdFactor(client);
 	else if (useModifers[HPK_MOD])
