@@ -7,6 +7,9 @@
 
 #define SKILL_NOT_FOUND -1
 
+#define KDR_MOD 0
+#define HPK_MOD 1
+
 Handle GameME_SkillReady_Forward;
 
 int GameME_Skill[MAXPLAYERS+1] = {-1, ...};
@@ -196,11 +199,16 @@ void GameME_AddInSkillModifiers(int client)
 	// Set final skill varriable to the exponential base
 	GameME_FinalSkill[client] = GameME_SkillBase[client];
 	
-	// Modify the base - based on the client's kdr ratio
-	if (GameME_UseKDR_Modifier(client))
-		GameME_FinalSkill[client] *= GameME_GetKpdFactor(client);
+	// Cache values of wether or not to use modifers
+	bool useModifers[2];
+	useModifers[KDR_MOD] = GameME_UseKDR_Modifier(client);
+	useModifers[HPK_MOD] = GameME_UseHPK_Modifier(client);
 	
-	// Stack any hpk modifications ontop of base & kdr to account for imbalances
-	if (GameME_UseHPK_Modifier(client))
-		GameME_FinalSkill[client] *= GameME_GetHpkFactor(client);	
+	// Decide if we need to take an average or only factor in one of them
+	if (useModifers[KDR_MOD] && useModifers[HPK_MOD])
+		GameME_FinalSkill[client] *= ((GameME_GetKpdFactor(client) + GameME_GetHpkFactor(client)) / 2.0);
+	else if (useModifers[KDR_MOD])
+		GameME_FinalSkill[client] *= GameME_GetKpdFactor(client);
+	else if (useModifers[HPK_MOD])
+		GameME_FinalSkill[client] *= GameME_GetHpkFactor(client);
 }
