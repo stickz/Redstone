@@ -30,7 +30,7 @@ public void OnPluginStart() {
 	}
 	
 	AddUpdaterLibrary(); // for auto-updater
-	LoadTranslations("common.phrases");
+	LoadTranslations("common.phrases"); //required for findtarget
 }
 
 public Action CMD_GetExp(int client, int args)
