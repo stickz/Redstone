@@ -60,6 +60,7 @@ public void OnPluginStart()
 	
 	AddUpdaterLibrary(); //add updater support
 	
+	LoadTranslations("common.phrases"); //required for FindTarget
 	LoadTranslations("nd_dead_weight.phrases");
 }
 

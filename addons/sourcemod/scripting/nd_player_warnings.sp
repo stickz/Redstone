@@ -41,6 +41,7 @@ public void OnPluginStart()
 	RegAdminCmd("sm_advertise", Cmd_WarnAdvertise, ADMFLAG_CUSTOM2, "<Name> - Warns a player to stop advertising.");
 	RegAdminCmd("sm_spawnsell", Cmd_SpawnSell, ADMFLAG_CUSTOM2, "<Name> - Warns a player that spawn selling isn't allowed.");
 	
+	LoadTranslations("common.phrases"); //required for FindTarget
 	LoadTranslations("nd_player_warnings.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater

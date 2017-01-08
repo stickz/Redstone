@@ -55,6 +55,7 @@ public void OnPluginStart()
 	if (ND_MapStarted())
 		GameMe_RecalculateSkill();
 		
+	LoadTranslations("common.phrases"); //required for FindTarget
 	AddUpdaterLibrary(); //auto-updater
 }
 
