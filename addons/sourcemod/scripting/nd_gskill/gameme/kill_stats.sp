@@ -1,7 +1,8 @@
 /* This function returns a linear kill per death multipler */
 float GameME_GetKpdFactor(int client)
 {
-	float ClientKdr = GameME_GetModifiedKdr(client);
+	/* Reseratively get the client's modified kdr */
+	float ClientKdr = GameME_GetModifiedKdr(client, true);
 
 	if (ClientKdr < 1.0)
 	{
@@ -15,8 +16,10 @@ float GameME_GetKpdFactor(int client)
 	return 1.0 + ClientKdr / gc_GameMe[kdrPositiveDivider].FloatValue;
 }
 
-/* This function returns an imbalance calculated final kdr */
-float GameME_GetModifiedKdr(int client)
+/* This function returns an imbalance calculated final kdr 
+ * Resersion may cause an infinate loop, handle with care.
+ */
+float GameME_GetModifiedKdr(int client, bool resertive = false)
 {
 	float ClientKdr = GameME_KDR[client];
 	float kdrMin = gc_GameMe[kdrMinSetValue].FloatValue;
@@ -30,9 +33,12 @@ float GameME_GetModifiedKdr(int client)
 	
 	if (!kdrChanged && GameME_UseHPK_Modifier(client))
 	{
+		/* Get client hpk. Decide if we're going to use resersion or not */
+		float ClientHpk = !resertive ? GameME_HPK[client] : (GameME_GetModifiedHpk(client) * 100.0);
+		
 		/* Calculate the percent the kdr and hpk is from the floor */
 		float percentKdr = ClientKdr / gc_GameMe[kdrImbalanceBaseKdr].FloatValue;
-		float percentHpk = GameME_HPK[client] / gc_GameMe[kdrImbalanceBaseHpk].FloatValue;		
+		float percentHpk = ClientHpk / gc_GameMe[kdrImbalanceBaseHpk].FloatValue;		
 			
 		/* If there's an imbalance between the client kdr and hpk */
 		if (percentKdr > percentHpk)
@@ -48,7 +54,8 @@ float GameME_GetModifiedKdr(int client)
 /* This function returns a linear headshot per kill multipler */
 float GameME_GetHpkFactor(int client)
 {
-	float ClientHpk = GameME_GetModifiedHpk(client);
+	/* Reseratively get the client's modified hpk */
+	float ClientHpk = GameME_GetModifiedHpk(client, true);
 	
 	//turn convars values into a decimal for the calculation
 	float negKdrDrop 	= percentToDecimal(gc_GameMe[hpkNegativeDrop].FloatValue);
@@ -60,15 +67,20 @@ float GameME_GetHpkFactor(int client)
 	return hpkMiddle + (ClientHpk * hpkMultiplier);
 }
 
-/* This function returns an imbalance calculated final hpk */
-float GameME_GetModifiedHpk(int client)
+/* This function returns an imbalance calculated final hpk
+ * Resersion may cause an infinate loop, handle with care.
+ */
+float GameME_GetModifiedHpk(int client, bool resertive = false)
 {
 	float ClientHpk = percentToDecimal(GameME_HPK[client]);
 	
 	if (GameME_UseKDR_Modifier(client))
 	{		
+		/* Get client kdr. Decide if we're going to use resersion or not */
+		float ClientKdr = !resertive ? GameME_KDR[client] : GameME_GetModifiedKdr(client);
+		
 		/* Calculate the percent the kdr and hpk is from the floor */
-		float percentKdr = GameME_KDR[client] / gc_GameMe[hpkImbalanceBaseKdr].FloatValue;
+		float percentKdr = ClientKdr / gc_GameMe[hpkImbalanceBaseKdr].FloatValue;
 		float percentHpk = ClientHpk / percentToDecimal(gc_GameMe[hpkImbalanceBaseHpk].FloatValue);
 			
 		/* If there's an imbalance between the client kdr and hpk */
