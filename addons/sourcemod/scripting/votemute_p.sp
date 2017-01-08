@@ -58,7 +58,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_votesilence", Command_Votesilence,  "sm_votesilence <player> ");  
 	RegConsoleCmd("sm_votegag", Command_Votegag,  "sm_votegag <player> "); 
 
-	LoadTranslations("common.phrases");
+	LoadTranslations("common.phrases"); // required for find target
 	LoadTranslations("votemute_p.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
