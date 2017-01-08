@@ -48,7 +48,7 @@ public Plugin:myinfo =
 
 public OnPluginStart()
 {
-	LoadTranslations("common.phrases");
+	LoadTranslations("common.phrases"); //required for find target
 	
 	RegAdminCmd("sm_listbans", OnListSourceBansCmd, ADMFLAG_BAN, LISTBANS_USAGE);
 	RegAdminCmd("sb_reload", OnReloadCmd, ADMFLAG_RCON, "Reload sourcebans config and ban reason menu options");
