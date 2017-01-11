@@ -69,8 +69,15 @@ public Action Event_PlayerDisconnected(Event event, const char[] name, bool dont
 
 public Action Event_PlayerConnect(Event event, const char[] name, bool dontBroadcast)
 {
-	int client = GetClientOfUserId(event.GetInt("userid"));	
-	event.BroadcastDisabled = !RED_IsValidClient(client);	
+	char steam_id[32];
+	event.GetString("networkid", steam_id, sizeof(steam_id));
+	
+	if (strncmp(steam_id, "STEAM_", 6) == 0)
+	{	
+		int client = GetClientOfUserId(event.GetInt("userid"));	
+		dontBroadcast = !RED_IsValidCIndex(client);
+	}
+	
 	return Plugin_Continue;
 }
 
