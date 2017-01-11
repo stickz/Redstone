@@ -70,7 +70,7 @@ public Action Event_PlayerDisconnected(Event event, const char[] name, bool dont
 public Action Event_PlayerConnect(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));	
-	event.BroadcastDisabled = RED_IsValidClient(client);	
+	dontBroadcast = !RED_IsValidClient(client);	
 	return Plugin_Continue;
 }
 
