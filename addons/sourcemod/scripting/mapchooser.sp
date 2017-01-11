@@ -183,22 +183,14 @@ InitiateVote(MapChange:when, Handle:inputlist=null)
 	/* Call OnMapVoteStarted() Forward */
 	Call_StartForward(g_MapVoteStartedForward);
 	Call_Finish();
-	
-	/**
-	 * TODO: Make a proper decision on when to clear the nominations list.
-	 * Currently it clears when used, and stays if an external list is provided.
-	 * Is this the right thing to do? External lists will probably come from places
-	 * like sm_mapvote from the adminmenu in the future.
-	 */
-	 
-	char map[PLATFORM_MAX_PATH];
-	
+
 	/* No input given - Don't do anything */
 	if (inputlist == null)
 		return;
 
 	else //We were given a list of maps to start the vote with
 	{
+		char map[PLATFORM_MAX_PATH];
 		for (int i = 0; i < GetArraySize(inputlist); i++)
 		{
 			GetArrayString(inputlist, i, map, sizeof(map));
