@@ -311,68 +311,10 @@ InitiateVote(MapChange:when, Handle:inputlist=null)
 	 
 	char map[PLATFORM_MAX_PATH];
 	
-	/* No input given - User our internal nominations and maplist */
+	/* No input given - Don't do anything */
 	if (inputlist == null)
-	{
-		int nominateCount = GetArraySize(g_NominateList);
-		int voteSize = g_Cvar_IncludeMaps.IntValue;
-		
-		/* Smaller of the two - It should be impossible for nominations to exceed the size though (cvar changed mid-map?) */
-		int nominationsToAdd = nominateCount >= voteSize ? voteSize : nominateCount;
-		
-		
-		for (int i = 0; i < nominationsToAdd; i++)
-		{
-			GetArrayString(g_NominateList, i, map, sizeof(map));
-			g_VoteMenu.AddItem(map, map);
-			RemoveStringFromArray(g_NextMapList, map);
-			
-			/* Notify Nominations that this map is now free */
-			Call_StartForward(g_NominationsResetForward);
-			Call_PushString(map);
-			Call_PushCell(GetArrayCell(g_NominateOwners, i));
-			Call_Finish();
-		}
-		
-		/* Clear out the rest of the nominations array */
-		for (int i = nominationsToAdd; i < nominateCount; i++)
-		{
-			GetArrayString(g_NominateList, i, map, sizeof(map));
-			/* These maps shouldn't be excluded from the vote as they weren't really nominated at all */
-			
-			/* Notify Nominations that this map is now free */
-			Call_StartForward(g_NominationsResetForward);
-			Call_PushString(map);
-			Call_PushCell(GetArrayCell(g_NominateOwners, i));
-			Call_Finish();			
-		}
-		
-		/* There should currently be 'nominationsToAdd' unique maps in the vote */
-		
-		int i = nominationsToAdd;
-		new count = 0;
-		new availableMaps = GetArraySize(g_NextMapList);
-		
-		while (i < voteSize)
-		{
-			if (count >= availableMaps)
-			{
-				//Run out of maps, this will have to do.
-				break;
-			}
-			
-			GetArrayString(g_NextMapList, count, map, sizeof(map));
-			count++;
-			
-			/* Insert the map and increment our count */
-			g_VoteMenu.AddItem(map, map);
-			i++;
-		}
-		
-		/* Wipe out our nominations list - Nominations have already been informed of this */
-		ClearArray(g_NominateOwners);
-		ClearArray(g_NominateList);
-	}
+		return;
+
 	else //We were given a list of maps to start the vote with
 	{
 		for (int i = 0; i < GetArraySize(inputlist); i++)
