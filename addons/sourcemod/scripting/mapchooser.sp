@@ -18,7 +18,6 @@ public Plugin myinfo =
 
 /* Plugin ConVars */
 ConVar g_Cvar_NoVoteMode;
-ConVar g_Cvar_EndOfMapVote;
 ConVar g_Cvar_VoteDuration;
 ConVar g_Cvar_RunOff;
 ConVar g_Cvar_RunOffPercent;
@@ -27,7 +26,6 @@ Handle g_VoteTimer = INVALID_HANDLE;
 Handle g_RetryTimer = INVALID_HANDLE;
 
 /* Data Handles */
-Handle g_MapList = null;
 Menu g_VoteMenu;
 
 bool g_HasVoteStarted;
@@ -46,16 +44,11 @@ public void OnPluginStart()
 	LoadTranslations("mapchooser.phrases");
 	LoadTranslations("common.phrases");
 	
-	int arraySize = ByteCountToCells(PLATFORM_MAX_PATH);
-	g_MapList = CreateArray(arraySize);
+	g_Cvar_NoVoteMode 	= CreateConVar("sm_mapvote_novote", "1", "Specifies whether or not MapChooser should pick a map if no votes are received.", _, true, 0.0, true, 1.0);
+	g_Cvar_VoteDuration 	= CreateConVar("sm_mapvote_voteduration", "20", "Specifies how long the mapvote should be available for.", _, true, 5.0);
+	g_Cvar_RunOff 		= CreateConVar("sm_mapvote_runoff", "0", "Hold run of votes if winning choice is less than a certain margin", _, true, 0.0, true, 1.0);
+	g_Cvar_RunOffPercent 	= CreateConVar("sm_mapvote_runoffpercent", "50", "If winning choice has less than this percent of votes, hold a runoff", _, true, 0.0, true, 100.0);
 	
-	g_Cvar_EndOfMapVote = CreateConVar("sm_mapvote_endvote", "1", "Specifies if MapChooser should run an end of map vote", _, true, 0.0, true, 1.0);
-	g_Cvar_NoVoteMode = CreateConVar("sm_mapvote_novote", "1", "Specifies whether or not MapChooser should pick a map if no votes are received.", _, true, 0.0, true, 1.0);
-	g_Cvar_VoteDuration = CreateConVar("sm_mapvote_voteduration", "20", "Specifies how long the mapvote should be available for.", _, true, 5.0);
-	g_Cvar_RunOff = CreateConVar("sm_mapvote_runoff", "0", "Hold run of votes if winning choice is less than a certain margin", _, true, 0.0, true, 1.0);
-	g_Cvar_RunOffPercent = CreateConVar("sm_mapvote_runoffpercent", "50", "If winning choice has less than this percent of votes, hold a runoff", _, true, 0.0, true, 100.0);
-	
-	RegAdminCmd("sm_mapvote", Command_Mapvote, ADMFLAG_CHANGEMAP, "sm_mapvote - Forces MapChooser to attempt to run a map vote now.");
 	RegAdminCmd("sm_setnextmap", Command_SetNextmap, ADMFLAG_CHANGEMAP, "sm_setnextmap <map>");
 
 	AutoExecConfig(true, "mapchooser");	
@@ -75,21 +68,7 @@ public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 	return APLRes_Success;
 }
 
-public void OnConfigsExecuted()
-{
-	if (ReadMapList(g_MapList,
-					 g_mapFileSerial, 
-					 "mapchooser",
-					 MAPLIST_FLAG_CLEARARRAY|MAPLIST_FLAG_MAPSFOLDER)
-		!= null)
-		
-	{
-		if (g_mapFileSerial == -1)
-		{
-			LogError("Unable to create a valid map list.");
-		}
-	}
-	
+public void OnConfigsExecuted() {
 	g_MapVoteCompleted = false;
 }
 
@@ -141,7 +120,7 @@ public Action Timer_StartMapVote(Handle timer, Handle data)
 	else
 		g_VoteTimer = null;
 	
-	if (!GetArraySize(g_MapList) || !g_Cvar_EndOfMapVote.BoolValue || g_MapVoteCompleted || g_HasVoteStarted)
+	if (!GetArraySize(g_MapList) || g_MapVoteCompleted || g_HasVoteStarted)
 		return Plugin_Stop;
 	
 	new MapChange:mapChange = MapChange:ReadPackCell(data);
@@ -163,15 +142,6 @@ public Event_RoundEnd(Event event, const String:name[], bool:dontBroadcast)
 		CreateTimer(delayTime, Timer_ChangeMap, INVALID_HANDLE, TIMER_FLAG_NO_MAPCHANGE);
 		g_ChangeMapInProgress = true;
 	}
-	
-	if (!GetArraySize(g_MapList) || g_HasVoteStarted || g_MapVoteCompleted)
-		return;
-}
-
-public Action Command_Mapvote(int client, int args)
-{
-	InitiateVote(MapChange_MapEnd, null);
-	return Plugin_Handled;	
 }
 
 /**
@@ -413,8 +383,4 @@ public Native_CanVoteStart(Handle plugin, int numParams) {
 
 public Native_CheckVoteDone(Handle plugin, int numParams) {
 	return g_MapVoteCompleted;
-}
-
-public Native_EndOfMapVoteEnabled(Handle plugin, int numParams) {
-	return g_Cvar_EndOfMapVote.BoolValue;
 }
