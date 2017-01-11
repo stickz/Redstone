@@ -34,6 +34,15 @@ stock bool RED_IsValidClient(int ClientIDX)
 	return RED_VC_AVAILABLE() && RED_ValidClient(ClientIDX);
 }
 
+native bool RED_ValidCIndex(int ClientIDX);
+
+#define RED_VCI_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "RED_ValidCIndex") == FeatureStatus_Available)
+
+stock bool RED_IsValidCIndex(int ClientIDX)
+{
+	return RED_VCI_AVAILABLE() && RED_ValidCIndex(int ClientIDX);
+}
+
 stock int RED_GetTeamCount(int team)
 {
 	if (!RED_VC_AVAILABLE())
