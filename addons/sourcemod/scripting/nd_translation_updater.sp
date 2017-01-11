@@ -17,13 +17,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <nd_rounds>
 
-//push update
+// The version is auto-filled by the updater
 public Plugin myinfo = 
 {
 	name 		= "[ND] Translation Updater",
 	author 		= "stickz",
 	description 	= "A simple dummy for updating server translations",
-	version 	= "rebuild",
+	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 }
 
