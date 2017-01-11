@@ -39,6 +39,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	HookEvent("player_disconnect", Event_PlayerDisconnected, EventHookMode_Pre);
+	HookEvent("player_connect_client", Event_PlayerConnect, EventHookMode_Pre);
 	LoadTranslations("nd_disconnect.phrases");
 	
 	AddClientPrefsSupport();
@@ -64,6 +65,13 @@ public Action Event_PlayerDisconnected(Event event, const char[] name, bool dont
 				PrintLostConnection(client);
 		}
 	}
+}
+
+public Action Event_PlayerConnect(Event event, const char[] name, bool dontBroadcast)
+{
+	int client = GetClientOfUserId(event.GetInt("userid"));	
+	dontBroadcast = !RED_IsValidClient(client);	
+	return Plugin_Continue;
 }
 
 void PrintLostConnection(int client)
