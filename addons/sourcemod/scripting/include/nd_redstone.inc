@@ -40,7 +40,7 @@ native bool RED_ValidCIndex(int ClientIDX);
 
 stock bool RED_IsValidCIndex(int ClientIDX)
 {
-	return RED_VCI_AVAILABLE() && RED_ValidCIndex(int ClientIDX);
+	return RED_VCI_AVAILABLE() && RED_ValidCIndex(ClientIDX);
 }
 
 stock int RED_GetTeamCount(int team)
