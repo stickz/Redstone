@@ -63,7 +63,6 @@ public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 	CreateNative("InitiateMapChooserVote", Native_InitiateVote);
 	CreateNative("CanMapChooserStartVote", Native_CanVoteStart);
 	CreateNative("HasEndOfMapVoteFinished", Native_CheckVoteDone);
-	CreateNative("EndOfMapVoteEnabled", Native_EndOfMapVoteEnabled);
 
 	return APLRes_Success;
 }
