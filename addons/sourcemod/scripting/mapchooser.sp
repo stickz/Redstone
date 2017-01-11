@@ -22,7 +22,6 @@ ConVar g_Cvar_VoteDuration;
 ConVar g_Cvar_RunOff;
 ConVar g_Cvar_RunOffPercent;
 
-Handle g_VoteTimer = INVALID_HANDLE;
 Handle g_RetryTimer = INVALID_HANDLE;
 
 /* Data Handles */
@@ -33,7 +32,6 @@ bool g_WaitingForVote;
 bool g_MapVoteCompleted;
 bool g_ChangeMapAtRoundEnd;
 bool g_ChangeMapInProgress;
-int g_mapFileSerial = -1;
 
 new MapChange:g_ChangeTime;
 
@@ -78,7 +76,6 @@ public void OnMapEnd()
 	g_ChangeMapAtRoundEnd = false;
 	g_ChangeMapInProgress = false;
 	
-	g_VoteTimer = null;
 	g_RetryTimer = null;
 }
 
@@ -110,14 +107,8 @@ public Action Command_SetNextmap(int client, int args)
 
 public Action Timer_StartMapVote(Handle timer, Handle data)
 {
-	if (timer == g_RetryTimer)
-	{
-		g_WaitingForVote = false;
-		g_RetryTimer = null;
-	}
-	
-	else
-		g_VoteTimer = null;
+	g_WaitingForVote = false;
+	g_RetryTimer = null;
 	
 	if (!GetArraySize(g_MapList) || g_MapVoteCompleted || g_HasVoteStarted)
 		return Plugin_Stop;
@@ -173,9 +164,9 @@ InitiateVote(MapChange:when, Handle:inputlist=null)
 	
 	g_ChangeTime = when;
 	
-	g_WaitingForVote = false;
-		
+	g_WaitingForVote = false;		
 	g_HasVoteStarted = true;
+	
 	g_VoteMenu = new Menu(Handler_MapVoteMenu, MenuAction:MENU_ACTIONS_ALL);
 	g_VoteMenu.SetTitle("Vote Nextmap");
 	g_VoteMenu.VoteResultCallback = Handler_MapVoteFinished;
