@@ -7,6 +7,10 @@
 #include <nd_redstone>
 #include <nd_aweight>
 
+/* Notice to plugin contributors: please create a new native and void,
+ * When modifying the sorting or placement algorithum to allow for proper testing.
+ */
+
 #define MAX_SKILL 225
 
 public Plugin myinfo =
