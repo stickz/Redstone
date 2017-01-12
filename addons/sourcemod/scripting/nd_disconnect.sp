@@ -39,7 +39,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	HookEvent("player_disconnect", Event_PlayerDisconnected, EventHookMode_Pre);
-	HookEvent("player_connect_client", Event_PlayerConnect, EventHookMode_Pre);
+	HookEvent("player_connect", Event_PlayerConnect, EventHookMode_Pre);
 	LoadTranslations("nd_disconnect.phrases");
 	
 	AddClientPrefsSupport();
