@@ -10,10 +10,10 @@
 public Plugin myinfo =
 {
 	name = "MapChooser",
-	author = "AlliedModders LLC",
+	author = "AlliedModders LLC, Stickz",
 	description = "Automated Map Voting",
-	version = SOURCEMOD_VERSION,
-	url = "http://www.sourcemod.net/"
+	version = "dummy",
+	url = "https://github.com/stickz/Redstone/"
 };
 
 /* Plugin ConVars */
