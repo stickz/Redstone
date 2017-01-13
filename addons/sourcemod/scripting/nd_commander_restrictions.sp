@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_com_eng>
 #include <nd_rounds>
 #include <nd_print>
+#include <nd_com_dep>
 
 #define INVALID_CLIENT 0
 
@@ -179,9 +180,15 @@ public Action Command_Apply(int client, const char[] command, int argc)
 			default:
 			{
 				if (g_Bool[timeOut])
-					return Plugin_Continue;			
+					return Plugin_Continue;
+					
+				if (ND_IsCommanderDeprioritised(client))
+				{
+					PrintMessage(client, "Commander Deprioritised");
+					return Plugin_Handled;
+				}
 				
-				if (count > g_cvar[cHighPlayerRestrict].IntValue)
+				else if (count > g_cvar[cHighPlayerRestrict].IntValue)
 				{
 					if (clientLevel < g_cvar[cHighPlayerLevel].IntValue)
 					{
