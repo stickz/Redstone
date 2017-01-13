@@ -111,4 +111,9 @@
 	{
 		"en"		"You cannot apply for commander in the first 90s, due to deprioritization from bad conduct. This restriction can be appealed at https://xenogamers.com/forums/13/."
 	}
+	
+	"Last Chance Apply"
+	{
+		"en"		""
+	}
 }
