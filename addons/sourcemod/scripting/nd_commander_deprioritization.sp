@@ -3,7 +3,7 @@
 #define STRING_NOT_FOUND -1
 
 /* Auto-Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_commander_restrictions/nd_commander_restrictions.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_commander_deprioritization/nd_commander_deprioritization.txt"
 #include "updater/standard.sp"
 
 public Plugin myinfo =
