@@ -108,14 +108,14 @@ public Action TIMER_DisableRestrictions(Handle timer)
 		g_Bool[timeOut] = true;
 		g_Bool[relaxedRestrictions] = true;
 		//ServerCommand("nd_commander_mutiny_vote_threshold 65.0");
-		if (RED_OnTeamCount() > 10)
+		if (RED_OnTeamCount() >= g_cvar[disRestrictions].IntValue)
 			PrintToChatAll("%s %t!", PREFIX, "Restrictions Relaxed"); //Commander restrictions relaxed
 			//PrintToChatAll("\x05[xG] Commander restrictions lifted! Mutiny threshold set to 70%! (no commander)");
 	}
 }
 
 public Action TIMER_DisplayComWarning(Handle timer) {
-	if (ND_GetCommanderCount() != 2 && RED_OnTeamCount() > 10)
+	if (ND_GetCommanderCount() != 2 && RED_OnTeamCount() >= g_cvar[disRestrictions].IntValue)
 		PrintToChatAll("%s %t!", PREFIX, "Last Chance Apply");
 }
 
