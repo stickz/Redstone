@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_com_eng>
 #include <nd_rounds>
 #include <nd_print>
+#include <nd_com_dep>
 
 #define INVALID_CLIENT 0
 
@@ -86,6 +87,7 @@ public void OnPluginStart()
 
 public void ND_OnRoundStarted() {
 	CreateTimer(105.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(90.0, TIMER_DisplayComWarning, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnMapStart() {
@@ -105,11 +107,16 @@ public Action TIMER_DisableRestrictions(Handle timer)
 	{
 		g_Bool[timeOut] = true;
 		g_Bool[relaxedRestrictions] = true;
-		ServerCommand("nd_commander_mutiny_vote_threshold 65.0");
+		//ServerCommand("nd_commander_mutiny_vote_threshold 65.0");
 		if (RED_OnTeamCount() > 10)
 			PrintToChatAll("%s %t!", PREFIX, "Restrictions Relaxed"); //Commander restrictions relaxed
 			//PrintToChatAll("\x05[xG] Commander restrictions lifted! Mutiny threshold set to 70%! (no commander)");
 	}
+}
+
+public Action TIMER_DisplayComWarning(Handle timer) {
+	if (ND_GetCommanderCount() != 2 && RED_OnTeamCount() > 10)
+		PrintToChatAll("%s %t!", PREFIX, "Last Chance Apply");
 }
 
 public Action Command_Apply(int client, const char[] command, int argc)
@@ -179,9 +186,15 @@ public Action Command_Apply(int client, const char[] command, int argc)
 			default:
 			{
 				if (g_Bool[timeOut])
-					return Plugin_Continue;			
+					return Plugin_Continue;
+					
+				if (ND_IsCommanderDeprioritised(client))
+				{
+					PrintMessage(client, "Commander Deprioritised");
+					return Plugin_Handled;
+				}
 				
-				if (count > g_cvar[cHighPlayerRestrict].IntValue)
+				else if (count > g_cvar[cHighPlayerRestrict].IntValue)
 				{
 					if (clientLevel < g_cvar[cHighPlayerLevel].IntValue)
 					{
