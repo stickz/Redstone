@@ -87,7 +87,7 @@ public void OnPluginStart()
 
 public void ND_OnRoundStarted() {
 	CreateTimer(105.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
-	CreateTimer(90.0, TIMER_DisplayComWarning _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(90.0, TIMER_DisplayComWarning, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnMapStart() {
