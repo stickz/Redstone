@@ -114,6 +114,6 @@
 	
 	"Last Chance Apply"
 	{
-		"en"		""
+		"en"		"Expereinced players have 15s left to apply for commander, before the scope of applications is widened."
 	}
 }
