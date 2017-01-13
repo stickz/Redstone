@@ -114,6 +114,6 @@
 	
 	"Last Chance Apply"
 	{
-		"en"		"15s left for prioritized commander applications. Afterwards, less experinced players or ones flagged for poor sportsmanship may apply."
+		"en"		"15s left for prioritized commander applications. Afterwards, less experienced players or ones flagged for poor sportsmanship may apply."
 	}
 }
