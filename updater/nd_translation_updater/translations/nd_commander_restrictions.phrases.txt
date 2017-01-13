@@ -109,11 +109,11 @@
 	
 	"Commander Deprioritised"
 	{
-		"en"		"You cannot apply for commander in the first 90s, due to deprioritization from bad conduct. This restriction can be appealed at https://xenogamers.com/forums/13/."
+		"en"		"You're deprioritized from commander selection and cannot apply in the first 90s."
 	}
 	
 	"Last Chance Apply"
 	{
-		"en"		"15s left for prioritized commander applications. Afterwards, less experienced players or ones flagged for poor sportsmanship may apply."
+		"en"		"15s remaining on prioritized commander applications!"
 	}
 }
