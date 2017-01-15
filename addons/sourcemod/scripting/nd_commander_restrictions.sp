@@ -22,10 +22,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <sourcecomms>
-#include <nd_balancer>
 #pragma newdecls required
 
 #include <nd_stocks>
+#include <nd_fskill>
 #include <nd_redstone>
 #include <nd_gameme>
 #include <nd_com_eng>
@@ -137,7 +137,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 		#endif
 		
 		#if defined _nd_balancer_included
-		if (ND_RoundStarted() && GAS_AVAILBLE() && GetAverageSkill() < g_cvar[aRestrictDisable].IntValue)
+		if (ND_RoundStarted() && ND_GSA_AVAILBLE() && ND_GetSkillAverage() < g_cvar[aRestrictDisable].IntValue)
 			return Plugin_Continue;
 		#endif
 
