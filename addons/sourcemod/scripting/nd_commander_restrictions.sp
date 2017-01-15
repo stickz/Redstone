@@ -137,7 +137,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 		#endif
 		
 		#if defined _nd_balancer_included
-		if (ND_RoundStarted() && GAS_AVAILBLE() && GetAverageSkill() < g_cvar[aRestrictDisable].IntValue)
+		if (ND_RoundStarted() && ND_GSA_AVAILBLE() && ND_GetSkillAverage() < g_cvar[aRestrictDisable].IntValue)
 			return Plugin_Continue;
 		#endif
 
