@@ -1,11 +1,12 @@
 #define STEAMID_SIZE 32
 
-#define TEXT_FILE_COUNT 4
+#define TEXT_FILE_COUNT 5
 char nd_text_file[TEXT_FILE_COUNT][] = {
 	"data/skill/w80.txt",
 	"data/skill/w100.txt",
 	"data/skill/w120.txt",
-	"data/skill/w140.txt"
+	"data/skill/w140.txt",
+	"data/skill/w160.txt"
 };
 
 void CreateTextFiles()
