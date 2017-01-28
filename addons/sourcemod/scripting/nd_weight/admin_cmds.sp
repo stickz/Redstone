@@ -2,6 +2,7 @@
 #define FILE100 1
 #define FILE120 2
 #define FILE140 3
+#define FILE160 4
 
 #define COMMAND_DESC "Sets a custom weighting for a player"
 
@@ -11,6 +12,7 @@ void RegAdminCmds()
 	RegAdminCmd("sm_Weight100", CMD_Weight100, ADMFLAG_ROOT, COMMAND_DESC);
 	RegAdminCmd("sm_Weight120", CMD_Weight120, ADMFLAG_ROOT, COMMAND_DESC);
 	RegAdminCmd("sm_Weight140", CMD_Weight140, ADMFLAG_ROOT, COMMAND_DESC);
+	RegAdminCmd("sm_Weight160", CMD_Weight140, ADMFLAG_ROOT, COMMAND_DESC);
 	RegAdminCmd("sm_WeightRemove", CMD_RemoveWeight, ADMFLAG_ROOT, COMMAND_DESC);
 	
 	RegAdminCmd("sm_CheckWeight", CMD_GetPlayerWFloor, ADMFLAG_KICK, COMMAND_DESC);
@@ -137,5 +139,18 @@ public Action CMD_Weight140(int client, int args)
 		return Plugin_Handled;
 	
 	AddClientWeighting(target, FILE140);	
+	return Plugin_Handled;
+}
+
+public Action CMD_Weight160(int client, int args)
+{
+	char player[64];
+	GetCmdArg(1, player, sizeof(player));	
+	int target = FindTarget(client, player, true, true);
+	
+	if (InvalidCommandUse(client, target, args))
+		return Plugin_Handled;
+	
+	AddClientWeighting(target, FILE160);
 	return Plugin_Handled;
 }
