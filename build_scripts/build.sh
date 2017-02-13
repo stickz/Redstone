@@ -5,7 +5,7 @@ set -e
 
 # set command line switches defaults
 verbose=false
-sourcemod_version="1.7.3-5255"
+sourcemod_version="1.7.3-5294"
 cache=true
 
 # process command line switches
