@@ -83,13 +83,9 @@ void checkCount()
 		int teamCount = RED_OnTeamCount();
 		if (teamCount < GetBotShutOffCount())
 		{
-			if (g_cvar[BoostBots].BoolValue && TDS_AVAILABLE())
-			{			
+			if(boostBots())
 				quota += getBotModulusQuota();
-				
-				if (!visibleBoosted)
-					toggleBooster(true);
-			}
+
 			else
 			{
 				quota += g_cvar[BotCount].IntValue;
@@ -120,22 +116,31 @@ void checkCount()
 
 public void ND_OnRoundStart()
 {
-	int quota = 0;
+	int quota = 0;	
 	
-	if (g_cvar[BoostBots].BoolValue && TDS_AVAILABLE())
-	{	
-		if (RED_OnTeamCount() < g_cvar[DisableBotsAt].IntValue)
-		{
-			if (!visibleBoosted)
-				toggleBooster(true);
-				
+	if (RED_OnTeamCount() < GetBotShutOffCount())
+	{
+		if(boostBots())			
 			quota = getBotModulusQuota();
-		}
 	}
+
 	else
 		quota = g_cvar[BotCount].IntValue;
 	
 	ServerCommand("bot_quota %d", quota);
+}
+
+bool boostBots()
+{
+	if (g_cvar[BoostBots].BoolValue && TDS_AVAILABLE())
+	{
+		if (!visibleBoosted)
+			toggleBooster(true);
+		
+		return true;
+	}
+
+	return false;
 }
 
 //Turn 32 slots on or off for bot quota
