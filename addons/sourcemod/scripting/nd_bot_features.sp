@@ -70,7 +70,7 @@ public Action TIMER_CC(Handle timer)
 	return Plugin_Handled;
 }
 
-public void ND_OnRoundEnd() {
+public void ND_OnRoundEnded() {
 	SignalMapChange();
 }
 
@@ -120,7 +120,7 @@ void checkCount()
 	}
 }
 
-public void ND_OnRoundStart()
+public void ND_OnRoundStarted()
 {
 	int quota = 0;	
 	
