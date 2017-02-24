@@ -5,6 +5,7 @@ enum convars
 	 ConVar:BotReduction,
 	 ConVar:BoosterQuota,
 	 ConVar:DisableBotsAt,
+	 ConVar:DisableBotsAtDec,
 	 ConVar:BotOverblance,
 	 ConVar:RegOverblance	 
 };
@@ -20,6 +21,7 @@ void CreatePluginConvars()
 	g_cvar[BotReduction] = CreateConVar("sm_bot_quota_reduct", "8", "How many bots to take off max for small maps");
 	g_cvar[BoosterQuota] = CreateConVar("sm_booster_bot_quota", "28", "sets the bota bot quota"); 
 	g_cvar[DisableBotsAt] = CreateConVar("sm_disable_bots_at", "8", "sets when disable bots"); 
+	g_cvar[DisableBotsAtDec] = CreateConVar("sm_disable_bots_at_dec", "6", "sets when disable bots sooner on certain maps"); 
 	g_cvar[BotOverblance] = CreateConVar("sm_bot_overbalance", "3", "sets team difference allowed with bots enabled"); 
 	g_cvar[RegOverblance] = CreateConVar("sm_reg_overbalance", "1", "sets team difference allowed with bots disabled"); 
 	
