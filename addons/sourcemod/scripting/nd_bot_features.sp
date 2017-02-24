@@ -81,6 +81,8 @@ void checkCount()
 		int quota = 0;
 		
 		int teamCount = RED_OnTeamCount();
+		
+		// Team count means the requirement for modulous bot quota
 		if (teamCount < GetBotShutOffCount())
 		{
 			if(boostBots())
@@ -93,23 +95,27 @@ void checkCount()
 			}
 		}
 		
-		else
-		{			
-			bool excludeSpecs = RED_ClientCount() < GetDynamicSlotCount() - 2;		
-			quota = getBotFillerQuota(teamCount, !excludeSpecs, excludeSpecs);			
+		// The plugin to get the server slot is available
+		else if (GDSC_AVAILABLE())
+		{	
+			// Get the bot count to fill empty team slots
+			int dynamicSlots = GetDynamicSlotCount() - 2;
+			bool excludeSpecs = RED_ClientCount() < dynamicSlots;
+			quota = getBotFillerQuota(teamCount, !excludeSpecs, excludeSpecs);		
 			
-			if (GDSC_AVAILABLE() && quota >= GetDynamicSlotCount() - 2 && getPositiveOverBalance() >= 3)
+			if (quota >= dynamicSlots && getPositiveOverBalance() >= 3)
 			{
 				quota = getBotFillerQuota(teamCount, true);
 				
 				if (!visibleBoosted)
 					toggleBooster(true, false);
 			}
-				
-			else if (visibleBoosted)
-				toggleBooster(false);
 		}
 		
+		// If the server slots are boosted to 32, disable that feature
+		else if (visibleBoosted)
+			toggleBooster(false);
+				
 		ServerCommand("bot_quota %d", quota);
 	}
 }
@@ -118,6 +124,8 @@ public void ND_OnRoundStart()
 {
 	int quota = 0;	
 	
+	// Team count means the requirement for modulous bot quota
+	// Decide which type of modulous quota we're using (boosted or regular)
 	if (RED_OnTeamCount() < GetBotShutOffCount())
 		quota = boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
 	
