@@ -4,19 +4,9 @@
 #define _nd_balancer_included
 
 /**
- * Called when the team difference changes
- *
- * @noreturn
+ * Called when the team balancer places someone onto a team
  */
-forward OnTeamDiffUpdated();
-
-/**
- * Retreive the team difference on the server
- * Positive for Consort and negative for Empire
- *
- * @return the skill difference on the teams
- */
-native float GetTeamDifference();
+forward void TB_OnTeamPlacement(int client, int team);
 
 /**
  * Retreive the average skill on the server
@@ -27,14 +17,6 @@ native float GetTeamDifference();
 native float GetAverageSkill();
 
 #define GAS_AVAILBLE() (GetFeatureStatus(FeatureType_Native, "GetAverageSkill") == FeatureStatus_Available)
-
-/**
- * Run the warmup team balancer
- *
- */
-native void WB_BalanceTeams();
-
-#define BT_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "WB_BalanceTeams") == FeatureStatus_Available)
 
 /**
  * Refresh the team balancer cache
