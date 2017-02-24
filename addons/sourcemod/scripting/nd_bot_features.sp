@@ -14,6 +14,7 @@
 
 #pragma newdecls required
 #include <nd_redstone>
+#include <nd_balancer>
 #include <nd_rounds>
 #include <nd_maps>
 
