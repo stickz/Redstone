@@ -48,19 +48,6 @@ public void OnMapEnd() {
 	SignalMapChange();	
 }
 
-public void OnBotBoostChange(ConVar convar, char[] oldValue, char[] newValue)
-{	
-	if ((!convar.BoolValue && visibleBoosted) ||
-		(convar.BoolValue && !visibleBoosted && OnTeamCount() < g_cvar[DisableBotsAt].IntValue))
-	{		
-		if (TDS_AVAILABLE())
-		{		
-			ToggleDynamicSlots(visibleBoosted);
-			visibleBoosted = convar.BoolValue;
-		}
-	}
-}
-
 public Action PlayerJoinTeam(int client, char[] command, int argc) {
 	CheckBotCounts(client);
 }
