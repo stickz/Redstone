@@ -36,13 +36,13 @@ int eSM[STOCK_MAP_SIZE] = {
 	view_as<int>(ND_Hydro)
 }
 
-#define CUSTOM_MAP_SIZE 3
+#define CUSTOM_MAP_SIZE 4
 int eCM[CUSTOM_MAP_SIZE] = {
 	view_as<int>(ND_Sandbrick),
 	view_as<int>(ND_MetroImp),
-	view_as<int>(ND_Mars)
+	view_as<int>(ND_Mars),
+	view_as<int>(ND_Corner)
 }
-
 
 /* Functions for adjusting quota based on the map */
 bool ReduceBotCountByMap()
