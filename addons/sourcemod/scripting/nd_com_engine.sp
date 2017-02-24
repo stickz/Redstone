@@ -74,8 +74,8 @@ public Action Event_CommanderModeLeft(Event event, const char[] name, bool dontB
 public Action Event_CommanderPromo(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
-	int team = event.GetInt("teamid") - 2;
-	TeamCommander[team] = client;
+	int team = event.GetInt("teamid");
+	TeamCommander[team-2] = client;
 	
 	/* Fire a forward when a commander is promoted */
 	Action dummy;
