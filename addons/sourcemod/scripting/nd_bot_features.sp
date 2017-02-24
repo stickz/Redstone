@@ -35,24 +35,16 @@ ConVar g_cvar[convars];
 //simply calling getBotModulusQuota() will return the integer
 #include "nd_bot_feat/modulus_quota.sp"
 
-#define TEAM_UNASSIGNED		0
-#define TEAM_SPEC			1
-#define TEAM_CONSORT		2
-#define TEAM_EMPIRE			3
-
-#define VERSION "1.3.1"
-
 public Plugin myinfo =
 {
 	name = "[ND] Bot Features",
 	author = "Stickz",
 	description = "Give more control over the bots on the server",
-	version = VERSION,
-	url = "N/A"
+	version = "dummy",
+	url = "https://github.com/stickz/Redstone/"
 };
 
-public void OnClientDisconnect_Post(int client)
-{
+public void OnClientDisconnect_Post(int client) {
 	checkCount();
 }
 	
@@ -66,21 +58,14 @@ public void OnPluginStart()
 	g_cvar[BotOverblance] = CreateConVar("sm_bot_overbalance", "3", "sets team difference allowed with bots enabled"); 
 	g_cvar[RegOverblance] = CreateConVar("sm_reg_overbalance", "1", "sets team difference allowed with bots disabled"); 
 		
-	HookConVarChange(g_cvar[BoostBots], OnBotBoostChange);
-	
-	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
-	
+	HookConVarChange(g_cvar[BoostBots], OnBotBoostChange);	
 	AddCommandListener(PlayerJoinTeam, "jointeam");
-	
-	HookEvent("round_win", Event_RoundEnd, EventHookMode_Pre);
-	HookEvent("timeleft_5s", Event_RoundEnd, EventHookMode_PostNoCopy);	
 
 	AutoExecConfig(true, "nd_bot_features");	
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapEnd()
-{
+public void OnMapEnd() {
 	SignalMapChange();	
 }
 
@@ -118,8 +103,7 @@ public Action TIMER_CC(Handle timer)
 	return Plugin_Handled;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
-{
+public void ND_OnRoundEnd() {
 	SignalMapChange();
 }
 
@@ -167,7 +151,7 @@ void checkCount()
 	}
 }
 
-public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
+public void ND_OnRoundStart()
 {
 	int quota = 0;
 	
