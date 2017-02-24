@@ -13,6 +13,7 @@
 #include "updater/standard.sp"
 
 #pragma newdecls required
+#include <nd_redstone>
 #include <nd_rounds>
 #include <nd_maps>
 
@@ -113,7 +114,7 @@ void checkCount()
 	{
 		int quota = 0;
 		
-		int teamCount = OnTeamCount();
+		int teamCount = RED_OnTeamCount();
 		if (teamCount < g_cvar[DisableBotsAt].IntValue)
 		{
 			if (g_cvar[BoostBots].BoolValue && TDS_AVAILABLE())
@@ -132,7 +133,7 @@ void checkCount()
 		
 		else
 		{			
-			bool excludeSpecs = ValidClientCount(true) < GetDynamicSlotCount() - 2;		
+			bool excludeSpecs = RED_ClientCount() < GetDynamicSlotCount() - 2;		
 			quota = getBotFillerQuota(teamCount, !excludeSpecs, excludeSpecs);			
 			
 			if (GDSC_AVAILABLE() && quota >= GetDynamicSlotCount() - 2 && getPositiveOverBalance() >= 3)
@@ -157,7 +158,7 @@ public void ND_OnRoundStart()
 	
 	if (g_cvar[BoostBots].BoolValue && TDS_AVAILABLE())
 	{	
-		if (OnTeamCount() < g_cvar[DisableBotsAt].IntValue)
+		if (RED_OnTeamCount() < g_cvar[DisableBotsAt].IntValue)
 		{
 			if (!visibleBoosted)
 				toggleBooster(true);
