@@ -7,7 +7,7 @@ int getBotModulusQuota()
 	int totalCount = g_cvar[BoosterQuota].IntValue - specCount - toSubtract;	
 	
 	if (ReduceBotCountByMap())
-		totalCount = GetSmallMapCount(totalCount);
+		totalCount = GetSmallMapCount(totalCount, specCount);
 	
 	return totalCount;
 }
@@ -65,21 +65,27 @@ bool ReduceBotCountByMap()
 	return false;
 }
 
-int GetSmallMapCount(int totalCount)
+int GetSmallMapCount(int totalCount, int specCount)
 {
+	// Get max quota and reduce amount
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
 	int rQuota = g_cvar[BotReduction].IntValue;
-	
-	int fromMax = maxQuota - totalCount;
-	int toReduce = totalCount - rQuota + fromMax;
-	
-	if (totalCount <= toReduce)
-		return totalCount;
-		
-	if (toReduce % 2 != totalCount % 2)
-		return toReduce + 1;
 
-	return toReduce;
+	// Caculate the value for the bot cvar
+	int botAmount = totalCount - rQuota + (maxQuota - totalCount);
+	
+	// Adjust bot value to offset the spectators 
+	botAmount += specCount;
+	
+	// If the bot value is greater than max, we must return max instead
+	if (botAmount >= totalCount)
+		return totalCount;
+					
+	// If required, modulate the bot count so the number is even
+	if (botAmount % 2 != totalCount % 2)
+		return botAmount+ 1;
+
+	return botAmount;
 }
 
 /* Disable bots sonner on certain maps */
