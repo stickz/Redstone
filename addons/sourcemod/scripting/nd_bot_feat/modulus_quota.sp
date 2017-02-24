@@ -36,13 +36,13 @@ int eSM[STOCK_MAP_SIZE] = {
 	view_as<int>(ND_Hydro)
 }
 
-#define CUSTOM_MAP_SIZE 3
+#define CUSTOM_MAP_SIZE 4
 int eCM[CUSTOM_MAP_SIZE] = {
 	view_as<int>(ND_Sandbrick),
 	view_as<int>(ND_MetroImp),
-	view_as<int>(ND_Mars)
+	view_as<int>(ND_Mars),
+	view_as<int>(ND_Corner)
 }
-
 
 /* Functions for adjusting quota based on the map */
 bool ReduceBotCountByMap()
@@ -80,4 +80,24 @@ int GetSmallMapCount(int totalCount)
 		return toReduce + 1;
 
 	return toReduce;
+}
+
+/* Disable bots sonner on certain maps */
+#define STOCK_MAP_SIZE2 1
+int sSOM[STOCK_MAP_SIZE2] = {
+	view_as<int>(ND_Silo)
+}
+
+int GetBotShutOffCount()
+{
+	char map[32];
+	GetCurrentMap(map, sizeof(map));
+	
+	for (int idx = 0; idx < STOCK_MAP_SIZE2; idx++)
+	{
+		if (StrEqual(map, ND_StockMaps[sSOM[idx]], false))
+			return g_cvar[DisableBotsAtDec].IntValue;
+	}
+	
+	return g_cvar[DisableBotsAt].IntValue;
 }

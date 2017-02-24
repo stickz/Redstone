@@ -8,88 +8,45 @@
 #include <nd_stocks>
 #include <nd_slots>
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_bot_features/nd_bot_features.txt"
+#include "updater/standard.sp"
+
 #pragma newdecls required
+#include <nd_redstone>
+#include <nd_balancer>
 #include <nd_rounds>
 #include <nd_maps>
 
-bool visibleBoosted = false;
-
-enum convars
-{
-	 ConVar:BotCount,
-	 ConVar:BoostBots,
-	 ConVar:BotReduction,
-	 ConVar:BoosterQuota,
-	 ConVar:DisableBotsAt,
-	 ConVar:BotOverblance,
-	 ConVar:RegOverblance	 
-};
-
-ConVar g_cvar[convars];
-
+#include "nd_bot_feat/convars.sp"
 //functions required to create a modulous bot quota
 //simply calling getBotModulusQuota() will return the integer
 #include "nd_bot_feat/modulus_quota.sp"
-
-#define TEAM_UNASSIGNED		0
-#define TEAM_SPEC			1
-#define TEAM_CONSORT		2
-#define TEAM_EMPIRE			3
-
-#define VERSION "1.3.1"
 
 public Plugin myinfo =
 {
 	name = "[ND] Bot Features",
 	author = "Stickz",
 	description = "Give more control over the bots on the server",
-	version = VERSION,
-	url = "N/A"
+	version = "dummy",
+	url = "https://github.com/stickz/Redstone/"
 };
 
-public void OnClientDisconnect_Post(int client)
-{
+public void OnClientDisconnect_Post(int client) {
 	checkCount();
 }
 	
 public void OnPluginStart()
 {
-	g_cvar[BoostBots] = CreateConVar("sm_boost_bots", "1", "0 to disable, 1 to enable (server count - 2 bots)");
-	g_cvar[BotCount] = CreateConVar("sm_botcount", "20", "sets the regular bot count.");
-	g_cvar[BotReduction] = CreateConVar("sm_bot_quota_reduct", "8", "How many bots to take off max for small maps");
-	g_cvar[BoosterQuota] = CreateConVar("sm_booster_bot_quota", "28", "sets the bota bot quota"); 
-	g_cvar[DisableBotsAt] = CreateConVar("sm_disable_bots_at", "8", "sets when disable bots"); 
-	g_cvar[BotOverblance] = CreateConVar("sm_bot_overbalance", "3", "sets team difference allowed with bots enabled"); 
-	g_cvar[RegOverblance] = CreateConVar("sm_reg_overbalance", "1", "sets team difference allowed with bots disabled"); 
-		
-	HookConVarChange(g_cvar[BoostBots], OnBotBoostChange);
-	
-	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
-	
+	CreatePluginConvars(); //convars.sp
 	AddCommandListener(PlayerJoinTeam, "jointeam");
-	
-	HookEvent("round_win", Event_RoundEnd, EventHookMode_Pre);
-	HookEvent("timeleft_5s", Event_RoundEnd, EventHookMode_PostNoCopy);	
 
-	AutoExecConfig(true, "nd_bot_features");
+	AutoExecConfig(true, "nd_bot_features");	
+	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapEnd()
-{
+public void OnMapEnd() {
 	SignalMapChange();	
-}
-
-public void OnBotBoostChange(ConVar convar, char[] oldValue, char[] newValue)
-{	
-	if ((!convar.BoolValue && visibleBoosted) ||
-		(convar.BoolValue && !visibleBoosted && OnTeamCount() < g_cvar[DisableBotsAt].IntValue))
-	{		
-		if (TDS_AVAILABLE())
-		{		
-			ToggleDynamicSlots(visibleBoosted);
-			visibleBoosted = convar.BoolValue;
-		}
-	}
 }
 
 public Action PlayerJoinTeam(int client, char[] command, int argc) {
@@ -102,7 +59,7 @@ public void TB_OnTeamPlacement(int client, int team) {
 
 void CheckBotCounts(int client)
 {
-	if (IsValidClient(client))	{
+	if (IsValidClient(client)) {
 		CreateTimer(0.1, TIMER_CC, _, TIMER_FLAG_NO_MAPCHANGE);
 	}
 }
@@ -113,8 +70,7 @@ public Action TIMER_CC(Handle timer)
 	return Plugin_Handled;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
-{
+public void ND_OnRoundEnd() {
 	SignalMapChange();
 }
 
@@ -124,8 +80,8 @@ void checkCount()
 	{
 		int quota = 0;
 		
-		int teamCount = OnTeamCount();
-		if (teamCount < g_cvar[DisableBotsAt].IntValue)
+		int teamCount = RED_OnTeamCount();
+		if (teamCount < GetBotShutOffCount())
 		{
 			if (g_cvar[BoostBots].BoolValue && TDS_AVAILABLE())
 			{			
@@ -143,7 +99,7 @@ void checkCount()
 		
 		else
 		{			
-			bool excludeSpecs = ValidClientCount(true) < GetDynamicSlotCount() - 2;		
+			bool excludeSpecs = RED_ClientCount() < GetDynamicSlotCount() - 2;		
 			quota = getBotFillerQuota(teamCount, !excludeSpecs, excludeSpecs);			
 			
 			if (GDSC_AVAILABLE() && quota >= GetDynamicSlotCount() - 2 && getPositiveOverBalance() >= 3)
@@ -162,13 +118,13 @@ void checkCount()
 	}
 }
 
-public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
+public void ND_OnRoundStart()
 {
 	int quota = 0;
 	
 	if (g_cvar[BoostBots].BoolValue && TDS_AVAILABLE())
 	{	
-		if (OnTeamCount() < g_cvar[DisableBotsAt].IntValue)
+		if (RED_OnTeamCount() < g_cvar[DisableBotsAt].IntValue)
 		{
 			if (!visibleBoosted)
 				toggleBooster(true);
@@ -198,8 +154,7 @@ void toggleBooster(bool state, bool teamCaps = true)
 		
 	//Unlock team joining when bots are blasting
 	if (teamCaps)
-		ServerCommand("mp_limitteams %d", state ? 	g_cvar[BotOverblance].IntValue :
-													g_cvar[RegOverblance].IntValue);
+		ServerCommand("mp_limitteams %d", state ? g_cvar[BotOverblance].IntValue : g_cvar[RegOverblance].IntValue);
 }
 
 //Disable the 32 slots (if activate) when the map changes
