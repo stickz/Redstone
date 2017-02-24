@@ -81,7 +81,7 @@ void checkCount()
 		int quota = 0;
 		
 		int teamCount = RED_OnTeamCount();
-		if (teamCount < g_cvar[DisableBotsAt].IntValue)
+		if (teamCount < GetBotShutOffCount())
 		{
 			if (g_cvar[BoostBots].BoolValue && TDS_AVAILABLE())
 			{			
