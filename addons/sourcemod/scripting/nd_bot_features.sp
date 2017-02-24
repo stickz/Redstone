@@ -179,7 +179,7 @@ int getBotFillerQuota(int teamCount, bool excludeSpectators = false, bool addSpe
 	if (ValidTeamCount(TEAM_EMPIRE) == ValidTeamCount(TEAM_CONSORT))
 		return 0;
 		
-	int total = teamCount + getPositiveOverBalance() - 1;
+	int total = teamCount + getPositiveOverBalance();
 		
 	/* Notice: It's assumed this code will only call ValidTeamCount() once for performance reasons */
 	if (addSpectators)
