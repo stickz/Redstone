@@ -17,21 +17,7 @@
 #include <nd_rounds>
 #include <nd_maps>
 
-bool visibleBoosted = false;
-
-enum convars
-{
-	 ConVar:BotCount,
-	 ConVar:BoostBots,
-	 ConVar:BotReduction,
-	 ConVar:BoosterQuota,
-	 ConVar:DisableBotsAt,
-	 ConVar:BotOverblance,
-	 ConVar:RegOverblance	 
-};
-
-ConVar g_cvar[convars];
-
+#include "nd_bot_feat/convars.sp"
 //functions required to create a modulous bot quota
 //simply calling getBotModulusQuota() will return the integer
 #include "nd_bot_feat/modulus_quota.sp"
@@ -51,15 +37,7 @@ public void OnClientDisconnect_Post(int client) {
 	
 public void OnPluginStart()
 {
-	g_cvar[BoostBots] = CreateConVar("sm_boost_bots", "1", "0 to disable, 1 to enable (server count - 2 bots)");
-	g_cvar[BotCount] = CreateConVar("sm_botcount", "20", "sets the regular bot count.");
-	g_cvar[BotReduction] = CreateConVar("sm_bot_quota_reduct", "8", "How many bots to take off max for small maps");
-	g_cvar[BoosterQuota] = CreateConVar("sm_booster_bot_quota", "28", "sets the bota bot quota"); 
-	g_cvar[DisableBotsAt] = CreateConVar("sm_disable_bots_at", "8", "sets when disable bots"); 
-	g_cvar[BotOverblance] = CreateConVar("sm_bot_overbalance", "3", "sets team difference allowed with bots enabled"); 
-	g_cvar[RegOverblance] = CreateConVar("sm_reg_overbalance", "1", "sets team difference allowed with bots disabled"); 
-		
-	HookConVarChange(g_cvar[BoostBots], OnBotBoostChange);	
+	CreatePluginConvars(); //convars.sp
 	AddCommandListener(PlayerJoinTeam, "jointeam");
 
 	AutoExecConfig(true, "nd_bot_features");	
