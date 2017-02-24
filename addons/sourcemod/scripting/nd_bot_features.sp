@@ -8,6 +8,10 @@
 #include <nd_stocks>
 #include <nd_slots>
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_bot_features/nd_bot_features.txt"
+#include "updater/standard.sp"
+
 #pragma newdecls required
 #include <nd_rounds>
 #include <nd_maps>
@@ -71,7 +75,8 @@ public void OnPluginStart()
 	HookEvent("round_win", Event_RoundEnd, EventHookMode_Pre);
 	HookEvent("timeleft_5s", Event_RoundEnd, EventHookMode_PostNoCopy);	
 
-	AutoExecConfig(true, "nd_bot_features");
+	AutoExecConfig(true, "nd_bot_features");	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public void OnMapEnd()
