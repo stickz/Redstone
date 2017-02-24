@@ -59,7 +59,7 @@ public void TB_OnTeamPlacement(int client, int team) {
 
 void CheckBotCounts(int client)
 {
-	if (IsValidClient(client))	{
+	if (IsValidClient(client)) {
 		CreateTimer(0.1, TIMER_CC, _, TIMER_FLAG_NO_MAPCHANGE);
 	}
 }
@@ -154,8 +154,7 @@ void toggleBooster(bool state, bool teamCaps = true)
 		
 	//Unlock team joining when bots are blasting
 	if (teamCaps)
-		ServerCommand("mp_limitteams %d", state ? 	g_cvar[BotOverblance].IntValue :
-													g_cvar[RegOverblance].IntValue);
+		ServerCommand("mp_limitteams %d", state ? g_cvar[BotOverblance].IntValue : g_cvar[RegOverblance].IntValue);
 }
 
 //Disable the 32 slots (if activate) when the map changes
