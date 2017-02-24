@@ -89,7 +89,7 @@ void checkCount()
 			else
 			{
 				quota += g_cvar[BotCount].IntValue;
-				ServerCommand("mp_limitteams %d", g_cvar[BotOverblance].IntValue);	
+				ServerCommand("mp_limitteams %d", g_cvar[BotOverblance].IntValue);
 			}
 		}
 		
@@ -119,13 +119,7 @@ public void ND_OnRoundStart()
 	int quota = 0;	
 	
 	if (RED_OnTeamCount() < GetBotShutOffCount())
-	{
-		if(boostBots())			
-			quota = getBotModulusQuota();
-	}
-
-	else
-		quota = g_cvar[BotCount].IntValue;
+		quota = boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
 	
 	ServerCommand("bot_quota %d", quota);
 }
