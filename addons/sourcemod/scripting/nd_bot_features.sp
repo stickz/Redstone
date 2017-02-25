@@ -100,16 +100,18 @@ void checkCount()
 		{	
 			// Get the bot count to fill empty team slots
 			int dynamicSlots = GetDynamicSlotCount() - 2;
-			bool excludeSpecs = RED_ClientCount() < dynamicSlots;
-			quota = getBotFillerQuota(teamCount, !excludeSpecs, excludeSpecs);		
+			int clientCount = RED_ClientCount();
+			quota = getBotFillerQuota(teamCount, clientCount < dynamicSlots);		
 			
 			if (quota >= dynamicSlots && getPositiveOverBalance() >= 3)
 			{
-				quota = getBotFillerQuota(teamCount, true);
-				
+				quota = getBotFillerQuota(teamCount);	
+			
 				if (!visibleBoosted)
 					toggleBooster(true, false);
 			}
+			else if (visibleBoosted)
+				toggleBooster(false);			
 		}
 		
 		// If the server slots are boosted to 32, disable that feature
@@ -174,7 +176,7 @@ void SignalMapChange()
 }
 
 //When teams have two or more less players
-int getBotFillerQuota(int teamCount, bool excludeSpectators = false, bool addSpectators = false) 
+int getBotFillerQuota(int teamCount, bool addSpectators = false) 
 {
 	if (ValidTeamCount(TEAM_EMPIRE) == ValidTeamCount(TEAM_CONSORT))
 		return 0;
@@ -183,10 +185,10 @@ int getBotFillerQuota(int teamCount, bool excludeSpectators = false, bool addSpe
 		
 	/* Notice: It's assumed this code will only call ValidTeamCount() once for performance reasons */
 	if (addSpectators)
-		total += ValidTeamCount(TEAM_SPEC);
+		total += ValidTeamCount(TEAM_SPEC);		
 		
-	if (excludeSpectators)
-		total -= ValidTeamCount(TEAM_SPEC);
-
+	if (total > 29)
+		total = 29;
+		
 	return total;
 }
