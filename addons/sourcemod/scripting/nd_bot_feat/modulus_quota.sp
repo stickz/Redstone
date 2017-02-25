@@ -89,21 +89,37 @@ int GetSmallMapCount(int totalCount, int specCount)
 }
 
 /* Disable bots sonner on certain maps */
-#define STOCK_MAP_SIZE2 1
-int sSOM[STOCK_MAP_SIZE2] = {
+#define SMALL_MAP_SIZE2 1
+int sSM[SMALL_MAP_SIZE2] = {
 	view_as<int>(ND_Silo)
 }
+
+#define LARGE_MAP_SIZE 3
+int lSM[LARGE_MAP_SIZE] = {
+	view_as<int>(ND_Gate),
+	view_as<int>(ND_Oilfield),
+	view_as<int>(ND_Downtown)
+};
 
 int GetBotShutOffCount()
 {
 	char map[32];
 	GetCurrentMap(map, sizeof(map));
 	
-	for (int idx = 0; idx < STOCK_MAP_SIZE2; idx++)
+	/* Look through array to see if it's a small stock map */
+	for (int idx = 0; idx < SMALL_MAP_SIZE2; idx++)
 	{
-		if (StrEqual(map, ND_StockMaps[sSOM[idx]], false))
+		if (StrEqual(map, ND_StockMaps[sSM[idx]], false))
 			return g_cvar[DisableBotsAtDec].IntValue;
 	}
 	
+	/* Look through array to see if it's a large stock map */
+	for (int ix = 0; ix < LARGE_MAP_SIZE; ix++)
+	{
+		if (StrEqual(map, ND_StockMaps[lSM[ix]], false))
+			return g_cvar[DisableBotsAtInc].IntValue;
+	}
+	
+	/* Otherwise, return the default value */
 	return g_cvar[DisableBotsAt].IntValue;
 }
