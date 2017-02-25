@@ -104,9 +104,9 @@ void checkCount()
 			quota = getBotFillerQuota(teamCount, clientCount < dynamicSlots);		
 			
 			if (quota >= dynamicSlots && getPositiveOverBalance() >= 3)
-			{				
+			{
 				quota = getBotFillerQuota(teamCount);	
-								
+			
 				if (!visibleBoosted)
 					toggleBooster(true, false);
 			}
