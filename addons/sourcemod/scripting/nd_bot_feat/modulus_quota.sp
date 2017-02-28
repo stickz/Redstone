@@ -47,12 +47,13 @@ int eSM[STOCK_MAP_SIZE] = {
 	view_as<int>(ND_Clocktower)
 }
 
-#define CUSTOM_MAP_SIZE 4
+#define CUSTOM_MAP_SIZE 5
 int eCM[CUSTOM_MAP_SIZE] = {
 	view_as<int>(ND_Sandbrick),
 	view_as<int>(ND_MetroImp),
 	view_as<int>(ND_Mars),
-	view_as<int>(ND_Corner)
+	view_as<int>(ND_Corner),
+	view_as<int><ND_Roadwork)
 }
 
 /* Functions for adjusting quota based on the map */
