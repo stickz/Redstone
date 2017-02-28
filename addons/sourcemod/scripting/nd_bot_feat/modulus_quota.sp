@@ -6,8 +6,14 @@ int getBotModulusQuota()
 
 	int totalCount = g_cvar[BoosterQuota].IntValue - specCount - toSubtract;	
 	
-	if (ReduceBotCountByMap())
-		totalCount = GetSmallMapCount(totalCount, specCount);
+	char map[32];
+	GetCurrentMap(map, sizeof(map));
+	
+	if (ReduceBotCountByMap(map))
+	{
+		int reducedCount = GetBotReductionCount(map);
+		totalCount = GetSmallMapCount(totalCount, specCount, reducedCount);		
+	}
 	
 	return totalCount;
 }
@@ -30,6 +36,7 @@ int getUnassignedAdjustment() //Fix bug which prevents connecting to the server
 	return NotAssignedCount;
 }
 
+/* List maps to reduce bots on */
 #define STOCK_MAP_SIZE 	5
 int eSM[STOCK_MAP_SIZE] = {
 	view_as<int>(ND_Silo),
@@ -48,11 +55,8 @@ int eCM[CUSTOM_MAP_SIZE] = {
 }
 
 /* Functions for adjusting quota based on the map */
-bool ReduceBotCountByMap()
+bool ReduceBotCountByMap(const char[] map)
 {
-	char map[32];
-	GetCurrentMap(map, sizeof(map));
-
 	for (int idx = 0; idx < STOCK_MAP_SIZE; idx++)
 	{
 		if (StrEqual(map, ND_StockMaps[eSM[idx]], false))
@@ -68,11 +72,28 @@ bool ReduceBotCountByMap()
 	return false;
 }
 
-int GetSmallMapCount(int totalCount, int specCount)
+/* List the really tinny maps to reduce further, (assume default if unlisted) */
+#define CUSTOM_MAP_SIZE2 1
+int tCM[CUSTOM_MAP_SIZE2] = {
+	view_as<int>(ND_Sandbrick)
+};
+
+int GetBotReductionCount(const char[] map)
+{
+	for (int idx = 0; idx < STOCK_MAP_SIZE; idx++)
+	{
+		if (StrEqual(map, ND_CustomMaps[tCM[idx]], false))
+			return g_cvar[BotReductionDec].IntValue;
+	}
+	
+	return g_cvar[BotReduction].IntValue;
+}
+
+/* Get the number of bots after the reduction */
+int GetSmallMapCount(int totalCount, int specCount, int rQuota)
 {
 	// Get max quota and reduce amount
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
-	int rQuota = g_cvar[BotReduction].IntValue;
 
 	// Caculate the value for the bot cvar
 	int botAmount = totalCount - rQuota + (maxQuota - totalCount);
