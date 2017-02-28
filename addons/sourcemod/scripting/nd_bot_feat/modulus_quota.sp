@@ -30,10 +30,13 @@ int getUnassignedAdjustment() //Fix bug which prevents connecting to the server
 	return NotAssignedCount;
 }
 
-#define STOCK_MAP_SIZE 	2
+#define STOCK_MAP_SIZE 	5
 int eSM[STOCK_MAP_SIZE] = {
 	view_as<int>(ND_Silo),
-	view_as<int>(ND_Hydro)
+	view_as<int>(ND_Hydro),
+	view_as<int>(ND_Oasis),
+	view_as<int>(ND_Coast),
+	view_as<int>(ND_Metro)
 }
 
 #define CUSTOM_MAP_SIZE 4
