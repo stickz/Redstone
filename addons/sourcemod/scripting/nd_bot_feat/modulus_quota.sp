@@ -137,7 +137,7 @@ int GetBotShutOffCount()
 	for (int idx = 0; idx < SMALL_MAP_SIZE2; idx++)
 	{
 		if (StrEqual(map, ND_StockMaps[sSM[idx]], false) 
-		|| (StrEqual(map, ND_CustomMaps[cSM[idx]], false))
+		|| (StrEqual(map, ND_CustomMaps[cSM[idx]], false)))
 			return g_cvar[DisableBotsAtDec].IntValue;
 	}
 	
