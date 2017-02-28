@@ -73,19 +73,11 @@ bool ReduceBotCountByMap(const char[] map)
 }
 
 /* List the really tinny maps to reduce further, (assume default if unlisted) */
-#define CUSTOM_MAP_SIZE2 1
-int tCM[CUSTOM_MAP_SIZE2] = {
-	view_as<int>(ND_Sandbrick)
-};
-
 int GetBotReductionCount(const char[] map)
 {
-	for (int idx = 0; idx < STOCK_MAP_SIZE; idx++)
-	{
-		if (StrEqual(map, ND_CustomMaps[tCM[idx]], false))
-			return g_cvar[BotReductionDec].IntValue;
-	}
-	
+	if (StrEqual(map, ND_CustomMaps[view_as<int>(ND_Sandbrick)], false))
+		return g_cvar[BotReductionDec].IntValue;
+
 	return g_cvar[BotReduction].IntValue;
 }
 
