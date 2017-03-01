@@ -53,7 +53,7 @@ int eCM[CUSTOM_MAP_SIZE] = {
 	view_as<int>(ND_MetroImp),
 	view_as<int>(ND_Mars),
 	view_as<int>(ND_Corner),
-	view_as<int><ND_Roadwork)
+	view_as<int>(ND_Roadwork)
 }
 
 /* Functions for adjusting quota based on the map */
