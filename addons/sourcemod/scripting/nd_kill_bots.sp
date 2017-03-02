@@ -38,7 +38,7 @@ public void ND_OnRoundEnded() {
 
 public Action CMD_KillBots(int client, int args)
 {
-	if (!RoundStarted())
+	if (!RoundStarted(client))
 		return Plugin_Handled;
 	
 	if (!ND_IsCommander(client))
@@ -63,7 +63,7 @@ public Action CMD_KillBots(int client, int args)
 
 public Action CMD_AdminKillBots(int client, int args)
 {
-	if (!RoundStarted())
+	if (!RoundStarted(client))
 		return Plugin_Handled;	
 	
 	if (!args)
@@ -95,7 +95,7 @@ public Action Timer_EnableBotKill(Handle timer, any team) {
 	CanKillBots[team - 2] = true;
 }
 
-bool RoundStarted()
+bool RoundStarted(int client)
 {
 	if (!ND_RoundStarted())
 	{
