@@ -99,7 +99,7 @@ bool RoundStarted()
 {
 	if (!ND_RoundStarted())
 	{
-		ReplyToCommand(client, "[SM] This command requires the round to be running!");
+		PrintToChat(client, "[SM] This command requires the round to be running!");
 		return false;
 	}
 	
