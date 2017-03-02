@@ -1,67 +1,53 @@
-#include <sourcemod>
 #include <sdktools>
+
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_kill_bots/nd_kill_bots.txt"
+#include "updater/standard.sp"
+
+#pragma newdecls required
+#include <sourcemod>
 #include <nd_stocks>
+#include <nd_rounds>
+#include <nd_com_eng>
 
-#undef REQUIRE_PLUGIN
-#tryinclude <nd_commander>
-#define REQUIRE_PLUGIN
-
-#define VERSION "1.0.2"
-
-#define TEAM_CONSORT		2
-#define TEAM_EMPIRE			3
-
-public Plugin:myinfo =
+public Plugin myinfo =
 {
 	name = "[ND] Bot Slaying",
 	author = "Stickz",
 	description = "Allows killing of bots on a particular team",
-	version = VERSION,
-	url = "N/A"
+	version = "dummy",
+	url = "https://github.com/stickz/Redstone/"
 };
 
-new bool:CanKillBots[2] = {true, ...};
-new bool:BotsReset = false;
-new bool:RoundStarted = false;
+bool CanKillBots[2] = {true, ...};
+bool BotsReset = false;
 
-public OnPluginStart()
+public void OnPluginStart()
 {
-	RegisterCommands();
-	HookEvents();
+	RegisterCommands(); // commands to slay bots
+	AddUpdaterLibrary(); // auto-updater
 }
 
-public OnMapEnd()
-{
+public void OnMapEnd() {
 	ResetKillBots();
-	RoundStarted = false;
 }
 
-public Event_RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
-{
-	RoundStarted = true;
-}
-
-public Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
-{
+public void ND_OnRoundEnded() {
 	ResetKillBots();
-	RoundStarted = false;
 }
 
-public Action:CMD_KillBots(client, args)
+public Action CMD_KillBots(int client, int args)
 {
-	if (!RoundStarted)
-	{
-		ReplyToCommand(client, "[SM] This command requires the round to be running!");
-		return Plugin_Handled;	
-	}
+	if (!RoundStarted(client))
+		return Plugin_Handled;
 	
-	if (!NDC_IsCommander(client))
+	if (!ND_IsCommander(client))
 	{
 		ReplyToCommand(client, "[SM] This command for commanders only!");
 		return Plugin_Handled;
 	}
 	
-	new team = GetClientTeam(client);
+	int team = GetClientTeam(client);
 	
 	if (!CanKillBots[team - 2])
 	{
@@ -75,13 +61,10 @@ public Action:CMD_KillBots(client, args)
 	return Plugin_Handled;
 }
 
-public Action:CMD_AdminKillBots(client, args)
+public Action CMD_AdminKillBots(int client, int args)
 {
-	if (!RoundStarted)
-	{
-		ReplyToCommand(client, "[SM] This command requires the round to be running!");
+	if (!RoundStarted(client))
 		return Plugin_Handled;	
-	}
 	
 	if (!args)
 	{
@@ -89,10 +72,10 @@ public Action:CMD_AdminKillBots(client, args)
 		return Plugin_Handled;
 	}
 	
-	decl String:teamArg[16];
+	char teamArg[16];
 	GetCmdArg(1, teamArg, sizeof(teamArg));
 	
-	new team;
+	int team;
 	
 	if (StrContains(teamArg, "emp", false) > -1)
 		team = TEAM_EMPIRE;
@@ -108,29 +91,40 @@ public Action:CMD_AdminKillBots(client, args)
 	return Plugin_Handled;
 }
 
-public Action:Timer_EnableBotKill(Handle:timer, any:team)
-{
+public Action Timer_EnableBotKill(Handle timer, any team) {
 	CanKillBots[team - 2] = true;
 }
 
-PerformKillBots(team)
+bool RoundStarted(int client)
 {
-	for (new client = 1; client <= MaxClients; client++)
+	if (!ND_RoundStarted())
 	{
-		if (IsValidClient(client, false) && IsFakeClient(client) && IsPlayerAlive(client) && GetClientTeam(client) == team)
+		PrintToChat(client, "[SM] This command requires the round to be running!");
+		return false;
+	}
+	
+	return true;
+}
+
+void PerformKillBots(int team)
+{
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		if ( IsValidClient(client, false) && IsFakeClient(client) && 
+		     IsPlayerAlive(client) && GetClientTeam(client) == team)
 		{
 			ForcePlayerSuicide(client);		
-		}	
+		}
 	}
 }
 
-CreateCooldown(team)
+void CreateCooldown(int team)
 {
 	CanKillBots[team - 2] = false;	
 	CreateTimer(300.0, Timer_EnableBotKill, team, TIMER_FLAG_NO_MAPCHANGE);
 }
 
-ResetKillBots()
+void ResetKillBots()
 {
 	if (!BotsReset)
 	{		
@@ -140,16 +134,9 @@ ResetKillBots()
 	}
 }
 
-RegisterCommands()
+void RegisterCommands()
 {
 	RegConsoleCmd("sm_KillBots", CMD_KillBots, "Allows a commander to kill their bots");
 	RegConsoleCmd("sm_KillBots", CMD_KillBots, "Allows a commander to kill their bots");
 	RegAdminCmd("sm_aKillBots", CMD_AdminKillBots, ADMFLAG_KICK, "Allows a command to kill bots on a team");
-}
-
-HookEvents()
-{
-	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
-	HookEvent("round_end", Event_RoundEnd, EventHookMode_PostNoCopy);
-	HookEvent("timeleft_5s", Event_RoundEnd, EventHookMode_PostNoCopy);
 }
