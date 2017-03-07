@@ -57,15 +57,7 @@ public Action Cmd_WarnRespect(int client, int args)
 	
 	char arg1[64]
 	GetCmdArg(1, arg1, sizeof(arg1));	
-	int target = FindTarget(client, arg1, true, true);
-	
-	if (target == -1)
-	{
-		ReplyToCommand(client, "[xG] Failed to target the player you're trying to warn.");
-		return Plugin_Handled;
-	}	
-	else
-		WarnPlayer(WARN_TYPE_RESPECT, client, target);
+	PrintWarning(WARN_TYPE_RESPECT, client, arg1);
 	
 	return Plugin_Handled;
 }
@@ -79,16 +71,8 @@ public Action Cmd_WarnAdvertise(int client, int args)
 	}
 	
 	char arg1[64]
-	GetCmdArg(1, arg1, sizeof(arg1));	
-	int target = FindTarget(client, arg1, true, true);
-	
-	if (target == -1)
-	{
-		ReplyToCommand(client, "[xG] Failed to target the player you're trying to warn.");
-		return Plugin_Handled;
-	}
-	else
-		WarnPlayer(WARN_TYPE_ADVERTISE, client, target);
+	GetCmdArg(1, arg1, sizeof(arg1));
+	PrintWarning(WARN_TYPE_ADVERTISE, client, arg1);
 	
 	return Plugin_Handled;
 }
@@ -103,17 +87,27 @@ public Action Cmd_SpawnSell(int client, int args)
 	
 	char arg1[64]
 	GetCmdArg(1, arg1, sizeof(arg1));	
-	int target = FindTarget(client, arg1, true, true);
+	PrintWarning(WARN_TYPE_SPAWNSELL, client, arg1);
 	
+	return Plugin_Handled;
+}
+
+bool TargetFound(int client, int target)
+{
 	if (target == -1)
 	{
-		ReplyToCommand(client, "[xG] Failed to target the player you're trying to warn.");
-		return Plugin_Handled;
+		PrintToChat(client, "[xG] Failed to target the player you're trying to warn.");
+		return false;
 	}
-	else
-		WarnPlayer(WARN_TYPE_SPAWNSELL, client, target);
+	
+	return true;
+}
 
-	return Plugin_Handled;
+void PrintWarning(int WarnType, int client, const char[] arg)
+{
+	int target = FindTarget(client, arg, true, true);	
+	if (TargetFound(client, target))
+		WarnPlayer(WarnType, client, target);
 }
 
 void WarnPlayer(int WarnType, int Moderator, int Offender)
