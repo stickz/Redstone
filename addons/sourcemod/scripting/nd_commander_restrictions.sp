@@ -57,6 +57,7 @@ enum convars
 	ConVar:cHighPlayerRestrict,
 	ConVar:cHighPlayerLevel,
 	ConVar:aRestrictDisable,
+	ConVar:mRestrictDisable,
 	ConVar:cRestrictSkillL,
 	ConVar:cRestrictSkillH,
 	ConVar:disRestrictions
@@ -72,6 +73,7 @@ public void OnPluginStart()
 	g_cvar[cHighPlayerRestrict]	=	CreateConVar("sm_restrict_highply", "18", "Sets the amount of players for high command requirements");
 	g_cvar[cHighPlayerLevel]	=	CreateConVar("sm_restrict_highlvl", "40", "Sets the maximum threshold required to command");
 	g_cvar[aRestrictDisable] 	= 	CreateConVar("sm_restrict_disable", "35", "Sets the skill average to disable all restrictions");
+	g_cvar[mRestrictDisable] 	= 	CreateConVar("sm_restrict_disable_med", "20", "Sets the skill median to disable all restrictions");
 	g_cvar[cRestrictSkillL]		=	CreateConVar("sm_commander_lskill", "5000", "Sets the minimum skill threshold required to command");
 	g_cvar[cRestrictSkillH]		=	CreateConVar("sm_commander_hskill", "15000", "Sets the maximum skill threshold required to command");
 	g_cvar[disRestrictions]		= 	CreateConVar("sm_restrict_enable", "8", "Sets number of players on team to enable commadner restrictions");
@@ -225,10 +227,17 @@ public Action Command_Apply(int client, const char[] command, int argc)
 
 bool DisableRestrictionsBySkill() 
 {		
-	if (ND_GEA_AVAILBLE())
+	if (ND_GSM_AVAILIBLE())
 	{
-		float value = ND_GetSkillAverage() * 0.60 + ND_GetSkillMedian() * 0.40;	
-		return value < g_cvar[aRestrictDisable].IntValue;
+		float median = ND_GetSkillMedian();
+		if (median < g_cvar[mRestrictDisable].IntValue)
+			return true;
+		
+		if (ND_GSA_AVAILBLE())
+		{
+			float value = ND_GetSkillAverage() * 0.60 + median * 0.40;	
+			return value < g_cvar[aRestrictDisable].IntValue;
+		}
 	}
 		
 	return true;
