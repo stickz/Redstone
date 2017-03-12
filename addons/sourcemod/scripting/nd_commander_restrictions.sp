@@ -227,7 +227,7 @@ bool DisableRestrictionsBySkill()
 {		
 	if (ND_GEA_AVAILBLE())
 	{
-		float value = ND_GetSkillAverage() * 0.6 + ND_GetSkillMedian() * 0.4;	
+		float value = ND_GetSkillAverage() * 0.5 + ND_GetSkillMedian() * 0.5;	
 		return value < g_cvar[aRestrictDisable].IntValue;
 	}
 		
