@@ -226,7 +226,10 @@ public Action Command_Apply(int client, const char[] command, int argc)
 bool DisableRestrictionsBySkill() 
 {		
 	if (ND_GEA_AVAILBLE())
-		return ND_GetEnhancedAverage() < g_cvar[aRestrictDisable].IntValue;
+	{
+		float value = ND_GetSkillAverage() * 0.6 + ND_GetSkillMedian() * 0.4;	
+		return value < g_cvar[aRestrictDisable].IntValue;
+	}
 		
 	return true;
 }
