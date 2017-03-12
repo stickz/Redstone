@@ -34,7 +34,7 @@ public Plugin:myinfo =
 public OnPluginStart()
 {
 	HookEvent("structure_death", Event_StructDeath);
-	HookEvent("structure_damage_sparse", Event_BunkerDamage);
+	//HookEvent("structure_damage_sparse", Event_BunkerDamage);
 }
 
 public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
@@ -47,7 +47,7 @@ public Event_StructDeath(Handle:event, const String:name[], bool:dontBroadcast)
 	}
 }
 
-public Event_BunkerDamage(Handle:event, const String:name[], bool:dontBroadcast)
+/*public Event_BunkerDamage(Handle:event, const String:name[], bool:dontBroadcast)
 {
 	if (GetEventBool(event, "bunker"))
 	{
@@ -60,7 +60,7 @@ public Event_BunkerDamage(Handle:event, const String:name[], bool:dontBroadcast)
 			RemoveTransportGates(team);
 		}
 	}
-}
+}*/
 
 RemoveTransportGates(team)
 {
