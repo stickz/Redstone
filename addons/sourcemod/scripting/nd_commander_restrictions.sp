@@ -231,7 +231,7 @@ bool DisableRestrictionsBySkill()
 	{
 		float percent = g_cvar[aMedianPercent].FloatValue / 100.0;
 		
-		float average = ND_GetSkillAverage() * 1.0 - (percent);
+		float average = ND_GetSkillAverage() * (1.0 - percent);
 		float median = ND_GetSkillMedian() * percent;
 		
 		return (average + median) < g_cvar[aRestrictDisable].IntValue;
