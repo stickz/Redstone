@@ -139,4 +139,5 @@ void RegisterCommands()
 	RegConsoleCmd("sm_KillBots", CMD_KillBots, "Allows a commander to kill their bots");
 	RegConsoleCmd("sm_SlayBots", CMD_KillBots, "Allows a commander to kill their bots");
 	RegAdminCmd("sm_aKillBots", CMD_AdminKillBots, ADMFLAG_KICK, "Allows a command to kill bots on a team");
+	RegAdminCmd("sm_aSlayBots", CMD_AdminKillBots, ADMFLAG_KICK, "Allows a command to kill bots on a team");
 }
