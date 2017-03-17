@@ -73,9 +73,14 @@ functag NativeCall public(Handle:plugin, numParams);
 public APLRes:AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("GameME_GetFinalSkill", Native_GameME_GetFinalSkill);
+	CreateNative("GameME_GetSkillBase", Native_GameME_GetSkillBase);
 	return APLRes_Success;
 }
 
 public Native_GameME_GetFinalSkill(Handle plugin, int numParams) {
 	return _:GameME_FinalSkill[GetNativeCell(1)];
+}
+
+public Native_GameME_GetSkillBase(Handle plugin, int numParams) {
+	return _:GameME_SkillBase[GetNativeCell(1)];
 }
