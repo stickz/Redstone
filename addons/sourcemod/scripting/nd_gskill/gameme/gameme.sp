@@ -51,7 +51,7 @@ void GameME_InitializeFeatures()
 	GameME_AddConvarChangeHooks();
 	
 	/* Create Forwards */
-	GameME_SkillReady_Forward = CreateGlobalForward("GameME_OnSkillCalculated", ET_Ignore, Param_Cell, Param_Float);
+	GameME_SkillReady_Forward = CreateGlobalForward("GameME_OnSkillCalculated", ET_Ignore, Param_Cell, Param_Float, Param_Float);
 }
 
 GameME_AddConvarChangeHooks()
@@ -127,6 +127,7 @@ void GameME_FireSkillReadyForward(int client)
 	Action dummy;
 	Call_StartForward(GameME_SkillReady_Forward);
 	Call_PushCell(client);
+	Call_PushFloat(GameME_SkillBase[client]);
 	Call_PushFloat(GameME_FinalSkill[client]);
 	Call_Finish(dummy);	
 }
