@@ -1,7 +1,7 @@
 /* Forwards and natives for the player skill calculation plugin
  */
 
-forward void GameME_OnSkillCalculated(int client, float skill);
+forward void GameME_OnSkillCalculated(int client, float base, float skill);
 
 native float GameME_GetFinalSkill(int client);
 native float GameME_GetSkillBase(int client);
