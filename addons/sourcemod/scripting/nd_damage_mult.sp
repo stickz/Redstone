@@ -15,11 +15,17 @@ public Plugin myinfo =
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_damage_mult/nd_damage_mult.txt"
+#include "updater/standard.sp"
+
 public void OnPluginStart()
 {
 	// Account for plugin late-loading
 	if (ND_RoundStarted())
 		HookBunkerEntities();
+		
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public void ND_OnRoundStarted() {	
