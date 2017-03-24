@@ -3,8 +3,11 @@
 #include <sdkhooks>
 #include <nd_rounds>
 
-#define BUNKER_DAMAGE_MULT 0.85
+#define BUNKER_DAMAGE_FT 0.85
+#define BUNKER_DAMAGE_SAB 1.15
+
 #define FLAMETHROWER_DT -2147481592
+#define SABATUER_DT 64
 
 public Plugin myinfo = 
 {
@@ -36,7 +39,11 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 {
 	// If the damage type is flamethrower, reduce the total damage
 	if (damagetype == FLAMETHROWER_DT)
-		damage *= BUNKER_DAMAGE_MULT;
+		damage *= BUNKER_DAMAGE_FT;
+	
+	// If the damage type is a RED, increase the total damage
+	else if (damagetype == SABATUER_DT)
+		damage *= BUNKER_DAMAGE_SAB;
 	
 	//PrintToChatAll("The damage type is %d.", damagetype);
 }
