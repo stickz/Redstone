@@ -4,7 +4,7 @@
 #include <nd_rounds>
 
 #define BUNKER_DAMAGE_FT 0.85
-#define BUNKER_DAMAGE_SAB 1.15
+#define BUNKER_DAMAGE_SAB 1.20
 
 #define FLAMETHROWER_DT -2147481592
 #define SABATUER_DT 64
