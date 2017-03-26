@@ -19,7 +19,7 @@ enum ND_CustomMapCount {
 
 stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] = 
 {
-	"rockv18",
+	"rockv19",
 	"mars_102",
 	"roadwork_w01",
 	"sandbrick_03",
