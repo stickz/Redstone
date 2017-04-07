@@ -44,7 +44,7 @@ public void OnPluginStart()
 {
 	// Account for plugin late-loading
 	if (ND_RoundStarted())
-		HookBunkerEntities();
+		HookEntitiesDamaged()
 		
 	AddUpdaterLibrary(); //auto-updater
 	
@@ -60,7 +60,11 @@ public void OnEntityCreated(int entity, const char[] classname)
 }
 
 public void ND_OnRoundStarted() {
+	HookEntitiesDamaged();
+}
 
+void HookEntitiesDamaged()
+{
 	SDK_HookEntityDamaged("struct_command_bunker", ND_OnBunkerDamaged);
 	SDK_HookEntityDamaged(STRUCT_ASSEMBLER, ND_OnAssemblerDamaged);
 }
