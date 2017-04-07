@@ -59,9 +59,10 @@ public void OnEntityCreated(int entity, const char[] classname)
 		SDKHook(entity, SDKHook_OnTakeDamage, ND_OnAssemblerDamaged);
 }
 
-public void ND_OnRoundStarted() {	
-	HookBunkerEntities();
-	HookAssemblerEntities();
+public void ND_OnRoundStarted() {
+
+	SDK_HookEntityDamaged("struct_command_bunker", ND_OnBunkerDamaged);
+	SDK_HookEntityDamaged(STRUCT_ASSEMBLER, ND_OnAssemblerDamaged);
 }
 
 public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
@@ -84,29 +85,11 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 		damage *= g_Float[red_assembler_mult];
 }
 
-void HookBunkerEntities()
-{
-	/* Find and hook when the bunker entities are damaged. */
-	int loopEntity = INVALID_ENT_REFERENCE;
-	while ((loopEntity = FindEntityByClassname(loopEntity, "struct_command_bunker")) != INVALID_ENT_REFERENCE) {
-		SDKHook(loopEntity, SDKHook_OnTakeDamage, ND_OnBunkerDamaged);		
-	}
-}
-
-void HookAssemblerEntities()
-{
-	/* Find and hook when an assembler is damaged. */
-	int loopEntity = INVALID_ENT_REFERENCE;
-	while ((loopEntity = FindEntityByClassname(loopEntity, STRUCT_ASSEMBLER)) != INVALID_ENT_REFERENCE) {
-		SDKHook(loopEntity, SDKHook_OnTakeDamage, ND_OnAssemblerDamaged);		
-	}
-}
-
-void SDK_HookEntityDamageByName(const char[] name, SDKHookCB callback)
+void SDK_HookEntityDamaged(const char[] classname, SDKHookCB callback)
 {
         /* Find and hook when entities is damaged. */
 	int loopEntity = INVALID_ENT_REFERENCE;
-	while ((loopEntity = FindEntityByClassname(loopEntity, name)) != INVALID_ENT_REFERENCE) {
+	while ((loopEntity = FindEntityByClassname(loopEntity, classname)) != INVALID_ENT_REFERENCE) {
 		SDKHook(loopEntity, SDKHook_OnTakeDamage, callback);		
 	}
 }
