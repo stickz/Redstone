@@ -23,22 +23,14 @@ public Plugin myinfo =
 
 /* The convar mess starts here! */
 #define CONFIG_VARS 3
-
-enum convars
+enum
 {
-	ConVar:nx300_bunker_per,
-	ConVar:red_bunker_per,
-	ConVar:red_assembler_per
-};
-ConVar g_Cvar[convars];
-
-enum floats
-{
-	Float:nx300_bunker_mult,
-	Float:red_bunker_mult,
-	Float:red_assembler_mult
-};
-float g_Float[floats];
+    	nx300_bunker_mult = 0,
+    	red_bunker_mult,
+	red_assembler_mult
+}
+ConVar g_Cvar[CONFIG_VARS];
+float g_Float[CONFIG_VARS];
 
 public void OnPluginStart()
 {
@@ -105,9 +97,23 @@ void SDK_HookEntityDamaged(const char[] classname, SDKHookCB callback)
 /* The convar mess for controlling plugin settings on the fly */
 void CreatePluginConVars()
 {
-	g_Cvar[nx300_bunker_per] = CreateConVar("sm_mult_bunker_nx300", "85", "Percentage of normal damage nx300 does to bunker");
-	g_Cvar[red_bunker_per] = CreateConVar("sm_mult_bunker_red", "120", "Percentage of normal damage REDs do to the bunker");
-	g_Cvar[red_assembler_per] = CreateConVar("sm_mult_assembler_red", "105", "Percentage of normal damage REDs deal to assemblers");
+	char convarName[CONFIG_VARS][] = {
+		"sm_mult_bunker_nx300",
+		"sm_mult_bunker_red",
+		"sm_mult_assembler_red"
+	};
+	
+	char convarDef[CONFIG_VARS][] = { "85", "120", "105" };
+	
+	char convarDesc[CONFIG_VARS][] = {
+		"Percentage of normal damage nx300 does to bunker",
+		"Percentage of normal damage REDs do to the bunker",
+		"Percentage of normal damage REDs deal to assemblers"
+	};
+	
+	for (int convar = 0; convar < CONFIG_VARS; convar++) {
+		g_Cvar[convar] = CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
+	};
 }
 
 void UpdateConVarCache()
