@@ -109,7 +109,7 @@ void CreatePluginConVars()
 void UpdateConVarCache()
 {
 	for (int i = 0; i < CONFIG_VARS; i++)	{
-		g_Float[i] = g_Cvar[i].FloatValue / 100;	
+		g_Float[i] = g_Cvar[i].FloatValue / 100.0;	
 	}
 }
 
