@@ -46,6 +46,7 @@ public void OnPluginStart()
 	
 	CreatePluginConVars();
 	HookConVarChanges();
+	AutoExecConfig(true, "nd_damage_mult");
 }
 
 public void ND_OnRoundStarted() {	
