@@ -45,7 +45,7 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 	
 	CreatePluginConVars();
-	HookConVarChange();
+	HookConVarChanges();
 }
 
 public void ND_OnRoundStarted() {	
@@ -88,7 +88,7 @@ void UpdateConVarCache()
 	}
 }
 
-void HookConVarChange()
+void HookConVarChanges()
 {
 	for (int i = 0; i < CONFIG_VARS; i++)	{
 		HookConVarChange(g_Cvar[i], OnConfigPercentChange);
