@@ -45,6 +45,7 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 	
 	CreatePluginConVars();
+	HookConVarChange();
 }
 
 public void ND_OnRoundStarted() {	
