@@ -44,7 +44,10 @@ public void OnPluginStart()
 {
 	// Account for plugin late-loading
 	if (ND_RoundStarted())
-		HookEntitiesDamaged()
+	{
+		HookEntitiesDamaged();
+		UpdateConVarCache();	
+	}
 		
 	AddUpdaterLibrary(); //auto-updater
 	
