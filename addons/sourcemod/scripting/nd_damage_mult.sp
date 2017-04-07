@@ -113,7 +113,7 @@ void CreatePluginConVars()
 	
 	for (int convar = 0; convar < CONFIG_VARS; convar++) {
 		g_Cvar[convar] = CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
-	};
+	}
 }
 
 void UpdateConVarCache()
