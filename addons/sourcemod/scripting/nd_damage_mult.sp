@@ -102,6 +102,15 @@ void HookAssemblerEntities()
 	}
 }
 
+void SDK_HookEntityDamageByName(const char[] name, SDKHookCB callback)
+{
+        /* Find and hook when entities is damaged. */
+	int loopEntity = INVALID_ENT_REFERENCE;
+	while ((loopEntity = FindEntityByClassname(loopEntity, name)) != INVALID_ENT_REFERENCE) {
+		SDKHook(loopEntity, SDKHook_OnTakeDamage, callback);		
+	}
+}
+
 /* The convar mess for controlling plugin settings on the fly */
 void CreatePluginConVars()
 {
