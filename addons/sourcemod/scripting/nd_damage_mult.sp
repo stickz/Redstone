@@ -6,6 +6,8 @@
 #define WEAPON_NX300_DT -2147481592
 #define WEAPON_RED_DT 64
 
+#define STRUCT_ASSEMBLER "struct_assembler"
+
 public Plugin myinfo = 
 {
 	name 		= "[ND] Damage Multiplers",
@@ -20,19 +22,21 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 /* The convar mess starts here! */
-#define CONFIG_VARS 2
+#define CONFIG_VARS 3
 
 enum convars
 {
 	ConVar:nx300_bunker_per,
-	ConVar:red_bunker_per
+	ConVar:red_bunker_per,
+	ConVar:red_assembler_per
 };
 ConVar g_Cvar[convars];
 
 enum floats
 {
 	Float:nx300_bunker_mult,
-	Float:red_bunker_mult
+	Float:red_bunker_mult,
+	Float:red_assembler_mult
 };
 float g_Float[floats];
 
@@ -49,8 +53,15 @@ public void OnPluginStart()
 	AutoExecConfig(true, "nd_damage_mult");
 }
 
+public void OnEntityCreated(int entity, const char[] classname)
+{
+	if (ND_RoundStarted() && StrEqual(classname, STRUCT_ASSEMBLER, true))
+		SDKHook(entity, SDKHook_OnTakeDamage, ND_OnAssemblerDamaged);
+}
+
 public void ND_OnRoundStarted() {	
 	HookBunkerEntities();
+	HookAssemblerEntities();
 }
 
 public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
@@ -66,6 +77,13 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	//PrintToChatAll("The damage type is %d.", damagetype);
 }
 
+public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
+{
+	// If the damage type is a RED, increase the total damage
+	if (damagetype == WEAPON_RED_DT)
+		damage *= g_Float[red_assembler_mult];
+}
+
 void HookBunkerEntities()
 {
 	/* Find and hook when the bunker entities are damaged. */
@@ -75,11 +93,21 @@ void HookBunkerEntities()
 	}
 }
 
+void HookAssemblerEntities()
+{
+	/* Find and hook when an assembler is damaged. */
+	int loopEntity = INVALID_ENT_REFERENCE;
+	while ((loopEntity = FindEntityByClassname(loopEntity, STRUCT_ASSEMBLER)) != INVALID_ENT_REFERENCE) {
+		SDKHook(loopEntity, SDKHook_OnTakeDamage, ND_OnAssemblerDamaged);		
+	}
+}
+
 /* The convar mess for controlling plugin settings on the fly */
 void CreatePluginConVars()
 {
 	g_Cvar[nx300_bunker_per] = CreateConVar("sm_mult_bunker_nx300", "85", "Percentage of normal damage nx300 does to bunker");
-	g_Cvar[red_bunker_per] = CreateConVar("sm_mult_bunker_nx300", "120", "Percentage of normal damage REDs do to the bunker");
+	g_Cvar[red_bunker_per] = CreateConVar("sm_mult_bunker_red", "120", "Percentage of normal damage REDs do to the bunker");
+	g_Cvar[red_assembler_per] = CreateConVar("sm_mult_assembler_red", "105", "Percentage of normal damage REDs deal to assemblers");
 }
 
 void UpdateConVarCache()
