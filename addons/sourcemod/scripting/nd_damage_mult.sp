@@ -61,6 +61,7 @@ public void OnEntityCreated(int entity, const char[] classname)
 
 public void ND_OnRoundStarted() {
 	HookEntitiesDamaged();
+	UpdateConVarCache();
 }
 
 void HookEntitiesDamaged()
