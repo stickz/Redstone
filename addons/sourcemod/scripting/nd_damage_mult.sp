@@ -7,6 +7,7 @@
 #define WEAPON_RED_DT 64
 
 #define STRUCT_ASSEMBLER "struct_assembler"
+#define STRUCT_TRANSPORT "struct_transport_gate"
 
 public Plugin myinfo = 
 {
@@ -22,12 +23,13 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 /* The convar mess starts here! */
-#define CONFIG_VARS 3
+#define CONFIG_VARS 4
 enum
 {
     	nx300_bunker_mult = 0,
     	red_bunker_mult,
-	red_assembler_mult
+	red_assembler_mult,
+	red_transport_mult
 }
 ConVar g_Cvar[CONFIG_VARS];
 float g_Float[CONFIG_VARS];
@@ -50,8 +52,14 @@ public void OnPluginStart()
 
 public void OnEntityCreated(int entity, const char[] classname)
 {
-	if (ND_RoundStarted() && StrEqual(classname, STRUCT_ASSEMBLER, true))
-		SDKHook(entity, SDKHook_OnTakeDamage, ND_OnAssemblerDamaged);
+	if (ND_RoundStarted())
+	{		
+		if (StrEqual(classname, STRUCT_ASSEMBLER, true))
+			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnAssemblerDamaged);
+		
+		else if (StrEqual(classname, STRUCT_TRANSPORT, true))
+			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnTransportDamaged);		
+	}	
 }
 
 public void ND_OnRoundStarted() {
@@ -63,7 +71,18 @@ void HookEntitiesDamaged()
 {
 	SDK_HookEntityDamaged("struct_command_bunker", ND_OnBunkerDamaged);
 	SDK_HookEntityDamaged(STRUCT_ASSEMBLER, ND_OnAssemblerDamaged);
+	SDK_HookEntityDamaged(STRUCT_TRANSPORT, ND_OnTransportDamaged);
 }
+
+public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
+{	
+	// If the damage type is a RED, increase the total damage
+	if (damagetype == WEAPON_RED_DT)
+	{
+		damage *= g_Float[red_transport_mult];
+		return Plugin_Changed;
+	}
+}		
 
 public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
 {
@@ -109,15 +128,17 @@ void CreatePluginConVars()
 	char convarName[CONFIG_VARS][] = {
 		"sm_mult_bunker_nx300",
 		"sm_mult_bunker_red",
-		"sm_mult_assembler_red"
+		"sm_mult_assembler_red",
+		"sm_mult_transport_red"
 	};
 	
-	char convarDef[CONFIG_VARS][] = { "85", "120", "105" };
+	char convarDef[CONFIG_VARS][] = { "85", "120", "105", "130" };
 	
 	char convarDesc[CONFIG_VARS][] = {
 		"Percentage of normal damage nx300 does to bunker",
 		"Percentage of normal damage REDs do to the bunker",
-		"Percentage of normal damage REDs deal to assemblers"
+		"Percentage of normal damage REDs deal to assemblers",
+		"Percentage of normal damage REDs deal to transport gates"
 	};
 	
 	for (int convar = 0; convar < CONFIG_VARS; convar++) {
