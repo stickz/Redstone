@@ -34,18 +34,18 @@ float g_Float[CONFIG_VARS];
 
 public void OnPluginStart()
 {
+	AddUpdaterLibrary(); //auto-updater
+	
+	CreatePluginConVars();
+	HookConVarChanges();
+	AutoExecConfig(true, "nd_damage_mult");
+	
 	// Account for plugin late-loading
 	if (ND_RoundStarted())
 	{
 		HookEntitiesDamaged();
 		UpdateConVarCache();	
 	}
-		
-	AddUpdaterLibrary(); //auto-updater
-	
-	CreatePluginConVars();
-	HookConVarChanges();
-	AutoExecConfig(true, "nd_damage_mult");
 }
 
 public void OnEntityCreated(int entity, const char[] classname)
