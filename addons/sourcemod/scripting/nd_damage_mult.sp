@@ -69,11 +69,17 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 {
 	// If the damage type is flamethrower, reduce the total damage
 	if (damagetype == WEAPON_NX300_DT)
+	{
 		damage *= g_Float[nx300_bunker_mult];
+		return Plugin_Changed;	
+	}
 	
 	// If the damage type is a RED, increase the total damage
 	else if (damagetype == WEAPON_RED_DT)
+	{
 		damage *= g_Float[red_bunker_mult];
+		return Plugin_Changed;	
+	}
 	
 	//PrintToChatAll("The damage type is %d.", damagetype);
 }
@@ -82,7 +88,10 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 {
 	// If the damage type is a RED, increase the total damage
 	if (damagetype == WEAPON_RED_DT)
+	{
 		damage *= g_Float[red_assembler_mult];
+		return Plugin_Changed;	
+	}
 }
 
 void SDK_HookEntityDamaged(const char[] classname, SDKHookCB callback)
