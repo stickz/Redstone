@@ -2,18 +2,10 @@
 #include <sdktools>
 #include <sdkhooks>
 #include <nd_rounds>
+#include <nd_structures>
 
 #define WEAPON_NX300_DT -2147481592
 #define WEAPON_RED_DT 64
-
-#define STRUCT_ASSEMBLER "struct_assembler"
-#define STRUCT_TRANSPORT "struct_transport_gate"
-#define STRUCT_ARTILLERY "struct_artillery_explosion"
-#define STRUCT_SONIC_TURRET "struct_sonic_turret"
-#define STRUCT_FT_TURRET "struct_flamethrower_turret"
-#define STRUCT_POWER_STATION "struct_power_station"
-#define STRUCT_ARMOURY "struct_armoury"
-#define STRUCT_RADAR "struct_radar"
 
 public Plugin myinfo = 
 {
