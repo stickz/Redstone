@@ -2,15 +2,7 @@
 #include <sdktools>
 #include <sdkhooks>
 #include <nd_rounds>
-
-#define WEAPON_NX300_DT -2147481592
-#define WEAPON_RED_DT 64
-
-#define STRUCT_ASSEMBLER "struct_assembler"
-#define STRUCT_TRANSPORT "struct_transport_gate"
-#define STRUCT_ARTILLERY "struct_artillery_explosion"
-#define STRUCT_SONIC_TURRET "struct_sonic_turret"
-#define STRUCT_FT_TURRET "struct_flamethrower_turret"
+#include <nd_structures>
 
 public Plugin myinfo = 
 {
@@ -25,19 +17,9 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_damage_mult/nd_damage_mult.txt"
 #include "updater/standard.sp"
 
-/* The convar mess starts here! */
-#define CONFIG_VARS 6
-enum
-{
-    	nx300_bunker_mult = 0,
-    	red_bunker_mult,
-	red_assembler_mult,
-	red_transport_mult,
-	red_artillery_mult,
-	red_ft_turret_mult
-}
-ConVar g_Cvar[CONFIG_VARS];
-float g_Float[CONFIG_VARS];
+/* Plugin Includes */
+#include "nd_damage/convars.sp"
+#include "nd_damage/damage_events.sp"
 
 public void OnPluginStart()
 {
@@ -64,17 +46,27 @@ public void OnEntityCreated(int entity, const char[] classname)
 		
 		else if (StrEqual(classname, STRUCT_TRANSPORT, true))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnTransportDamaged);
-		
+
 		else if (StrEqual(classname, STRUCT_ARTILLERY, true))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnArtilleryDamaged);
-			
+		
 		else if (StrEqual(classname, STRUCT_SONIC_TURRET, true) ||
 			 StrEqual(classname, STRUCT_FT_TURRET, true))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnFlamerTurretDamaged);
+		
+		else if (StrEqual(classname, STRUCT_POWER_STATION, true))
+			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnPowerPlantDamaged);
+		
+		else if (StrEqual(classname, STRUCT_ARMOURY, true))
+			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnArmouryDamaged);
+		
+		else if (StrEqual(classname, STRUCT_RADAR, true))
+			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnRadarDamaged);
 	}	
 }
 
-public void ND_OnRoundStarted() {
+public void ND_OnRoundStarted()
+{
 	HookEntitiesDamaged();
 	UpdateConVarCache();
 }
@@ -92,65 +84,9 @@ void HookEntitiesDamaged(bool lateLoad = false)
 		// Flamethrower and sonic turrets on same event
 		SDK_HookEntityDamaged(STRUCT_SONIC_TURRET, ND_OnFlamerTurretDamaged);
 		SDK_HookEntityDamaged(STRUCT_FT_TURRET, ND_OnFlamerTurretDamaged);
-	}
-}
-
-public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
-{
-	// If the damage type is a RED, increase the total damage
-	if (damagetype == WEAPON_RED_DT)
-	{
-		damage *= g_Float[red_ft_turret_mult];
-		return Plugin_Changed;	
-	}
-}
-
-public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
-{
-	// If the damage type is a RED, increase the total damage
-	if (damagetype == WEAPON_RED_DT)
-	{
-		damage *= g_Float[red_artillery_mult];
-		return Plugin_Changed;
-	}
-}
-
-public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
-{	
-	// If the damage type is a RED, increase the total damage
-	if (damagetype == WEAPON_RED_DT)
-	{
-		damage *= g_Float[red_transport_mult];
-		return Plugin_Changed;
-	}
-}		
-
-public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
-{
-	// If the damage type is flamethrower, reduce the total damage
-	if (damagetype == WEAPON_NX300_DT)
-	{
-		damage *= g_Float[nx300_bunker_mult];
-		return Plugin_Changed;	
-	}
-	
-	// If the damage type is a RED, increase the total damage
-	else if (damagetype == WEAPON_RED_DT)
-	{
-		damage *= g_Float[red_bunker_mult];
-		return Plugin_Changed;	
-	}
-	
-	//PrintToChatAll("The damage type is %d.", damagetype);
-}
-
-public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
-{
-	// If the damage type is a RED, increase the total damage
-	if (damagetype == WEAPON_RED_DT)
-	{
-		damage *= g_Float[red_assembler_mult];
-		return Plugin_Changed;	
+		SDK_HookEntityDamaged(STRUCT_POWER_STATION, ND_OnPowerPlantDamaged);
+		SDK_HookEntityDamaged(STRUCT_ARMOURY, ND_OnArmouryDamaged);
+		SDK_HookEntityDamaged(STRUCT_RADAR, ND_OnRadarDamaged);
 	}
 }
 
@@ -161,50 +97,4 @@ void SDK_HookEntityDamaged(const char[] classname, SDKHookCB callback)
 	while ((loopEntity = FindEntityByClassname(loopEntity, classname)) != INVALID_ENT_REFERENCE) {
 		SDKHook(loopEntity, SDKHook_OnTakeDamage, callback);		
 	}
-}
-
-/* The convar mess for controlling plugin settings on the fly */
-void CreatePluginConVars()
-{
-	char convarName[CONFIG_VARS][] = {
-		"sm_mult_bunker_nx300",
-		"sm_mult_bunker_red",
-		"sm_mult_assembler_red",
-		"sm_mult_transport_red",
-		"sm_mult_artillery_red",
-		"sm_mult_ft_turret_red"
-	};
-	
-	char convarDef[CONFIG_VARS][] = { "85", "120", "105", "130", "110", "120" };
-	
-	char convarDesc[CONFIG_VARS][] = {
-		"Percentage of normal damage nx300 does to bunker",
-		"Percentage of normal damage REDs do to the bunker",
-		"Percentage of normal damage REDs deal to assemblers",
-		"Percentage of normal damage REDs deal to transport gates",
-		"Percentage of normal damage REDs deal to artillery",
-		"Percentage of normal damage REDs deal to ft/sonic turrets"
-	};
-	
-	for (int convar = 0; convar < CONFIG_VARS; convar++) {
-		g_Cvar[convar] = CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
-	}
-}
-
-void UpdateConVarCache()
-{
-	for (int i = 0; i < CONFIG_VARS; i++)	{
-		g_Float[i] = g_Cvar[i].FloatValue / 100.0;	
-	}
-}
-
-void HookConVarChanges()
-{
-	for (int i = 0; i < CONFIG_VARS; i++)	{
-		HookConVarChange(g_Cvar[i], OnConfigPercentChange);
-	}
-}
-
-public void OnConfigPercentChange(ConVar convar, char[] oldValue, char[] newValue) {	
-	UpdateConVarCache();
 }
