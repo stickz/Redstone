@@ -14,6 +14,7 @@
 #include <nd_stocks>
 #include <nd_rounds>
 #include <nd_redstone>
+#include <nd_com_eng>
 
 #pragma semicolon 1
 
@@ -568,7 +569,7 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
 {
 	if (g_bEnabled)
 	{
-		if (IsClientSourceTV(client) || IsFakeClient(client)) // Ignore Source TV & Bots
+		if (IsClientSourceTV(client) || IsFakeClient(client) || ND_IsCommander(client)) // Ignore Source TV & Bots
 			return Plugin_Continue;
 
 		if (cmdnum <= 0) // NULL Commands?
