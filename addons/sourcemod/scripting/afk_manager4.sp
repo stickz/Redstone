@@ -569,7 +569,7 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
 {
 	if (g_bEnabled)
 	{
-		if (IsClientSourceTV(client) || IsFakeClient(client) || ND_IsCommander(client)) // Ignore Source TV & Bots
+		if (IsClientSourceTV(client) || IsFakeClient(client)) // Ignore Source TV & Bots
 			return Plugin_Continue;
 
 		if (cmdnum <= 0) // NULL Commands?
@@ -774,7 +774,8 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			g_iAFKTime[client]++;
 			return Plugin_Continue;
 		}
-
+		
+		/* Handle the logistics of dealing with afk spectators */
 		if (IsClientObserver(client))
 		{
 			int m_iObserverMode = GetEntProp(client, Prop_Send, "m_iObserverMode");
@@ -860,9 +861,9 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			}
 		}
 
+		/* Handle the logistics of moving afk clients to spectator */
 		int AFKTime = g_iAFKTime[client] >= 0 ? Time - g_iAFKTime[client] : 0;
-
-		if ( g_iPlayerTeam[client] != g_iSpec_Team && g_cvar[MoveSpec].BoolValue && 
+		if ( g_iPlayerTeam[client] != g_iSpec_Team && !ND_IsCommander(client) && g_cvar[MoveSpec].BoolValue && 
 		     bMovePlayers && IsNotAdminImmune(client, true) && g_iTimeToMove > 0)
 		{
 			int AFKMoveTimeleft = g_iTimeToMove - AFKTime;
@@ -898,6 +899,7 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			}
 		}
 	
+		/* Handle the logistics of kicking afk clients */
 		int iKickPlayers = g_cvar[KickPlayers].IntValue;
 		if (iKickPlayers && bKickPlayers)
 		{
