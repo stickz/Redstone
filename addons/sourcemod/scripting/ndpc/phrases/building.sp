@@ -107,7 +107,7 @@ void createAliasesForBuildings()
 	
 	nd_building_aliases[Sonic_Turret][0] = "son";
 	
-	nd_building_aliases[Rocket_Turret][0] = "rt";	
+	nd_building_aliases[Rocket_Turret][0] = "rocket";	
 	
 	nd_building_aliases[Relay_Tower][0] = "tower";
 	
