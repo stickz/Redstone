@@ -78,3 +78,13 @@ stock int RED_OnTeamCount()
 	
 	return clientCount;
 }
+
+#define RED_LOOP_CLIENTS(%1) for (int %1=RED_Client_GetNext(); %1 >= 1 && %1 <= MaxClients; %1=RED_Client_GetNext(++%1))
+stock int RED_Client_GetNext(int index = 1) {
+	for (int client = index; client <= MaxClients; client++) {
+		if (RED_IsValidClient(client))
+			return client;
+	}
+
+	return -1;
+}
