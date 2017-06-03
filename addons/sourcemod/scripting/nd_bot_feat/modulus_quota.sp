@@ -109,18 +109,20 @@ int GetSmallMapCount(int totalCount, int specCount, int rQuota)
 }
 
 /* Disable bots sonner on certain maps */
-#define SMALL_MAP_SIZE2 1
+#define SMALL_MAP_SIZE2 2
 int sSM[SMALL_MAP_SIZE2] = {
-	view_as<int>(ND_Silo)
+	view_as<int>(ND_Silo),
+	view_as<int>(ND_Oilfield)
 }
-int cSM[SMALL_MAP_SIZE2] = {
+
+#define SMALL_MAP_SIZE3 1
+int cSM[SMALL_MAP_SIZE3] = {
 	view_as<int>(ND_Sandbrick)
 }
 
-#define LARGE_MAP_SIZE 3
+#define LARGE_MAP_SIZE 2
 int lSM[LARGE_MAP_SIZE] = {
 	view_as<int>(ND_Gate),
-	view_as<int>(ND_Oilfield),
 	view_as<int>(ND_Downtown)
 };
 
@@ -129,11 +131,17 @@ int GetBotShutOffCount()
 	char map[32];
 	GetCurrentMap(map, sizeof(map));
 	
-	/* Look through arrays to see if it's a small stock/custom map */
+	/* Look through arrays to see if it's a small/broken stock maps */
 	for (int idx = 0; idx < SMALL_MAP_SIZE2; idx++)
 	{
-		if (StrEqual(map, ND_StockMaps[sSM[idx]], false) 
-		|| (StrEqual(map, ND_CustomMaps[cSM[idx]], false)))
+		if (StrEqual(map, ND_StockMaps[sSM[idx]], false))
+			return g_cvar[DisableBotsAtDec].IntValue;
+	}
+	
+	/* Look through arrays to see if it's a small/broken custom maps */
+	for (int id = 0; id < SMALL_MAP_SIZE3; id++)
+	{
+		if (StrEqual(map, ND_CustomMaps[cSM[id]], false))
 			return g_cvar[DisableBotsAtDec].IntValue;
 	}
 	
