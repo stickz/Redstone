@@ -187,8 +187,6 @@ int getBotFillerQuota(int teamCount, bool addSpectators = false)
 	if (addSpectators)
 		total += ValidTeamCount(TEAM_SPEC);		
 		
-	if (total > 29)
-		total = 29;
-		
-	return total;
+	// Set a ceiling of 29 to be returned
+	return total > 29 ? 29 : total;
 }
