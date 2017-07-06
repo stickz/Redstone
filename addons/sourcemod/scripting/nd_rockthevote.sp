@@ -50,10 +50,10 @@ int voteCount;
 bool g_Bool[Bools];
 bool g_hasVoted[MAXPLAYERS+1] = {false, ... };
 
-ConVar cvarMaxPlayers;
 ConVar cvarMinPlayers;
 ConVar cvarTimeWindow;
 ConVar cvarPercentPass;
+ConVar cvarPercentPassEx;
 
 public Plugin myinfo =
 {
@@ -76,6 +76,7 @@ public void OnPluginStart()
 	
 	CreatePluginConvars(); // create convars
 	
+	// Late loading support for plugin
 	if (ND_RoundStarted()) {
 		StartRTVDisableTimer();
 	}
@@ -128,15 +129,7 @@ public Action TIMER_DisableRTV(Handle timer) {
 
 void callRockTheVote(int client)
 {
-	int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
-	
-	if (!g_Bool[enableRTV])
-	{
-		if (clientCount > cvarMaxPlayers.FloatValue)
-			PrintMessage(client, "Too Late");
-	}
-	
-	else if (g_Bool[hasPassedRTV])
+	if (g_Bool[hasPassedRTV])
 		PrintMessage(client, "Already Passed");	
 
 	else if (g_hasVoted[client])
@@ -152,14 +145,20 @@ void callRockTheVote(int client)
 	{
 		voteCount++;		
 		g_hasVoted[client] = true;
-		
-		checkForPass(clientCount, true, client);
+		checkForPass(true, client);
 	}
 }
 
-void checkForPass(int clientCount, bool display = false, int client = -1)
-{
-	float countFloat = clientCount * (cvarPercentPass.FloatValue / 100.0);
+void checkForPass(bool display = false, int client = -1)
+{	
+	// Set percentage required to pass before or after the timeout
+	float passPercent = g_Bool[enableRTV] ? cvarPercentPass.FloatValue : cvarPercentPassEx.FloatValue;
+	
+	// Get the client count on the server. Try Redstone native first.
+	int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
+	
+	// Calculate the number of players for pass, based on player counts
+	float countFloat = clientCount * (passPercent / 100.0);
 
 	/* Set min votes for rtv or percentage (which ever is greater) */
 	int rCount = RoundToNearest(countFloat);
@@ -180,8 +179,7 @@ void resetValues(int client)
 	if (g_hasVoted[client])
 	{
 		g_hasVoted[client] = false;
-		int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
-		checkForPass(clientCount);
+		checkForPass();
 	}
 }
 
@@ -224,18 +222,16 @@ void displayVotes(int Remainder, int client)
 	PrintToChatAll("\x05%t", "Typed Change Map", name, NumberInEnglish(Remainder));
 }
 
-void StartRTVDisableTimer()
-{
-	float time = cvarTimeWindow.FloatValue * 60;
-	CreateTimer(time, TIMER_DisableRTV, _, TIMER_FLAG_NO_MAPCHANGE);
+void StartRTVDisableTimer() {
+	CreateTimer((cvarTimeWindow.FloatValue * 60), TIMER_DisableRTV, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 void CreatePluginConvars()
 {
-	cvarMaxPlayers 	= CreateConVar("sm_rtv_maxp", "8", "Set's the max number of players to disable rtv timeouts.");
-	cvarMinPlayers	= CreateConVar("sm_rtv_minp", "4", "Set's the min players to pass rtv regardless of player count.");	
+	cvarMinPlayers	= CreateConVar("sm_rtv_minp", "4", "Set's the min players to pass rtv regardless of player count.");
 	cvarTimeWindow	= CreateConVar("sm_rtv_time", "8", "Set's how many minutes after round start players have to rtv");
 	cvarPercentPass	= CreateConVar("sm_rtv_percent", "51", "Set's percent of players required to change the map");
+	cvarPercentPassEx = CreateConVar("sm_rtv_per_after", "70", "Set's percent of players required to change the map after timeout");
 	
 	AutoExecConfig(true, "nd_rockthevote");
 }
