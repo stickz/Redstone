@@ -30,6 +30,8 @@ enum
 ConVar g_Cvar[CONFIG_VARS];
 float g_Float[CONFIG_VARS];
 
+ConVar cvarNoWarmupBunkerDamage;
+
 /* The convar mess for controlling plugin settings on the fly */
 void CreatePluginConVars()
 {
@@ -97,6 +99,8 @@ void CreatePluginConVars()
 	for (int convar = 0; convar < CONFIG_VARS; convar++) {
 		g_Cvar[convar] = CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
 	}
+	
+	cvarNoWarmupBunkerDamage = CreateConVar("sm_warmup_protect_bunker", "1", "Disable bunker damage during the warmup round.");
 }
 
 void UpdateConVarCache()
