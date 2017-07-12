@@ -6,3 +6,6 @@
 #define STRUCT_POWER_STATION "struct_power_station"
 #define STRUCT_ARMOURY "struct_armoury"
 #define STRUCT_RADAR "struct_radar"
+#define STRUCT_MG_TURRET "struct_machinegun_turret"
+#define STRUCT_ROCKET_TURRET "struct_rocket_turret"
+#define STRUCT_SUPPLY "struct_support_station"
