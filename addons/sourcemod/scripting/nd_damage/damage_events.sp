@@ -158,13 +158,6 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 
 public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
 {
-	// Disable bunker damage during warmup round, if convar is enabled
-	if (!ND_RoundStarted() && cvarNoWarmupBunkerDamage.BoolValue)
-	{
-		damage = BLOCK_DAMAGE;
-		return Plugin_Changed;
-	}
-	
 	switch (damagetype)
 	{
 		case WEAPON_RED_DT:	 
@@ -185,6 +178,13 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 
 public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
 {
+	// Disable bunker damage during warmup round, if convar is enabled
+	if (!ND_RoundStarted() && cvarNoWarmupBunkerDamage.BoolValue)
+	{
+		damage = BLOCK_DAMAGE;
+		return Plugin_Changed;
+	}
+
 	switch (damagetype)
 	{
 		case WEAPON_NX300_DT:
