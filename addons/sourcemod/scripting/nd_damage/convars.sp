@@ -100,7 +100,7 @@ void CreatePluginConVars()
 		g_Cvar[convar] = CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
 	}
 	
-	cvarNoWarmupBunkerDamage = CreateConVar("sm_warmup_protect_bunker", "1" "Disable bunker damage during the warmup round.");
+	cvarNoWarmupBunkerDamage = CreateConVar("sm_warmup_protect_bunker", "1", "Disable bunker damage during the warmup round.");
 }
 
 void UpdateConVarCache()
