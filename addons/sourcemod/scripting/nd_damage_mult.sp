@@ -51,7 +51,7 @@ public void OnEntityCreated(int entity, const char[] classname)
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnArtilleryDamaged);
 		
 		else if (StrEqual(classname, STRUCT_SONIC_TURRET, true) ||
-			 StrEqual(classname, STRUCT_FT_TURRET, true))
+				 StrEqual(classname, STRUCT_FT_TURRET, true))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnFlamerTurretDamaged);
 		
 		else if (StrEqual(classname, STRUCT_POWER_STATION, true))
@@ -62,6 +62,15 @@ public void OnEntityCreated(int entity, const char[] classname)
 		
 		else if (StrEqual(classname, STRUCT_RADAR, true))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnRadarDamaged);
+		
+		else if (StrEqual(classname, STRUCT_MG_TURRET, true))
+			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnMGTurretDamaged);
+		
+		else if (StrEqual(classname, STRUCT_ROCKET_TURRET, true))
+			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnRocketTurretDamaged);
+		
+		else if (StrEqual(classname, STRUCT_SUPPLY, true))
+			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnSupplyStationDamaged);
 	}	
 }
 
@@ -87,6 +96,9 @@ void HookEntitiesDamaged(bool lateLoad = false)
 		SDK_HookEntityDamaged(STRUCT_POWER_STATION, ND_OnPowerPlantDamaged);
 		SDK_HookEntityDamaged(STRUCT_ARMOURY, ND_OnArmouryDamaged);
 		SDK_HookEntityDamaged(STRUCT_RADAR, ND_OnRadarDamaged);
+		SDK_HookEntityDamaged(STRUCT_MG_TURRET, ND_OnMGTurretDamaged);
+		SDK_HookEntityDamaged(STRUCT_ROCKET_TURRET, ND_OnRocketTurretDamaged);
+		SDK_HookEntityDamaged(STRUCT_SUPPLY, ND_OnSupplyStationDamaged);
 	}
 }
 
