@@ -44,7 +44,7 @@ Handle SurrenderDelayTimer = INVALID_HANDLE;
 
 ConVar cvarMinPlayers;
 ConVar cvarSurrenderPercent;
-Convar cvarEarlySurrenderPer;
+ConVar cvarEarlySurrenderPer;
 ConVar cvarSurrenderTimeout;
 ConVar cvarLowBunkerHealth;
 
@@ -65,7 +65,7 @@ public void OnPluginStart()
 	
 	cvarMinPlayers		= CreateConVar("sm_surrender_minp", "4", "Set's the minimum number of team players required to surrender.");
 	cvarSurrenderPercent 	= CreateConVar("sm_surrender_percent", "51", "Set's the percentage required to surrender.");
-	cvarEarlySurrenderPer	= CreateConVar("sm_surrender_early", "80", "Set's the percentage required to surrender.");
+	cvarEarlySurrenderPer	= CreateConVar("sm_surrender_early", "80", "Set's the percentage for early surrender.");
 	cvarSurrenderTimeout	= CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
 	cvarLowBunkerHealth	= CreateConVar("sm_surrender_bh", "10000", "Sets the min bunker health required to surrender");
 	
