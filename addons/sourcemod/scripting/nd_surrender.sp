@@ -44,6 +44,7 @@ Handle SurrenderDelayTimer = INVALID_HANDLE;
 
 ConVar cvarMinPlayers;
 ConVar cvarSurrenderPercent;
+ConVar cvarEarlySurrenderPer;
 ConVar cvarSurrenderTimeout;
 ConVar cvarLowBunkerHealth;
 
@@ -64,6 +65,7 @@ public void OnPluginStart()
 	
 	cvarMinPlayers		= CreateConVar("sm_surrender_minp", "4", "Set's the minimum number of team players required to surrender.");
 	cvarSurrenderPercent 	= CreateConVar("sm_surrender_percent", "51", "Set's the percentage required to surrender.");
+	cvarEarlySurrenderPer	= CreateConVar("sm_surrender_early", "80", "Set's the percentage for early surrender.");
 	cvarSurrenderTimeout	= CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
 	cvarLowBunkerHealth	= CreateConVar("sm_surrender_bh", "10000", "Sets the min bunker health required to surrender");
 	
@@ -170,10 +172,7 @@ void callSurrender(int client)
 {
 	int team = GetClientTeam(client);
 	
-	if (!g_Bool[enableSurrender])
-		PrintMessage(client, "Too Soon");
-	
-	else if (g_Bool[hasSurrendered])
+	if (g_Bool[hasSurrendered])
 		PrintMessage(client, "Team Surrendered");
 	
 	else if (team < 2)
@@ -202,13 +201,18 @@ void callSurrender(int client)
 			case TEAM_EMPIRE: g_hasVotedEmpire[client] = true;
 		}
 		
-		checkSurrender(team, RED_GetTeamCount(team), true, client);
+		checkSurrender(team, true, client);
 	}
 }
 
-void checkSurrender(int team, int teamCount, bool showVotes = false, int client = -1)
+void checkSurrender(int team, bool showVotes = false, int client = -1)
 {
-	float teamFloat = teamCount * (cvarSurrenderPercent.FloatValue / 100.0);
+	int teamCount = RED_GetTeamCount(team);
+	
+	// Check if we're using the early surrender percentage requirement or not
+	float surrenderPer = g_Bool[enableSurrender] ? cvarSurrenderPercent.FloatValue : cvarEarlySurrenderPer.FloatValue;
+	
+	float teamFloat = teamCount * (surrenderPer / 100.0);
 	float minTeamFoat = cvarMinPlayers.FloatValue;
 
 	if (teamFloat < minTeamFoat)
@@ -242,9 +246,8 @@ void resetValues(int client)
 	if (team > TEAM_SPEC)
 	{
 		voteCount[team - 2]--;
-		int teamCount = RED_GetTeamCount(team);
-		if (teamCount >= cvarMinPlayers.IntValue + 1 && !ND_RoundEnded() && !g_Bool[hasSurrendered])
-			checkSurrender(team, teamCount);
+		if (!ND_RoundEnded() && !g_Bool[hasSurrendered])
+			checkSurrender(team);
 	}
 }
 
