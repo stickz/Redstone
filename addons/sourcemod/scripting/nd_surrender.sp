@@ -201,12 +201,14 @@ void callSurrender(int client)
 			case TEAM_EMPIRE: g_hasVotedEmpire[client] = true;
 		}
 		
-		checkSurrender(team, RED_GetTeamCount(team), true, client);
+		checkSurrender(team, true, client);
 	}
 }
 
-void checkSurrender(int team, int teamCount, bool showVotes = false, int client = -1)
+void checkSurrender(int team, bool showVotes = false, int client = -1)
 {
+	int teamCount = RED_GetTeamCount(team);
+	
 	// Check if we're using the early surrender percentage requirement or not
 	float surrenderPer = g_Bool[enableSurrender] ? cvarSurrenderPercent.FloatValue : cvarEarlySurrenderPer.FloatValue;
 	
@@ -244,9 +246,8 @@ void resetValues(int client)
 	if (team > TEAM_SPEC)
 	{
 		voteCount[team - 2]--;
-		int teamCount = RED_GetTeamCount(team);
-		if (teamCount >= cvarMinPlayers.IntValue + 1 && !ND_RoundEnded() && !g_Bool[hasSurrendered])
-			checkSurrender(team, teamCount);
+		if (!ND_RoundEnded() && !g_Bool[hasSurrendered])
+			checkSurrender(team);
 	}
 }
 
