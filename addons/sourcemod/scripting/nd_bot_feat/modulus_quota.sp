@@ -131,9 +131,6 @@ int GetBotShutOffCount()
 	char map[32];
 	GetCurrentMap(map, sizeof(map));
 	
-	if (StrEqual(map, ND_CustomMaps[ND_Corner], false))
-		return g_cvar[DisableBotsAt].IntValue - 2;
-	
 	/* Look through arrays to see if it's a small/broken stock maps */
 	for (int idx = 0; idx < SMALL_MAP_SIZE2; idx++)
 	{
