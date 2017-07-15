@@ -258,7 +258,7 @@ bool InstantRTVMap()
 	
 	for (int i = 0; i < RTV_INSTANT_SIZE; i++)
 	{
-		if (StrEqual(curMap, nd_rtv_instant_maps[i]))
+		if (StrEqual(curMap, nd_rtv_instant_maps[i], false))
 			return true;
 	}
 
