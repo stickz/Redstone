@@ -242,7 +242,7 @@ void CreatePluginConvars()
 bool InstantRTVMap()
 {
 	// Specify the maps for no min player requirements to RTV
-	int RTV_INSTANT_SIZE 6
+	int RTV_INSTANT_SIZE 6;
 	char nd_rtv_instant_maps[RTV_INSTANT_SIZE][] =
 	{
 		ND_CustomMaps[ND_Mars],
