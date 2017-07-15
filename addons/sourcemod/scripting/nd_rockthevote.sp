@@ -47,6 +47,21 @@ char nd_rtv_commands[RTV_COMMANDS_SIZE][] =
 	"changemap"
 };
 
+// Specify the maps for no min player requirements to RTV
+#define C_INS_SIZE 5
+int insCusMaps[C_INS_SIZE] = {
+	view_as<int>(ND_Mars),
+	view_as<int>(ND_Sandbrick),
+	view_as<int>(ND_Nuclear),
+	view_as<int>(ND_Submarine),
+	view_as<int>(ND_Rock)
+};
+
+#define S_INS_SIZE 1
+int insStockMaps[S_INS_SIZE] = {
+	view_as<int>(ND_Oilfield)
+};
+
 int voteCount;	
 bool g_Bool[Bools];
 bool g_hasVoted[MAXPLAYERS+1] = {false, ... };
@@ -241,24 +256,19 @@ void CreatePluginConvars()
 
 bool InstantRTVMap()
 {
-	// Specify the maps for no min player requirements to RTV
-	int RTV_INSTANT_SIZE = 6;
-	
-	char insMaps[RTV_INSTANT_SIZE];
-	insMaps[0] = ND_CustomMaps[ND_Mars];
-	insMaps[1] = ND_CustomMaps[ND_Sandbrick];
-	insMaps[2] = ND_CustomMaps[ND_Nuclear];
-	insMaps[3] = ND_CustomMaps[ND_Submarine];
-	insMaps[4] = ND_CustomMaps[ND_Rock];
-	insMaps[5] = ND_StockMaps[ND_Oilfield];
-	
 	char curMap[32];
 	GetCurrentMap(curMap, sizeof(curMap));
 	
-	for (int i = 0; i < RTV_INSTANT_SIZE; i++)
+	for (int i = 0; i < C_INS_SIZE; i++)
 	{
-		if (StrEqual(curMap, insMaps[i], false))
+		if (StrEqual(curMap, ND_CustomMaps[insCusMaps[i]], false))
 			return true;
+	}
+	
+	for (int ix = 0; ix < S_INS_SIZE; ix++)
+	{
+		if (StrEqual(curMap, ND_StockMaps[insStockMaps[ix]], false))
+			return true;	
 	}
 
 	return false;
