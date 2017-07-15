@@ -243,22 +243,21 @@ bool InstantRTVMap()
 {
 	// Specify the maps for no min player requirements to RTV
 	int RTV_INSTANT_SIZE = 6;
-	char nd_rtv_instant_maps[RTV_INSTANT_SIZE][] =
-	{
-		ND_CustomMaps[ND_Mars],
-		ND_CustomMaps[ND_Sandbrick],
-		ND_CustomMaps[ND_Nuclear],
-		ND_CustomMaps[ND_Submarine],
-		ND_CustomMaps[ND_Rock],
-		ND_StockMaps[ND_Oilfield]
-	};
+	
+	char insMaps[RTV_INSTANT_SIZE];
+	insMaps[0] = ND_CustomMaps[ND_Mars];
+	insMaps[1] = ND_CustomMaps[ND_Sandbrick];
+	insMaps[2] = ND_CustomMaps[ND_Nuclear];
+	insMaps[3] = ND_CustomMaps[ND_Submarine];
+	insMaps[4] = ND_CustomMaps[ND_Rock];
+	insMaps[5] = ND_StockMaps[ND_Oilfield];
 	
 	char curMap[32];
 	GetCurrentMap(curMap, sizeof(curMap));
 	
 	for (int i = 0; i < RTV_INSTANT_SIZE; i++)
 	{
-		if (StrEqual(curMap, nd_rtv_instant_maps[i], false))
+		if (StrEqual(curMap, insMaps[i], false))
 			return true;
 	}
 
