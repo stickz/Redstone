@@ -28,7 +28,7 @@ stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] =
 	"corner_intermediate_04",
 	"nd_submarine",
 	"metro_imp2",
-	"silo_imp1
+	"silo_imp1"
 };
 
 stock bool ND_IsCustomMap(char[] mapName)
