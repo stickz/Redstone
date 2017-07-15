@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_rounds>
 #include <nd_redstone>
 #include <nd_print>
+#include <nd_maps>
 
 enum Bools
 {
@@ -44,6 +45,18 @@ char nd_rtv_commands[RTV_COMMANDS_SIZE][] =
 	"rtv",
 	"change map",
 	"changemap"
+};
+
+// Specify the maps for no min player requirements to RTV
+#define RTV_INSTANT_SIZE 6
+char nd_rtv_instant_maps[RTV_INSTANT_SIZE][] =
+{
+	ND_CustomMaps[ND_Mars],
+	ND_CustomMaps[ND_Sandbrick],
+	ND_CustomMaps[ND_Nuclear],
+	ND_CustomMaps[ND_Submarine],
+	ND_CustomMaps[ND_Rock],
+	ND_StockMaps[ND_Oilfield]
 };
 
 int voteCount;	
@@ -163,7 +176,9 @@ void checkForPass(bool display = false, int client = -1)
 	/* Set min votes for rtv or percentage (which ever is greater) */
 	int rCount = RoundToNearest(countFloat);
 	int mCount = cvarMinPlayers.IntValue;
-	int reqVotes = rCount > mCount ? rCount : mCount;
+	
+	// Are we are instant rtv map? If so, don't enforce min count
+	int reqVotes = rCount > mCount || InstantRTVMap() ? rCount : mCount;
 	
 	int Remainder = reqVotes - voteCount;
 		
@@ -234,6 +249,20 @@ void CreatePluginConvars()
 	cvarPercentPassEx = CreateConVar("sm_rtv_per_after", "70", "Set's percent of players required to change the map after timeout");
 	
 	AutoExecConfig(true, "nd_rockthevote");
+}
+
+bool InstantRTVMap()
+{
+	char curMap[32];
+	GetCurrentMap(curMap, sizeof(curMap));
+	
+	for (int i = 0; i < RTV_INSTANT_SIZE; i++)
+	{
+		if (StrEqual(curMap, nd_rtv_instant_maps[i]))
+			return true;
+	}
+
+	return false;
 }
 
 /* Natives */
