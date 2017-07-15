@@ -47,18 +47,6 @@ char nd_rtv_commands[RTV_COMMANDS_SIZE][] =
 	"changemap"
 };
 
-// Specify the maps for no min player requirements to RTV
-#define RTV_INSTANT_SIZE 6
-char nd_rtv_instant_maps[RTV_INSTANT_SIZE][] =
-{
-	ND_CustomMaps[ND_Mars],
-	ND_CustomMaps[ND_Sandbrick],
-	ND_CustomMaps[ND_Nuclear],
-	ND_CustomMaps[ND_Submarine],
-	ND_CustomMaps[ND_Rock],
-	ND_StockMaps[ND_Oilfield]
-};
-
 int voteCount;	
 bool g_Bool[Bools];
 bool g_hasVoted[MAXPLAYERS+1] = {false, ... };
@@ -253,6 +241,18 @@ void CreatePluginConvars()
 
 bool InstantRTVMap()
 {
+	// Specify the maps for no min player requirements to RTV
+	int RTV_INSTANT_SIZE 6
+	char nd_rtv_instant_maps[RTV_INSTANT_SIZE][] =
+	{
+		ND_CustomMaps[ND_Mars],
+		ND_CustomMaps[ND_Sandbrick],
+		ND_CustomMaps[ND_Nuclear],
+		ND_CustomMaps[ND_Submarine],
+		ND_CustomMaps[ND_Rock],
+		ND_StockMaps[ND_Oilfield]
+	};
+	
 	char curMap[32];
 	GetCurrentMap(curMap, sizeof(curMap));
 	
