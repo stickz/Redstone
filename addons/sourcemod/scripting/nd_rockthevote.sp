@@ -167,9 +167,11 @@ void callRockTheVote(int client)
 
 void checkForPass(bool display = false, int client = -1)
 {	
+	bool InsRTV = InstantRTVMap();
+	
 	// Set percentage required to pass before or after the timeout
 	// Don't have a timeout for unpopular maps
-	float passPercent = g_Bool[enableRTV] || InstantRTVMap() ? cvarPercentPass.FloatValue : cvarPercentPassEx.FloatValue;
+	float passPercent = (g_Bool[enableRTV] || InsRTV) ? cvarPercentPass.FloatValue : cvarPercentPassEx.FloatValue;
 	
 	// Get the client count on the server. Try Redstone native first.
 	int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
@@ -182,7 +184,7 @@ void checkForPass(bool display = false, int client = -1)
 	int mCount = cvarMinPlayers.IntValue;
 	
 	// Are we are instant rtv map? If so, don't enforce min count
-	int reqVotes = rCount > mCount || InstantRTVMap() ? rCount : mCount;
+	int reqVotes = (rCount > mCount || InsRTV) ? rCount : mCount;
 	
 	int Remainder = reqVotes - voteCount;
 		
