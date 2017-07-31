@@ -115,9 +115,10 @@ int sSM[SMALL_MAP_SIZE2] = {
 	view_as<int>(ND_Oilfield)
 }
 
-#define SMALL_MAP_SIZE3 1
+#define SMALL_MAP_SIZE3 2
 int cSM[SMALL_MAP_SIZE3] = {
-	view_as<int>(ND_Sandbrick)
+	view_as<int>(ND_Sandbrick),
+	view_as<int>(ND_Corner)
 }
 
 #define LARGE_MAP_SIZE 2
