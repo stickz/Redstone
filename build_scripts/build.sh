@@ -140,7 +140,7 @@ if [ ! -d "$SOURCEMOD_DIR" ] || [ "$cache" = false ]; then
     $SOURCEMOD_ARCHIVE_URL to $SOURCEMOD_DIR"
   fi
   mkdir -p $SOURCEMOD_DIR
-  wget $SOURCEMOD_ARCHIVE_URL -O $SOURCEMOD_ARCHIVE_PATH
+  curl $SOURCEMOD_ARCHIVE_URL
 
   if [ "$OS" = "Mac" ]; then
     # -o stands for OVERWRITE, meaning don't prompt if overwriting files
@@ -163,7 +163,7 @@ if [ ! -e "$UPDATER_PATCH_PATH" ] || [ "$cache" = false ]; then
   if [ "$verbose" = true ]; then
     echo "- Downloading updater patch from $UPDATER_PATCH_URL"
   fi
-  wget $UPDATER_PATCH_URL -O $UPDATER_PATCH_PATH
+  curl $UPDATER_PATCH_URL -O $UPDATER_PATCH_PATH
 else
   if [ "$verbose" = true ]; then
     echo "- Using previously downloaded updater patch"
