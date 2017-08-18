@@ -28,7 +28,7 @@ public Plugin myinfo =
 	name = "[ND] Bot Features",
 	author = "Stickz",
 	description = "Give more control over the bots on the server",
-	version = "recompile",
+	version = "rebuild",
 	url = "https://github.com/stickz/Redstone/"
 };
 
