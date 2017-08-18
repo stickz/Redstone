@@ -163,7 +163,7 @@ if [ ! -e "$UPDATER_PATCH_PATH" ] || [ "$cache" = false ]; then
   if [ "$verbose" = true ]; then
     echo "- Downloading updater patch from $UPDATER_PATCH_URL"
   fi
-  curl $UPDATER_PATCH_URL -O $UPDATER_PATCH_PATH
+  curl $UPDATER_PATCH_URL
 else
   if [ "$verbose" = true ]; then
     echo "- Using previously downloaded updater patch"
