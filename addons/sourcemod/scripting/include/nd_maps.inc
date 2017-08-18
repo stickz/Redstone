@@ -54,7 +54,8 @@ enum ND_StockMapCount {
 	ND_Gate,
 	ND_Oilfield,
 	ND_Downtown,
-	ND_Clocktower
+	ND_Clocktower,
+	SK_Metro
 }
 
 stock char ND_StockMaps[ND_StockMapCount][ND_MAX_MAP_SIZE] = {
@@ -66,7 +67,8 @@ stock char ND_StockMaps[ND_StockMapCount][ND_MAX_MAP_SIZE] = {
 	"gate",
 	"oilfield",
 	"downtown",
-	"clocktower"
+	"clocktower",
+	"sk_metro"
 };
 
 stock bool ND_IsStockMap(char[] mapName)
