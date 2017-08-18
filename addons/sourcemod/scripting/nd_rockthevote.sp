@@ -48,18 +48,20 @@ char nd_rtv_commands[RTV_COMMANDS_SIZE][] =
 };
 
 // Specify the maps for no min player requirements to RTV
-#define C_INS_SIZE 5
+#define C_INS_SIZE 6
 int insCusMaps[C_INS_SIZE] = {
 	view_as<int>(ND_Mars),
 	view_as<int>(ND_Sandbrick),
 	view_as<int>(ND_Nuclear),
 	view_as<int>(ND_Submarine),
-	view_as<int>(ND_Rock)
+	view_as<int>(ND_Rock),
+	view_as<int>(ND_Roadwork)
 };
 
-#define S_INS_SIZE 1
+#define S_INS_SIZE 2
 int insStockMaps[S_INS_SIZE] = {
-	view_as<int>(ND_Oilfield)
+	view_as<int>(ND_Oilfield),
+	view_as<int>(ND_Clocktower)
 };
 
 int voteCount;	
