@@ -168,9 +168,16 @@ public Action TIMER_PrepMapChange(Handle timer)
 public Action TIMER_ChangeMapNow(Handle timer)
 {
 	char nextMap[64];
-	GetNextMap(nextMap, sizeof(nextMap));
 	
-	ServerCommand("changelevel %s", nextMap);
+	/* Change level to the next map,
+	 * If next map retrieval fails, 
+	 * Try to end the round asap
+	 */	
+	if (GetNextMap(nextMap, sizeof(nextMap)))	
+		ServerCommand("changelevel %s", nextMap);
+	else
+		ServerCommand("mp_roundtime 1");
+		
 	return Plugin_Handled;
 }
 
