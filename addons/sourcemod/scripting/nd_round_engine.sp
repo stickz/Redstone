@@ -109,5 +109,5 @@ public int Native_GetMapStarted(Handle plugin, int numParams)
 
 public int Native_FireRoundEnd(Handle plugin, int numParams)
 {
-	Event_RoundEnd(null, null, false);
+	Event_RoundEnd(null, "", false);
 }
