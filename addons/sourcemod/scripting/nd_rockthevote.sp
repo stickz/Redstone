@@ -15,6 +15,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include <mapchooser>
+#include <nextmap>
 
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_rockthevote/nd_rockthevote.txt"
@@ -146,6 +147,22 @@ public Action TIMER_DisableRTV(Handle timer) {
 	g_Bool[enableRTV] = false;
 }
 
+public Action TIMER_ChangeMapNow(Handle timer)
+{
+	/* Change level to the next map,
+	 * If next map retrieval fails, 
+	 * Try to end the round asap
+	 */
+
+	char nextMap[64];
+	if (GetNextMap(nextMap, sizeof(nextMap)))	
+		ServerCommand("changelevel %s", nextMap);
+	else
+		ServerCommand("mp_roundtime 1");
+
+	return Plugin_Handled;
+}
+
 void callRockTheVote(int client)
 {
 	if (g_Bool[hasPassedRTV])
@@ -234,7 +251,9 @@ public Action Timer_DelayMapChange(Handle timer)
 
 void FiveSecondChange()
 {
-	ServerCommand("mp_roundtime 1");
+	ND_SimulateRoundEnd();
+	CreateTimer(5.0, TIMER_ChangeMapNow, _, TIMER_FLAG_NO_MAPCHANGE);
+	
 	PrintToChatAll("%s %t", PREFIX, "RTV Changing"); //RTV Successful: Map will change in five seconds.
 }
 
