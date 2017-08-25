@@ -157,7 +157,7 @@ public Action TIMER_PrepMapChange(Handle timer)
 	if (GetNextMap(nextMap, sizeof(nextMap))
 	{
 		ND_SimulateRoundEnd();
-		CreateTimer(1.0, TIMER_ChangeMapNow, nextMap, TIMER_FLAG_NO_MAPCHANGE);
+		CreateTimer(1.0, TIMER_ChangeMapNow, _, TIMER_FLAG_NO_MAPCHANGE);
 	}
 	else
 		ServerCommand("mp_roundtime 1");
@@ -165,9 +165,12 @@ public Action TIMER_PrepMapChange(Handle timer)
 	return Plugin_Handled;
 }
 
-public Action TIMER_ChangeMapNow(Handle timer, any map)
+public Action TIMER_ChangeMapNow(Handle timer)
 {
-	ServerCommand("changelevel %s", map);
+	char nextMap[64];
+	GetNextMap(nextMap, sizeof(nextMap));
+	
+	ServerCommand("changelevel %s", nextMap);
 	return Plugin_Handled;
 }
 
