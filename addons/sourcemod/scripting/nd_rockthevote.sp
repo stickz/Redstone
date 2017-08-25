@@ -154,7 +154,7 @@ public Action TIMER_PrepMapChange(Handle timer)
 	/* Try to change the map the fast way,
 	 * If it fails, use the slow way
 	 */
-	if (GetNextMap(nextMap, sizeof(nextMap))
+	if (GetNextMap(nextMap, sizeof(nextMap)))
 	{
 		ND_SimulateRoundEnd();
 		CreateTimer(1.0, TIMER_ChangeMapNow, _, TIMER_FLAG_NO_MAPCHANGE);
