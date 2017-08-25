@@ -147,37 +147,19 @@ public Action TIMER_DisableRTV(Handle timer) {
 	g_Bool[enableRTV] = false;
 }
 
-public Action TIMER_PrepMapChange(Handle timer)
-{
-	char nextMap[64];
-	
-	/* Try to change the map the fast way,
-	 * If it fails, use the slow way
-	 */
-	if (GetNextMap(nextMap, sizeof(nextMap)))
-	{
-		ND_SimulateRoundEnd();
-		CreateTimer(1.0, TIMER_ChangeMapNow, _, TIMER_FLAG_NO_MAPCHANGE);
-	}
-	else
-		ServerCommand("mp_roundtime 1");
-		
-	return Plugin_Handled;
-}
-
 public Action TIMER_ChangeMapNow(Handle timer)
 {
-	char nextMap[64];
-	
 	/* Change level to the next map,
 	 * If next map retrieval fails, 
 	 * Try to end the round asap
-	 */	
+	 */
+
+	char nextMap[64];
 	if (GetNextMap(nextMap, sizeof(nextMap)))	
 		ServerCommand("changelevel %s", nextMap);
 	else
 		ServerCommand("mp_roundtime 1");
-		
+
 	return Plugin_Handled;
 }
 
@@ -269,7 +251,8 @@ public Action Timer_DelayMapChange(Handle timer)
 
 void FiveSecondChange()
 {
-	CreateTimer(4.0, TIMER_PrepMapChange, _, TIMER_FLAG_NO_MAPCHANGE);
+	ND_SimulateRoundEnd();
+	CreateTimer(5.0, TIMER_ChangeMapNow, _, TIMER_FLAG_NO_MAPCHANGE);
 	
 	PrintToChatAll("%s %t", PREFIX, "RTV Changing"); //RTV Successful: Map will change in five seconds.
 }
