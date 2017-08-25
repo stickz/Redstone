@@ -48,3 +48,6 @@ forward void ND_OnRoundStarted();
 
 forward void ND_OnRoundEnd();
 forward void ND_OnRoundEnded();
+
+/* Fires the RoundEnd forward to all plugins */
+native void ND_SimulateRoundEnd()
