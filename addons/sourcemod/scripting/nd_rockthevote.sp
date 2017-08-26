@@ -231,7 +231,7 @@ void prepMapChange()
 	if (!CanMapChooserStartVote())
 	{
 		PrintToChatAll("%s %t", PREFIX, "RTV Wait"); //Pending map change due to successful rtv vote.		
-		CreateTimer(1.0, Timer_DelayMapChange, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+		CreateTimer(0.5, Timer_DelayMapChange, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	}
 	else
 		FiveSecondChange();
@@ -252,7 +252,7 @@ public Action Timer_DelayMapChange(Handle timer)
 void FiveSecondChange()
 {
 	ND_SimulateRoundEnd();
-	CreateTimer(5.0, TIMER_ChangeMapNow, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(4.5, TIMER_ChangeMapNow, _, TIMER_FLAG_NO_MAPCHANGE);
 	
 	PrintToChatAll("%s %t", PREFIX, "RTV Changing"); //RTV Successful: Map will change in five seconds.
 }
