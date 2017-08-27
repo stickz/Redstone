@@ -19,6 +19,10 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"
 };
 
+/* Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_warmup/nd_warmup.txt"
+#include "updater/standard.sp"
+
 enum Bools
 {
 	useBalancer,
@@ -50,8 +54,8 @@ public void OnPluginStart()
 	LoadTranslations("nd_warmup.phrases");
 	
 	g_Cvar[enableWarmupBalance] 	=	CreateConVar("sm_warmup_balance", "1", "Warmup Balancer: 0 to disable, 1 to enable");
-	g_Cvar[stockWarmupTime]			=	CreateConVar("sm_warmup_rtime", "40", "Sets the warmup time for stock maps");
-	g_Cvar[customWarmupTime]		=	CreateConVar("sm_warmup_ctime", "55", "Sets the warmup time for custom maps");
+	g_Cvar[stockWarmupTime]		=	CreateConVar("sm_warmup_rtime", "40", "Sets the warmup time for stock maps");
+	g_Cvar[customWarmupTime]	=	CreateConVar("sm_warmup_ctime", "55", "Sets the warmup time for custom maps");
 	g_Cvar[rapidStartClientCount]	=	CreateConVar("sm_warmup_rscc", "3", "Sets the number of players for rapid starting");	
 	
 	AutoExecConfig(true, "nd_warmup");
@@ -59,6 +63,8 @@ public void OnPluginStart()
 	RegAdminCmd("sm_NextPick", CMD_TriggerPicking, ADMFLAG_RESERVATION, "enable/disable picking for next map");
 	
 	g_Bool[pauseWarmup] = false;
+	
+	AddUpdaterLibrary(); //Add updater support if included
 }
 
 public void OnMapStart()
