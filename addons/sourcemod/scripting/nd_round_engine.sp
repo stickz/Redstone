@@ -87,6 +87,8 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("ND_RoundEnded", Native_GetRoundEnded);
 
 	CreateNative("ND_MapStarted", Native_GetMapStarted)
+	
+	CreateNative("ND_SimulateRoundEnd", Native_FireRoundEnd);
 	return APLRes_Success;
 }
 
@@ -103,4 +105,9 @@ public int Native_GetRoundEnded(Handle plugin, int numParams)
 public int Native_GetMapStarted(Handle plugin, int numParams)
 {
 	return _:mapStarted;
+}
+
+public int Native_FireRoundEnd(Handle plugin, int numParams)
+{
+	Event_RoundEnd(null, "", false);
 }
