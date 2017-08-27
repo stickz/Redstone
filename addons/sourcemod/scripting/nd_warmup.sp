@@ -8,7 +8,8 @@
 #define VALUE_TYPE_ENABLED 1
 #define VALUE_TYPE_DISABLED 0
 
-#define TIME_RAPID_START 15
+#define STOCK_RAPID_START 15
+#define CUSTOM_RAPID_START 30
 
 public Plugin myinfo =
 {
@@ -91,17 +92,16 @@ public Action TIMER_WarmupRound(Handle timer)
 
 	switch (g_Integer[warmupCountdown])
 	{
-		case TIME_RAPID_START:
+		// Notice: These hacks assume short circuit evaluation is used.
+		case CUSTOM_RAPID_START:
 		{
-			// Get the client count on the server. Try Redstone native first.
-			int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 	
-
-			// If the client count is within range, start the game faster
-			if (clientCount <= g_Cvar[rapidStartClientCount].IntValue)
-			{
-				SetWarmupEndType();
-				return Plugin_Stop;				
-			}
+			if (!CurMapIsStock() && CheckRapidStart())
+				return Plugin_Stop;
+		}		
+		case STOCK_RAPID_START:
+		{
+			if (CurMapIsStock() && CheckRapidStart())
+				return Plugin_Stop;
 		}
 		
 		case 4: ServerCommand("bot_quota 0");		
@@ -116,6 +116,27 @@ public Action TIMER_WarmupRound(Handle timer)
 	
 	DisplayHudText();
 	return Plugin_Continue;
+}
+
+bool CurMapIsStock()
+{
+	char curMap[32];
+	GetCurrentMap(curMap, sizeof(curMap));
+	
+	return ND_IsStockMap(curMap);
+}
+
+bool CheckRapidStart()
+{
+	// Get the client count on the server. Try Redstone native first.
+	int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 	
+
+	// If the client count is within range, start the game faster
+	if (clientCount <= g_Cvar[rapidStartClientCount].IntValue)
+	{
+		SetWarmupEndType();
+		return true;				
+	}
 }
 
 /* Toggle player picking mode */
