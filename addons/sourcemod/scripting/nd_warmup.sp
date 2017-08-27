@@ -42,7 +42,8 @@ enum Convars
 	ConVar:enableWarmupBalance,
 	ConVar:stockWarmupTime,
 	ConVar:customWarmupTime,
-	ConVar:rapidStartClientCount	
+	ConVar:rapidStartClientCount,
+	ConVar:minPlayersForBalance
 };
 
 bool g_Bool[Bools];
@@ -161,7 +162,7 @@ public Action CMD_TriggerPicking(int client, int args)
 bool RunWarmupBalancer()
 {
 	if (BT2_AVAILABLE() && g_Bool[runBalancer] && g_Bool[enableBalancer])
-		return ReadyToBalanceCount() >= 6;
+		return ReadyToBalanceCount() >= g_Cvar[minPlayersForBalance].IntValue;
 	
 	return false;
 }
@@ -171,7 +172,8 @@ void CreatePluginConvars()
 	g_Cvar[enableWarmupBalance] 	=	CreateConVar("sm_warmup_balance", "1", "Warmup Balancer: 0 to disable, 1 to enable");
 	g_Cvar[stockWarmupTime]		=	CreateConVar("sm_warmup_rtime", "40", "Sets the warmup time for stock maps");
 	g_Cvar[customWarmupTime]	=	CreateConVar("sm_warmup_ctime", "55", "Sets the warmup time for custom maps");
-	g_Cvar[rapidStartClientCount]	=	CreateConVar("sm_warmup_rscc", "3", "Sets the number of players for rapid starting");	
+	g_Cvar[rapidStartClientCount]	=	CreateConVar("sm_warmup_rscc", "4", "Sets the number of players for rapid starting");
+	g_Cvar[minPlayersForBalance]	=	CreateConVar("sm_warmup_bmin", "6", "Sets minium number of players for warmup balance");
 	
 	AutoExecConfig(true, "nd_warmup");
 }
