@@ -81,13 +81,8 @@ public void ND_OnRoundEnded() {
 	InitiateRoundEnd();	
 }
 
-public void ND_OnRoundStarted()
-{
-	if (g_Bool[pauseWarmup])
-		ServerCommand("sm_cvar mp_friendlyfire 0");	
-
-	else
-		ToogleWarmupConvars(VALUE_TYPE_DISABLED);
+public void ND_OnRoundStarted() {
+	ToogleWarmupConvars(VALUE_TYPE_DISABLED, g_Bool[pauseWarmup]);
 }
 
 public Action TIMER_WarmupRound(Handle timer)
@@ -256,10 +251,10 @@ void SetVarDefaults()
 	g_Integer[warmupTextType] = 0;
 }
 
-ToogleWarmupConvars(value)
+ToogleWarmupConvars(value, overrideFF = false)
 {
 	ServerCommand("sm_cvar sv_alltalk %d", value);
-	ServerCommand("sm_cvar mp_friendlyfire %d", value);	
+	ServerCommand("sm_cvar mp_friendlyfire %d", overrideFF ? VALUE_TYPE_ENABLED : value);	
 	
 	/* 
 	 * cannot use spawn time feature yet due to quick join penalty
