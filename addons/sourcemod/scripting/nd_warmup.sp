@@ -19,6 +19,10 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"
 };
 
+/* Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_warmup/nd_warmup.txt"
+#include "updater/standard.sp"
+
 enum Bools
 {
 	useBalancer,
@@ -38,7 +42,8 @@ enum Convars
 	ConVar:enableWarmupBalance,
 	ConVar:stockWarmupTime,
 	ConVar:customWarmupTime,
-	ConVar:rapidStartClientCount	
+	ConVar:rapidStartClientCount,
+	ConVar:minPlayersForBalance
 };
 
 bool g_Bool[Bools];
@@ -49,16 +54,13 @@ public void OnPluginStart()
 {
 	LoadTranslations("nd_warmup.phrases");
 	
-	g_Cvar[enableWarmupBalance] 	=	CreateConVar("sm_warmup_balance", "1", "Warmup Balancer: 0 to disable, 1 to enable");
-	g_Cvar[stockWarmupTime]			=	CreateConVar("sm_warmup_rtime", "40", "Sets the warmup time for stock maps");
-	g_Cvar[customWarmupTime]		=	CreateConVar("sm_warmup_ctime", "55", "Sets the warmup time for custom maps");
-	g_Cvar[rapidStartClientCount]	=	CreateConVar("sm_warmup_rscc", "3", "Sets the number of players for rapid starting");	
-	
-	AutoExecConfig(true, "nd_warmup");
+	CreatePluginConvars();
 	
 	RegAdminCmd("sm_NextPick", CMD_TriggerPicking, ADMFLAG_RESERVATION, "enable/disable picking for next map");
 	
 	g_Bool[pauseWarmup] = false;
+	
+	AddUpdaterLibrary(); //Add updater support if included
 }
 
 public void OnMapStart()
@@ -79,13 +81,8 @@ public void ND_OnRoundEnded() {
 	InitiateRoundEnd();	
 }
 
-public void ND_OnRoundStarted()
-{
-	if (g_Bool[pauseWarmup])
-		ServerCommand("sm_cvar mp_friendlyfire 0");	
-
-	else
-		ToogleWarmupConvars(VALUE_TYPE_DISABLED);
+public void ND_OnRoundStarted() {
+	ToogleWarmupConvars(VALUE_TYPE_DISABLED, g_Bool[pauseWarmup]);
 }
 
 public Action TIMER_WarmupRound(Handle timer)
@@ -160,9 +157,20 @@ public Action CMD_TriggerPicking(int client, int args)
 bool RunWarmupBalancer()
 {
 	if (BT2_AVAILABLE() && g_Bool[runBalancer] && g_Bool[enableBalancer])
-		return ReadyToBalanceCount() >= 6;
+		return ReadyToBalanceCount() >= g_Cvar[minPlayersForBalance].IntValue;
 	
 	return false;
+}
+
+void CreatePluginConvars()
+{
+	g_Cvar[enableWarmupBalance] 	=	CreateConVar("sm_warmup_balance", "1", "Warmup Balancer: 0 to disable, 1 to enable");
+	g_Cvar[stockWarmupTime]		=	CreateConVar("sm_warmup_rtime", "40", "Sets the warmup time for stock maps");
+	g_Cvar[customWarmupTime]	=	CreateConVar("sm_warmup_ctime", "55", "Sets the warmup time for custom maps");
+	g_Cvar[rapidStartClientCount]	=	CreateConVar("sm_warmup_rscc", "4", "Sets the number of players for rapid starting");
+	g_Cvar[minPlayersForBalance]	=	CreateConVar("sm_warmup_bmin", "6", "Sets minium number of players for warmup balance");
+	
+	AutoExecConfig(true, "nd_warmup");
 }
 
 void DisplayHudText()
@@ -243,10 +251,10 @@ void SetVarDefaults()
 	g_Integer[warmupTextType] = 0;
 }
 
-ToogleWarmupConvars(value)
+ToogleWarmupConvars(value, overrideFF = false)
 {
 	ServerCommand("sm_cvar sv_alltalk %d", value);
-	ServerCommand("sm_cvar mp_friendlyfire %d", value);	
+	ServerCommand("sm_cvar mp_friendlyfire %d", overrideFF ? VALUE_TYPE_ENABLED : value);	
 	
 	/* 
 	 * cannot use spawn time feature yet due to quick join penalty
