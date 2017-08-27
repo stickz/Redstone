@@ -137,6 +137,8 @@ bool CheckRapidStart()
 		SetWarmupEndType();
 		return true;				
 	}
+	
+	return false;
 }
 
 /* Toggle player picking mode */
