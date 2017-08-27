@@ -53,12 +53,7 @@ public void OnPluginStart()
 {
 	LoadTranslations("nd_warmup.phrases");
 	
-	g_Cvar[enableWarmupBalance] 	=	CreateConVar("sm_warmup_balance", "1", "Warmup Balancer: 0 to disable, 1 to enable");
-	g_Cvar[stockWarmupTime]		=	CreateConVar("sm_warmup_rtime", "40", "Sets the warmup time for stock maps");
-	g_Cvar[customWarmupTime]	=	CreateConVar("sm_warmup_ctime", "55", "Sets the warmup time for custom maps");
-	g_Cvar[rapidStartClientCount]	=	CreateConVar("sm_warmup_rscc", "3", "Sets the number of players for rapid starting");	
-	
-	AutoExecConfig(true, "nd_warmup");
+	CreatePluginConvars();
 	
 	RegAdminCmd("sm_NextPick", CMD_TriggerPicking, ADMFLAG_RESERVATION, "enable/disable picking for next map");
 	
@@ -169,6 +164,16 @@ bool RunWarmupBalancer()
 		return ReadyToBalanceCount() >= 6;
 	
 	return false;
+}
+
+void CreatePluginConvars()
+{
+	g_Cvar[enableWarmupBalance] 	=	CreateConVar("sm_warmup_balance", "1", "Warmup Balancer: 0 to disable, 1 to enable");
+	g_Cvar[stockWarmupTime]		=	CreateConVar("sm_warmup_rtime", "40", "Sets the warmup time for stock maps");
+	g_Cvar[customWarmupTime]	=	CreateConVar("sm_warmup_ctime", "55", "Sets the warmup time for custom maps");
+	g_Cvar[rapidStartClientCount]	=	CreateConVar("sm_warmup_rscc", "3", "Sets the number of players for rapid starting");	
+	
+	AutoExecConfig(true, "nd_warmup");
 }
 
 void DisplayHudText()
