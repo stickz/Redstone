@@ -33,7 +33,7 @@ stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] =
 
 stock bool ND_IsCustomMap(char[] mapName)
 {
-	for (int m = 0; m < ND_CustomMapCount; m++)
+	for (int m = 0; m < view_as<int>(ND_CustomMapCount); m++)
 	{
 		if (StrEqual(ND_CustomMaps[m], mapName, false))
 			return true;	
@@ -73,7 +73,7 @@ stock char ND_StockMaps[ND_StockMapCount][ND_MAX_MAP_SIZE] = {
 
 stock bool ND_IsStockMap(char[] mapName)
 {
-	for (int m = 0; m < ND_StockMapCountt; m++)
+	for (int m = 0; m < view_as<int>(ND_StockMapCount); m++)
 	{
 		if (StrEqual(ND_StockMaps[m], mapName, false))
 			return true;	
