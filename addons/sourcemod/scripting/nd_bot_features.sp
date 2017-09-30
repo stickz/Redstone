@@ -78,12 +78,10 @@ void checkCount()
 {
 	if (ND_RoundStarted())
 	{
-		int quota = 0;
-		
-		int teamCount = RED_OnTeamCount();
+		int quota = 0;		
 		
 		// Team count means the requirement for modulous bot quota
-		if (teamCount < GetBotShutOffCount())
+		if (RED_OnTeamCount() < GetBotShutOffCount())
 		{
 			if(boostBots())
 				quota += getBotModulusQuota();
@@ -101,6 +99,9 @@ void checkCount()
 			// Get the bot count to fill empty team slots
 			int dynamicSlots = GetDynamicSlotCount() - 2;
 			int clientCount = RED_ClientCount();
+			
+			// Must use actual team count here to count properly
+			int teamCount = OnTeamCount();			
 			quota = getBotFillerQuota(teamCount, clientCount < dynamicSlots);		
 			
 			if (quota >= dynamicSlots && getPositiveOverBalance() >= 3)
