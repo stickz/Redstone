@@ -17,6 +17,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <mapchooser>
 #include <nextmap>
 
+// Hack - Too lazy to create include file
+forward void ND_OnWarmupComplete();
+native bool ND_TriggerMapVote();
+
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_rockthevote/nd_rockthevote.txt"
 #include "updater/standard.sp"
@@ -28,11 +32,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_redstone>
 #include <nd_print>
 #include <nd_maps>
+#include <mapchooser>
 
 enum Bools
 {
 	enableRTV,
-	hasPassedRTV
+	hasPassedRTV,
+	hasMapVoteStarted,
+	hasWarmupCompleted
 };
 
 #define TEAM_SPEC		1
@@ -102,6 +109,14 @@ public void OnPluginStart()
 	}
 }
 
+public void ND_OnWarmupComplete() {
+	g_Bool[hasWarmupCompleted] = true;
+}
+
+public void OnMapVoteStarted() {
+	g_Bool[hasMapVoteStarted] = true;
+}
+
 public void ND_OnRoundStarted() {
 	StartRTVDisableTimer();
 }
@@ -127,6 +142,8 @@ public void OnMapStart()
 	voteCount 		= 0;
 	g_Bool[enableRTV] 	= true;
 	g_Bool[hasPassedRTV] 	= false;
+	g_Bool[hasMapVoteStarted] = false;
+	g_Bool[hasWarmupCompleted] = false;
 	
 	for (int client = 1; client <= MaxClients; client++) {
 		g_hasVoted[client] = false;	
@@ -174,7 +191,7 @@ void callRockTheVote(int client)
 	else if (ND_RoundEnded())
 		PrintMessage(client, "Round Ended");
 		
-	else if (!ND_RoundStarted())
+	else if (!g_Bool[hasWarmupCompleted])
 		PrintMessage(client, "Round Start");
 
 	else
@@ -228,13 +245,32 @@ void prepMapChange()
 {
 	g_Bool[hasPassedRTV] = true;
 	
-	if (!CanMapChooserStartVote())
+	if (!g_Bool[hasMapVoteStarted])
+	{
+		PrintToChatAll("%s %t", PREFIX, "RTV Wait"); //Pending map change due to successful rtv vote.
+		CreateTimer(0.5, Timer_StartMapVoteASAP, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+	}
+	
+	else if (!CanMapChooserStartVote())
 	{
 		PrintToChatAll("%s %t", PREFIX, "RTV Wait"); //Pending map change due to successful rtv vote.		
 		CreateTimer(0.5, Timer_DelayMapChange, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	}
+	
 	else
 		FiveSecondChange();
+}
+
+public Action Timer_StartMapVoteASAP(Handle timer)
+{
+	if (!ND_TriggerMapVote())
+		return Plugin_Continue;
+		
+	else
+	{
+		CreateTimer(0.5, Timer_DelayMapChange, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+		return Plugin_Stop;
+	}
 }
 
 public Action Timer_DelayMapChange(Handle timer)
