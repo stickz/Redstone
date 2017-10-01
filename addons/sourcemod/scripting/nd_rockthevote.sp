@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // Hack - Too lazy to create include file
 forward void ND_OnWarmupComplete();
+forward bool ND_TriggerMapVote();
 
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_rockthevote/nd_rockthevote.txt"
@@ -190,7 +191,7 @@ void callRockTheVote(int client)
 	else if (ND_RoundEnded())
 		PrintMessage(client, "Round Ended");
 		
-	else if (!ND_RoundStarted())
+	else if (!g_Bool[hasWarmupCompleted])
 		PrintMessage(client, "Round Start");
 
 	else
@@ -244,18 +245,37 @@ void prepMapChange()
 {
 	g_Bool[hasPassedRTV] = true;
 	
-	if (!IsNextMapReady())
+	if (!g_Bool[hasMapVoteStarted])
+	{
+		PrintToChatAll("%s %t", PREFIX, "RTV Wait"); //Pending map change due to successful rtv vote.
+		CreateTimer(0.5, Timer_StartMapVoteASAP, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+	}
+	
+	else if (!CanMapChooserStartVote())
 	{
 		PrintToChatAll("%s %t", PREFIX, "RTV Wait"); //Pending map change due to successful rtv vote.		
 		CreateTimer(0.5, Timer_DelayMapChange, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	}
+	
 	else
 		FiveSecondChange();
 }
 
+public Action Timer_StartMapVoteASAP(Handle timer)
+{
+	if (!ND_TriggerMapVote())
+		return Plugin_Continue;
+		
+	else
+	{
+		CreateTimer(0.5, Timer_DelayMapChange, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+		return Plugin_Stop;
+	}
+}
+
 public Action Timer_DelayMapChange(Handle timer)
 {
-	if (!IsNextMapReady())
+	if (!CanMapChooserStartVote())
 		return Plugin_Continue;
 			
 	else
@@ -263,11 +283,6 @@ public Action Timer_DelayMapChange(Handle timer)
 		FiveSecondChange();
 		return Plugin_Stop;
 	}
-}
-
-bool IsNextMapReady()
-{
-	return g_Bool[hasMapVoteStarted] && CanMapChooserStartVote();
 }
 
 void FiveSecondChange()
