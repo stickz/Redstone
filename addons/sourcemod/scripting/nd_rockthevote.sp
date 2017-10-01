@@ -28,11 +28,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_redstone>
 #include <nd_print>
 #include <nd_maps>
+#include <mapchooser>
 
 enum Bools
 {
 	enableRTV,
-	hasPassedRTV
+	hasPassedRTV,
+	hasMapVoteStarted
 };
 
 #define TEAM_SPEC		1
@@ -102,6 +104,10 @@ public void OnPluginStart()
 	}
 }
 
+public void OnMapVoteStarted(){
+	g_Bool[hasMapVoteStarted] = true;
+}
+
 public void ND_OnRoundStarted() {
 	StartRTVDisableTimer();
 }
@@ -127,6 +133,7 @@ public void OnMapStart()
 	voteCount 		= 0;
 	g_Bool[enableRTV] 	= true;
 	g_Bool[hasPassedRTV] 	= false;
+	g_Bool[hasMapVoteStarted] = false;
 	
 	for (int client = 1; client <= MaxClients; client++) {
 		g_hasVoted[client] = false;	
@@ -228,7 +235,7 @@ void prepMapChange()
 {
 	g_Bool[hasPassedRTV] = true;
 	
-	if (!CanMapChooserStartVote())
+	if (!IsNextMapReady())
 	{
 		PrintToChatAll("%s %t", PREFIX, "RTV Wait"); //Pending map change due to successful rtv vote.		
 		CreateTimer(0.5, Timer_DelayMapChange, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
@@ -239,7 +246,7 @@ void prepMapChange()
 
 public Action Timer_DelayMapChange(Handle timer)
 {
-	if (!CanMapChooserStartVote())
+	if (!IsNextMapReady())
 		return Plugin_Continue;
 			
 	else
@@ -247,6 +254,11 @@ public Action Timer_DelayMapChange(Handle timer)
 		FiveSecondChange();
 		return Plugin_Stop;
 	}
+}
+
+bool IsNextMapReady()
+{
+	return g_Bool[hasMapVoteStarted] && CanMapChooserStartVote();
 }
 
 void FiveSecondChange()
