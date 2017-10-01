@@ -17,6 +17,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <mapchooser>
 #include <nextmap>
 
+// Hack - Too lazy to create include file
+forward void ND_OnWarmupComplete();
+
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_rockthevote/nd_rockthevote.txt"
 #include "updater/standard.sp"
@@ -34,7 +37,8 @@ enum Bools
 {
 	enableRTV,
 	hasPassedRTV,
-	hasMapVoteStarted
+	hasMapVoteStarted,
+	hasWarmupCompleted
 };
 
 #define TEAM_SPEC		1
@@ -104,7 +108,11 @@ public void OnPluginStart()
 	}
 }
 
-public void OnMapVoteStarted(){
+public void ND_OnWarmupComplete() {
+	g_Bool[hasWarmupCompleted] = true;
+}
+
+public void OnMapVoteStarted() {
 	g_Bool[hasMapVoteStarted] = true;
 }
 
@@ -134,6 +142,7 @@ public void OnMapStart()
 	g_Bool[enableRTV] 	= true;
 	g_Bool[hasPassedRTV] 	= false;
 	g_Bool[hasMapVoteStarted] = false;
+	g_Bool[hasWarmupCompleted] = false;
 	
 	for (int client = 1; client <= MaxClients; client++) {
 		g_hasVoted[client] = false;	
