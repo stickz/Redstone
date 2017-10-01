@@ -191,7 +191,7 @@ void callRockTheVote(int client)
 	else if (ND_RoundEnded())
 		PrintMessage(client, "Round Ended");
 		
-	else if (!g_Bool[hasWarmupCompleted])
+	else if (!g_Bool[hasWarmupCompleted] && !ND_RoundStarted())
 		PrintMessage(client, "Round Start");
 
 	else
