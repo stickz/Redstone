@@ -268,7 +268,7 @@ public Action Timer_StartMapVoteASAP(Handle timer)
 		
 	else
 	{
-		CreateTimer(0.5, Timer_DelayMapChange, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+		ChangeMap(0.5);
 		return Plugin_Stop;
 	}
 }
@@ -280,15 +280,15 @@ public Action Timer_DelayMapChange(Handle timer)
 			
 	else
 	{
-		FiveSecondChange();
+		ChangeMap(4.5);
 		return Plugin_Stop;
 	}
 }
 
-void FiveSecondChange()
+void ChangeMap(float when)
 {
 	ND_SimulateRoundEnd();
-	CreateTimer(4.5, TIMER_ChangeMapNow, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(when, TIMER_ChangeMapNow, _, TIMER_FLAG_NO_MAPCHANGE);
 	
 	PrintToChatAll("%s %t", PREFIX, "RTV Changing"); //RTV Successful: Map will change in five seconds.
 }
