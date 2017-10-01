@@ -251,7 +251,7 @@ void prepMapChange()
 		CreateTimer(0.5, Timer_StartMapVoteASAP, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	}
 	
-	else if (!CanMapChooserStartVote())
+	else if (!HasEndOfMapVoteFinished() && !CanMapChooserStartVote())
 	{
 		PrintToChatAll("%s %t", PREFIX, "RTV Wait"); //Pending map change due to successful rtv vote.		
 		CreateTimer(0.5, Timer_DelayMapChange, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
