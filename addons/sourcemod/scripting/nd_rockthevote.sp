@@ -258,7 +258,7 @@ void prepMapChange()
 	}
 	
 	else
-		FiveSecondChange();
+		ChangeMap();
 }
 
 public Action Timer_StartMapVoteASAP(Handle timer)
@@ -280,12 +280,12 @@ public Action Timer_DelayMapChange(Handle timer)
 			
 	else
 	{
-		ChangeMap(4.5);
+		ChangeMap();
 		return Plugin_Stop;
 	}
 }
 
-void ChangeMap(float when)
+void ChangeMap(float when = 4.5)
 {
 	ND_SimulateRoundEnd();
 	CreateTimer(when, TIMER_ChangeMapNow, _, TIMER_FLAG_NO_MAPCHANGE);
