@@ -7,7 +7,9 @@ native float ND_GetPlayerSkill(int client);
 native float ND_GetCommanderSkill(int client);
 native int ND_GetPlayerLevel(int client);
 
+#define ND_GSM_AVAILBLE2() (GetFeatureStatus(FeatureType_Native, "ND_GetSkillMedian") == FeatureStatus_Available)
 native float ND_GetSkillMedian();
+
 native float ND_GetSkillAverage();
 native float ND_GetTeamSkillAverage(int team);
 
