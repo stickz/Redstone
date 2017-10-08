@@ -51,6 +51,9 @@ bool g_Bool[Bools];
 int g_Integer[Integers];
 ConVar g_Cvar[Convars];
 
+/* Forwards */
+Handle g_OnWarmupCompleted = INVALID_HANDLE;
+
 public void OnPluginStart()
 {
 	LoadTranslations("nd_warmup.phrases");
@@ -58,6 +61,7 @@ public void OnPluginStart()
 	CreatePluginConvars();
 	
 	RegAdminCmd("sm_NextPick", CMD_TriggerPicking, ADMFLAG_RESERVATION, "enable/disable picking for next map");
+	g_OnWarmupCompleted = CreateGlobalForward("ND_OnWarmupComplete", ET_Ignore);
 	
 	g_Bool[pauseWarmup] = false;
 	
@@ -225,7 +229,8 @@ void SetWarmupEndType()
 	{
 		ServerCommand("sm_cvar sv_alltalk 0"); //Disable AT while picking, but enable FF.
 		ServerCommand("sm_balance 0");
-		PrintToAdmins("\x05[xG] Team Picking is now availible!", "b");		
+		PrintToAdmins("\x05[xG] Team Picking is now availible!", "b");
+		FireWarmupCompleteForward();
 		
 		return;
 	}
@@ -235,10 +240,17 @@ void SetWarmupEndType()
 		WB2_BalanceTeams();
 			
 	/* Otherwise, Start the Round normally */			
-	else 
-		StartRound();
+	else
+		StartRound();	
 		
 	ServerCommand("sm_balance 1");
+}
+
+void FireWarmupCompleteForward()
+{
+	Action dummy;
+	Call_StartForward(g_OnWarmupCompleted);
+	Call_Finish(dummy);
 }
 
 void InitiateRoundEnd()
