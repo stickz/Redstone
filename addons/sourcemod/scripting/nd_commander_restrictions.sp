@@ -138,10 +138,8 @@ public Action Command_Apply(int client, const char[] command, int argc)
 			return Plugin_Continue;
 		#endif
 		
-		#if defined _nd_balancer_included
 		if (ND_RoundStarted() && DisableRestrictionsBySkill())
 			return Plugin_Continue;
-		#endif
 
 		int count = RED_OnTeamCount();
 		if (count < g_cvar[disRestrictions].IntValue)
@@ -212,13 +210,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 						return Plugin_Handled;	
 					}
 					#endif
-				}
-				
-				else if (clientLevel < count)
-				{
-					PrintMessage(client, "Total Level");
-					return Plugin_Handled;
-				}
+				}				
 			}		
 		}
 	}
@@ -227,18 +219,11 @@ public Action Command_Apply(int client, const char[] command, int argc)
 
 bool DisableRestrictionsBySkill() 
 {		
-	if (ND_GSM_AVAILIBLE())
-	{
-		float median = ND_GetSkillMedian();
-		if (median < g_cvar[mRestrictDisable].IntValue)
-			return true;
-		
-		if (ND_GSA_AVAILBLE())
-		{
-			float value = ND_GetSkillAverage() * 0.60 + median * 0.40;	
-			return value < g_cvar[aRestrictDisable].IntValue;
-		}
-	}
+	if (ND_GEA_AVAILBLE())
+		return ND_GetEnhancedAverage() < g_cvar[aRestrictDisable].IntValue;
+	
+	else if (ND_GSM_AVAILBLE2())
+		return ND_GetSkillMedian() < g_cvar[mRestrictDisable].IntValue;
 		
 	return true;
 }
