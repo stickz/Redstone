@@ -25,6 +25,41 @@
 #define SUPPORT_CLASS_ENGINEER	1
 #define SUPPORT_CLASS_BBQ		2
 
+enum ND_MainClasses
+{
+	mAssault,
+	mExo,
+	mStealth,
+	mSupport
+}
+
+enum ND_aSubClasses
+{
+	aInfantry,
+	aGrenadier,
+	aSniper
+}
+
+enum ND_eSubClasses
+{
+	eSuppression,
+	eSiege_Kit
+}
+
+enum ND_seSubClasses
+{
+	seAssassin,
+	seSniper,
+	seSabateur
+}
+
+enum ND_suSubClasses
+{
+	suMedic,
+	suEngineer,
+	suBBQ
+}
+
 /* Player class stock functions */
 stock bool IsSniperClass(int class, int subClass) 
 {
