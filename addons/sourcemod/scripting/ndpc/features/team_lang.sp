@@ -11,7 +11,7 @@ char nd_tl_commands[TLANG_PRINTOUT_SIZE][] =
 
 void RegTeamLangCommands()
 {
-	for (int p = 0; p < CLANG_PRINTOUT_SIZE; p++)
+	for (int p = 0; p < TLANG_PRINTOUT_SIZE; p++)
 	{
 		RegConsoleCmd(nd_tl_commands[p], CMD_TeamCLang);
 	}
