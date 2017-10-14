@@ -323,7 +323,7 @@ bool IsTooMuchSnipers(int client)
 {
 	int clientTeam = GetClientTeam(client);	
 	int clientCount = RED_GetTeamCount(clientTeam);
-	int sniperCount = NDB_GetUnitCount(clientTeam, uSnipers);
+	int sniperCount = NDB_GetUnitCount(clientTeam, view_as<int>(uSnipers));
 	int teamIDX = clientTeam - 2;
 
 	if (!SetLimit[teamIDX][TYPE_SNIPER])
@@ -350,7 +350,7 @@ bool IsTooMuchStealth(int client)
 	int stealthMin = GetMinStealthValue(clientTeam);
 	int stealthLimit = stealthMin > unitLimit ? stealthMin : unitLimit;
 	
-	return NDB_GetUnitCount(clientTeam, uStealth) >= stealthLimit;
+	return NDB_GetUnitCount(clientTeam, view_as<int>(uStealth)) >= stealthLimit;
 }
 
 bool IsTooMuchAntiStructure(int client)
@@ -361,7 +361,7 @@ bool IsTooMuchAntiStructure(int client)
 	if (!SetLimit[teamIDX][TYPE_STRUCTURE])
 		return false;
 	
-	float AntiStructureFloat = float(NDB_GetUnitCount(clientTeam, uAntiStructure));
+	float AntiStructureFloat = float(NDB_GetUnitCount(clientTeam, view_as<int>(uAntiStructure)));
 	float teamFloat = float(RED_GetTeamCount(clientTeam));
 	float AntiStructurePercent = (AntiStructureFloat / teamFloat) * 100.0;
 	
