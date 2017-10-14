@@ -34,7 +34,7 @@ public Plugin myinfo =
 	name = "[ND] Team Breakdown",
 	author = "databomb, stickz",
 	description = "Provides troop count display",
-    version = "dummy",
+    	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 }
 
@@ -94,7 +94,7 @@ public Action DisplayBreakdownsCommander(Handle timer, any:Userid)
 	int clientTeam = GetClientTeam(client);	
 	if (clientTeam > 1)
 	{
-		if (ND_IsCommanderOnTeam(client, clientTeam)) //commander troops counts
+		if (ND_GetCommanderOnTeam(clientTeam) == client) //commander troops counts
 		{
 			ShowTeamBreakdown(client, clientTeam, 1.0, 0.115, 255, 128, 0, 175);
 			return Plugin_Continue;
@@ -135,12 +135,12 @@ void ShowTeamBreakdown(int client, int clientTeam, float x, float y, int r, int 
 	int arrayIdx = clientTeam -2;
 	Handle hHudText = CreateHudSynchronizer();
 	SetHudTextParams(x, y, BREAKDOWN_UPDATE_RATE, r, g, b, a);
-	ShowSyncHudText(client, hHudText, "%t %d\n%t %d\n%t %d\n%t %d\n%t %d\n%t %d",	"Combat", 			g_Layout[arrayIdx][DirectCombat],					
-																					"Anti-Structure",	g_Layout[arrayIdx][AntiStructure], 	
-																					"Sniper", 			g_Layout[arrayIdx][Snipers], 	
-																					"Stealth", 			g_Layout[arrayIdx][Stealth], 	
-																					"Medic", 			g_Layout[arrayIdx][Medic], 			
-																					"Engineer", 		g_Layout[arrayIdx][Engineer]);
+	ShowSyncHudText(client, hHudText, "%t %d\n%t %d\n%t %d\n%t %d\n%t %d\n%t %d",	"Combat",  		g_Layout[arrayIdx][DirectCombat],					
+											"Anti-Structure",	g_Layout[arrayIdx][AntiStructure], 	
+											"Sniper", 		g_Layout[arrayIdx][Snipers], 	
+											"Stealth", 		g_Layout[arrayIdx][Stealth], 	
+											"Medic", 		g_Layout[arrayIdx][Medic], 			
+											"Engineer", 		g_Layout[arrayIdx][Engineer]);
 	CloseHandle(hHudText);
 }
 
