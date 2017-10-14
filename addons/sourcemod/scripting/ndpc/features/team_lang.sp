@@ -48,15 +48,15 @@ void PrintTeamLanguages(int client = -1)
 	}
 	
 	//sort through players to find languages
-	for (int client = 1; client <= MaxClients; client++)
+	for (int iClient = 1; iClient <= MaxClients; iClient++)
 	{
-		if (IsValidClient(client))
+		if (IsValidClient(iClient))
 		{
-			clientTeam = GetClientTeam(client);
+			clientTeam = GetClientTeam(iClient);
 			
 			if (clientTeam > 2)
 			{
-				int langNum = GetClientLanguage(client);
+				int langNum = GetClientLanguage(iClient);
 				char langCode[8]; 
 				char langName[32];
 				GetLanguageInfo(langNum, langCode, sizeof(langCode), langName, sizeof(langName));
