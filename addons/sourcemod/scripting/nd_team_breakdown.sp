@@ -41,9 +41,8 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	AddClientPrefSupport(); // From clientprefs.sp
-	LoadTranslations("nd_team_breakdown.phrases");		
-	HookEvent("promoted_to_commander", Event_CommanderPromote);
-	
+	LoadTranslations("nd_team_breakdown.phrases");
+
 	//Account for late plugin loading		
 	if (ND_RoundStarted())
 		startPlugin();
@@ -78,8 +77,8 @@ public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadca
 		CreateTimer(BREAKDOWN_UPDATE_RATE, DisplayBreakdownsClients, userID, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public Action Event_CommanderPromote(Event event, const char[] name, bool dontBroadcast) {
-	CreateTimer(BREAKDOWN_UPDATE_RATE, DisplayBreakdownsCommander, event.GetInt("userid"), TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+public void ND_OnCommanderPromoted(int client, int team) {
+	CreateTimer(BREAKDOWN_UPDATE_RATE, DisplayBreakdownsCommander, GetClientUserId(client), TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action DisplayBreakdownsCommander(Handle timer, any:Userid)
