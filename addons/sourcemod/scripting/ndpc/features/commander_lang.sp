@@ -1,13 +1,10 @@
-#define CLANG_PRINTOUT_SIZE 6
+#define CLANG_PRINTOUT_SIZE 3
 
 char nd_cl_commands[CLANG_PRINTOUT_SIZE][] = 
 {
 	"sm_comlang",
 	"sm_commanderlang",
-	"sm_commanderlanguage",
-	"sm_ComLang",
-	"sm_CommanderLang",
-	"sm_CommanderLanguage"
+	"sm_commanderlanguage"
 };
 
 void RegComLangCommands()
