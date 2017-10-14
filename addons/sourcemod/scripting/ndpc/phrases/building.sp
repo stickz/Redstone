@@ -113,7 +113,7 @@ void createAliasesForBuildings()
 	nd_building_aliases[Relay_Tower][0] = "tower";
 	
 	nd_building_aliases[Wireless_Repeater][0] = "wr";
-	nd_building_aliases[Wireless_Repeater][1] = "wireless";
+	nd_building_aliases[Wireless_Repeater][1] = "wire";
 	nd_building_aliases[Wireless_Repeater][2] = "repeat";
 	
 	nd_building_aliases[Assembler][0] = "ass";
