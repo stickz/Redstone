@@ -11,7 +11,6 @@
 #define BREAKDOWN_UPDATE_RATE 1.5
 
 bool statusChanged = false;
-bool hasEnabled = false;
  
 enum ClassBreakdown
 {
@@ -56,7 +55,8 @@ public void ND_OnRoundStarted() {
 }
 
 public void ND_OnRoundEnded() {
-	disableBreakdowns();
+	if (ND_RoundStartedThisMap())
+		disableBreakdowns();
 }
 
 public Action Event_ChangeClass(Event event, const char[] name, bool dontBroadcast)
@@ -217,12 +217,8 @@ void AddClientClass(int client)
 
 void disableBreakdowns()
 {
-	if (hasEnabled)
-	{
-		UnhookEvent("player_changeclass", Event_ChangeClass);
-		UnhookEvent("player_death", Event_PlayerDeath);
-		hasEnabled = false;
-	}
+	UnhookEvent("player_changeclass", Event_ChangeClass);
+	UnhookEvent("player_death", Event_PlayerDeath);
 }
 
 void startPlugin()
