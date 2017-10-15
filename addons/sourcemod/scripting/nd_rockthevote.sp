@@ -266,11 +266,13 @@ public Action Timer_StartMapVoteASAP(Handle timer)
 	if (!ND_TriggerMapVote())
 		return Plugin_Continue;
 		
-	else
+	else if (HasEndOfMapVoteFinished())
 	{
 		ChangeMap(0.5);
 		return Plugin_Stop;
 	}
+	
+	return Plugin_Continue;
 }
 
 public Action Timer_DelayMapChange(Handle timer)
