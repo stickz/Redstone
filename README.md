@@ -1,8 +1,4 @@
 # Redstone ND Server Project
-Looking for: An automated script to reboot servers at a specified time os everyday.
-See the startup scripts folder here: https://github.com/stickz/Redstone/tree/master/startup_scripts
-
-# Useful Information
 Get Started Using Github Here: https://guides.github.com/activities/hello-world/
 
 The current stable build environment for this github is sourcemod 1.7 build 5294.
