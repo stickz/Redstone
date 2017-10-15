@@ -1,3 +1,4 @@
+#define STRUCT_BUNKER "struct_command_bunker"
 #define STRUCT_ASSEMBLER "struct_assembler"
 #define STRUCT_TRANSPORT "struct_transport_gate"
 #define STRUCT_ARTILLERY "struct_artillery_explosion"
