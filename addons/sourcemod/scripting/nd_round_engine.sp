@@ -27,6 +27,7 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 bool roundStarted = false;
+bool roundStartedThisMap = false;
 bool roundEnded = false;
 bool mapStarted = false;
 
@@ -52,6 +53,7 @@ public void OnMapStart()
 public void OnMapEnd()
 {
 	roundStarted = false;
+	roundStartedThisMap = false;
 	mapStarted = false;
 	roundEnded = false;
 }
@@ -59,6 +61,7 @@ public void OnMapEnd()
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {
 	roundStarted = true;
+	roundStartedThisMap = true;
 	
 	Action dummy;
 	Call_StartForward(g_OnRoundStartedForward);
@@ -82,6 +85,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	CreateNative("ND_RoundStart", Native_GetRoundStarted);
 	CreateNative("ND_RoundStarted", Native_GetRoundStarted);
+	CreateNative("ND_RoundStartedThisMap", Native_GetRoundStartedEX);
 	
 	CreateNative("ND_RoundEnd", Native_GetRoundEnded);
 	CreateNative("ND_RoundEnded", Native_GetRoundEnded);
@@ -95,6 +99,11 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public int Native_GetRoundStarted(Handle plugin, int numParams)
 {
 	return _:roundStarted;
+}
+
+public int Native_GetRoundStartedEX(Handle plugin, int numParams)
+{
+	return _:roundStartedThisMap;
 }
 
 public int Native_GetRoundEnded(Handle plugin, int numParams)
