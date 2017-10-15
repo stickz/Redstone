@@ -54,9 +54,8 @@ public void ND_OnRoundStarted() {
 	startPlugin();
 }
 
-public void ND_OnRoundEnded() {
-	if (ND_RoundStartedThisMap())
-		disableBreakdowns();
+public void ND_OnRoundEndedEX() {
+	disableBreakdowns();
 }
 
 public Action Event_ChangeClass(Event event, const char[] name, bool dontBroadcast)
