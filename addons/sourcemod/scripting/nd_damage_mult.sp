@@ -86,7 +86,7 @@ public void ND_OnRoundEndedEX() {
 
 void HookEntitiesDamaged(bool lateLoad = false)
 {
-	SDK_HookEntityDamaged("struct_command_bunker", ND_OnBunkerDamaged);
+	SDK_HookEntityDamaged(STRUCT_BUNKER, ND_OnBunkerDamaged);
 	SDK_HookEntityDamaged(STRUCT_ASSEMBLER, ND_OnAssemblerDamaged);
 	SDK_HookEntityDamaged(STRUCT_TRANSPORT, ND_OnTransportDamaged);
 	
@@ -108,7 +108,7 @@ void HookEntitiesDamaged(bool lateLoad = false)
 
 void UnHookEntitiesDamaged()
 {
-	SDK_UnHookEntityDamaged("struct_command_bunker", ND_OnBunkerDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_BUNKER, ND_OnBunkerDamaged);
 	SDK_UnHookEntityDamaged(STRUCT_ASSEMBLER, ND_OnAssemblerDamaged);
 	SDK_UnHookEntityDamaged(STRUCT_TRANSPORT, ND_OnTransportDamaged);	
 	SDK_UnHookEntityDamaged(STRUCT_ARTILLERY, ND_OnArtilleryDamaged);
