@@ -11,6 +11,7 @@
 #define BREAKDOWN_UPDATE_RATE 1.5
 
 bool statusChanged = false;
+bool hasEnabled = false;
  
 enum ClassBreakdown
 {
@@ -216,13 +217,18 @@ void AddClientClass(int client)
 
 void disableBreakdowns()
 {
-	UnhookEvent("player_changeclass", Event_ChangeClass);
-	UnhookEvent("player_death", Event_PlayerDeath);
+	if (hasEnabled)
+	{
+		UnhookEvent("player_changeclass", Event_ChangeClass);
+		UnhookEvent("player_death", Event_PlayerDeath);
+		hasEnabled = false;
+	}
 }
 
 void startPlugin()
 {
 	statusChanged = true;
+	hasEnabled = true;
 	CreateTimer(BREAKDOWN_UPDATE_RATE, UpdateBreakdowns, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	
 	HookEvent("player_changeclass", Event_ChangeClass);
