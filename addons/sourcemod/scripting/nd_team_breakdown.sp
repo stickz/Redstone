@@ -224,7 +224,6 @@ void disableBreakdowns()
 void startPlugin()
 {
 	statusChanged = true;
-	hasEnabled = true;
 	CreateTimer(BREAKDOWN_UPDATE_RATE, UpdateBreakdowns, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	
 	HookEvent("player_changeclass", Event_ChangeClass);
