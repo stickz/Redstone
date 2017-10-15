@@ -40,7 +40,7 @@ bool cPrintChatMessage(int client, int team, const char[] pName, const char[] sA
 							nd_request_capture[resource]);
 		return true;
 	}
-	else if (StrIsWithin(sArgs, "res"))
+	else if (StrIsWithin(sArgs, "res") || StrIsWithin(sArgs, "point") || StrIsWithin(sArgs, "income"))
 	{
 		NDPC_PrintRequestS0(team, pName, "Generic Capture Request");
 		return true;	

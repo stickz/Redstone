@@ -107,12 +107,13 @@ void createAliasesForBuildings()
 	
 	nd_building_aliases[Sonic_Turret][0] = "son";
 	
-	nd_building_aliases[Rocket_Turret][0] = "rocket";	
+	nd_building_aliases[Rocket_Turret][0] = "rock";
+	nd_building_aliases[Rocket_Turret][1] = "rt";
 	
 	nd_building_aliases[Relay_Tower][0] = "tower";
 	
 	nd_building_aliases[Wireless_Repeater][0] = "wr";
-	nd_building_aliases[Wireless_Repeater][1] = "wireless";
+	nd_building_aliases[Wireless_Repeater][1] = "wire";
 	nd_building_aliases[Wireless_Repeater][2] = "repeat";
 	
 	nd_building_aliases[Assembler][0] = "ass";

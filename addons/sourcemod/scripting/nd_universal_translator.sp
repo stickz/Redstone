@@ -33,7 +33,7 @@ public Plugin myinfo =
 	name 		= "[ND] Project Communication",
 	author 		= "Stickz",
 	description 	= "Breaks Communication Barriers",
-	version 	= "rebuild",
+	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
