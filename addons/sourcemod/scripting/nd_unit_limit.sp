@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_breakdown>
 #include <nd_rounds>
 #include <nd_classes>
+#include <nd_redstone>
 
 #define TYPE_SNIPER 	0
 #define TYPE_STEALTH 	1
@@ -321,8 +322,8 @@ bool IsInvalidTeam(int client, int team)
 bool IsTooMuchSnipers(int client) 
 {
 	int clientTeam = GetClientTeam(client);	
-	int clientCount = ValidTeamCount(client);
-	int sniperCount = GetSniperCount(clientTeam);
+	int clientCount = RED_GetTeamCount(clientTeam);
+	int sniperCount = NDB_GetUnitCount(clientTeam, view_as<int>(uSnipers));
 	int teamIDX = clientTeam - 2;
 
 	if (!SetLimit[teamIDX][TYPE_SNIPER])
@@ -345,13 +346,11 @@ bool IsTooMuchStealth(int client)
 	if (!SetLimit[teamIDX][TYPE_STEALTH])
 		return false;
 		
-	int stealthCount = GetStealthCount(clientTeam);
-	int unitLimit = UnitLimit[teamIDX][TYPE_STEALTH];
-	
+	int unitLimit = UnitLimit[teamIDX][TYPE_STEALTH];	
 	int stealthMin = GetMinStealthValue(clientTeam);
 	int stealthLimit = stealthMin > unitLimit ? stealthMin : unitLimit;
 	
-	return stealthCount >= stealthLimit;
+	return NDB_GetUnitCount(clientTeam, view_as<int>(uStealth)) >= stealthLimit;
 }
 
 bool IsTooMuchAntiStructure(int client)
@@ -362,8 +361,8 @@ bool IsTooMuchAntiStructure(int client)
 	if (!SetLimit[teamIDX][TYPE_STRUCTURE])
 		return false;
 	
-	float AntiStructureFloat = float(GetAntiStructureCount(clientTeam));
-	float teamFloat = float(ValidTeamCount(clientTeam));
+	float AntiStructureFloat = float(NDB_GetUnitCount(clientTeam, view_as<int>(uAntiStructure)));
+	float teamFloat = float(RED_GetTeamCount(clientTeam));
 	float AntiStructurePercent = (AntiStructureFloat / teamFloat) * 100.0;
 	
 	int percentLimit = UnitLimit[clientTeam - 2][TYPE_STRUCTURE];
@@ -379,7 +378,7 @@ bool IsAntiStructure(int class, int subClass)
 }
 
 int GetMinStealthValue(int team) {
-	return ValidTeamCount(team) < STEALTH_EPLY_COUNT ? MIN_STEALTH_LOW_VALUE : MIN_STEALTH_HIGH_VALUE; 
+	return RED_GetTeamCount(team) < STEALTH_EPLY_COUNT ? MIN_STEALTH_LOW_VALUE : MIN_STEALTH_HIGH_VALUE; 
 }
 
 void ResetPlayerClass(int client) {

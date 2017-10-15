@@ -80,9 +80,13 @@ public void ND_OnRoundStarted()
 	UpdateConVarCache();
 }
 
+public void ND_OnRoundEndedEX() {
+	UnHookEntitiesDamaged();
+}
+
 void HookEntitiesDamaged(bool lateLoad = false)
 {
-	SDK_HookEntityDamaged("struct_command_bunker", ND_OnBunkerDamaged);
+	SDK_HookEntityDamaged(STRUCT_BUNKER, ND_OnBunkerDamaged);
 	SDK_HookEntityDamaged(STRUCT_ASSEMBLER, ND_OnAssemblerDamaged);
 	SDK_HookEntityDamaged(STRUCT_TRANSPORT, ND_OnTransportDamaged);
 	
@@ -102,11 +106,36 @@ void HookEntitiesDamaged(bool lateLoad = false)
 	}
 }
 
+void UnHookEntitiesDamaged()
+{
+	SDK_UnHookEntityDamaged(STRUCT_BUNKER, ND_OnBunkerDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_ASSEMBLER, ND_OnAssemblerDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_TRANSPORT, ND_OnTransportDamaged);	
+	SDK_UnHookEntityDamaged(STRUCT_ARTILLERY, ND_OnArtilleryDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_SONIC_TURRET, ND_OnFlamerTurretDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_FT_TURRET, ND_OnFlamerTurretDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_POWER_STATION, ND_OnPowerPlantDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_ARMOURY, ND_OnArmouryDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_RADAR, ND_OnRadarDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_MG_TURRET, ND_OnMGTurretDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_ROCKET_TURRET, ND_OnRocketTurretDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_SUPPLY, ND_OnSupplyStationDamaged);
+}
+
 void SDK_HookEntityDamaged(const char[] classname, SDKHookCB callback)
 {
         /* Find and hook when entities is damaged. */
 	int loopEntity = INVALID_ENT_REFERENCE;
 	while ((loopEntity = FindEntityByClassname(loopEntity, classname)) != INVALID_ENT_REFERENCE) {
 		SDKHook(loopEntity, SDKHook_OnTakeDamage, callback);		
+	}
+}
+
+void SDK_UnHookEntityDamaged(const char[] classname, SDKHookCB callback)
+{
+	/* Find and unhook when entities are damaged. */
+	int loopEntity = INVALID_ENT_REFERENCE;
+	while ((loopEntity = FindEntityByClassname(loopEntity, classname)) != INVALID_ENT_REFERENCE) {
+		SDKUnhook(loopEntity, SDKHook_OnTakeDamage, callback);		
 	}
 }

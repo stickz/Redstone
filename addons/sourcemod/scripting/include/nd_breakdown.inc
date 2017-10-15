@@ -3,14 +3,14 @@
 #endif
 #define _nd_breakdown_included
 
-enum ClassBreakdown
+enum ND_ClassBreakdown
 {
-	DirectCombat = 0,
-	Snipers,
-	AntiStructure,
-	Stealth,
-	Medic,
-	Engineer
+	uCombat = 0,
+	uSnipers,
+	uAntiStructure,
+	uStealth,
+	uMedic,
+	uEngineer
 }
 
 /**

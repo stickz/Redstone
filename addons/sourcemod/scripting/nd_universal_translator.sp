@@ -71,6 +71,7 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 	CreateConVars(); //create ConVars (from convars.sp)
 	RegComLangCommands(); // for commander_lang.sp
+	RegTeamLangCommands(); // for team_lang.sp
 	
 	/* Create alaises for various requests */
 	createAliasesForBuildings();

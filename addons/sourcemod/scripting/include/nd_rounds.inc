@@ -17,6 +17,16 @@ native bool ND_RoundStarted();
 #define NDRS_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStarted") == FeatureStatus_Available)
 
 /**
+ * Checks wether the round started this Map or not
+ * Works incase SimulateRoundEnd() is fired
+ *
+ * @return True or False 	Round Started this map.
+ */
+native bool ND_RoundStartedThisMap();
+
+#define NDRSTM_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStartedThisMap") == FeatureStatus_Available)
+
+/**
  * Checks wether the round is currently ended or not
  * Works for usage OnPluginStart() when for late loading
  *
@@ -48,6 +58,9 @@ forward void ND_OnRoundStarted();
 
 forward void ND_OnRoundEnd();
 forward void ND_OnRoundEnded();
+
+/* Only fires if the round has started this map */
+forward void ND_OnRoundEndedEX();
 
 /* Fires the RoundEnd forward to all plugins */
 native void ND_SimulateRoundEnd()
