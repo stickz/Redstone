@@ -6,6 +6,7 @@
 //Nuclear Dawn includes
 #include <nd_redstone>
 #include <nd_stocks>
+#include <nd_rounds>
 
 public Plugin myinfo =
 {
@@ -121,15 +122,13 @@ public Action Timer_StartMapVote(Handle timer, Handle data)
 	return Plugin_Stop;
 }
 
-/* You ask, why don't you just use team_score event? And I answer... Because CSS doesn't. */
-public Event_RoundEnd(Event event, const String:name[], bool:dontBroadcast)
+public void ND_OnRoundEndedEX()
 {
 	if (g_ChangeMapAtRoundEnd)
 	{
 		g_ChangeMapAtRoundEnd = false;
-
-		float delayTime = ND_GetClientCount() < 12 ? 8.0 : 16.0;		
-		CreateTimer(delayTime, Timer_ChangeMap, INVALID_HANDLE, TIMER_FLAG_NO_MAPCHANGE);
+		
+		CreateTimer(8.0, Timer_ChangeMap, INVALID_HANDLE, TIMER_FLAG_NO_MAPCHANGE);
 		g_ChangeMapInProgress = true;
 	}
 }
