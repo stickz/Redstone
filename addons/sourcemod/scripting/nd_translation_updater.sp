@@ -38,6 +38,6 @@ public Updater_OnPluginUpdated() {
 	PrintToChatAll("\x05[xG] Server translations updated from github!");
 }
 
-public void ND_OnRoundEnded() {
+public void ND_OnRoundEndedEX() {
 	ServerCommand("sm_updater_check");
 }
