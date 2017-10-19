@@ -2,7 +2,7 @@ void RegisterCommands()
 {
 	RegAdminCmd("ToggleLocks", DisableTeamChg, ADMFLAG_GENERIC);
 	RegAdminCmd("ShowPickMenu", ShowPickMenu, ADMFLAG_GENERIC);	
-	RegAdminCmd("ReloadPicker", ReloadPlugin, ADMFLAG_GENERIC);
+	RegAdminCmd("ReloadPicker", ReloadTeamPicker, ADMFLAG_GENERIC);
 	RegAdminCmd("StopPicker", StopTeamPicking, ADMFLAG_GENERIC);	
 }
 
@@ -12,7 +12,7 @@ public Action StopTeamPicking(int client, int args)
 	return Plugin_Handled;
 }
 
-public Action ReloadPlugin(int client, int args)
+public Action ReloadTeamPicker(int client, int args)
 {
 	char Name[32];
 	GetClientName(client, Name, sizeof(Name));
