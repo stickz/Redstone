@@ -24,13 +24,13 @@ bool doublePlace = true;
 bool firstPlace = true;
 bool checkPlacement = true;
 
-#include "nd_team_pick/commands.sp"
-#include "nd_team_pick/start_picking.sp"
-#include "nd_team_pick/picking_process.sp"
-
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_team_picking/nd_team_picking.txt"
 #include "updater/standard.sp"
+
+#include "nd_team_pick/commands.sp"
+#include "nd_team_pick/start_picking.sp"
+#include "nd_team_pick/picking_process.sp"
 
 public void OnPluginStart() 
 {
