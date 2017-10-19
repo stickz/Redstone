@@ -3,13 +3,13 @@
 #include <nd_rounds>
 #include <nd_redstone>
 
-public Plugin:myinfo = 
+public Plugin myinfo = 
 {
 	name = "[ND] Team Picker",
 	author = "Stickz",
 	description = "Lets two selected commanders pick their team",
 	version = "dummy",
-	url = "<- URL ->"
+	url = "https://github.com/stickz/Redstone/"
 }
 
 #define CONSORT_aIDX 0
@@ -24,13 +24,13 @@ bool doublePlace = true;
 bool firstPlace = true;
 bool checkPlacement = true;
 
-#include "nd_team_pick/commands.sp"
-#include "nd_team_pick/start_picking.sp"
-#include "nd_team_pick/picking_process.sp"
-
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_team_picking/nd_team_picking.txt"
 #include "updater/standard.sp"
+
+#include "nd_team_pick/commands.sp"
+#include "nd_team_pick/start_picking.sp"
+#include "nd_team_pick/picking_process.sp"
 
 public void OnPluginStart() 
 {
