@@ -21,7 +21,7 @@ public Action ReloadTeamPicker(int client, int args)
 	DisplayReloadedPlugin(client);
 	
 	// Reload the team picking plugin
-	ServerCommand("sm plugins reload ND_TeamPicking");	
+	ServerCommand("sm plugins reload nd_team_picking");	
 	return Plugin_Handled;
 }
 
