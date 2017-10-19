@@ -21,7 +21,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			last_choice[cur_team_choosing - 2] = selectedPlayer;
 
 			// If the selected player is valid, do the picking routine
-			if (RED_IsValidClient(selectedPlayer))
+			if (RED_IsValidClient(client))
 			{			
 				
 				/* Switch Algorithum! 
