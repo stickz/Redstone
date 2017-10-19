@@ -3,13 +3,13 @@
 #include <nd_rounds>
 #include <nd_redstone>
 
-public Plugin:myinfo = 
+public Plugin myinfo = 
 {
 	name = "[ND] Team Picker",
 	author = "Stickz",
 	description = "Lets two selected commanders pick their team",
 	version = "dummy",
-	url = "<- URL ->"
+	url = "https://github.com/stickz/Redstone/"
 }
 
 #define CONSORT_aIDX 0
