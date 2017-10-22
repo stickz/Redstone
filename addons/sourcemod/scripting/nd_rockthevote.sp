@@ -208,7 +208,7 @@ void callRockTheVote(int client)
 void checkForPass(bool display = false, int client = -1)
 {	
 	bool InsRTV = InstantRTVMap();		
-	float passPercent = getPassPercentage(); // Changes based on timeout and map
+	float passPercent = getPassPercentage(InsRTV); // Changes based on timeout and map
 	
 	// Get the client count on the server. Try Redstone native first.
 	int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
@@ -232,7 +232,7 @@ void checkForPass(bool display = false, int client = -1)
 		displayVotes(Remainder, client);
 }
 
-float getPassPercentage()
+float getPassPercentage(bool InsRTV)
 {
 	// Set percentage required to pass AFTER timeout for popular and unpopular maps
 	if (!g_Bool[enableRTV])
