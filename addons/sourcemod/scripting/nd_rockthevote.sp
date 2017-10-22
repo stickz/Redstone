@@ -67,10 +67,11 @@ int insCusMaps[C_INS_SIZE] = {
 	view_as<int>(ND_Corner)
 };
 
-#define S_INS_SIZE 2
+#define S_INS_SIZE 3
 int insStockMaps[S_INS_SIZE] = {
 	view_as<int>(ND_Oilfield),
-	view_as<int>(ND_Clocktower)
+	view_as<int>(ND_Clocktower),
+	view_as<int>(ND_Gate)
 };
 
 int voteCount;	
