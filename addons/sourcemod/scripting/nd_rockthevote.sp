@@ -18,7 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nextmap>
 
 // Hack - Too lazy to create include file
-forward void ND_OnWarmupComplete();
 native bool ND_TriggerMapVote();
 
 /* Auto Updater */
@@ -32,14 +31,14 @@ native bool ND_TriggerMapVote();
 #include <nd_redstone>
 #include <nd_print>
 #include <nd_maps>
+#include <nd_warmup>
 #include <mapchooser>
 
 enum Bools
 {
 	enableRTV,
 	hasPassedRTV,
-	hasMapVoteStarted,
-	hasWarmupCompleted
+	hasMapVoteStarted
 };
 
 #define TEAM_SPEC		1
@@ -112,10 +111,6 @@ public void OnPluginStart()
 	}
 }
 
-public void ND_OnWarmupComplete() {
-	g_Bool[hasWarmupCompleted] = true;
-}
-
 public void OnMapVoteStarted() {
 	g_Bool[hasMapVoteStarted] = true;
 }
@@ -146,7 +141,6 @@ public void OnMapStart()
 	g_Bool[enableRTV] 	= true;
 	g_Bool[hasPassedRTV] 	= false;
 	g_Bool[hasMapVoteStarted] = false;
-	g_Bool[hasWarmupCompleted] = false;
 	
 	for (int client = 1; client <= MaxClients; client++) {
 		g_hasVoted[client] = false;	
@@ -194,7 +188,7 @@ void callRockTheVote(int client)
 	else if (ND_RoundEnded())
 		PrintMessage(client, "Round Ended");
 		
-	else if (!g_Bool[hasWarmupCompleted] && !ND_RoundStarted())
+	else if (!ND_WarmupCompleted() && !ND_RoundStarted())
 		PrintMessage(client, "Round Start");
 
 	else
