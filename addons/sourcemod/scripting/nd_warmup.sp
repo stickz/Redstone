@@ -29,7 +29,8 @@ enum Bools
 	useBalancer,
 	runBalancer,
 	enableBalancer,
-	pauseWarmup
+	pauseWarmup,
+	warmupCompleted
 };
 
 enum Integers
@@ -231,6 +232,7 @@ void SetWarmupEndType()
 		ServerCommand("sm_balance 0"); // Disable team balancer plugin
 		ServerCommand("sm_commander_restrictions 0"); // Disable commander restrictions
 		PrintToAdmins("\x05[xG] Team Picking is now availible!", "b");
+		g_Bool[warmupCompleted] = true;
 		FireWarmupCompleteForward();
 		
 		return;
@@ -283,6 +285,7 @@ void SetVarDefaults()
 {
 	g_Bool[useBalancer] = false;
 	g_Bool[runBalancer] = true;
+	g_Bool[warmupCompleted] = false;
 	g_Bool[enableBalancer] = g_Cvar[enableWarmupBalance].BoolValue;
 	g_Integer[warmupTextType] = 0;
 }
@@ -297,4 +300,15 @@ ToogleWarmupConvars(value)
 	 * ServerCommand("nd_spawn_min_time 6");
 	 * ServerCommand("nd_spawn_wave_interval 12");
 	 */
+}
+
+/* Natives */
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	CreateNative("ND_WarmupCompleted", Native_GetWarmupCompleted);
+	return APLRes_Success;
+}
+
+public Native_GetPlayerSkill(Handle plugin, int numParms) {
+	return _:g_Bool[warmupCompleted];
 }
