@@ -94,7 +94,7 @@ public void OnMapStart() {
 	g_Bool[timeOut] = false;
 }
 
-public void ND_OnRoundEnded()
+public void ND_OnRoundEndedEX()
 {		
 	g_Bool[relaxedRestrictions] = false;
 	g_Bool[timeOut] = false;
