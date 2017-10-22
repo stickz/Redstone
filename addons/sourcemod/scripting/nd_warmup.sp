@@ -228,7 +228,8 @@ void SetWarmupEndType()
 	if (g_Bool[pauseWarmup])
 	{
 		ServerCommand("sm_cvar sv_alltalk 0"); //Disable AT while picking, but enable FF.
-		ServerCommand("sm_balance 0");
+		ServerCommand("sm_balance 0"); // Disable team balancer plugin
+		ServerCommand("sm_commander_restrictions 0"); // Disable commander restrictions
 		PrintToAdmins("\x05[xG] Team Picking is now availible!", "b");
 		FireWarmupCompleteForward();
 		
