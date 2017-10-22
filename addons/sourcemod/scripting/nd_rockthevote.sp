@@ -80,7 +80,8 @@ bool g_hasVoted[MAXPLAYERS+1] = {false, ... };
 ConVar cvarMinPlayers;
 ConVar cvarTimeWindow;
 ConVar cvarPercentPass;
-ConVar cvarPercentPassEx;
+ConVar cvarPercentPassAfter;
+ConVar cvarPercentPassAfterEX;
 
 public Plugin myinfo =
 {
@@ -206,9 +207,11 @@ void checkForPass(bool display = false, int client = -1)
 {	
 	bool InsRTV = InstantRTVMap();
 	
-	// Set percentage required to pass before or after the timeout
-	// Don't have a timeout for unpopular maps
-	float passPercent = (g_Bool[enableRTV] || InsRTV) ? cvarPercentPass.FloatValue : cvarPercentPassEx.FloatValue;
+	// Set percentage required to pass before timeout
+	// Set a different percent pass for instant rtv maps after timeout
+	float passPercent = cvarPercentPass.FloatValue;
+	if (!g_Bool[enableRTV])
+		passPercent = InsRTV ? cvarPercentPassAfterEX.FloatValue : cvarPercentPassAfter.FloatValue;
 	
 	// Get the client count on the server. Try Redstone native first.
 	int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
@@ -311,8 +314,9 @@ void CreatePluginConvars()
 {
 	cvarMinPlayers	= CreateConVar("sm_rtv_minp", "4", "Set's the min players to pass rtv regardless of player count.");
 	cvarTimeWindow	= CreateConVar("sm_rtv_time", "8", "Set's how many minutes after round start players have to rtv");
-	cvarPercentPass	= CreateConVar("sm_rtv_percent", "51", "Set's percent of players required to change the map");
-	cvarPercentPassEx = CreateConVar("sm_rtv_per_after", "70", "Set's percent of players required to change the map after timeout");
+	cvarPercentPass	= CreateConVar("sm_rtv_percent", "40", "Set's percent of players required to change the map");
+	cvarPercentPassAfter = CreateConVar("sm_rtv_per_after", "60", "Set's normal percent to change the map after timeout");
+	cvarPercentPassAfterEX = CreateConVar("sm_rtv_per_after_ex", "51", "Set's adnormal percent to change the map after timeout");
 	
 	AutoExecConfig(true, "nd_rockthevote");
 }
