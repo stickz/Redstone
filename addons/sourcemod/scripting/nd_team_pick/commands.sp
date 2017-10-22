@@ -14,13 +14,22 @@ public Action StopTeamPicking(int client, int args)
 
 public Action ReloadTeamPicker(int client, int args)
 {
-	char Name[32];
-	GetClientName(client, Name, sizeof(Name));
+	// Terminate team picking procress before reloading
+	FinishPicking(true);
 	
-	PrintToChatAll("\x05[xG] %s reloaded the team picker plugin!", Name);
-	ServerCommand("sm plugins reload ND_TeamPicking");
+	// Display a message the plugin is about to be reloaded
+	DisplayReloadedPlugin(client);
 	
+	// Reload the team picking plugin
+	ServerCommand("sm plugins reload nd_team_picking");	
 	return Plugin_Handled;
+}
+
+void DisplayReloadedPlugin(int client)
+{
+	char Name[32];
+	GetClientName(client, Name, sizeof(Name));	
+	PrintToChatAll("\x05[xG] %s reloaded the team picker plugin!", Name);
 }
 
 public Action DisableTeamChg(int client, intargs) 

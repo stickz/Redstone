@@ -47,7 +47,7 @@ public void OnPluginStart()
 
 public Action Command_JoinTeam(int client, char[] command, int argc)
 {
-	if (g_bEnabled)
+	if (!ND_RoundStarted() && g_bEnabled)
 	{
 		PrintToChat(client,"\x05Please stay in spectator until you're chosen.");
 		return Plugin_Handled;

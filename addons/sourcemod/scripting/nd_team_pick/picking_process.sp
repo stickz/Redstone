@@ -21,36 +21,9 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			last_choice[cur_team_choosing - 2] = selectedPlayer;
 
 			// If the selected player is valid, do the picking routine
-			if (RED_IsValidClient(selectedPlayer))
+			if (RED_IsValidClient(client))
 			{			
-				
-				/* Switch Algorithum! 
-				 * One team gets to pick the first player.
-				 * The next team gets to pick the two in a row.
-				 * Afterwards, take turns picking one player at a time.
-				 */
-				if (checkPlacement)
-				{		
-					if (firstPlace)
-					{
-						firstPlace = false;					
-						SwitchPickingTeam();
-						
-						int otherTeam = getOtherTeam(cur_team_choosing);
-						PrintToChatAll("\x05[xG] %s got the first pick!", ND_GetTeamName(cur_team_choosing));
-						PrintToChatAll("\x05[xG] %s gets the next two picks!", ND_GetTeamName(otherTeam)); 
-					}
-					
-					else if (doublePlace)
-					{
-						doublePlace = false;
-						checkPlacement = false;
-						
-						SetConstantPickingTeam();
-					}
-				}				
-				else
-					SwitchPickingTeam();
+				SetPickingTeam(); // Decide which team gets the next pick
 				
 				// If a player was selected (picked) by the team captain
 				if (selectedPlayer != NO_PLAYER_SELECTED) 
@@ -76,6 +49,15 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 				// Otherwise, continue displaying the menu to pick players.
 				else 
 					Menu_PlayerPick(next_comm, next_team);
+			}
+			
+			// If both teams have sent cancel, that means picking is complete
+			else if (PickingComplete())
+			{
+				// Run the finish routine and close off the menu
+				FinishPicking();					
+				if (menu != INVALID_HANDLE)
+					CloseHandle(menu);
 			}
 			
 			// Otherwise, refresh the menu and have the player pick anther option.
@@ -118,17 +100,17 @@ public Action Menu_PlayerPick(int client, int args)
 		TerminatePicking();
 		PrintToChatAll("\x05[xG] Picking terminated. A team captain left the server.");
 		return Plugin_Handled;
-	}	
+	}
 	// Otherwise, build the menu object that will be used to pick players.	
 	// Set the current team choosing
 	int clientTeam = GetClientTeam(client);
 	cur_team_choosing = clientTeam;	
-	
+
 	// Initialize menu object. Set menu title and exit button properties
 	PickingMenu = CreateMenu(Handle_PickPlayerMenu);
 	SetMenuTitle(PickingMenu, "Choose next person to add to %s", ND_GetTeamName(clientTeam));
 	SetMenuExitButton(PickingMenu, false);	
-	
+
 	// Precast varriables and loop through all the players on the server
 	char currentName[60], currentUser[30];	
 	for (int player = 0; player <= MaxClients; player++) 
@@ -142,7 +124,7 @@ public Action Menu_PlayerPick(int client, int args)
 			AddMenuItem(PickingMenu, currentUser, currentName);			
 		}
 	}
-	
+
 	// Add the menu item skip and display the menu to the team captain
 	AddMenuItem(PickingMenu, "-1", "End/Skip");
 	DisplayMenu(PickingMenu, client, 300); 
@@ -162,7 +144,7 @@ void SwitchPickingTeam()
 		case TEAM_CONSORT:
 		{
 			next_comm = team_captain[EMPIRE_aIDX];
-			next_team = TEAM_EMPIRE;	
+			next_team = TEAM_EMPIRE;
 		}
 							
 		case TEAM_EMPIRE:
@@ -172,23 +154,53 @@ void SwitchPickingTeam()
 		}
 	}
 }
+void SetPickingTeam()
+{
+	/* Switch Algorithum! 
+	 * One team gets to pick the first player.
+	 * The next team gets to pick the two in a row.
+	 * Afterwards, take turns picking one player at a time.
+	 */
+	if (checkPlacement)
+	{
+		if (firstPlace)
+		{
+			firstPlace = false;				
+			SwitchPickingTeam();
+
+			int otherTeam = getOtherTeam(cur_team_choosing);
+			PrintToChatAll("\x05[xG] %s got the first pick!", ND_GetTeamName(cur_team_choosing));
+			PrintToChatAll("\x05[xG] %s gets the next two picks!", ND_GetTeamName(otherTeam));
+		}
+
+		else if (doublePlace)
+		{
+			doublePlace = false;
+			checkPlacement = false;
+
+			SetConstantPickingTeam();
+		}
+	}
+	else
+		SwitchPickingTeam();
+}
 bool PickingComplete()
 {
 	return 	last_choice[CONSORT_aIDX] == NO_PLAYER_SELECTED && 
-			last_choice[EMPIRE_aIDX] == NO_PLAYER_SELECTED;
+		last_choice[EMPIRE_aIDX] == NO_PLAYER_SELECTED;
 }
 void FinishPicking(bool forced = false)
 {
 	g_bEnabled = false;
 	g_bPickStarted = false;
-	
+
 	if (!forced)
 		PrintToChatAll("\x05Player Picking has been completed.");
 }
 void TerminatePicking()
 {
 	FinishPicking(true);
-	
+
 	if (PickingMenu != INVALID_HANDLE)
 		CloseHandle(PickingMenu);
 }

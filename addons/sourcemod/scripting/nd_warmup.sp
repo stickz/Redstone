@@ -87,7 +87,7 @@ public void ND_OnRoundEnded() {
 }
 
 public void ND_OnRoundStarted() {
-	ToogleWarmupConvars(VALUE_TYPE_DISABLED, g_Bool[pauseWarmup]);
+	ToogleWarmupConvars(VALUE_TYPE_DISABLED);
 }
 
 public Action TIMER_WarmupRound(Handle timer)
@@ -228,7 +228,8 @@ void SetWarmupEndType()
 	if (g_Bool[pauseWarmup])
 	{
 		ServerCommand("sm_cvar sv_alltalk 0"); //Disable AT while picking, but enable FF.
-		ServerCommand("sm_balance 0");
+		ServerCommand("sm_balance 0"); // Disable team balancer plugin
+		ServerCommand("sm_commander_restrictions 0"); // Disable commander restrictions
 		PrintToAdmins("\x05[xG] Team Picking is now availible!", "b");
 		FireWarmupCompleteForward();
 		
@@ -286,10 +287,10 @@ void SetVarDefaults()
 	g_Integer[warmupTextType] = 0;
 }
 
-ToogleWarmupConvars(value, overrideFF = false)
+ToogleWarmupConvars(value)
 {
 	ServerCommand("sm_cvar sv_alltalk %d", value);
-	ServerCommand("sm_cvar mp_friendlyfire %d", overrideFF ? VALUE_TYPE_ENABLED : value);	
+	ServerCommand("sm_cvar mp_friendlyfire %d", value);	
 	
 	/* 
 	 * cannot use spawn time feature yet due to quick join penalty
