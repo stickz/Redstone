@@ -81,6 +81,7 @@ bool g_hasVoted[MAXPLAYERS+1] = {false, ... };
 ConVar cvarMinPlayers;
 ConVar cvarTimeWindow;
 ConVar cvarPercentPass;
+ConVar cvarPercentPassEX;
 ConVar cvarPercentPassAfter;
 ConVar cvarPercentPassAfterEX;
 
@@ -206,13 +207,8 @@ void callRockTheVote(int client)
 
 void checkForPass(bool display = false, int client = -1)
 {	
-	bool InsRTV = InstantRTVMap();
-	
-	// Set percentage required to pass before timeout
-	// Set a different percent pass for instant rtv maps after timeout
-	float passPercent = cvarPercentPass.FloatValue;
-	if (!g_Bool[enableRTV])
-		passPercent = InsRTV ? cvarPercentPassAfterEX.FloatValue : cvarPercentPassAfter.FloatValue;
+	bool InsRTV = InstantRTVMap();		
+	float passPercent = getPassPercentage(InsRTV); // Changes based on timeout and map
 	
 	// Get the client count on the server. Try Redstone native first.
 	int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
@@ -234,6 +230,16 @@ void checkForPass(bool display = false, int client = -1)
 		
 	else if (display)
 		displayVotes(Remainder, client);
+}
+
+float getPassPercentage(bool InsRTV)
+{
+	// Set percentage required to pass AFTER timeout for popular and unpopular maps
+	if (!g_Bool[enableRTV])
+		return InsRTV ? cvarPercentPassAfterEX.FloatValue : cvarPercentPassAfter.FloatValue;
+	
+	// Set percentage required to pass BEFORE timeout for popular and unpopular maps
+	return InsRTV ? cvarPercentPassEX.FloatValue : cvarPercentPass.FloatValue;
 }
 
 void resetValues(int client)
@@ -315,7 +321,8 @@ void CreatePluginConvars()
 {
 	cvarMinPlayers	= CreateConVar("sm_rtv_minp", "4", "Set's the min players to pass rtv regardless of player count.");
 	cvarTimeWindow	= CreateConVar("sm_rtv_time", "8", "Set's how many minutes after round start players have to rtv");
-	cvarPercentPass	= CreateConVar("sm_rtv_percent", "40", "Set's percent of players required to change the map");
+	cvarPercentPass	= CreateConVar("sm_rtv_percent", "40", "Set's normal percent to change the map");
+	cvarPercentPassEX = CreateConVar("sm_rtv_percent_ex", "51", "Set's adnormal percent to change the map"); 
 	cvarPercentPassAfter = CreateConVar("sm_rtv_per_after", "60", "Set's normal percent to change the map after timeout");
 	cvarPercentPassAfterEX = CreateConVar("sm_rtv_per_after_ex", "51", "Set's adnormal percent to change the map after timeout");
 	
