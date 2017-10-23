@@ -7,6 +7,15 @@
 
 #define TEAMDIFF_UPDATE_RATE 3.0 //NOTE: This value MUST be a float (ie. 3.0 not 3)
 
+public Plugin myinfo =
+{
+	name 		= "[ND] Teamdiff Display",
+	author		= "Stickz",
+	description 	= "Display team difference to players",
+	version 	= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
+};
+
 #include "nd_teamdiff/hud_display.sp"
 #include "nd_teamdiff/commands.sp"
 
