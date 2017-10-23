@@ -8,7 +8,6 @@
 #define REQUIRE_EXTENSIONS
 
 /* Plugin Info */
-// This is a comment to trigger a plugin rebuild
 public Plugin:myinfo =
 {
 	name = "Plugin Updater",
@@ -19,7 +18,7 @@ public Plugin:myinfo =
 };
 
 /* Globals */
-#define DEBUG		// This will enable verbose logging. Useful for developers testing their updates.
+//#define DEBUG		// This will enable verbose logging. Useful for developers testing their updates.
 
 #define SOCKET_AVAILABLE()		(GetFeatureStatus(FeatureType_Native, "SocketCreate") == FeatureStatus_Available)
 #define STEAMWORKS_AVAILABLE()	(GetFeatureStatus(FeatureType_Native, "SteamWorks_WriteHTTPResponseBodyToFile") == FeatureStatus_Available)
