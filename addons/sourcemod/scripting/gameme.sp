@@ -1,7 +1,7 @@
 /**
  * gameME Plugin
  * http://www.gameme.com
- * Copyright (C) 2007-2016 TTS Oetzel & Goerz GmbH
+ * Copyright (C) 2007-2017 TTS Oetzel & Goerz GmbH
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1237,12 +1237,14 @@ get_server_mod()
 			
 			}
 			case MOD_INSMOD: {
-				HookEvent("player_death", 			 Event_INSMODPlayerDeath);
-				HookEvent("player_hurt",  			 Event_INSMODPlayerHurt); 
-				HookEvent("weapon_fire",  			 Event_INSMODEventFired);
-				HookEvent("player_spawn", 			 Event_INSMODPlayerSpawn);
-				HookEvent("player_pick_squad",       Event_INSMODPlayerPickSquad);
-				HookEvent("round_end",    			 Event_INSMODRoundEnd);
+				HookEvent("player_death", 		Event_INSMODPlayerDeath);
+				HookEvent("player_hurt",  		Event_INSMODPlayerHurt); 
+				HookEvent("weapon_fire",  		Event_INSMODEventFired);
+				HookEvent("player_spawn", 		Event_INSMODPlayerSpawn);
+				HookEvent("player_pick_squad",       	Event_INSMODPlayerPickSquad);
+				HookEvent("round_end",    		Event_INSMODRoundEnd);
+				HookEvent("object_destroyed",		Event_INSMODObjectiveDestroyed);
+ 				HookEvent("controlpoint_captured",	Event_INSMODControlpointCapped);
 			}	
 			case MOD_HL2MP: {
 				HookEvent("player_death",            Event_HL2MPPlayerDeath);
@@ -3923,7 +3925,7 @@ public Action: gameme_raw_message(args)
 
 					decl String: session_hpk_param[16];
 					GetCmdArg(29, session_hpk_param, 16);					
-					WritePackFloat(pack, StringToFloat(hpk_param)); // session_hpk
+					WritePackFloat(pack, StringToFloat(session_hpk_param)); // session_hpk
 
 					decl String: session_acc_param[16];
 					GetCmdArg(30, session_acc_param, 16);					
@@ -5633,29 +5635,43 @@ public Event_L4DAward(Handle: event, const String: name[], bool:dontBroadcast)
 }
 
 
-public Action: Event_INSMODObjMsg(UserMsg: msg_id, Handle:bf, const players[], playersNum, bool:reliable, bool:init)
-{ 
-	new objective_point = BfReadByte(bf); // Objective Point: 1 = point A, 2 = point B, 3 = point C, etc.
-	new cap_status = BfReadByte(bf); // Capture Status: 1 on starting capture, 2 on finished capture
-	new team_index = BfReadByte(bf); // Team Index: 1 = Marines, 2 = Insurgents
-	
-	if ((cap_status == 2) && (strcmp(team_list[team_index], "") != 0)) {
-		switch (objective_point) {
-			case 1:
-				log_team_event(team_list[team_index], "point_captured", "point_a");
-			case 2:
-				log_team_event(team_list[team_index], "point_captured", "point_b");
-			case 3:
-				log_team_event(team_list[team_index], "point_captured", "point_c");
-			case 4:
-				log_team_event(team_list[team_index], "point_captured", "point_d");
-			case 5:
-				log_team_event(team_list[team_index], "point_captured", "point_e");
-		}
-	}
-
-	return Plugin_Continue;
-} 
+public Action: Event_INSMODObjectiveDestroyed(Handle: event, const String: name[], bool: dontBroadcast)
+{
+	//"team"		"byte"
+	//"attacker"	"byte"
+	//"cp"			"short"
+	//"index"		"short"
+	//"type"		"byte"
+	//"weapon"		"string"
+	//"weaponid"	"short"
+ 	//"assister"	"byte"
+ 	//"attackerteam" "byte"
+ 
+ 	new client = GetClientOfUserId(GetEventInt(event, "attacker"));
+ 	if ((client > 0) && (client <= MaxClients) && (IsClientInGame(client))) {
+ 		log_player_event(client, "triggered", "obj_destroyed");
+ 	}
+ }
+ 
+ 
+ public Action: Event_INSMODControlpointCapped(Handle: event, const String: name[], bool: dontBroadcast)
+ {
+ 	//	"priority"	"short"
+ 	//	"cp"		"byte"
+ 	//	"cappers"	"string"
+ 	//	"cpname"	"string"
+ 	//	"team"		"byte"
+ 
+ 	decl String: cappers[256];
+ 	GetEventString(event, "cappers", cappers, sizeof(cappers));
+ 	
+ 	for (new i = 0; i < strlen(cappers); i++) {
+ 		new client = cappers[i];
+ 		if ((client > 0) && (client <= MaxClients) && (IsClientInGame(client))) {
+ 			log_player_event(client, "triggered", "obj_captured");
+ 		}
+ 	}	
+ }
 
 
 public Event_TF2StealSandvich(Handle: event, const String: name[], bool:dontBroadcast)
