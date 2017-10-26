@@ -7,6 +7,7 @@
 #include <nd_redstone>
 #include <nd_com_eng>
 #include <nd_aweight>
+#include <nd_entities>
 
 #define _DEBUG 0
 
@@ -17,8 +18,6 @@
 
 float GameME_PlayerSkill[MAXPLAYERS+1] = {-1.0,...};
 float GameME_CommanderSkill[MAXPLAYERS+1] = {-1.0,...};
-
-int playerResEntity = -1;
 
 float lastAverage = 0.0;
 float lastMedian = 0.0;
@@ -67,10 +66,6 @@ public void OnPluginStart()
 	
 	if (ND_RoundStarted())
 		startSPMTimer();
-}
-
-public void OnMapStart() {
-	playerResEntity = GetPlayerResourceEntity();	
 }
 
 public void GameME_OnSkillCalculated(int client, float base, float skill) {

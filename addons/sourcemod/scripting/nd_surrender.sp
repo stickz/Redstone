@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_com_eng>
 #include <nd_rounds>
 #include <nd_print>
+#include <nd_entities>
 
 enum Bools
 {
@@ -35,7 +36,6 @@ enum Bools
 };
 
 int voteCount[2];
-int teamBunkers[2];
 bool g_Bool[Bools];
 bool g_commanderVoted[2] = {false, ...};
 bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... };
@@ -82,7 +82,6 @@ public void ND_OnRoundStarted()
 	{
 		voteCount[i] = 0;
 		g_commanderVoted[i] = false;
-		teamBunkers[i] = -1;
 	}
 	
 	float surrenderSeconds = cvarSurrenderTimeout.FloatValue * 60;
@@ -96,8 +95,6 @@ public void ND_OnRoundStarted()
 		g_hasVotedEmpire[client] = false;
 		g_hasVotedConsort[client] = false;
 	}
-	
-	CreateTimer(1.5, TIMER_SetBunkerEnts, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void ND_OnRoundEnded() {
@@ -148,24 +145,8 @@ public Action TIMER_DisplaySurrender(Handle timer, any team)
 	}
 }
 
-public Action TIMER_SetBunkerEnts(Handle timer) {
-	setBunkerEntityIndexs();
-}
-
 bool bunkerHealthTooLow(int team) {
-	return GetEntProp(teamBunkers[team-2], Prop_Send, "m_iHealth") < cvarLowBunkerHealth.IntValue; 
-}
-
-void setBunkerEntityIndexs()
-{	
-	// loop through all entities finding the bunkers
-	int loopEntity = INVALID_ENT_REFERENCE;
-	while ((loopEntity = FindEntityByClassname(loopEntity, "struct_command_bunker")) != INVALID_ENT_REFERENCE)
-	{
-		// cache them, so we can find their health really quick later
-		int team = GetEntProp(loopEntity, Prop_Send, "m_iTeamNum") - 2;
-		teamBunkers[team] = loopEntity;	
-	}
+	return GetEntProp(ND_GetTeamBunkerEntity(team), Prop_Send, "m_iHealth") < cvarLowBunkerHealth.IntValue; 
 }
 
 void callSurrender(int client)

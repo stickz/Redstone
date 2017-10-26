@@ -9,7 +9,6 @@
 int	connectionTime[MAXPLAYERS+1] = {-1, ...};
 int	scorePerMinute[MAXPLAYERS+1] = {-1, ...};
 int	previousTeam[MAXPLAYERS+1] = {-1, ...};
-int playerManager = -1;
 
 /*Update Score per Minute Data */
 public Action TIMER_updateSPM(Handle timer)
@@ -26,14 +25,13 @@ public Action TIMER_updateSPM(Handle timer)
 }
 
 void startSPMTimer() {
-	playerManager = FindEntityByClassname(-1, "nd_player_manager");
 	CreateTimer(60.0, TIMER_updateSPM, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);	
 }
 
 void UpdateSPM()
 {
 	int clientScore;
-	int	spmAverage[2];
+	int spmAverage[2];
 	int cTeamM2;
 	float SPM;
 	float cSkill;
@@ -53,7 +51,7 @@ void UpdateSPM()
 			if (connectionTime[client] >= 1)
 			{
 				/* Update client's score per minute each minute */
-				clientScore = RetrieveScore(client, playerManager);
+				clientScore = ND_RetrieveScore(client);
 				SPM = (float(clientScore) / float(connectionTime[client])) * SCORE_BASED_MULTIPLIER;
 				scorePerMinute[client] = RoundFloat(SPM);
 				cSkill = GetSkillLevel(client);

@@ -6,6 +6,7 @@
 #include <nd_stocks>
 #include <nd_redstone>
 #include <nd_aweight>
+#include <nd_entities>
 
 /* Notice to plugin contributors: please create a new native and void,
  * When modifying the sorting or placement algorithum to allow for proper testing.
@@ -48,15 +49,14 @@ void BalanceTeams()
 	
 	/* Store the clients we're balancing into an array */
 	ArrayList players = new ArrayList(4, MaxClients+1);	
-	bool roundStarted = ND_RoundStarted();	
-	int resEntity = GetPlayerResourceEntity();
+	bool roundStarted = ND_RoundStarted();
 	
 	int client = 1;
 	players.Set(0, -1);
 	
 	int skill = 0;
-	for (; client <= MaxClients; client++){ 
-		skill = GetFinalSkill(client, roundStarted, resEntity);
+	for (; client <= MaxClients; client++) { 
+		skill = GetFinalSkill(client, roundStarted);
 		players.Set(client, skill);
 	}
 	
@@ -138,9 +138,9 @@ bool IsReadyForBalance(int client, bool roundStarted)
 	return !roundStarted ? team != TEAM_UNASSIGNED : team > TEAM_SPEC;	
 }
 
-int GetSkillLevel(int client, int playerMan)
+int GetSkillLevel(int client)
 {
-	int level = RetreiveLevel(client, playerMan);
+	int level = ND_RetreiveLevel(client);
 	int sFloor = ND_GetSkillFloor(client);
 	
 	/* Load all skill floored clients before they spawn */
@@ -160,12 +160,12 @@ int GetSkillLevel(int client, int playerMan)
 	return level;
 }
 
-int GetFinalSkill(int client, bool roundStarted, int resEntity) 
+int GetFinalSkill(int client, bool roundStarted) 
 {
 	if (!RED_IsValidClient(client) || !IsReadyForBalance(client, roundStarted))
 		return -1;
 	
-	return GetSkillLevel(client, resEntity);	
+	return GetSkillLevel(client);	
 }
 
 /* Natives */
