@@ -184,8 +184,7 @@ stock int getPositiveOverBalance()
 
 stock int getOtherTeam(int team)
 {
-	//consort = 2, empire = 3	
-	return team == 2 ? 3 : 2;
+	return TEAM_CONSORT + TEAM_EMPIRE - team;
 }
 
 stock bool isOnTeam(int client)
