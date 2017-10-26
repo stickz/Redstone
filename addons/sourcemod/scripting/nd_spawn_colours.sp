@@ -16,11 +16,11 @@ ConVar cvarRedTransparency;
 
 public Plugin myinfo =
 {
-    name = "[ND] Spawn Colours",
-    author = "Stickz",
-    description = "Colour spawn protected player entities",
-    version = "dummy",
-	url = "https://github.com/stickz/Redstone/"
+	name = "[ND] Spawn Colours",
+    	author = "Stickz",
+    	description = "Colour spawn protected player entities",
+    	version = "dummy",
+    	url = "https://github.com/stickz/Redstone/"
 };
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_spawn_colours/nd_spawn_colours.txt"
