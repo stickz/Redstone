@@ -25,7 +25,7 @@ public void OnPluginStart()
 public Action CheckResources(int client, int args)
 {
 	ReplyToCommand(	client, "Consort %d | Empire %d", 
-					ND_GetTeamResources(TEAM_CONSORT), 
-					ND_GetTeamResources(TEAM_EMPIRE));
+					ND_GetCurrentResources(TEAM_CONSORT), 
+					ND_GetCurrentResources(TEAM_EMPIRE));
 	return Plugin_Handled;
 }
