@@ -232,7 +232,6 @@ void SetWarmupEndType()
 		ServerCommand("sm_balance 0"); // Disable team balancer plugin
 		ServerCommand("sm_commander_restrictions 0"); // Disable commander restrictions
 		PrintToAdmins("\x05[xG] Team Picking is now availible!", "b");
-		g_Bool[warmupCompleted] = true;
 		FireWarmupCompleteForward();
 		
 		return;
@@ -244,13 +243,16 @@ void SetWarmupEndType()
 			
 	/* Otherwise, Start the Round normally */			
 	else
-		StartRound();	
-		
+		StartRound();
+	
+	FireWarmupCompleteForward();
 	ServerCommand("sm_balance 1");
 }
 
 void FireWarmupCompleteForward()
 {
+	g_Bool[warmupCompleted] = true;
+	
 	Action dummy;
 	Call_StartForward(g_OnWarmupCompleted);
 	Call_Finish(dummy);
