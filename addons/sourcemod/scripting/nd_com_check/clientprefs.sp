@@ -29,8 +29,9 @@ public CookieMenuHandler_CommanderCheckList(int client, CookieMenuAction:action,
 	}
 }
 
-public void OnClientCookiesCached(int client)
+public void OnClientCookiesCached(int client) {
 	option_com_checklist[client] = GetCookieCommanderCheckList(client);
+}
 
 bool GetCookieCommanderCheckList(int client)
 {
