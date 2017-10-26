@@ -288,9 +288,8 @@ String:GetDirection(float pos[3], int team, int type)
 	float rel[3];
 	SubtractVectors(pos, refCenter, rel);
 	
-	int otherteam = TEAM_CONSORT + TEAM_EMPIRE - team;
 	if (IsCloseToBase(pos, team)) { direction = "OB"; return direction; }
-	if (IsCloseToBase(pos, otherteam)) { direction = "EB"; return direction; }
+	if (IsCloseToBase(pos, getOtherTeam(team))) { direction = "EB"; return direction; }
 	if (type == 2 && GetVectorLength(pos) < CENTRAL_DISTANCE) { direction = "CE"; return direction; }
 	
 	int ns = 0, we = 0;
