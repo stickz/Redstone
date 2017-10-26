@@ -236,7 +236,7 @@ void UpdateCommHud(int team)
 			if(!teamChecklists[team][CHECKLIST_ITEM_COUNT])
 			{
 				char  message[256]; 
-				Format(message, sizeof(message), "%T\n", "COMMANDER_CHECKLIST", LANG_SERVER, commander);
+				Format(message, sizeof(message), "%T\n", "COMMANDER_CHECKLIST", commander);
 
 				int checkedItemCount = 0;
 				for (new idx = 0; idx < CHECKLIST_ITEM_COUNT; idx++)
@@ -253,13 +253,13 @@ void UpdateCommHud(int team)
 					char task[25];
 					task = checklistTasks[idx];
 					if (!(teamChecklists[team][idx] && g_hidedone.BoolValue)) 
-						Format(message, sizeof(message), "%s%s %T\n", message, state, task, LANG_SERVER, commander);	
+						Format(message, sizeof(message), "%s%s %T\n", message, state, task, commander);	
 				}
 
 				if(checkedItemCount >= CHECKLIST_ITEM_COUNT)
 				{
-					Format(message, sizeof(message), "%T", "COMM_THANKS", LANG_SERVER, commander);
-					Format(message, sizeof(message), "%s\n%T", message, "COMM_SUPPORTTROOPS", LANG_SERVER, commander);
+					Format(message, sizeof(message), "%T", "COMM_THANKS", commander);
+					Format(message, sizeof(message), "%s\n%T", message, "COMM_SUPPORTTROOPS", commander);
 					SetHudTextParams(1.0, 0.2,    5.0,    0, 128, 0, 80);
 					teamChecklists[team][CHECKLIST_ITEM_COUNT] = true;
 				} 
