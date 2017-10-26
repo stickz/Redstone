@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <sdktools>
+#include <clientprefs>
 #include <nd_stocks>
 #include <nd_com_eng>
 #include <nd_entities>
@@ -19,13 +20,15 @@ char checklistTasks[CHECKLIST_ITEM_COUNT][25] = {"BUILD_FWD_SPAWN","RESEARCH_TAC
 //marking whether the comm has seen the thankyou msg after completing all tasks.
 bool teamChecklists[TEAM_COUNT][CHECKLIST_ITEM_COUNT+1];
 
+#include "nd_com_check/clientprefs.sp"
+
 public Plugin myinfo =
 {
 	name = "[ND] Commander Checklist",
 	author = "jddunlap, Stickz",
 	description = "Shows a commander checklist for new commanders",
 	version = "dummy",
-    url = "https://github.com/stickz/Redstone/"
+   	url = "https://github.com/stickz/Redstone/"
 };
 
 /* Auto-Updater Support */
