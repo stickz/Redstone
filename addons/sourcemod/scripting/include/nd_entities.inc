@@ -21,3 +21,13 @@ stock int ND_RetreiveLevel(int client) {
 stock int ND_RetrieveScore(int client) {
 	return GetEntProp(ND_GetPlayerManagerEntity(), Prop_Send, "m_iScore", 1, client);
 }
+
+/** 
+ * Retreives the current resources of a given team index
+ *
+ * @param team		team index.
+ * @return			The resources of the team.
+ */ 
+stock int ND_GetTeamResources(int team) {
+	return GetEntProp(ND_GetTeamEntity(team), Prop_Send, "m_iResourcePoints");
+}
