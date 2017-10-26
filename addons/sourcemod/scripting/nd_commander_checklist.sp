@@ -1,14 +1,18 @@
 #include <sourcemod>
 #include <sdktools>
+#include <clientprefs>
 #include <nd_stocks>
 #include <nd_com_eng>
 #include <nd_entities>
 #include <nd_research>
+#include <nd_redstone>
+#include <nd_rounds>
 
 #define CHECKLIST_ITEM_COUNT    5
+#define CHECKLIST_UPDATE_RATE   1.5
 #define DEBUG					0
 
-Handle hudSync;
+//Handle hudSync;
 
 //ConVar g_enabled;
 ConVar g_maxlevel;
@@ -19,13 +23,15 @@ char checklistTasks[CHECKLIST_ITEM_COUNT][25] = {"BUILD_FWD_SPAWN","RESEARCH_TAC
 //marking whether the comm has seen the thankyou msg after completing all tasks.
 bool teamChecklists[TEAM_COUNT][CHECKLIST_ITEM_COUNT+1];
 
+#include "nd_com_check/clientprefs.sp"
+
 public Plugin myinfo =
 {
 	name = "[ND] Commander Checklist",
 	author = "jddunlap, Stickz",
 	description = "Shows a commander checklist for new commanders",
 	version = "dummy",
-    url = "https://github.com/stickz/Redstone/"
+   	url = "https://github.com/stickz/Redstone/"
 };
 
 /* Auto-Updater Support */
@@ -39,10 +45,12 @@ public void OnPluginStart()
 	g_maxlevel = CreateConVar("sm_comm_checklist_maxlevel", "80");
 	g_hidedone = CreateConVar("sm_comm_checklist_hide_done", "1");
 	
-	hudSync = CreateHudSynchronizer();
+	//hudSync = CreateHudSynchronizer();
 
 	//basic init
 	LoadTranslations ("sm_comm_checklist.phrases");
+	
+	AddClientPrefSupport(); // clientprefs.sp
 	
 	//For updating HUD when field tactics and kits are researched
 	HookEvent("research_complete",OnResearchCompleted);
@@ -83,7 +91,7 @@ public Action OnPlayerChat(Event event, const char[] name, bool dontBroadcast)
 	{
 		int clientTeam = GetClientTeam(client);
 		teamChecklists[clientTeam][4] = true;
-		UpdateCommHud(clientTeam);
+		//UpdateCommHud(clientTeam);
 	}
 
 	return Plugin_Continue;
@@ -102,7 +110,7 @@ public Action OnStructureBuildStarted(Event event, const char[] name, bool dontB
 	if (structType == 8 && !teamChecklists[teamId][2])
 	{
 		teamChecklists[teamId][2] = true;
-		UpdateCommHud(teamId);
+		//UpdateCommHud(teamId);
 	}
 	
 	return Plugin_Continue;
@@ -177,7 +185,7 @@ public Action TransportGateTimerCB(Handle timer, any:entIdx)
 		if(percentAcrossMap >= 0.20)
 		{
 			teamChecklists[teamId][0] = true;
-			UpdateCommHud(teamId);
+			//UpdateCommHud(teamId);
 		}
 	}
   	return Plugin_Stop;
@@ -194,86 +202,93 @@ public Action OnResearchCompleted(Event event, const char[] name, bool dontBroad
 	if (researchId == RESEARCH_ADVANCED_KITS)
 	{
 		teamChecklists[teamId][3] = true;
-		UpdateCommHud(teamId);
+		//UpdateCommHud(teamId);
 	}
 
 	else if (researchId == RESEARCH_FIELD_TACTICS)
 	{
 		teamChecklists[teamId][1] = true;
-		UpdateCommHud(teamId);
+		//UpdateCommHud(teamId);
 	}
 
 	return Plugin_Continue;
 }
 
 // Called when the commander enters or exits rts view
-public void ND_OnCommanderStateChanged(int team) {
+/*public void ND_OnCommanderStateChanged(int team) {
 	UpdateCommHud(team);	
+}*/
+
+public void ND_OnCommanderPromoted(int client, int team) {
+	CreateTimer(CHECKLIST_UPDATE_RATE, DisplayChecklistCommander, GetClientUserId(client), TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public Action DisplayChecklistCommander(Handle timer, any:Userid)
+{
+	if (!ND_RoundStarted())
+		return Plugin_Stop;
+	
+	int client = GetClientOfUserId(Userid);	
+	if (client == 0 || !RED_IsValidClient(client)) //invalid userid/client
+		return Plugin_Stop;
+		
+	if (ND_RetreiveLevel(client) > g_maxlevel.IntValue || !ND_IsInCommanderMode(client))
+		return Plugin_Continue;
+	
+	int clientTeam = GetClientTeam(client);	
+	if (clientTeam > 1)
+	{
+		if (ND_GetCommanderOnTeam(clientTeam) == client) //commander troops counts
+		{
+			ShowCheckList(client, clientTeam);
+			return Plugin_Continue;
+		}	
+	}
+	
+	return Plugin_Stop;
 }
 
 //Updates the commander hud for the specified team.
 //Shows or clears hud depending on whether comm is in
 //chair and whether he has finished his tasks.
-void UpdateCommHud(int team)
+void ShowCheckList(int commander, int team)
 {
-	#if DEBUG == 1
-		PrintToServer("Update Hud for team: %d", team);
-	#endif
-
-	// comm is in the chair
-	int commander = ND_GetCommanderOnTeam(team);
-	if (commander != NO_COMMANDER)
+	if(!teamChecklists[team][CHECKLIST_ITEM_COUNT])
 	{
-		if (ND_IsInCommanderMode(commander))
-		{		
-			#if DEBUG == 1
-				PrintToServer("Comm for team %d is: %N", team, commander);
-			#endif
+		char message[256]; 
+		Format(message, sizeof(message), "%T\n", "COMMANDER_CHECKLIST", commander);
 
-			if (ND_RetreiveLevel(commander) > g_maxlevel.IntValue)
-				return;
-
-			if(!teamChecklists[team][CHECKLIST_ITEM_COUNT])
-			{
-				char  message[256]; 
-				Format(message, sizeof(message), "%T\n", "COMMANDER_CHECKLIST", LANG_SERVER, commander);
-
-				int checkedItemCount = 0;
-				for (new idx = 0; idx < CHECKLIST_ITEM_COUNT; idx++)
-				{
-					char state[2];
-					if(teamChecklists[team][idx])
-					{
-						state="✔";
-						checkedItemCount++;
-					} 
-					else
-						state="✘";
-					
-					char task[25];
-					task = checklistTasks[idx];
-					if (!(teamChecklists[team][idx] && g_hidedone.BoolValue)) 
-						Format(message, sizeof(message), "%s%s %T\n", message, state, task, LANG_SERVER, commander);	
-				}
-
-				if(checkedItemCount >= CHECKLIST_ITEM_COUNT)
-				{
-					Format(message, sizeof(message), "%T", "COMM_THANKS", LANG_SERVER, commander);
-					Format(message, sizeof(message), "%s\n%T", message, "COMM_SUPPORTTROOPS", LANG_SERVER, commander);
-					SetHudTextParams(1.0, 0.2,    5.0,    0, 128, 0, 80);
-					teamChecklists[team][CHECKLIST_ITEM_COUNT] = true;
-				} 
-				else 
-					SetHudTextParams(1.0, 0.1,    99999.0,    255, 255, 80, 80);
-				
-				ShowSyncHudText(commander, hudSync, message);
-			}
-		}
-		else
+		int checkedItemCount = 0;
+		for (int idx = 0; idx < CHECKLIST_ITEM_COUNT; idx++)
 		{
-			SetHudTextParams(1.0, 0.1,    99999.0,    255, 255, 80, 80);
-			ShowSyncHudText(commander, hudSync, "");
+			char state[2];
+			if(teamChecklists[team][idx])
+			{
+				state="✔";
+				checkedItemCount++;
+			} 
+			else
+				state="✘";
+					
+			char task[25];
+			task = checklistTasks[idx];
+			if (!(teamChecklists[team][idx] && g_hidedone.BoolValue)) 
+				Format(message, sizeof(message), "%s%s %T\n", message, state, task, commander);	
 		}
+		
+		Handle hudSync = CreateHudSynchronizer();		
+		if(checkedItemCount >= CHECKLIST_ITEM_COUNT)
+		{
+			Format(message, sizeof(message), "%T", "COMM_THANKS", commander);
+			Format(message, sizeof(message), "%s\n%T", message, "COMM_SUPPORTTROOPS", commander);
+			SetHudTextParams(1.0, 0.2, CHECKLIST_UPDATE_RATE, 0, 128, 0, 80);
+			teamChecklists[team][CHECKLIST_ITEM_COUNT] = true;
+		} 
+		else 
+			SetHudTextParams(1.0, 0.1, CHECKLIST_UPDATE_RATE, 255, 255, 80, 80);
+			
+		ShowSyncHudText(commander, hudSync, message);
+		CloseHandle(hudSync);
 	}	
 }
 

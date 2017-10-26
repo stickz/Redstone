@@ -1,43 +1,39 @@
-﻿"Phrases"
+"Phrases"
 {
+    "Cookie Commander Checklist"
+    {
+        "en"        "Commander Checklist"
+    }    
     "BUILD_FWD_SPAWN"
     {
-        "#format"    "{1:s}"
         "en"        "Build Forward Spawn"
     }
     "RESEARCH_TACTICS"
     {
-        "#format"    "{1:s}"
         "en"        "Research Field Tactics"
     }
     "BUILD_ARMORY"
     {
-        "#format"    "{1:s}"
         "en"        "Build Armory"
     }
     "RESEARCH_KITS"
     {
-        "#format"    "{1:s}"
         "en"        "Research Advanced Kits"
     }
     "COMMANDER_CHECKLIST"
     {
-        "#format"    "{1:s}"
         "en"        "COMMANDER CHECKLIST"
     }
     "COMM_THANKS"
     {
-        "#format"    "{1:s}"
         "en"        "Thanks, Commander!"
     }
     "COMM_SUPPORTTROOPS"
     {
-        "#format"    "{1:s}"
         "en"        "Remember: support your troops!"
     }
     "CHAT_MSG"
     {
-        "#format"    "{1:s}"
         "en"        "Type into chat"
     }
 }
