@@ -94,7 +94,7 @@ public int Native_GetTeamBunker(Handle plugin, int numParams)
 }
 
 bool IsTeamInvalid(int team) {
-	return team != TEAM_EMPIRE || team != TEAM_CONSORT;	
+	return team != TEAM_EMPIRE && team != TEAM_CONSORT;	
 }
 
 void SetBunkerEntityIndexs()

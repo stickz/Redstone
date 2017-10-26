@@ -25,9 +25,33 @@ stock int ND_RetrieveScore(int client) {
 /** 
  * Retreives the current resources of a given team index
  *
- * @param team		team index.
+ * @param team			team index.
  * @return			The resources of the team.
  */ 
-stock int ND_GetTeamResources(int team) {
+stock int ND_GetCurrentResources(int team) {
 	return GetEntProp(ND_GetTeamEntity(team), Prop_Send, "m_iResourcePoints");
+}
+
+/** 
+ * Retreives the total resources spent by a given team index
+ *
+ * @param team			team index.
+ * @return			The resources of the team.
+ */ 
+stock int ND_GetSpentResources(int team) {
+	return GetEntProp(ND_GetTeamEntity(team), Prop_Send, "m_iExpendedResources");
+}
+
+
+/** 
+ * Retreives the total resources accumulated by a given team index
+ *
+ * @param team			team index.
+ * @return			The resources of the team.
+ */ 
+stock int ND_GetAccumulatedResources(int team) 
+{
+	int teamEntity = ND_GetTeamEntity(team);
+	return 	GetEntProp(teamEntity, Prop_Send, "m_iResourcePoints") +
+		GetEntProp(teamEntity, Prop_Send, "m_iExpendedResources");
 }
