@@ -15,14 +15,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include <sourcemod>
-#include <nd_rounds>
+#include <nd_warmup>
 
 // The version is auto-filled by the updater
 public Plugin myinfo = 
 {
 	name 		= "[ND] Translation Updater",
 	author 		= "stickz",
-	description 	= "A simple dummy for updating server translations",
+	description 	= "Update server plugins and translations",
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 }
@@ -38,6 +38,6 @@ public Updater_OnPluginUpdated() {
 	PrintToChatAll("\x05[xG] Server translations updated from github!");
 }
 
-public void ND_OnRoundEndedEX() {
+public void ND_OnWarmupComplete() {
 	ServerCommand("sm_updater_check");
 }
