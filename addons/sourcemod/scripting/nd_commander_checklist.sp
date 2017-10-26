@@ -255,8 +255,6 @@ void ShowCheckList(int commander, int team)
 {
 	if(!teamChecklists[team][CHECKLIST_ITEM_COUNT])
 	{
-		Handle hudSync = CreateHudSynchronizer();
-			
 		char message[256]; 
 		Format(message, sizeof(message), "%T\n", "COMMANDER_CHECKLIST", commander);
 
@@ -277,7 +275,8 @@ void ShowCheckList(int commander, int team)
 			if (!(teamChecklists[team][idx] && g_hidedone.BoolValue)) 
 				Format(message, sizeof(message), "%s%s %T\n", message, state, task, commander);	
 		}
-
+		
+		Handle hudSync = CreateHudSynchronizer();		
 		if(checkedItemCount >= CHECKLIST_ITEM_COUNT)
 		{
 			Format(message, sizeof(message), "%T", "COMM_THANKS", commander);
