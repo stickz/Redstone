@@ -38,7 +38,7 @@ int TeamCommander[2] = {-1, ...};
 Handle g_OnCommanderResignForward;
 Handle g_OnCommanderMutinyForward;
 Handle g_OnCommanderPromotedForward;
-Hnalde g_OnCommanderStateChangeForward;
+Handle g_OnCommanderStateChangeForward;
 
 public void OnPluginStart()
 {
