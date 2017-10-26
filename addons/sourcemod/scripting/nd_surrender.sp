@@ -82,7 +82,6 @@ public void ND_OnRoundStarted()
 	{
 		voteCount[i] = 0;
 		g_commanderVoted[i] = false;
-		teamBunkers[i] = -1;
 	}
 	
 	float surrenderSeconds = cvarSurrenderTimeout.FloatValue * 60;
