@@ -1,5 +1,9 @@
 "Phrases"
 {
+    "Cookie Commander Checklist"
+    {
+        "en"        "Commander Checklist"
+    }    
     "BUILD_FWD_SPAWN"
     {
         "en"        "Build Forward Spawn"
