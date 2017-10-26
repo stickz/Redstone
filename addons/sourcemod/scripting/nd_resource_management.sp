@@ -13,7 +13,7 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"
 };
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_resources/nd_resources.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_resource_management/nd_resource_management.txt"
 #include "updater/standard.sp"
 
 public void OnPluginStart()
