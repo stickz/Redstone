@@ -77,3 +77,4 @@ stock bool ND_IsCommander(int clientIDX) {
 forward Action ND_OnCommanderResigned(int client, int team);
 forward Action ND_OnCommanderMutiny(int client, int commander, int team);
 forward void ND_OnCommanderPromoted(int client, int team);
+forward void ND_OnCommanderStateChanged(int team);
