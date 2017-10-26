@@ -289,6 +289,7 @@ void ShowCheckList(int commander, int team)
 			SetHudTextParams(1.0, 0.1, CHECKLIST_UPDATE_RATE, 255, 255, 80, 80);
 			
 		ShowSyncHudText(commander, hudSync, message);
+		CloseHandle(hudSync);
 	}	
 }
 
