@@ -12,8 +12,7 @@ int getClientLevel(int client)
 			return LevelCacheArray[client];			
 		}
 		
-		int clientLevel = GetEntProp(playerResEntity, Prop_Send, "m_iPlayerRank", 1, client);		
-		
+		int clientLevel = ND_RetreiveLevel(client);		
 		if (clientLevel > 1)
 		{
 			LevelCacheArray[client] = clientLevel;
