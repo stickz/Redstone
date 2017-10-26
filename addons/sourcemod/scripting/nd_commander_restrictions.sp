@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_rounds>
 #include <nd_print>
 #include <nd_com_dep>
+#include <nd_entities>
 
 #define INVALID_CLIENT 0
 
@@ -138,7 +139,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 		if (count < g_cvar[disRestrictions].IntValue)
 			return Plugin_Continue;		
 			
-		int clientLevel = RetreiveLevel(client);
+		int clientLevel = ND_RetreiveLevel(client);
 		
 		switch(clientLevel)
 		{
