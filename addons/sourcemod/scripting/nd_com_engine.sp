@@ -38,6 +38,7 @@ int TeamCommander[2] = {-1, ...};
 Handle g_OnCommanderResignForward;
 Handle g_OnCommanderMutinyForward;
 Handle g_OnCommanderPromotedForward;
+Hnalde g_OnCommanderStateChangeForward;
 
 public void OnPluginStart()
 {
@@ -49,6 +50,7 @@ public void OnPluginStart()
 	g_OnCommanderResignForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell);
 	g_OnCommanderMutinyForward = CreateGlobalForward("ND_OnCommanderMutiny", ET_Event, Param_Cell, Param_Cell, Param_Cell);
 	g_OnCommanderPromotedForward = CreateGlobalForward("ND_OnCommanderPromoted", ET_Ignore, Param_Cell, Param_Cell);
+	g_OnCommanderStateChangeForward = CreateGlobalForward("ND_OnCommanderStateChanged", ET_Ignore, Param_Cell);
 	
 	AddCommandListener(startmutiny, "startmutiny");
 	
@@ -58,16 +60,24 @@ public void OnPluginStart()
 public Action Event_CommanderModeEnter(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
-	InCommanderMode[GetClientTeam(client) - 2] = true;	
+	int team = GetClientTeam(client);
+	
+	InCommanderMode[team - 2] = true;
+	CommanderStateChangeForward(team);
 	return Plugin_Continue;
 }
 
 public Action Event_CommanderModeLeft(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
+	int team = GetClientTeam(client);
 	
-	int team = GetClientTeam(client) - 2;
-	if (team > 0) InCommanderMode[team] = false;			
+	if (team-2 > 0) 
+	{	
+		InCommanderMode[team-2] = false;
+		CommanderStateChangeForward(team);	
+	}
+	
 	return Plugin_Continue;
 }
 
@@ -136,6 +146,14 @@ public Action startmutiny(int client, const char[] command, int argc)
 	/* Does the plugin want to block the commander munity */
 	Call_Finish(blockMutiny);	
 	return blockMutiny;
+}
+
+void CommanderStateChangeForward(int team)
+{
+	Action dummy;
+	Call_StartForward(g_OnCommanderStateChangeForward);
+	Call_PushCell(team);
+	Call_Finish(dummy);
 }
 
 /* Natives */
