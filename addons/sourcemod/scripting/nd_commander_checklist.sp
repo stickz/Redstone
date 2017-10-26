@@ -47,6 +47,8 @@ public void OnPluginStart()
 	//basic init
 	LoadTranslations ("sm_comm_checklist.phrases");
 	
+	AddClientPrefSupport(); // clientprefs.sp
+	
 	//For updating HUD when field tactics and kits are researched
 	HookEvent("research_complete",OnResearchCompleted);
 	//For updating HUD when armory is built
