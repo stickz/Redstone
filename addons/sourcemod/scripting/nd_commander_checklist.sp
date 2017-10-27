@@ -46,8 +46,8 @@ public void OnPluginStart()
 {	
 	//Convars (show it for everyone for now to get some feedback)
 	//g_enabled = CreateConVar("sm_comm_checklist_enabled","1");
-	g_maxskill 		= CreateConVar("sm_comm_checklist_maxlevel", "80");
-	g_hidedone 		= CreateConVar("sm_comm_checklist_hide_done", "1");
+	g_maxskill 	= CreateConVar("sm_comm_checklist_maxlevel", "80");
+	g_hidedone 	= CreateConVar("sm_comm_checklist_hide_done", "1");
 	g_updaterate 	= CreateConVar("sm_comm_checklist_updaterate", "1.5");
 	g_afterdisplay	= CreateConVar("sm_comm_checklist_afterdisplay", "5");
 	
@@ -94,8 +94,7 @@ void ResetVarriables()
 	//init task arrays
 	for (int idx = 2; idx < TEAM_COUNT; idx++)
 	{
-		for (int idx2 = 0; idx2 < CHECKLIST_ITEM_COUNT+1; idx2++) 
-		{
+		for (int idx2 = 0; idx2 < CHECKLIST_ITEM_COUNT+1; idx2++) {
 			teamChecklists[idx][idx2]=false;
 		}
 	}
@@ -116,12 +115,9 @@ public Action OnPlayerChat(Event event, const char[] name, bool dontBroadcast)
 		PrintToServer("hooked chat, team %d, client %d, comm %d", teamId, client, ND_InCommanderMode(teamId));
 	#endif
 
+	// When the commander chats, check the item off in the list
 	if (ND_IsCommander(client) && ND_IsInCommanderMode(client))
-	{
-		int clientTeam = GetClientTeam(client);
-		teamChecklists[clientTeam][4] = true;
-		//UpdateCommHud(clientTeam);
-	}
+		teamChecklists[GetClientTeam(client)][4] = true;
 
 	return Plugin_Continue;
 }
@@ -137,10 +133,7 @@ public Action OnStructureBuildStarted(Event event, const char[] name, bool dontB
 
 	//Armory
 	if (structType == 8 && !teamChecklists[teamId][2])
-	{
 		teamChecklists[teamId][2] = true;
-		//UpdateCommHud(teamId);
-	}
 	
 	return Plugin_Continue;
 }
@@ -175,11 +168,9 @@ public Action TransportGateTimerCB(Handle timer, any:entIdx)
 		float pos[3];
 		GetEntPropVector(entIdx, Prop_Send, "m_vecOrigin", pos);
 
+		// The transport isn't constructed yet, if cords are null
 		if(pos[0] == 0.0 && pos[1] == 0.0 && pos[2] == 0.0)
-		{
-			//PrintToChatAll("%d not ready yet", entIdx);
 			return Plugin_Continue;
-		}
 
 		// Get the bunker location of the current team
 		float friendlyBunkerPos[3];
@@ -200,26 +191,22 @@ public Action TransportGateTimerCB(Handle timer, any:entIdx)
 		linePt[2]=0.0;
 		float percentAcrossMap = percentageAlongLine(friendlyBunkerPos, otherBunkerPos, linePt);
 
-
-		/*PrintToChatAll(
-			"entindex(%d) Positions: (%f,%f,%f) (%f,%f,%f) (%f,%f,%f) (%f,%f,%f) - [%f,%f]", 
-			entIdx,
-			friendlyBunkerPos[0],friendlyBunkerPos[1],friendlyBunkerPos[2],
-			otherBunkerPos[0],otherBunkerPos[1],otherBunkerPos[2],
-			pos[0],pos[1],pos[2],
-			linePt[0],linePt[1],linePt[2],
-			distanceBetweenPts(friendlyBunkerPos, pos),
-			distanceBetweenPts(friendlyBunkerPos, linePt)
-		);
-		PrintToChatAll("Forward spawn is %f percent across the map", percentAcrossMap);
-		*/
+		#if DEBUG == 1
+			PrintToChatAll(
+				"entindex(%d) Positions: (%f,%f,%f) (%f,%f,%f) (%f,%f,%f) (%f,%f,%f) - [%f,%f]", 
+				entIdx,
+				friendlyBunkerPos[0],friendlyBunkerPos[1],friendlyBunkerPos[2],
+				otherBunkerPos[0],otherBunkerPos[1],otherBunkerPos[2],
+				pos[0],pos[1],pos[2],
+				linePt[0],linePt[1],linePt[2],
+				distanceBetweenPts(friendlyBunkerPos, pos),
+				distanceBetweenPts(friendlyBunkerPos, linePt)
+			);
+			PrintToChatAll("Forward spawn is %f percent across the map", percentAcrossMap);
+		#endif
 		
 		// If the forward spawn is 20% across the map, check the item off on the list
-		if(percentAcrossMap >= 0.20)
-		{
-			teamChecklists[teamId][0] = true;
-			//UpdateCommHud(teamId);
-		}
+		teamChecklists[teamId][0] = percentAcrossMap >= 0.20;	
 	}
   	return Plugin_Stop;
 }  
@@ -230,27 +217,18 @@ public Action OnResearchCompleted(Event event, const char[] name, bool dontBroad
 	int researchId = event.GetInt("researchid");
 	int teamId = event.GetInt("teamid");
 
-	//PrintToChatAll("Research completed for team %d: %d", teamId, researchId);
+	#if DEBUG == 1
+		PrintToChatAll("Research completed for team %d: %d", teamId, researchId);
+	#endif
 
 	if (researchId == RESEARCH_ADVANCED_KITS)
-	{
 		teamChecklists[teamId][3] = true;
-		//UpdateCommHud(teamId);
-	}
 
 	else if (researchId == RESEARCH_FIELD_TACTICS)
-	{
 		teamChecklists[teamId][1] = true;
-		//UpdateCommHud(teamId);
-	}
 
 	return Plugin_Continue;
 }
-
-// Called when the commander enters or exits rts view
-/*public void ND_OnCommanderStateChanged(int team) {
-	UpdateCommHud(team);	
-}*/
 
 public void ND_OnCommanderPromoted(int client, int team) {
 	StartTaskTimer(client);
@@ -264,23 +242,18 @@ void StartTaskTimer(int client)
 
 public Action DisplayChecklistCommander(Handle timer, any:Userid)
 {
-	if (!ND_RoundStarted())
+	if (!ND_RoundStarted()) // Stop the checklist when the round ends
 		return Plugin_Stop;
 
-	// If the client is invalid, stop the timer	
-	int client = GetClientOfUserId(Userid);	
-	if (client == 0 || !RED_IsValidClient(client))
+	// If the client is invalid or no longer commander, stop the timer	
+	int client = GetClientOfUserId(Userid);
+	if (!RED_IsValidClient(client) || !ND_IsCommander(client))
 		return Plugin_Stop;
-
-	// If the client is not commanding on a team, stop the timer
-	int clientTeam = GetClientTeam(client);
-	if (clientTeam < 2 || !ND_IsCommander(client))
-		return Plugin_Stop;	
 	
 	// If the client is in commander mode, with the checklist option enabled
 	if (ND_IsInCommanderMode(client) && option_com_checklist[client])
 	{	
-		ShowCheckList(client, clientTeam);
+		ShowCheckList(client);
 		return Plugin_Continue;
 	}	
 
@@ -294,8 +267,9 @@ bool DisableCheckListBySkill(int client) {
 //Updates the commander hud for the specified team.
 //Shows or clears hud depending on whether comm is in
 //chair and whether he has finished his tasks.
-void ShowCheckList(int commander, int team)
+void ShowCheckList(int commander)
 {
+	int team = GetClientTeam(client);
 	if(!teamChecklists[team][CHECKLIST_ITEM_COUNT])
 	{
 		char message[256]; 
@@ -341,8 +315,8 @@ public Action Timer_CheckListCompleted(Handle timer, any:userid)
 	if (userid == INVALID_USERID)
 		return Plugin_Handled;
 	
-	int client = GetClientOfUserId(userid);	
-	checkListCompleted[client] = true;
+	// Set the client's checklist completed status to true
+	checkListCompleted[GetClientOfUserId(userid)] = true;
 	return Plugin_Handled;
 }
 
@@ -372,7 +346,7 @@ public pointOn2dLine(float line1[3], float line2[3], float toProject[3], float r
     result[2]=0.0;
 }
 
-stock float min(float x, float y){
+stock float min(float x, float y) {
 	return x <= y ? x : y;
 }
 
