@@ -142,11 +142,11 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 			case 0: resKey = "Primary Resource Captured";
 			case 1: resKey = "Secondary Resource Captured";
 			case 2: resKey = "Tertiary Resource Captured";
-		}
+		}		
 		
-		for (int client = 1; client <= MAXPLAYERS; client++)
+		RED_LOOP_CLIENTS(client)
 		{
-			if (IsValidClient(client) && GetClientTeam(client) == team)
+			if (option_resmsg[client] && GetClientTeam(client) == team)
 			{
 				// translate area
 				char areaKey[32];
@@ -159,8 +159,8 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				Format(message, sizeof(message), "\x03%T", resKey, client, nameString, area);
 				
 				// show it to the user
-				PrintToChat(client, message);
-			}
+				PrintToChat(client, message);			
+			}		
 		}
 	}
 	
