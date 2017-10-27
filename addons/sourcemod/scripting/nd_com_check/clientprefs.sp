@@ -38,5 +38,5 @@ bool GetCookieCommanderCheckList(int client)
 	char buffer[10];
 	GetClientCookie(client, cookie_com_checklist, buffer, sizeof(buffer));
 	
-	return StrEqual(buffer, "On");
+	return !StrEqual(buffer, "Off");
 }
