@@ -72,8 +72,8 @@ public Action Event_CommanderModeLeft(Event event, const char[] name, bool dontB
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	int team = GetClientTeam(client);
 	
-	if (team-2 > 0) 
-	{	
+	if (team-2 >= 0)
+	{
 		InCommanderMode[team-2] = false;
 		CommanderStateChangeForward(team);	
 	}
