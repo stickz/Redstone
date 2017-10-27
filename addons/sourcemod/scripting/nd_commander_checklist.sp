@@ -269,7 +269,7 @@ bool DisableCheckListBySkill(int client) {
 //chair and whether he has finished his tasks.
 void ShowCheckList(int commander)
 {
-	int team = GetClientTeam(client);
+	int team = GetClientTeam(commander);
 	if(!teamChecklists[team][CHECKLIST_ITEM_COUNT])
 	{
 		char message[256]; 
