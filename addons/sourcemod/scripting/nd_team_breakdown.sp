@@ -7,6 +7,7 @@
 #include <nd_rounds>
 #include <nd_classes>
 #include <nd_redstone>
+#include <nd_checklist>
 
 #define BREAKDOWN_UPDATE_RATE 1.5
 
@@ -45,7 +46,10 @@ public void OnPluginStart()
 
 	//Account for late plugin loading		
 	if (ND_RoundStarted())
+	{
 		startPlugin();
+		LateLoadStart();
+	}
 	
 	AddUpdaterLibrary(); //Auto-Updater
 }
@@ -78,7 +82,20 @@ public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadca
 }
 
 public void ND_OnCommanderPromoted(int client, int team) {
+	StartBreakdownTimer(client);
+}
+
+void StartBreakdownTimer(int client) {
 	CreateTimer(BREAKDOWN_UPDATE_RATE, DisplayBreakdownsCommander, GetClientUserId(client), TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+}
+
+void LateLoadStart()
+{
+	for (int client = 1; client <= MAXPLAYERS; client++) 
+	{
+		if (RED_IsValidClient(client) && ND_IsCommander(client))
+			StartBreakdownTimer(client);	
+	}
 }
 
 public Action DisplayBreakdownsCommander(Handle timer, any:Userid)
@@ -89,6 +106,11 @@ public Action DisplayBreakdownsCommander(Handle timer, any:Userid)
 	int client = GetClientOfUserId(Userid);	
 	if (client == 0 || !RED_IsValidClient(client)) //invalid userid/client
 		return Plugin_Stop;	
+		
+	// If the checklist is not done, it's not disabled and the commander is in rts view
+	// The displaying the checklist has priority, so delay displaying troop counts
+	if (!ND_CheckListDone(client) && !ND_CheckListOff(client) && ND_InCommanderMode(client))
+		return Plugin_Continue;
 	
 	int clientTeam = GetClientTeam(client);	
 	if (clientTeam > 1)

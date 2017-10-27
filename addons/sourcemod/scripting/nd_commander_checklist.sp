@@ -9,19 +9,23 @@
 #include <nd_rounds>
 
 #define CHECKLIST_ITEM_COUNT    5
-#define CHECKLIST_UPDATE_RATE   1.5
 #define DEBUG					0
+#define INVALID_USERID 			0
 
 //Handle hudSync;
 
 //ConVar g_enabled;
-ConVar g_maxlevel;
+ConVar g_maxskill;
 ConVar g_hidedone;
+ConVar g_updaterate;
+ConVar g_afterdisplay;
 char checklistTasks[CHECKLIST_ITEM_COUNT][25] = {"BUILD_FWD_SPAWN","RESEARCH_TACTICS","BUILD_ARMORY","RESEARCH_KITS","CHAT_MSG"};
 
 //Commander checklists for each team. Each checklist has one extra field, for 
 //marking whether the comm has seen the thankyou msg after completing all tasks.
 bool teamChecklists[TEAM_COUNT][CHECKLIST_ITEM_COUNT+1];
+
+bool checkListCompleted[MAXPLAYERS+1] = {false, ...};
 
 #include "nd_com_check/clientprefs.sp"
 
@@ -42,13 +46,15 @@ public void OnPluginStart()
 {	
 	//Convars (show it for everyone for now to get some feedback)
 	//g_enabled = CreateConVar("sm_comm_checklist_enabled","1");
-	g_maxlevel = CreateConVar("sm_comm_checklist_maxlevel", "80");
-	g_hidedone = CreateConVar("sm_comm_checklist_hide_done", "1");
+	g_maxskill 		= CreateConVar("sm_comm_checklist_maxlevel", "80");
+	g_hidedone 		= CreateConVar("sm_comm_checklist_hide_done", "1");
+	g_updaterate 	= CreateConVar("sm_comm_checklist_updaterate", "1.5");
+	g_afterdisplay	= CreateConVar("sm_comm_checklist_afterdisplay", "5");
 	
 	//hudSync = CreateHudSynchronizer();
 
 	//basic init
-	LoadTranslations ("sm_comm_checklist.phrases");
+	LoadTranslations("nd_commander_checklist.phrases");
 	
 	AddClientPrefSupport(); // clientprefs.sp
 	
@@ -61,10 +67,29 @@ public void OnPluginStart()
 	//For updating HUD when the comm activate chat
 	HookEvent("player_say", OnPlayerChat, EventHookMode_Post);
 	
+	if (ND_RoundStarted())
+	{
+		ResetVarriables();
+		LateLoadStart();
+	}
+	
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapStart()
+public void OnMapStart() {
+	ResetVarriables();
+}
+
+void LateLoadStart()
+{
+	for (int client = 1; client <= MAXPLAYERS; client++) 
+	{
+		if (RED_IsValidClient(client) && ND_IsCommander(client))
+			StartTaskTimer(client);	
+	}
+}
+
+void ResetVarriables()
 {
 	//init task arrays
 	for (int idx = 2; idx < TEAM_COUNT; idx++)
@@ -73,6 +98,10 @@ public void OnMapStart()
 		{
 			teamChecklists[idx][idx2]=false;
 		}
+	}
+	
+	for (int client = 1; client <= MAXPLAYERS; client++) {
+		checkListCompleted[client] = false;			
 	}
 }
 
@@ -121,6 +150,10 @@ public Action OnStructureBuildStarted(Event event, const char[] name, bool dontB
 //so we set a timer for the entity and do our checks there.
 public Action OnForwardSpawnCreated(Event event, const char[] name, bool dontBroadcast)
 {
+	// Don't fire for spawns created when the map first starts
+	if (!ND_RoundStarted())
+		return Plugin_Continue;
+	
 	//PrintToChatAll("Forward spawn created for team %d", teamId);
 	CreateTimer(1.0, TransportGateTimerCB, event.GetInt("entindex"), TIMER_REPEAT);
 	return Plugin_Continue;
@@ -220,7 +253,13 @@ public Action OnResearchCompleted(Event event, const char[] name, bool dontBroad
 }*/
 
 public void ND_OnCommanderPromoted(int client, int team) {
-	CreateTimer(CHECKLIST_UPDATE_RATE, DisplayChecklistCommander, GetClientUserId(client), TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+	StartTaskTimer(client);
+}
+
+void StartTaskTimer(int client)
+{
+	if (!DisableCheckListBySkill(client) && !checkListCompleted[client])
+		CreateTimer(g_updaterate.FloatValue, DisplayChecklistCommander, GetClientUserId(client), TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);	
 }
 
 public Action DisplayChecklistCommander(Handle timer, any:Userid)
@@ -229,10 +268,10 @@ public Action DisplayChecklistCommander(Handle timer, any:Userid)
 		return Plugin_Stop;
 	
 	int client = GetClientOfUserId(Userid);	
-	if (client == 0 || !RED_IsValidClient(client)) //invalid userid/client
+	if (client == 0 || !RED_IsValidClient(client) || !option_com_checklist[client])
 		return Plugin_Stop;
 		
-	if (ND_RetreiveLevel(client) > g_maxlevel.IntValue || !ND_IsInCommanderMode(client))
+	if (!ND_IsInCommanderMode(client))
 		return Plugin_Continue;
 	
 	int clientTeam = GetClientTeam(client);	
@@ -246,6 +285,10 @@ public Action DisplayChecklistCommander(Handle timer, any:Userid)
 	}
 	
 	return Plugin_Stop;
+}
+
+bool DisableCheckListBySkill(int client) {
+	return ND_RetreiveLevel(client) > g_maxskill.IntValue;	
 }
 
 //Updates the commander hud for the specified team.
@@ -281,15 +324,26 @@ void ShowCheckList(int commander, int team)
 		{
 			Format(message, sizeof(message), "%T", "COMM_THANKS", commander);
 			Format(message, sizeof(message), "%s\n%T", message, "COMM_SUPPORTTROOPS", commander);
-			SetHudTextParams(1.0, 0.2, CHECKLIST_UPDATE_RATE, 0, 128, 0, 80);
+			SetHudTextParams(1.0, 0.2, g_afterdisplay.FloatValue, 0, 128, 0, 80);
 			teamChecklists[team][CHECKLIST_ITEM_COUNT] = true;
+			CreateTimer(g_afterdisplay.FloatValue, Timer_CheckListCompleted, GetClientUserId(commander), TIMER_FLAG_NO_MAPCHANGE);
 		} 
 		else 
-			SetHudTextParams(1.0, 0.1, CHECKLIST_UPDATE_RATE, 255, 255, 80, 80);
+			SetHudTextParams(1.0, 0.1, g_updaterate.FloatValue, 255, 255, 80, 80);
 			
 		ShowSyncHudText(commander, hudSync, message);
 		CloseHandle(hudSync);
 	}	
+}
+
+public Action Timer_CheckListCompleted(Handle timer, any:userid)
+{
+	if (userid == INVALID_USERID)
+		return Plugin_Handled;
+	
+	int client = GetClientOfUserId(userid);	
+	checkListCompleted[client] = true;
+	return Plugin_Handled;
 }
 
 //returns the percentage of the distance pt falls at on the line from pt1 to pt2
@@ -324,4 +378,38 @@ stock float min(float x, float y){
 
 stock float max(float x, float y) {
 	return x >= y ? x : y;
+}
+
+/* Natives */
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	CreateNative("ND_CheckListComplete", Native_GetCheckListComplete);
+	CreateNative("ND_CheckListDisabled", Native_GetCheckListDisabled);
+	return APLRes_Success;
+}
+
+public int Native_GetCheckListComplete(Handle plugin, int numParams) 
+{
+	// Retrieve the team parameter
+	int client = GetNativeCell(1);
+	
+	// If the client is invalid, return false
+	if (!RED_IsValidClient(client))
+		return _:false;
+	
+	// Otherwise, return if the checklist is completed
+	return _:checkListCompleted[client];
+}
+
+public int Native_GetCheckListDisabled(Handle plugin, int numParams) 
+{
+	// Retrieve the team parameter
+	int client = GetNativeCell(1);
+	
+	// If the client is invalid, return false
+	if (!RED_IsValidClient(client))
+		return _:false;
+	
+	// Otherwise, return if the checklist is disabled	
+	return _:(!option_com_checklist[client] || DisableCheckListBySkill(client));
 }
