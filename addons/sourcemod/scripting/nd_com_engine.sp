@@ -72,7 +72,7 @@ public Action Event_CommanderModeLeft(Event event, const char[] name, bool dontB
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	int team = GetClientTeam(client);
 	
-	if (team-2 >= 0)
+	if (team == TEAM_EMPIRE || team == TEAM_CONSORT)
 	{
 		InCommanderMode[team-2] = false;
 		CommanderStateChangeForward(team);	
@@ -172,7 +172,7 @@ public int Native_InCommanderMode(Handle plugin, int numParams)
 	int client = GetNativeCell(1);
 	int team = GetClientTeam(client) - 2;
 	
-	return team > 0 && InCommanderMode[team];
+	return team >= 0 && InCommanderMode[team];
 }
 
 public int Native_GetTeamCommander(Handle plugin, int numParams)
