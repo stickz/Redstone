@@ -2,6 +2,7 @@
 #include <sdktools>
 #include <clientprefs>
 #include <nd_stocks>
+#include <nd_redstone>
 
 //#define DEBUG //Enable plugin debugging mode
 
