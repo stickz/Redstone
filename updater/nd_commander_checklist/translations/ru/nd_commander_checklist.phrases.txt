@@ -1,0 +1,56 @@
+// Exported from SourceMod Translator
+// Date: 2017-10-27 17:25:25 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/293
+//
+"Phrases"
+{
+
+	"Cookie Commander Checklist"
+	{
+		"ru"		"Список задач командира."
+	}
+
+	"BUILD_FWD_SPAWN"
+	{
+		"ru"		"Построй впереди Транспортный портал. "
+	}
+
+	"RESEARCH_TACTICS"
+	{
+		"ru"		"Изучи Полевую тактику."
+	}
+
+	"BUILD_ARMORY"
+	{
+		"ru"		"Построй Арсенал."
+	}
+
+	"RESEARCH_KITS"
+	{
+		"ru"		"Изучи Улучшенные комплекты."
+	}
+
+	"COMMANDER_CHECKLIST"
+	{
+		"ru"		"Список задач командира."
+	}
+
+	"COMM_THANKS"
+	{
+		"ru"		"Спасибо, командир!"
+	}
+
+	"COMM_SUPPORTTROOPS"
+	{
+		"ru"		"Помни: поддерживай свою команду!"
+	}
+
+	"CHAT_MSG"
+	{
+		"ru"		"Напиши в чате."
+	}
+
+}

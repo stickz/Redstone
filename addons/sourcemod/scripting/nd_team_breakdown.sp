@@ -109,7 +109,7 @@ public Action DisplayBreakdownsCommander(Handle timer, any:Userid)
 		
 	// If the checklist is not done, it's not disabled and the commander is in rts view
 	// The displaying the checklist has priority, so delay displaying troop counts
-	if (!ND_CheckListDone(client) && !ND_CheckListOff(client) && ND_InCommanderMode(client))
+	if ((!ND_CheckListDone(client) && !ND_CheckListOff(client) && ND_InCommanderMode(client)) || !option_team_breakdown[client])
 		return Plugin_Continue;
 	
 	int clientTeam = GetClientTeam(client);	

@@ -266,25 +266,25 @@ public Action DisplayChecklistCommander(Handle timer, any:Userid)
 {
 	if (!ND_RoundStarted())
 		return Plugin_Stop;
-	
+
+	// If the client is invalid, stop the timer	
 	int client = GetClientOfUserId(Userid);	
-	if (client == 0 || !RED_IsValidClient(client) || !option_com_checklist[client])
+	if (client == 0 || !RED_IsValidClient(client))
 		return Plugin_Stop;
-		
-	if (!ND_IsInCommanderMode(client))
+
+	// If the client is not commanding on a team, stop the timer
+	int clientTeam = GetClientTeam(client);
+	if (clientTeam < 2 || !ND_IsCommander(client))
+		return Plugin_Stop;	
+	
+	// If the client is in commander mode, with the checklist option enabled
+	if (ND_IsInCommanderMode(client) && option_com_checklist[client])
+	{	
+		ShowCheckList(client, clientTeam);
 		return Plugin_Continue;
-	
-	int clientTeam = GetClientTeam(client);	
-	if (clientTeam > 1)
-	{
-		if (ND_GetCommanderOnTeam(clientTeam) == client) //commander troops counts
-		{
-			ShowCheckList(client, clientTeam);
-			return Plugin_Continue;
-		}	
-	}
-	
-	return Plugin_Stop;
+	}	
+
+	return Plugin_Continue;
 }
 
 bool DisableCheckListBySkill(int client) {
