@@ -1,0 +1,56 @@
+// Exported from SourceMod Translator
+// Date: 2017-10-27 02:40:09 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/293
+//
+"Phrases"
+{
+
+	"Cookie Commander Checklist"
+	{
+		"es"		"Lista de tareas de Comandante"
+	}
+
+	"BUILD_FWD_SPAWN"
+	{
+		"es"		"Construir Punto de Aparición más adelante"
+	}
+
+	"RESEARCH_TACTICS"
+	{
+		"es"		"Investigar Tácticas de Campo"
+	}
+
+	"BUILD_ARMORY"
+	{
+		"es"		"Construir Armería"
+	}
+
+	"RESEARCH_KITS"
+	{
+		"es"		"Investigar Kits avanzados"
+	}
+
+	"COMMANDER_CHECKLIST"
+	{
+		"es"		"LISTA DE TAREAS DE COMANDANTE"
+	}
+
+	"COMM_THANKS"
+	{
+		"es"		"¡Gracias, comandante!"
+	}
+
+	"COMM_SUPPORTTROOPS"
+	{
+		"es"		"Recuerda: ¡ayuda a tus tropas!"
+	}
+
+	"CHAT_MSG"
+	{
+		"es"		"Escribir en el chat"
+	}
+
+}
