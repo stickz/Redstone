@@ -38,7 +38,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 				}	
 				
 				// If the picking is not done, continue displaying the menu to pick players.
-				else if (!PickingComplete(&menu))
+				else if (!PickingComplete())
 					Menu_PlayerPick(next_comm, next_team);
 			}
 			
@@ -51,7 +51,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			}
 			
 			// If picking is not done, display menu to opposite team incase a skip was sent
-			else if (!PickingComplete(&menu))
+			else if (!PickingComplete())
 			{
 				SetPickingTeam(); // Decide which team gets the next pick
 				Menu_PlayerPick(next_comm, next_team);
@@ -66,7 +66,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			last_choice[cur_team_choosing - 2] = NO_PLAYER_SELECTED;
 
 			// If the picking is not done, continue displaying the menu to pick players.
-			if (!PickingComplete(&menu))
+			if (!PickingComplete())
 				Menu_PlayerPick(next_comm, next_team);
 		}
 	}
@@ -164,15 +164,15 @@ void SetPickingTeam()
 	else
 		SwitchPickingTeam();
 }
-bool PickingComplete(Handle &menu)
+bool PickingComplete()
 {
 	if (	last_choice[CONSORT_aIDX] == NO_PLAYER_SELECTED && 	
 		last_choice[EMPIRE_aIDX] == NO_PLAYER_SELECTED)
 	{
 		FinishPicking();
 		
-		if (menu != INVALID_HANDLE)
-			CloseHandle(menu);
+		if (PickingMenu != INVALID_HANDLE)
+			CloseHandle(PickingMenu);
 			
 		return true;
 	}
