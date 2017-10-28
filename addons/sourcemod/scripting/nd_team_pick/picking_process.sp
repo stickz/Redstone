@@ -35,23 +35,11 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 
 					// Set the player's team to the team captain's team.
 					ChangeClientTeam(client, cur_team_choosing);
-				}
+				}	
 				
-				// If both teams have sent cancel, that means picking is complete
-				if (PickingComplete()) {
-					if (menu != INVALID_HANDLE)
-						CloseHandle(menu);
-				}
-				
-				// Otherwise, continue displaying the menu to pick players.
-				else 
+				// If the picking is not done, continue displaying the menu to pick players.
+				else if (!PickingComplete(&menu)) {
 					Menu_PlayerPick(next_comm, next_team);
-			}
-			
-			// If both teams have sent cancel, that means picking is complete
-			else if (PickingComplete()) {					
-				if (menu != INVALID_HANDLE)
-					CloseHandle(menu);
 			}
 			
 			// If selected item was a player, refresh to pick anther option.
@@ -62,8 +50,8 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 				Menu_PlayerPick(next_comm, next_team);
 			}
 			
-			// Otherwise, display menu to opposite team incase a skip was sent
-			else
+			// If picking is not done, display menu to opposite team incase a skip was sent
+			else if (!PickingComplete(&menu))
 			{
 				SetPickingTeam(); // Decide which team gets the next pick
 				Menu_PlayerPick(next_comm, next_team);
@@ -77,15 +65,10 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			SwitchPickingTeam();			
 			last_choice[cur_team_choosing - 2] = NO_PLAYER_SELECTED;
 
-			// If both teams have sent cancel, that means picking is complete
-			if (PickingComplete()) {
-				if (menu != INVALID_HANDLE)
-					CloseHandle(menu);
-			}
-			
-			// Otherwise, continue displaying the menu to pick players.
-			else 
-				Menu_PlayerPick(next_comm, next_team);		
+			// If the picking is not done, continue displaying the menu to pick players.
+			if (!PickingComplete(&menu)) {
+				Menu_PlayerPick(next_comm, next_team);	
+			}	
 		}
 	}
 }
@@ -182,12 +165,16 @@ void SetPickingTeam()
 	else
 		SwitchPickingTeam();
 }
-bool PickingComplete()
+bool PickingComplete(Handle &menu)
 {
 	if (	last_choice[CONSORT_aIDX] == NO_PLAYER_SELECTED && 	
 		last_choice[EMPIRE_aIDX] == NO_PLAYER_SELECTED)
 	{
 		FinishPicking();
+		
+		if (menu != INVALID_HANDLE)
+			CloseHandle(menu);
+			
 		return true;
 	}
 	
