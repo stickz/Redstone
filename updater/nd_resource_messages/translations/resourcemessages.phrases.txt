@@ -3,7 +3,7 @@
 	// !settings menu label
 	"Cookie Resource Messages"
 	{
-		"en"			"Show Resource Messages"
+		"en"			"Resource Messages"
 	}
 	
 	//Example: "Cube, MissLiss (+3) have captured the primary!"
