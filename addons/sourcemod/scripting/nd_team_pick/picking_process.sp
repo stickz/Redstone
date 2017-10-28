@@ -38,7 +38,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 				}	
 				
 				// If the picking is not done, continue displaying the menu to pick players.
-				else if (!PickingComplete(&menu)) {
+				else if (!PickingComplete(&menu))
 					Menu_PlayerPick(next_comm, next_team);
 			}
 			
@@ -66,9 +66,8 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			last_choice[cur_team_choosing - 2] = NO_PLAYER_SELECTED;
 
 			// If the picking is not done, continue displaying the menu to pick players.
-			if (!PickingComplete(&menu)) {
-				Menu_PlayerPick(next_comm, next_team);	
-			}	
+			if (!PickingComplete(&menu))
+				Menu_PlayerPick(next_comm, next_team);
 		}
 	}
 }
