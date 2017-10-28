@@ -61,7 +61,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			}
 			
 			// Otherwise, refresh the menu and have the player pick anther option.
-			else
+			else if (selectedPlayer != NO_PLAYER_SELECTED)
 			{
 				PrintToChat(client, "\x05[xG] Player disconnected. Please pick again.");
 				SetConstantPickingTeam();
