@@ -38,10 +38,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 				}
 				
 				// If both teams have sent cancel, that means picking is complete
-				if (PickingComplete())
-				{
-					// Run the finish routine and close off the menu
-					FinishPicking();					
+				if (PickingComplete()) {
 					if (menu != INVALID_HANDLE)
 						CloseHandle(menu);
 				}
@@ -52,19 +49,23 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			}
 			
 			// If both teams have sent cancel, that means picking is complete
-			else if (PickingComplete())
-			{
-				// Run the finish routine and close off the menu
-				FinishPicking();					
+			else if (PickingComplete()) {					
 				if (menu != INVALID_HANDLE)
 					CloseHandle(menu);
 			}
 			
-			// Otherwise, refresh the menu and have the player pick anther option.
+			// If selected item was a player, refresh to pick anther option.
 			else if (selectedPlayer != NO_PLAYER_SELECTED)
 			{
 				PrintToChat(client, "\x05[xG] Player disconnected. Please pick again.");
 				SetConstantPickingTeam();
+				Menu_PlayerPick(next_comm, next_team);
+			}
+			
+			// Otherwise, display menu to opposite team incase a skip was sent
+			else
+			{
+				SetPickingTeam(); // Decide which team gets the next pick
 				Menu_PlayerPick(next_comm, next_team);
 			}
 		}
@@ -77,10 +78,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			last_choice[cur_team_choosing - 2] = NO_PLAYER_SELECTED;
 
 			// If both teams have sent cancel, that means picking is complete
-			if (PickingComplete()) 
-			{
-				// Run the finish routine and close off the menu
-				FinishPicking();				
+			if (PickingComplete()) {
 				if (menu != INVALID_HANDLE)
 					CloseHandle(menu);
 			}
@@ -186,8 +184,14 @@ void SetPickingTeam()
 }
 bool PickingComplete()
 {
-	return 	last_choice[CONSORT_aIDX] == NO_PLAYER_SELECTED && 
-		last_choice[EMPIRE_aIDX] == NO_PLAYER_SELECTED;
+	if (	last_choice[CONSORT_aIDX] == NO_PLAYER_SELECTED && 	
+		last_choice[EMPIRE_aIDX] == NO_PLAYER_SELECTED)
+	{
+		FinishPicking();
+		return true;
+	}
+	
+	return false;
 }
 void FinishPicking(bool forced = false)
 {
