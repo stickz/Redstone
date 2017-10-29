@@ -43,7 +43,7 @@ Handle g_MapVoteStartedForward = null;
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/dontshout/dontshout.txt"
 #include "updater/standard.sp"
 
-#include 
+#include "mapchooser/clientprefs.sp"
 
 public void OnPluginStart()
 {
