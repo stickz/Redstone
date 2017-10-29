@@ -111,7 +111,7 @@ public Action TIMER_DisableRestrictions(Handle timer)
 }
 
 public Action TIMER_DisplayComWarning(Handle timer) {
-	if (ND_GetCommanderCount() != 2 && RED_OnTeamCount() >= g_cvar[disRestrictions].IntValue)
+	if (g_cvar[eRestrictions].BoolValue && ND_GetCommanderCount() != 2 && RED_OnTeamCount() >= g_cvar[disRestrictions].IntValue)
 		PrintToChatAll("%s %t!", PREFIX, "Last Chance Apply");
 }
 
