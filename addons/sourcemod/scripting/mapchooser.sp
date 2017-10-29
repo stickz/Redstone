@@ -40,7 +40,7 @@ new MapChange:g_ChangeTime;
 Handle g_MapVoteStartedForward = null;
 
 /* Auto Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/dontshout/dontshout.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/mapchooser/mapchooser.txt"
 #include "updater/standard.sp"
 
 #include "mapchooser/clientprefs.sp"
