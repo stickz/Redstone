@@ -2,6 +2,7 @@
 #include <sourcemod>
 #include <mapchooser>
 #include <nextmap>
+#include <clientprefs>
 
 //Nuclear Dawn includes
 #include <nd_redstone>
@@ -38,6 +39,12 @@ new MapChange:g_ChangeTime;
 
 Handle g_MapVoteStartedForward = null;
 
+/* Auto Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/dontshout/dontshout.txt"
+#include "updater/standard.sp"
+
+#include "mapchooser/clientprefs.sp"
+
 public void OnPluginStart()
 {
 	LoadTranslations("mapchooser.phrases");
@@ -50,9 +57,12 @@ public void OnPluginStart()
 	
 	RegAdminCmd("sm_setnextmap", Command_SetNextmap, ADMFLAG_CHANGEMAP, "sm_setnextmap <map>");
 
-	AutoExecConfig(true, "mapchooser");	
-
+	AutoExecConfig(true, "mapchooser");
+	
 	g_MapVoteStartedForward = CreateGlobalForward("OnMapVoteStarted", ET_Ignore);
+	
+	AddClientPrefSupport(); //clientprefs.sp
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
@@ -234,6 +244,15 @@ public Handler_VoteFinishedGeneric(Menu menu,
 		
 	g_HasVoteStarted = false;
 	g_MapVoteCompleted = true;
+	
+	int PassPercent = RoundToFloor(float(item_info[0][VOTEINFO_ITEM_VOTES])/float(num_votes)*100);	
+	RED_LOOP_CLIENTS(client)
+	{
+		if (option_mapvote_mesg[client])
+			PrintToChat(client, "[SM] %t", "Nextmap Voting Finished", displayName, PassPercent, num_votes);
+	}
+	
+	LogAction(-1, -1, "Voting for next map has finished. Nextmap: %s.", map);
 }
 
 public Handler_MapVoteFinished(Menu menu,
@@ -267,7 +286,20 @@ public Handler_MapVoteFinished(Menu menu,
 			int voteDuration = g_Cvar_VoteDuration.IntValue;
 			g_VoteMenu.ExitButton = false;
 			g_VoteMenu.DisplayVoteToAll(voteDuration);
-					
+			
+			/* Notify */
+			float map1percent = float(item_info[0][VOTEINFO_ITEM_VOTES])/ float(num_votes) * 100;
+			float map2percent = float(item_info[1][VOTEINFO_ITEM_VOTES])/ float(num_votes) * 100;
+			
+			float runOffPercent = g_Cvar_RunOffPercent.FloatValue;
+			RED_LOOP_CLIENTS(client)
+			{
+				if (option_mapvote_mesg[client])
+					PrintToChat(client, "[SM] %t", "Starting Runoff", 
+						runOffPercent, info1, map1percent, info2, map2percent);						
+			}	
+			
+			LogMessage("Voting for next map was indecisive, beginning runoff vote");					
 			return;
 		}
 	}
