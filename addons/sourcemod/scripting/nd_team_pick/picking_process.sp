@@ -35,6 +35,9 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 
 					// Set the player's team to the team captain's team.
 					ChangeClientTeam(client, cur_team_choosing);
+					
+					// Send the team picking menu to the next captain
+					Menu_PlayerPick(next_comm, next_team);
 				}
 				
 				// If the picking is not done, continue displaying the menu to pick players.
