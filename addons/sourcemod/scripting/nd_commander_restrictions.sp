@@ -127,7 +127,8 @@ public Action Command_Apply(int client, const char[] command, int argc)
 	
 	if (g_cvar[eRestrictions].BoolValue)
 	{	
-		if (!ND_IsCommanderDeprioritised(client))
+		bool isDeprioritised = ND_IsCommanderDeprioritised(client)
+		if (!isDeprioritised)
 		{
 			#if defined _nd_gameme_included
 			if (GM_RC_LOADED() && GameME_RankedClient(client))
@@ -185,7 +186,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 				if (g_Bool[timeOut])
 					return Plugin_Continue;
 					
-				if (ND_IsCommanderDeprioritised(client))
+				if (isDeprioritised)
 				{
 					PrintMessage(client, "Commander Deprioritised");
 					return Plugin_Handled;
