@@ -127,13 +127,16 @@ public Action Command_Apply(int client, const char[] command, int argc)
 	
 	if (g_cvar[eRestrictions].BoolValue)
 	{	
-		#if defined _nd_gameme_included
-		if (GM_RC_LOADED() && GameME_RankedClient(client))
-			return Plugin_Continue;
-		#endif
-		
-		if (ND_RoundStarted() && DisableRestrictionsBySkill())
-			return Plugin_Continue;
+		if (!ND_IsCommanderDeprioritised(client))
+		{
+			#if defined _nd_gameme_included
+			if (GM_RC_LOADED() && GameME_RankedClient(client))
+				return Plugin_Continue;
+			#endif
+
+			if (ND_RoundStarted() && DisableRestrictionsBySkill())
+				return Plugin_Continue;
+		}
 
 		int count = RED_OnTeamCount();
 		if (count < g_cvar[disRestrictions].IntValue)
