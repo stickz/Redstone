@@ -154,7 +154,7 @@ public Action OnForwardSpawnCreated(Event event, const char[] name, bool dontBro
 
 public Action TransportGateTimerCB(Handle timer, any:entIdx)
 {
-	if (entIdx < 1)
+	if (!IsValidEntity(entIdx))
 		return Plugin_Stop;
 	
 	int teamId = GetEntProp(entIdx, Prop_Send, "m_iTeamNum");
