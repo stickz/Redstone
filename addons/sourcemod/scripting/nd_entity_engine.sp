@@ -4,6 +4,7 @@
 #include <nd_structures>
 
 #define CHECK_ALL -1
+#define NATIVE_ERROR -1
 
 public Plugin myinfo =
 {
@@ -74,7 +75,10 @@ public int Native_GetTeamManager(Handle plugin, int numParams)
 
 	// Throw an error if the team is invalid
 	if (IsTeamInvalid(team))
-		return ThrowNativeError(SP_ERROR_NATIVE, "Invalid team index (%d)", team);	
+	{
+		LogError("Invalid team index (%d) for native GetTeamEntity()", team);
+		return NATIVE_ERROR;
+	}
 
 	// Otherwise, return the team entity index
 	return _:g_iTeamEntities[team-2];
@@ -87,7 +91,10 @@ public int Native_GetTeamBunker(Handle plugin, int numParams)
 
 	// Throw an error if the team is invalid
 	if (IsTeamInvalid(team))
-		return ThrowNativeError(SP_ERROR_NATIVE, "Invalid team index (%d)", team);	
+	{
+		LogError("Invalid team index (%d) for native GetTeamBunkerEntity()", team);
+		return NATIVE_ERROR;
+	}
 
 	// Otherwise, return the bunker entity index
 	return _:g_iBunkerEntities[team-2];
