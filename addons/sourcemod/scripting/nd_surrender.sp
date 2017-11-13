@@ -20,8 +20,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_surrender/nd_surrender.txt"
 #include "updater/standard.sp"
 
-#define BUNKER_NOT_FOUND -1
-
 #pragma newdecls required
 #include <sourcemod>
 #include <nd_stocks>
@@ -150,11 +148,7 @@ public Action TIMER_DisplaySurrender(Handle timer, any team)
 bool bunkerHealthTooLow(int team)
 {
 	int bunkerEnt = ND_GetTeamBunkerEntity(team);	
-	return bunkerEnt == BUNKER_NOT_FOUND ? false : ND_GetBuildingHealth(bunkerEnt) < cvarLowBunkerHealth.IntValue; 
-}
-
-stock int ND_GetBuildingHealth(int entity) {
-	return GetEntProp(entity, Prop_Send, "m_iHealth");
+	return bunkerEnt == ENTITY_NOT_FOUND ? false : ND_GetBuildingHealth(bunkerEnt) < cvarLowBunkerHealth.IntValue; 
 }
 
 void callSurrender(int client)
