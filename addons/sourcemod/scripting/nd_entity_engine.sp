@@ -22,8 +22,6 @@ int g_iPlayerManager = -1;
 int g_iTeamEntities[2] = {-1, ...};
 int g_iBunkerEntities[2] = {-1, ...};
 
-bool roundStarted = false;
-
 public void OnPluginStart()
 {
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
@@ -37,6 +35,9 @@ public void OnMapStart()
 	g_iPlayerManager = FindEntityByClassname(CHECK_ALL, "nd_player_manager");
 	g_iTeamEntities[TEAM_EMPIRE-2] = FindEntityByClassname(CHECK_ALL, "nd_team_empire");
 	g_iTeamEntities[TEAM_CONSORT-2] = FindEntityByClassname(CHECK_ALL, "nd_team_consortium");
+	
+	// Update bunker entity indexs when the map starts
+	SetBunkerEntityIndexs();
 }
 
 public void OnMapEnd() {
@@ -47,13 +48,10 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 {	
 	// Update bunker entity indexs when the round starts
 	SetBunkerEntityIndexs();
-	roundStarted = true;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) 
-{
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
 	ExpireRoundCache();
-	roundStarted = false;
 }
 
 /* Natives */
@@ -98,13 +96,6 @@ public int Native_GetTeamBunker(Handle plugin, int numParams)
 		LogError("Invalid team index (%d) for native GetTeamBunkerEntity()", team);
 		return NATIVE_ERROR;
 	}
-	
-	// Log an error and return -1 if the round is not started
-	if (!roundStarted)
-	{
-		LogError("Tryed to call GetTeamBunkerEntity() while round not started");
-		return NATIVE_ERROR;	
-	}
 
 	// Otherwise, return the bunker entity index
 	return _:g_iBunkerEntities[team-2];
@@ -130,5 +121,4 @@ void ExpireRoundCache()
 {
 	g_iBunkerEntities[0] = -1;
 	g_iBunkerEntities[1] = -1;
-	roundStarted = false;
 }
