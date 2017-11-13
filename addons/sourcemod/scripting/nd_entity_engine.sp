@@ -22,6 +22,8 @@ int g_iPlayerManager = -1;
 int g_iTeamEntities[2] = {-1, ...};
 int g_iBunkerEntities[2] = {-1, ...};
 
+bool roundStarted = false;
+
 public void OnPluginStart()
 {
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
@@ -45,10 +47,13 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 {	
 	// Update bunker entity indexs when the round starts
 	SetBunkerEntityIndexs();
+	roundStarted = true;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) 
+{
 	ExpireRoundCache();
+	roundStarted = false;
 }
 
 /* Natives */
@@ -87,11 +92,18 @@ public int Native_GetTeamBunker(Handle plugin, int numParams)
 	// Retrieve the team parameter
 	int team = GetNativeCell(1);
 
-	// Throw an error if the team is invalid
+	// Log an error and return -1 if the team is invalid
 	if (IsTeamInvalid(team))
 	{
 		LogError("Invalid team index (%d) for native GetTeamBunkerEntity()", team);
 		return NATIVE_ERROR;
+	}
+	
+	// Log an error and return -1 if the round is not started
+	if (!roundStarted)
+	{
+		LogError("Tryed to call GetTeamBunkerEntity() while round not started");
+		return NATIVE_ERROR;	
 	}
 
 	// Otherwise, return the bunker entity index
@@ -118,4 +130,5 @@ void ExpireRoundCache()
 {
 	g_iBunkerEntities[0] = -1;
 	g_iBunkerEntities[1] = -1;
+	roundStarted = false;
 }
