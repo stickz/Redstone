@@ -1,4 +1,4 @@
-stock static int ENTITY_NOT_FOUND = -1;
+#define ENTITY_NOT_FOUND = -1;
 
 native int ND_GetTeamEntity(int team);
 native int ND_GetPlayerManagerEntity();
