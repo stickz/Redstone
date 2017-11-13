@@ -48,7 +48,6 @@ Handle g_MapVoteStartedForward = null;
 public void OnPluginStart()
 {
 	LoadTranslations("mapchooser.phrases");
-	LoadTranslations("common.phrases");
 	
 	g_Cvar_NoVoteMode 	= CreateConVar("sm_mapvote_novote", "1", "Specifies whether or not MapChooser should pick a map if no votes are received.", _, true, 0.0, true, 1.0);
 	g_Cvar_VoteDuration 	= CreateConVar("sm_mapvote_voteduration", "20", "Specifies how long the mapvote should be available for.", _, true, 5.0);
