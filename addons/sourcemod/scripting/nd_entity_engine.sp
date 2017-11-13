@@ -31,8 +31,7 @@ public void OnPluginStart()
 
 public void OnMapStart()
 {
-	/* Update the entity caches each time the map starts */
-	SetBunkerEntityIndexs();
+	/* Update team and player manager entities when the map starts */
 	g_iPlayerManager = FindEntityByClassname(CHECK_ALL, "nd_player_manager");
 	g_iTeamEntities[TEAM_EMPIRE-2] = FindEntityByClassname(CHECK_ALL, "nd_team_empire");
 	g_iTeamEntities[TEAM_CONSORT-2] = FindEntityByClassname(CHECK_ALL, "nd_team_consortium");
@@ -43,10 +42,9 @@ public void OnMapEnd() {
 }
 
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) 
-{
-	// Only set bunker entities if not previously availible
-	if (g_iBunkerEntities[0] == -1 || g_iBunkerEntities[1] == -1)
-		SetBunkerEntityIndexs();
+{	
+	// Update bunker entity indexs when the round starts
+	SetBunkerEntityIndexs();
 }
 
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
