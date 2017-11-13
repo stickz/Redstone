@@ -145,8 +145,10 @@ public Action TIMER_DisplaySurrender(Handle timer, any team)
 	}
 }
 
-bool bunkerHealthTooLow(int team) {
-	return GetEntProp(ND_GetTeamBunkerEntity(team), Prop_Send, "m_iHealth") < cvarLowBunkerHealth.IntValue; 
+bool bunkerHealthTooLow(int team)
+{
+	int bunkerEnt = ND_GetTeamBunkerEntity(team);	
+	return bunkerEnt != ENTITY_NOT_FOUND && ND_GetBuildingHealth(bunkerEnt) < cvarLowBunkerHealth.IntValue; 
 }
 
 void callSurrender(int client)
