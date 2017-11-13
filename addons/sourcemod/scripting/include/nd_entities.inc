@@ -1,3 +1,5 @@
+stock static int ENTITY_NOT_FOUND = -1;
+
 native int ND_GetTeamEntity(int team);
 native int ND_GetPlayerManagerEntity();
 native int ND_GetTeamBunkerEntity(int team);
@@ -54,4 +56,14 @@ stock int ND_GetAccumulatedResources(int team)
 	int teamEntity = ND_GetTeamEntity(team);
 	return 	GetEntProp(teamEntity, Prop_Send, "m_iResourcePoints") +
 		GetEntProp(teamEntity, Prop_Send, "m_iExpendedResources");
+}
+
+/** 
+ * Retreives the building health of a given entity
+ *
+ * @param entity		entity index.
+ * @return			The health of the building.
+ */ 
+stock int ND_GetBuildingHealth(int entity) {
+ 	return GetEntProp(entity, Prop_Send, "m_iHealth");
 }
