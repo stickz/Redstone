@@ -1,4 +1,5 @@
 #define INVALID_TARGET -1
+bool DebugTeamPicking = false;
 
 void RegisterPickingCommand()
 {
@@ -12,15 +13,13 @@ public Action StartPicking(int client, int args)
 {
 	// If there's a common error condition, we can't continue
 	if (CatchCommonFailure(args))
-		return Plugin_Handled;  	
+		return Plugin_Handled;	
 
-	// Get the player target in the first argument
-	char con_name[64];
+	char con_name[64]; // Get the player target in the first argument
 	GetCmdArg(1, con_name, sizeof(con_name));		
 	int target1 = FindTarget(client, con_name, false, false);
 	
-	// Get the player target in the second argument
-	char emp_name[64];
+	char emp_name[64]; // Get the player target in the second argument
 	GetCmdArg(2, emp_name, sizeof(emp_name));
 	int target2 = FindTarget(client, emp_name, false, false);
 
@@ -35,8 +34,7 @@ public Action StartPicking(int client, int args)
 	// If an optional third argument is inputed for the starting team
 	if (args == 3)
 	{
-		// Get the third argument inputed
-		char startTeam[16];
+		char startTeam[16]; // Get the third argument inputed
 		GetCmdArg(3, startTeam, sizeof(startTeam));		
 		
 		// Set the starting team to etheir Consort or Empire
@@ -57,6 +55,14 @@ public Action StartPicking(int client, int args)
 			PrintToChatAll("\x05[xG] !PlayerPicking Failure: '%s' was specified, but is an invalid starting team!", startTeam);
 			return Plugin_Handled;		
 		}
+	}
+	
+	// Check if the user wants to enable debugging
+	if (args == 4)
+	{
+		char useDebug[16]; // Get the forth argument inputed
+		GetCmdArg(4, useDebug, sizeof(useDebug));
+		DebugTeamPicking = StrEqual(useDebug, "true", false);	
 	}
 	
 	// Start player picking by running preparation
