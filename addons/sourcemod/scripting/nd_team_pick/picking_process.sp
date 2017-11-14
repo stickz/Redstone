@@ -99,7 +99,7 @@ public Action Menu_PlayerPick(int client, int args)
 	for (int player = 0; player <= MaxClients; player++) 
 	{
 		// If the client is valid by Redstone standards and not already on a team
-		if (RED_IsValidClient(player) && GetClientTeam(player) < 2)
+		if (RED_IsValidCIndex(player) && IsValidClient(player, !DebugTeamPicking) && GetClientTeam(player) < 2)
 		{
 			// Get their name and add a new menu item for them
 			GetClientName(player, currentName, sizeof(currentName));
