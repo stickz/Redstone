@@ -56,7 +56,7 @@ public Action StartPicking(int client, int args)
 		}
 	}
 	
-	// Start player picking by running preparation
+	// Run player picking preparation
 	BeforePicking(client, target1, target2);
 	
 	// Check if the user wants to enable debugging
@@ -67,9 +67,16 @@ public Action StartPicking(int client, int args)
 		DebugTeamPicking = StrEqual(useDebug, "true", false);	
 	}
 	
+	// Allow running the team picker for bots after round start if debugging
+	if (ND_RoundStarted() && !DebugTeamPicking)
+	{
+		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Use '!Nexpick on' then Reload the map!");
+		return Plugin_Handled;	
+	}
+	
 	// Display the first picking menu
 	Menu_PlayerPick(teamCaptain, teamName);
-	return Plugin_Handled;	
+	return Plugin_Handled;
 }
 bool CatchCommonFailure(int args)
 {
@@ -79,19 +86,13 @@ bool CatchCommonFailure(int args)
 		return true;
 	}
 	
-	if (ND_RoundStarted())
-	{
-		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Use '!Nexpick on' then Reload the map!");
-		return true;	
-	}
-		
 	if (GetClientCount(false) < 4)
 	{		
 		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Four players required to use!");
 		return true;
 	}
 	
-	if (args < 2 || args > 3)
+	if (args < 2 || args > 4)
 	{
 		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Format Incorrect. Usage: !PlayerPicking captain1 captain2 startingTeam");
 		return true;
