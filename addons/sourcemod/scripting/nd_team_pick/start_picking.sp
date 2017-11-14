@@ -1,5 +1,4 @@
 #define INVALID_TARGET -1
-bool DebugTeamPicking = false;
 
 void RegisterPickingCommand()
 {
