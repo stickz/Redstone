@@ -8,7 +8,7 @@ void RegisterCommands()
 
 public Action StopTeamPicking(int client, int args)
 {
-	TerminatePicking();	
+	FinishPicking(true);	
 	return Plugin_Handled;
 }
 
