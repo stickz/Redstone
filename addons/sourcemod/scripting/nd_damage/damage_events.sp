@@ -5,7 +5,7 @@
 
 public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
-	if (damagetype == WEAPON_BULLET_DT)
+	if (IsValidEntity(inflictor) && damagetype == WEAPON_BULLET_DT)
 	{
 		damage *= g_Float[bullet_supply_station_mult];
 		return Plugin_Changed;
@@ -16,7 +16,7 @@ public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflicto
 
 public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
-	if (damagetype == WEAPON_BULLET_DT)
+	if (IsValidEntity(inflictor) && damagetype == WEAPON_BULLET_DT)
 	{
 		damage *= g_Float[bullet_rocket_turret_mult];
 		return Plugin_Changed;
@@ -27,7 +27,7 @@ public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor
 
 public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
-	if (damagetype == WEAPON_BULLET_DT)
+	if (IsValidEntity(inflictor) && damagetype == WEAPON_BULLET_DT)
 	{
 		damage *= g_Float[bullet_mg_turret_mult];
 		return Plugin_Changed;
@@ -38,6 +38,9 @@ public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, fl
 
 public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
+	if (!IsValidEntity(inflictor))
+		return Plugin_Continue;
+	
 	switch (damagetype)
 	{
 		case WEAPON_RED_DT:
@@ -58,6 +61,9 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 	
 public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
+	if (!IsValidEntity(inflictor))
+		return Plugin_Continue;
+	
 	switch (damagetype)
 	{
 		case WEAPON_RED_DT:
@@ -78,6 +84,9 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 
 public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
+	if (!IsValidEntity(inflictor))
+		return Plugin_Continue;
+	
 	switch(damagetype)
 	{
 		case WEAPON_RED_DT:
@@ -98,6 +107,9 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 
 public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
+	if (!IsValidEntity(inflictor))
+		return Plugin_Continue;
+	
 	switch (damagetype)
 	{
 		case WEAPON_RED_DT:
@@ -118,6 +130,9 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 
 public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
+	if (!IsValidEntity(inflictor))
+		return Plugin_Continue;
+	
 	switch (damagetype)
 	{
 		case WEAPON_RED_DT:
@@ -138,6 +153,9 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 
 public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
+	if (!IsValidEntity(inflictor))
+		return Plugin_Continue;
+	
 	switch (damagetype)
 	{
 		case WEAPON_RED_DT:
@@ -158,6 +176,9 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 
 public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
 {
+	if (!IsValidEntity(inflictor))
+		return Plugin_Continue;
+	
 	switch (damagetype)
 	{
 		case WEAPON_RED_DT:	 
