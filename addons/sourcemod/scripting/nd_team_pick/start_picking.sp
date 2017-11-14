@@ -56,6 +56,9 @@ public Action StartPicking(int client, int args)
 		}
 	}
 	
+	// Start player picking by running preparation
+	BeforePicking(client, target1, target2);
+	
 	// Check if the user wants to enable debugging
 	if (args == 4)
 	{
@@ -64,9 +67,7 @@ public Action StartPicking(int client, int args)
 		DebugTeamPicking = StrEqual(useDebug, "true", false);	
 	}
 	
-	// Start player picking by running preparation
-	// Then displaying the first picking menu
-	BeforePicking(client, target1, target2);
+	// Display the first picking menu
 	Menu_PlayerPick(teamCaptain, teamName);
 	return Plugin_Handled;	
 }
@@ -150,6 +151,7 @@ void SetVarriableDefaults()
 	
 	g_bEnabled=true;
 	g_bPickStarted=true;
+	DebugTeamPicking = false;
 }
 void PutEveryoneInSpectate()
 {
