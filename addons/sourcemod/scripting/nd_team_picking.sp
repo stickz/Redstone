@@ -23,6 +23,7 @@ bool g_bPickStarted = false;
 bool doublePlace = true;
 bool firstPlace = true;
 bool checkPlacement = true;
+bool DebugTeamPicking = false;
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_team_picking/nd_team_picking.txt"

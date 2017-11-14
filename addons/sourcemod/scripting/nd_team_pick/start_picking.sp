@@ -12,15 +12,13 @@ public Action StartPicking(int client, int args)
 {
 	// If there's a common error condition, we can't continue
 	if (CatchCommonFailure(args))
-		return Plugin_Handled;  	
+		return Plugin_Handled;	
 
-	// Get the player target in the first argument
-	char con_name[64];
+	char con_name[64]; // Get the player target in the first argument
 	GetCmdArg(1, con_name, sizeof(con_name));		
 	int target1 = FindTarget(client, con_name, false, false);
 	
-	// Get the player target in the second argument
-	char emp_name[64];
+	char emp_name[64]; // Get the player target in the second argument
 	GetCmdArg(2, emp_name, sizeof(emp_name));
 	int target2 = FindTarget(client, emp_name, false, false);
 
@@ -35,8 +33,7 @@ public Action StartPicking(int client, int args)
 	// If an optional third argument is inputed for the starting team
 	if (args == 3)
 	{
-		// Get the third argument inputed
-		char startTeam[16];
+		char startTeam[16]; // Get the third argument inputed
 		GetCmdArg(3, startTeam, sizeof(startTeam));		
 		
 		// Set the starting team to etheir Consort or Empire
@@ -59,11 +56,27 @@ public Action StartPicking(int client, int args)
 		}
 	}
 	
-	// Start player picking by running preparation
-	// Then displaying the first picking menu
+	// Run player picking preparation
 	BeforePicking(client, target1, target2);
+	
+	// Check if the user wants to enable debugging
+	if (args == 4)
+	{
+		char useDebug[16]; // Get the forth argument inputed
+		GetCmdArg(4, useDebug, sizeof(useDebug));
+		DebugTeamPicking = StrEqual(useDebug, "true", false);	
+	}
+	
+	// Allow running the team picker for bots after round start if debugging
+	if (ND_RoundStarted() && !DebugTeamPicking)
+	{
+		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Use '!Nexpick on' then Reload the map!");
+		return Plugin_Handled;	
+	}
+	
+	// Display the first picking menu
 	Menu_PlayerPick(teamCaptain, teamName);
-	return Plugin_Handled;	
+	return Plugin_Handled;
 }
 bool CatchCommonFailure(int args)
 {
@@ -73,19 +86,13 @@ bool CatchCommonFailure(int args)
 		return true;
 	}
 	
-	if (ND_RoundStarted())
-	{
-		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Use '!Nexpick on' then Reload the map!");
-		return true;	
-	}
-		
 	if (GetClientCount(false) < 4)
 	{		
 		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Four players required to use!");
 		return true;
 	}
 	
-	if (args < 2 || args > 3)
+	if (args < 2 || args > 4)
 	{
 		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Format Incorrect. Usage: !PlayerPicking captain1 captain2 startingTeam");
 		return true;
@@ -145,6 +152,7 @@ void SetVarriableDefaults()
 	
 	g_bEnabled=true;
 	g_bPickStarted=true;
+	DebugTeamPicking = false;
 }
 void PutEveryoneInSpectate()
 {

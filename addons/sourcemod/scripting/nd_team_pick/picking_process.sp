@@ -1,5 +1,5 @@
 #define NO_PLAYER_SELECTED -1
-Handle PickingMenu = INVALID_HANDLE;
+//Handle PickingMenu = INVALID_HANDLE;
 
 int cur_team_choosing = TEAM_CONSORT;
 int next_team; int next_comm;
@@ -80,7 +80,7 @@ public Action Menu_PlayerPick(int client, int args)
 	// To Do: Allow reassigning the team captain, to continue picking where left off
 	if (!RED_IsValidClient(client))
 	{
-		TerminatePicking();
+		FinishPicking(true);
 		PrintToChatAll("\x05[xG] Picking terminated. A team captain left the server.");
 		return Plugin_Handled;
 	}
@@ -90,7 +90,7 @@ public Action Menu_PlayerPick(int client, int args)
 	cur_team_choosing = clientTeam;	
 
 	// Initialize menu object. Set menu title and exit button properties
-	PickingMenu = CreateMenu(Handle_PickPlayerMenu);
+	Handle PickingMenu = CreateMenu(Handle_PickPlayerMenu);
 	SetMenuTitle(PickingMenu, "Choose next person to add to %s", ND_GetTeamName(clientTeam));
 	SetMenuExitButton(PickingMenu, false);	
 
@@ -99,7 +99,7 @@ public Action Menu_PlayerPick(int client, int args)
 	for (int player = 0; player <= MaxClients; player++) 
 	{
 		// If the client is valid by Redstone standards and not already on a team
-		if (RED_IsValidClient(player) && GetClientTeam(player) < 2)
+		if (RED_IsValidCIndex(player) && IsValidClient(player, !DebugTeamPicking) && GetClientTeam(player) < 2)
 		{
 			// Get their name and add a new menu item for them
 			GetClientName(player, currentName, sizeof(currentName));
@@ -172,11 +172,7 @@ bool PickingComplete()
 	if (	last_choice[CONSORT_aIDX] == NO_PLAYER_SELECTED && 	
 		last_choice[EMPIRE_aIDX] == NO_PLAYER_SELECTED)
 	{
-		FinishPicking();
-		
-		if (PickingMenu != INVALID_HANDLE)
-			CloseHandle(PickingMenu);
-			
+		FinishPicking();			
 		return true;
 	}
 	
@@ -189,11 +185,4 @@ void FinishPicking(bool forced = false)
 
 	if (!forced)
 		PrintToChatAll("\x05Player Picking has been completed.");
-}
-void TerminatePicking()
-{
-	FinishPicking(true);
-
-	if (PickingMenu != INVALID_HANDLE)
-		CloseHandle(PickingMenu);
 }
