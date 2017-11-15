@@ -7,11 +7,17 @@ int next_team; int next_comm;
 /* Functions for handling the team pick process */
 public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2) 
 {
+	if (DebugTeamPicking)
+		ConsoleToAdmins("Handle_PickPlayerMenu(): Started", "b");
+	
 	switch (action)
 	{
 		// If the action by the team captain was selecting a player.
 		case MenuAction_Select:
 		{
+			if (DebugTeamPicking)
+				ConsoleToAdmins("Handle_PickPlayerMenu(): MenuAction_Select", "b");
+			
 			char selectedItem[32]
 			GetMenuItem(menu, param2, selectedItem, sizeof(selectedItem));	
 			
@@ -21,7 +27,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			last_choice[cur_team_choosing - 2] = selectedPlayer;
 
 			// If the selected player is valid, do the picking routine
-			if (RED_IsValidClient(client))
+			if (IsValidClient(client, !DebugTeamPicking) && RED_IsValidCIndex(client))
 			{			
 				SetPickingTeam(); // Decide which team gets the next pick
 				
@@ -64,6 +70,9 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 		// If the action by the team captain was canceling their selection.
 		case MenuAction_Cancel:
 		{
+			if (DebugTeamPicking)
+				ConsoleToAdmins("Handle_PickPlayerMenu(): MenuAction_Cancel", "b");
+			
 			// Switch to the other team and set their last choice to canceled
 			SwitchPickingTeam();			
 			last_choice[cur_team_choosing - 2] = NO_PLAYER_SELECTED;
@@ -73,9 +82,15 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 				Menu_PlayerPick(next_comm, next_team);
 		}
 	}
+
+	if (DebugTeamPicking)
+		ConsoleToAdmins("Handle_PickPlayerMenu(): Finished", "b");
 }
 public Action Menu_PlayerPick(int client, int args)
-{
+{	
+	if (DebugTeamPicking)
+		ConsoleToAdmins("Menu_PlayerPick(): Started", "b");
+	
 	// If the team captain left the server, terminate the picking and force restart
 	// To Do: Allow reassigning the team captain, to continue picking where left off
 	if (!RED_IsValidClient(client))
@@ -84,6 +99,10 @@ public Action Menu_PlayerPick(int client, int args)
 		PrintToChatAll("\x05[xG] Picking terminated. A team captain left the server.");
 		return Plugin_Handled;
 	}
+	
+	if (DebugTeamPicking)
+		ConsoleToAdmins("Menu_PlayerPick(): Client is valid", "b");
+	
 	// Otherwise, build the menu object that will be used to pick players.	
 	// Set the current team choosing
 	int clientTeam = GetClientTeam(client);
@@ -92,14 +111,17 @@ public Action Menu_PlayerPick(int client, int args)
 	// Initialize menu object. Set menu title and exit button properties
 	Handle PickingMenu = CreateMenu(Handle_PickPlayerMenu);
 	SetMenuTitle(PickingMenu, "Choose next person to add to %s", ND_GetTeamName(clientTeam));
-	SetMenuExitButton(PickingMenu, false);	
+	SetMenuExitButton(PickingMenu, false);
+
+	if (DebugTeamPicking)
+		ConsoleToAdmins("Menu_PlayerPick(): Initial menu created", "b");
 
 	// Precast varriables and loop through all the players on the server
 	char currentName[60], currentUser[30];	
 	for (int player = 0; player <= MaxClients; player++) 
 	{
 		// If the client is valid by Redstone standards and not already on a team
-		if (RED_IsValidCIndex(player) && IsValidClient(player, !DebugTeamPicking) && GetClientTeam(player) < 2)
+		if (IsValidClient(player, !DebugTeamPicking) && RED_IsValidCIndex(player) && GetClientTeam(player) < 2)
 		{
 			// Get their name and add a new menu item for them
 			GetClientName(player, currentName, sizeof(currentName));
@@ -107,10 +129,17 @@ public Action Menu_PlayerPick(int client, int args)
 			AddMenuItem(PickingMenu, currentUser, currentName);			
 		}
 	}
+	
+	if (DebugTeamPicking)
+		ConsoleToAdmins("Menu_PlayerPick(): Menu populated", "b");
 
 	// Add the menu item skip and display the menu to the team captain
 	AddMenuItem(PickingMenu, "-1", "End/Skip");
 	DisplayMenu(PickingMenu, client, 300); 
+	
+	if (DebugTeamPicking)
+		ConsoleToAdmins("Menu_PlayerPick(): finished", "b");
+	
 	return Plugin_Handled;
 }
 

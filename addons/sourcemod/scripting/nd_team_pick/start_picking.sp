@@ -64,14 +64,18 @@ public Action StartPicking(int client, int args)
 	{
 		char useDebug[16]; // Get the forth argument inputed
 		GetCmdArg(4, useDebug, sizeof(useDebug));
-		DebugTeamPicking = StrEqual(useDebug, "true", false);	
+		DebugTeamPicking = StrEqual(useDebug, "true", false);
+		
+		char debugStatus[32];
+		Format(debugStatus, sizeof(debugStatus), "Status of debug team picking is %d", DebugTeamPicking);
+		ConsoleToAdmins(debugStatus, "b");
 	}
 	
 	// Allow running the team picker for bots after round start if debugging
 	if (ND_RoundStarted() && !DebugTeamPicking)
 	{
 		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Use '!Nexpick on' then Reload the map!");
-		return Plugin_Handled;	
+		return Plugin_Handled;
 	}
 	
 	// Display the first picking menu
