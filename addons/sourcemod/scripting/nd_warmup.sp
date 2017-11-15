@@ -310,9 +310,14 @@ ToogleWarmupConvars(value)
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_WarmupCompleted", Native_GetWarmupCompleted);
+	CreateNative("ND_TeamPickMode", Native_GetTeamPickMode);
 	return APLRes_Success;
 }
 
 public Native_GetWarmupCompleted(Handle plugin, int numParms) {
 	return _:g_Bool[warmupCompleted];
+}
+
+public Native_GetTeamPickMode(Handle plugin, int numParms) {
+	return _:g_Bool[pauseWarmup];
 }
