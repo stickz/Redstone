@@ -15,7 +15,8 @@ enum ND_CustomMapCount {
 	ND_Corner,
 	ND_Submarine,
 	ND_MetroImp,
-	ND_Port
+	ND_Port,
+	SK_Metro
 }
 
 stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] = 
@@ -28,7 +29,8 @@ stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] =
 	"corner_intermediate_04",
 	"nd_submarine",
 	"metro_imp2",
-	"port"
+	"port",
+	"sk_metro"
 };
 
 stock bool ND_IsCustomMap(char[] mapName)
@@ -42,7 +44,7 @@ stock bool ND_IsCustomMap(char[] mapName)
 	return false;
 }
 
-stock bool ND_CustomMapEquals(const char[] currentMap, ND_CustomMapCount:searchMap) {
+stock bool ND_CustomMapEquals(const char[] currentMap, ND_CustomMapCount searchMap) {
 	return StrEqual(currentMap, ND_CustomMaps[view_as<int>(searchMap)], false);
 }
 
@@ -83,6 +85,6 @@ stock bool ND_IsStockMap(char[] mapName)
 	return false;
 }
 
-stock bool ND_StockMapEquals(const char[] currentMap, ND_StockMapCount:searchMap) {
+stock bool ND_StockMapEquals(const char[] currentMap, ND_StockMapCount searchMap) {
 	return StrEqual(currentMap, ND_StockMaps[view_as<int>(searchMap)], false);
 }
