@@ -33,6 +33,7 @@ public Plugin myinfo =
 };
 
 bool InCommanderMode[2] = {false, ...};
+bool EnteredCommanderMode[2] = {false, ...};
 int TeamCommander[2] = {-1, ...};
 
 Handle g_OnCommanderResignForward;
@@ -57,12 +58,17 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
+public void OnMapEnd() {
+	ResetVariableDefaults();
+}
+
 public Action Event_CommanderModeEnter(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	int team = GetClientTeam(client);
 	
 	InCommanderMode[team - 2] = true;
+	EnteredCommanderMode[team -2] = true;
 	CommanderStateChangeForward(team);
 	return Plugin_Continue;
 }
@@ -97,13 +103,8 @@ public Action Event_CommanderPromo(Event event, const char[] name, bool dontBroa
 	return Plugin_Continue;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
-{
-	for (int i = 0; i < 2; i++)
-	{
-		InCommanderMode[i] = false;
-		TeamCommander[i] = -1;	
-	}
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
+	ResetVariableDefaults();
 }
 
 public Action startmutiny(int client, const char[] command, int argc)
@@ -148,6 +149,16 @@ public Action startmutiny(int client, const char[] command, int argc)
 	return blockMutiny;
 }
 
+void ResetVariableDefaults()
+{
+	for (int i = 0; i < 2; i++)
+	{
+		InCommanderMode[i] = false;
+		TeamCommander[i] = -1;
+		EnteredCommanderMode[i] = -1;
+	}
+}
+
 void CommanderStateChangeForward(int team)
 {
 	Action dummy;
@@ -162,8 +173,10 @@ typedef NativeCall = function int (Handle plugin, int numParams);
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_IsInCommanderMode", Native_InCommanderMode);
+	CreateNative("ND_EnteredCommanderMode", Native_EnteredCommanderMode);
 	CreateNative("ND_GetTeamCommander", Native_GetTeamCommander);
 	CreateNative("ND_IsCommanderClient", Native_IsCommanderClient);
+	
 	return APLRes_Success;
 }
 
@@ -173,6 +186,14 @@ public int Native_InCommanderMode(Handle plugin, int numParams)
 	int team = GetClientTeam(client) - 2;
 	
 	return team >= 0 && InCommanderMode[team];
+}
+
+public int Native_EnteredCommanderMode(Handle plugin, int numParams)
+{
+	int client = GetNativeCell(1);
+	int team = GetClientTeam(client) - 2;
+	
+	return team >= 0 && EnteredCommanderMode[team];
 }
 
 public int Native_GetTeamCommander(Handle plugin, int numParams)
