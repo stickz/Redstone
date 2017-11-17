@@ -53,13 +53,27 @@ public Action ShowPickMenu(int client, int args)
 		return Plugin_Handled;
 	}
 	
-	char team_str[64]
-	GetCmdArg(2, team_str, sizeof(team_str));
-	
 	if (!IsVoteInProgress())
-	{
-		int teamNum = StringToInt(team_str) == TEAM_CONSORT ? TEAM_CONSORT : TEAM_EMPIRE;
-		Menu_PlayerPick(team_captain[CONSORT_aIDX], teamNum);	
+	{	
+		DebugTeamPicking = true;
+		PutEveryoneInSpectate();
+		
+		if (args == 2)
+		{
+			char putTeam[64]
+			GetCmdArg(2, putTeam, sizeof(putTeam));	
+			
+			if (StrEqual(putTeam, "true", false))
+			{
+				char team_str[64]
+				GetCmdArg(1, team_str, sizeof(team_str));
+				int teamNum = StringToInt(team_str) == TEAM_CONSORT ? TEAM_CONSORT : TEAM_EMPIRE;
+				ChangeClientTeam(client, teamNum);
+			}
+		}
+		
+		
+		Menu_PlayerPick(client);	
 	}	
 
 	return Plugin_Handled;

@@ -1,8 +1,9 @@
+#include <nd_fskill>
 #define NO_PLAYER_SELECTED -1
 //Handle PickingMenu = INVALID_HANDLE;
 
 int cur_team_choosing = TEAM_CONSORT;
-int next_team; int next_comm;
+int next_comm;
 
 /* Functions for handling the team pick process */
 public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2) 
@@ -43,12 +44,12 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 					ChangeClientTeam(client, cur_team_choosing);
 					
 					// Send the team picking menu to the next captain
-					Menu_PlayerPick(next_comm, next_team);
+					Menu_PlayerPick(next_comm);
 				}
 				
 				// If the picking is not done, continue displaying the menu to pick players.
 				else if (!PickingComplete())
-					Menu_PlayerPick(next_comm, next_team);
+					Menu_PlayerPick(next_comm);
 			}
 			
 			// If selected item was a player, refresh to pick anther option.
@@ -56,14 +57,14 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			{
 				PrintToChat(client, "\x05[xG] Player disconnected. Please pick again.");
 				SetConstantPickingTeam();
-				Menu_PlayerPick(next_comm, next_team);
+				Menu_PlayerPick(next_comm);
 			}
 			
 			// If picking is not done, display menu to opposite team incase a skip was sent
 			else if (!PickingComplete())
 			{
 				SetPickingTeam(); // Decide which team gets the next pick
-				Menu_PlayerPick(next_comm, next_team);
+				Menu_PlayerPick(next_comm);
 			}
 		}
 		
@@ -75,18 +76,27 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			
 			// Switch to the other team and set their last choice to canceled
 			SwitchPickingTeam();			
-			last_choice[cur_team_choosing - 2] = NO_PLAYER_SELECTED;
+			
+			if (!lastTimerEnded || noChoiceFound)
+				last_choice[cur_team_choosing - 2] = NO_PLAYER_SELECTED;
 
 			// If the picking is not done, continue displaying the menu to pick players.
 			if (!PickingComplete())
-				Menu_PlayerPick(next_comm, next_team);
+				CreateTimer(3.0, TIMER_DelayNextPick, _, TIMER_FLAG_NO_MAPCHANGE);
 		}
 	}
 
 	if (DebugTeamPicking)
 		ConsoleToAdmins("Handle_PickPlayerMenu(): Finished", "b");
 }
-public Action Menu_PlayerPick(int client, int args)
+
+public Action TIMER_DelayNextPick(Handle timer)
+{
+	Menu_PlayerPick(next_comm);
+	return Plugin_Handled;
+}
+
+public void Menu_PlayerPick(int client)
 {	
 	if (DebugTeamPicking)
 		ConsoleToAdmins("Menu_PlayerPick(): Started", "b");
@@ -97,7 +107,7 @@ public Action Menu_PlayerPick(int client, int args)
 	{
 		FinishPicking(true);
 		PrintToChatAll("\x05[xG] Picking terminated. A team captain left the server.");
-		return Plugin_Handled;
+		return;
 	}
 	
 	if (DebugTeamPicking)
@@ -117,14 +127,18 @@ public Action Menu_PlayerPick(int client, int args)
 		ConsoleToAdmins("Menu_PlayerPick(): Initial menu created", "b");
 
 	// Precast varriables and loop through all the players on the server
-	char currentName[60], currentUser[30];	
+	char currentName[60], currentUser[30], skill[8];
 	for (int player = 0; player <= MaxClients; player++) 
 	{
-		// If the client is valid by Redstone standards and not already on a team
-		if (IsValidClient(player, !DebugTeamPicking) && RED_IsValidCIndex(player) && GetClientTeam(player) < 2)
+		if (PlayerIsPickable(player))
 		{
-			// Get their name and add a new menu item for them
+			// Get their name and attach skill value to it
 			GetClientName(player, currentName, sizeof(currentName));
+			Format(skill, sizeof(skill), " [%d]", 	IsFakeClient(player) ? 0 : 
+													ND_GetRoundedPSkill(player));			
+			StrCat(currentName, sizeof(currentName), skill);
+			
+			// Convert user id to a string. Add userid and name to menu item.
 			IntToString(GetClientUserId(player), currentUser, sizeof(currentUser));			
 			AddMenuItem(PickingMenu, currentUser, currentName);			
 		}
@@ -135,35 +149,26 @@ public Action Menu_PlayerPick(int client, int args)
 
 	// Add the menu item skip and display the menu to the team captain
 	AddMenuItem(PickingMenu, "-1", "End/Skip");
-	DisplayMenu(PickingMenu, client, 300); 
+	DisplayMenu(PickingMenu, client, GetPickingTimeLimit());
+	
+	// Reset the team picking timer for the next commander
+	// Let the timer know if it's the first two picks
+	ResetPickTimer(client);
 	
 	if (DebugTeamPicking)
 		ConsoleToAdmins("Menu_PlayerPick(): finished", "b");
-	
-	return Plugin_Handled;
 }
 
 /* Helper functions for handling the team pick process */
-void SetConstantPickingTeam()
-{
-	next_team = cur_team_choosing; // Does this need to be set?
+void SetConstantPickingTeam() {
 	next_comm = cur_team_choosing == TEAM_CONSORT ? team_captain[CONSORT_aIDX] : team_captain[EMPIRE_aIDX];
 }
 void SwitchPickingTeam()
-{
+{	
 	switch (cur_team_choosing)
 	{
-		case TEAM_CONSORT:
-		{
-			next_comm = team_captain[EMPIRE_aIDX];
-			next_team = TEAM_EMPIRE;
-		}
-							
-		case TEAM_EMPIRE:
-		{
-			next_comm = team_captain[CONSORT_aIDX];
-			next_team = TEAM_CONSORT;
-		}
+		case TEAM_CONSORT: next_comm = team_captain[EMPIRE_aIDX];		
+		case TEAM_EMPIRE: next_comm = team_captain[CONSORT_aIDX];
 	}
 }
 void SetPickingTeam()

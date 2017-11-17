@@ -27,7 +27,6 @@ public Action StartPicking(int client, int args)
 		return Plugin_Handled;
 	
 	// Set the default starting team to consort
-	int teamName = TEAM_CONSORT;
 	int teamCaptain = target1;
 	
 	// If an optional third argument is inputed for the starting team
@@ -38,15 +37,10 @@ public Action StartPicking(int client, int args)
 		
 		// Set the starting team to etheir Consort or Empire
 		if (StrContains(startTeam, "con", false) > -1)
-		{
-			teamName = TEAM_CONSORT;
 			teamCaptain = target1;
-		}			
+
 		else if (StrContains(startTeam, "emp", false) > -1)
-		{
-			teamName = TEAM_EMPIRE;
 			teamCaptain = target2;
-		}
 		
 		// If the starting team is invalid, don't countinue and have the command run again
 		else
@@ -79,7 +73,7 @@ public Action StartPicking(int client, int args)
 	}
 	
 	// Display the first picking menu
-	Menu_PlayerPick(teamCaptain, teamName);
+	Menu_PlayerPick(teamCaptain);
 	return Plugin_Handled;
 }
 bool CatchCommonFailure(int args)
@@ -142,12 +136,17 @@ public void BeforePicking(int client, int consortTarget, int empireTarget)
 	SetVarriableDefaults();		
 	PutEveryoneInSpectate();	
 	SetCaptainTeams(consortTarget, empireTarget);
-	PrintToChatAll("\x05Player Picking has Started!");
+	PrintToChatAll("\x05Player Picking has Started!");	
+	PrintToChatAll("\x05Captains have %ds for each pick!", cvarPickTimeLimit.IntValue);
+	PrintToChatAll("\x05The first pick has %ds to prepare!", cvarFirstPickTime.IntValue);
 }
 void SetVarriableDefaults()
 {
 	last_choice[CONSORT_aIDX] = 0;
 	last_choice[EMPIRE_aIDX] = 0;
+	
+	team_captain[CONSORT_aIDX] = -1;
+	team_captain[EMPIRE_aIDX] = -1;
 	
 	/* Switch Algorithum */
 	doublePlace = true;
