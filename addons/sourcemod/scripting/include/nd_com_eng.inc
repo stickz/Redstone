@@ -16,7 +16,7 @@
  * @return bool (true, false).
  */
 
-native bool ND_EnteredCommanderMode(int clientIDX)
+native bool ND_EnteredCommanderMode(int clientIDX);
 	
 #define ND_ECM_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_EnteredCommanderMode") == FeatureStatus_Available)
 	
