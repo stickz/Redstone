@@ -2,6 +2,7 @@
 #include <nd_stocks>
 #include <nd_rounds>
 #include <nd_redstone>
+#include <nd_print>
 
 public Plugin myinfo = 
 {
@@ -40,6 +41,8 @@ ConVar cvarFirstPickTime;
 public void OnPluginStart()
 {
 	LoadTranslations("common.phrases");
+	LoadTranslations("nd_team_picking.phrases");
+	
 	cvarPickTimeLimit = CreateConVar("sm_tp_time", "20", "Set time allocated for each pick");
 	cvarFirstPickTime = CreateConVar("sm_tp_time_first", "40", "Set time allocated for first pick");	
 	AutoExecConfig(true, "nd_teampick");

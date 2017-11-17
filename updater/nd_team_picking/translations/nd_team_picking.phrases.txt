@@ -1,0 +1,116 @@
+"Phrases"
+{
+	"Team Captain Left"
+	{
+		"en"		"Picking terminated. A team captain left the server"
+	}
+	
+	"Pick Again"
+	{
+		"en"		"Player disconnected. Please pick again"
+	}
+	
+	"Picking Completed"
+	{
+		"en"		"Player Picking has been completed"	
+	}
+	
+	"Picking Started"
+	{
+		"en"		"Player Picking has Started"	
+	}
+	
+	"Each Pick Time"
+	{
+		"#format"	"{1:i}"
+		"en"		"Captains have {1}s for each pick"
+	}
+	
+	"First Pick Time"
+	{
+		"#format"	"{1:i}"
+		"en"		"The first pick has {1}s to prepare"
+	}
+	
+	"Auto Select"
+	{
+		"#format"	"{1:i}"
+		"en"		"Auto-Select in {1}s"
+	}
+	
+	"Auto Selected Join"
+	{
+		// To Do: make {2:t} for team name
+		// {1} = Player Name, {2} = Team Name
+		"#format"	"{1:s},{2:s}"
+		"en"		"{1} was auto-selected to join {2}."	
+	}
+	
+	"Choosen Join"
+	{
+		// To Do: make {2:t} for team name
+		// {1} = Player Name, {2} = Team Name
+		"#format"	"{1:s},{2:s}"
+		"en"		"{1} was choosen to join {2}."	
+	}
+	
+	"Got First Pick"
+	{
+		// To Do: make {1:t} for team name
+		// {1} = Team Name
+		"#format"	"{1:s}"
+		"en"		"{1} got the first pick"
+	}
+	
+	"Got Next Picks"
+	{
+		// To Do: make {1:t} for team name
+		// {1} = Team Name
+		"#format"	"{1:s}"
+		"en"		"{1} gets the next two picks"
+	}
+	
+	// Plugin Errors
+	"Already Running"
+	{
+		"en"		"!PlayerPicking Failure: Already running or glitched. Use !ReloadPicker if required."	
+	}
+	
+	"Four Players Required"
+	{
+		"en"		"!PlayerPicking Failure: Four players required to use"	
+	}
+	
+	"Correct Usage"
+	{
+		"en"		"!PlayerPicking Failure: Format Incorrect. Usage: !PlayerPicking captain1 captain2 startingTeam"	
+	}
+	
+	"Vote Currently Running"
+	{
+		"en"		"!PlayerPicking Failure: Is a !vote or mapvote currently in progress?"	
+	}
+	
+	"Next Pick On"
+	{
+		"en"		"!PlayerPicking Failure: Use '!Nexpick on' then Reload the map"	
+	}
+
+	"Name Segment Invalid"
+	{
+		"#format"	"{1:s}"
+		"en"		"!PlayerPicking Failure: '{1}' name segment invalid OR found multiple times"
+	}
+	
+	"Name Segment Duplicate"
+	{
+		"#format"	"{1:s}"
+		"en"		"!PlayerPicking Failure: '{1}' targeted as picker on both teams"
+	}
+	
+	"Invalid Starting Team"
+	{
+		"#format"	"{1:s}"
+		"en"		"!PlayerPicking Failure: '{1}' was specified, but is an invalid starting team"
+	}
+}

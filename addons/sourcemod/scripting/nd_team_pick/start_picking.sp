@@ -45,13 +45,13 @@ public Action StartPicking(int client, int args)
 		// If the starting team is invalid, don't countinue and have the command run again
 		else
 		{
-			PrintToChatAll("\x05[xG] !PlayerPicking Failure: '%s' was specified, but is an invalid starting team!", startTeam);
+			PrintMessageAllTS1("Invalid Starting Team", startTeam);
 			return Plugin_Handled;		
 		}
 	}
 	
-	// Run player picking preparation
-	BeforePicking(client, target1, target2);
+	// Set default varriables early in-case of debugging mode
+	SetVarriableDefaults();	
 	
 	// Check if the user wants to enable debugging
 	if (args == 4)
@@ -68,9 +68,12 @@ public Action StartPicking(int client, int args)
 	// Allow running the team picker for bots after round start if debugging
 	if (ND_RoundStarted() && !DebugTeamPicking)
 	{
-		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Use '!Nexpick on' then Reload the map!");
+		PrintMessageAll("Next Pick On");
 		return Plugin_Handled;
 	}
+	
+	// Run before picking starts
+	BeforePicking(target1, target2);
 	
 	// Display the first picking menu
 	Menu_PlayerPick(teamCaptain);
@@ -80,25 +83,25 @@ bool CatchCommonFailure(int args)
 {
 	if (g_bPickStarted) 
 	{
-		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Already running or glitched. Use !ReloadPicker if required.");
+		PrintMessageAll("Already Running");
 		return true;
 	}
 	
 	if (GetClientCount(false) < 4)
 	{		
-		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Four players required to use!");
+		PrintMessageAll("Four Players Required");
 		return true;
 	}
 	
 	if (args < 2 || args > 4)
 	{
-		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Format Incorrect. Usage: !PlayerPicking captain1 captain2 startingTeam");
+		PrintMessageAll("Correct Usage");
 		return true;
 	}
 	
 	if (IsVoteInProgress())
 	{
-		PrintToChatAll("\x05[xG] !PlayerPicking Failure: Is a !vote or mapvote currently in progress?");
+		PrintMessageAll("Vote Currently Running");
 		return true;
 	}	
 	
@@ -108,13 +111,13 @@ bool TargetingIsInvalid(int target1, char[] con_name, int target2, char[] emp_na
 {
 	if (target1 == INVALID_TARGET) 
 	{
-		PrintToChatAll("\x05[xG] !PlayerPicking Failure: '%s' name segment invalid OR found multiple times!", con_name);
+		PrintMessageAllTS1("Name Segment Invalid", con_name);
 		return true;
 	}	
 
 	if (target2 == INVALID_TARGET)
 	{
-		PrintToChatAll("\x05[xG] !PlayerPicking Failure: '%s' name segment invalid OR found multiple times!", emp_name);
+		PrintMessageAllTS1("Name Segment Invalid", emp_name);
 		return true;
 	}
 
@@ -122,8 +125,7 @@ bool TargetingIsInvalid(int target1, char[] con_name, int target2, char[] emp_na
 	{
 		char pickerName[64];
 		GetClientName(target1, pickerName, sizeof(pickerName));
-		
-		PrintToChatAll("\x05[xG] !PlayerPicking Failure: '%s' targeted as picker on both teams!", pickerName);
+		PrintMessageAllTS1("Name Segment Duplicate", pickerName);
 		return true;	
 	}
 	
@@ -131,15 +133,20 @@ bool TargetingIsInvalid(int target1, char[] con_name, int target2, char[] emp_na
 }
 
 /* Functions for running a routine before team picking is started */
-public void BeforePicking(int client, int consortTarget, int empireTarget) 
+void BeforePicking(int consortTarget, int empireTarget) 
 {	
-	SetVarriableDefaults();		
 	PutEveryoneInSpectate();	
 	SetCaptainTeams(consortTarget, empireTarget);
-	PrintToChatAll("\x05Player Picking has Started!");	
-	PrintToChatAll("\x05Captains have %ds for each pick!", cvarPickTimeLimit.IntValue);
-	PrintToChatAll("\x05The first pick has %ds to prepare!", cvarFirstPickTime.IntValue);
+	PrintPickingMessages();
 }
+
+void PrintPickingMessages()
+{
+	PrintMessageAll("Picking Started");
+	PrintMessageAllTI1("Each Pick Time", cvarPickTimeLimit.IntValue);
+	PrintMessageAllTI1("First Pick Time", cvarFirstPickTime.IntValue);	
+}
+
 void SetVarriableDefaults()
 {
 	last_choice[CONSORT_aIDX] = 0;

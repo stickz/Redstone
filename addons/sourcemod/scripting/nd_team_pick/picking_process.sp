@@ -36,9 +36,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 				if (selectedPlayer != NO_PLAYER_SELECTED) 
 				{
 					// Get their name and display which team they're joining.
-					char name[64];
-					GetClientName(client, name, sizeof(name));					
-					PrintToChatAll("%s was choosen to join %s.", name, ND_GetTeamName(cur_team_choosing));	
+					PrintChoosenJoin(client, cur_team_choosing);
 
 					// Set the player's team to the team captain's team.
 					ChangeClientTeam(client, cur_team_choosing);
@@ -55,7 +53,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			// If selected item was a player, refresh to pick anther option.
 			else if (selectedPlayer != NO_PLAYER_SELECTED)
 			{
-				PrintToChat(client, "\x05[xG] Player disconnected. Please pick again.");
+				PrintMessage(client, "Pick Again");
 				SetConstantPickingTeam();
 				Menu_PlayerPick(next_comm);
 			}
@@ -90,6 +88,23 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 		ConsoleToAdmins("Handle_PickPlayerMenu(): Finished", "b");
 }
 
+void PrintChoosenJoin(int player, int team)
+{
+	char name[64];
+	GetClientName(player, name, sizeof(name));
+	
+	char teamName[32];
+	Format(teamName, sizeof(teamName), ND_GetTeamName(team));
+	
+	for (int client = 1; client <= MaxClients; client++) 
+	{
+		if (IsClientInGame(client))
+		{
+			PrintToChat(client, "%t", "Choosen Join", name, teamName);
+		}
+	}
+}
+
 public Action TIMER_DelayNextPick(Handle timer)
 {
 	Menu_PlayerPick(next_comm);
@@ -106,7 +121,7 @@ public void Menu_PlayerPick(int client)
 	if (!RED_IsValidClient(client))
 	{
 		FinishPicking(true);
-		PrintToChatAll("\x05[xG] Picking terminated. A team captain left the server.");
+		PrintMessageAll("Team Captain Left");
 		return;
 	}
 	
@@ -186,8 +201,8 @@ void SetPickingTeam()
 			SwitchPickingTeam();
 
 			int otherTeam = getOtherTeam(cur_team_choosing);
-			PrintToChatAll("\x05[xG] %s got the first pick!", ND_GetTeamName(cur_team_choosing));
-			PrintToChatAll("\x05[xG] %s gets the next two picks!", ND_GetTeamName(otherTeam));
+			PrintPickOrderMessage("Got First Pick", cur_team_choosing);
+			PrintPickOrderMessage("Got Next Picks", otherTeam);
 		}
 
 		else if (doublePlace)
@@ -201,6 +216,21 @@ void SetPickingTeam()
 	else
 		SwitchPickingTeam();
 }
+
+void PrintPickOrderMessage(char[] phrase, int team)
+{
+	char teamName[32];
+	Format(teamName, sizeof(teamName), ND_GetTeamName(team));
+	
+	for (int client = 1; client <= MaxClients; client++) 
+	{
+		if (IsClientInGame(client))
+		{		
+			PrintToChat(client, "\x05[xG] %t", phrase, teamName);
+		}
+	}	
+}
+
 bool PickingComplete()
 {
 	if (	last_choice[CONSORT_aIDX] == NO_PLAYER_SELECTED && 	
@@ -218,5 +248,5 @@ void FinishPicking(bool forced = false)
 	g_bPickStarted = false;
 
 	if (!forced)
-		PrintToChatAll("\x05Player Picking has been completed.");
+		PrintMessageAllEx("Team Captain Left");
 }

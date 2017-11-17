@@ -38,7 +38,7 @@ public Action TIMER_CountdownPickTime(Handle timer, any:userid)
 
 	// Display a countdown in the pickers server chat, when it's about to pick for them
 	else if (PickTimeRemaining == 10 || (PickTimeRemaining <= 5 && PickTimeRemaining >= 1))
-		PrintToChat(client, "\x05[xG] Auto-Select in %ds", PickTimeRemaining);
+		PrintToChat(client, "\x05[xG] %t.", "Auto Select", PickTimeRemaining);
 	
 	if (DebugTeamPicking)
 	{
@@ -83,9 +83,7 @@ void AutoSelectPlayer(int picker)
 		ChangeClientTeam(playerToSelect, team);
 		
 		// Print the auto assignment to server chat
-		char playerName[64];
-		GetClientName(playerToSelect, playerName, sizeof(playerName));		
-		PrintToChatAll("%s was auto-selected to join %s!", playerName, ND_GetTeamName(team));
+		PrintAutoSelected(playerToSelect, team);
 	}
 	else 
 	{
@@ -93,6 +91,23 @@ void AutoSelectPlayer(int picker)
 		if (DebugTeamPicking)
 			ConsoleToAdmins( "AutoSelectPlayer(): Didn't find anybody", "b");
 	}
+}
+
+void PrintAutoSelected(int player, int team)
+{
+	char playerName[64];
+	GetClientName(player, playerName, sizeof(playerName));
+	
+	char teamName[32];
+	Format(teamName, sizeof(teamName), ND_GetTeamName(team));
+	
+	for (int client = 1; client <= MaxClients; client++) 
+	{
+		if (IsClientInGame(client))
+		{
+			PrintToChat(client, "%t", "Auto Selected Join", playerName, teamName);
+		}
+	}		
 }
 
 
