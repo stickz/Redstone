@@ -98,13 +98,12 @@ void checkCount()
 		{	
 			// Get the bot count to fill empty team slots
 			int dynamicSlots = GetDynamicSlotCount() - 2;
-			int clientCount = RED_ClientCount();
 			
 			// Must use actual team count here to count properly
 			int teamCount = OnTeamCount();			
-			quota = getBotFillerQuota(teamCount, clientCount < dynamicSlots);		
+			quota = getBotFillerQuota(teamCount, GetClientCount() < dynamicSlots);		
 			
-			if (quota >= dynamicSlots && getPositiveOverBalance() >= 3)
+			if (quota >= dynamicSlots && getPositiveOverBalance() >= 2)
 			{
 				quota = getBotFillerQuota(teamCount);	
 			
