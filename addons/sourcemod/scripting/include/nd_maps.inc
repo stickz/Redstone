@@ -15,7 +15,7 @@ enum ND_CustomMapCount {
 	ND_Corner,
 	ND_Submarine,
 	ND_MetroImp,
-	ND_SiloImp
+	ND_Port
 }
 
 stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] = 
@@ -28,7 +28,7 @@ stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] =
 	"corner_intermediate_04",
 	"nd_submarine",
 	"metro_imp2",
-	"silo_imp1"
+	"port"
 };
 
 stock bool ND_IsCustomMap(char[] mapName)
@@ -42,6 +42,9 @@ stock bool ND_IsCustomMap(char[] mapName)
 	return false;
 }
 
+stock bool ND_CustomMapEquals(const char[] currentMap, ND_CustomMapCount:searchMap) {
+	return StrEqual(currentMap, ND_CustomMaps[view_as<int>(searchMap)], false);
+}
 
 /* Stock Maps */
 
@@ -54,8 +57,7 @@ enum ND_StockMapCount {
 	ND_Gate,
 	ND_Oilfield,
 	ND_Downtown,
-	ND_Clocktower,
-	SK_Metro
+	ND_Clocktower
 }
 
 stock char ND_StockMaps[ND_StockMapCount][ND_MAX_MAP_SIZE] = {
@@ -67,8 +69,7 @@ stock char ND_StockMaps[ND_StockMapCount][ND_MAX_MAP_SIZE] = {
 	"gate",
 	"oilfield",
 	"downtown",
-	"clocktower",
-	"sk_metro"
+	"clocktower"
 };
 
 stock bool ND_IsStockMap(char[] mapName)
@@ -80,4 +81,8 @@ stock bool ND_IsStockMap(char[] mapName)
 	}
 	
 	return false;
+}
+
+stock bool ND_StockMapEquals(const char[] currentMap, ND_StockMapCount:searchMap) {
+	return StrEqual(currentMap, ND_StockMaps[view_as<int>(searchMap)], false);
 }
