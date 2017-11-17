@@ -6,6 +6,25 @@
 #define NO_COMMANDER -1
 
 /**
+ * Gets if the commander has commander mode.
+ * At least once this round.
+ *
+ * Accepts the input of any client on a team
+ * Then checks if their commander has entered rts_view
+ *
+ * @parm1 clientIDX
+ * @return bool (true, false).
+ */
+
+native bool ND_EnteredCommanderMode(int clientIDX);
+	
+#define ND_ECM_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_EnteredCommanderMode") == FeatureStatus_Available)
+	
+stock bool ND_HasEnteredCommanderMode(int clientIDX) {
+	return ND_ECM_AVAILABLE() && ND_EnteredCommanderMode(clientIDX);
+}
+
+/**
  * Gets if the commander is in commander mode
  *
  * Accepts the input of any client on a team

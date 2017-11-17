@@ -116,7 +116,7 @@ public Action OnPlayerChat(Event event, const char[] name, bool dontBroadcast)
 	#endif
 
 	// When the commander chats, check the item off in the list
-	if (ND_IsCommander(client) && ND_IsInCommanderMode(client))
+	if (ND_IsCommander(client) && ND_HasEnteredCommanderMode(client))
 		teamChecklists[GetClientTeam(client)][4] = true;
 
 	return Plugin_Continue;
