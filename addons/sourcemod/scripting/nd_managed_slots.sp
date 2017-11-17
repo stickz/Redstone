@@ -83,18 +83,18 @@ public void OnClientPutInServer(int client)
 
 public void OnClientAuthorized(int client)
 {	
-	if (!IsFakeClient(client))
+	if (!IsFakeClient(client) && GetClientCount(false) > g_Integer[maxKickCount])
 	{		
-		if (GetClientCount(false) > g_Integer[maxKickCount] && eDynamicSlots)
+		if (eDynamicSlots)
 		{			
-			if (!RED_IsDonator(client))
-				KickClient(client, "%t", "Donors Only");		
-			else
+			slotUsed[client] = RED_IsDonator(client);
+			if (!slotUsed[client])
 			{
-				g_Integer[maxKickCount]++;
-				slotUsed[client] = true;
+				KickClient(client, "%t", "Donors Only");
+				return;
 			}
 		}
+		g_Integer[maxKickCount]++;
 	}
 }
 
