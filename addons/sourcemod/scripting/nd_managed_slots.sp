@@ -87,16 +87,14 @@ public void OnClientAuthorized(int client)
 	{		
 		if (eDynamicSlots)
 		{			
-			if (!RED_IsDonator(client))
-				KickClient(client, "%t", "Donors Only");		
-			else
+			slotUsed[client] = RED_IsDonator(client);
+			if (!slotUsed[client])
 			{
-				g_Integer[maxKickCount]++;
-				slotUsed[client] = true;
+				KickClient(client, "%t", "Donors Only");
+				return;
 			}
 		}
-		else
-			g_Integer[maxKickCount]++;
+		g_Integer[maxKickCount]++;
 	}
 }
 
