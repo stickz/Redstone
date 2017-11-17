@@ -79,7 +79,7 @@ bool ReduceBotCountByMap(const char[] map)
 /* List the really tinny maps to reduce further, (assume default if unlisted) */
 int GetBotReductionCount(const char[] map)
 {
-	if (ND_CustomMapEquals(map, ND_Sanbrick) || ND_CustomMapEquals(map, ND_Mars))
+	if (ND_CustomMapEquals(map, ND_Sandbrick) || ND_CustomMapEquals(map, ND_Mars))
 		return g_cvar[BotReductionDec].IntValue;
 
 	return g_cvar[BotReduction].IntValue;
