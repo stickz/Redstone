@@ -79,8 +79,7 @@ bool ReduceBotCountByMap(const char[] map)
 /* List the really tinny maps to reduce further, (assume default if unlisted) */
 int GetBotReductionCount(const char[] map)
 {
-	if (StrEqual(map, ND_CustomMaps[view_as<int>(ND_Sandbrick)], false)
-	||  StrEqual(map, ND_CustomMaps[view_as<int>(ND_Mars)], false))
+	if (ND_CustomMapEquals(map, ND_Sanbrick) || ND_CustomMapEquals(map, ND_Mars))
 		return g_cvar[BotReductionDec].IntValue;
 
 	return g_cvar[BotReduction].IntValue;
@@ -109,50 +108,18 @@ int GetSmallMapCount(int totalCount, int specCount, int rQuota)
 	return botAmount;
 }
 
-/* Disable bots sonner on certain maps */
-#define SMALL_MAP_SIZE2 2
-int sSM[SMALL_MAP_SIZE2] = {
-	view_as<int>(ND_Silo),
-	view_as<int>(ND_Oilfield)
-}
-
-#define SMALL_MAP_SIZE3 2
-int cSM[SMALL_MAP_SIZE3] = {
-	view_as<int>(ND_Sandbrick),
-	view_as<int>(ND_Corner)
-}
-
-#define LARGE_MAP_SIZE 2
-int lSM[LARGE_MAP_SIZE] = {
-	view_as<int>(ND_Gate),
-	view_as<int>(ND_Downtown)
-};
-
 int GetBotShutOffCount()
 {
 	char map[32];
 	GetCurrentMap(map, sizeof(map));
+
+	// Disable bots sooner if it's a tiny/broken map
+	if (ND_StockMapEquals(map, ND_Oilfield) || ND_CustomMapEquals(map, ND_Sandbrick) || ND_CustomMapEquals(map, ND_Corner))
+		return g_cvar[DisableBotsAtDec].IntValue;
 	
-	/* Look through arrays to see if it's a small/broken stock maps */
-	for (int idx = 0; idx < SMALL_MAP_SIZE2; idx++)
-	{
-		if (StrEqual(map, ND_StockMaps[sSM[idx]], false))
-			return g_cvar[DisableBotsAtDec].IntValue;
-	}
-	
-	/* Look through arrays to see if it's a small/broken custom maps */
-	for (int id = 0; id < SMALL_MAP_SIZE3; id++)
-	{
-		if (StrEqual(map, ND_CustomMaps[cSM[id]], false))
-			return g_cvar[DisableBotsAtDec].IntValue;
-	}
-	
-	/* Look through array to see if it's a large stock map */
-	for (int ix = 0; ix < LARGE_MAP_SIZE; ix++)
-	{
-		if (StrEqual(map, ND_StockMaps[lSM[ix]], false))
-			return g_cvar[DisableBotsAtInc].IntValue;
-	}
+	// Disable bots later if it's a large stock map
+	if (ND_StockMapEquals(map, ND_Gate) || ND_StockMapEquals(map, ND_Downtown))
+		return g_cvar[DisableBotsAtInc].IntValue;
 	
 	/* Otherwise, return the default value */
 	return g_cvar[DisableBotsAt].IntValue;
