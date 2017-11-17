@@ -108,6 +108,17 @@ stock void PrintToAdmins(const char[] message, const char[] flags)
     } 
 }
 
+stock void ConsoleToAdmins(const char[] message, const char[] flags)
+{ 
+    for (int x = 1; x <= MaxClients; x++) 
+    { 
+        if (IsValidClient(x) && IsValidAdmin(x, flags)) 
+        { 
+            PrintToConsole(x, message); 
+        } 
+    } 
+}
+
 /* Count Constants */
 stock int ValidClientCount()
 {
