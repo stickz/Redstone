@@ -15,6 +15,24 @@ native int RED_ClientCount();
 
 #define RED_CC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "RED_ClientCount") == FeatureStatus_Available)
 
+stock int ND_GetClientCount() {
+	return RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount();
+}
+
+/**
+ * Get's if the client is marked as a donator
+ *
+ * @parm1 ClientIDX 'index of client'
+ * @return bool true false.
+ */
+native bool RED_Donator(int ClientIDX);
+
+#define RED_D_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "RED_Donator") == FeatureStatus_Available)
+
+stock bool RED_IsDonator(int ClientIDX)
+{
+	return RED_D_AVAILABLE() && RED_Donator(ClientIDX);
+}
 
 /**
  * Gets wheter the client is valid or not from Redstone
