@@ -27,5 +27,5 @@ float PredictedSkill(int clientLevel)
 	 * Otherwise, use the client level for regular clients.
 	 */
 	float min = lastAverage / 4.25;
-	return clientLevel < min ? min : Math_Max(clientLevel, lastAverage / 3);
+	return clientLevel < min ? min : Math_Max(clientLevel, lastAverage / 3.0);
 }
