@@ -15,8 +15,8 @@ float RookieMinSkillValue(int clientLevel) {
 	return clientLevel < 10 ? RoundToNearestMultipleEx(clientLevel, 5) : float(clientLevel);
 }
 
-float MinSkillValue(int clientLevel) {
-	return clientLevel < 20 ? RoundToNearestMultipleEx(clientLevel, 5) : float(clientLevel);
+float MinSkillValue(int clientLevel, int endLevel = 20, int multiple = 5) {
+	return clientLevel < endLevel ? RoundToNearestMultipleEx(clientLevel, multiple) : float(clientLevel);
 }
 
 float PredictedSkill(int clientLevel)
