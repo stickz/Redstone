@@ -8,6 +8,7 @@
 #include <nd_com_eng>
 #include <nd_aweight>
 #include <nd_entities>
+#include <smlib/math>
 
 #define _DEBUG 0
 
