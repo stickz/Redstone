@@ -41,11 +41,7 @@ float GetSkillLevel(int client)
 	if (EnableSkillPrediction())
 		return PredictedSkill(clientLevel);
 		
-	/* Then try to use the client level */
-	if (clientLevel >= 20)
-		return float(clientLevel);
-		
-	/* If that is too low, set skill to min threshold */	
+	// Return a min skill multiple or the client level (whichever is greater)
 	return MinSkillValue(clientLevel, RookieClassify() ? 10 : 20);
 }
 
