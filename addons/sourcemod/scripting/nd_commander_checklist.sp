@@ -4,7 +4,7 @@
 #include <nd_stocks>
 #include <nd_com_eng>
 #include <nd_entities>
-#include <nd_research>
+#include <nd_research_eng>
 #include <nd_redstone>
 #include <nd_rounds>
 
@@ -58,8 +58,6 @@ public void OnPluginStart()
 	
 	AddClientPrefSupport(); // clientprefs.sp
 	
-	//For updating HUD when field tactics and kits are researched
-	HookEvent("research_complete",OnResearchCompleted);
 	//For updating HUD when armory is built
 	HookEvent("commander_start_structure_build",OnStructureBuildStarted);
 	//For updating HUD when a forward spawn is built
@@ -211,23 +209,12 @@ public Action TransportGateTimerCB(Handle timer, any:entIdx)
   	return Plugin_Stop;
 }  
 
+public void OnAdvancedKitsResearched(int team) {
+	teamChecklists[team][3] = true;
+}
 
-public Action OnResearchCompleted(Event event, const char[] name, bool dontBroadcast)
-{	
-	int researchId = event.GetInt("researchid");
-	int teamId = event.GetInt("teamid");
-
-	#if DEBUG == 1
-		PrintToChatAll("Research completed for team %d: %d", teamId, researchId);
-	#endif
-
-	if (researchId == RESEARCH_ADVANCED_KITS)
-		teamChecklists[teamId][3] = true;
-
-	else if (researchId == RESEARCH_FIELD_TACTICS)
-		teamChecklists[teamId][1] = true;
-
-	return Plugin_Continue;
+public void OnFieldTacticsResearched(int team) {
+	teamChecklists[team][1] = true;
 }
 
 public void ND_OnCommanderPromoted(int client, int team) {
