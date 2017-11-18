@@ -210,11 +210,11 @@ public Action TransportGateTimerCB(Handle timer, any:entIdx)
 }  
 
 public void OnAdvancedKitsResearched(int team) {
-	teamChecklists[teamId][3] = true;
+	teamChecklists[team][3] = true;
 }
 
 public void OnFieldTacticsResearched(int team) {
-	teamChecklists[teamId][1] = true;
+	teamChecklists[team][1] = true;
 }
 
 public void ND_OnCommanderPromoted(int client, int team) {
