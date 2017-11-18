@@ -5,6 +5,7 @@
 #include <nd_com_eng>
 #include <nd_entities>
 #include <nd_research_eng>
+#include <nd_struct_eng>
 #include <nd_redstone>
 #include <nd_rounds>
 
@@ -51,15 +52,9 @@ public void OnPluginStart()
 	g_updaterate 	= CreateConVar("sm_comm_checklist_updaterate", "1.5");
 	g_afterdisplay	= CreateConVar("sm_comm_checklist_afterdisplay", "5");
 	
-	//hudSync = CreateHudSynchronizer();
-
-	//basic init
-	LoadTranslations("nd_commander_checklist.phrases");
-	
+	LoadTranslations("nd_commander_checklist.phrases");	
 	AddClientPrefSupport(); // clientprefs.sp
 	
-	//For updating HUD when armory is built
-	HookEvent("commander_start_structure_build",OnStructureBuildStarted);
 	//For updating HUD when a forward spawn is built
 	HookEvent("transport_gate_created",OnForwardSpawnCreated);
 	//For updating HUD when the comm activate chat
@@ -120,20 +115,8 @@ public Action OnPlayerChat(Event event, const char[] name, bool dontBroadcast)
 	return Plugin_Continue;
 }
 
-public Action OnStructureBuildStarted(Event event, const char[] name, bool dontBroadcast)
-{
-	int structType = event.GetInt("type");
-	int teamId = event.GetInt("team");
-
-	#if DEBUG == 1
-		PrintToChatAll("Structure build started for team %d: %d", teamId, structType);
-	#endif
-
-	//Armory
-	if (structType == 8 && !teamChecklists[teamId][2])
-		teamChecklists[teamId][2] = true;
-	
-	return Plugin_Continue;
+public void OnBuildStarted_Armory(int team) {
+	teamChecklists[team][2] = true;
 }
 
 //structure_built and forward_spawn_created do not fire serverside. 
