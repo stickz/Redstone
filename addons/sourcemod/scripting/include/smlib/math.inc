@@ -25,13 +25,8 @@ enum VecAngle
  * @param number		A number that can be positive or negative.
  * @return				Positive number.
  */
-stock any:Math_Abs(any:number)
-{	
-	if (number >= 0) {
-		return number;
-	}
-
-	return (number * -1);
+stock any:Math_Abs(any:number) {	
+	return number >= 0 ? number : (number * -1);
 }
 
 /**
@@ -43,11 +38,8 @@ stock any:Math_Abs(any:number)
  * @param tolerance 	If you want to check that those vectors are somewhat even. 0.0 means they are 100% even if this function returns true.
  * @return				True if vectors are equal, false otherwise.
  */
-stock bool:Math_VectorsEqual(Float:vec1[3], Float:vec2[3], Float:tolerance=0.0)
-{	
-	new Float:distance = GetVectorDistance(vec1, vec2);
-	
-	return distance <= tolerance;
+stock bool:Math_VectorsEqual(Float:vec1[3], Float:vec2[3], Float:tolerance=0.0) {	
+	return GetVectorDistance(vec1, vec2) <= tolerance;
 }
 
 /**
@@ -58,13 +50,8 @@ stock bool:Math_VectorsEqual(Float:vec1[3], Float:vec2[3], Float:tolerance=0.0)
  * @param min			Min Value used as lower border
  * @return				Correct value not lower than min
  */
-stock any:Math_Min(any:value, any:min)
-{
-	if (value < min) {
-		value = min;
-	}
-	
-	return value;
+stock any:Math_Min(any:value, any:min) {
+	return value < min ? min : value;
 }
 
 /**
@@ -75,13 +62,8 @@ stock any:Math_Min(any:value, any:min)
  * @param max			Max Value used as upper border
  * @return				Correct value not upper than max
  */
-stock any:Math_Max(any:value, any:max)
-{	
-	if (value > max) {
-		value = max;
-	}
-	
-	return value;
+stock any:Math_Max(any:value, any:max) {	
+	return value > max ? max : value;
 }
 
 /**
@@ -112,13 +94,8 @@ stock any:Math_Clamp(any:value, any:min, any:max)
  * @param max		The upper border.
  * @return			True if the value is within bounds (bigger or equal min / smaller or equal max), false otherwise.
  */
-stock bool:Math_IsInBounds(any:value, any:min, any:max)
-{
-	if (value < min || value > max) {
-		return false;
-	}
-	
-	return true;
+stock bool:Math_IsInBounds(any:value, any:min, any:max) {
+	return !(value < min || value > max);
 }
 
 /**
