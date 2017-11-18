@@ -182,17 +182,21 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public int Native_InCommanderMode(Handle plugin, int numParams)
 {
-	int client = GetNativeCell(1);
-	int team = GetClientTeam(client) - 2;
+	int client = GetNativeCell(1);	
+	if (!IsValidClient(client))
+		return false;
 	
+	int team = GetClientTeam(client) - 2;	
 	return team >= 0 && InCommanderMode[team];
 }
 
 public int Native_EnteredCommanderMode(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
-	int team = GetClientTeam(client) - 2;
+	if (!IsValidClient(client))
+		return false;
 	
+	int team = GetClientTeam(client) - 2;	
 	return team >= 0 && EnteredCommanderMode[team];
 }
 
