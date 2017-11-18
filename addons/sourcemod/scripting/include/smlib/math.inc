@@ -20,11 +20,11 @@ enum VecAngle
 }
 
 stock int RoundToNearestMultiple(int value, int mult) {
-	return (n + mult -1) / mult * mult;
+	return (value + mult -1) / mult * mult;
 }
 
 stock float RoundToNearestMultipleEx(int value, int mult) {
-	return (n + mult -1) / mult * mult;
+	return (value + mult -1) / mult * mult;
 }
 
 /**
