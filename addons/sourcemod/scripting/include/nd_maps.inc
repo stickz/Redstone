@@ -15,8 +15,7 @@ enum ND_CustomMapCount {
 	ND_Corner,
 	ND_Submarine,
 	ND_MetroImp,
-	ND_Port,
-	SK_Metro
+	ND_Port
 }
 
 stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] = 
@@ -29,8 +28,7 @@ stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] =
 	"corner_intermediate_04",
 	"nd_submarine",
 	"metro_imp2",
-	"port",
-	"sk_metro"
+	"port"
 };
 
 stock bool ND_IsCustomMap(char[] mapName)
@@ -59,7 +57,8 @@ enum ND_StockMapCount {
 	ND_Gate,
 	ND_Oilfield,
 	ND_Downtown,
-	ND_Clocktower
+	ND_Clocktower,
+	SK_Metro
 }
 
 stock char ND_StockMaps[ND_StockMapCount][ND_MAX_MAP_SIZE] = {
@@ -71,7 +70,8 @@ stock char ND_StockMaps[ND_StockMapCount][ND_MAX_MAP_SIZE] = {
 	"gate",
 	"oilfield",
 	"downtown",
-	"clocktower"
+	"clocktower",
+	"sk_metro"
 };
 
 stock bool ND_IsStockMap(char[] mapName)
