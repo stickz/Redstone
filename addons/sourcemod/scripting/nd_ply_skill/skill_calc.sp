@@ -9,7 +9,8 @@ float GetSkillLevel(int client)
 	// Otherwise, return the max of the clientLevel, gameMeSkill or Skill Floor
 	float gameMeSkill = GameME_PlayerSkill[client];
 	if (gameMeSkill > -1)
-		return PlayerUnderPerforming(gameMeSkill) ? lastAverage : Math_Max(Math_Max(gameMeSkill, clientLevel), skillFloor);		
+		return 	PlayerUnderPerforming(client, gameMeSkill) ? lastAverage : 
+			Math_Max(Math_Max(gameMeSkill, clientLevel), skillFloor);		
 	
 	/* Then check if a client has a skill floor */
 	if (skillFloor != -1)
