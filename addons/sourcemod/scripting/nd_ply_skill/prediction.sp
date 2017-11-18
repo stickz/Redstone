@@ -11,7 +11,7 @@ bool RookieClassify() {
 	return lastAverage < SERVER_IS_ROOKIE;
 }
 
-bool PlayerUnderPerforming(GameMeSkill) {
+bool PlayerUnderPerforming(int client, float gameMeSkill) {
 	return g_isWeakVeteran[client] && gameMeSkill > lastAverage;
 }
 
