@@ -38,18 +38,15 @@ float GetSkillLevel(int client)
 			return cachedAverage;	
 	}
 
+	if (EnableSkillPrediction())
+		return PredictedSkill(clientLevel);
+		
 	/* Then try to use the client level */
 	if (clientLevel >= 20)
 		return float(clientLevel);
-	
-	/* If that is too low, set skill to min threshold */				
-	if (RookieClassify())
-		return RookieMinSkillValue(clientLevel);
-				
-	if (EnableSkillPrediction())
-		return PredictedSkill(clientLevel);				
-			
-	return MinSkillValue(clientLevel);
+		
+	/* If that is too low, set skill to min threshold */	
+	return MinSkillValue(clientLevel, RookieClassify() ? 10 : 20);
 }
 
 float GetCommanderSkill(int client)
