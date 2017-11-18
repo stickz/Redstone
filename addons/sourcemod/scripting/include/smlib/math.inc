@@ -23,6 +23,10 @@ stock int RoundToNearestMultiple(int value, int mult) {
 	return (n + mult -1) / mult * mult;
 }
 
+stock float RoundToNearestMultipleEx(int value, int mult) {
+	return (n + mult -1) / mult * mult;
+}
+
 /**
  * Makes a negative integer number to a positive integer number.
  *
