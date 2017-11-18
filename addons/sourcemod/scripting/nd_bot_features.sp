@@ -101,7 +101,7 @@ void checkCount()
 			
 			// Must use actual team count here to count properly
 			int teamCount = OnTeamCount();			
-			quota = getBotFillerQuota(teamCount, GetClientCount() < dynamicSlots);		
+			quota = getBotFillerQuota(teamCount, ValidClientCount() < dynamicSlots);		
 			
 			if (quota >= dynamicSlots && getPositiveOverBalance() >= 2)
 			{
