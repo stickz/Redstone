@@ -5,7 +5,7 @@ public Plugin myinfo =
 {
 	name 		= "[ND] Research Engine",
 	author 		= "Stickz",
-	description = "Creates forwards and natives for researching",
+	description 	= "Creates forwards and natives for researching",
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
