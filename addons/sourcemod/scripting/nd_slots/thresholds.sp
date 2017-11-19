@@ -9,7 +9,7 @@ int GetMapPlayerCount(const char[] checkMap)
 	else if (ND_IsTinyMap(checkMap))
 		return GetSlotCount(22, 26, 26);
 
-	/* metro, silo, oasis, coast, hydro */
+	/* metro, silo, oasis, coast, hydro, roadwork */
 	else 
 		return GetSlotCount(24, 28, 28);
 }
@@ -25,7 +25,6 @@ bool ND_IsLargeMap(const char[] checkMap)
 bool ND_IsMediumMap(const char[] checkMap)
 {
 	return ND_StockMapEquals(checkMap, ND_Clocktower)
-		|| ND_CustomMapEquals(checkMap, ND_Roadwork)
 		|| ND_CustomMapEquals(checkMap, ND_Nuclear);	
 }
 
