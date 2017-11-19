@@ -25,4 +25,5 @@ native float ND_GetTeamSkillAverage(int team);
 #define ND_GEA_AVAILBLE() (GetFeatureStatus(FeatureType_Native, "ND_GetEnhancedAverage") == FeatureStatus_Available)
 native float ND_GetEnhancedAverage();
 
+#define ND_GED_AVAILBLE() (GetFeatureStatus(FeatureType_Native, "ND_GetTeamDifference") == FeatureStatus_Available)
 native float ND_GetTeamDifference();
