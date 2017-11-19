@@ -10,6 +10,9 @@ void loadHudDisplayFeature()
 
 public Action TIMER_UpdateTeamDiffHint(Handle Timer)
 {
+	if (!ND_GEA_AVAILBLE() || !ND_GED_AVAILBLE())
+		return Plugin_Stop;
+	
 	displayTeamDiffUpdate();
 	return Plugin_Continue;
 }
