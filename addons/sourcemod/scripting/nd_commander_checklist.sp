@@ -215,10 +215,10 @@ public Action TransportGateTimerCB(Handle timer, any:entIdx)
 		if (percentAcrossMap >= 0.20)
 		{		
 			if (!teamChecklists[teamId][0])
-				!teamChecklists[teamId][0] = true;
+				teamChecklists[teamId][0] = true;
 			
 			if (++forwardSpawnCount >= 3)
-				!teamChecklists2[teamId][2] = true;
+				teamChecklists2[teamId][2] = true;
 		}
 	}
   	return Plugin_Stop;
