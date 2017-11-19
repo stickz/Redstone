@@ -36,3 +36,11 @@ public void OnPluginStart()
 public void ND_OnRoundStarted() {
 	CreateTimer(TEAMDIFF_UPDATE_RATE, TIMER_UpdateTeamDiffHint, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 }
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	MarkNativeAsOptional("ND_GetTeamDifference");
+	MarkNativeAsOptional("ND_GetPlayerSkill");
+	MarkNativeAsOptional("ND_GetEnhancedAverage");
+	return APLRes_Success;
+}
