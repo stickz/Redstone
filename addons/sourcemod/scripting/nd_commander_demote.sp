@@ -29,6 +29,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_redstone>
 #include <nd_rounds>
 #include <nd_print>
+#include <nd_fskill>
+#include <nd_com_dep>
 
 #define INVALID_CLIENT 0
 
@@ -49,7 +51,8 @@ bool g_hasVoted[2][MAXPLAYERS+1];
 ConVar tNoBunkerDemoteTime;
 ConVar cDemotePercentage;
 ConVar cDemoteMinValue;
-ConVar cDemoteMinTeamCount;
+ConVar cDemotePercentEx;
+ConVar cDemoteVetSkill;
 
 #define DEMOTE_SCOUNT 2
 char nd_demote_strings[DEMOTE_SCOUNT][] = {
@@ -59,10 +62,11 @@ char nd_demote_strings[DEMOTE_SCOUNT][] = {
 
 public void OnPluginStart()
 {
-	tNoBunkerDemoteTime 		= 	CreateConVar("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
-	cDemotePercentage		= 	CreateConVar("sm_demote_percent", "51", "Specifies the percent rounded to nearest required for demotion");
-	cDemoteMinValue			= 	CreateConVar("sm_demote_vmin", "3", "Specifies the minimum number of votes required, regardless of percentage");
-	cDemoteMinTeamCount		=	CreateConVar("sm_demote_tmin", "4", "Specifies the minium number of players on a team required for commander demote");
+	tNoBunkerDemoteTime 	= 	CreateConVar("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
+	cDemotePercentage	= 	CreateConVar("sm_demote_percent", "51", "Specifies the percent rounded to nearest required for demotion");
+	cDemotePercentEx	= 	CreateConVar("sm_demote_percentex", "60", "Specifies the percent demote a veteran commander");
+	cDemoteMinValue		= 	CreateConVar("sm_demote_vmin", "3", "Specifies the minimum number of votes required, regardless of percentage");
+	cDemoteVetSkill		=	CreateConVar("sm_demote_vet", "100", "Specifies the minimum commander skill to be a veteran");
 	
 	AddCommandListener(PlayerJoinTeam, "jointeam");
 	
@@ -223,20 +227,17 @@ void callMutiny(int client, int team)
 		PrintMessage(client, "Silence First"); //You cannot cast the first demote vote while silenced
 	#endif
 	
-	else if (RED_GetTeamCount(team) < cDemoteMinTeamCount.IntValue)
-		PrintMessage(client, "Four Required"); //x amount team players required to vote demote. phrase needs fixed.
-
 	else
-		castDemoteVote(team, teamIDX, client); //Cast the vote to demote the commander
+		castDemoteVote(team, teamIDX, client, com); //Cast the vote to demote the commander
 }
 
-void castDemoteVote(int team, int teamIDX, int client)
+void castDemoteVote(int team, int teamIDX, int client, int commander)
 {
 	voteCount[teamIDX]++;
 		
-	/* Get the number of votes required for demote, and round to ceiling */
-	float minPercent = (cDemotePercentage.FloatValue / 100);
-	int demotePercent = RoundToFloor(RED_GetTeamCount(team) * minPercent);	
+	/* Get the number of votes required for demote, and round to nereast */
+	int minPercent = IncreaseDemotePercent(commander) ? cDemotePercentEx.IntValue : cDemotePercentage.IntValue;			 
+	int demotePercent = RoundToNearest(RED_GetTeamCount(team) * minPercent);
 	
 	/* Enforce a minium number of votes required for demote, regardless of percent */
 	int minDemoteCount = cDemoteMinValue.IntValue;
@@ -251,6 +252,10 @@ void castDemoteVote(int team, int teamIDX, int client)
 		displayVotes(team, Remainder, client);
 			
 	g_hasVoted[teamIDX][client] = true;
+}
+
+bool IncreaseDemotePercent(int commander) {
+	return ND_GetCommanderSkill(commander) > cDemoteVetSkill.IntValue && !ND_IsCommanderDeprioritised(commander);
 }
 
 void demoteCommander(int team)
