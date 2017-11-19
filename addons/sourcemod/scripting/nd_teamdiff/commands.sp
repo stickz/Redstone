@@ -14,6 +14,12 @@ public Action CMD_TeamDiff(int client, int args)
 		return Plugin_Handled;
 	}
 	
+	if (!ND_GEA_AVAILBLE() || !ND_GPS_AVAILBLE() || !ND_GED_AVAILBLE())
+	{
+		PrintToChat(client, "\x05[TB] This feature is currently unavailable.");
+		return Plugin_Handled;
+	}
+	
 	/* Get the team difference */
 	float teamDiff = ND_GetTeamDifference();
 	
