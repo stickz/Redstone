@@ -1,17 +1,17 @@
 int GetMapPlayerCount(const char[] checkMap)
 {
 	if (ND_IsLargeMap(checkMap))
-		return GetSlotCount(28, 32, 32);
+		return GetSlotCount(26, 30, 30);
 		
 	else if (ND_IsMediumMap(checkMap))
-		return GetSlotCount(26, 28, 30);
+		return GetSlotCount(24, 28, 30);
 		
 	else if (ND_IsTinyMap(checkMap))
-		return GetSlotCount(22, 24, 26);
+		return GetSlotCount(22, 26, 26);
 
 	/* metro, silo, oasis, coast, hydro */
 	else 
-		return GetSlotCount(24, 26, 28);
+		return GetSlotCount(24, 28, 28);
 }
 
 bool ND_IsLargeMap(const char[] checkMap)
@@ -42,14 +42,8 @@ int GetSlotCount(int min, int med, int max)
 	if (!ND_GEA_AVAILBLE() || !eSkillBasedSlots())
 		return max;	
 		
-	float avSkill = ND_GetEnhancedAverage();
-	
-	int hSkill = g_Cvar[HighSkill].IntValue;
-	int lSkill  = g_Cvar[LowSkill].IntValue;	
-	
-	return 	avSkill < lSkill  ? max : 
-			avSkill < hSkill  ? med 
-					          : min;
+	float avSkill = ND_GetEnhancedAverage();	
+	return avSkill < g_Cvar[LowSkill].IntValue  ? max : avSkill < g_Cvar[HighSkill].IntValue ? med : min;
 }
 
 bool eSkillBasedSlots() {
