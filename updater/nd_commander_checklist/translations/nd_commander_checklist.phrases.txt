@@ -3,7 +3,9 @@
     "Cookie Commander Checklist"
     {
         "en"        "Commander Checklist"
-    }    
+    }
+    
+    // Checklist tier 1
     "BUILD_FWD_SPAWN"
     {
         "en"        "Build Forward Spawn"
@@ -20,6 +22,33 @@
     {
         "en"        "Research Advanced Kits"
     }
+    "CHAT_MSG"
+    {
+        "en"        "Type into chat"
+    }
+    
+    // Checklist tier 2
+    "BUILD_POWER"
+    {
+        "en"        "Build Power Plant"    
+    }
+    "BUILD_SUPPLY"
+    {
+        "en"        "Build Supply Station"
+    }
+    "BUILD_TWO_SPAWN"
+    {
+        "en"        "Build Two More Spawns"
+    }    
+    "RESEARCH_ADV_MAN"
+    {
+        "en"        "Research Advanced Manufacturing"
+    }
+    "RESEARCH_SR"
+    {
+        "en"        "Research Structure Reinforcement"
+    }
+    
     "COMMANDER_CHECKLIST"
     {
         "en"        "COMMANDER CHECKLIST"
@@ -31,9 +60,5 @@
     "COMM_SUPPORTTROOPS"
     {
         "en"        "Remember: support your troops!"
-    }
-    "CHAT_MSG"
-    {
-        "en"        "Type into chat"
-    }
+    }    
 }
