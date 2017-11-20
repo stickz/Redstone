@@ -44,17 +44,17 @@ public Action Event_ResearchCompleted(Event event, const char[] name, bool dontB
 	switch(researchId)
 	{
 		// Armoury Research Commander Abilities
-		case view_as<int>(Commander_Abilities): 		FireMultiTeirResearch(item(Commander_Abilities), teamId, 1);
-		case view_as<int>(Commander_Abilities_Two):		FireMultiTeirResearch(item(Commander_Abilities), teamId, 2);
+		case view_as<int>(Commander_Abilities): 	FireMultiTeirResearch(item(Commander_Abilities), teamId, 1);
+		case view_as<int>(Commander_Abilities_Two):	FireMultiTeirResearch(item(Commander_Abilities), teamId, 2);
 		case view_as<int>(Commander_Abilities_Three):	FireMultiTeirResearch(item(Commander_Abilities), teamId, 3);
 		
 		// Armoury Research Infantry_Boost
-		case view_as<int>(Infantry_Boost):			FireMultiTeirResearch(item(Infantry_Boost), teamId, 1);
+		case view_as<int>(Infantry_Boost):		FireMultiTeirResearch(item(Infantry_Boost), teamId, 1);
 		case view_as<int>(Infantry_Boost_Two):		FireMultiTeirResearch(item(Infantry_Boost), teamId, 2);
 		case view_as<int>(Infantry_Boost_Three):	FireMultiTeirResearch(item(Infantry_Boost), teamId, 3);
 		
 		// Armoury Research Structure_Reinforcement
-		case view_as<int>(Structure_Reinforcement):			FireMultiTeirResearch(item(Structure_Reinforcement), teamId, 1);
+		case view_as<int>(Structure_Reinforcement):		FireMultiTeirResearch(item(Structure_Reinforcement), teamId, 1);
 		case view_as<int>(Structure_Reinforcement_Two):		FireMultiTeirResearch(item(Structure_Reinforcement), teamId, 2);
 		case view_as<int>(Structure_Reinforcement_Three):	FireMultiTeirResearch(item(Structure_Reinforcement), teamId, 3);
 
