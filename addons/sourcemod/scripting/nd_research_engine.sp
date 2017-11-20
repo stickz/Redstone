@@ -130,11 +130,11 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public int Native_GetItemResearched(Handle plugin, int numParams) 
 {
 	// Return if the research level for the team, and research item is completed
-	return _:researchLevel[GetNativeCell(1)][item(GetNativeCell(1))] >= RESEARCH_COMPLETE;
+	return _:researchLevel[GetNativeCell(1)][item(GetNativeCell(2))] >= RESEARCH_COMPLETE;
 }
 
 public int Native_GetItemResearchLevel(Handle plugin, int numParams)
 {
 	// Return the research level for the team, and research item
-	return researchLevel[GetNativeCell(1)][item(GetNativeCell(1))];
+	return researchLevel[GetNativeCell(1)][item(GetNativeCell(2))];
 }
