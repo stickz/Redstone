@@ -1,5 +1,5 @@
 // Exported from SourceMod Translator
-// Date: 2017-10-27 02:40:09 UTC
+// Date: 2017-11-20 03:32:56 UTC
 // Language: Spanish (es)
 // 
 // To view other translations for this plugin, please visit:
@@ -51,6 +51,56 @@
 	"CHAT_MSG"
 	{
 		"es"		"Escribir en el chat"
+	}
+
+	"BUILD_POWER"
+	{
+		"es"		"Planta de Poder"
+	}
+
+	"BUILD_SUPPLY"
+	{
+		"es"		"Estación de Suministros"
+	}
+
+	"BUILD_TWO_SPAWN"
+	{
+		"es"		"Construye dos Puntos de Aparición más"
+	}
+
+	"RESEARCH_ADV_MAN"
+	{
+		"es"		"Fabricación Avanzada"
+	}
+
+	"RESEARCH_SR"
+	{
+		"es"		"Refuerzo Estructural"
+	}
+
+	"RESEARCH_MOD"
+	{
+		"es"		"Modulación de Poder"
+	}
+
+	"BUILD_RADAR"
+	{
+		"es"		"Estación de Radar"
+	}
+
+	"RESEARCH_COM_ABB2"
+	{
+		"es"		"Habilidades de Comandante 2"
+	}
+
+	"BUILD_WALL"
+	{
+		"es"		"Construye una Pared"
+	}
+
+	"RESEARCH_SR2"
+	{
+		"es"		"Refuerzo Estructural 2"
 	}
 
 }
