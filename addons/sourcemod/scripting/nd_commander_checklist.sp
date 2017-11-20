@@ -327,7 +327,7 @@ char GetCheckListMessage(int array, int team, int commander)
 	{
 		teamChecklists[array][team][CHECKLIST_ITEM_COUNT] = true;
 		
-		if (array == 2)
+		if (array == CHECKLIST_NUM_TIERS - 1)
 		{
 			Format(message, sizeof(message), "%T", "COMM_THANKS", commander);
 			Format(message, sizeof(message), "%s\n%T", message, "COMM_SUPPORTTROOPS", commander);
