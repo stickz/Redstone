@@ -21,9 +21,11 @@ ConVar g_updaterate;
 ConVar g_afterdisplay;
 
 #define CHECKLIST_ITEM_COUNT    5
-char checklistTasks[CHECKLIST_ITEM_COUNT][25] = {"BUILD_FWD_SPAWN","RESEARCH_TACTICS","BUILD_ARMORY","RESEARCH_KITS","CHAT_MSG"};
-char checklistTasks2[CHECKLIST_ITEM_COUNT][25] = {"BUILD_POWER", "BUILD_SUPPLY", "BUILD_TWO_SPAWN", "RESEARCH_ADV_MAN", "RESEARCH_SR"};
-char checklistTasks3[CHECKLIST_ITEM_COUNT][25] = {"RESEARCH_MOD", "BUILD_RADAR", "RESEARCH_COM_ABB2", "BUILD_WALL", "RESEARCH_SR2"};
+char checklistTasks[3][CHECKLIST_ITEM_COUNT][25] = { 
+	{"BUILD_FWD_SPAWN","RESEARCH_TACTICS","BUILD_ARMORY","RESEARCH_KITS","CHAT_MSG"},
+	{"BUILD_POWER", "BUILD_SUPPLY", "BUILD_TWO_SPAWN", "RESEARCH_ADV_MAN", "RESEARCH_SR"},
+	{"RESEARCH_MOD", "BUILD_RADAR", "RESEARCH_COM_ABB2", "BUILD_WALL", "RESEARCH_SR2"}
+};
 bool teamChecklists[3][TEAM_COUNT][CHECKLIST_ITEM_COUNT+1];
 
 int forwardSpawnCount = 0;
@@ -303,7 +305,7 @@ void ShowCheckList(int commander)
 				state="✘";
 					
 			char task[25];
-			task = checklistTasks[idx];
+			task = checklistTasks[0][idx];
 			if (!(teamChecklists[0][team][idx] && g_hidedone.BoolValue)) 
 				Format(message, sizeof(message), "%s%s %T\n", message, state, task, commander);	
 		}
@@ -336,7 +338,7 @@ void ShowCheckList(int commander)
 				state="✘";
 					
 			char task[25];
-			task = checklistTasks2[idx];
+			task = checklistTasks[1][idx];
 			if (!(teamChecklists[1][team][idx] && g_hidedone.BoolValue)) 
 				Format(message, sizeof(message), "%s%s %T\n", message, state, task, commander);	
 		}
@@ -369,7 +371,7 @@ void ShowCheckList(int commander)
 				state="✘";
 					
 			char task[25];
-			task = checklistTasks3[idx];
+			task = checklistTasks[2][idx];
 			if (!(teamChecklists[2][team][idx] && g_hidedone.BoolValue)) 
 				Format(message, sizeof(message), "%s%s %T\n", message, state, task, commander);	
 		}
