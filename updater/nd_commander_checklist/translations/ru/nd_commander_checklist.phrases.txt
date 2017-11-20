@@ -1,5 +1,5 @@
 // Exported from SourceMod Translator
-// Date: 2017-10-27 17:25:25 UTC
+// Date: 2017-11-20 14:30:01 UTC
 // Language: Russian (ru)
 // 
 // To view other translations for this plugin, please visit:
@@ -51,6 +51,56 @@
 	"CHAT_MSG"
 	{
 		"ru"		"Напиши в чате."
+	}
+
+	"BUILD_POWER"
+	{
+		"ru"		"Электростанция"
+	}
+
+	"BUILD_SUPPLY"
+	{
+		"ru"		"Станция Снабжения"
+	}
+
+	"BUILD_TWO_SPAWN"
+	{
+		"ru"		"Постройте еще два Транспортных портала"
+	}
+
+	"RESEARCH_ADV_MAN"
+	{
+		"ru"		"Улучшенное Производство"
+	}
+
+	"RESEARCH_SR"
+	{
+		"ru"		"Улучшение строений"
+	}
+
+	"RESEARCH_MOD"
+	{
+		"ru"		"Энергомодуляция"
+	}
+
+	"BUILD_RADAR"
+	{
+		"ru"		"Радар"
+	}
+
+	"RESEARCH_COM_ABB2"
+	{
+		"ru"		"Способности Командира 2"
+	}
+
+	"BUILD_WALL"
+	{
+		"ru"		"Постройте Стену"
+	}
+
+	"RESEARCH_SR2"
+	{
+		"ru"		"Улучшение Строений 2"
 	}
 
 }
