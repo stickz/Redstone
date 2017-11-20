@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <nd_research>
+#include <nd_stocks>
 
 public Plugin myinfo = 
 {
@@ -17,7 +18,7 @@ public Plugin myinfo =
 Handle OnResearchCompleted[ND_ResearchItems];
 
 // Hold the research levels in an array
-int researchLevel[ND_ResearchItems];
+int researchLevel[TEAM_COUNT][ND_ResearchItems];
 
 public void OnPluginStart()
 {
@@ -43,17 +44,17 @@ public Action Event_ResearchCompleted(Event event, const char[] name, bool dontB
 	switch(researchId)
 	{
 		// Armoury Research Commander Abilities
-		case view_as<int>(Commander_Abilities): 		FireMultiTeirResearch(item(Commander_Abilities), teamId, 1);
-		case view_as<int>(Commander_Abilities_Two):		FireMultiTeirResearch(item(Commander_Abilities), teamId, 2);
+		case view_as<int>(Commander_Abilities): 	FireMultiTeirResearch(item(Commander_Abilities), teamId, 1);
+		case view_as<int>(Commander_Abilities_Two):	FireMultiTeirResearch(item(Commander_Abilities), teamId, 2);
 		case view_as<int>(Commander_Abilities_Three):	FireMultiTeirResearch(item(Commander_Abilities), teamId, 3);
 		
 		// Armoury Research Infantry_Boost
-		case view_as<int>(Infantry_Boost):			FireMultiTeirResearch(item(Infantry_Boost), teamId, 1);
+		case view_as<int>(Infantry_Boost):		FireMultiTeirResearch(item(Infantry_Boost), teamId, 1);
 		case view_as<int>(Infantry_Boost_Two):		FireMultiTeirResearch(item(Infantry_Boost), teamId, 2);
 		case view_as<int>(Infantry_Boost_Three):	FireMultiTeirResearch(item(Infantry_Boost), teamId, 3);
 		
 		// Armoury Research Structure_Reinforcement
-		case view_as<int>(Structure_Reinforcement):			FireMultiTeirResearch(item(Structure_Reinforcement), teamId, 1);
+		case view_as<int>(Structure_Reinforcement):		FireMultiTeirResearch(item(Structure_Reinforcement), teamId, 1);
 		case view_as<int>(Structure_Reinforcement_Two):		FireMultiTeirResearch(item(Structure_Reinforcement), teamId, 2);
 		case view_as<int>(Structure_Reinforcement_Three):	FireMultiTeirResearch(item(Structure_Reinforcement), teamId, 3);
 
@@ -64,8 +65,12 @@ public Action Event_ResearchCompleted(Event event, const char[] name, bool dontB
 
 void ResetResearchTech()
 {
-	for (int tech = 0; tech < view_as<int>(ND_ResearchItems); tech++) {
-		researchLevel[tech] = RESEARCH_INCOMPLETE;
+	for (int tech = 0; tech < view_as<int>(ND_ResearchItems); tech++) 
+	{
+		for (int team = 0; team < TEAM_COUNT; team++)
+		{
+			researchLevel[team][tech] = RESEARCH_INCOMPLETE;
+		}
 	}
 }
 
@@ -98,7 +103,7 @@ void FireSingleTeirResearch(int item, int team)
 	Call_Finish(dummy);
 	
 	// Mark the item as researched for natives
-	researchLevel[item] = RESEARCH_COMPLETE;
+	researchLevel[team][item] = RESEARCH_COMPLETE;
 }
 
 void FireMultiTeirResearch(int item, int team, int level)
@@ -111,7 +116,7 @@ void FireMultiTeirResearch(int item, int team, int level)
 	Call_Finish(dummy);
 	
 	// Mark the item research level for natives
-	researchLevel[item] = level;
+	researchLevel[team][item] = level;
 }
 
 /* Natives */
@@ -122,10 +127,14 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	return APLRes_Success;
 }
 
-public int Native_GetItemResearched(Handle plugin, int numParams) {
-	return _:researchLevel[item(GetNativeCell(1))] >= RESEARCH_COMPLETE;
+public int Native_GetItemResearched(Handle plugin, int numParams) 
+{
+	// Return if the research level for the team, and research item is completed
+	return _:researchLevel[GetNativeCell(1)][item(GetNativeCell(2))] >= RESEARCH_COMPLETE;
 }
 
-public int Native_GetItemResearchLevel(Handle plugin, int numParams) {
-	return researchLevel[item(GetNativeCell(1))];
+public int Native_GetItemResearchLevel(Handle plugin, int numParams)
+{
+	// Return the research level for the team, and research item
+	return researchLevel[GetNativeCell(1)][item(GetNativeCell(2))];
 }

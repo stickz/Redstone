@@ -24,7 +24,7 @@ forward void OnStructureReinResearched(int team, int level);
  *
  * Consider using ND_GetItemResearchLevel() for multi-teired research
  */
-native bool ND_ItemHasBeenResearched(ND_ResearchItems item);
+native bool ND_ItemHasBeenResearched(int team, ND_ResearchItems item);
 
 /* Gets the research level of an item.
  * 
@@ -34,4 +34,4 @@ native bool ND_ItemHasBeenResearched(ND_ResearchItems item);
  * Enum is tagged, but has a requirement to use only the first...
  * item for multi-teired research to save computing resources.
  */
-native int ND_GetItemResearchLevel(ND_ResearchItems item);
+native int ND_GetItemResearchLevel(int team, ND_ResearchItems item);
