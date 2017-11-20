@@ -1,10 +1,5 @@
 "Phrases"
 {
-    "Cookie Commander Checklist"
-    {
-        "en"        "Commander Checklist"
-    }
-    
     // Checklist tier 1
     "BUILD_FWD_SPAWN"
     {
@@ -38,7 +33,7 @@
     }
     "BUILD_TWO_SPAWN"
     {
-        "en"        "Build Two More Spawns"
+        "en"        "Build two more Spawns"
     }    
     "RESEARCH_ADV_MAN"
     {
@@ -49,6 +44,33 @@
         "en"        "Research Structure Reinforcement"
     }
     
+    // Checklist tier 3
+    "RESEARCH_MOD"
+    {
+        "en"        "Research Power Modulation"    
+    }
+    "BUILD_RADAR"
+    {
+        "en"        "Build Radar Station"
+    }
+    "RESEARCH_COM_ABB2"
+    {
+        "en"        "Research Commmander Abilities 2"
+    }
+    "BUILD_WALL"
+    {
+        "en"        "Build a Wall
+    }
+    "RESEARCH_SR2"
+    {
+        "en"        "Research Structure Reinforcement 2"
+    }
+    
+    // Other changes
+    "Cookie Commander Checklist"
+    {
+        "en"        "Commander Checklist"
+    }
     "COMMANDER_CHECKLIST"
     {
         "en"        "COMMANDER CHECKLIST"
