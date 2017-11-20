@@ -9,9 +9,8 @@
 #include <nd_redstone>
 #include <nd_rounds>
 
-#define CHECKLIST_ITEM_COUNT    5
-#define DEBUG					0
-#define INVALID_USERID 			0
+#define DEBUG			0
+#define INVALID_USERID 		0
 
 //Handle hudSync;
 
@@ -20,12 +19,17 @@ ConVar g_maxskill;
 ConVar g_hidedone;
 ConVar g_updaterate;
 ConVar g_afterdisplay;
-char checklistTasks[CHECKLIST_ITEM_COUNT][25] = {"BUILD_FWD_SPAWN","RESEARCH_TACTICS","BUILD_ARMORY","RESEARCH_KITS","CHAT_MSG"};
 
-//Commander checklists for each team. Each checklist has one extra field, for 
-//marking whether the comm has seen the thankyou msg after completing all tasks.
-bool teamChecklists[TEAM_COUNT][CHECKLIST_ITEM_COUNT+1];
+#define CHECKLIST_ITEM_COUNT    5
+#define CHECKLIST_NUM_TIERS	3
+char checklistTasks[CHECKLIST_NUM_TIERS][CHECKLIST_ITEM_COUNT][25] = { 
+	{"BUILD_FWD_SPAWN","RESEARCH_TACTICS","BUILD_ARMORY","RESEARCH_KITS","CHAT_MSG"},
+	{"BUILD_POWER", "BUILD_SUPPLY", "BUILD_TWO_SPAWN", "RESEARCH_ADV_MAN", "RESEARCH_SR"},
+	{"RESEARCH_MOD", "BUILD_RADAR", "RESEARCH_COM_ABB2", "BUILD_WALL", "RESEARCH_SR2"}
+};
+bool teamChecklists[CHECKLIST_NUM_TIERS][TEAM_COUNT][CHECKLIST_ITEM_COUNT+1];
 
+int forwardSpawnCount = 0;
 bool checkListCompleted[MAXPLAYERS+1] = {false, ...};
 
 #include "nd_com_check/clientprefs.sp"
@@ -87,14 +91,20 @@ void ResetVarriables()
 	//init task arrays
 	for (int idx = 2; idx < TEAM_COUNT; idx++)
 	{
-		for (int idx2 = 0; idx2 < CHECKLIST_ITEM_COUNT+1; idx2++) {
-			teamChecklists[idx][idx2]=false;
+		for (int idx2 = 0; idx2 < CHECKLIST_ITEM_COUNT+1; idx2++)
+		{
+			for (int idx3 = 0; idx3 < CHECKLIST_NUM_TIERS; idx++)
+			{
+				teamChecklists[idx3][idx][idx2] = false;
+			}
 		}
 	}
 	
 	for (int client = 1; client <= MAXPLAYERS; client++) {
 		checkListCompleted[client] = false;			
 	}
+	
+	forwardSpawnCount = 0;
 }
 
 public Action OnPlayerChat(Event event, const char[] name, bool dontBroadcast)
@@ -110,13 +120,49 @@ public Action OnPlayerChat(Event event, const char[] name, bool dontBroadcast)
 
 	// When the commander chats, check the item off in the list
 	if (ND_IsCommander(client) && ND_HasEnteredCommanderMode(client))
-		teamChecklists[GetClientTeam(client)][4] = true;
+		teamChecklists[0][GetClientTeam(client)][4] = true;
 
 	return Plugin_Continue;
 }
 
+/* Engine items for checklists */
+public void OnAdvancedKitsResearched(int team) {
+	teamChecklists[0][team][3] = true;
+}
+public void OnFieldTacticsResearched(int team) {
+	teamChecklists[0][team][1] = true;
+}
 public void OnBuildStarted_Armory(int team) {
-	teamChecklists[team][2] = true;
+	teamChecklists[0][team][2] = true;
+}
+public void OnBuildStarted_PowerPlant(int team) {
+	teamChecklists[1][team][0] = true;
+}
+public void OnBuildStarted_SupplyStation(int team) {
+	teamChecklists[1][team][1] = true;
+}
+public void OnAdvancedManufacturingResearched(int team) {
+	teamChecklists[1][team][3] = true;
+}
+public void OnStructureReinResearched(int team, int level)
+{
+	if (level == 1)
+		teamChecklists[1][team][4] = true;
+	else if (level == 2)
+		teamChecklists[2][team][4] = true;
+}
+public void OnPowerModResearched(int team) {
+	teamChecklists[2][team][0] = true;
+}
+public void OnBuildStarted_RadarStation(int team) {
+	teamChecklists[2][team][1] = true;
+}
+public void OnCommanderAbilitiesResearched(int team, int level) {
+	if (level == 2)
+		teamChecklists[2][team][2] = true;
+}
+public void OnBuildStarted_Wall(int team) {
+	teamChecklists[2][team][3] = true;
 }
 
 //structure_built and forward_spawn_created do not fire serverside. 
@@ -144,7 +190,7 @@ public Action TransportGateTimerCB(Handle timer, any:entIdx)
 		PrintToChatAll("Forward spawn timer for entity %d and team %d", entIdx, teamId);
 	#endif
 
-	if(!teamChecklists[teamId][0]) 
+	if(!teamChecklists[0][teamId][0] || !teamChecklists[1][teamId][2]) 
 	{
 		float pos[3];
 		GetEntPropVector(entIdx, Prop_Send, "m_vecOrigin", pos);
@@ -187,18 +233,17 @@ public Action TransportGateTimerCB(Handle timer, any:entIdx)
 		#endif
 		
 		// If the forward spawn is 20% across the map, check the item off on the list
-		teamChecklists[teamId][0] = percentAcrossMap >= 0.20;	
+		if (percentAcrossMap >= 0.20)
+		{		
+			if (!teamChecklists[0][teamId][0])
+				teamChecklists[0][teamId][0] = true;
+			
+			if (++forwardSpawnCount >= 3)
+				teamChecklists[1][teamId][2] = true;
+		}
 	}
   	return Plugin_Stop;
 }  
-
-public void OnAdvancedKitsResearched(int team) {
-	teamChecklists[team][3] = true;
-}
-
-public void OnFieldTacticsResearched(int team) {
-	teamChecklists[team][1] = true;
-}
 
 public void ND_OnCommanderPromoted(int client, int team) {
 	StartTaskTimer(client);
@@ -223,6 +268,9 @@ public Action DisplayChecklistCommander(Handle timer, any:Userid)
 	// If the client is in commander mode, with the checklist option enabled
 	if (ND_IsInCommanderMode(client) && option_com_checklist[client])
 	{	
+		if (checkListCompleted[client])
+			return Plugin_Stop;
+		
 		ShowCheckList(client);
 		return Plugin_Continue;
 	}	
@@ -239,45 +287,59 @@ bool DisableCheckListBySkill(int client) {
 //chair and whether he has finished his tasks.
 void ShowCheckList(int commander)
 {
-	int team = GetClientTeam(commander);
-	if(!teamChecklists[team][CHECKLIST_ITEM_COUNT])
+	int team = GetClientTeam(commander);	
+	for (int i = 0; i < CHECKLIST_NUM_TIERS; i++)
 	{
-		char message[256]; 
-		Format(message, sizeof(message), "%T\n", "COMMANDER_CHECKLIST", commander);
-
-		int checkedItemCount = 0;
-		for (int idx = 0; idx < CHECKLIST_ITEM_COUNT; idx++)
+		if(!teamChecklists[i][team][CHECKLIST_ITEM_COUNT])
 		{
-			char state[2];
-			if(teamChecklists[team][idx])
-			{
-				state="✔";
-				checkedItemCount++;
-			} 
-			else
-				state="✘";
-					
-			char task[25];
-			task = checklistTasks[idx];
-			if (!(teamChecklists[team][idx] && g_hidedone.BoolValue)) 
-				Format(message, sizeof(message), "%s%s %T\n", message, state, task, commander);	
+			Handle hudSync = CreateHudSynchronizer();
+			ShowSyncHudText(commander, hudSync, GetCheckListMessage(i, team, commander));
+			CloseHandle(hudSync);
+			break;
 		}
+	}
+}
+
+char GetCheckListMessage(int array, int team, int commander)
+{
+	char message[256]; 
+	Format(message, sizeof(message), "%T\n", "COMMANDER_CHECKLIST", commander);
+
+	int checkedItemCount = 0;
+	for (int idx = 0; idx < CHECKLIST_ITEM_COUNT; idx++)
+	{
+		char state[2];
+		if(teamChecklists[array][team][idx])
+		{
+			state="✔";
+			checkedItemCount++;
+		} 
+		else
+			state="✘";
+					
+		char task[25];
+		task = checklistTasks[array][idx];
+		if (!(teamChecklists[array][team][idx] && g_hidedone.BoolValue)) 
+			Format(message, sizeof(message), "%s%s %T\n", message, state, task, commander);	
+	}
+	
+	if(checkedItemCount >= CHECKLIST_ITEM_COUNT)
+	{
+		teamChecklists[array][team][CHECKLIST_ITEM_COUNT] = true;
 		
-		Handle hudSync = CreateHudSynchronizer();		
-		if(checkedItemCount >= CHECKLIST_ITEM_COUNT)
+		if (array == CHECKLIST_NUM_TIERS - 1)
 		{
 			Format(message, sizeof(message), "%T", "COMM_THANKS", commander);
 			Format(message, sizeof(message), "%s\n%T", message, "COMM_SUPPORTTROOPS", commander);
 			SetHudTextParams(1.0, 0.2, g_afterdisplay.FloatValue, 0, 128, 0, 80);
-			teamChecklists[team][CHECKLIST_ITEM_COUNT] = true;
-			CreateTimer(g_afterdisplay.FloatValue, Timer_CheckListCompleted, GetClientUserId(commander), TIMER_FLAG_NO_MAPCHANGE);
-		} 
-		else 
-			SetHudTextParams(1.0, 0.1, g_updaterate.FloatValue, 255, 255, 80, 80);
-			
-		ShowSyncHudText(commander, hudSync, message);
-		CloseHandle(hudSync);
-	}	
+			CreateTimer(	g_afterdisplay.FloatValue, Timer_CheckListCompleted, 
+					GetClientUserId(commander), TIMER_FLAG_NO_MAPCHANGE);
+		}
+	}
+	else
+		SetHudTextParams(1.0, 0.1, g_updaterate.FloatValue, 255, 255, 80, 80);	
+	
+	return message;
 }
 
 public Action Timer_CheckListCompleted(Handle timer, any:userid)
