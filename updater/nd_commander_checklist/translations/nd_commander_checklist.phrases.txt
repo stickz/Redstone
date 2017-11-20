@@ -25,11 +25,11 @@
     // Checklist tier 2
     "BUILD_POWER"
     {
-        "en"        "Build Power Plant"    
+        "en"        "Power Plant"    
     }
     "BUILD_SUPPLY"
     {
-        "en"        "Build Supply Station"
+        "en"        "Supply Station"
     }
     "BUILD_TWO_SPAWN"
     {
@@ -37,25 +37,25 @@
     }    
     "RESEARCH_ADV_MAN"
     {
-        "en"        "Research Advanced Man"
+        "en"        "Advanced Manufacturing"
     }
     "RESEARCH_SR"
     {
-        "en"        "Research Structure Rein"
+        "en"        "Structure Reinforcement"
     }
     
     // Checklist tier 3
     "RESEARCH_MOD"
     {
-        "en"        "Research Power Mod"    
+        "en"        "Power Modulation"    
     }
     "BUILD_RADAR"
     {
-        "en"        "Build Radar Station"
+        "en"        "Radar Station"
     }
     "RESEARCH_COM_ABB2"
     {
-        "en"        "Research Comm Ability2"
+        "en"        "Commmand Abilities 2"
     }
     "BUILD_WALL"
     {
@@ -63,7 +63,7 @@
     }
     "RESEARCH_SR2"
     {
-        "en"        "Research Structure Rein2"
+        "en"        "Structure Reinforcement 2"
     }
     
     // Other phrases
