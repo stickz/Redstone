@@ -93,7 +93,7 @@ void ResetVarriables()
 	{
 		for (int idx2 = 0; idx2 < CHECKLIST_ITEM_COUNT+1; idx2++)
 		{
-			for (int idx3 = 0; idx3 < CHECKLIST_NUM_TIERS; idx++)
+			for (int idx3 = 0; idx3 < CHECKLIST_NUM_TIERS; idx3++)
 			{
 				teamChecklists[idx3][idx][idx2] = false;
 			}
