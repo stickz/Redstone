@@ -37,17 +37,17 @@
     }    
     "RESEARCH_ADV_MAN"
     {
-        "en"        "Research Advanced Manufacturing"
+        "en"        "Research Advanced Man"
     }
     "RESEARCH_SR"
     {
-        "en"        "Research Structure Reinforcement"
+        "en"        "Research Structure Rein"
     }
     
     // Checklist tier 3
     "RESEARCH_MOD"
     {
-        "en"        "Research Power Modulation"    
+        "en"        "Research Power Mod"    
     }
     "BUILD_RADAR"
     {
@@ -55,18 +55,18 @@
     }
     "RESEARCH_COM_ABB2"
     {
-        "en"        "Research Commmander Abilities 2"
+        "en"        "Research Comm Ability2"
     }
     "BUILD_WALL"
     {
-        "en"        "Build a Wall
+        "en"        "Build a Wall"
     }
     "RESEARCH_SR2"
     {
-        "en"        "Research Structure Reinforcement 2"
+        "en"        "Research Structure Rein2"
     }
     
-    // Other changes
+    // Other phrases
     "Cookie Commander Checklist"
     {
         "en"        "Commander Checklist"
