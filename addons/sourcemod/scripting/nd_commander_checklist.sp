@@ -21,12 +21,13 @@ ConVar g_updaterate;
 ConVar g_afterdisplay;
 
 #define CHECKLIST_ITEM_COUNT    5
-char checklistTasks[3][CHECKLIST_ITEM_COUNT][25] = { 
+#define CHECKLIST_NUM_TIERS	3
+char checklistTasks[CHECKLIST_NUM_TIERS][CHECKLIST_ITEM_COUNT][25] = { 
 	{"BUILD_FWD_SPAWN","RESEARCH_TACTICS","BUILD_ARMORY","RESEARCH_KITS","CHAT_MSG"},
 	{"BUILD_POWER", "BUILD_SUPPLY", "BUILD_TWO_SPAWN", "RESEARCH_ADV_MAN", "RESEARCH_SR"},
 	{"RESEARCH_MOD", "BUILD_RADAR", "RESEARCH_COM_ABB2", "BUILD_WALL", "RESEARCH_SR2"}
 };
-bool teamChecklists[3][TEAM_COUNT][CHECKLIST_ITEM_COUNT+1];
+bool teamChecklists[CHECKLIST_NUM_TIERS][TEAM_COUNT][CHECKLIST_ITEM_COUNT+1];
 
 int forwardSpawnCount = 0;
 bool checkListCompleted[MAXPLAYERS+1] = {false, ...};
@@ -286,52 +287,16 @@ bool DisableCheckListBySkill(int client) {
 //chair and whether he has finished his tasks.
 void ShowCheckList(int commander)
 {
-	int team = GetClientTeam(commander);
-	if(!teamChecklists[0][team][CHECKLIST_ITEM_COUNT])
-	{		
-		Handle hudSync = CreateHudSynchronizer();		
-		if(checkedItemCount >= CHECKLIST_ITEM_COUNT)
-			teamChecklists[0][team][CHECKLIST_ITEM_COUNT] = true;
-		else 
-			SetHudTextParams(1.0, 0.1, g_updaterate.FloatValue, 255, 255, 80, 80);
-			
-		ShowSyncHudText(commander, hudSync, GetCheckListMessage(0, team, commander));
-		CloseHandle(hudSync);
-	}
-	
-	else if (!teamChecklists[1][team][CHECKLIST_ITEM_COUNT])
+	int team = GetClientTeam(commander);	
+	for (int i = 0; i < CHECKLIST_NUM_TIERS; i++)
 	{
-		Handle hudSync = CreateHudSynchronizer();		
-		if(checkedItemCount >= CHECKLIST_ITEM_COUNT)
-			teamChecklists[1][team][CHECKLIST_ITEM_COUNT] = true;
-		else 
-			SetHudTextParams(1.0, 0.1, g_updaterate.FloatValue, 255, 255, 80, 80);
-			
-		ShowSyncHudText(commander, hudSync, GetCheckListMessage(1, team, commander));
-		CloseHandle(hudSync);	
-	}
-	
-	else if (!teamChecklists[2][team][CHECKLIST_ITEM_COUNT])
-	{
-		char message[256]; 
-
-		Handle hudSync = CreateHudSynchronizer();		
-		if(checkedItemCount >= CHECKLIST_ITEM_COUNT)
+		if(!teamChecklists[i][team][CHECKLIST_ITEM_COUNT])
 		{
-			Format(message, sizeof(message), "%T", "COMM_THANKS", commander);
-			Format(message, sizeof(message), "%s\n%T", message, "COMM_SUPPORTTROOPS", commander);
-			SetHudTextParams(1.0, 0.2, g_afterdisplay.FloatValue, 0, 128, 0, 80);
-			teamChecklists[2][team][CHECKLIST_ITEM_COUNT] = true;
-			CreateTimer(g_afterdisplay.FloatValue, Timer_CheckListCompleted, GetClientUserId(commander), TIMER_FLAG_NO_MAPCHANGE);
-		} 
-		else
-		{
-			Format(message, sizeof(message), GetCheckListMessage(2, team, commander));
-			SetHudTextParams(1.0, 0.1, g_updaterate.FloatValue, 255, 255, 80, 80);
+			Handle hudSync = CreateHudSynchronizer();
+			ShowSyncHudText(commander, hudSync, GetCheckListMessage(i, team, commander));
+			CloseHandle(hudSync);
+			break;
 		}
-			
-		ShowSyncHudText(commander, hudSync, message);
-		CloseHandle(hudSync);	
 	}
 }
 
@@ -357,6 +322,22 @@ char GetCheckListMessage(int array, int team, int commander)
 		if (!(teamChecklists[array][team][idx] && g_hidedone.BoolValue)) 
 			Format(message, sizeof(message), "%s%s %T\n", message, state, task, commander);	
 	}
+	
+	if(checkedItemCount >= CHECKLIST_ITEM_COUNT)
+	{
+		teamChecklists[array][team][CHECKLIST_ITEM_COUNT] = true;
+		
+		if (array == 2)
+		{
+			Format(message, sizeof(message), "%T", "COMM_THANKS", commander);
+			Format(message, sizeof(message), "%s\n%T", message, "COMM_SUPPORTTROOPS", commander);
+			SetHudTextParams(1.0, 0.2, g_afterdisplay.FloatValue, 0, 128, 0, 80);
+			CreateTimer(	g_afterdisplay.FloatValue, Timer_CheckListCompleted, 
+					GetClientUserId(commander), TIMER_FLAG_NO_MAPCHANGE);
+		}
+	}
+	else
+		SetHudTextParams(1.0, 0.1, g_updaterate.FloatValue, 255, 255, 80, 80);	
 	
 	return message;
 }
