@@ -8,6 +8,8 @@
 #define TEAM_SPEC		1
 #define TEAM_CONSORT		2
 #define TEAM_EMPIRE		3
+
+#define TEAM_START			2
 #define TEAM_COUNT			4
 
 stock char NumberInEnglish(int num)

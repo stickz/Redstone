@@ -60,7 +60,7 @@ enum ND_suSubClasses
 	suBBQ
 }
 
-/* Player class stock functions */
+/* Sub class checker stock functions */
 stock bool IsSniperClass(int class, int subClass) 
 {
 	return 	   (class == MAIN_CLASS_ASSAULT && subClass == ASSAULT_CLASS_SNIPER) 
@@ -70,8 +70,6 @@ stock bool IsStealthClass(int class)
 {
 	return class == MAIN_CLASS_STEALTH;
 }
-
-/* Orginally for the damage fix plugin */
 stock bool IsExoSeigeKit(int class, int subClass)
 {
 	return class == MAIN_CLASS_EXO && subClass == EXO_CLASS_SEIGE_KIT;
@@ -83,6 +81,19 @@ stock bool IsSupportBBQ(int class, int subClass)
 stock bool IsStealthSab(int class, int subClass)
 {
 	return class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SABATEUR;
+}
+stock bool IsStealthAss(int class, int subClass)
+{
+	return class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_ASSASSIN;
+}
+
+/* Various other class functions */
+
+int ND_GetMainClass(int client) {
+	return GetEntProp(client, Prop_Send, "m_iPlayerClass");
+}
+int ND_GetSubClass(int client) {
+	return GetEntProp(client, Prop_Send, "m_iPlayerSubclass");
 }
 
 stock void ResetClass(int client, int mainClass, int subClass, int gizmo = -1)
