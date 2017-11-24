@@ -47,6 +47,12 @@ public void ND_OnRoundStarted()
 		SpawnTertiaryPoint({2620.0, 529.0, 5.0});
 		SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
 	}
+	
+	else if (ND_StockMapEquals(map_name, ND_Silo))
+	{
+		SpawnTertiaryPoint({3375.0, 1050.0, 22.0});
+		SpawnTertiaryPoint({-36.0, -2000.0, 15.5});	
+	}
 }
 
 public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
