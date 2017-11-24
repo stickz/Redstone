@@ -44,8 +44,8 @@ public void ND_OnRoundStart()
 	
 	else if (ND_CustomMapEquals(map_name, ND_MetroImp))
 	{
-		SpawnTertiaryPoint({2620.0, 529.0, 65.5});
-		SpawnTertiaryPoint({-2235.0, -3249.0, -32.5});
+		SpawnTertiaryPoint({2620.0, 529.0, 15.0});
+		SpawnTertiaryPoint({-2235.0, -3249.0, -70.0});
 	}
 }
 
