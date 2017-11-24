@@ -29,7 +29,7 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void ND_OnRoundStart()
+public void ND_OnRoundStarted()
 {
 	resSpawnCount = 0;
 	char map_name[64];   
