@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <sdktools>
+#include <nd_stocks>
 #include <nd_rounds>
 #include <nd_maps>
 #include <nd_redstone>
