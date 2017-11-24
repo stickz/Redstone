@@ -51,7 +51,7 @@ public void ND_OnRoundStarted()
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
 		SpawnTertiaryPoint({-3375.0, 1050.0, 22.0});
-		SpawnTertiaryPoint({-36.0, -2000.0, 15.5});	
+		SpawnTertiaryPoint({-36.0, -2000.0, 5.0});	
 	}
 }
 
