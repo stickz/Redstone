@@ -24,7 +24,7 @@ public void OnPluginStart()
 {
 	// Fire round start event if plugin loads late
 	if (ND_RoundStarted())
-		ND_OnRoundStart();
+		ND_OnRoundStarted();
 
 	AddUpdaterLibrary(); //auto-updater
 }
