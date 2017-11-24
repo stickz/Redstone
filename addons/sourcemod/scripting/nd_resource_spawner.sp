@@ -2,6 +2,7 @@
 #include <sdktools>
 #include <nd_rounds>
 #include <nd_maps>
+#include <nd_redstone>
 
 #define TERTIARY_MODEL "models/rts_structures/rts_resource/rts_resource_tertiary.mdl"
 #define VECTOR_SIZE 3
@@ -19,6 +20,7 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 int resSpawnCount = 0;
+bool tertsSpawned = false;
 
 public void OnPluginStart()
 {
@@ -29,9 +31,20 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
+public void OnClientPutInServer(int client) {
+	if (!tertsSpawned)
+		CheckTertiarySpawns();
+}
+
 public void ND_OnRoundStarted()
 {
 	resSpawnCount = 0;
+	tertsSpawned = false;
+	CheckTertiarySpawns();
+}
+
+void CheckTertiarySpawns()
+{
 	char map_name[64];   
 	GetCurrentMap(map_name, sizeof(map_name));
 	
@@ -42,7 +55,7 @@ public void ND_OnRoundStarted()
 		SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
 	}
 	
-	else if (ND_CustomMapEquals(map_name, ND_MetroImp))
+	else if (ND_CustomMapEquals(map_name, ND_MetroImp) && RED_OnTeamCount() >= 18)
 	{
 		SpawnTertiaryPoint({2620.0, 529.0, 5.0});
 		SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
@@ -61,6 +74,7 @@ public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
 	int trigger = CreateEntityByName("nd_trigger_resource_point");
        
 	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin);
+	tertsSpawned = true;
 }
 
 public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin)
