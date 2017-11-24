@@ -41,6 +41,12 @@ public void ND_OnRoundStart()
 		SpawnTertiaryPoint({987.0, -7562.0, 23.0});
 		SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
 	}
+	
+	else if (ND_CustomMapEquals(map_name, ND_MetroImp))
+	{
+		SpawnTertiaryPoint({2620.0, 529.0, 65.5});
+		SpawnTertiaryPoint({-2235.0, -3249.0, -32.5});
+	}
 }
 
 public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
