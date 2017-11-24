@@ -66,6 +66,8 @@ void CheckTertiarySpawns()
 		SpawnTertiaryPoint({-3375.0, 1050.0, 22.0});
 		SpawnTertiaryPoint({-36.0, -2000.0, 5.0});	
 	}
+	else
+		tertsSpawned = true;
 }
 
 public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
