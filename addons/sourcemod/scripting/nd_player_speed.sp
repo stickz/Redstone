@@ -64,34 +64,12 @@ public void OnPluginStart()
 	/*for (int i = 1; i < IBLEVELS; i++) {
 		InfantryBoostConVars[i].AddChangeHook(OnConvarChanged);
 	}*/
-		
-	if (ND_RoundStarted())
-		HookEvents();
 	
-	AddUpdaterLibrary(); //auto-updater
-}
-
-/* Functions that handle event hooks */
-public void ND_OnRoundStarted() {
-	HookEvents();	
-}
-public void OnMapEnd() {
-	UnHookEvents();
-}
-public void ND_OnRoundEnded() {
-	UnHookEvents();
-}
-void HookEvents()
-{
 	HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_PostNoCopy);
 	HookEvent("player_death", OnPlayerDeath, EventHookMode_PostNoCopy);
 	HookEvent("player_changeclass", OnPlayerChangeClass, EventHookMode_Post);
-}
-void UnHookEvents()
-{
-	UnhookEvent("player_spawn", OnPlayerSpawn, EventHookMode_PostNoCopy);
-	UnhookEvent("player_death", OnPlayerDeath, EventHookMode_PostNoCopy);
-	UnhookEvent("player_changeclass", OnPlayerChangeClass, EventHookMode_Post);
+		
+	AddUpdaterLibrary(); //auto-updater
 }
 
 /* Functions that update team movement speeds */
