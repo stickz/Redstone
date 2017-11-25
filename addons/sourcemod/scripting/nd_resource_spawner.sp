@@ -62,7 +62,7 @@ void CheckTertiarySpawns()
 		SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
 	}
 	
-	else if (ND_StockMapEquals(map_name, ND_Silo) && RED_OnTeamCount() >= 18)
+	else if (ND_StockMapEquals(map_name, ND_Silo) && RED_OnTeamCount() >= 14)
 	{
 		SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
 		SpawnTertiaryPoint({-36.0, -2000.0, 5.0});	
