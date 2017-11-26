@@ -89,10 +89,10 @@ stock bool IsStealthAss(int class, int subClass)
 
 /* Various other class functions */
 
-int ND_GetMainClass(int client) {
+stock int ND_GetMainClass(int client) {
 	return GetEntProp(client, Prop_Send, "m_iPlayerClass");
 }
-int ND_GetSubClass(int client) {
+stock int ND_GetSubClass(int client) {
 	return GetEntProp(client, Prop_Send, "m_iPlayerSubclass");
 }
 
