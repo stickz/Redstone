@@ -10,12 +10,12 @@
 
 	"Team Languages"
 	{
-		"de"		"Teamsprachen: {1}"
+		"de"		"Teamsprachen: {1}."
 	}
 
 	"Commander Language"
 	{
-		"de"		"Die Sprache des Kommandeurs ist {1}"
+		"de"		"Die Sprache des Kommandanten ist {1}."
 	}
 
 	"Simple Building Request"
@@ -50,17 +50,17 @@
 
 	"No Translate Keyword"
 	{
-		"de"		"keinen übersetzbaren Begriff erkannt"
+		"de"		"keinen übersetzbaren Begriff erkannt."
 	}
 
 	"Not On Team"
 	{
-		"de"		"Um dieses Kommando auszuführen musst du in einem Team sein"
+		"de"		"Um dieses Kommando auszuführen, musst du in einem Team sein."
 	}
 
 	"No Team Commander"
 	{
-		"de"		"Das Team hat zur Zeit keinen Kommandeur"
+		"de"		"Das Team hat zur Zeit keinen Kommandanten."
 	}
 
 	"Roof"
@@ -145,7 +145,7 @@
 
 	"Commander Abilities"
 	{
-		"de"		"Kommandeurfähigkeiten"
+		"de"		"Kommandantenfähigkeiten"
 	}
 
 	"Power Modulation"
@@ -190,12 +190,12 @@
 
 	"Compass Repair Request"
 	{
-		"de"		"meldet Gebäude auf der {1}-Seite der Karte, die repariert werden müssen!"
+		"de"		"meldet Gebäude im {1} der Karte, die repariert werden müssen!"
 	}
 
 	"Comp Loc Repair Request"
 	{
-		"de"		"meldet, dass die Gebäude bei {2} im {1} repariert werden müssen."
+		"de"		"meldet, dass die Gebäude bei {2} im {1} repariert werden müssen!"
 	}
 
 	"Location Repair Request"
@@ -215,7 +215,7 @@
 
 	"Compass Capture Request"
 	{
-		"de"		"meldet, dass der {1}-Ressourcenpunkt im {2} eingenommen werden muss!"
+		"de"		"meldet, dass der Ressourcenpunkt {1} im {2} eingenommen werden muss!"
 	}
 
 	"Location Capture Request"
@@ -245,27 +245,27 @@
 
 	"Complex Tango Request"
 	{
-		"de"		"meldet eine Feindsichtung im {1} bei {2} im {3}."
+		"de"		"hat Feinde im {1} bei {2} im {3} gesichtet."
 	}
 
 	"Spot Tango Request"
 	{
-		"de"		"meldet eine Feindsichtung bei {2} {1}"
+		"de"		"hat Feinde bei {2} {1} gesichtet."
 	}
 
 	"Compass Tango Request"
 	{
-		"de"		"meldet eine Feindsichtung bei {1} in {2}."
+		"de"		"hat Feinde bei {1} in {2} gesichtet."
 	}
 
 	"Tango Building"
 	{
-		"de"		"hat einen Feind bei {1} gesichted."
+		"de"		"hat Feinde bei {1} gesichtet."
 	}
 
 	"Tango Compass"
 	{
-		"de"		"hat einen Feind im {1} der Karte gesichted."
+		"de"		"hat einen Feind im {1} der Karte gesichtet."
 	}
 
 	"Tango Location"

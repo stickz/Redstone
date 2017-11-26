@@ -12,12 +12,12 @@
 	
 	"Only Commanders"
 	{
-		"en"		"Dieses Feature ist den Kommandeuren vorbehalten"
+		"en"		"Diese Funktion ist den Kommandanten vorbehalten"
 	}
 	
 	"Commander Disabled"
 	{
-		"de"		"Die Option, dass Kommandeure die Anzahl an Heckenschützen festlegen können, wurde deaktiviert"	
+		"de"		"Kommandanten können die Anzahl an Heckenschützen nicht mehr limitieren"	
 	}
 	
 	"Invalid Team"
@@ -27,7 +27,7 @@
 	
 	"Limit Reached"
 	{
-		"de"		"Heckenschützenlimit erreicht, zu Assault zurückgesetzt"
+		"de"		"Zu viele Heckenschützen, auf Assault zurückgesetzt"
 	}
 	
 	"Proper Usage"
