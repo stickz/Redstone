@@ -77,6 +77,20 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
+/* Functions that restore varriables to default */
+public void OnClientDisconnect(int client) {
+	ResetVariables(client);
+}
+public void ND_OnRoundStart() {
+	for (int client = 0; client <= MAXPLAYERS; client++) 
+		ResetVariables(client);
+}
+void ResetVariables(int client)
+{
+	FirstAssassinSpawn[client] = false;
+	FirstBBQSpawn[client] = false;
+}
+
 /* Functions that update team movement speeds */
 public void OnConfigsExecuted() {
 	UpdateMovementSpeeds();
