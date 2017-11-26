@@ -94,16 +94,19 @@ float GameME_GetModifiedHpk(int client, bool resertive = false)
 	return ClientHpk;
 }
 
+/* This function returns an imbalance calculated final skill base */
 float GameME_GetModifiedSkillBase(int client)
 {
 	/* Reseratively get the client's modified hpk */
 	float ClientHpk = GameME_GetModifiedHpk(client, true);
-	float ClientMinHpk = percentToDecimal(gc_GameMe[hpkImbalanceSkillBase].FloatValue);
+	float ClientMinHpk = percentToDecimal(gc_GameMe[hpkMiddleTendency].FloatValue);
 	
-	if (ClientHpk <= ClientMinHpk)
+	if (ClientHpk < ClientMinHpk)
 	{
-		float ClientHpkModifier = percentToDecimal(gc_GameMe[hpkSkillBaseModifer].FloatValue);
-		return GameME_SkillBase[client] * (1 + ClientHpk / ClientHpkModifier);
+		// calculate the percent taken off for every hpk percent missing
+		float ClientHpkMod = (ClientMinHpk - ClientHpk) * gc_GameMe[hpkSkillBaseModifer].FloatValue;
+		// Return the skill base times one minus the percent to take it off
+		return GameME_SkillBase[client] * (1 - ClientHpkMod);
 	}
 	
 	return GameME_SkillBase[client];
