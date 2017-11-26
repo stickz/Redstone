@@ -104,7 +104,8 @@ public void OnPluginEnd() {
 public void OnInfantryBoostResearched(int team, int level) 
 {
 	UpdateTeamMoveSpeeds(team);
-	PrintMessageAllTI1("Stealth Speed Increase", level * 2);
+	int sSpeed = RoundFloat((1.0 - InfantryBoostConVars[level].FloatValue) * 100.0);
+	PrintMessageAllTI1("Stealth Speed Increase", sSpeed);
 }
 void UpdateMovementSpeeds()
 {	
@@ -195,13 +196,15 @@ void NotifyMoveIncrease(int client)
 	int subClass = ND_GetSubClass(client);
 	if (!FirstAssassinSpawn[client] && IsStealthAss(mainClass, subClass))
 	{
-		PrintMessage(client, "Assassin Speed Increase");
+		int aSpeed = RoundFloat((1.0 - AssassinSpeedConVar.FloatValue) * 100.0);
+		PrintMessageExTI1(client, "Recent Assassin Speed", aSpeed);
 		FirstAssassinSpawn[client] = true;
 	}
 	
 	else if (!FirstBBQSpawn[client] && IsSupportBBQ(mainClass, subClass))
 	{
-		PrintMessage(client, "BBQ Speed Increase");
+		int bSpeed = RoundFloat((1.0 - BBQSpeedConVar.FloatValue) * 100.0);
+		PrintMessageExTI1(client, "Recent BBQ Speed", bSpeed);
 		FirstBBQSpawn[client] = true;
 	}
 }
