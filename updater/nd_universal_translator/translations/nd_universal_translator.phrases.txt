@@ -211,36 +211,58 @@
 	/* Tango Mentions */
 	"Complex Tango Request"
 	{
+		// {1} = Building Name
+		// {2} = Location Name
+		// {3} = Compass Position
+		//
+		// Ex. (Translator) Vertex: Is mentioning there's an enemy on the east secondary transport gate.
 		"#format"	"{1:s},{2:s},{3:s}"
 		"en"		"Is mentioning there's an enemy on the {3} {2} {1}."
 	}
 	
 	"Spot Tango Request"
 	{
+		// {1} = Building Name
+		// {2} = Location Name
+		// 
+		// Ex. (Translator) Vertex: Is mentioning there's an enemy on the prime transport gate.
 		"#format"	"{1:s},{2:s}"
 		"en"		"Is mentioning there's an enemy on the {2} {1}."
 	}
 	
 	"Compass Tango Request"
 	{
+		// {1} = Building Name
+		// {2} = Location Name
+		//
+		// Ex. (Translator) Vertex: Is mentioning there's an enemy on the west trasnport gate.
 		"#format"	"{1:s},{2:s}"
 		"en"		"Is mentioning there's an enemy on the {2} {1}."
 	}
 	
 	"Tango Building"
 	{
+		// {1} = Building Name
+		//
+		// Ex. (Translator) Vertex: Is mentioning there's an enemy on the radar station.
 		"#format"	"{1:s}"
 		"en"		"Is mentioning there's an enemy on the {1}."
 	}
 	
 	"Tango Compass"
 	{
+		// {1} = Compass Position
+		//
+		// Ex. (Translator) Vertex: Is mentioning there's an enemy on the west side of the map.
 		"#format"	"{1:s}"
 		"en"		"Is mentioning there's an enemy on the {1} side of the map."
 	}
 	
 	"Tango Location"
 	{
+		// {1} = Location Name
+		//
+		// Ex. (Translator) Vertex: Is mentioning there's an enemy at the secondary.
 		"#format"	"{1:s}"
 		"en"		"Is mentioning there's an enemy at the {1}."
 	}

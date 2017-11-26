@@ -1,10 +1,15 @@
 #include <sourcemod>
 #include <sdktools>
+#include <nd_stocks>
 #include <nd_rounds>
 #include <nd_maps>
+#include <nd_redstone>
 
 #define TERTIARY_MODEL "models/rts_structures/rts_resource/rts_resource_tertiary.mdl"
 #define VECTOR_SIZE 3
+
+#define CAPTURE_RADIUS 200.0
+#define nCAPTURE_RADIUS -200.0
  
 public Plugin myinfo =
 {
@@ -19,19 +24,31 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 int resSpawnCount = 0;
+bool tertsSpawned = false;
 
 public void OnPluginStart()
 {
 	// Fire round start event if plugin loads late
 	if (ND_RoundStarted())
-		ND_OnRoundStart();
+		ND_OnRoundStarted();
 
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void ND_OnRoundStart()
+public void OnClientPutInServer(int client) {
+	if (!tertsSpawned)
+		CheckTertiarySpawns();
+}
+
+public void ND_OnRoundStarted()
 {
 	resSpawnCount = 0;
+	tertsSpawned = false;
+	CheckTertiarySpawns();
+}
+
+void CheckTertiarySpawns()
+{
 	char map_name[64];   
 	GetCurrentMap(map_name, sizeof(map_name));
 	
@@ -42,11 +59,19 @@ public void ND_OnRoundStart()
 		SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
 	}
 	
-	else if (ND_CustomMapEquals(map_name, ND_MetroImp))
+	else if (ND_CustomMapEquals(map_name, ND_MetroImp) && RED_OnTeamCount() >= 18)
 	{
-		SpawnTertiaryPoint({2620.0, 529.0, 65.5});
-		SpawnTertiaryPoint({-2235.0, -3249.0, -32.5});
+		SpawnTertiaryPoint({2620.0, 529.0, 5.0});
+		SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
 	}
+	
+	else if (ND_StockMapEquals(map_name, ND_Silo) && RED_OnTeamCount() >= 14)
+	{
+		SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
+		SpawnTertiaryPoint({-36.0, -2000.0, 5.0});	
+	}
+	else
+		tertsSpawned = true;
 }
 
 public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
@@ -55,6 +80,7 @@ public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
 	int trigger = CreateEntityByName("nd_trigger_resource_point");
        
 	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin);
+	tertsSpawned = true;
 }
 
 public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin)
@@ -87,8 +113,8 @@ public void SpawnResourcePoint( const char[] type, const char[] model, int rt, i
 	TeleportEntity(rt, origin, NULL_VECTOR, NULL_VECTOR);
 	TeleportEntity(trigger, origin, NULL_VECTOR, NULL_VECTOR);
        
-	float min_bounds[VECTOR_SIZE] = {-300.0, -300.0, -300.0};
-	float max_bounds[VECTOR_SIZE] = {300.0, 300.0, 300.0};
+	float min_bounds[VECTOR_SIZE] = {nCAPTURE_RADIUS, nCAPTURE_RADIUS, nCAPTURE_RADIUS};
+	float max_bounds[VECTOR_SIZE] = {CAPTURE_RADIUS, CAPTURE_RADIUS, CAPTURE_RADIUS};
 	
 	SetEntPropVector(trigger, Prop_Send, "m_vecMins", min_bounds);
 	SetEntPropVector(trigger, Prop_Send, "m_vecMaxs", max_bounds);
