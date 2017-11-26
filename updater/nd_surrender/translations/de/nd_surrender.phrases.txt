@@ -10,37 +10,37 @@
 
 	"Twelve Required"
 	{
-		"de"		"Für diese Funktion werden mindestens 12 Spieler benötigt."
+		"de"		"Für diese Funktion werden mindestens 12 Spieler benötigt"
 	}
 
 	"Ten Required"
 	{
-		"de"		"Für diese Funktion werden mindestens 10 Spieler benötigt."
+		"de"		"Für diese Funktion werden mindestens 10 Spieler benötigt"
 	}
 
 	"Four Required"
 	{
-		"de"		"Zum Kapitulieren werden mindestens 4 Spieler benötigt."
+		"de"		"Zum Kapitulieren werden mindestens 4 Spieler benötigt"
 	}
 
 	"Too Soon"
 	{
-		"de"		"Es ist noch zu früh, um aufzugeben."
+		"de"		"Es ist noch zu früh, um zu kapitulieren"
 	}
 
 	"Team Surrendered"
 	{
-		"de"		"Dein Team hat bereits kapituliert."
+		"de"		"Dein Team hat bereits kapituliert"
 	}
 
 	"On Team"
 	{
-		"de"		"Nur Teammitglieder können abstimmen."
+		"de"		"Nur Teammitglieder können abstimmen"
 	}
 
 	"You Surrendered"
 	{
-		"de"		"Du hast der Kapitulation bereits zugestimmt."
+		"de"		"Du hast der Kapitulation bereits zugestimmt"
 	}
 
 	"Round Ended"
@@ -50,17 +50,17 @@
 
 	"Consort Surrendered"
 	{
-		"de"		"Das Konsortium hat aufgegeben."
+		"de"		"Das Konsortium hat aufgegeben"
 	}
 
 	"Empire Surrendered"
 	{
-		"de"		"Das Reich hat aufgegeben"
+		"de"		"Das Imperium hat aufgegeben"
 	}
 
 	"Typed Surrender"
 	{
-		"de"		"{1} will kapitulieren : {2} weitere Befürworter benötigt."
+		"de"		"{1} will kapitulieren : {2} weitere Stimmen benötigt."
 	}
 
 	"Low Bunker Health"
@@ -75,12 +75,12 @@
 
 	"Veto Commander Only"
 	{
-		"de"		"Die \"Veto\"-Funktion ist nur für Kommandeure!"
+		"de"		"Die \"Veto\"-Funktion kann nur vom Kommandanten benutzt werden!"
 	}
 
 	"Commander Used Veto"
 	{
-		"de"		"Der Kommandeur hat die schnelle Kapitulation verhindert. Die Kapitulation muss jetzt mehrheitlich beschlossen werden."
+		"de"		"Der Kommandant hat die schnelle Kapitulation verhindert. Die Kapitulation muss jetzt mehrheitlich beschlossen werden."
 	}
 
 }

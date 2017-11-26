@@ -15,7 +15,7 @@
 
 	"Command Bunker"
 	{
-		"de"		"der Kommandobunker"
+		"de"		"ein Kommandobunker"
 	}
 
 	"MG Turret"
@@ -25,7 +25,7 @@
 
 	"Transport Gate"
 	{
-		"de"		"Ein Transporttor"
+		"de"		"ein Transporttor"
 	}
 
 	"Power Station"
@@ -35,7 +35,7 @@
 
 	"Wireless Repeater"
 	{
-		"de"		"ein Drahtloser Verstärker"
+		"de"		"ein drahtloser Verstärker"
 	}
 
 	"Relay Tower"
@@ -75,7 +75,7 @@
 
 	"Sonic Turret"
 	{
-		"de"		"Ein Ultrasschall-Turm"
+		"de"		"ein Schall-Geschützturm"
 	}
 
 	"Rocket Turret"
@@ -100,7 +100,7 @@
 
 	"Empire"
 	{
-		"de"		"das Reich"
+		"de"		"Das Imperium"
 	}
 
 	"Consort"
