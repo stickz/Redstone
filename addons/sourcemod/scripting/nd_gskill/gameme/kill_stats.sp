@@ -94,6 +94,21 @@ float GameME_GetModifiedHpk(int client, bool resertive = false)
 	return ClientHpk;
 }
 
+float GameME_GetModifiedSkillBase(int client)
+{
+	/* Reseratively get the client's modified hpk */
+	float ClientHpk = GameME_GetModifiedHpk(client, true);
+	float ClientMinHpk = percentToDecimal(gc_GameMe[hpkImbalanceSkillBase].FloatValue);
+	
+	if (ClientHpk <= ClientMinHpk)
+	{
+		float ClientHpkModifier = percentToDecimal(gc_GameMe[hpkSkillBaseModifer].FloatValue);
+		return GameME_SkillBase[client] * (1 + ClientHpk / ClientHpkModifier);
+	}
+	
+	return GameME_SkillBase[client];
+}
+
 bool GameME_UseKDR_Modifier(int client) { //Does the kdr modifier meet requirements to use it?
 	return !GameME_KDR_Availible(client) ? false : (GameMe_UseKills(client) || GameME_UseDeaths(client));
 }
