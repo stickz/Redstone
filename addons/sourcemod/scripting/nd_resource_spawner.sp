@@ -7,7 +7,9 @@
 
 #define TERTIARY_MODEL "models/rts_structures/rts_resource/rts_resource_tertiary.mdl"
 #define VECTOR_SIZE 3
+
 #define CAPTURE_RADIUS 200.0
+#define nCAPTURE_RADIUS -200.0
  
 public Plugin myinfo =
 {
@@ -111,8 +113,7 @@ public void SpawnResourcePoint( const char[] type, const char[] model, int rt, i
 	TeleportEntity(rt, origin, NULL_VECTOR, NULL_VECTOR);
 	TeleportEntity(trigger, origin, NULL_VECTOR, NULL_VECTOR);
        
-	float negCapRadius = CAPTURE_RADIUS * -1;
-	float min_bounds[VECTOR_SIZE] = {negCapRadius, negCapRadius, negCapRadius};
+	float min_bounds[VECTOR_SIZE] = {nCAPTURE_RADIUS, nCAPTURE_RADIUS, nCAPTURE_RADIUS};
 	float max_bounds[VECTOR_SIZE] = {CAPTURE_RADIUS, CAPTURE_RADIUS, CAPTURE_RADIUS};
 	
 	SetEntPropVector(trigger, Prop_Send, "m_vecMins", min_bounds);
