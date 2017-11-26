@@ -9,7 +9,7 @@
 #define VECTOR_SIZE 3
 
 #define CAPTURE_RADIUS 200.0
-#define nCAPTURE_RADIUS CAPTURE_RADIUS * -1
+#define nCAPTURE_RADIUS -200.0
  
 public Plugin myinfo =
 {
