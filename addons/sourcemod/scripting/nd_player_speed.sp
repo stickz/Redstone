@@ -197,14 +197,14 @@ void NotifyMoveIncrease(int client)
 	if (!FirstAssassinSpawn[client] && IsStealthAss(mainClass, subClass))
 	{
 		int aSpeed = RoundFloat((1.0 - AssassinSpeedConVar.FloatValue) * 100.0);
-		PrintMessageExTI1(client, "Recent Assassin Speed", aSpeed);
+		PrintMessageTI1(client, "Recent Assassin Speed", aSpeed);
 		FirstAssassinSpawn[client] = true;
 	}
 	
 	else if (!FirstBBQSpawn[client] && IsSupportBBQ(mainClass, subClass))
 	{
 		int bSpeed = RoundFloat((1.0 - BBQSpeedConVar.FloatValue) * 100.0);
-		PrintMessageExTI1(client, "Recent BBQ Speed", bSpeed);
+		PrintMessageTI1(client, "Recent BBQ Speed", bSpeed);
 		FirstBBQSpawn[client] = true;
 	}
 }
