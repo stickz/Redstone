@@ -4,6 +4,7 @@
 #include <nd_rounds>
 #include <nd_stocks>
 #include <nd_research_eng>
+#include <nd_print>
 
 // Bug: "m_flLaggedMovementValue" is reset if a player change class fails
 // Continuously leaving the pre-hook think running doesn't change anything.
@@ -47,6 +48,9 @@ bool HookedThink[MAXPLAYERS+1] = {false, ...};
 float PlayerMoveSpeed[MAXPLAYERS+1] = {1.0, ...};
 bool FirstThink[MAXPLAYERS+1] = {false, ...};
 
+bool FirstAssassinSpawn[MAXPLAYERS+1] = {false, ...};
+bool FirstBBQSpawn[MAXPLAYERS+1] = {false, ...};
+
 public void OnPluginStart()
 {
 	// Don't hook convar change for now. It disables the players movement speed. This feature is optional.
@@ -68,7 +72,8 @@ public void OnPluginStart()
 	HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_PostNoCopy);
 	HookEvent("player_death", OnPlayerDeath, EventHookMode_PostNoCopy);
 	HookEvent("player_changeclass", OnPlayerChangeClass, EventHookMode_Post);
-		
+	
+	LoadTranslations("nd_player_speed.phrases");		
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -82,8 +87,10 @@ public void OnConfigsExecuted() {
 public void OnPluginEnd() {
 	UpdateMovementSpeeds();
 }
-public void OnInfantryBoostResearched(int team) {
+public void OnInfantryBoostResearched(int team, int level) 
+{
 	UpdateTeamMoveSpeeds(team);
+	PrintMessageAllTI1("Stealth Speed Increase", level * 2);
 }
 void UpdateMovementSpeeds()
 {	
@@ -141,6 +148,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 {
 	// Hook the think event for the client and set their movement speed
 	int client = GetClientOfUserId(event.GetInt("userid"));	
+	NotifyMoveIncrease(client);
 	
 	if (UpdateMovementSpeed(client))
 	{
@@ -165,6 +173,23 @@ bool UpdateMovementSpeed(int client)
 		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(StealthClass)];
 	
 	return PlayerMoveSpeed[client] != DEFAULT_SPEED;
+}
+
+void NotifyMoveIncrease(int client)
+{
+	int mainClass = ND_GetMainClass(client);
+	int subClass = ND_GetSubClass(client);
+	if (!FirstAssassinSpawn[client] && IsStealthAss(mainClass, subClass))
+	{
+		PrintMessage(client, "Assassin Speed Increase");
+		FirstAssassinSpawn[client] = true;
+	}
+	
+	else if (!FirstBBQSpawn[client] && IsSupportBBQ(mainClass, subClass))
+	{
+		PrintMessage(client, "BBQ Speed Increase");
+		FirstBBQSpawn[client] = true;
+	}
 }
 
 public Action OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
