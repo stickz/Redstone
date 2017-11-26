@@ -1,0 +1,20 @@
+"Phrases"
+{
+	"Stealth Speed Increase"
+	{
+		"#format"	"{1:i}"
+		"en"		"Stealth movement speed increased by {1}%"
+	}
+	
+	"Recent Assassin Speed"
+	{
+		"#format"	"{1:i}"
+		"en"		"The Assassin movement speed is currently +{1}%"	
+	}
+	
+	"Recent BBQ Speed"
+	{
+		"#format"	"{1:i}"
+		"en"		"The BBQ Kit movement speed is currently +{1}%"
+	}
+}

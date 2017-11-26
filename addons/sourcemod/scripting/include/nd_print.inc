@@ -1,11 +1,18 @@
 #define PREFIX "\x05[xG]"
+#define COLOUR "\x05"
 
 stock void PrintMessage(int client, const char[] phrase) {
 	PrintToChat(client, "%s %t.", PREFIX, phrase);
 }
+stock void PrintMessageTI1(int client, const char[] phrase, int intArg) {
+	PrintToChat(client, "%s%t.", PREFIX, phrase, intArg);
+}
 
 stock void PrintMessageEx(int client, const char[] phrase) {
-	PrintToChat(client, "%t.", phrase);
+	PrintToChat(client, "%s%t.", COLOUR, phrase);
+}
+stock void PrintMessageExTI1(int client, const char[] phrase, int intArg) {
+	PrintToChat(client, "%s%t.", COLOUR, phrase, intArg);
 }
 
 stock void PrintMessageAll(const char[] phrase) 
