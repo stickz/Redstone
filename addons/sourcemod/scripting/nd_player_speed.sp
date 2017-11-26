@@ -134,7 +134,8 @@ void DisableTeamMoveSpeeds(int team)
 	{
 		if (IsValidClient(client, false) && GetClientTeam(client) == team)
 		{
-			DisableMovementSpeed(client);			
+			DisableMovementSpeed(client);
+			FirstAssassinSpawn[client] = false;
 		}
 	}
 }
