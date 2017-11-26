@@ -1,19 +1,26 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:59:53 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/249
+//
 "Phrases"
 {
+
 	"Cookie Solution Assist"
 	{
 		"ru"		"Помощник"
 	}
-	
+
 	"Spawn Bug"
 	{
 		"ru"		"Смените класс или выберитте другой телепорт. Нажмите ENTER для вызова меню"
 	}
-	
-	//Notice: If the numbers.phrases file isn't translated, it will fill {1} with English
-	//{1} is not a number like 1,2,3 etc, (improper grammer) instead it's one,two,three etc.
+
 	"Suicide Request"
 	{
 		"ru"		"До самоуничтожения осталось {1} сек."
 	}
+
 }

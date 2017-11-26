@@ -1,0 +1,36 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:51:07 UTC
+// Language: Brazilian Portuguese (pt)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/255
+//
+"Phrases"
+{
+
+	"Retrigger Map Vote"
+	{
+		"pt"		"Ciclo até {1} cancelado pelos limiares de contagem de jogadores. A votação do mapa agora irá recomeçar."
+	}
+
+	"Not Enough Players"
+	{
+		"pt"		"Não há jogadores suficientes para {1}! O mapa seguinte mudou para {2}!"
+	}
+
+	"Too Many Players"
+	{
+		"pt"		"Muitos jogadores para {1}! O mapa seguinte mudou para {2}!"
+	}
+
+	"Wait Map List"
+	{
+		"pt"		"Aguarde {1} segundos antes de listar mapas anteriores novamente!"
+	}
+
+	"Prev Maps Listed"
+	{
+		"pt"		"Mapas anteriores listados com êxito. Consulte o console para mais informações."
+	}
+
+}

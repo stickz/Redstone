@@ -1,151 +1,171 @@
-﻿"Phrases"
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:42:24 UTC
+// Language: Brazilian Portuguese (pt)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/252
+//
+"Phrases"
 {
+
 	"Cookie TeamBalancer Messages"
 	{
 		"pt"		"Mensagens de Balanceamento dos Times"
 	}
+
 	"Rookie Only"
 	{
-		"pt"		"Este servidor é somente para jogadores iniciantes"	
+		"pt"		"Este servidor é somente para jogadores iniciantes"
 	}
+
 	"Veteran Only"
 	{
-		"pt"		"Este servidor é somente para jogadores veteranos"	
+		"pt"		"Este servidor é somente para jogadores veteranos"
 	}
+
 	"Graduated"
 	{
-		"pt"		"Parabéns soldado, você foi graduado no treinamento"	
+		"pt"		"Parabéns soldado, você foi graduado no treinamento"
 	}
+
 	"Submitted Placement"
 	{
-		"pt"		"Pedido de posicionamento separado de comandantes submetido"	
+		"pt"		"Pedido de posicionamento separado de comandantes submetido"
 	}
+
 	"Revoked Placement"
 	{
 		"pt"		"Pedido de posicionamento separado de comandantes revogado"
 	}
+
 	"Balancer Running"
 	{
-		"pt"		"Não pode junta-se a um time enquanto o balanceamento estiver ocorrendo"	
+		"pt"		"Não pode junta-se a um time enquanto o balanceamento estiver ocorrendo"
 	}
+
 	"Resign Switch"
 	{
-		"pt"		"Você precisa renunciar o comando antes de mudar de time"	
+		"pt"		"Você precisa renunciar o comando antes de mudar de time"
 	}
+
 	"Switch Disabled"
 	{
-		"pt"		"Mudança de times desativada por alguns minutos adicionais ou até o balanceamento dos times"	
+		"pt"		"Mudança de times desativada por alguns minutos adicionais ou até o balanceamento dos times"
 	}
+
 	"Retry Placement"
 	{
-		"pt"		"Você está no modo espectador! Por favor tente jutar-se a um dos times novamente"	
+		"pt"		"Você está no modo espectador! Por favor tente jutar-se a um dos times novamente"
 	}
+
 	"Level Retrieved"
 	{
 		"pt"		"Nível adquirido com sucesso, por favor tente novamente!"
 	}
+
 	"Level Switch Wait"
 	{
-		"pt"		"Por favor, espere até a tabela de pontos mostrar nível 2+ antes de mudar de time"	
+		"pt"		"Por favor, espere até a tabela de pontos mostrar nível 2+ antes de mudar de time"
 	}
+
 	"Revoke Spectator"
 	{
 		"pt"		"É preciso tornar-se espectador antes de juntar-se"
 	}
+
 	"Spectator Avoid"
 	{
-		"pt"		"Não pode usar este comando para evitar o balanceamento de times"	
+		"pt"		"Não pode usar este comando para evitar o balanceamento de times"
 	}
+
 	"Spectator Unlocked"
 	{
 		"pt"		"Você está destravado do modo espectador"
 	}
+
 	"Spectator Joined"
 	{
 		"pt"		"Você está agora no modo espectador! Para sair digite !spec."
 	}
+
 	"Teamdiff Round Wait"
 	{
 		"pt"		"Não pode usar teamdiff antes da partida começar"
 	}
+
 	"Ether Team Stack"
 	{
 		"pt"		"Juntar-se a um dos times irá causar desequilíbrio. Restrito por alguns minutos ou quando o estado mudar."
 	}
+
 	"Could Be Switched"
 	{
-		"pt"		"Você poderá ser remanejado imediatamente após seu nível carregar"	
+		"pt"		"Você poderá ser remanejado imediatamente após seu nível carregar"
 	}
+
 	"Initial Team Lock"
 	{
 		"pt"		"Você está travado no time inicial devido à evasão, não pode juntar-se até que esteja balanceado"
 	}
+
 	"Separate Placement"
 	{
-		"pt"		"Você foi colocado separadamente para assegurar que ambos os times tenham um comandante"	
+		"pt"		"Você foi colocado separadamente para assegurar que ambos os times tenham um comandante"
 	}
+
 	"Random Selection"
 	{
 		"pt"		"Escolha do comandante é randômica, but é altamente provável que você será escolhido"
 	}
+
 	"Balancer Not Run"
 	{
 		"pt"		"Balanceamento prévio NÃO ocorre devido à ausência de jogadores"
 	}
+
 	"Balancer Off"
 	{
 		"pt"		"Balanceamento de Times está DESATIVADO no momento"
 	}
+
 	"Waiting"
 	{
-		"pt"		"Aguardando os jogadores conectarem"	
+		"pt"		"Aguardando os jogadores conectarem"
 	}
+
 	"Please Wait"
 	{
 		"pt"		"Por favor espere"
 	}
+
 	"Status"
 	{
 		"pt"		"Status"
 	}
-	"Excellent"
-	{
-		"pt"		"Excelente"	
-	}
-	"Good"
-	{
-		"pt"		"Bom"
-	}
-	"Not Bad"
-	{
-		"pt"		"Razoável"
-	}
+
 	"Switch Recommended"
 	{
-		"pt"		"Mudança recomendável"	
+		"pt"		"Mudança recomendável"
 	}
+
 	"Slightly Imbalanced"
 	{
 		"pt"		"Ligeiramente desbalanceado"
 	}
+
 	"Moderately Imbalanced"
 	{
 		"pt"		"Moderadamente desbalanceado"
 	}
+
 	"Heavily Imbalanced"
 	{
-		"pt"		"Muito desbalanceado"	
+		"pt"		"Muito desbalanceado"
 	}
-	"Empire"
+
+	"Skill"
 	{
-		"pt"		"Empire"
+		"pt"		"Habilidades"
 	}
-	"Consortium"
-	{
-		"pt"		"Consort"
-	}
-	"Skill"	
-	{
-		"pt"		"Habilidades"	
-	}
+
 }

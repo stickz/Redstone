@@ -1,0 +1,21 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:53:31 UTC
+// Language: Brazilian Portuguese (pt)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/254
+//
+"Phrases"
+{
+
+	"Radio Disabled"
+	{
+		"pt"		"O menu de rádio está atualmente com problemas ou desativado."
+	}
+
+	"Radio Wait"
+	{
+		"pt"		"Aguarde {1} segundo (s) antes da próxima mensagem de rádio."
+	}
+
+}

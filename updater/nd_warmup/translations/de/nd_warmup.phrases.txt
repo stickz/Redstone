@@ -1,0 +1,31 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 15:01:02 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/248
+//
+"Phrases"
+{
+
+	"Balancer Not Run"
+	{
+		"de"		"Der Teamausgleicher wird aufgrund zu weniger Spieler nicht ausgeführt"
+	}
+
+	"Balancer Off"
+	{
+		"de"		"Teamausgleicher ist momentan inaktiv"
+	}
+
+	"Waiting"
+	{
+		"de"		"Warte auf Spieler"
+	}
+
+	"Please Wait"
+	{
+		"de"		"Bitte warten"
+	}
+
+}

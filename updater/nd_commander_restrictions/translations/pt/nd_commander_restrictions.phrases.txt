@@ -1,5 +1,13 @@
-﻿"Phrases"
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:41:17 UTC
+// Language: Brazilian Portuguese (pt)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/257
+//
+"Phrases"
 {
+
 	"Demotion Reapply"
 	{
 		"pt"		"Você não pode recandidatar-se para comandante após ter sido destituído"
@@ -7,67 +15,62 @@
 
 	"Resignation Reapply"
 	{
-		"pt"		"Você não pode recandidatar-se por 30s após renúncia por motim"	
+		"pt"		"Você não pode recandidatar-se por 30s após renúncia por motim"
 	}
-	
+
 	"Spawn Before Apply"
 	{
-		"pt"		"Por favor entre no jogo antes de candidatar-se para comandante!"	
+		"pt"		"Por favor entre no jogo antes de candidatar-se para comandante!"
 	}
-	
-	"Bellow Ten"
-	{
-		"pt"		"Jogadores com nível abaixo de 10 só podem comandar 1-10
-        jogadores"	
-	}
-	
+
 	"Fifty Five Required"
 	{
 		"pt"		"Nível 45+ é necessário para comendar um grande número de jogadores (24 ou mais)"
 	}
-	
+
 	"Total Level"
 	{
 		"pt"		"Você não pode comandar mais jogadores no total do que o seu nível"
 	}
-	
+
 	"No Commander"
 	{
 		"pt"		"Não há comandante para destituir"
 	}
-	
+
 	"On Team"
 	{
 		"pt"		"Você precisa estar em um time para votar uma destituição"
 	}
-	
+
 	"Four Required"
 	{
 		"pt"		"Quatro jogadores de um time são necessários para usar esta funcionalidade"
 	}
-	
+
 	"Already Voted"
 	{
 		"pt"		"Você já votou para destituir o comandante"
 	}
-	
+
 	"Round End"
 	{
 		"pt"		"Não pode usar esta funcionalidade após o final da partida"
 	}
-	
+
 	"Round Started"
 	{
-		"pt"		"Por favor espere até o começo da partida para destituição"	
+		"pt"		"Por favor espere até o começo da partida para destituição"
 	}
-	
+
 	"Commander Demoted"
 	{
-		"pt"		"O Comandante foi destituído com sucesso"	
+		"pt"		"O Comandante foi destituído com sucesso"
 	}
-	
+
 	"Demote Failed"
 	{
 		"pt"		"Erro! Comandante não encontrado para destituição!"
 	}
+
 }

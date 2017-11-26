@@ -1,71 +1,86 @@
-﻿"Phrases"
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:45:23 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/241
+//
+"Phrases"
 {
+
 	"Empire"
 	{
 		"de"		"Imperium"
 	}
-	
+
 	"Consortium"
 	{
 		"de"		"Konsortium"
 	}
-	
+
 	"Only Commanders"
 	{
 		"de"		"Dieses Feature ist den Kommandeuren vorbehalten"
 	}
-	
+
 	"Commander Disabled"
 	{
-		"de"		"Die Option, dass Kommandeure die Anzahl an Heckenschützen festlegen können, wurde deaktiviert"	
+		"de"		"Die Option, dass Kommandeure die Anzahl an Heckenschützen festlegen können, wurde deaktiviert"
 	}
-	
+
 	"Invalid Team"
 	{
 		"de"		"Ungültiges Team (0 = Konsortium, 1 = Imperium)"
 	}
-	
+
 	"Sniper Limit Reached"
 	{
 		"de"		"Heckenschützenlimit erreicht, zu Assault zurückgesetzt"
 	}
-	
+
+	"Stealth Limit Reached"
+	{
+		"de"		"Tarn-Limit erreicht, Auswahl wurde auf Assault zurückgesetzt"
+	}
+
+	"AntiStructure Limit Reached"
+	{
+		"de"		"Anti-Gebäude-Limit erreicht, Auswahl wurde auf Assault zurückgesetzt"
+	}
+
 	"Proper Sniper Usage"
 	{
 		"de"		"Verwendung: !maxsnipers <Limit>"
 	}
-	
+
 	"Proper Stealth Usage"
 	{
 		"de"		"Verwendung: !maxstealth <Limit>"
 	}
-	
+
 	"Proper Structure Usage"
 	{
 		"de"		"Verwendung: !MaxAntiStructure <Percent>"
 	}
-	
+
 	"Set Sniper Limit"
 	{
-		//{1} = number of snipers in word form (ex. one, two, three)
 		"de"		"Sniper count limited to {1}"
 	}
-	
+
 	"Set Stealth Limit"
 	{
-		//{1} = number of stealth in word form (ex. one, two, three)
 		"de"		"Stealth count limited to {1}"
 	}
-	
+
 	"Set Structure Limit"
 	{
-		//{1} = number of Ant-Structure in number form (ex. 60, 70, 80)
-		"de" 		"Anti-Structure limited to {1} percent"
+		"de"		"Anti-Structure limited to {1} percent"
 	}
-	
-	
+
 	"Invalid Args"
 	{
 		"de"		"Ungültige Anzahl an Argumenten: <Team> <Anzahl>"
 	}
+
 }

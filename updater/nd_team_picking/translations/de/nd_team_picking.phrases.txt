@@ -1,0 +1,106 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:57:15 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/294
+//
+"Phrases"
+{
+
+	"Team Captain Left"
+	{
+		"de"		"Spielerauswahl abgebrochen. Ein Kapitän hat das Spiel verlassen"
+	}
+
+	"Pick Again"
+	{
+		"de"		"Der Spieler hat das Spiel verlassen. Wähle nochmal"
+	}
+
+	"Picking Completed"
+	{
+		"de"		"Die Spielerauswahl ist abgeschlossen"
+	}
+
+	"Picking Started"
+	{
+		"de"		"Spielerauswahl hat begonnen"
+	}
+
+	"Each Pick Time"
+	{
+		"de"		"Jeder Kapitän hat {1} Sekunden zum Wählen"
+	}
+
+	"First Pick Time"
+	{
+		"de"		"Für die erste Auswahl hast du {1} Sekunden Zeit."
+	}
+
+	"Auto Select"
+	{
+		"de"		"Automatische Auswahl in {1} Sekunden"
+	}
+
+	"Auto Selected Join"
+	{
+		"de"		"{1} wurde automatisch {2} zugewiesen."
+	}
+
+	"Choosen Join"
+	{
+		"de"		"{1} wurde zu {2} gewählt."
+	}
+
+	"Got First Pick"
+	{
+		"de"		"{1} darf zuerst wählen"
+	}
+
+	"Got Next Picks"
+	{
+		"de"		"{1} darf zwei Mal wählen"
+	}
+
+	"Already Running"
+	{
+		"de"		"!Spielerauswahlfehler: Spielerauswahl läuft bereits oder ist fehlgeschlagen. Wenn nötig: \"!ReloadPicker\" ausführen."
+	}
+
+	"Four Players Required"
+	{
+		"de"		"!Spielerauswahlfehler: Mindestens 4 Spieler werden für diese Funktion benötigt."
+	}
+
+	"Correct Usage"
+	{
+		"de"		"!Spielerauswahlfehler: Fehlerhafte Eingabe! schreibe \"!PlayerPicking Team1Kapitän Team2Kapitän Startteam\""
+	}
+
+	"Vote Currently Running"
+	{
+		"de"		"!Spielerauswahlfehler: Wird gerade eine Abstimmung durchgeführt?"
+	}
+
+	"Next Pick On"
+	{
+		"de"		"!Spielerauswahlfehler: Führe \"!Nexpick\" aus und starte die Karte neu"
+	}
+
+	"Name Segment Invalid"
+	{
+		"de"		"!Spielerauswahlfehler: '{1}' Name unzulässig oder mehrfach gefunden"
+	}
+
+	"Name Segment Duplicate"
+	{
+		"de"		"!Spielerauswahlfehler: '{1}' wurde als Wählender für beide Teams gewählt"
+	}
+
+	"Invalid Starting Team"
+	{
+		"de"		"!Spielerauswahlfehler: '{1}'  ist keine zugelassene Eingabe."
+	}
+
+}

@@ -1,84 +1,91 @@
-﻿"Phrases"
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:59:24 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/250
+//
+"Phrases"
 {
+
 	"Cookie TimeLimit Features"
 	{
-		"de"		"TimeLimit Features"
+		"de"		"Zeitlimitfunktionen"
 	}
-	
+
 	"Six Required"
 	{
-		"de"		"Six players are required to use this feature"	
+		"de"		"Für diese Funktion werden 6 Spieler benötigt"
 	}
-	
+
 	"Already Extended"
 	{
-		"de"		"Only one extension is allowed per map"
+		"de"		"Pro Karte kann nur einmal verlängert werden"
 	}
-	
+
 	"On Team"
 	{
-		"de"		"You must be on a team use to this feature"	
+		"de"		"Du musst dich in einem Team befinden um diese Funktion zu nutzen"
 	}
-	
+
 	"You Extended"
 	{
-		"de"		"You've already voted to extend the match"
+		"de"		"Du hast der Weiterführung bereits zugestimmt"
 	}
-	
+
 	"Round Ended"
 	{
-		"de"		"This feature cannot be used at round end"
+		"de"		"Diese Funktion kann nicht am Rundenende benutzt werden"
 	}
-	
+
 	"Wait End"
 	{
-		"de"		"Please wait until the last five minutes before extending"
+		"de"		"Bitte warte bis 5 Minuten vor Rundenende mit dem Verlängern."
 	}
-	
+
 	"Regular Time"
 	{
-		"de"		"The regular time limit is currently being used"
+		"de"		"Momentan ist das Standardzeitlimit aktiv"
 	}
-	
+
 	"Time Disabled"
 	{
-		"de"		"The time limit is disabled until more players connect"
+		"de"		"Das Zeitlimit ist deaktiviert bis mehr Spieler verbunden sind"
 	}
-	 
+
 	"Time End"
 	{
-		"de"		"Round ended by 1h delayed population time limit"
+		"de"		"Zeitlimit erreicht. Die Runde wurde beendet"
 	}
-	
+
 	"Limit Effect"
 	{
-		"de"		"Population timelimit now in effect for 1h"
+		"de"		"Das Zeitlimit ist jetzt eine Stunde aktiv"
 	}
-	
+
 	"Round Extended"
 	{
-		"de"		"time limit extended by fifteen minutes"
+		"de"		"Das Zeitlimit wurde um 15 Minuten verlängert"
 	}
 
 	"Extend Availible"
 	{
-		"de"		"Vote extend is now availible"
+		"de"		"Die Verlängerungsabstimmung ist jetzt verfügbar"
 	}
-	
-	
-	//Three types of extend printouts
-	//{1} = Player's name
-	//{2} and/or {3} = team number remaining (1,2,3 etc)
+
 	"Extend Both"
 	{
-		"de"		"{1} typed extend : {2} Con & {3} Emp required." 	
+		"de"		"{1} will verlängern : Es werden noch {2} Unterstützer vom Konsortium & {3} Unterstützer aus dem Reich benötigt."
 	}
+
 	"Extend Empire"
 	{
-		"de"		"{1} typed extend : {2} empire required."	
+		"de"		"{1} will verlängern : Es werden noch {2} Unterstützer aus dem Reich benötigt."
 	}
+
 	"Extend Consort"
 	{
-		"de"		"{1} typed extend : {2} consort required."	
+		"de"		"{1} will verlängern : Es werden noch {2} Unterstützer vom Konsortium benötigt."
 	}
+
 }

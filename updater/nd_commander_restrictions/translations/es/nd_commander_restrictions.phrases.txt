@@ -1,129 +1,116 @@
-﻿"Phrases"
-
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:41:16 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/257
+//
+"Phrases"
 {
 
 	"Demotion Reapply"
-
 	{
-
 		"es"		"No te puedes aplicar para comandante después de haber sido degradado"
-
 	}
-
 
 	"Resignation Reapply"
-
 	{
-
-		"es"		"No te puedes aplicar 30s luego de resignar un motín"	
-
+		"es"		"No te puedes aplicar 30s luego de resignar un motín"
 	}
-
 
 	"Spawn Before Apply"
-
 	{
-
-		"es"		"Por favor despliégate antes de aplicarte para comandante!"	
-
+		"es"		"Por favor despliégate antes de aplicarte para comandante!"
 	}
-
 
 	"Bellow Ten"
-
 	{
-
-		"es"		"Jugadores con nivel menor a 10 solo pueden comandar a 1-10 jugadores"	
-
+		"es"		"Jugadores con nivel menor a 10 solo pueden comandar a 1-10 jugadores"
 	}
-
 
 	"Fifty Five Required"
-
 	{
-
 		"es"		"Es necesario nivel 45+ para comandar grandes cantidades de jugadores (24 o más)"
-
 	}
-	
 
 	"Total Level"
-
 	{
-
 		"es"		"No puedes comandar jugadores de mayor nivel"
-
 	}
-	
+
 	"No Commander"
-
 	{
-
 		"es"		"No hay comandante para degradar"
-
 	}
-	
 
 	"On Team"
-
 	{
-
 		"es"		"Debes estar en un equipo para votar"
-
 	}
-
 
 	"Four Required"
-
 	{
-
 		"es"		"Necesitas 4 compañeros de equipo para utilizar esta opción"
-
 	}
-	
 
 	"Already Voted"
-	
 	{
-
 		"es"		"Ya has votado para degradar al comandante"
-
 	}
 
-	
-"Round End"
-
+	"Round End"
 	{
-
 		"es"		"No puedes utilizar esta opción después de terminar la ronda"
-
 	}
-	
 
 	"Round Started"
-
 	{
-
-		"es"		"Por favor espera a que comience la ronda antes degradar"	
-
+		"es"		"Por favor espera a que comience la ronda antes degradar"
 	}
-	
 
 	"Commander Demoted"
-
 	{
-
-		"es"		"Comandante degradado exitosamente"	
-
+		"es"		"Comandante degradado exitosamente"
 	}
-	
 
 	"Demote Failed"
-
 	{
-
 		"es"		"Error! No hay comandante para degradar!"
+	}
 
+	"Demote First"
+	{
+		"es"		"No puedes emitir el primer voto de degrado después de la degradación"
+	}
+
+	"Silence First"
+	{
+		"es"		"No puedes emitir el primer voto de degrado cuando estás silenciado"
+	}
+
+	"Silence Command"
+	{
+		"es"		"No puedes comandar mientras estás silenciado"
+	}
+
+	"Restrictions Relaxed"
+	{
+		"es"		"Restricciones de comandante disminuidas"
+	}
+
+	"Demote Not Found"
+	{
+		"es"		"Tu voto para degradar al comandante ya está revertido o no presente."
+	}
+
+	"Demote Vote"
+	{
+		"es"		"{1} ha votado por degradar al comandante. ({2} más requeridos)"
+	}
+
+	"Skill Required"
+	{
+		"es"		"¡Se requiere una habilidad de {1} en las estadísticas del servidor para comandar!"
 	}
 
 }

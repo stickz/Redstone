@@ -1,17 +1,26 @@
-﻿"Phrases"
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:52:55 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/243
+//
+"Phrases"
 {
+
 	"Respect"
 	{
 		"es"		"Por favor sé respetuoso con los otros jugadores del servidor"
 	}
-	
+
 	"Advertise"
 	{
-		"es"		"Por favor no hagas publicidad en el servidor"	
+		"es"		"Por favor no hagas publicidad en el servidor"
 	}
-	
+
 	"Spawn Sell"
 	{
-		"es"		"Vender todos los puntos de reaparición está prohibido en el servidor"	
+		"es"		"Vender todos los puntos de reaparición está prohibido en el servidor"
 	}
+
 }

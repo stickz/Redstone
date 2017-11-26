@@ -1,0 +1,46 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:56:27 UTC
+// Language: Brazilian Portuguese (pt)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/251
+//
+"Phrases"
+{
+
+	"Cookie Team Breakdown"
+	{
+		"pt"		"Contagem de tropas"
+	}
+
+	"Combat"
+	{
+		"pt"		"Combate"
+	}
+
+	"Anti-Structure"
+	{
+		"pt"		"Anti-Estrutura"
+	}
+
+	"Sniper"
+	{
+		"pt"		"Sniper"
+	}
+
+	"Stealth"
+	{
+		"pt"		"Furtividade"
+	}
+
+	"Medic"
+	{
+		"pt"		"Médico"
+	}
+
+	"Engineer"
+	{
+		"pt"		"Engenheiro"
+	}
+
+}

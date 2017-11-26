@@ -1,0 +1,86 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:39:03 UTC
+// Language: French (fr)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/253
+//
+"Phrases"
+{
+
+	"Twelve Required"
+	{
+		"fr"		"Il doit y avoir au moins 12 joueurs pour pouvoir utiliser cette fonction"
+	}
+
+	"Ten Required"
+	{
+		"fr"		"Il doit y avoir au moins 10 joueurs pour pouvoir utiliser cette fonction"
+	}
+
+	"Four Required"
+	{
+		"fr"		"Il faut quatre joueurs dans l'équipe pour pouvoir se rendre"
+	}
+
+	"Too Soon"
+	{
+		"fr"		"Vous ne pouvez pas vous rendre si tôt dans le match"
+	}
+
+	"Team Surrendered"
+	{
+		"fr"		"Votre équipe s'est déjà rendue"
+	}
+
+	"On Team"
+	{
+		"fr"		"Vous devez être dans une équipe pour pouvoir voter la reddition"
+	}
+
+	"You Surrendered"
+	{
+		"fr"		"Vous avez déjà voté pour la reddition"
+	}
+
+	"Round Ended"
+	{
+		"fr"		"La partie est déjà terminée"
+	}
+
+	"Consort Surrendered"
+	{
+		"fr"		"Le Consortium s'est rendu"
+	}
+
+	"Empire Surrendered"
+	{
+		"fr"		"L'Empire s'est rendu"
+	}
+
+	"Typed Surrender"
+	{
+		"fr"		"{1} se sont rendus : {2} de plus requis."
+	}
+
+	"Low Bunker Health"
+	{
+		"fr"		"Vous ne pouvez pas vous rendre avec un bunker trop endommagé"
+	}
+
+	"Veto Already Used"
+	{
+		"fr"		"Vous vous êtes déjà opposé à une reddition"
+	}
+
+	"Veto Commander Only"
+	{
+		"fr"		"Le veto est réservé aux commandants !"
+	}
+
+	"Commander Used Veto"
+	{
+		"fr"		"Le commandant s'est opposé à la reddition. Une majorité est à présent nécessaire pour la déclencher"
+	}
+
+}

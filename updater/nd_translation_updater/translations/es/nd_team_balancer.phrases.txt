@@ -1,187 +1,216 @@
-﻿"Phrases"
-{	
-	"Cookie TeamBalancer Messages"	
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:42:24 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/252
+//
+"Phrases"
+{
+
+	"Cookie TeamDiff Hints"
 	{
-		"es"		"Mensajes del balanceador de equipos"	
+		"es"		"HUD de dif. de equipos"
 	}
-	
-	"Rookie Only"	
+
+	"Cookie TeamBalancer Messages"
 	{
-		"es"		"Este servidor es exclusivo para novatos"	
+		"es"		"Mensajes del balanceador de equipos"
 	}
-	
-	"Veteran Only"	
+
+	"Choice Granted"
+	{
+		"es"		"Elección de equipo autorizada debido a equipos muy balanceados"
+	}
+
+	"TP Spectator"
+	{
+		"es"		"No puedes usar esta función mientras la elección de equipo esté activa"
+	}
+
+	"Rookie Only"
+	{
+		"es"		"Este servidor es exclusivo para novatos"
+	}
+
+	"Veteran Only"
 	{
 		"es"		"Este servidor es exclusivo para veteranos"
 	}
-	
-	"Graduated"	
-	{		
-		"es"		"Felicidades soldado, te has graduado de"	
-	}
-	
-	"Submitted Placement"	
+
+	"Graduated"
 	{
-		"es"		"Solicitud para separar la colocación del comandante enviada"	
+		"es"		"Felicidades soldado, te has graduado de"
 	}
-	
-	"Revoked Placement"	
+
+	"Submitted Placement"
 	{
-		"es"		"Solicitud para separar la colocación del comandante denegada"	
+		"es"		"Solicitud para separar la colocación del comandante enviada"
 	}
-	
-	"Balancer Running"	
+
+	"Revoked Placement"
 	{
-		"es"		"No te puedes unir a un equipo mientras los equipos se están equilibrando"	
+		"es"		"Solicitud para separar la colocación del comandante denegada"
 	}
-	
-	"Resign Switch"	
+
+	"Balancer Running"
 	{
-		"es"		"Debes resignar de comandante antes de cambiar de equipo"	
+		"es"		"No te puedes unir a un equipo mientras los equipos se están equilibrando"
 	}
-	
-	"Switch Disabled"	
+
+	"Resign Switch"
 	{
-		"es"		"Cambio de equipos deshabilitado por unos minutos o hasta haya desbalance en los equipos"	
+		"es"		"Debes resignar de comandante antes de cambiar de equipo"
 	}
-	
-	"Retry Placement"	
+
+	"Switch Disabled"
+	{
+		"es"		"Cambio de equipos deshabilitado por unos minutos o hasta haya desbalance en los equipos"
+	}
+
+	"Retry Placement"
 	{
 		"es"		"En modo espectador! Por favor somete su solicitud de colocación de equipo nuevamente"
 	}
-	
-	"Level Retrieved"	
+
+	"Level Retrieved"
 	{
-		"es"		"Nivel recuperado con éxito, por favor intenta de nuevo"	
+		"es"		"Nivel recuperado con éxito, por favor intenta de nuevo"
 	}
-	
+
 	"Level Switch Wait"
 	{
 		"es"		"Por favor espera hasta que el marcador muestre nivel 2+ antes de cambiar de equipo"
 	}
-	
+
 	"Revoke Spectator"
 	{
 		"es"		"Petición de espectador debe ser declinada antes de unirte"
 	}
-	
+
 	"Spectator Avoid"
-	{	
+	{
 		"es"		"No puedes utilizar este comando para evitar el balanceador de equipos"
 	}
-	
+
 	"Spectator Unlocked"
 	{
-		"es"		"Has sido liberado del modo espectador"	
+		"es"		"Has sido liberado del modo espectador"
 	}
-	
+
 	"Spectator Joined"
 	{
-		"es"		"En modo espectador! Para salir escribe !spec."	
+		"es"		"En modo espectador! Para salir escribe !spec."
 	}
-	
+
 	"Teamdiff Round Wait"
 	{
 		"es"		"No puedes utilizar teamdiff antes que la ronda comience"
 	}
-	
+
 	"Ether Team Stack"
 	{
 		"es"		"Unirse a cualquier equipo provocara una pila. Restringido por unos minutos o hasta que cambie de estado."
 	}
-	
+
 	"Could Be Switched"
 	{
 		"es"		"Podrías ser cambiado inmediatamente tras cargar tu nivel"
 	}
-	
+
 	"Initial Team Lock"
 	{
 		"es"		"Has sido fijado en el equipo inicial, imposible cambiarte hasta que haya balance"
 	}
-	
-	"Separate Placement"	
-	{	
+
+	"Separate Placement"
+	{
 		"es"		"Colocado en el otro equipo para asegurar que ambos equipos tengan comandante"
 	}
-	
+
 	"Random Selection"
-	{	
+	{
 		"es"		"La selección de comandante es aleatoria, pero es muy probable que seas el elegido"
 	}
-	
+
 	"Balancer Not Run"
-	{	
+	{
 		"es"		"Balanceador inicial no puede ejecutarse por falta de jugadores"
 	}
-	
+
 	"Balancer Off"
 	{
 		"es"		"Balanceador de equipos actualmente apagado"
 	}
-	
+
 	"Waiting"
 	{
 		"es"		"Esperando que se conecten los jugadores"
 	}
-	
+
 	"Please Wait"
 	{
 		"es"		"Por favor espere"
 	}
-	
+
 	"Status"
 	{
 		"es"		"Estado"
 	}
-	
-	"Excellent"
-	{
-		"es"		"Excelente"		
-	}
-	
-	"Good"
-	{
-		"es"		"Bien"
-	}
-	
-	"Not Bad"
-	{
-		"es"		"Nada mal"
-	}
-	
+
 	"Switch Recommended"
 	{
 		"es"		"Cambio recomendado"
 	}
-	
+
 	"Slightly Imbalanced"
 	{
 		"es"		"Ligeramente desbalanceado"
 	}
-	
+
 	"Moderately Imbalanced"
 	{
 		"es"		"Moderadamente desbalanceado"
 	}
-	
+
 	"Heavily Imbalanced"
 	{
 		"es"		"Altamente desbalanceado"
 	}
-	
+
 	"Empire"
 	{
 		"es"		"Imperio"
 	}
-	
+
 	"Consortium"
 	{
 		"es"		"Consorcio"
 	}
-	
-	"Skill"	
+
+	"Skill"
 	{
 		"es"		"habilidad"
 	}
+
+	"Disconnected WB"
+	{
+		"es"		"{1} creó un desbalance de equipos al ser desconectado después del balanceo del calentamiento"
+	}
+
+	"Imbalanced Teams"
+	{
+		"es"		"equipos desbalanceados"
+	}
+
+	"Player Assigned"
+	{
+		"es"		"Se te asignó a {1}. ({2})"
+	}
+
+	"Skill Averages"
+	{
+		"es"		"Promedios de habilidades: Imperio: {1}, Consorcio: {2}"
+	}
+
 }

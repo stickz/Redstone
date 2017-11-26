@@ -1,0 +1,26 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:59:53 UTC
+// Language: Brazilian Portuguese (pt)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/249
+//
+"Phrases"
+{
+
+	"Cookie Solution Assist"
+	{
+		"pt"		"Assistência de solução"
+	}
+
+	"Spawn Bug"
+	{
+		"pt"		"Altere a classe e selecione outro ponto de spawn. Se necessário, pressione enter para abrir o menu spawn"
+	}
+
+	"Suicide Request"
+	{
+		"pt"		"Seu pedido de suicídio será concluído em {1} segundos."
+	}
+
+}

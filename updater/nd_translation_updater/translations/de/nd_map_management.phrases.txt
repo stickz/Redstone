@@ -1,18 +1,36 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:51:07 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/255
+//
 "Phrases"
 {
+
 	"Retrigger Map Vote"
 	{
-		//{1} = Next Map
-		"de"		"Cycling to {1} canceled by player count thresholds. Map voting will now recommence."
+		"de"		"Die Kartenwahl wird aufgrund geringer Beteiligung neugestartet."
 	}
-	
-	//{1} = Next Map, {2} = Changed map
+
 	"Not Enough Players"
 	{
-		"de"		"Not enough players for {1}! Next map changed to {2}!"
+		"de"		"Nicht genügend Spieler für die Karte {1}! Wechsle zu {2}!"
 	}
+
 	"Too Many Players"
 	{
-		"de"		"Too many players for {1}! Next map changed to {2}!"	
+		"de"		"Es gibt zu viele Spieler für die nächste Karte {1}! Wechsle zu {2}!"
 	}
+
+	"Wait Map List"
+	{
+		"de"		"In {1} Sekunden kannst du die Liste nochmal abrufen!"
+	}
+
+	"Prev Maps Listed"
+	{
+		"de"		"Die Liste der vorherigen Karten wurden erfolgreich in die Konsole geschrieben. "
+	}
+
 }

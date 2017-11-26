@@ -1,0 +1,26 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:52:55 UTC
+// Language: French (fr)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/243
+//
+"Phrases"
+{
+
+	"Respect"
+	{
+		"fr"		"Merci d'être respectueux envers les autres joueurs du serveur"
+	}
+
+	"Advertise"
+	{
+		"fr"		"Merci de ne pas publier de publicités"
+	}
+
+	"Spawn Sell"
+	{
+		"fr"		"La vente des spawns est interdite sur ce serveur"
+	}
+
+}

@@ -1,5 +1,5 @@
 // Exported from SourceMod Translator
-// Date: 2016-10-27 01:12:38 UTC
+// Date: 2017-11-26 14:41:16 UTC
 // Language: German (de)
 // 
 // To view other translations for this plugin, please visit:
@@ -11,6 +11,16 @@
 	"Demotion Reapply"
 	{
 		"de"		"Du darfst dich nicht als Kommandeur bewerben, nachdem du abwählt wurdest"
+	}
+
+	"Resignation Reapply"
+	{
+		"de"		"Eine erneute Bewerbung als Kommandeur ist erst 30 Sekunden nach einer Meuterei möglich"
+	}
+
+	"Spawn Before Apply"
+	{
+		"de"		"Du musst ins Spiel einsteigen, bevor du dich als Kommandeur bewerben kannst!"
 	}
 
 	"Bellow Ten"
@@ -28,6 +38,21 @@
 		"de"		"Du kannst nicht mehr Spieler befehlen als dein Level zulässt"
 	}
 
+	"No Commander"
+	{
+		"de"		"Ohne Kommandeur kann die Meuterei nicht gestartet werden."
+	}
+
+	"On Team"
+	{
+		"de"		"Du musst dich in einem Team befinden um den Kommandeur abzuwählen"
+	}
+
+	"Four Required"
+	{
+		"de"		"Für diese Funktion werden 4 Spieler pro Team benötigt."
+	}
+
 	"Already Voted"
 	{
 		"de"		"Du hast bereits abgestimmt den Kommandeur abzuwählen"
@@ -43,6 +68,11 @@
 		"de"		"Warte mit dem Absetzen bis die Runde gestartet hat"
 	}
 
+	"Commander Demoted"
+	{
+		"de"		"Kommandeur erfolgreich abgewählt"
+	}
+
 	"Demote Failed"
 	{
 		"de"		"Fehler! Keinen Kommandeur zum Absetzen gefunden"
@@ -51,6 +81,11 @@
 	"Demote First"
 	{
 		"de"		"Du kannst keine neue Abstimmung nach dem Absetzen starten"
+	}
+
+	"Silence First"
+	{
+		"de"		"Du kannst keine Meuterei starten, während du verstummt bist."
 	}
 
 	"Silence Command"
@@ -71,6 +106,11 @@
 	"Demote Vote"
 	{
 		"de"		"{1} will den Kommandeur absetzen - !demote. ({2} weitere Stimmen benötigt)"
+	}
+
+	"Skill Required"
+	{
+		"de"		"Um auf diesem Server kommandieren zu dürfen ist ein Skillwertung von {1} benötigt."
 	}
 
 }

@@ -1,5 +1,5 @@
 // Exported from SourceMod Translator
-// Date: 2016-10-27 01:15:26 UTC
+// Date: 2017-11-26 14:42:24 UTC
 // Language: German (de)
 // 
 // To view other translations for this plugin, please visit:
@@ -166,21 +166,6 @@
 	"Status"
 	{
 		"de"		"Status"
-	}
-
-	"Excellent"
-	{
-		"de"		"Ausgezeichnet"
-	}
-
-	"Good"
-	{
-		"de"		"Gut"
-	}
-
-	"Not Bad"
-	{
-		"de"		"Nicht schlecht"
 	}
 
 	"Switch Recommended"

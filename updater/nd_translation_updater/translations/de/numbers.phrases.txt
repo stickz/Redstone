@@ -1,51 +1,71 @@
-﻿"Phrases"
+// Exported from SourceMod Translator
+// Date: 2017-11-26 15:02:00 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/247
+//
+"Phrases"
 {
+
 	"one"
 	{
-		"de"		"one"
+		"de"		"eins"
 	}
+
 	"two"
 	{
-		"de"		"two"
+		"de"		"zwei"
 	}
+
 	"three"
 	{
-		"de"		"three"
+		"de"		"drei"
 	}
+
 	"four"
 	{
-		"de"		"four"
+		"de"		"vier"
 	}
+
 	"five"
 	{
-		"de"		"five"
+		"de"		"fünf"
 	}
+
 	"six"
 	{
-		"de"		"six"
+		"de"		"sechs"
 	}
+
 	"seven"
 	{
-		"de"		"seven"
+		"de"		"sieben"
 	}
+
 	"eight"
 	{
-		"de"		"eight"
+		"de"		"acht"
 	}
+
 	"nine"
 	{
-		"de"		"nine"
+		"de"		"neun"
 	}
+
 	"ten"
 	{
-		"de"		"ten"
+		"de"		"zehn"
 	}
+
 	"eleven"
 	{
-		"de"		"eleven"
+		"de"		"elf"
 	}
+
 	"twelve"
 	{
-		"de"		"twelve"
+		"de"		"zwölf"
 	}
+
 }

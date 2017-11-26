@@ -1,119 +1,121 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:44:07 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/238
+//
 "Phrases"
 {
+
 	"Cookie Structure Killings"
 	{
-		"de"		"Strukturzerstörungen"
+		"de"		"zerstörte Gebäude"
 	}
-	
-	//Building Names
-	"Bunker"
+
+	"Command Bunker"
 	{
-		"de"		"the Command Bunker"
+		"de"		"der Kommandobunker"
 	}
-	"MG"
+
+	"MG Turret"
 	{
-		"de"		"a Machine Gun Turret"
+		"de"		"ein MG-Geschützturm"
 	}
-	"Transport"
+
+	"Transport Gate"
 	{
-		"de"		"a Transport Gate"
+		"de"		"Ein Transporttor"
 	}
-	"Power"
+
+	"Power Station"
 	{
-		"de"		"a Power Station"
+		"de"		"ein Kraftwerk"
 	}
-	"Repeater"
+
+	"Wireless Repeater"
 	{
-		"de"		"a Wireless Repeater"
+		"de"		"ein Drahtloser Verstärker"
 	}
-	"Relay"
+
+	"Relay Tower"
 	{
-		"de"		"a Relay Tower"
+		"de"		"ein Relais"
 	}
-	"Supply"
+
+	"Supply Station"
 	{
-		"de"		"a Supply Station"
+		"de"		"eine Versorgungstation"
 	}
+
 	"Assembler"
 	{
-		"de"		"an Assembler"
+		"de"		"ein Montagewerk"
 	}
+
 	"Armory"
 	{
-		"de"		"an Armory"
+		"de"		"ein Waffenlager"
 	}
+
 	"Artillery"
 	{
-		"de"		"an Artillery"
+		"de"		"eine Artillerie"
 	}
-	"Radar"
+
+	"Radar Station"
 	{
-		"de"		"a Radar Station"
+		"de"		"eine Radarstation"
 	}
-	"Flame"
+
+	"FT Turret"
 	{
-		"de"		"a Flamethrower Turret"
+		"de"		"ein Flammenwerfer-Geschützturm"
 	}
-	"Sonic"
+
+	"Sonic Turret"
 	{
-		"de"		"a Sonic Turret"
+		"de"		"Ein Ultrasschall-Turm"
 	}
-	"Rocket"
+
+	"Rocket Turret"
 	{
-		"de"		"a Rocket Turret"
+		"de"		"ein Raketen-Geschützturm"
 	}
+
 	"Wall"
 	{
-		"de"		"a Wall"
+		"de"		"eine Wand"
 	}
+
 	"Barrier"
 	{
-		"de"		"a Barrier"
+		"de"		"eine Barriere"
 	}
-	
+
 	"Building Destoryed"
 	{
-		//{1} = team colour (always keep this first)
-		//{2} = Player's name who destoryed the structure
-		//{3} = The name of the structure destoryed (translated above)
-		"de"		"{1}{2} destroyed {3}"
+		"de"		"{1}{2} hat {3} zerstört"
 	}
-	
-	
-	//Advantage Translations
+
 	"Empire"
 	{
-		"de"		"Imperium"
+		"de"		"das Reich"
 	}
-	"Consortium"
+
+	"Consort"
 	{
-		"de"		"Konsortium"
+		"de"		"Das Konsortium"
 	}
-	
-	//This message is a complicated mess, so read carefully
+
 	"Advantage Message"
 	{
-		//{1} changes {2} to the team colour
-		//{2} = Is the player's name
-		
-		//{3} changes the 'just gave' colour to green
-		
-		//{4} changes {5} to the team colour
-		//{5} = Is etheir "Empire" or "Consort" as translated above
-		
-		//{6} changes 'the advantage' colour to green
-		
-		//Ex1. Vertex just gave Consortium the advantage! -without colours
-		//Ex2. {blue} Vertex {green} just gave {blue} Consortium {green} the advantage!
-		//If required, change the number order to suit your needs
-		
-		"de"		"{1}{2} {3}just gave {4}{5} {6}the advantage"
+		"de"		"{1}{2} {3} hat gerade den Vorteil für {4}{5} {6} geholt"
 	}
-	
-	//This message only uses the phrase "Empire" or "Consort"
+
 	"Advantage Center"
 	{
-		//{1} = Is etheir "Empire" or "Consort" as translated above
-		"de"		"Advantage - {1}"
+		"de"		"Vorteil - {1}"
 	}
+
 }

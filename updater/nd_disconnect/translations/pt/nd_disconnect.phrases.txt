@@ -1,0 +1,21 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:49:08 UTC
+// Language: Brazilian Portuguese (pt)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/244
+//
+"Phrases"
+{
+
+	"Cookie Lost Connect"
+	{
+		"pt"		"D/C Mensagem"
+	}
+
+	"Lost Connection"
+	{
+		"pt"		"{1} conexão perdida!"
+	}
+
+}

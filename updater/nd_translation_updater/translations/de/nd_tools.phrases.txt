@@ -1,19 +1,26 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:59:53 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/249
+//
 "Phrases"
 {
+
 	"Cookie Solution Assist"
 	{
-		"de"		"Solution Assist"
+		"de"		"Lösungsassistent"
 	}
-	
+
 	"Spawn Bug"
 	{
-		"de"		"Change class and select another spawn point. If required, press enter to open the spawn menu"
+		"de"		"Wechsle die Klasse und wähle einen anderen Einstiegspunkt. Öffne dafür, falls nötig, das Menü mit der \"Eingabe\"-Taste"
 	}
-	
-	//Notice: If the numbers.phrases file isn't translated, it will fill {1} with English
-	//{1} is not a number like 1,2,3 etc, (improper grammer) instead it's one,two,three etc.
+
 	"Suicide Request"
 	{
-		"de"		"Your suicide request will complete in {1} seconds."
+		"de"		"Du wirst dich in {1} Sekunden umbringen."
 	}
+
 }

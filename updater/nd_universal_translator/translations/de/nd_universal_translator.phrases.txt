@@ -1,6 +1,13 @@
-// Scroll down from incomplete phrases.
+// Exported from SourceMod Translator
+// Date: 2017-11-26 15:00:35 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/260
+//
 "Phrases"
 {
+
 	"Team Languages"
 	{
 		"de"		"Teamsprachen: {1}"
@@ -11,15 +18,30 @@
 		"de"		"Die Sprache des Kommandeurs ist {1}"
 	}
 
+	"Simple Building Request"
+	{
+		"de"		"fordert {1} an."
+	}
+
+	"Compass Building Request"
+	{
+		"de"		"fordert {1} im {2} an."
+	}
+
+	"Spot Building Request"
+	{
+		"de"		"fordert {1} bei {2} an."
+	}
+
+	"Complex Building Request"
+	{
+		"de"		"fordert das Gebäude {1} bei {2} im {3} an."
+	}
+
 	"Tert"
 	{
 		"de"		"Tertiär"
 	}
-	
-	"Terts"
-	{
-		"de"		"Tertiaries"
-	}	
 
 	"Translate Tag"
 	{
@@ -96,6 +118,21 @@
 		"de"		"Links"
 	}
 
+	"Simple Research Request"
+	{
+		"de"		"bittet, {1} zu erforschen."
+	}
+
+	"Simple Capture Request"
+	{
+		"de"		"meldet, dass die Ressource(n) bei {1} eingenommen werden müssen!"
+	}
+
+	"Extended Capture Request"
+	{
+		"de"		"{1} will {2} {3} einnehmen"
+	}
+
 	"Advanced Kits"
 	{
 		"de"		"Erweiterte Ausrüstung"
@@ -130,167 +167,160 @@
 	{
 		"de"		"Strukturelle Verstärkung"
 	}
-	
-	/* Building request messages */
-	"Building Now"
-	{
-		"de" 		"Ich baue jetzt das Gebäude."
-	}
-	
-	"Build Flanks"
-	{
-		"de"		"empfiehlt entlang leerer Wege zu bauen, wo der Gegner hinter uns schlüpfen kann."
-	}
-	
-	"Simple Building Request"
-	{
-		//{1} = Building Name from structminigame.phrases
-		"de"		"fordert ein {1} an."
-	}
-	
+
 	"Simple Compass Request"
 	{
-		//{1} = Compass Name (see bellow)
-		"de"		"empfiehlt im {1} der Karte weiter aufzubauen."
+		"de"		"empfielt, im {1} der Karte zu bauen."
 	}
-	
+
 	"Simple Location Request"
 	{
-		//{1} = Location Name (see bellow)
-		"de"		"empfiehlt Gebäude bei {1} zu bauen."
+		"de"		"empfielt bei {1} zu bauen."
 	}
-	
-	"Compass Building Request"
-	{
-		//{1} = Building Name from structminigame.phrases
-		//{2} = Compass Name (see bellow)
-		"de"		"fordert eine {1} im {2} an."
-	}
-	
-	"Spot Building Request"
-	{
-		//{1} = Building Name from structminigame.phrases
-		//{2} = Location Name (see bellow)
-		"de"		"fordert ein {1} bei {2} an."
-	}
-	
-	"Complex Building Request"
-	{
-		//{1} = Building Name from structminigame.phrases
-		//{2} = Location Name (see bellow)
-		//{3} = Compass Name (see bellow)
-		"de" 		"fordert ein {1} im {3} von {2} an."
-	}
-	
-	/* Research Messages */
-	"Simple Research Request"
-	{
-		//{1} = Research Name
-		"de"		"Is requesting {1} research."
-	}
-	
-	/* Repair Requests */	
+
 	"Building Repair Request"
 	{
-		//{1} = Building Name
-		"de"		"Is mentioning a {1} needs repaired!"
+		"de"		"meldet, dass {1} repariert werden muss!"
 	}
-	
+
 	"Build Comp Repair Request"
 	{
-		//{1} = Building Name
-		//{2} = Compass Name (see bellow)
-		"de"		"Is mentioning the {2} {1} needs repaired!"
+		"de"		"meldet, dass {1} in {2} repariert werden muss!"
 	}
-	
+
 	"Compass Repair Request"
 	{
-		//{1} = Compass Position
-		"de"		"Is mentioning buildings need repaired, on the {1} side of the map!"		
+		"de"		"meldet Gebäude auf der {1}-Seite der Karte, die repariert werden müssen!"
 	}
-	
+
 	"Comp Loc Repair Request"
 	{
-		//{1} = Compass Position
-		//{2} = Location Name
-		"de"		"Is mentioning buildings need repaired at {1} {2}!"		
+		"de"		"meldet, dass die Gebäude bei {2} im {1} repariert werden müssen."
 	}
-	
+
 	"Location Repair Request"
 	{
-		//{1} = Location Name
-		"de"		"Is mentioning buildings need repaired at {1}!"
+		"de"		"meldet Gebäude bei {1}, die repariert werden müssen!"
 	}
-	
+
 	"Build Loc Repair Request"
 	{
-		//{1} = Building Name
-		//{2} = Location Name
-		"de"		"Is mentioning the {1} at {2} needs repaired!"	
+		"de"		"meldet, dass {1} bei {2} repariert werden muss!"
 	}
-	
+
 	"Extended Repair Request"
 	{
-		//{1} = Building Name
-		//{2} = Compass Position
-		//{3} = Location Name
-		"de"		"Is mentioning the {1} at {2} {3} needs repaired!"
+		"de"		"meldet, dass {1} bei {3} im {2} repariert werden muss!"
 	}
-	
-	/* Capture Messages */
-	"Simple Capture Request"
-	{
-		//{1} = Resource Name (see bellow)
-		"de"		"Is mentioning the {1} resource point(s) need captured!"
-	}
-	
+
 	"Compass Capture Request"
 	{
-		//{1} = Resource Name (see bellow)
-		//{2} = Compass Position (see bellow)
-		"de"		"Is mentioning the {2} {1} resource point needs captured!"
+		"de"		"meldet, dass der {1}-Ressourcenpunkt im {2} eingenommen werden muss!"
 	}
-	
+
 	"Location Capture Request"
 	{
-		//{1} = Resource Name (see bellow)
-		//{2} = Location (see bellow)
-		"de"		"Is mentioning the {2} {1} resource point needs captured!"
+		"de"		"meldet, dass der Ressourcenpunkt {1} bei {2} eingenommen werden muss!"
 	}
-	
+
 	"Generic Capture Request"
 	{
-		"de"		"Is mentioning resource points need captured!"	
+		"de"		"meldet, dass Ressourcenpunkte eingenommen werden müssen!"
 	}
-	
-	/* Tango Mentions */
+
+	"Terts"
+	{
+		"de"		"Tertiäre"
+	}
+
+	"Building Now"
+	{
+		"de"		"Das Gebäude wird gerade gebaut."
+	}
+
+	"Build Flanks"
+	{
+		"de"		"empfielt, auch auf den leeren Pfaden zu bauen, wo Gegner bislang unentdeckt bleiben."
+	}
+
 	"Complex Tango Request"
 	{
-		"de"		"Is mentioning there's an enemy on the {3} {2} {1}."
+		"de"		"meldet eine Feindsichtung im {1} bei {2} im {3}."
 	}
-	
+
 	"Spot Tango Request"
 	{
-		"de"		"Is mentioning there's an enemy on the {2} {1}."
+		"de"		"meldet eine Feindsichtung bei {2} {1}"
 	}
-	
+
 	"Compass Tango Request"
 	{
-		"de"		"Is mentioning there's an enemy on the {2} {1}."
+		"de"		"meldet eine Feindsichtung bei {1} in {2}."
 	}
-	
+
 	"Tango Building"
 	{
-		"de"		"Is mentioning there's an enemy on the {1}."
+		"de"		"hat einen Feind bei {1} gesichted."
 	}
-	
+
 	"Tango Compass"
 	{
-		"de"		"Is mentioning there's an enemy on the {1} side of the map."
+		"de"		"hat einen Feind im {1} der Karte gesichted."
 	}
-	
+
 	"Tango Location"
 	{
-		"de"		"Is mentioning there's an enemy at the {1}."
+		"de"		"hat einen Feind bei {1} gesichtet."
 	}
+
+	"Bulldozer"
+	{
+		"de"		"Planierraupe"
+	}
+
+	"Courtyard"
+	{
+		"de"		"Hof"
+	}
+
+	"Forward"
+	{
+		"de"		"Außenposten"
+	}
+
+	"Garage"
+	{
+		"de"		"Garage"
+	}
+
+	"Helicopter"
+	{
+		"de"		"Hubschrauber"
+	}
+
+	"Silo"
+	{
+		"de"		"Silo"
+	}
+
+	"Stairs"
+	{
+		"de"		"Treppe"
+	}
+
+	"Statue"
+	{
+		"de"		"Statue"
+	}
+
+	"Truck"
+	{
+		"de"		"LKW"
+	}
+
+	"Tunnel"
+	{
+		"de"		"Tunneleingang"
+	}
+
 }
