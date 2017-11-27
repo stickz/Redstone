@@ -10,12 +10,12 @@
 
 	"Cookie Welcome Message"
 	{
-		"ro"		" Mesaj de primire"
+		"ro"		"Mesaj de primire"
 	}
 
 	"Welcome"
 	{
-		"ro"		"Bine ați venit"
+		"ro"		"Bine ați venit!"
 	}
 
 }

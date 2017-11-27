@@ -43,7 +43,7 @@
 		// To Do: make {2:t} for team name
 		// {1} = Player Name, {2} = Team Name
 		"#format"	"{1:s},{2:s}"
-		"en"		"{1} was auto-selected to join {2}."	
+		"en"		"{1} was auto-selected to join {2}"	
 	}
 	
 	"Choosen Join"
@@ -51,7 +51,7 @@
 		// To Do: make {2:t} for team name
 		// {1} = Player Name, {2} = Team Name
 		"#format"	"{1:s},{2:s}"
-		"en"		"{1} was choosen to join {2}."	
+		"en"		"{1} was choosen to join {2}"	
 	}
 	
 	"Got First Pick"
@@ -73,7 +73,7 @@
 	// Plugin Errors
 	"Already Running"
 	{
-		"en"		"!PlayerPicking Failure: Already running or glitched. Use !ReloadPicker if required."	
+		"en"		"!PlayerPicking Failure: Already running or glitched. Use !ReloadPicker if required"	
 	}
 	
 	"Four Players Required"

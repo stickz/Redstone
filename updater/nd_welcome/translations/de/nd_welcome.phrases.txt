@@ -7,6 +7,6 @@
 
 	"Welcome"
 	{
-		"de"			"Willkommen auf Redstone! Du kannst dein Spielerlebniss anpassen indem du !settings in den Chat eingibst."
+		"de"			"Willkommen auf Redstone! Du kannst dein Spielerlebniss anpassen indem du !settings in den Chat eingibst"
 	}
 }

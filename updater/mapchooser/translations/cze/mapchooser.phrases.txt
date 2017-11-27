@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"cze"		"Prodlouzit soucasnou mapu"
+		"cze"		"Prodlouzit soucasnou mapu."
 	}
 
 	"Dont Change"
 	{
-		"cze"		" Nemenit soucasnou mapu"
+		"cze"		"Nemenit soucasnou mapu."
 	}
 
 	"Current Map Stays"

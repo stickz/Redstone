@@ -7,6 +7,6 @@
 
 	"Welcome"
 	{
-		"cze"			"Vítej na serveru Redstone. Nastavení lze měnit příkazem !settings v chatu."
+		"cze"			"Vítej na serveru Redstone. Nastavení lze měnit příkazem !settings v chatu"
 	}
 }

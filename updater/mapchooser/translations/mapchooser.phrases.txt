@@ -29,12 +29,12 @@
 	
 	"Extend Map"
 	{
-		"en"			"Extend Current Map"
+		"en"			"Extend Current Map."
 	}
 
 	"Dont Change"
 	{
-		"en"			"Don't Change"
+		"en"			"Don't Change."
 	}
 
 	"Current Map Stays"
@@ -52,6 +52,6 @@
 	"Starting Runoff"
 	{
 		"#format"		"{1:.0f},{2:s},{3:.0f},{4:s},{5:.0f}"
-		"en"			"No map got over {1}%% votes ({2} [{3}%%] & {4} [{5}%%]), starting runoff vote"
+		"en"			"No map got over {1}%% votes ({2} [{3}%%] & {4} [{5}%%]), starting runoff vote."
 	}
 }

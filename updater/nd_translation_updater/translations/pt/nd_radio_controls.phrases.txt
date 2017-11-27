@@ -10,12 +10,12 @@
 
 	"Radio Disabled"
 	{
-		"pt"		"O menu de rádio está atualmente com problemas ou desativado."
+		"pt"		"O menu de rádio está atualmente com problemas ou desativado"
 	}
 
 	"Radio Wait"
 	{
-		"pt"		"Aguarde {1} segundo (s) antes da próxima mensagem de rádio."
+		"pt"		"Aguarde {1} segundo (s) antes da próxima mensagem de rádio"
 	}
 
 }

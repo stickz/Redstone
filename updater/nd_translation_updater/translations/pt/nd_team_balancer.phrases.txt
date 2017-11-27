@@ -85,7 +85,7 @@
 
 	"Spectator Joined"
 	{
-		"pt"		"Você está agora no modo espectador! Para sair digite !spec."
+		"pt"		"Você está agora no modo espectador! Para sair digite !spec"
 	}
 
 	"Teamdiff Round Wait"
@@ -95,7 +95,7 @@
 
 	"Ether Team Stack"
 	{
-		"pt"		"Juntar-se a um dos times irá causar desequilíbrio. Restrito por alguns minutos ou quando o estado mudar."
+		"pt"		"Juntar-se a um dos times irá causar desequilíbrio. Restrito por alguns minutos ou quando o estado mudar"
 	}
 
 	"Could Be Switched"

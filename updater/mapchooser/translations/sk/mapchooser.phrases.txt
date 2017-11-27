@@ -12,22 +12,22 @@
 
 	"Nextmap Voting Finished"
 	{
-		"sk"		"Hlasovanie o ďalšiu mapu sa skončilo. Ďalšia mapa bude {1}. (Získanych {2}%% z {3} hlasov) "
+		"sk"		"Hlasovanie o ďalšiu mapu sa skončilo. Ďalšia mapa bude {1}. (Získanych {2}%% z {3} hlasov)"
 	}
 
 	"Current Map Extended"
 	{
-		"sk"		"Aktuálna mapa bola predĺžená. (Získanych {1}%% z {2} hlasov) "
+		"sk"		"Aktuálna mapa bola predĺžená. (Získanych {1}%% z {2} hlasov)"
 	}
 
 	"Extend Map"
 	{
-		"sk"		"Predĺžiť aktuálnu mapu"
+		"sk"		"Predĺžiť aktuálnu mapu."
 	}
 
 	"Dont Change"
 	{
-		"sk"		"Nemeniť"
+		"sk"		"Nemeniť."
 	}
 
 	"Current Map Stays"

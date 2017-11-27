@@ -12,27 +12,27 @@
 
 	"Nextmap Voting Finished"
 	{
-		"tr"		"Harita oylaması sona erdi. Sıradaki harita {1} olacak. ({3} oyun %%{2}'i alındı) "
+		"tr"		"Harita oylaması sona erdi. Sıradaki harita {1} olacak. ({3} oyun %%{2}'i alındı)"
 	}
 
 	"Current Map Extended"
 	{
-		"tr"		"Geçerli harita uzatıldı. ({2} oyun %%{1}'i alındı) "
+		"tr"		"Geçerli harita uzatıldı. ({2} oyun %%{1}'i alındı)"
 	}
 
 	"Extend Map"
 	{
-		"tr"		"Geçerli Haritayı Uzat"
+		"tr"		"Geçerli Haritayı Uzat."
 	}
 
 	"Dont Change"
 	{
-		"tr"		"Değiştirme"
+		"tr"		"Değiştirme."
 	}
 
 	"Current Map Stays"
 	{
-		"tr"		"Geçerli harita devam ediyor! Oylama konuştu! ({2} oyun %%{1}'i alındı)  "
+		"tr"		"Geçerli harita devam ediyor! Oylama konuştu! ({2} oyun %%{1}'i alındı)"
 	}
 
 	"Changed Next Map"
@@ -42,7 +42,7 @@
 
 	"Starting Runoff"
 	{
-		"tr"		"Hiçbir harita %%{1} oyun üzerine çıkamadı ({2} [%%{3}] & {4} [%%{5}]), balotaj oylaması başlatılıyor"
+		"tr"		"Hiçbir harita %%{1} oyun üzerine çıkamadı ({2} [%%{3}] & {4} [%%{5}]), balotaj oylaması başlatılıyor."
 	}
 
 }

@@ -100,7 +100,7 @@
 
 	"Invalid Starting Team"
 	{
-		"de"		"!Spielerauswahlfehler: '{1}'  ist keine zugelassene Eingabe"
+		"de"		"!Spielerauswahlfehler: '{1}' ist keine zugelassene Eingabe"
 	}
 
 }
