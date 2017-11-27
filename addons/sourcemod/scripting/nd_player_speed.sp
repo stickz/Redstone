@@ -65,6 +65,8 @@ public void OnPluginStart()
 	InfantryBoostConVars[2] = CreateConVar("sm_speed_ib2_stealth", "1.04", "Sets ib2 speed of stealth class");
 	InfantryBoostConVars[3] = CreateConVar("sm_speed_ib3_stealth", "1.06", "Sets ib3 speed of stealth class");	
 	
+	AutoExecConfig(true, "nd_player_speed"); // Create configuration file for convars
+	
 	/*for (int i = 1; i < IBLEVELS; i++) {
 		InfantryBoostConVars[i].AddChangeHook(OnConvarChanged);
 	}*/
