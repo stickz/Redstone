@@ -225,7 +225,7 @@ bool PlayerIsSeige(int class, int subclass)
 void SetPlayerSeige(int client)
 {
 	ResetClass(client, MAIN_CLASS_EXO, EXO_CLASS_SEIGE_KIT, 0);
-	PrintToChat(client, "%s %t.", PREFIX, "Locked Siege");
+	PrintToChat(client, "%s %t", PREFIX, "Locked Siege");
 }
 
 void SeigeLockPlayer(int admin, int target, bool AdminUsed = true)
@@ -238,14 +238,14 @@ void SeigeLockPlayer(int admin, int target, bool AdminUsed = true)
 	
 	if (player_forced_seige[target])
 	{
-		PrintToChat(admin, "%s %t.", PREFIX, "Enabled Seige Lock");
-		PrintToChat(target, "%s %t.", PREFIX, AdminUsed ? "Admin Lock Enabled" : "Commander Lock Enabled");
+		PrintToChat(admin, "%s %t", PREFIX, "Enabled Seige Lock");
+		PrintToChat(target, "%s %t", PREFIX, AdminUsed ? "Admin Lock Enabled" : "Commander Lock Enabled");
 		pDeadWeightArray.PushString(gAuth);
 	}
 	else
 	{
-		PrintToChat(admin, "%s %t.", PREFIX, "Disabled Seige Lock");
-		PrintToChat(target, "%s %t.", PREFIX, AdminUsed ? "Admin Lock Disibled" : "Commander Lock Disbled");
+		PrintToChat(admin, "%s %t", PREFIX, "Disabled Seige Lock");
+		PrintToChat(target, "%s %t", PREFIX, AdminUsed ? "Admin Lock Disibled" : "Commander Lock Disbled");
 		
 		int ArrayIndex = pDeadWeightArray.FindString(gAuth);
 		if (ArrayIndex != -1)
