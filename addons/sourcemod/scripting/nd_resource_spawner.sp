@@ -59,16 +59,22 @@ void CheckTertiarySpawns()
 		SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
 	}
 	
-	else if (ND_CustomMapEquals(map_name, ND_MetroImp) && RED_OnTeamCount() >= 18)
+	else if (ND_CustomMapEquals(map_name, ND_MetroImp))
 	{
-		SpawnTertiaryPoint({2620.0, 529.0, 5.0});
-		SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
+		if (RED_OnTeamCount() >= 18)
+		{
+			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
+			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
+		}
 	}
 	
-	else if (ND_StockMapEquals(map_name, ND_Silo) && RED_OnTeamCount() >= 14)
+	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
-		SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
-		SpawnTertiaryPoint({-36.0, -2000.0, 5.0});	
+		if (RED_OnTeamCount() >= 14)
+		{
+			SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
+			SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
+		}
 	}
 	else
 		tertsSpawned = true;
