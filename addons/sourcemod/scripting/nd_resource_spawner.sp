@@ -26,12 +26,20 @@ public Plugin myinfo =
 int resSpawnCount = 0;
 bool tertsSpawned = false;
 
+ConVar cvarSiloTertiarySpawns;
+ConVar cvarMetroTertiarySpawns;
+
 public void OnPluginStart()
 {
 	// Fire round start event if plugin loads late
 	if (ND_RoundStarted())
 		ND_OnRoundStarted();
-
+	
+	// Create convars for resoruce spawning and generate the configuration file
+	cvarSiloTertiarySpawns = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
+	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
+	AutoExecConfig(true, "nd_res_spawner");
+	
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -61,7 +69,7 @@ void CheckTertiarySpawns()
 	
 	else if (ND_CustomMapEquals(map_name, ND_MetroImp))
 	{
-		if (RED_OnTeamCount() >= 18)
+		if (RED_OnTeamCount() >= cvarMetroTertiarySpawns.IntValue)
 		{
 			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
 			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
@@ -70,7 +78,7 @@ void CheckTertiarySpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
-		if (RED_OnTeamCount() >= 14)
+		if (RED_OnTeamCount() >= cvarSiloTertiarySpawns.IntValue)
 		{
 			SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
 			SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
