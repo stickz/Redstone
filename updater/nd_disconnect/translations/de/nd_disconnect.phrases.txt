@@ -15,12 +15,6 @@
 
 	"Lost Connection"
 	{
-		"de"		"Verbindung von {1} abgebrochen!"
-	}
-
-	"Lost Connection"
-	{
 		"de"		"Verbindung von {1} abgebrochen"
 	}
-
 }
