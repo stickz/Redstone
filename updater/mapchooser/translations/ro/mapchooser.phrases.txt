@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"ro"		"Extinde Harta Actuală"
+		"ro"		"Extinde Harta Actuală."
 	}
 
 	"Dont Change"
 	{
-		"ro"		"Nu schimba"
+		"ro"		"Nu schimba."
 	}
 
 	"Current Map Stays"
@@ -42,7 +42,7 @@
 
 	"Starting Runoff"
 	{
-		"ro"		"Nici o harta nu a obtinut peste {1}%% voturi ({2} [{3}%%] & {4} [{5}%%]), porneste a doua runda de vot"
+		"ro"		"Nici o harta nu a obtinut peste {1}%% voturi ({2} [{3}%%] & {4} [{5}%%]), porneste a doua runda de vot."
 	}
 
 }

@@ -12,22 +12,22 @@
 
 	"Nextmap Voting Finished"
 	{
-		"lv"		"Balsošana par karti ir beigusies. Nākamā karte būs {1}. (Saņēma {2}%% no {3} balsīm)  "
+		"lv"		"Balsošana par karti ir beigusies. Nākamā karte būs {1}. (Saņēma {2}%% no {3} balsīm)"
 	}
 
 	"Current Map Extended"
 	{
-		"lv"		"Patreizējās kartes laiks ir pagarināts. (Saņēma {1}%% no {2} balsīm)  "
+		"lv"		"Patreizējās kartes laiks ir pagarināts. (Saņēma {1}%% no {2} balsīm)"
 	}
 
 	"Extend Map"
 	{
-		"lv"		"Pagarināt laiku patreizējā kartē"
+		"lv"		"Pagarināt laiku patreizējā kartē."
 	}
 
 	"Dont Change"
 	{
-		"lv"		"Nemainīt"
+		"lv"		"Nemainīt."
 	}
 
 	"Current Map Stays"
@@ -42,7 +42,7 @@
 
 	"Starting Runoff"
 	{
-		"lv"		"Neviena karte nesaņēma vairāk par {1}%% balsīm ({2} [{3}%%] & {4} [{5}%%]), tiks uzsākta jauna aptauja"
+		"lv"		"Neviena karte nesaņēma vairāk par {1}%% balsīm ({2} [{3}%%] & {4} [{5}%%]), tiks uzsākta jauna aptauja."
 	}
 
 }

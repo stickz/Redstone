@@ -22,7 +22,7 @@
 	
 	"Invalid Team"
 	{
-		"es"		"Equipo  (0 = Consorte, 1 = Imperio)"
+		"es"		"Equipo (0 = Consorte, 1 = Imperio)"
 	}
 	
 	"Sniper Limit Reached"

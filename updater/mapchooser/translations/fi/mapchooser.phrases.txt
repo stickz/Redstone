@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"fi"		"Jatka tämänhetkistä karttaa"
+		"fi"		"Jatka tämänhetkistä karttaa."
 	}
 
 	"Dont Change"
 	{
-		"fi"		"Älä vaihda"
+		"fi"		"Älä vaihda."
 	}
 
 	"Current Map Stays"

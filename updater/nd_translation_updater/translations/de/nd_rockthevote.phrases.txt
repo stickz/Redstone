@@ -22,7 +22,7 @@
 	
 	"Already Passed"
 	{
-		"de"		"Map change is pending, please be patient."
+		"de"		"Map change is pending, please be patient"
 	}
 	
 	"Already RTVed"
@@ -57,6 +57,6 @@
 	{
 		//{1} = Player's Name
 		//{2} = Translated numbers from number.phrases		
-		"de"		"{1} typed change map: {2} more required."
+		"de"		"{1} typed change map: {2} more required"
 	}
 }

@@ -14,6 +14,6 @@
 	}
 	"Killed"
 	{
-		"nl"			"De nummers {1}{2}en{3} zijn de spelersnamen, {4} het wapen en {5}  hoeveel leven er over is van de tegenstander"
+		"nl"			"De nummers {1}{2}en{3} zijn de spelersnamen, {4} het wapen en {5} hoeveel leven er over is van de tegenstander"
 	}
 }

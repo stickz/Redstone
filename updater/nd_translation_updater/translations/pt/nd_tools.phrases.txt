@@ -20,7 +20,7 @@
 
 	"Suicide Request"
 	{
-		"pt"		"Seu pedido de suicídio será concluído em {1} segundos."
+		"pt"		"Seu pedido de suicídio será concluído em {1} segundos"
 	}
 
 }
