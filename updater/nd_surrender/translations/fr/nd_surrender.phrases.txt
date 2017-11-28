@@ -60,7 +60,7 @@
 
 	"Typed Surrender"
 	{
-		"fr"		"{1} se sont rendus : {2} de plus requis."
+		"fr"		"{1} se sont rendus : {2} de plus requis"
 	}
 
 	"Low Bunker Health"

@@ -100,7 +100,7 @@
 
 	"Spectator Joined"
 	{
-		"es"		"En modo espectador! Para salir escribe !spec."
+		"es"		"En modo espectador! Para salir escribe !spec"
 	}
 
 	"Teamdiff Round Wait"
@@ -110,7 +110,7 @@
 
 	"Ether Team Stack"
 	{
-		"es"		"Unirse a cualquier equipo provocara una pila. Restringido por unos minutos o hasta que cambie de estado."
+		"es"		"Unirse a cualquier equipo provocara una pila. Restringido por unos minutos o hasta que cambie de estado"
 	}
 
 	"Could Be Switched"

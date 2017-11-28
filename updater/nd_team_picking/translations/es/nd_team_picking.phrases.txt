@@ -45,12 +45,12 @@
 
 	"Auto Selected Join"
 	{
-		"es"		"{1} ha sido seleccionado automáticamente para unirse al {2}."
+		"es"		"{1} ha sido seleccionado automáticamente para unirse al {2}"
 	}
 
 	"Choosen Join"
 	{
-		"es"		"{1} ha sido elegido para unirse al {2}."
+		"es"		"{1} ha sido elegido para unirse al {2}"
 	}
 
 	"Got First Pick"
@@ -65,7 +65,7 @@
 
 	"Already Running"
 	{
-		"es"		"!PlayerPicking fallido: Ya activo o con errores. Usa !ReloadPicker si se requiere."
+		"es"		"!PlayerPicking fallido: Ya activo o con errores. Usa !ReloadPicker si se requiere"
 	}
 
 	"Four Players Required"

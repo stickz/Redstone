@@ -80,7 +80,7 @@
 
 	"Level Switch Wait"
 	{
-		"de"		"Bitte warte mit dem Teamwechsel, bis Level 2+ in den Ergebnissen angezeigt wird "
+		"de"		"Bitte warte mit dem Teamwechsel, bis Level 2+ in den Ergebnissen angezeigt wird"
 	}
 
 	"Revoke Spectator"

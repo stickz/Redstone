@@ -100,7 +100,7 @@
 
 	"Demote Not Found"
 	{
-		"es"		"Tu voto para degradar al comandante ya está revertido o no presente."
+		"es"		"Tu voto para degradar al comandante ya está revertido o no presente"
 	}
 
 	"Demote Vote"

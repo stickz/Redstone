@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"sv"		"Förläng nuvarande karta"
+		"sv"		"Förläng nuvarande karta."
 	}
 
 	"Dont Change"
 	{
-		"sv"		"Byt inte"
+		"sv"		"Byt inte."
 	}
 
 	"Current Map Stays"
@@ -42,7 +42,7 @@
 
 	"Starting Runoff"
 	{
-		"sv"		"Ingen karta fick fler än {1}%% röster ({2} [{3}%%] & {4} [{5}%%]), startar alternativomröstning"
+		"sv"		"Ingen karta fick fler än {1}%% röster ({2} [{3}%%] & {4} [{5}%%]), startar alternativomröstning."
 	}
 
 }

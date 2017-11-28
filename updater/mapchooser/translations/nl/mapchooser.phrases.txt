@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"nl"		"Verleng huidige map"
+		"nl"		"Verleng huidige map."
 	}
 
 	"Dont Change"
 	{
-		"nl"		"Niet veranderen"
+		"nl"		"Niet veranderen."
 	}
 
 	"Current Map Stays"
@@ -42,7 +42,7 @@
 
 	"Starting Runoff"
 	{
-		"nl"		"Geen map kreeg meer dan {1}%% stemmen ({2} [{3}%%] & {4} [{5}%%]), alternatieve stemming wordt gestart"
+		"nl"		"Geen map kreeg meer dan {1}%% stemmen ({2} [{3}%%] & {4} [{5}%%]), alternatieve stemming wordt gestart."
 	}
 
 }

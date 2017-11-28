@@ -7,7 +7,7 @@
 
 	"Extend Map"
 	{
-		"l0l"		"3x73nd curr3n7 m4p"
+		"l0l"		"3x73nd curr3n7 m4p."
 	}
 
 	"Nextmap Voting Finished"
@@ -37,7 +37,7 @@
 
 	"Dont Change"
 	{
-		"l0l"		"D0n'7 ch4n63"
+		"l0l"		"D0n'7 ch4n63."
 	}
 
 }

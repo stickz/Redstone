@@ -12,7 +12,7 @@
 
 	"Nextmap Voting Finished"
 	{
-		"hu"		"A szavazás lezárult. A következő pálya a {1} lesz"
+		"hu"		"A szavazás lezárult. A következő pálya a {1} lesz."
 	}
 
 	"Current Map Extended"
@@ -22,7 +22,7 @@
 
 	"Extend Map"
 	{
-		"hu"		"Palya meghosszabitasa"
+		"hu"		"Palya meghosszabitasa."
 	}
 
 	"Dont Change"
@@ -37,12 +37,12 @@
 
 	"Changed Next Map"
 	{
-		"hu"		"\"{1}\" lesz a kovetkezo palya"
+		"hu"		"\"{1}\" lesz a kovetkezo palya."
 	}
 
 	"Starting Runoff"
 	{
-		"hu"		"Egy pálya se kapot legalább {1}%%t  ({2} [{3}%%] & {4} [{5}%%]), végső szavazás indítása."
+		"hu"		"Egy pálya se kapot legalább {1}%%t ({2} [{3}%%] & {4} [{5}%%]), végső szavazás indítása."
 	}
 
 }

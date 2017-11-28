@@ -10,7 +10,7 @@
 
 	"Retrigger Map Vote"
 	{
-		"pt"		"Ciclo até {1} cancelado pelos limiares de contagem de jogadores. A votação do mapa agora irá recomeçar."
+		"pt"		"Ciclo até {1} cancelado pelos limiares de contagem de jogadores. A votação do mapa agora irá recomeçar"
 	}
 
 	"Not Enough Players"
@@ -30,7 +30,7 @@
 
 	"Prev Maps Listed"
 	{
-		"pt"		"Mapas anteriores listados com êxito. Consulte o console para mais informações."
+		"pt"		"Mapas anteriores listados com êxito. Consulte o console para mais informações"
 	}
 
 }

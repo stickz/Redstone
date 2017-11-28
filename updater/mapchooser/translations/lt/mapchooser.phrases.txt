@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"lt"		"Pratesti dabartinį žemėlapį"
+		"lt"		"Pratesti dabartinį žemėlapį."
 	}
 
 	"Dont Change"
 	{
-		"lt"		"Nekeisti"
+		"lt"		"Nekeisti."
 	}
 
 	"Current Map Stays"
@@ -42,7 +42,7 @@
 
 	"Starting Runoff"
 	{
-		"lt"		"Nei vienas žemėlapis negavo virš {1}%% balsų ({2} [{3}%%] & {4} [{5}%%]), pradedamas papildomas balsavimas"
+		"lt"		"Nei vienas žemėlapis negavo virš {1}%% balsų ({2} [{3}%%] & {4} [{5}%%]), pradedamas papildomas balsavimas."
 	}
 
 }

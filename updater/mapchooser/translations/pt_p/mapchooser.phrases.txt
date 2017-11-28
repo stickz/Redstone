@@ -17,17 +17,17 @@
 
 	"Current Map Extended"
 	{
-		"pt_p"		"O mapa atual foi estendido. ({1}%% de {2} voto(s)) "
+		"pt_p"		"O mapa atual foi estendido. ({1}%% de {2} voto(s))"
 	}
 
 	"Extend Map"
 	{
-		"pt_p"		"Prolongar o mapa atual"
+		"pt_p"		"Prolongar o mapa atual."
 	}
 
 	"Dont Change"
 	{
-		"pt_p"		"Não mudar"
+		"pt_p"		"Não mudar."
 	}
 
 	"Current Map Stays"
@@ -42,7 +42,7 @@
 
 	"Starting Runoff"
 	{
-		"pt_p"		"Nenhum mapa recebeu mais de {1}%% votos ({2} [{3}%%] & {4} [{5}%%]), a iniciar segundo turno"
+		"pt_p"		"Nenhum mapa recebeu mais de {1}%% votos ({2} [{3}%%] & {4} [{5}%%]), a iniciar segundo turno."
 	}
 
 }

@@ -25,7 +25,7 @@
     // Checklist tier 2
     "BUILD_POWER"
     {
-        "en"        "Power Plant"    
+        "en"        "Power Plant" 
     }
     "BUILD_SUPPLY"
     {
@@ -34,7 +34,7 @@
     "BUILD_TWO_SPAWN"
     {
         "en"        "Build two more Spawns"
-    }    
+    } 
     "RESEARCH_ADV_MAN"
     {
         "en"        "Advanced Manufacturing"
@@ -47,7 +47,7 @@
     // Checklist tier 3
     "RESEARCH_MOD"
     {
-        "en"        "Power Modulation"    
+        "en"        "Power Modulation" 
     }
     "BUILD_RADAR"
     {
@@ -82,5 +82,5 @@
     "COMM_SUPPORTTROOPS"
     {
         "en"        "Remember: support your troops!"
-    }    
+    } 
 }

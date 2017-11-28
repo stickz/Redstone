@@ -101,7 +101,7 @@
 		//{3} changes the 'just gave' colour to green
 		
 		//{4} changes {5} to the team colour
-		//{5} = Is etheir "Empire" or "Consort" as translated above
+		//{5} = Is either "Empire" or "Consort" as translated above
 		
 		//{6} changes 'the advantage' colour to green
 		
@@ -116,7 +116,7 @@
 	//This message only uses the phrase "Empire" or "Consort"
 	"Advantage Center"
 	{
-		//{1} = Is etheir "Empire" or "Consort" as translated above
+		//{1} = Is either "Empire" or "Consort" as translated above
 		"#format"	"{1:s}"
 		"en"		"Advantage - {1}"
 	}

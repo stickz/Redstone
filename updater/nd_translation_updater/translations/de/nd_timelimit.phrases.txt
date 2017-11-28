@@ -75,17 +75,17 @@
 
 	"Extend Both"
 	{
-		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer vom Konsortium & {3} Unterstützer aus dem Imperium benötigt."
+		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer vom Konsortium & {3} Unterstützer aus dem Imperium benötigt"
 	}
 
 	"Extend Empire"
 	{
-		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer aus dem Imperium benötigt."
+		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer aus dem Imperium benötigt"
 	}
 
 	"Extend Consort"
 	{
-		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer aus dem Konsortium benötigt."
+		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer aus dem Konsortium benötigt"
 	}
 
 }

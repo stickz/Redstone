@@ -20,7 +20,7 @@
 
 	"Suicide Request"
 	{
-		"de"		"Du wirst dich in {1} Sekunden umbringen."
+		"de"		"Du wirst dich in {1} Sekunden umbringen"
 	}
 
 }
