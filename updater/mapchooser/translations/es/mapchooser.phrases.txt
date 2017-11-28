@@ -2,12 +2,12 @@
 {
 	"Vote Nextmap"
 	{
-		"es"		"Vota por el siguiente mapa!"
+		"es"		"Vota por el siguiente mapa"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"es"		"La votación para el siguiente mapa ha comenzado."
+		"es"		"La votación para el siguiente mapa ha comenzado"
 	}
 
 	"Nextmap Voting Finished"
@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"es"		"Extender el Mapa Actual."
+		"es"		"Extender el Mapa Actual"
 	}
 
 	"Dont Change"
 	{
-		"es"		"No cambiar."
+		"es"		"No cambiar"
 	}
 
 	"Current Map Stays"
@@ -37,12 +37,12 @@
 
 	"Changed Next Map"
 	{
-		"es"		"Siguiente mapa cambiado a \"{1}\"."
+		"es"		"Siguiente mapa cambiado a \"{1}\""
 	}
 
 	"Starting Runoff"
 	{
-		"es"		"No hay ningún mapa que superase el {1}%% de los votos ({2} [{3}%%] & {4} [{5}%%]), comenzando segunda votación."
+		"es"		"No hay ningún mapa que superase el {1}%% de los votos ({2} [{3}%%] & {4} [{5}%%]), comenzando segunda votación"
 	}
 
 }
