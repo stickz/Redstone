@@ -2,12 +2,12 @@
 {
 	"Vote Nextmap"
 	{
-		"de"		"Stimme für die nächste Karte!"
+		"de"		"Stimme für die nächste Karte"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"de"		"Abstimmung für die nächste Karte wurde gestartet."
+		"de"		"Abstimmung für die nächste Karte wurde gestartet"
 	}
 
 	"Nextmap Voting Finished"
@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"de"		"Verlängere aktuelle Karte."
+		"de"		"Verlängere aktuelle Karte"
 	}
 
 	"Dont Change"
 	{
-		"de"		"Nicht wechseln."
+		"de"		"Nicht wechseln"
 	}
 
 	"Current Map Stays"
@@ -37,7 +37,7 @@
 
 	"Changed Next Map"
 	{
-		"de"		"Nächste Karte wurde auf \"{1}\" geändert."
+		"de"		"Nächste Karte wurde auf \"{1}\" geändert"
 	}
 
 	"Starting Runoff"
