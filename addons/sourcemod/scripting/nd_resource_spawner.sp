@@ -88,7 +88,7 @@ void CheckTertiarySpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
-		SpawnTertiaryPoint({6190, 350, 115});
+		//SpawnTertiaryPoint({6190, 350, 115});
 		
 		if (RED_OnTeamCount() >= cvarSiloTertiarySpawns.IntValue)
 		{
@@ -97,7 +97,7 @@ void CheckTertiarySpawns()
 			tertsSpawned = true;
 		}
 	}
-	else if (ND_StockMapEquals(map_name, ND_Gate))
+	/*else if (ND_StockMapEquals(map_name, ND_Gate))
 	{
 		if (RED_OnTeamCount() >= cvarGateTertiarySpawns.IntValue)
 		{
@@ -105,7 +105,7 @@ void CheckTertiarySpawns()
 			SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
 			tertsSpawned = true;
 		}
-	}
+	}*/
 	
 	else
 		tertsSpawned = true;
@@ -122,8 +122,8 @@ void RemoveTertiarySpawns()
 		RemoveTertiaryPoint("tertiary04", "tertiary_area04");
 	}
 	
-	else if (ND_StockMapEquals(map_name, ND_Silo))
-		RemoveTertiaryPoint("tertiary_ct", "tertiary_ct_area");
+	//else if (ND_StockMapEquals(map_name, ND_Silo))
+	//	RemoveTertiaryPoint("tertiary_ct", "tertiary_ct_area");
 }
 
 public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
