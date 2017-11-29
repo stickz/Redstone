@@ -73,6 +73,7 @@ void CheckTertiarySpawns()
 		SpawnTertiaryPoint({-1000.0, -3820.0, -186.0});
 		SpawnTertiaryPoint({1350.0, -2153.0, 54.0});
 		SpawnTertiaryPoint({1001.0, 1523.0, -112.0});
+		tertsSpawned = true;
 	}
 	
 	else if (ND_CustomMapEquals(map_name, ND_MetroImp))
@@ -81,15 +82,19 @@ void CheckTertiarySpawns()
 		{
 			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
 			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
+			tertsSpawned = true;
 		}
 	}
 	
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
+		SpawnTertiaryPoint({6347, 332, 40});
+		
 		if (RED_OnTeamCount() >= cvarSiloTertiarySpawns.IntValue)
 		{
 			SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
 			SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
+			tertsSpawned = true;
 		}
 	}
 	else if (ND_StockMapEquals(map_name, ND_Gate))
@@ -98,6 +103,7 @@ void CheckTertiarySpawns()
 		{
 			SpawnTertiaryPoint({-3392.0, -2384.0, 0.0});
 			SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
+			tertsSpawned = true;
 		}
 	}
 	
@@ -115,6 +121,9 @@ void RemoveTertiarySpawns()
 		RemoveTertiaryPoint("tertiary01", "tertiary_area01");
 		RemoveTertiaryPoint("tertiary04", "tertiary_area04");
 	}
+	
+	else if (ND_StockMapEquals(map_name, ND_Silo))
+		RemoveTertiaryPoint("tertiary_ct", "tertiary_ct_area");
 }
 
 public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
@@ -123,7 +132,6 @@ public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
 	int trigger = CreateEntityByName("nd_trigger_resource_point");
        
 	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin);
-	tertsSpawned = true;
 }
 
 public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin)
