@@ -2,12 +2,12 @@
 {
 	"Vote Nextmap"
 	{
-		"lv"		"Balso par nākamo karti!"
+		"lv"		"Balso par nākamo karti"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"lv"		"Balsošana par nākamo karti ir sākusies."
+		"lv"		"Balsošana par nākamo karti ir sākusies"
 	}
 
 	"Nextmap Voting Finished"
@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"lv"		"Pagarināt laiku patreizējā kartē."
+		"lv"		"Pagarināt laiku patreizējā kartē"
 	}
 
 	"Dont Change"
 	{
-		"lv"		"Nemainīt."
+		"lv"		"Nemainīt"
 	}
 
 	"Current Map Stays"
@@ -37,12 +37,12 @@
 
 	"Changed Next Map"
 	{
-		"lv"		"Nomainīja nākamo karti uz \"{1}\"."
+		"lv"		"Nomainīja nākamo karti uz \"{1}\""
 	}
 
 	"Starting Runoff"
 	{
-		"lv"		"Neviena karte nesaņēma vairāk par {1}%% balsīm ({2} [{3}%%] & {4} [{5}%%]), tiks uzsākta jauna aptauja."
+		"lv"		"Neviena karte nesaņēma vairāk par {1}%% balsīm ({2} [{3}%%] & {4} [{5}%%]), tiks uzsākta jauna aptauja"
 	}
 
 }
