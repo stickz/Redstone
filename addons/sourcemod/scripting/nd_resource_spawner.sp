@@ -88,7 +88,7 @@ void CheckTertiarySpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
-		SpawnTertiaryPoint({6150, 1300, 55});
+		SpawnTertiaryPoint({6190, 350, 115});
 		
 		if (RED_OnTeamCount() >= cvarSiloTertiarySpawns.IntValue)
 		{
