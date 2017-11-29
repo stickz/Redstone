@@ -2,61 +2,61 @@
 {
 	"Disabled Feature"
 	{
-		"en"		"This feature is currently disabled."
+		"en"		"This feature is currently disabled"
 	}
 	
 	"Proper Usage"
 	{
-		"en"		"Usage: !LockSeige <player>."
+		"en"		"Usage: !LockSeige <player>"
 	}
 	
 	"Only Commanders"
 	{
-		"en"		"This feature is only available for commanders."
+		"en"		"This feature is only available for commanders"
 	}
 	
 	"Cannot Find Player"
 	{
-		"en"		"Cannot find specified player. Make sure to use a unique name segement."
+		"en"		"Cannot find specified player. Make sure to use a unique name segement"
 	}
 	
 	"Cannot Lock"
 	{
-		"en"		"This player currently cannot be locked siege."	
+		"en"		"This player currently cannot be locked siege"	
 	}
 	
 	"Enabled Seige Lock"
 	{
-		"en"		"Player succesfully locked into exo siege kit."		
+		"en"		"Player succesfully locked into exo siege kit"		
 	}
 	
 	"Disabled Seige Lock"
 	{
-		"en"		"Player exo siege kit lock succesfully removed."		
+		"en"		"Player exo siege kit lock succesfully removed"		
 	}
 	
 	"Admin Lock Enabled"
 	{
-		"en"		"An admin locked you into exo siege kit due to lack of team contribution."	
+		"en"		"An admin locked you into exo siege kit due to lack of team contribution"	
 	}
 	
 	"Commander Lock Enabled"
 	{
-		"en"		"The commander locked you into exo siege kit due to a lack of meaningful team contribution.
+		"en"		"The commander locked you into exo siege kit due to a lack of meaningful team contribution"
 	}
 	
 	"Admin Lock Disbled"
 	{
-		"en"		"An admin disabled your exo siege kit lock."	
+		"en"		"An admin disabled your exo siege kit lock"	
 	}
 	
 	"Commander Lock Disbled"
 	{
-		"en"		"The commander disabled your exo siege kit lock."	
+		"en"		"The commander disabled your exo siege kit lock"	
 	}
 	
 	"Locked Siege"
 	{
-		"en"		"You're locked into siege and cannot change class."	
+		"en"		"You're locked into siege and cannot change class"	
 	}
 }
