@@ -2,12 +2,12 @@
 {
 	"Vote Nextmap"
 	{
-		"no"		"Stem for den neste banen!"
+		"no"		"Stem for den neste banen"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"no"		"Avstemning for den neste banen har startet."
+		"no"		"Avstemning for den neste banen har startet"
 	}
 
 	"Nextmap Voting Finished"
@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"no"		"Forleng gjeldende bane."
+		"no"		"Forleng gjeldende bane"
 	}
 
 	"Dont Change"
 	{
-		"no"		"Ikke bytt!"
+		"no"		"Ikke bytt"
 	}
 
 	"Current Map Stays"
@@ -37,12 +37,12 @@
 
 	"Changed Next Map"
 	{
-		"no"		"Byttet neste bane til \"{1}\"."
+		"no"		"Byttet neste bane til \"{1}\""
 	}
 
 	"Starting Runoff"
 	{
-		"no"		"Ingen baner fikk over {1}%% stemmer ({2} [{3}%%] & {4} [{5}%%]), starter om avstemmningen."
+		"no"		"Ingen baner fikk over {1}%% stemmer ({2} [{3}%%] & {4} [{5}%%]), starter om avstemmningen"
 	}
 
 }
