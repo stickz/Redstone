@@ -2,12 +2,12 @@
 {
 	"Vote Nextmap"
 	{
-		"zho"		"為下一幅地票投票吧！"
+		"zho"		"為下一幅地票投票吧"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"zho"		"下一幅圖的投票已開始."
+		"zho"		"下一幅圖的投票已開始"
 	}
 
 	"Nextmap Voting Finished"
@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"zho"		"地圖延時."
+		"zho"		"地圖延時"
 	}
 
 	"Dont Change"
 	{
-		"zho"		"不改變."
+		"zho"		"不改變"
 	}
 
 	"Current Map Stays"
@@ -37,12 +37,12 @@
 
 	"Changed Next Map"
 	{
-		"zho"		"將下幅地圖改為 \"{1}\"."
+		"zho"		"將下幅地圖改為 \"{1}\""
 	}
 
 	"Starting Runoff"
 	{
-		"zho"		"沒有圖得到超過 {1}%% 票 ({2} [{3}%%] & {4} [{5}%%]), 開始決選."
+		"zho"		"沒有圖得到超過 {1}%% 票 ({2} [{3}%%] & {4} [{5}%%]), 開始決選"
 	}
 
 }
