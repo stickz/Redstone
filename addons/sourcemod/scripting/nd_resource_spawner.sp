@@ -28,6 +28,7 @@ bool tertsSpawned = false;
 
 ConVar cvarSiloTertiarySpawns;
 ConVar cvarMetroTertiarySpawns;
+ConVar cvarGateTertiarySpawns;
 
 public void OnPluginStart()
 {
@@ -38,6 +39,8 @@ public void OnPluginStart()
 	// Create convars for resoruce spawning and generate the configuration file
 	cvarSiloTertiarySpawns = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
 	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
+	cvarGateTertiarySpawns = CreateConVar("sm_tertiary_gate", "22", "Sets number of players to spawn extra tertaries on gate.");
+	
 	AutoExecConfig(true, "nd_res_spawner");
 	
 	AddUpdaterLibrary(); //auto-updater
@@ -52,6 +55,7 @@ public void ND_OnRoundStarted()
 {
 	resSpawnCount = 0;
 	tertsSpawned = false;
+	RemoveTertiarySpawns();
 	CheckTertiarySpawns();
 }
 
@@ -88,8 +92,29 @@ void CheckTertiarySpawns()
 			SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
 		}
 	}
+	else if (ND_StockMapEquals(map_name, ND_Gate))
+	{
+		if (RED_OnTeamCount() >= cvarGateTertiarySpawns.IntValue)
+		{
+			SpawnTertiaryPoint({-3392.0, -2384.0, 0.0});
+			SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
+		}
+	}
+	
 	else
 		tertsSpawned = true;
+}
+
+void RemoveTertiarySpawns()
+{
+	char map_name[64];   
+	GetCurrentMap(map_name, sizeof(map_name));
+	
+	if (ND_StockMapEquals(map_name, ND_Gate))
+	{
+		RemoveTertiaryPoint("tertiary01", "tertiary_area01");
+		RemoveTertiaryPoint("tertiary04", "tertiary_area04");
+	}
 }
 
 public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
@@ -138,4 +163,28 @@ public void SpawnResourcePoint( const char[] type, const char[] model, int rt, i
 	SetEntPropVector(trigger, Prop_Send, "m_vecMaxs", max_bounds);
 	
 	resSpawnCount++;
+}
+
+public void RemoveTertiaryPoint(const char[] rtName, const char[] trigName)
+{
+	int entity = LookupEntity("nd_info_tertiary_resource_point", rtName, -1);	
+	if (entity > -1) AcceptEntityInput(entity, "Kill");	
+	
+	entity = LookupEntity("nd_trigger_resource_point", trigName, -1);
+	if (entity > -1) AcceptEntityInput(entity, "Kill");
+}
+
+//Recursivly lookup entities by classname until we find the matching name
+public int LookupEntity(const char[] classname, const char[] lookup_name, int start_point)
+{
+	int entity = FindEntityByClassname(start_point, classname);
+	
+	if (entity > -1)
+	{
+		char entity_name[32];
+		GetEntPropString(entity, Prop_Data, "m_iName", entity_name, sizeof(entity_name));
+		return StrEqual(entity_name, lookup_name) ? entity : LookupEntity(classname, lookup_name, entity);
+	}
+	
+	return -1;
 }
