@@ -35,7 +35,7 @@
 
 	"First Pick Time"
 	{
-		"de"		"Für die erste Auswahl hast du {1} Sekunden Zeit."
+		"de"		"Für die erste Auswahl hast du {1} Sekunden Zeit"
 	}
 
 	"Auto Select"
@@ -45,12 +45,12 @@
 
 	"Auto Selected Join"
 	{
-		"de"		"{1} wurde automatisch {2} zugewiesen."
+		"de"		"{1} wurde automatisch {2} zugewiesen"
 	}
 
 	"Choosen Join"
 	{
-		"de"		"{1} wurde zu {2} gewählt."
+		"de"		"{1} wurde zu {2} gewählt"
 	}
 
 	"Got First Pick"
@@ -65,12 +65,12 @@
 
 	"Already Running"
 	{
-		"de"		"!Spielerauswahlfehler: Spielerauswahl läuft bereits oder ist fehlgeschlagen. Wenn nötig: \"!ReloadPicker\" ausführen."
+		"de"		"!Spielerauswahlfehler: Spielerauswahl läuft bereits oder ist fehlgeschlagen. Wenn nötig: \"!ReloadPicker\" ausführen"
 	}
 
 	"Four Players Required"
 	{
-		"de"		"!Spielerauswahlfehler: Mindestens 4 Spieler werden für diese Funktion benötigt."
+		"de"		"!Spielerauswahlfehler: Mindestens 4 Spieler werden für diese Funktion benötigt"
 	}
 
 	"Correct Usage"
@@ -100,7 +100,7 @@
 
 	"Invalid Starting Team"
 	{
-		"de"		"!Spielerauswahlfehler: '{1}'  ist keine zugelassene Eingabe."
+		"de"		"!Spielerauswahlfehler: '{1}' ist keine zugelassene Eingabe"
 	}
 
 }

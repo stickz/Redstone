@@ -7,17 +7,17 @@
 
 	"Nextmap Voting Started"
 	{
-		"no"		"Avstemning for den neste banen har startet. "
+		"no"		"Avstemning for den neste banen har startet"
 	}
 
 	"Nextmap Voting Finished"
 	{
-		"no"		"Baneavstemningen er avsluttet. Den neste banen vil være {1}. (Mottok {2}%% av {3} stemmer). "
+		"no"		"Baneavstemningen er avsluttet. Den neste banen vil være {1}. (Mottok {2}%% av {3} stemmer)"
 	}
 
 	"Current Map Extended"
 	{
-		"no"		"Gjeldende bane videreføres! (Mottok {1}%% av {2} stemmer)."
+		"no"		"Gjeldende bane videreføres! (Mottok {1}%% av {2} stemmer)"
 	}
 
 	"Extend Map"
@@ -27,22 +27,22 @@
 
 	"Dont Change"
 	{
-		"no"		"Ikke bytt!"
+		"no"		"Ikke bytt"
 	}
 
 	"Current Map Stays"
 	{
-		"no"		"Gjeldende bane videreføres! Avstemningen har talt! (Mottok {1}%% av {2} stemmer). "
+		"no"		"Gjeldende bane videreføres! Avstemningen har talt! (Mottok {1}%% av {2} stemmer)"
 	}
 
 	"Changed Next Map"
 	{
-		"no"		"Byttet neste bane til \"{1}\"."
+		"no"		"Byttet neste bane til \"{1}\""
 	}
 
 	"Starting Runoff"
 	{
-		"no"		"Ingen baner fikk over {1}%%  stemmer  ({2} [{3}%%] & {4} [{5}%%]), starter om avstemmningen"
+		"no"		"Ingen baner fikk over {1}%% stemmer ({2} [{3}%%] & {4} [{5}%%]), starter om avstemmningen"
 	}
 
 }

@@ -60,7 +60,7 @@
 
 	"Typed Surrender"
 	{
-		"de"		"{1} will kapitulieren : {2} weitere Stimmen benötigt."
+		"de"		"{1} will kapitulieren : {2} weitere Stimmen benötigt"
 	}
 
 	"Low Bunker Health"
@@ -70,7 +70,7 @@
 
 	"Veto Already Used"
 	{
-		"de"		"Das Veto wurde bereits verbraucht."
+		"de"		"Das Veto wurde bereits verbraucht"
 	}
 
 	"Veto Commander Only"
@@ -80,7 +80,7 @@
 
 	"Commander Used Veto"
 	{
-		"de"		"Der Kommandant hat die schnelle Kapitulation verhindert. Die Kapitulation muss jetzt mehrheitlich beschlossen werden."
+		"de"		"Der Kommandant hat die schnelle Kapitulation verhindert. Die Kapitulation muss jetzt mehrheitlich beschlossen werden"
 	}
 
 }

@@ -248,7 +248,7 @@ public Handler_VoteFinishedGeneric(Menu menu,
 	RED_LOOP_CLIENTS(client)
 	{
 		if (option_mapvote_mesg[client])
-			PrintToChat(client, "[SM] %t", "Nextmap Voting Finished", displayName, PassPercent, num_votes);
+			PrintToChat(client, "[SM] %t.", "Nextmap Voting Finished", displayName, PassPercent, num_votes);
 	}
 	
 	LogAction(-1, -1, "Voting for next map has finished. Nextmap: %s.", map);
@@ -294,7 +294,7 @@ public Handler_MapVoteFinished(Menu menu,
 			RED_LOOP_CLIENTS(client)
 			{
 				if (option_mapvote_mesg[client])
-					PrintToChat(client, "[SM] %t", "Starting Runoff", 
+					PrintToChat(client, "[SM] %t.", "Starting Runoff", 
 						runOffPercent, info1, map1percent, info2, map2percent);						
 			}	
 			

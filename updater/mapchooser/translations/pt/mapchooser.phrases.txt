@@ -2,22 +2,22 @@
 {
 	"Vote Nextmap"
 	{
-		"pt"		"Vote para escolher o próximo mapa!"
+		"pt"		"Vote para escolher o próximo mapa"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"pt"		"A votação para o próximo mapa foi iniciada."
+		"pt"		"A votação para o próximo mapa foi iniciada"
 	}
 
 	"Nextmap Voting Finished"
 	{
-		"pt"		"A votação está concluída. O próximo mapa será {1}.  ({2}%% de {3} voto(s))"
+		"pt"		"A votação está concluída. O próximo mapa será {1}. ({2}%% de {3} voto(s))"
 	}
 
 	"Current Map Extended"
 	{
-		"pt"		"O mapa atual foi estendido. ({1}%% de {2} voto(s)) "
+		"pt"		"O mapa atual foi estendido. ({1}%% de {2} voto(s))"
 	}
 
 	"Extend Map"

@@ -2,12 +2,12 @@
 {
 	"Vote Nextmap"
 	{
-		"ko"		"다음 맵을 결정하기 위한 투표!"
+		"ko"		"다음 맵을 결정하기 위한 투표"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"ko"		"다음 맵을 결정하기 위한 투표가 시작되었습니다."
+		"ko"		"다음 맵을 결정하기 위한 투표가 시작되었습니다"
 	}
 
 	"Nextmap Voting Finished"
@@ -37,7 +37,7 @@
 
 	"Changed Next Map"
 	{
-		"ko"		"다음 맵을 \"{1}\" 로 바꾸었습니다."
+		"ko"		"다음 맵을 \"{1}\" 로 바꾸었습니다"
 	}
 
 	"Starting Runoff"

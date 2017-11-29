@@ -60,7 +60,7 @@
 
 	"Round End"
 	{
-		"de"		"Diese Funktion kann nach dem Ende der Runde nicht benutzt werden."
+		"de"		"Diese Funktion kann nach dem Ende der Runde nicht benutzt werden"
 	}
 
 	"Round Started"
@@ -85,7 +85,7 @@
 
 	"Silence First"
 	{
-		"de"		"Du kannst keine Meuterei starten, während du verstummt bist."
+		"de"		"Du kannst keine Meuterei starten, während du verstummt bist"
 	}
 
 	"Silence Command"
@@ -110,7 +110,7 @@
 
 	"Skill Required"
 	{
-		"de"		"Um auf diesem Server kommandieren zu dürfen, ist ein Skillwertung von {1} benötigt."
+		"de"		"Um auf diesem Server kommandieren zu dürfen, ist ein Skillwertung von {1} benötigt"
 	}
 
 }

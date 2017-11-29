@@ -15,6 +15,6 @@
 	"Suicide Request"
 	{
 		"#format"	"{1:t}"
-		"en"		"Your suicide request will complete in {1} seconds."
+		"en"		"Your suicide request will complete in {1} seconds"
 	}
 }

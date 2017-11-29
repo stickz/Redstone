@@ -30,7 +30,7 @@
 
 	"Already Passed"
 	{
-		"de"		"Anstehender Kartenwechsel, bitte warten."
+		"de"		"Anstehender Kartenwechsel, bitte warten"
 	}
 
 	"Already RTVed"
@@ -55,12 +55,12 @@
 
 	"RTV Wait"
 	{
-		"de"		"RTV Erfolgreich: Auswahl für die Folgekarte aktiviert."
+		"de"		"RTV Erfolgreich: Auswahl für die Folgekarte aktiviert"
 	}
 
 	"Typed Change Map"
 	{
-		"de"		"{1} hat einen Kartenwechsel vorgeschlagen: {2} weitere Unterstützer benötigt."
+		"de"		"{1} hat einen Kartenwechsel vorgeschlagen: {2} weitere Unterstützer benötigt"
 	}
 
 }

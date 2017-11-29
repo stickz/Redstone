@@ -2,7 +2,7 @@
 {
 	"Vote Nextmap"
 	{
-		"zho"		"為下一幅地票投票吧！"
+		"zho"		"為下一幅地票投票吧"
 	}
 
 	"Nextmap Voting Started"
@@ -12,12 +12,12 @@
 
 	"Nextmap Voting Finished"
 	{
-		"zho"		"地圖投票已結束，下一幅地圖為 {1} (得到共 {3} 票中的 {2}%%) "
+		"zho"		"地圖投票已結束，下一幅地圖為 {1} (得到共 {3} 票中的 {2}%%)"
 	}
 
 	"Current Map Extended"
 	{
-		"zho"		"當前地圖延時 (得到共 {2} 票中的 {1}%%) "
+		"zho"		"當前地圖延時 (得到共 {2} 票中的 {1}%%)"
 	}
 
 	"Extend Map"
@@ -32,7 +32,7 @@
 
 	"Current Map Stays"
 	{
-		"zho"		"投票結果︰當前地圖繼續！(得到共 {2} 票中的 {1}%%) "
+		"zho"		"投票結果︰當前地圖繼續！(得到共 {2} 票中的 {1}%%)"
 	}
 
 	"Changed Next Map"

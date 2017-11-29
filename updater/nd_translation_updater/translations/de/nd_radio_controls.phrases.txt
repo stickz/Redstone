@@ -10,12 +10,12 @@
 
 	"Radio Disabled"
 	{
-		"de"		"Das Radiomenü ist momentan deaktiviert."
+		"de"		"Das Radiomenü ist momentan deaktiviert"
 	}
 
 	"Radio Wait"
 	{
-		"de"		"Noch {1} Sekunde(n) gesperrt."
+		"de"		"Noch {1} Sekunde(n) gesperrt"
 	}
 
 }

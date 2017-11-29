@@ -7,6 +7,6 @@
 
 	"Welcome"
 	{
-		"fr"			"Bienvenue à Redstone! Redstone à la recherche de traductions pour la communauté française."
+		"fr"			"Bienvenue à Redstone! Redstone à la recherche de traductions pour la communauté française"
 	}
 }

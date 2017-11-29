@@ -2,12 +2,12 @@
 {
 	"Vote Nextmap"
 	{
-		"hu"		"Mi legyen a következő pálya?"
+		"hu"		"Mi legyen a következő pálya"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"hu"		"Palyavalaszto szavazas elindult!"
+		"hu"		"Palyavalaszto szavazas elindult"
 	}
 
 	"Nextmap Voting Finished"
@@ -17,7 +17,7 @@
 
 	"Current Map Extended"
 	{
-		"hu"		"Az aktualis palya meghosszabitva."
+		"hu"		"Az aktualis palya meghosszabitva"
 	}
 
 	"Extend Map"
@@ -27,12 +27,12 @@
 
 	"Dont Change"
 	{
-		"hu"		"Ne valtsunk!"
+		"hu"		"Ne valtsunk"
 	}
 
 	"Current Map Stays"
 	{
-		"hu"		"Jelenlegi palya folytatodik."
+		"hu"		"Jelenlegi palya folytatodik"
 	}
 
 	"Changed Next Map"
@@ -42,7 +42,7 @@
 
 	"Starting Runoff"
 	{
-		"hu"		"Egy pálya se kapot legalább {1}%%t  ({2} [{3}%%] & {4} [{5}%%]), végső szavazás indítása."
+		"hu"		"Egy pálya se kapot legalább {1}%%t ({2} [{3}%%] & {4} [{5}%%]), végső szavazás indítása"
 	}
 
 }

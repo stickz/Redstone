@@ -100,17 +100,17 @@
 
 	"Empire"
 	{
-		"de"		"Das Imperium"
+		"de"		"Imperium"
 	}
 
 	"Consort"
 	{
-		"de"		"Das Konsortium"
+		"de"		"Konsortium"
 	}
 
 	"Advantage Message"
 	{
-		"de"		"{1}{2} {3} hat gerade den Vorteil für {4}{5} {6} geholt"
+		"de"		"{1}{2} {3} hat gerade den Vorteil für das {4}{5} {6} geholt"
 	}
 
 	"Advantage Center"

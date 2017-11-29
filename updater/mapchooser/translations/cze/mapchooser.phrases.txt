@@ -2,12 +2,12 @@
 {
 	"Vote Nextmap"
 	{
-		"cze"		"Hlasujte o pristi mape!"
+		"cze"		"Hlasujte o pristi mape"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"cze"		"Hlasovani o pristi mape zacalo."
+		"cze"		"Hlasovani o pristi mape zacalo"
 	}
 
 	"Nextmap Voting Finished"
@@ -27,7 +27,7 @@
 
 	"Dont Change"
 	{
-		"cze"		" Nemenit soucasnou mapu"
+		"cze"		"Nemenit soucasnou mapu"
 	}
 
 	"Current Map Stays"
@@ -37,12 +37,12 @@
 
 	"Changed Next Map"
 	{
-		"cze"		"Zmenil pristi mapu na \"{1}\"."
+		"cze"		"Zmenil pristi mapu na \"{1}\""
 	}
 
 	"Starting Runoff"
 	{
-		"cze"		"Zadna mapa neziskala {1]%% hlasu ({2} [{3}%%] & {4} [{5}%%]), zacina rozhodujici hlasovani."
+		"cze"		"Zadna mapa neziskala {1]%% hlasu ({2} [{3}%%] & {4} [{5}%%]), zacina rozhodujici hlasovani"
 	}
 
 }
