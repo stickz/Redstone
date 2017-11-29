@@ -2,12 +2,12 @@
 {
 	"Vote Nextmap"
 	{
-		"tr"		"Sonraki harita için oy ver!"
+		"tr"		"Sonraki harita için oy ver"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"tr"		"Sonraki harita için oylama başladı."
+		"tr"		"Sonraki harita için oylama başladı"
 	}
 
 	"Nextmap Voting Finished"
@@ -22,12 +22,12 @@
 
 	"Extend Map"
 	{
-		"tr"		"Geçerli Haritayı Uzat."
+		"tr"		"Geçerli Haritayı Uzat"
 	}
 
 	"Dont Change"
 	{
-		"tr"		"Değiştirme."
+		"tr"		"Değiştirme"
 	}
 
 	"Current Map Stays"
@@ -37,12 +37,12 @@
 
 	"Changed Next Map"
 	{
-		"tr"		"Sıradaki harita \"{1}\" olarak değiştirildi."
+		"tr"		"Sıradaki harita \"{1}\" olarak değiştirildi"
 	}
 
 	"Starting Runoff"
 	{
-		"tr"		"Hiçbir harita %%{1} oyun üzerine çıkamadı ({2} [%%{3}] & {4} [%%{5}]), balotaj oylaması başlatılıyor."
+		"tr"		"Hiçbir harita %%{1} oyun üzerine çıkamadı ({2} [%%{3}] & {4} [%%{5}]), balotaj oylaması başlatılıyor"
 	}
 
 }
