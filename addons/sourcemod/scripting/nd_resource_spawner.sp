@@ -29,6 +29,7 @@ bool spawnedGate = false;
 
 ConVar cvarSiloTertiarySpawns;
 ConVar cvarMetroTertiarySpawns;
+ConVar cvarDowntownTertiarySpawns;
 ConVar cvarGateTertiarySpawns[2];
 
 public void OnPluginStart()
@@ -100,6 +101,7 @@ void CheckTertiarySpawns()
 			tertsSpawned = true;
 		}
 	}
+	
 	else if (ND_StockMapEquals(map_name, ND_Gate))
 	{
 		int teamCount = RED_OnTeamCount();
@@ -121,6 +123,16 @@ void CheckTertiarySpawns()
 		}
 	}
 	
+	else if (ND_StockMapEquals(map_name, ND_Downtown))
+	{
+		if (RED_OnTeamCount() >= cvarDowntownTertiarySpawns.IntValue)
+		{
+			SpawnTertiaryPoint({-2160.0, 6320.0, -3840.0});
+			SpawnTertiaryPoint({753.0, 1468.0, -3764.0});
+			tertsSpawned = true;
+		}		
+	}
+	
 	else
 		tertsSpawned = true;
 }
@@ -139,6 +151,13 @@ void RemoveTertiarySpawns()
 		// Tertaries by the secondary and prime
 		RemoveTertiaryPoint("tertiary013", "tertiary_area013");
 		RemoveTertiaryPoint("tertiary07", "tertiary_area07");
+	}
+	
+	else if (ND_StockMapEquals(map_name, ND_Downtown))
+	{
+		// Remove tertiary by prime and secondary
+		RemoveTertiaryPoint("tertiary_cr", "tertiary_areacr");
+		RemoveTertiaryPoint("tertiary_mb", "tertiary_areamb");
 	}
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
