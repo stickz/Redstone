@@ -33,6 +33,7 @@ bool tertsSpawned[2] = { false, ... };
 ConVar cvarMarsTertiarySpawns;
 ConVar cvarSiloTertiarySpawns;
 ConVar cvarMetroTertiarySpawns;
+ConVar cvarOasisTertiarySpawns;
 ConVar cvarNuclearTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
@@ -60,6 +61,7 @@ void CreatePluginConvars()
 	cvarMarsTertiarySpawns = CreateConVar("sm_tertiary_mars", "16", "Sets number of players to spawn extra tertaries on mars.");
 	cvarSiloTertiarySpawns = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
 	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
+	cvarOasisTertiarySpawns = CreateConVar("sm_tertiary_oasis", "18", "Sets number of players to spawn extra tertaries on oasis.");
 	cvarNuclearTertiarySpawns = CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
 	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown.");
 	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
@@ -250,6 +252,17 @@ void CheckTertiarySpawns()
 		}		
 	}
 	
+	else if (ND_StockMapEquals(map_name, ND_Oasis))
+	{
+		if (RED_OnTeamCount() >= cvarOasisTertiarySpawns.IntValue)
+		{
+			// (Re)spawn tertaries near the secondaries
+			SpawnTertiaryPoint({-4702.0, 1176.0, -224.0});
+			SpawnTertiaryPoint({5600.0, 1500.0, -390.0});
+			tertsSpawned[FIRST_TIER] = true;
+		}
+	}
+	
 	else
 		tertsSpawned[SECOND_TIER] = true;
 }
@@ -328,6 +341,9 @@ void AdjustTertiarySpawns()
 		RemoveTertiaryPoint("tertiary_tunnel", "tertiary_tunnel_area");		
 		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0});
 	}
+	
+	else if (ND_StockMapEquals(map_name, ND_Oasis))
+		RemoveTertiaryPoint("tertiary_2", "tertiary_area2");
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
 	//	RemoveTertiaryPoint("tertiary_ct", "tertiary_ct_area");
