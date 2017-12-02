@@ -25,10 +25,11 @@ public Plugin myinfo =
 
 int resSpawnCount = 0;
 bool tertsSpawned = false;
+bool spawnedGate = false;
 
 ConVar cvarSiloTertiarySpawns;
 ConVar cvarMetroTertiarySpawns;
-ConVar cvarGateTertiarySpawns;
+ConVar cvarGateTertiarySpawns[2];
 
 public void OnPluginStart()
 {
@@ -39,7 +40,8 @@ public void OnPluginStart()
 	// Create convars for resoruce spawning and generate the configuration file
 	cvarSiloTertiarySpawns = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
 	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
-	cvarGateTertiarySpawns = CreateConVar("sm_tertiary_gate", "22", "Sets number of players to spawn extra tertaries on gate.");
+	cvarGateTertiarySpawns[0] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
+	cvarGateTertiarySpawns[1] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
 	
 	AutoExecConfig(true, "nd_res_spawner");
 	
@@ -55,6 +57,7 @@ public void ND_OnRoundStarted()
 {
 	resSpawnCount = 0;
 	tertsSpawned = false;
+	spawnedGate = false;
 	RemoveTertiarySpawns();
 	CheckTertiarySpawns();
 }
@@ -99,11 +102,22 @@ void CheckTertiarySpawns()
 	}
 	else if (ND_StockMapEquals(map_name, ND_Gate))
 	{
-		if (RED_OnTeamCount() >= cvarGateTertiarySpawns.IntValue)
+		int teamCount = RED_OnTeamCount();
+		if (teamCount >= cvarGateTertiarySpawns[0].IntValue)
 		{
-			SpawnTertiaryPoint({-3392.0, -2384.0, 0.0});
-			SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
-			tertsSpawned = true;
+			if (!spawnedGate)
+			{
+				SpawnTertiaryPoint({-5824.0, -32.0, 0.0});
+				SpawnTertiaryPoint({3392.0, 0.0, 5.0});
+				spawnedGate = true;
+			}
+			
+			if (teamCount >= cvarGateTertiarySpawns[1].IntValue)
+			{
+				SpawnTertiaryPoint({-3392.0, -2384.0, 0.0});
+				SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
+				tertsSpawned = true;
+			}
 		}
 	}
 	
@@ -118,8 +132,13 @@ void RemoveTertiarySpawns()
 	
 	if (ND_StockMapEquals(map_name, ND_Gate))
 	{
+		// Tertaries by the secondaries
 		RemoveTertiaryPoint("tertiary01", "tertiary_area01");
 		RemoveTertiaryPoint("tertiary04", "tertiary_area04");
+		
+		// Tertaries by the secondary and prime
+		RemoveTertiaryPoint("tertiary013", "tertiary_area013");
+		RemoveTertiaryPoint("tertiary07", "tertiary_area07");
 	}
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
