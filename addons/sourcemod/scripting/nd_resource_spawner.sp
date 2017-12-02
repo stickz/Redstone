@@ -33,6 +33,7 @@ bool tertsSpawned[2] = { false, ... };
 ConVar cvarMarsTertiarySpawns;
 ConVar cvarSiloTertiarySpawns;
 ConVar cvarMetroTertiarySpawns;
+ConVar cvarNuclearTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
 ConVar cvarGateTertiarySpawns[2];
@@ -58,6 +59,7 @@ void CreatePluginConvars()
 	cvarMarsTertiarySpawns = CreateConVar("sm_tertiary_mars", "16", "Sets number of players to spawn extra tertaries on mars.");
 	cvarSiloTertiarySpawns = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
 	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
+	cvarNuclearTertiarySpawns = CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
 	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown.");
 	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
 	cvarGateTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
@@ -212,6 +214,16 @@ void CheckTertiarySpawns()
 		}
 	}
 	
+	else if (ND_CustomMapEquals(map_name, ND_Nuclear))
+	{
+		if (RED_OnTeamCount() >= cvarNuclearTertiarySpawns.IntValue)
+		{
+			SpawnTertiaryPoint({7867.0, 3467.0, 21.0});
+			SpawnTertiaryPoint({312.0, 2635.0, -88.0});
+			tertsSpawned[SECOND_TIER] = true;
+		}
+	}
+	
 	else
 		tertsSpawned[SECOND_TIER] = true;
 }
@@ -272,6 +284,13 @@ void RemoveTertiarySpawns()
 		// Middle corner spawns are teir 2
 		RemoveTertiaryPoint("tertiary_9", "tertiary_area9");
 		RemoveTertiaryPoint("tertiary_10", "tertiary_area10");
+	}
+	
+	else if (ND_CustomMapEquals(map_name, ND_Nuclear))
+	{
+		// Remove tertaries between base and secondary
+		RemoveTertiaryPoint("InstanceAuto4-tertiary_point", "InstanceAuto4-tertiary_point_area");
+		RemoveTertiaryPoint("InstanceAuto9-tertiary_point", "InstanceAuto9-tertiary_point_area");		
 	}
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
