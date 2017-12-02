@@ -36,6 +36,7 @@ ConVar cvarMetroTertiarySpawns;
 ConVar cvarNuclearTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
+ConVar cvarClocktowerTertiarySpawns;
 ConVar cvarGateTertiarySpawns[2];
 ConVar cvarRockTertiarySpawns[2];
 ConVar cvarOilfeildTertiarySpawns[2];
@@ -62,6 +63,7 @@ void CreatePluginConvars()
 	cvarNuclearTertiarySpawns = CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
 	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown.");
 	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
+	cvarClocktowerTertiarySpawns = CreateConVar("sm_tertiary_clocktower", "14", "Sets number of players to spawn extra tertaries on clocktower.");
 	cvarGateTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
 	cvarGateTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
 	cvarRockTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_rock1", "8", "Sets number of players to spawn extra tertaries on rock.");
@@ -224,6 +226,16 @@ void CheckTertiarySpawns()
 		}
 	}
 	
+	else if (ND_StockMapEquals(map_name, ND_Clocktower))
+	{
+		if (RED_OnTeamCount() >= cvarClocktowerTertiarySpawns.IntValue)
+		{
+			SpawnTertiaryPoint({-5028.0, -2906.0, -1396.0});
+			SpawnTertiaryPoint({-2564.0, 282.0, 1672.0});
+			tertsSpawned[SECOND_TIER] = true;
+		}		
+	}
+	
 	else
 		tertsSpawned[SECOND_TIER] = true;
 }
@@ -291,6 +303,12 @@ void RemoveTertiarySpawns()
 		// Remove tertaries between base and secondary
 		RemoveTertiaryPoint("InstanceAuto4-tertiary_point", "InstanceAuto4-tertiary_point_area");
 		RemoveTertiaryPoint("InstanceAuto9-tertiary_point", "InstanceAuto9-tertiary_point_area");		
+	}
+	
+	else if (ND_StockMapEquals(map_name, ND_Clocktower))
+	{
+		RemoveTertiaryPoint("tertiary_1", "tertiary_area1");
+		RemoveTertiaryPoint("tertiary_4", "tertiary_area4");
 	}
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
