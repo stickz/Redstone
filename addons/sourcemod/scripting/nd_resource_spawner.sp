@@ -67,6 +67,8 @@ void CreatePluginConvars()
 	cvarGateTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
 	cvarRockTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_rock1", "8", "Sets number of players to spawn extra tertaries on rock.");
 	cvarRockTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_rock2", "16", "Sets number of players to spawn extra tertaries on rock.");
+	cvarOilfeildTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_oilfeild1", "12", "Sets number of players to spawn extra tertaries on oilfield.");
+	cvarOilfeildTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_oilfeild2", "20", "Sets number of players to spawn extra tertaries on oilfield.");
 	cvarClocktowerTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_clocktower1", "12", "Sets number of players to spawn extra tertaries on clocktower.");
 	cvarClocktowerTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_clocktower2", "18", "Sets number of players to spawn extra tertaries on clocktower.");
 }
