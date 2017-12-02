@@ -191,7 +191,7 @@ void CheckTertiarySpawns()
 		}
 	}
 	
-	else if (ND_StockMapEquals(map_name, ND_Oilfeild))
+	else if (ND_StockMapEquals(map_name, ND_Oilfield))
 	{
 		int teamCount = RED_OnTeamCount();
 		if (teamCount >= cvarOilfeildTertiarySpawns[FIRST_TIER].IntValue)
@@ -263,7 +263,7 @@ void RemoveTertiarySpawns()
 		RemoveTertiaryPoint("tertiary04", "tertiary_area04");
 	}
 	
-	else if (ND_StockMapEquals(map_name, ND_Oilfeild))
+	else if (ND_StockMapEquals(map_name, ND_Oilfield))
 	{
 		// Inner corner spawns are teir 1
 		RemoveTertiaryPoint("tertiary_4", "tertiary_area4");
