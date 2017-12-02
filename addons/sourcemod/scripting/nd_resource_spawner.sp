@@ -97,7 +97,7 @@ void CheckTertiarySpawns()
 			tertsSpawned = true;
 		}
 	}
-	/*else if (ND_StockMapEquals(map_name, ND_Gate))
+	else if (ND_StockMapEquals(map_name, ND_Gate))
 	{
 		if (RED_OnTeamCount() >= cvarGateTertiarySpawns.IntValue)
 		{
@@ -105,7 +105,7 @@ void CheckTertiarySpawns()
 			SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
 			tertsSpawned = true;
 		}
-	}*/
+	}
 	
 	else
 		tertsSpawned = true;
