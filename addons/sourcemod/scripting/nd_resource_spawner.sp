@@ -38,15 +38,21 @@ public void OnPluginStart()
 	if (ND_RoundStarted())
 		ND_OnRoundStarted();
 	
-	// Create convars for resoruce spawning and generate the configuration file
-	cvarSiloTertiarySpawns = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
-	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
-	cvarGateTertiarySpawns[0] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
-	cvarGateTertiarySpawns[1] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
+	CreatePluginConvars();
 	
 	AutoExecConfig(true, "nd_res_spawner");
 	
 	AddUpdaterLibrary(); //auto-updater
+}
+
+void CreatePluginConvars()
+{
+	// Create convars for resoruce spawning and generate the configuration file
+	cvarSiloTertiarySpawns = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
+	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
+	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown.");
+	cvarGateTertiarySpawns[0] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
+	cvarGateTertiarySpawns[1] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
 }
 
 public void OnClientPutInServer(int client) {
