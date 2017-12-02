@@ -27,6 +27,8 @@ int resSpawnCount = 0;
 bool tertsSpawned = false;
 bool spawnedGate = false;
 
+/* Plugin Convars */
+ConVar cvarMarsTertiarySpawns;
 ConVar cvarSiloTertiarySpawns;
 ConVar cvarMetroTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
@@ -49,6 +51,7 @@ public void OnPluginStart()
 void CreatePluginConvars()
 {
 	// Create convars for resoruce spawning and generate the configuration file
+	cvarMarsTertiarySpawns = CreateConVar("sm_tertiary_mars", "16", "Sets number of players to spawn extra tertaries on mars.");
 	cvarSiloTertiarySpawns = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
 	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
 	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown.");
@@ -151,6 +154,16 @@ void CheckTertiarySpawns()
 		}
 	}
 	
+	else if (ND_CustomMapEquals(map_name, ND_Mars))
+	{
+		if (RED_OnTeamCount() >= cvarMarsTertiarySpawns.IntValue)
+		{
+			SpawnTertiaryPoint({-556.0, 4408.0, 28.0});
+			SpawnTertiaryPoint({540.0, 3836.0, 28.0});
+			tertsSpawned = true;		
+		}		
+	}
+	
 	else
 		tertsSpawned = true;
 }
@@ -182,6 +195,13 @@ void RemoveTertiarySpawns()
 	{
 		RemoveTertiaryPoint("tertiary02", "tertiary_area02");
 		RemoveTertiaryPoint("tertiary05", "tertiary_area05");
+	}
+	
+	else if (ND_CustomMapEquals(map_name, ND_Mars))
+	{
+		// Remove 2 out of 5 tertaries on top of the map
+		RemoveTertiaryPoint("tertiary_res_02", "tertiary_res_area_02");
+		RemoveTertiaryPoint("tertiary_res_05", "tertiary_res_area_05");		
 	}
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
