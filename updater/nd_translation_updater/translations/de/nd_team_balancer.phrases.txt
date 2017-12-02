@@ -178,16 +178,6 @@
 		"de"		"Stark unausgeglichen"
 	}
 
-	"Empire"
-	{
-		"de"		"Imperium"
-	}
-
-	"Consortium"
-	{
-		"de"		"Konsortium"
-	}
-
 	"Skill"
 	{
 		"de"		"Können"

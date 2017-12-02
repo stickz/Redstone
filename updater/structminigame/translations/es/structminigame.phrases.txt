@@ -80,17 +80,6 @@
 		"es"		"{1}{2} ha destruido {3}"
 	}
 	
-	
-	//Advantage Translations
-	"Empire"
-	{
-		"es"		"Imperio"
-	}
-	"Consort"
-	{
-		"es"		"Consorte"
-	}
-	
 	//This message is a complicated mess, so read carefully
 	"Advantage Message"
 	{

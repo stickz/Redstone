@@ -7,17 +7,6 @@
 //
 "Phrases"
 {
-
-	"Empire"
-	{
-		"de"		"Imperium"
-	}
-
-	"Consortium"
-	{
-		"de"		"Konsortium"
-	}
-
 	"Only Commanders"
 	{
 		"de"		"Dieses Funktion ist den Kommandanten vorbehalten"

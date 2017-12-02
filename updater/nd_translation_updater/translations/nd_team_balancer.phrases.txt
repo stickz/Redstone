@@ -148,14 +148,6 @@
 	{
 		"en"		"Heavily Imbalanced"	
 	}
-	"Empire"
-	{
-		"en"		"Empire"
-	}
-	"Consortium"
-	{
-		"en"		"Consort"
-	}
 	"Skill"	
 	{
 		"en"		"skill"	

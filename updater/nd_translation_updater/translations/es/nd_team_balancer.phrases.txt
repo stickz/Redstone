@@ -178,16 +178,6 @@
 		"es"		"Altamente desbalanceado"
 	}
 
-	"Empire"
-	{
-		"es"		"Imperio"
-	}
-
-	"Consortium"
-	{
-		"es"		"Consorcio"
-	}
-
 	"Skill"
 	{
 		"es"		"habilidad"

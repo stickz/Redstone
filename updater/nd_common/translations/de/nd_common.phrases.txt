@@ -1,0 +1,12 @@
+"Phrases"
+{
+    "Empire"
+	{
+		"en"		"Imperium"
+	}
+	
+	"Consortium"
+	{
+		"en"		"Konsortium"
+	}
+}
