@@ -37,6 +37,7 @@ ConVar cvarDowntownTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
 ConVar cvarGateTertiarySpawns[2];
 ConVar cvarRockTertiarySpawns[2];
+ConVar cvarOilfeildTertiarySpawns[2];
 
 public void OnPluginStart()
 {
@@ -63,6 +64,8 @@ void CreatePluginConvars()
 	cvarGateTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
 	cvarRockTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_rock1", "8", "Sets number of players to spawn extra tertaries on rock.");
 	cvarRockTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_rock2", "16", "Sets number of players to spawn extra tertaries on rock.");
+	cvarOilfeildTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_oilfeild1", "12", "Sets number of players to spawn extra tertaries on oilfield.");
+	cvarOilfeildTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_oilfeild2", "20", "Sets number of players to spawn extra tertaries on oilfield.");
 }
 
 public void OnClientPutInServer(int client) {
@@ -188,6 +191,27 @@ void CheckTertiarySpawns()
 		}
 	}
 	
+	else if (ND_StockMapEquals(map_name, ND_Oilfield))
+	{
+		int teamCount = RED_OnTeamCount();
+		if (teamCount >= cvarOilfeildTertiarySpawns[FIRST_TIER].IntValue)
+		{
+			if (!tertsSpawned[FIRST_TIER])
+			{				
+				SpawnTertiaryPoint({3691.0, 4118.0, -1056.0});
+				SpawnTertiaryPoint({-4221.0, -3844.0, -951.0});
+				tertsSpawned[FIRST_TIER] = true;
+			}
+			
+			if (teamCount >= cvarOilfeildTertiarySpawns[SECOND_TIER].IntValue)
+			{
+				SpawnTertiaryPoint({-6654.0, -4276.0, -904.0});
+				SpawnTertiaryPoint({6642.0, 4530.0, -996.0});
+				tertsSpawned[SECOND_TIER] = true;
+			}
+		}
+	}
+	
 	else
 		tertsSpawned[SECOND_TIER] = true;
 }
@@ -237,6 +261,17 @@ void RemoveTertiarySpawns()
 		// Remove the two points on the benches
 		RemoveTertiaryPoint("tertiary03", "tertiary_area03");
 		RemoveTertiaryPoint("tertiary04", "tertiary_area04");
+	}
+	
+	else if (ND_StockMapEquals(map_name, ND_Oilfield))
+	{
+		// Inner corner spawns are teir 1
+		RemoveTertiaryPoint("tertiary_4", "tertiary_area4");
+		RemoveTertiaryPoint("tertiary_2", "tertiary_area2");
+		
+		// Middle corner spawns are teir 2
+		RemoveTertiaryPoint("tertiary_9", "tertiary_area9");
+		RemoveTertiaryPoint("tertiary_10", "tertiary_area10");
 	}
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
