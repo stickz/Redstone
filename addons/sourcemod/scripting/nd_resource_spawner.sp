@@ -30,6 +30,7 @@ bool spawnedGate = false;
 ConVar cvarSiloTertiarySpawns;
 ConVar cvarMetroTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
+ConVar cvarRoadworkTertiarySpawns;
 ConVar cvarGateTertiarySpawns[2];
 
 public void OnPluginStart()
@@ -51,6 +52,7 @@ void CreatePluginConvars()
 	cvarSiloTertiarySpawns = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
 	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
 	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown.");
+	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
 	cvarGateTertiarySpawns[0] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
 	cvarGateTertiarySpawns[1] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
 }
@@ -139,6 +141,16 @@ void CheckTertiarySpawns()
 		}		
 	}
 	
+	else if (ND_CustomMapEquals(map_name, ND_Roadwork))
+	{
+		if (RED_OnTeamCount() >= cvarRoadworkTertiarySpawns.IntValue)
+		{
+			SpawnTertiaryPoint({3456.0, -5760.0, 7.0});
+			SpawnTertiaryPoint({-6912.0, -2648.0, -118.0});
+			tertsSpawned = true;
+		}
+	}
+	
 	else
 		tertsSpawned = true;
 }
@@ -164,6 +176,12 @@ void RemoveTertiarySpawns()
 		// Remove tertiary by prime and secondary
 		RemoveTertiaryPoint("tertiary_cr", "tertiary_areacr");
 		RemoveTertiaryPoint("tertiary_mb", "tertiary_areamb");
+	}
+	
+	else if (ND_CustomMapEquals(map_name, ND_Roadwork))
+	{
+		RemoveTertiaryPoint("tertiary02", "tertiary_area02");
+		RemoveTertiaryPoint("tertiary05", "tertiary_area05");
 	}
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
