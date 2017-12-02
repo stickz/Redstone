@@ -47,7 +47,7 @@ public void OnPluginStart()
 }
 
 public void OnClientPutInServer(int client) {
-	if (!tertsSpawned)
+	if (!tertsSpawned && ND_RoundStarted())
 		CheckTertiarySpawns();
 }
 
