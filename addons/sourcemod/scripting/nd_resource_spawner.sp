@@ -23,9 +23,11 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_resource_spawner/nd_resource_spawner.txt"
 #include "updater/standard.sp"
 
+#define FIRST_TIER 	0
+#define SECOND_TIER 	1
+
 int resSpawnCount = 0;
-bool tertsSpawned = false;
-bool spawnedGate = false;
+bool tertsSpawned[2] = { false, ... };
 
 /* Plugin Convars */
 ConVar cvarMarsTertiarySpawns;
@@ -34,6 +36,7 @@ ConVar cvarMetroTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
 ConVar cvarGateTertiarySpawns[2];
+ConVar cvarRockTertiarySpawns[2];
 
 public void OnPluginStart()
 {
@@ -56,20 +59,22 @@ void CreatePluginConvars()
 	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
 	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown.");
 	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
-	cvarGateTertiarySpawns[0] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
-	cvarGateTertiarySpawns[1] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
+	cvarGateTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
+	cvarGateTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
+	cvarRockTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_rock1", "8", "Sets number of players to spawn extra tertaries on rock.");
+	cvarRockTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_rock2", "16", "Sets number of players to spawn extra tertaries on rock.");
 }
 
 public void OnClientPutInServer(int client) {
-	if (!tertsSpawned && ND_RoundStarted())
+	if (!tertsSpawned[SECOND_TIER] && ND_RoundStarted())
 		CheckTertiarySpawns();
 }
 
 public void ND_OnRoundStarted()
 {
 	resSpawnCount = 0;
-	tertsSpawned = false;
-	spawnedGate = false;
+	tertsSpawned[FIRST_TIER] = false;
+	tertsSpawned[SECOND_TIER] = false;
 	RemoveTertiarySpawns();
 	CheckTertiarySpawns();
 }
@@ -88,7 +93,7 @@ void CheckTertiarySpawns()
 		//SpawnTertiaryPoint({-1000.0, -3820.0, -186.0});
 		//SpawnTertiaryPoint({1350.0, -2153.0, 54.0});
 		//SpawnTertiaryPoint({1001.0, 1523.0, -112.0});
-		tertsSpawned = true;
+		tertsSpawned[SECOND_TIER] = true;
 	}
 	
 	else if (ND_CustomMapEquals(map_name, ND_MetroImp))
@@ -97,39 +102,37 @@ void CheckTertiarySpawns()
 		{
 			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
 			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
-			tertsSpawned = true;
+			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
 	
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
-		//SpawnTertiaryPoint({6190, 350, 115});
-		
 		if (RED_OnTeamCount() >= cvarSiloTertiarySpawns.IntValue)
 		{
 			SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
 			SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
-			tertsSpawned = true;
+			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
 	
 	else if (ND_StockMapEquals(map_name, ND_Gate))
 	{
 		int teamCount = RED_OnTeamCount();
-		if (teamCount >= cvarGateTertiarySpawns[0].IntValue)
+		if (teamCount >= cvarGateTertiarySpawns[FIRST_TIER].IntValue)
 		{
-			if (!spawnedGate)
+			if (!tertsSpawned[FIRST_TIER])
 			{
 				SpawnTertiaryPoint({-5824.0, -32.0, 0.0});
 				SpawnTertiaryPoint({3392.0, 0.0, 5.0});
-				spawnedGate = true;
+				tertsSpawned[FIRST_TIER] = true;
 			}
 			
-			if (teamCount >= cvarGateTertiarySpawns[1].IntValue)
+			if (teamCount >= cvarGateTertiarySpawns[SECOND_TIER].IntValue)
 			{
 				SpawnTertiaryPoint({-3392.0, -2384.0, 0.0});
 				SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
-				tertsSpawned = true;
+				tertsSpawned[SECOND_TIER] = true;
 			}
 		}
 	}
@@ -140,8 +143,8 @@ void CheckTertiarySpawns()
 		{
 			SpawnTertiaryPoint({-2160.0, 6320.0, -3840.0});
 			SpawnTertiaryPoint({753.0, 1468.0, -3764.0});
-			tertsSpawned = true;
-		}		
+			tertsSpawned[SECOND_TIER] = true;
+		}
 	}
 	
 	else if (ND_CustomMapEquals(map_name, ND_Roadwork))
@@ -150,7 +153,7 @@ void CheckTertiarySpawns()
 		{
 			SpawnTertiaryPoint({3456.0, -5760.0, 7.0});
 			SpawnTertiaryPoint({-6912.0, -2648.0, -118.0});
-			tertsSpawned = true;
+			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
 	
@@ -160,12 +163,33 @@ void CheckTertiarySpawns()
 		{
 			SpawnTertiaryPoint({-556.0, 4408.0, 28.0});
 			SpawnTertiaryPoint({540.0, 3836.0, 28.0});
-			tertsSpawned = true;		
-		}		
+			tertsSpawned[SECOND_TIER] = true;
+		}
+	}
+	
+	else if (ND_CustomMapEquals(map_name, ND_Rock))
+	{
+		int teamCount = RED_OnTeamCount();
+		if (teamCount >= cvarRockTertiarySpawns[FIRST_TIER].IntValue)
+		{
+			if (!tertsSpawned[FIRST_TIER])
+			{
+				SpawnTertiaryPoint({4052.0, 7008.0, -300.0});
+				SpawnTertiaryPoint({-3720.0, -8716.0, -500.0});
+				tertsSpawned[FIRST_TIER] = true;
+			}
+			
+			if (teamCount >= cvarRockTertiarySpawns[SECOND_TIER].IntValue)
+			{
+				SpawnTertiaryPoint({5648.0, -3264.0, -496.0});
+				SpawnTertiaryPoint({-3932.0, 2964.0, -496.0});
+				tertsSpawned[SECOND_TIER] = true;
+			}
+		}
 	}
 	
 	else
-		tertsSpawned = true;
+		tertsSpawned[SECOND_TIER] = true;
 }
 
 void RemoveTertiarySpawns()
@@ -202,6 +226,17 @@ void RemoveTertiarySpawns()
 		// Remove 2 out of 5 tertaries on top of the map
 		RemoveTertiaryPoint("tertiary_res_02", "tertiary_res_area_02");
 		RemoveTertiaryPoint("tertiary_res_05", "tertiary_res_area_05");		
+	}
+	
+	else if (ND_CustomMapEquals(map_name, ND_Rock))
+	{
+		// Remove the two points on the far edge of base
+		RemoveTertiaryPoint("tertiary02", "tertiary_area02");
+		RemoveTertiaryPoint("tertiary06", "tertiary_area06");
+		
+		// Remove the two points on the benches
+		RemoveTertiaryPoint("tertiary03", "tertiary_area03");
+		RemoveTertiaryPoint("tertiary04", "tertiary_area04");
 	}
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
