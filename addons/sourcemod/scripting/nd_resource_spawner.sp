@@ -36,10 +36,10 @@ ConVar cvarMetroTertiarySpawns;
 ConVar cvarNuclearTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
-ConVar cvarClocktowerTertiarySpawns;
 ConVar cvarGateTertiarySpawns[2];
 ConVar cvarRockTertiarySpawns[2];
 ConVar cvarOilfeildTertiarySpawns[2];
+ConVar cvarClocktowerTertiarySpawns[2];
 
 public void OnPluginStart()
 {
@@ -63,13 +63,14 @@ void CreatePluginConvars()
 	cvarNuclearTertiarySpawns = CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
 	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown.");
 	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
-	cvarClocktowerTertiarySpawns = CreateConVar("sm_tertiary_clocktower", "14", "Sets number of players to spawn extra tertaries on clocktower.");
 	cvarGateTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
 	cvarGateTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
 	cvarRockTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_rock1", "8", "Sets number of players to spawn extra tertaries on rock.");
 	cvarRockTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_rock2", "16", "Sets number of players to spawn extra tertaries on rock.");
 	cvarOilfeildTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_oilfeild1", "12", "Sets number of players to spawn extra tertaries on oilfield.");
 	cvarOilfeildTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_oilfeild2", "20", "Sets number of players to spawn extra tertaries on oilfield.");
+	cvarClocktowerTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_clocktower1", "12", "Sets number of players to spawn extra tertaries on clocktower.");
+	cvarClocktowerTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_clocktower2", "18", "Sets number of players to spawn extra tertaries on clocktower.");
 }
 
 public void OnClientPutInServer(int client) {
@@ -82,7 +83,7 @@ public void ND_OnRoundStarted()
 	resSpawnCount = 0;
 	tertsSpawned[FIRST_TIER] = false;
 	tertsSpawned[SECOND_TIER] = false;
-	RemoveTertiarySpawns();
+	AdjustTertiarySpawns();
 	CheckTertiarySpawns();
 }
 
@@ -228,11 +229,24 @@ void CheckTertiarySpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
 	{
-		if (RED_OnTeamCount() >= cvarClocktowerTertiarySpawns.IntValue)
+		int teamCount = RED_OnTeamCount();
+		if (teamCount >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue)
 		{
-			SpawnTertiaryPoint({-5028.0, -2906.0, -1396.0});
-			SpawnTertiaryPoint({-2564.0, 282.0, 1672.0});
-			tertsSpawned[SECOND_TIER] = true;
+			if (!tertsSpawned[FIRST_TIER])
+			{
+				// Respawn coutyard and near secondary resources
+				SpawnTertiaryPoint({-5028.0, -2906.0, -1396.0});
+				SpawnTertiaryPoint({-1550.0, -2764.0, -1200.0});
+				tertsSpawned[FIRST_TIER] = true;
+			}
+			
+			if (teamCount >= cvarClocktowerTertiarySpawns[SECOND_TIER].IntValue)
+			{
+				// Respawn tunnel resources			
+				SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
+				SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
+				tertsSpawned[SECOND_TIER] = true;
+			}
 		}		
 	}
 	
@@ -240,7 +254,7 @@ void CheckTertiarySpawns()
 		tertsSpawned[SECOND_TIER] = true;
 }
 
-void RemoveTertiarySpawns()
+void AdjustTertiarySpawns()
 {
 	char map_name[64];   
 	GetCurrentMap(map_name, sizeof(map_name));
@@ -308,7 +322,11 @@ void RemoveTertiarySpawns()
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
 	{
 		RemoveTertiaryPoint("tertiary_1", "tertiary_area1");
+		RemoveTertiaryPoint("tertiary_2", "tertiary_area2");
 		RemoveTertiaryPoint("tertiary_4", "tertiary_area4");
+		
+		RemoveTertiaryPoint("tertiary_tunnel", "tertiary_tunnel_area");		
+		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0});
 	}
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
