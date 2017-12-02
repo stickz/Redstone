@@ -27,7 +27,7 @@ public Plugin myinfo =
 #define SECOND_TIER 	1
 
 int resSpawnCount = 0;
-bool tertsSpawned[2] = false;
+bool tertsSpawned[2] = { false, ... };
 
 /* Plugin Convars */
 ConVar cvarMarsTertiarySpawns;
