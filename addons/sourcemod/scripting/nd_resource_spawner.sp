@@ -34,6 +34,7 @@ ConVar cvarMarsTertiarySpawns;
 ConVar cvarSiloTertiarySpawns;
 ConVar cvarMetroTertiarySpawns;
 ConVar cvarOasisTertiarySpawns;
+ConVar cvarCoastTertiarySpawns;
 ConVar cvarNuclearTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
@@ -62,6 +63,7 @@ void CreatePluginConvars()
 	cvarSiloTertiarySpawns = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
 	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
 	cvarOasisTertiarySpawns = CreateConVar("sm_tertiary_oasis", "18", "Sets number of players to spawn extra tertaries on oasis.");
+	cvarCoastTertiarySpawns = CreateConVar("sm_tertiary_coast", "16", "Sets number of players to spawn extra tertaries on coast.");	
 	cvarNuclearTertiarySpawns = CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
 	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown.");
 	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
@@ -263,6 +265,17 @@ void CheckTertiarySpawns()
 		}
 	}
 	
+	else if (ND_StockMapEquals(map_name, ND_Coast))
+	{
+		if (RED_OnTeamCount() >= cvarCoastTertiarySpawns.IntValue)
+		{
+			// (Re)spawn tertaries near the secondaries			
+			SpawnTertiaryPoint({700.0, 7164.0, 40.0});
+			SpawnTertiaryPoint({2500.0, -528.0, 54.0});
+			tertsSpawned[FIRST_TIER] = true;
+		}
+	}
+	
 	else
 		tertsSpawned[SECOND_TIER] = true;
 }
@@ -344,6 +357,17 @@ void AdjustTertiarySpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Oasis))
 		RemoveTertiaryPoint("tertiary_2", "tertiary_area2");
+		
+	else if (ND_StockMapEquals(map_name, ND_Coast))
+	{
+		// Remove two tertiary points near the secondary
+		RemoveTertiaryPoint("tertiary_sideroom", "tertiary_sideroom_area");
+		RemoveTertiaryPoint("tertiary_gameshop", "tertiary_gameshop_area");
+		
+		// Move the sand tertiary over more
+		RemoveTertiaryPoint("tertiary_sand", "tertiary_area");
+		SpawnTertiaryPoint({6700.0, 6800.0, 45.0});
+	}
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
 	//	RemoveTertiaryPoint("tertiary_ct", "tertiary_ct_area");
