@@ -7,7 +7,6 @@
 //
 "Phrases"
 {
-
 	"Twelve Required"
 	{
 		"fr"		"Il doit y avoir au moins 12 joueurs pour pouvoir utiliser cette fonction"
@@ -26,11 +25,6 @@
 	"On Team"
 	{
 		"fr"		"Vous devez être dans une équipe pour pouvoir voter la reddition"
-	}
-
-	"You Surrendered"
-	{
-		"fr"		"Vous avez déjà voté pour la reddition"
 	}
 
 	"Consort Surrendered"
@@ -67,5 +61,4 @@
 	{
 		"fr"		"Le commandant s'est opposé à la reddition. Une majorité est à présent nécessaire pour la déclencher"
 	}
-
 }
