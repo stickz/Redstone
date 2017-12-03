@@ -128,11 +128,6 @@
 		"pt"		"Balanceamento de Times está DESATIVADO no momento"
 	}
 
-	"Please Wait"
-	{
-		"pt"		"Por favor espere"
-	}
-
 	"Status"
 	{
 		"pt"		"Status"
