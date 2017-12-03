@@ -142,12 +142,7 @@
 	{
 		"de"		"Teambalancer ist ausgeschaltet"
 	}
-
-	"Please Wait"
-	{
-		"de"		"Bitte warten"
-	}
-
+	
 	"Status"
 	{
 		"de"		"Status"
