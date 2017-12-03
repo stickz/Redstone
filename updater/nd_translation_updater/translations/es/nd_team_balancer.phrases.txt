@@ -142,12 +142,7 @@
 	{
 		"es"		"Balanceador de equipos actualmente apagado"
 	}
-
-	"Please Wait"
-	{
-		"es"		"Por favor espere"
-	}
-
+	
 	"Status"
 	{
 		"es"		"Estado"
