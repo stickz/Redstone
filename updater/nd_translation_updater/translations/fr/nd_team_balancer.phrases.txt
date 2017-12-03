@@ -127,12 +127,7 @@
 	{
 		"fr"		"L'équilibrage automatique est désactivé"
 	}
-
-	"Please Wait"
-	{
-		"fr"		"Veuillez patienter"
-	}
-
+	
 	"Status"
 	{
 		"fr"		"Statut"
