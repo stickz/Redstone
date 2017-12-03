@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <nd_maps>
+#include <nd_stype>
 #include <nd_stocks>
 #include <smlib/math>
 #include <nd_redstone>
@@ -90,7 +91,9 @@ void CreateMapThresholdList(bool debugFunction = false)
 	float resAdjust = 60 + 2.5 * clientCount;
 	ND_NominateMap(ND_StockMaps[ND_Clocktower], resAdjust);
 	ND_NominateMap(ND_CustomMaps[ND_Roadwork], resAdjust);
-	ND_NominateMap(ND_CustomMaps[ND_Rock], resAdjust);
+	
+	if (ND_GetServerType() == SERVER_TYPE_BETA)
+		ND_NominateMap(ND_CustomMaps[ND_Rock], resAdjust);
 		
 	/* Run through the 'less than' x players to include maps */		
 	if (clientCount <= cvarStockMapCount.IntValue)
@@ -104,7 +107,9 @@ void CreateMapThresholdList(bool debugFunction = false)
 			if (clientCount < 8)
 			{
 				ND_NominateMap(ND_CustomMaps[ND_Sandbrick], 80.0);
-				ND_NominateMap(ND_CustomMaps[ND_Mars], 60.0);
+				
+				float marsPer = ND_GetServerType() >= SERVER_TYPE_BETA ? 60.0 : 40.0;
+				ND_NominateMap(ND_CustomMaps[ND_Mars], marsPer);
 			}
 		}
 	}
@@ -118,6 +123,9 @@ void CreateMapThresholdList(bool debugFunction = false)
 		ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);
 		ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
 		ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);
+		
+		if (ND_GetServerType() <= SERVER_TYPE_STABLE)
+			ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
 	}	
 	
 	if (debugFunction)
