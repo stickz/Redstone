@@ -97,7 +97,7 @@ public void ND_OnRoundStarted()
 	}
 	
 	// always spawn extra tertaries on submarine
-	else (serverType != SERVER_TYPE_DISABLE)
+	else if (serverType != SERVER_TYPE_DISABLE)
 	{
 		char map_name[64];   
 		GetCurrentMap(map_name, sizeof(map_name));
