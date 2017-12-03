@@ -187,10 +187,10 @@ void callRockTheVote(int client)
 		PrintMessage(client, "Already RTVed");
 	
 	else if (ND_RoundEnded())
-		PrintMessage(client, "Round Ended");
+		PrintMessage(client, "Round End Usage");
 		
 	else if (!ND_WarmupCompleted() && !ND_RoundStarted())
-		PrintMessage(client, "Round Start");
+		PrintMessage(client, "Round Start Usage");
 
 	else
 	{
