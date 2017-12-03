@@ -17,6 +17,9 @@ enum ND_CustomMapCount {
 	ND_MetroImp,
 	ND_Port
 }
+stock int cm(ND_CustomMapCount map) {
+	return view_as<int>(map);
+}
 
 stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] = 
 {
@@ -59,6 +62,9 @@ enum ND_StockMapCount {
 	ND_Downtown,
 	ND_Clocktower,
 	SK_Metro
+}
+stock int sm(ND_StockMapCount map) {
+	return view_as<int>(map);
 }
 
 stock char ND_StockMaps[ND_StockMapCount][ND_MAX_MAP_SIZE] = {
