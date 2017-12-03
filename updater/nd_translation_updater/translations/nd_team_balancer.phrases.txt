@@ -108,10 +108,6 @@
 	{
 		"en"		"There was NOT enough players, to run the warmup-round shuffle"
 	}
-	"Please Wait"
-	{
-		"en"		"Please Wait"
-	}
 	"Status"
 	{
 		"en"		"Status"
