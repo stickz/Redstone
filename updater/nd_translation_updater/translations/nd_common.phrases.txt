@@ -24,4 +24,9 @@
 	{
 		"en"		"You've already voted"
 	}
+
+	"Feature Unavailable"
+	{
+		"en"		"This feature is currently unavailable"
+	}
 }

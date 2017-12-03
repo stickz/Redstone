@@ -24,4 +24,9 @@
 	{
 		"de"		"Du hast bereits abgestimmt"
 	}
+
+	"Feature Unavailable"
+	{
+		"de"		"Diese Funktion ist gerade nicht verfügbar"
+	}
 }

@@ -10,13 +10,13 @@ public Action CMD_TeamDiff(int client, int args)
 {
 	if (!ND_RoundStarted())
 	{
-		PrintToChat(client, "\x05[TB] %t!", "Teamdiff Round Wait");
+		PrintToChat(client, "\x05[TB] %t!", "Round Start Usage");
 		return Plugin_Handled;
 	}
 	
 	if (!ND_GEA_AVAILBLE() || !ND_GPS_AVAILBLE() || !ND_GED_AVAILBLE())
 	{
-		PrintToChat(client, "\x05[TB] This feature is currently unavailable.");
+		PrintToChat(client, "\x05[TB] %t.", "Feature Unavailable");
 		return Plugin_Handled;
 	}
 	
