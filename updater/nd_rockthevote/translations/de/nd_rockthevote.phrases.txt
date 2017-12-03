@@ -33,21 +33,6 @@
 		"de"		"Anstehender Kartenwechsel, bitte warten"
 	}
 
-	"Already RTVed"
-	{
-		"de"		"Dem Kartenwechsel wurde bereits zugestimmt"
-	}
-
-	"Round Ended"
-	{
-		"de"		"RTV kann nicht nach Rundenende benutzt werden"
-	}
-
-	"Round Start"
-	{
-		"de"		"Bitte warten, bis die Runde gestartet hat"
-	}
-
 	"RTV Changing"
 	{
 		"de"		"RTV Erfolgreich: Die Karte wird in Fünf Sekunden gewechselt"

@@ -43,29 +43,9 @@
 		"es"		"No hay comandante para degradar"
 	}
 
-	"On Team"
-	{
-		"es"		"Debes estar en un equipo para votar"
-	}
-
 	"Four Required"
 	{
 		"es"		"Necesitas 4 compañeros de equipo para utilizar esta opción"
-	}
-
-	"Already Voted"
-	{
-		"es"		"Ya has votado para degradar al comandante"
-	}
-
-	"Round End"
-	{
-		"es"		"No puedes utilizar esta opción después de terminar la ronda"
-	}
-
-	"Round Started"
-	{
-		"es"		"Por favor espera a que comience la ronda antes degradar"
 	}
 
 	"Commander Demoted"

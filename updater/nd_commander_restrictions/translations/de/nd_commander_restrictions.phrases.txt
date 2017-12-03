@@ -43,29 +43,9 @@
 		"de"		"Ohne Kommandant kann die Meuterei nicht gestartet werden"
 	}
 
-	"On Team"
-	{
-		"de"		"Du musst dich in einem Team befinden, um den Kommandant abzuwählen"
-	}
-
 	"Four Required"
 	{
 		"de"		"Für diese Funktion werden 4 Spieler pro Team benötigt"
-	}
-
-	"Already Voted"
-	{
-		"de"		"Du hast bereits abgestimmt, den Kommandant abzusetzen"
-	}
-
-	"Round End"
-	{
-		"de"		"Diese Funktion kann nach dem Ende der Runde nicht benutzt werden"
-	}
-
-	"Round Started"
-	{
-		"de"		"Warte mit dem Absetzen, bis die Runde gestartet hat"
 	}
 
 	"Commander Demoted"

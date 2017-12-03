@@ -19,25 +19,10 @@
 	{
 		"en"		"You cannot surrender so soon into the match"
 	}
-	
+
 	"Team Surrendered"
 	{
 		"en"		"Your team has already surrendered"
-	}
-	
-	"On Team"
-	{
-		"en"		"You must be on a team to vote surrender"
-	}
-	
-	"You Surrendered"
-	{
-		"en"		"You've already voted to surrender"
-	}
-	
-	"Round Ended"
-	{
-		"en"		"The round has already ended"
 	}
 	
 	"Low Bunker Health"

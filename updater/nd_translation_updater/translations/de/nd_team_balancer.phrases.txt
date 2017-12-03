@@ -142,17 +142,7 @@
 	{
 		"de"		"Teambalancer ist ausgeschaltet"
 	}
-
-	"Waiting"
-	{
-		"de"		"Warte auf Spieler"
-	}
-
-	"Please Wait"
-	{
-		"de"		"Bitte warten"
-	}
-
+	
 	"Status"
 	{
 		"de"		"Status"
@@ -176,16 +166,6 @@
 	"Heavily Imbalanced"
 	{
 		"de"		"Stark unausgeglichen"
-	}
-
-	"Empire"
-	{
-		"de"		"Imperium"
-	}
-
-	"Consortium"
-	{
-		"de"		"Konsortium"
 	}
 
 	"Skill"

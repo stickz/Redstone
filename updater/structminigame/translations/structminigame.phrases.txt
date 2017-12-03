@@ -81,17 +81,6 @@
 		"en"		"{1}{2} destroyed a {3}"
 	}
 	
-	
-	//Advantage Translations
-	"Empire"
-	{
-		"en"		"Empire"
-	}
-	"Consort"
-	{
-		"en"		"Consortium"
-	}
-	
 	//This message is a complicated mess, so read carefully
 	"Advantage Message"
 	{

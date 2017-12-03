@@ -35,29 +35,9 @@
 		"en"		"There is no commander to demote"
 	}
 	
-	"On Team"
-	{
-		"en"		"You must be on a team to vote demote"
-	}
-	
 	"Four Required"
 	{
 		"en"		"Four team players required to use this feature"
-	}
-	
-	"Already Voted"
-	{
-		"en"		"You've already voted to demote the commander"
-	}
-	
-	"Round End"
-	{
-		"en"		"Cannot use this feature after round end"
-	}
-	
-	"Round Started"
-	{
-		"en"		"Please wait until round start before demoting"	
 	}
 	
 	"Commander Demoted"

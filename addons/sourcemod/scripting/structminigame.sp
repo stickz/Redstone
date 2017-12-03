@@ -52,6 +52,7 @@ public void OnPluginStart()
 	
 	AddClientPrefSupport();
 
+	LoadTranslations("nd_common.phrases");
 	LoadTranslations("structminigame.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
@@ -161,7 +162,7 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 		char teamTrans[16];
 		switch (team)
 		{
-			case TEAM_CONSORT: Format(teamTrans, sizeof(teamTrans), "Consort");  
+			case TEAM_CONSORT: Format(teamTrans, sizeof(teamTrans), "Consortium");  
 			case TEAM_EMPIRE:  Format(teamTrans, sizeof(teamTrans), "Empire");
 		}
 		

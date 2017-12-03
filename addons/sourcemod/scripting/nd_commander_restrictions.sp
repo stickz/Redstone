@@ -79,6 +79,7 @@ public void OnPluginStart()
 	
 	AddCommandListener(view_as<CommandListener>(Command_Apply), "applyforcommander");
 	
+	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
 	AutoExecConfig(true, "nd_commander_restrictions");

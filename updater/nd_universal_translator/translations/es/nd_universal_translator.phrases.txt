@@ -53,11 +53,6 @@
 		"es"		"No se ha encontrado la traducción."
 	}
 
-	"Not On Team"
-	{
-		"es"		"Debes estar en un equipo para usar este comando."
-	}
-
 	"No Team Commander"
 	{
 		"es"		"Este equipo no tiene un comandante actualmente."

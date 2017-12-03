@@ -128,16 +128,6 @@
 		"pt"		"Balanceamento de Times está DESATIVADO no momento"
 	}
 
-	"Waiting"
-	{
-		"pt"		"Aguardando os jogadores conectarem"
-	}
-
-	"Please Wait"
-	{
-		"pt"		"Por favor espere"
-	}
-
 	"Status"
 	{
 		"pt"		"Status"

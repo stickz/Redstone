@@ -79,17 +79,6 @@
 		"ru"		"{1}{2} уничтожил {3}"
 	}
 	
-	
-	//Advantage Translations
-	"Empire"
-	{
-		"ru"		"Империя"
-	}
-	"Consort"
-	{
-		"ru"		"Консирициум"
-	}
-	
 	//This message is a complicated mess, so read carefully
 	"Advantage Message"
 	{

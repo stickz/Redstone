@@ -1,15 +1,5 @@
 ﻿"Phrases"
 {
-	"Empire"
-	{
-		"en"		"Empire"
-	}
-	
-	"Consortium"
-	{
-		"en"		"Consort"
-	}
-	
 	"Only Commanders"
 	{
 		"en"		"This feature is only available for commanders"

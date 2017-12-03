@@ -15,11 +15,6 @@
 		"en"		"Only one extension is allowed per map"
 	}
 	
-	"On Team"
-	{
-		"en"		"You must be on a team use to this feature"	
-	}
-	
 	"You Extended"
 	{
 		"en"		"You've already voted to extend the match"

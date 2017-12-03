@@ -142,17 +142,7 @@
 	{
 		"es"		"Balanceador de equipos actualmente apagado"
 	}
-
-	"Waiting"
-	{
-		"es"		"Esperando que se conecten los jugadores"
-	}
-
-	"Please Wait"
-	{
-		"es"		"Por favor espere"
-	}
-
+	
 	"Status"
 	{
 		"es"		"Estado"
@@ -176,16 +166,6 @@
 	"Heavily Imbalanced"
 	{
 		"es"		"Altamente desbalanceado"
-	}
-
-	"Empire"
-	{
-		"es"		"Imperio"
-	}
-
-	"Consortium"
-	{
-		"es"		"Consorcio"
 	}
 
 	"Skill"

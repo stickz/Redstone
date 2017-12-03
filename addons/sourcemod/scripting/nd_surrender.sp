@@ -69,6 +69,7 @@ public void OnPluginStart()
 	cvarSurrenderTimeout	= CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
 	cvarLowBunkerHealth	= CreateConVar("sm_surrender_bh", "10000", "Sets the min bunker health required to surrender");
 	
+	LoadTranslations("nd_common.phrases"); // for all chat messages
 	LoadTranslations("nd_surrender.phrases"); // for all chat messages
 	LoadTranslations("numbers.phrases"); // for one,two,three etc.
 	
@@ -162,11 +163,14 @@ void callSurrender(int client)
 		PrintMessage(client, "On Team");
 	
 	else if (g_hasVotedEmpire[client] || g_hasVotedConsort[client])
-		PrintMessage(client, "You Surrendered");
-	
+		PrintMessage(client, "Already Voted");
+
 	else if (ND_RoundEnded())
-		PrintMessage(client, "Round Ended");
-	
+		PrintMessage(client, "Round End Usage");
+
+	else if (!ND_RoundStarted()) 
+		PrintMessage(client, "Round Start Usage");
+		
 	else if (bunkerHealthTooLow(team))
 		PrintMessage(client, "Low Bunker Health");
 

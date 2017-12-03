@@ -32,22 +32,7 @@
 	{
 		"de"		"Dein Team hat bereits kapituliert"
 	}
-
-	"On Team"
-	{
-		"de"		"Nur Teammitglieder können abstimmen"
-	}
-
-	"You Surrendered"
-	{
-		"de"		"Du hast der Kapitulation bereits zugestimmt"
-	}
-
-	"Round Ended"
-	{
-		"de"		"Die Runde ist bereits beendet"
-	}
-
+	
 	"Consort Surrendered"
 	{
 		"de"		"Das Konsortium hat aufgegeben"
@@ -82,5 +67,4 @@
 	{
 		"de"		"Der Kommandant hat die schnelle Kapitulation verhindert. Die Kapitulation muss jetzt mehrheitlich beschlossen werden"
 	}
-
 }
