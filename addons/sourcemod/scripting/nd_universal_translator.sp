@@ -81,6 +81,7 @@ public void OnPluginStart()
 	BuildLogFilePath(); // for logging plugin actions
 	
 	/* Add translated phrases */
+	LoadTranslations("nd_common.phrases");
 	LoadTranslations("structminigame.phrases");
 	LoadTranslations("nd_universal_translator.phrases");
 }
