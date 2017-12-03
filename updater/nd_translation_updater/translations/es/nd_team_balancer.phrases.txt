@@ -143,11 +143,6 @@
 		"es"		"Balanceador de equipos actualmente apagado"
 	}
 
-	"Waiting"
-	{
-		"es"		"Esperando que se conecten los jugadores"
-	}
-
 	"Please Wait"
 	{
 		"es"		"Por favor espere"

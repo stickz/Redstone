@@ -143,11 +143,6 @@
 		"de"		"Teambalancer ist ausgeschaltet"
 	}
 
-	"Waiting"
-	{
-		"de"		"Warte auf Spieler"
-	}
-
 	"Please Wait"
 	{
 		"de"		"Bitte warten"

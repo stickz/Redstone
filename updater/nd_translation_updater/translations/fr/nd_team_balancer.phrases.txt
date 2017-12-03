@@ -128,11 +128,6 @@
 		"fr"		"L'équilibrage automatique est désactivé"
 	}
 
-	"Waiting"
-	{
-		"fr"		"En attente de joueurs"
-	}
-
 	"Please Wait"
 	{
 		"fr"		"Veuillez patienter"
