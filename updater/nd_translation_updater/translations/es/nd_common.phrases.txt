@@ -14,9 +14,14 @@
 	{
 		"es"		"No puedes utilizar esta opción después de terminar la ronda"
 	}
-	
+
 	"Round Start"
 	{
 		"es"		"Por favor espera a que la partida haya empezado"	
+	}
+
+	"Already Voted"
+	{
+		"es"		"Ya has votado"
 	}
 }

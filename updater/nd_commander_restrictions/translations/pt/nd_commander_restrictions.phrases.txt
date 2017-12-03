@@ -48,11 +48,6 @@
 		"pt"		"Quatro jogadores de um time são necessários para usar esta funcionalidade"
 	}
 
-	"Already Voted"
-	{
-		"pt"		"Você já votou para destituir o comandante"
-	}
-
 	"Commander Demoted"
 	{
 		"pt"		"O Comandante foi destituído com sucesso"

@@ -53,11 +53,6 @@
 		"es"		"Necesitas 4 compañeros de equipo para utilizar esta opción"
 	}
 
-	"Already Voted"
-	{
-		"es"		"Ya has votado para degradar al comandante"
-	}
-
 	"Commander Demoted"
 	{
 		"es"		"Comandante degradado exitosamente"

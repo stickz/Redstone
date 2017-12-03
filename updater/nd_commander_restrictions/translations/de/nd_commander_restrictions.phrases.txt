@@ -53,11 +53,6 @@
 		"de"		"Für diese Funktion werden 4 Spieler pro Team benötigt"
 	}
 
-	"Already Voted"
-	{
-		"de"		"Du hast bereits abgestimmt, den Kommandant abzusetzen"
-	}
-
 	"Commander Demoted"
 	{
 		"de"		"Kommandant erfolgreich abgesetzt"

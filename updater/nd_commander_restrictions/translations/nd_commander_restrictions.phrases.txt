@@ -45,11 +45,6 @@
 		"en"		"Four team players required to use this feature"
 	}
 	
-	"Already Voted"
-	{
-		"en"		"You've already voted to demote the commander"
-	}
-	
 	"Commander Demoted"
 	{
 		"en"		"Commander demoted successfully"	

@@ -184,7 +184,7 @@ void callRockTheVote(int client)
 		PrintMessage(client, "Already Passed");	
 
 	else if (g_hasVoted[client])
-		PrintMessage(client, "Already RTVed");
+		PrintMessage(client, "Already Voted");
 	
 	else if (ND_RoundEnded())
 		PrintMessage(client, "Round End Usage");

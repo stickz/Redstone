@@ -19,4 +19,9 @@
 	{
 		"de"		"Für diese Funktion muss die Runde gestartet sein"
 	}
+
+	"Already Voted"
+	{
+		"de"		"Du hast bereits abgestimmt"
+	}
 }
