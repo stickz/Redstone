@@ -10,12 +10,12 @@
 		"es"		"Consorcio"
 	}
 
-	"Round End"
+	"Round End Usage"
 	{
 		"es"		"No puedes utilizar esta opción después de terminar la ronda"
 	}
 
-	"Round Start"
+	"Round Start Usage"
 	{
 		"es"		"Por favor espera a que la partida haya empezado"	
 	}

@@ -10,12 +10,12 @@
 		"de"		"Konsortium"
 	}
 	
-	"Round End"
+	"Round End Usage"
 	{
 		"de"		"Diese Funktion kann nach dem Ende der Runde nicht benutzt werden"
 	}
 
-	"Round Started"
+	"Round Start Usage"
 	{
 		"de"		"Für diese Funktion muss die Runde gestartet sein"
 	}

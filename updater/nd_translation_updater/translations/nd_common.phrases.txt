@@ -10,12 +10,12 @@
 		"en"		"Consort"
 	}
 
-	"Round End"
+	"Round End Usage"
 	{
 		"en"		"This feature can't be used when the game is over"
 	}
 
-	"Round Started"
+	"Round Start Usage"
 	{
 		"en"		"This feature requires the round to be started"	
 	}
