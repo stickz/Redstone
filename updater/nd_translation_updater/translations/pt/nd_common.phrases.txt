@@ -1,5 +1,15 @@
 "Phrases"
 {
+	"Empire"
+	{
+		"es"		"Imperium"
+	}
+
+	"Consortium"
+	{
+		"es"		"Consortium"
+	}
+
 	"Round End"
 	{
 		"pt"		"Não pode usar esta funcionalidade após o final da partida"
