@@ -18,6 +18,7 @@ public void OnPluginStart()
 {
 	cvarServerType = CreateConVar("sm_server_type", "1", "0 = disable, 1 = stable, 2 = beta, 3 = alpha");
 	AddUpdaterLibrary(); //auto-updater
+	AutoExecConfig(true, "nd_server_type");
 }
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
