@@ -4,6 +4,7 @@
 #include <nd_rounds>
 #include <nd_maps>
 #include <nd_redstone>
+#include <nd_stype>
 
 #define TERTIARY_MODEL "models/rts_structures/rts_resource/rts_resource_tertiary.mdl"
 #define VECTOR_SIZE 3
@@ -78,7 +79,7 @@ void CreatePluginConvars()
 }
 
 public void OnClientPutInServer(int client) {
-	if (!tertsSpawned[SECOND_TIER] && ND_RoundStarted())
+	if (!tertsSpawned[SECOND_TIER] && ND_RoundStarted() && ND_GetServerType() >= SERVER_TYPE_BETA)
 		CheckTertiarySpawns();
 }
 
@@ -87,8 +88,27 @@ public void ND_OnRoundStarted()
 	resSpawnCount = 0;
 	tertsSpawned[FIRST_TIER] = false;
 	tertsSpawned[SECOND_TIER] = false;
-	AdjustTertiarySpawns();
-	CheckTertiarySpawns();
+	
+	int serverType = ND_GetServerType();
+	if (serverType >= SERVER_TYPE_BETA)
+	{
+		AdjustTertiarySpawns();
+		CheckTertiarySpawns();
+	}
+	
+	// always spawn extra tertaries on submarine
+	else (serverType != SERVER_TYPE_DISABLE)
+	{
+		char map_name[64];   
+		GetCurrentMap(map_name, sizeof(map_name));
+
+		// Will throw tag mismatch warning, it's okay
+		if (ND_CustomMapEquals(map_name, ND_Submarine))
+		{
+			SpawnTertiaryPoint({987.0, -7562.0, 23.0});
+			SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
+		}	
+	}
 }
 
 void CheckTertiarySpawns()
