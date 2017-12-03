@@ -2,7 +2,7 @@
 #include <sdktools>
 #include <sdkhooks>
 #include <nd_rounds>
-#include <nd_structures>
+#include <nd_struct_eng>
 
 public Plugin myinfo = 
 {
@@ -37,7 +37,7 @@ public void OnPluginStart()
 	}
 }
 
-public void OnEntityCreated(int entity, const char[] classname)
+public void ND_OnStructureCreated(int entity, const char[] classname)
 {
 	if (ND_RoundStarted())
 	{		

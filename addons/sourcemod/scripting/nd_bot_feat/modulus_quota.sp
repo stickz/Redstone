@@ -37,7 +37,7 @@ int getUnassignedAdjustment() //Fix bug which prevents connecting to the server
 }
 
 /* List maps to reduce bots on */
-#define STOCK_MAP_SIZE 	7
+/*#define STOCK_MAP_SIZE 	7
 int eSM[STOCK_MAP_SIZE] = {
 	view_as<int>(ND_Silo),
 	view_as<int>(ND_Hydro),
@@ -56,12 +56,12 @@ int eCM[CUSTOM_MAP_SIZE] = {
 	view_as<int>(ND_Corner),
 	view_as<int>(ND_Roadwork),
 	view_as<int>(ND_Nuclear)
-}
+}*/
 
 /* Functions for adjusting quota based on the map */
 bool ReduceBotCountByMap(const char[] map)
 {
-	for (int idx = 0; idx < STOCK_MAP_SIZE; idx++)
+	/*for (int idx = 0; idx < STOCK_MAP_SIZE; idx++)
 	{
 		if (StrEqual(map, ND_StockMaps[eSM[idx]], false))
 			return true;
@@ -73,7 +73,11 @@ bool ReduceBotCountByMap(const char[] map)
 			return true;
 	}
 	
-	return false;
+	return false;*/
+	
+	// Reduce bot counts on all maps for now
+	// To combat an unknown performance issue
+	return true;
 }
 
 /* List the really tinny maps to reduce further, (assume default if unlisted) */
