@@ -26,11 +26,6 @@
 	{
 		"es"		"Tu equipo se ha rendido"
 	}
-	
-	"On Team"
-	{
-		"es"		"Debes estar en un equipo para rendirte"
-	}
 		
 	"Consort Surrendered"
 	{	

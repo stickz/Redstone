@@ -24,4 +24,9 @@
 	{
 		"es"		"Ya has votado"
 	}
+	
+	"On Team"
+	{
+		"es"		"Debes estar en un equipo para usar este comando."
+	}
 }

@@ -23,11 +23,6 @@
 		"es"		"Solo una prórroga está permitida por mapa"
 	}
 
-	"On Team"
-	{
-		"es"		"Debes estar en un equipo para usar esta característica"
-	}
-
 	"You Extended"
 	{
 		"es"		"Ya has votado para prorrogar la partida"

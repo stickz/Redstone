@@ -22,7 +22,7 @@ public Action CMD_TeamCLang(int client, int args)
 	int team = GetClientTeam(client);
 	if (team != TEAM_CONSORT && team != TEAM_EMPIRE)
 	{
-		PrintMessage(client, "Not On Team");
+		PrintMessage(client, "On Team");
 		return Plugin_Handled;	
 	}	
 	

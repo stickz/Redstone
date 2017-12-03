@@ -43,11 +43,6 @@
 		"de"		"Ohne Kommandant kann die Meuterei nicht gestartet werden"
 	}
 
-	"On Team"
-	{
-		"de"		"Du musst dich in einem Team befinden, um den Kommandant abzuwählen"
-	}
-
 	"Four Required"
 	{
 		"de"		"Für diese Funktion werden 4 Spieler pro Team benötigt"

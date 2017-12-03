@@ -27,11 +27,6 @@
 		"pt"		"Seu time já se rendeu"
 	}
 	
-	"On Team"
-	{
-		"pt"		"Você precisa estar em um time para votar rendição"	
-	}
-	
 	"Consort Surrendered"
 	{
 		"pt"		"Consortium se rendeu"	

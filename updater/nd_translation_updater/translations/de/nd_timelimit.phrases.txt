@@ -23,11 +23,6 @@
 		"de"		"Pro Karte kann nur einmal verlängert werden"
 	}
 
-	"On Team"
-	{
-		"de"		"Du musst dich in einem Team befinden, um diese Funktion zu nutzen"
-	}
-
 	"You Extended"
 	{
 		"de"		"Du hast der Verlängerung bereits zugestimmt"

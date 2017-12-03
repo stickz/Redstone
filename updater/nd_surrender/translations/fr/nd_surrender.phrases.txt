@@ -22,11 +22,6 @@
 		"fr"		"Votre équipe s'est déjà rendue"
 	}
 
-	"On Team"
-	{
-		"fr"		"Vous devez être dans une équipe pour pouvoir voter la reddition"
-	}
-
 	"Consort Surrendered"
 	{
 		"fr"		"Le Consortium s'est rendu"

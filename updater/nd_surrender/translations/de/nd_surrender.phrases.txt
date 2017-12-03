@@ -32,11 +32,6 @@
 	{
 		"de"		"Dein Team hat bereits kapituliert"
 	}
-
-	"On Team"
-	{
-		"de"		"Nur Teammitglieder können abstimmen"
-	}
 	
 	"Consort Surrendered"
 	{

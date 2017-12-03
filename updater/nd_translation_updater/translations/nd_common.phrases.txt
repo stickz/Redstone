@@ -29,4 +29,9 @@
 	{
 		"en"		"This feature is currently unavailable"
 	}
+
+	"On Team"
+	{
+		"en"		"You must be on a team to use this command"
+	}
 }

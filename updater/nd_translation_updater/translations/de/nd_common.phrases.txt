@@ -29,4 +29,9 @@
 	{
 		"de"		"Diese Funktion ist gerade nicht verfügbar"
 	}
+	
+	"On Team"
+	{
+		"de"		"Für diese Funktion musst du in einem Team sein."
+	}
 }

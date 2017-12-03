@@ -53,11 +53,6 @@
 		"de"		"keinen übersetzbaren Begriff erkannt."
 	}
 
-	"Not On Team"
-	{
-		"de"		"Um dieses Kommando auszuführen, musst du in einem Team sein."
-	}
-
 	"No Team Commander"
 	{
 		"de"		"Das Team hat zur Zeit keinen Kommandanten."

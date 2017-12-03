@@ -38,11 +38,6 @@
 		"pt"		"Não há comandante para destituir"
 	}
 
-	"On Team"
-	{
-		"pt"		"Você precisa estar em um time para votar uma destituição"
-	}
-
 	"Four Required"
 	{
 		"pt"		"Quatro jogadores de um time são necessários para usar esta funcionalidade"

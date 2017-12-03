@@ -35,11 +35,6 @@
 		"en"		"There is no commander to demote"
 	}
 	
-	"On Team"
-	{
-		"en"		"You must be on a team to vote demote"
-	}
-	
 	"Four Required"
 	{
 		"en"		"Four team players required to use this feature"

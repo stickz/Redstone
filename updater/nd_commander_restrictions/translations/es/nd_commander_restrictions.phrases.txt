@@ -43,11 +43,6 @@
 		"es"		"No hay comandante para degradar"
 	}
 
-	"On Team"
-	{
-		"es"		"Debes estar en un equipo para votar"
-	}
-
 	"Four Required"
 	{
 		"es"		"Necesitas 4 compañeros de equipo para utilizar esta opción"
