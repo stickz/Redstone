@@ -98,6 +98,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_rtv", CMD_RockTheVote);
 	RegConsoleCmd("sm_changemap", CMD_RockTheVote);
 	
+	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_rockthevote.phrases");
 	LoadTranslations("numbers.phrases");
 	

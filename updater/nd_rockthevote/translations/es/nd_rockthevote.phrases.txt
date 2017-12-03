@@ -30,16 +30,6 @@
 		"es"		"Ya has votado para cambiar el mapa"	
 	}
 	
-	"Round Ended"
-	{
-		"es"		"RTV no puede ser usato tras finalizar la ronda"	
-	}
-	
-	"Round Start"
-	{
-		"es"		"Por favor espera a que la partida haya empezado"	
-	}
-	
 	"RTV Changing"
 	{
 		"es"		"RTV Con éxito: El mapa cambiará en cinco segundos"		

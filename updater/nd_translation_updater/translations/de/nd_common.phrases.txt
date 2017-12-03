@@ -2,11 +2,21 @@
 {
     "Empire"
 	{
-		"en"		"Imperium"
+		"de"		"Imperium"
 	}
 	
 	"Consortium"
 	{
-		"en"		"Konsortium"
+		"de"		"Konsortium"
+	}
+	
+	"Round End"
+	{
+		"de"		"Diese Funktion kann nach dem Ende der Runde nicht benutzt werden"
+	}
+
+	"Round Started"
+	{
+		"de"		"Für diese Funktion muss die Runde gestartet sein"
 	}
 }

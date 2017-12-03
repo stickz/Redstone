@@ -30,16 +30,6 @@
 		"en"		"You've already voted to change the map"	
 	}
 	
-	"Round Ended"
-	{
-		"en"		"RTV cannot be used after round end"	
-	}
-	
-	"Round Start"
-	{
-		"en"		"Please wait until the match has started"	
-	}
-	
 	"RTV Changing"
 	{
 		"en"		"RTV Successful: Map will change in five seconds"		
@@ -49,7 +39,6 @@
 	{
 		"en"		"RTV Successful: Pending next map vote for change"
 	}
-	
 	
 	//Notice: If the numbers.phrases file isn't translated, it will fill {2} with English
 	//{2} is not a number like 1,2,3 etc, (improper grammer) instead it's one,two,three etc.

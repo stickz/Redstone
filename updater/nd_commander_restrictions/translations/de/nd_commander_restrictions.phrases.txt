@@ -58,16 +58,6 @@
 		"de"		"Du hast bereits abgestimmt, den Kommandant abzusetzen"
 	}
 
-	"Round End"
-	{
-		"de"		"Diese Funktion kann nach dem Ende der Runde nicht benutzt werden"
-	}
-
-	"Round Started"
-	{
-		"de"		"Warte mit dem Absetzen, bis die Runde gestartet hat"
-	}
-
 	"Commander Demoted"
 	{
 		"de"		"Kommandant erfolgreich abgesetzt"
