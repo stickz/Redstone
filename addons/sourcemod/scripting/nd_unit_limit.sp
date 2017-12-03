@@ -107,6 +107,7 @@ public void OnPluginStart()
 	RegisterCommands(); //register unit limit commands
 	AddUpdaterLibrary(); //add updater support
 	
+	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_unit_limit.phrases");
 	LoadTranslations("numbers.phrases");
 }

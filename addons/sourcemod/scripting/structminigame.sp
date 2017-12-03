@@ -52,6 +52,7 @@ public void OnPluginStart()
 	
 	AddClientPrefSupport();
 
+	LoadTranslations("nd_common.phrases");
 	LoadTranslations("structminigame.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
