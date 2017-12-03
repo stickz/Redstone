@@ -25,11 +25,6 @@
 		"de"		"Map change is pending, please be patient"
 	}
 	
-	"Already RTVed"
-	{
-		"de"		"You've already voted to change the map"	
-	}
-	
 	"Round Ended"
 	{
 		"de"		"RTV cannot be used after round end"	

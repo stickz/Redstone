@@ -25,11 +25,6 @@
 		"es"		"El cambio de mapa está pendiente, por favor ten paciencia"
 	}
 	
-	"Already RTVed"
-	{
-		"es"		"Ya has votado para cambiar el mapa"	
-	}
-	
 	"RTV Changing"
 	{
 		"es"		"RTV Con éxito: El mapa cambiará en cinco segundos"		

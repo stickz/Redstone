@@ -33,11 +33,6 @@
 		"de"		"Anstehender Kartenwechsel, bitte warten"
 	}
 
-	"Already RTVed"
-	{
-		"de"		"Dem Kartenwechsel wurde bereits zugestimmt"
-	}
-
 	"RTV Changing"
 	{
 		"de"		"RTV Erfolgreich: Die Karte wird in Fünf Sekunden gewechselt"
