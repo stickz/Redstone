@@ -15,7 +15,7 @@
 	"Four Required"
 	{
 		"es"		"Se necesitan cuatro jugadores en tu equipo para rendirte"	
-	}	
+	}
 	
 	"Too Soon"
 	{
@@ -30,18 +30,8 @@
 	"On Team"
 	{
 		"es"		"Debes estar en un equipo para rendirte"
-	}	
-	
-	"You Surrendered"
-	{
-		"es"		"Ya has votado para rendirte"
-	}	
-
-	"Round Ended"
-	{
-		"es"		"La ronda ha terminado"	
 	}
-	
+		
 	"Consort Surrendered"
 	{	
 		"es"		"El Consorcio se ha rendido"

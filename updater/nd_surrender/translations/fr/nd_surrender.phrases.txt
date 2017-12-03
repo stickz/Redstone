@@ -17,17 +17,7 @@
 	{
 		"fr"		"Il doit y avoir au moins 10 joueurs pour pouvoir utiliser cette fonction"
 	}
-
-	"Four Required"
-	{
-		"fr"		"Il faut quatre joueurs dans l'équipe pour pouvoir se rendre"
-	}
-
-	"Too Soon"
-	{
-		"fr"		"Vous ne pouvez pas vous rendre si tôt dans le match"
-	}
-
+	
 	"Team Surrendered"
 	{
 		"fr"		"Votre équipe s'est déjà rendue"
@@ -41,11 +31,6 @@
 	"You Surrendered"
 	{
 		"fr"		"Vous avez déjà voté pour la reddition"
-	}
-
-	"Round Ended"
-	{
-		"fr"		"La partie est déjà terminée"
 	}
 
 	"Consort Surrendered"
