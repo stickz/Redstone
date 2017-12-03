@@ -52,6 +52,8 @@ public void OnPluginStart()
 	gH_Cvar_Type = CreateConVar("sm_ping_type", "3", "The type of map blip to use. Check the source for details.", _, true, 0.0);
 
 	AddUpdaterLibrary(); //auto-updater
+	
+	LoadTranslations("nd_common.phrases");
 }
 
 public Action Command_Ping(int client, int args)
