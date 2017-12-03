@@ -11,3 +11,6 @@
 
 // Returns the server type, see defines above
 native int ND_GetServerType();
+
+// Check if the native availible before calling it
+#define ND_STYPE_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_GetServerType") == FeatureStatus_Available)
