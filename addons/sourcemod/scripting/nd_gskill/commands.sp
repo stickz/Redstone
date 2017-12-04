@@ -133,17 +133,17 @@ void DumpPlayerBase(int player)
 
 void dumpPlayBasesOnTeam(int team, int player)
 {	
-	char Name[32]; char oBase[5]; char nBase[6];
+	char Name[32]; int oBase; int nBase;
 	for (int client; client <= MaxClients; client++)
 	{
 		if (RED_IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			GetClientName(client, Name, sizeof(Name));		
+			GetClientName(client, Name, sizeof(Name));
 			
-			FloatToString(trFloat(GameME_SkillBase[client]), oBase, sizeof(oBase));
-			FloatToString(trFloat(GameME_GetModifiedSkillBase(client), nBase, sizeof(nBase));
+			oBase = RoundFloat(GameME_SkillBase[client]);
+			nBase = RoundFloat(GameME_GetModifiedSkillBase(client));
 			
-			PrintToConsole(player, "Name: %s, Reg Base: %s, Hpk Base, %s", Name, oBase, nBase);
+			PrintToConsole(player, "Name: %s, Reg Base: %d, Hpk Base, %d", Name, oBase, nBase);
 		}
 	}
 }
