@@ -13,6 +13,7 @@ enum GMConvars
 	ConVar:hpkMiddleTendency,
 	ConVar:hpkImbalanceBaseHpk,
 	ConVar:hpkImbalanceBaseKdr,
+	ConVar:hpkSkillBaseModifer,
 	
 	ConVar:kdrPositiveDivider,
 	ConVar:kdrNegativeBase,
@@ -43,6 +44,7 @@ void GameME_CreateConvars()
 	gc_GameMe[hpkMiddleTendency]		=	CreateConVar("sm_gameme_hpk_middle", "15", "Specifies what hpk value is used as the average, in calculations.");
 	gc_GameMe[hpkImbalanceBaseHpk]		=	CreateConVar("sm_gameme_hpk_ibhpk", "15", "Specifies the imbalance hpk value for hpk calculations.");		
 	gc_GameMe[hpkImbalanceBaseKdr]		=	CreateConVar("sm_gameme_hpk_ibkdr", "1.5", "Specifies the imbalance kdr value for hpk calculations.");
+	gc_GameMe[hpkSkillBaseModifer]	 	= 	CreateConVar("sm_gameme_hpk_ibsb", "2", "Specifies skill base percent reduction for every hpk point missing from average.");
 	
 	gc_GameMe[kdrPositiveDivider]		= 	CreateConVar("sm_gameme_kdr_posDevider", "20", "Value to devide postive kdrs by");
 	gc_GameMe[kdrNegativeBase]		= 	CreateConVar("sm_gameme_kdr_negBase", "0.75", "Factor to base negative kdrs off of... lower = more impact, higher = less impact");	

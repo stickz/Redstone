@@ -2,9 +2,10 @@ void RegTestCommands()
 {
 	RegAdminCmd("sm_kdrmult", CMD_GetKdrMult, ADMFLAG_GENERIC, "Checks a player's kdr multipler");
 	RegAdminCmd("sm_hpkmult", CMD_GetHpkMult, ADMFLAG_GENERIC, "Checks a player's hpk multipler");
-	
+		
 	RegConsoleCmd("sm_DumpPlayerSkill", CMD_DumpPlayerData);
 	RegConsoleCmd("sm_DumpPlayerData", CMD_DumpPlayerData);
+	RegConsoleCmd("sm_DumpPlayerBase", CMD_DumpPlayerBase);
 }
 
 public Action CMD_GetKdrMult(int client, int args)
@@ -102,4 +103,47 @@ void PrintSpacer(int player) {
 
 float trFloat(float f) {	
 	return (float(RoundFloat(f * 100.0))) / 100.0;
+}
+
+/* Functions for !DumpPlayerBase */
+public Action CMD_DumpPlayerBase(int client, int args)
+{
+	DumpPlayerBase(client);
+	return Plugin_Handled;
+}
+
+void DumpPlayerBase(int player)
+{
+	PrintSpacer(player); PrintSpacer(player);
+	
+	PrintToConsole(player, "--> Player Base Skill Values <--");
+	PrintToConsole(player, "Format: Name, Reg Base, HPK Base");
+	PrintSpacer(player);
+	
+	for (int team = 0; team < 4; team++)
+	{
+		if (RED_GetTeamCount(team) > 0)
+		{
+			PrintToConsole(player, "Team %s:", ND_GetTeamName(team));
+			dumpPlayBasesOnTeam(team, player);
+			PrintSpacer(player);
+		}
+	}
+}
+
+void dumpPlayBasesOnTeam(int team, int player)
+{	
+	char Name[32]; int oBase; int nBase;
+	for (int client; client <= MaxClients; client++)
+	{
+		if (RED_IsValidClient(client) && GetClientTeam(client) == team)
+		{
+			GetClientName(client, Name, sizeof(Name));
+			
+			oBase = RoundFloat(GameME_SkillBase[client]);
+			nBase = RoundFloat(GameME_GetModifiedSkillBase(client));
+			
+			PrintToConsole(player, "Name: %s, Reg Base: %d, Hpk Base, %d", Name, oBase, nBase);
+		}
+	}
 }

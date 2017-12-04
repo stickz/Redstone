@@ -94,6 +94,24 @@ float GameME_GetModifiedHpk(int client, bool resertive = false)
 	return ClientHpk;
 }
 
+/* This function returns an imbalance calculated final skill base */
+float GameME_GetModifiedSkillBase(int client)
+{
+	/* Reseratively get the client's modified hpk */
+	float ClientHpk = GameME_GetModifiedHpk(client, true);
+	float ClientMinHpk = percentToDecimal(gc_GameMe[hpkMiddleTendency].FloatValue);
+	
+	if (ClientHpk < ClientMinHpk)
+	{
+		// calculate the percent taken off for every hpk percent missing
+		float ClientHpkMod = (ClientMinHpk - ClientHpk) * gc_GameMe[hpkSkillBaseModifer].FloatValue;
+		// Return the skill base times one minus the percent to take it off
+		return GameME_SkillBase[client] * (1 - ClientHpkMod);
+	}
+	
+	return GameME_SkillBase[client];
+}
+
 bool GameME_UseKDR_Modifier(int client) { //Does the kdr modifier meet requirements to use it?
 	return !GameME_KDR_Availible(client) ? false : (GameMe_UseKills(client) || GameME_UseDeaths(client));
 }
