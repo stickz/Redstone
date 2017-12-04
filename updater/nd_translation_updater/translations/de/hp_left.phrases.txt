@@ -10,10 +10,10 @@
 	}
 	"Killedhs"
 	{
-		"de"			"{1}{2}{3} tötete Sie mit einer {4} (headshot) und hat {5} HP übrig"
+		"de"			"{1}{2}{3} tötete Sie mit einer {4} (Kopfschuss) und hat {5} HP übrig"
 	}
 	"Killed"
 	{
-		"de"			"{1}{2}{3} tötete Sie mit der Waffe {4} (Kopfschuss) und hat {5} HP übrig"
+		"de"			"{1}{2}{3} tötete Sie mit der Waffe {4} und hat {5} HP übrig"
 	}
 }

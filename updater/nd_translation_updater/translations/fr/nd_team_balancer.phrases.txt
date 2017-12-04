@@ -20,7 +20,7 @@
 
 	"Veteran Only"
 	{
-		"fr"		"Ce serveur est uniquement pour les  joueurs vétérans"
+		"fr"		"Ce serveur est uniquement pour les joueurs vétérans"
 	}
 
 	"Graduated"
@@ -40,7 +40,7 @@
 
 	"Balancer Running"
 	{
-		"fr"		"Impossible de rejoindre une équipe durant la partie d'échauffement."
+		"fr"		"Impossible de rejoindre une équipe durant la partie d'échauffement"
 	}
 
 	"Resign Switch"
@@ -95,7 +95,7 @@
 
 	"Ether Team Stack"
 	{
-		"fr"		"Rejoindre une équipe causera un déséquilibrage. Restriction pour quelque minutes ou jusqu'à changement de statut."
+		"fr"		"Rejoindre une équipe causera un déséquilibrage. Restriction pour quelque minutes ou jusqu'à changement de statut"
 	}
 
 	"Could Be Switched"
@@ -127,17 +127,7 @@
 	{
 		"fr"		"L'équilibrage automatique est désactivé"
 	}
-
-	"Waiting"
-	{
-		"fr"		"En attente de joueurs"
-	}
-
-	"Please Wait"
-	{
-		"fr"		"Veuillez patienter"
-	}
-
+	
 	"Status"
 	{
 		"fr"		"Statut"

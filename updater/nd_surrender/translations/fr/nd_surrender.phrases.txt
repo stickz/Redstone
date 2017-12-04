@@ -7,7 +7,6 @@
 //
 "Phrases"
 {
-
 	"Twelve Required"
 	{
 		"fr"		"Il doit y avoir au moins 12 joueurs pour pouvoir utiliser cette fonction"
@@ -17,7 +16,7 @@
 	{
 		"fr"		"Il doit y avoir au moins 10 joueurs pour pouvoir utiliser cette fonction"
 	}
-
+	
 	"Four Required"
 	{
 		"fr"		"Il faut quatre joueurs dans l'équipe pour pouvoir se rendre"
@@ -33,21 +32,6 @@
 		"fr"		"Votre équipe s'est déjà rendue"
 	}
 
-	"On Team"
-	{
-		"fr"		"Vous devez être dans une équipe pour pouvoir voter la reddition"
-	}
-
-	"You Surrendered"
-	{
-		"fr"		"Vous avez déjà voté pour la reddition"
-	}
-
-	"Round Ended"
-	{
-		"fr"		"La partie est déjà terminée"
-	}
-
 	"Consort Surrendered"
 	{
 		"fr"		"Le Consortium s'est rendu"
@@ -60,7 +44,7 @@
 
 	"Typed Surrender"
 	{
-		"fr"		"{1} se sont rendus : {2} de plus requis."
+		"fr"		"{1} se sont rendus : {2} de plus requis"
 	}
 
 	"Low Bunker Health"
@@ -82,5 +66,4 @@
 	{
 		"fr"		"Le commandant s'est opposé à la reddition. Une majorité est à présent nécessaire pour la déclencher"
 	}
-
 }

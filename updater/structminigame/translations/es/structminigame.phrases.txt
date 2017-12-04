@@ -80,17 +80,6 @@
 		"es"		"{1}{2} ha destruido {3}"
 	}
 	
-	
-	//Advantage Translations
-	"Empire"
-	{
-		"es"		"Imperio"
-	}
-	"Consort"
-	{
-		"es"		"Consorte"
-	}
-	
 	//This message is a complicated mess, so read carefully
 	"Advantage Message"
 	{
@@ -100,7 +89,7 @@
 		//{3} changes the 'just gave' colour to green
 		
 		//{4} changes {5} to the team colour
-		//{5} = Is etheir "Empire" or "Consort" as translated above
+		//{5} = Is either "Empire" or "Consort" as translated above
 		
 		//{6} changes 'the advantage' colour to green
 		
@@ -114,7 +103,7 @@
 	//This message only uses the phrase "Empire" or "Consort"
 	"Advantage Center"
 	{
-		//{1} = Is etheir "Empire" or "Consort" as translated above
+		//{1} = Is either "Empire" or "Consort" as translated above
 		"es"		"Ventaja - {1}"
 	}
 }

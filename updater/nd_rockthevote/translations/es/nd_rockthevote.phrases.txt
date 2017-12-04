@@ -22,22 +22,7 @@
 	
 	"Already Passed"
 	{
-		"es"		"El cambio de mapa está pendiente, por favor ten paciencia."
-	}
-	
-	"Already RTVed"
-	{
-		"es"		"Ya has votado para cambiar el mapa."	
-	}
-	
-	"Round Ended"
-	{
-		"es"		"RTV no puede ser usato tras finalizar la ronda"	
-	}
-	
-	"Round Start"
-	{
-		"es"		"Por favor espera a que la partida haya empezado"	
+		"es"		"El cambio de mapa está pendiente, por favor ten paciencia"
 	}
 	
 	"RTV Changing"
@@ -57,6 +42,6 @@
 	{
 		//{1} = Player's Name
 		//{2} = Translated numbers from number.phrases		
-		"es"		"{1} escribió 'change map' (cambiar de mapa): {2} jugadores más necesarios."
+		"es"		"{1} escribió 'change map' (cambiar de mapa): {2} jugadores más necesarios"
 	}
 }

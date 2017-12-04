@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdkhooks>
 #include <nd_rounds>
 #include <nd_maps>
+#include <nd_struct_eng>
 
 #define DEBUG 0
 
@@ -36,7 +37,7 @@ public Plugin myinfo =
 	author 		= "yed_, stickz",
     	description 	= "Prevents building things in glitched locations",
     	version 	= "dummy",
-	url 		= "git@vanyli.net:nd-plugins"
+	url 		= "https://github.com/stickz/Redstone/"
 }
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_offmap_fixes/nd_offmap_fixes.txt"
@@ -164,19 +165,9 @@ void HandleCoast()
     HAX.PushArray(hax);
 }
 
-public void OnEntityCreated(entity, const char[] classname)
-{
-    if (!validMap)
-    {
-        #if DEBUG == 1
-	PrintToChatAll("debug: Map is Valid");
-	#endif
-		
-	return;	
-    }
-
-    if (strncmp(classname, "struct_", 7) == 0) 
-        CreateTimer(0.1, CheckBorders, entity);
+public void ND_OnStructureCreated(int entity, const char[] classname) {
+    if (validMap)
+    	CreateTimer(0.1, CheckBorders, entity);
 }
 
 public Action CheckBorders(Handle timer, any entity) 

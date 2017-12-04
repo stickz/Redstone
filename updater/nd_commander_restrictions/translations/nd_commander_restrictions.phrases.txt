@@ -17,7 +17,7 @@
 	
 	"Bellow Ten"
 	{
-		"en"		"Players bellow level 10 can only command <10 players or level <25 averages."	
+		"en"		"Players bellow level 10 can only command <10 players or level <25 averages"	
 	}
 	
 	"Fifty Five Required"
@@ -35,29 +35,9 @@
 		"en"		"There is no commander to demote"
 	}
 	
-	"On Team"
-	{
-		"en"		"You must be on a team to vote demote"
-	}
-	
 	"Four Required"
 	{
 		"en"		"Four team players required to use this feature"
-	}
-	
-	"Already Voted"
-	{
-		"en"		"You've already voted to demote the commander"
-	}
-	
-	"Round End"
-	{
-		"en"		"Cannot use this feature after round end"
-	}
-	
-	"Round Started"
-	{
-		"en"		"Please wait until round start before demoting"	
 	}
 	
 	"Commander Demoted"
@@ -92,7 +72,7 @@
 	
 	"Demote Not Found"
 	{
-		"en"		"Your vote to demote the commander is already reversed or not present."
+		"en"		"Your vote to demote the commander is already reversed or not present"
 	}
 	
 	"Demote Vote"
@@ -109,7 +89,7 @@
 	
 	"Commander Deprioritised"
 	{
-		"en"		"You're deprioritized from commander selection and cannot apply in the first 90s."
+		"en"		"You're deprioritized from commander selection and cannot apply in the first 90s"
 	}
 	
 	"Last Chance Apply"

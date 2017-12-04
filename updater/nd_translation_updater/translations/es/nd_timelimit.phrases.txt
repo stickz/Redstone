@@ -23,11 +23,6 @@
 		"es"		"Solo una prórroga está permitida por mapa"
 	}
 
-	"On Team"
-	{
-		"es"		"Debes estar en un equipo para usar esta característica"
-	}
-
 	"You Extended"
 	{
 		"es"		"Ya has votado para prorrogar la partida"
@@ -75,17 +70,17 @@
 
 	"Extend Both"
 	{
-		"es"		"{1} decidió prorrogar : {2} Con & {3} Imp requeridos."
+		"es"		"{1} decidió prorrogar : {2} Con & {3} Imp requeridos"
 	}
 
 	"Extend Empire"
 	{
-		"es"		"{1} decidió prorrogar : {2} imperio requeridos."
+		"es"		"{1} decidió prorrogar : {2} imperio requeridos"
 	}
 
 	"Extend Consort"
 	{
-		"es"		"{1} decidió prorrogar : {2} consorte requeridos."
+		"es"		"{1} decidió prorrogar : {2} consorte requeridos"
 	}
 
 }

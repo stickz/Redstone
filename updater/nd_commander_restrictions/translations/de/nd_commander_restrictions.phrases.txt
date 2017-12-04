@@ -10,17 +10,17 @@
 
 	"Demotion Reapply"
 	{
-		"de"		"Du darfst dich nicht als Kommandeur bewerben, nachdem du abwählt wurdest"
+		"de"		"Du kannst dich nicht als Kommandant bewerben, nachdem du abgesetzt wurdest"
 	}
 
 	"Resignation Reapply"
 	{
-		"de"		"Eine erneute Bewerbung als Kommandeur ist erst 30 Sekunden nach einer Meuterei möglich"
+		"de"		"Eine erneute Bewerbung als Kommandant ist erst 30 Sekunden nach dem Abdanken möglich"
 	}
 
 	"Spawn Before Apply"
 	{
-		"de"		"Du musst ins Spiel einsteigen, bevor du dich als Kommandeur bewerben kannst!"
+		"de"		"Du musst ins Spiel einsteigen, bevor du dich als Kommandant bewerben kannst!"
 	}
 
 	"Bellow Ten"
@@ -30,52 +30,32 @@
 
 	"Fifty Five Required"
 	{
-		"de"		"Level 40+ Spieler werden ab 24 Spielern als Kommandeur bevorzugt"
+		"de"		"Level 40+ Spieler werden ab 24 Spielern als Kommandant bevorzugt"
 	}
 
 	"Total Level"
 	{
-		"de"		"Du kannst nicht mehr Spieler befehlen als dein Level zulässt"
+		"de"		"Du kannst nicht mehr Spieler befehlen, als dein Level zulässt"
 	}
 
 	"No Commander"
 	{
-		"de"		"Ohne Kommandeur kann die Meuterei nicht gestartet werden."
-	}
-
-	"On Team"
-	{
-		"de"		"Du musst dich in einem Team befinden um den Kommandeur abzuwählen"
+		"de"		"Ohne Kommandant kann die Meuterei nicht gestartet werden"
 	}
 
 	"Four Required"
 	{
-		"de"		"Für diese Funktion werden 4 Spieler pro Team benötigt."
-	}
-
-	"Already Voted"
-	{
-		"de"		"Du hast bereits abgestimmt den Kommandeur abzuwählen"
-	}
-
-	"Round End"
-	{
-		"de"		"Diese Funktion kann nach dem Ende der Runde nicht benutzt werden."
-	}
-
-	"Round Started"
-	{
-		"de"		"Warte mit dem Absetzen bis die Runde gestartet hat"
+		"de"		"Für diese Funktion werden 4 Spieler pro Team benötigt"
 	}
 
 	"Commander Demoted"
 	{
-		"de"		"Kommandeur erfolgreich abgewählt"
+		"de"		"Kommandant erfolgreich abgesetzt"
 	}
 
 	"Demote Failed"
 	{
-		"de"		"Fehler! Keinen Kommandeur zum Absetzen gefunden"
+		"de"		"Fehler! Keinen Kommandant zum Absetzen gefunden"
 	}
 
 	"Demote First"
@@ -85,32 +65,32 @@
 
 	"Silence First"
 	{
-		"de"		"Du kannst keine Meuterei starten, während du verstummt bist."
+		"de"		"Du kannst keine Meuterei starten, während du verstummt bist"
 	}
 
 	"Silence Command"
 	{
-		"de"		"Du kannst nichts befehlen während du stumm bist"
+		"de"		"Du kannst nichts befehlen, während du stumm bist"
 	}
 
 	"Restrictions Relaxed"
 	{
-		"de"		"Kommandeurbeschränkung verringert"
+		"de"		"Kommandantbeschränkung reduziert"
 	}
 
 	"Demote Not Found"
 	{
-		"de"		"Deine Stimme zur Abwahl des Kommandeurs wurde bereits zurückgezogen"
+		"de"		"Deine Stimme zum Absetzen des Kommandanten wurde bereits zurückgezogen"
 	}
 
 	"Demote Vote"
 	{
-		"de"		"{1} will den Kommandeur absetzen - !demote. ({2} weitere Stimmen benötigt)"
+		"de"		"{1} will den Kommandanten absetzen - '!demote' ({2} weitere Stimmen benötigt)"
 	}
 
 	"Skill Required"
 	{
-		"de"		"Um auf diesem Server kommandieren zu dürfen ist ein Skillwertung von {1} benötigt."
+		"de"		"Um auf diesem Server kommandieren zu dürfen, ist ein Skillwertung von {1} benötigt"
 	}
 
 }

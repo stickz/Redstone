@@ -15,11 +15,6 @@
 		"en"		"Only one extension is allowed per map"
 	}
 	
-	"On Team"
-	{
-		"en"		"You must be on a team use to this feature"	
-	}
-	
 	"You Extended"
 	{
 		"en"		"You've already voted to extend the match"
@@ -72,16 +67,16 @@
 	"Extend Both"
 	{
 		"#format"	"{1:s},{2:i},{3:i}"
-		"en"		"{1} typed extend : {2} Con & {3} Emp required." 	
+		"en"		"{1} typed extend : {2} Con & {3} Emp required" 	
 	}
 	"Extend Empire"
 	{
 		"#format"	"{1:s},{2:i}"
-		"en"		"{1} typed extend : {2} empire required."	
+		"en"		"{1} typed extend : {2} empire required"	
 	}
 	"Extend Consort"
 	{
 		"#format"	"{1:s},{2:i}"
-		"en"		"{1} typed extend : {2} consort required."	
+		"en"		"{1} typed extend : {2} consort required"	
 	}
 }

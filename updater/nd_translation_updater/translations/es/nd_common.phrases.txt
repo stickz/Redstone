@@ -1,0 +1,32 @@
+"Phrases"
+{
+	"Empire"
+	{
+		"es"		"Imperio"
+	}
+
+	"Consortium"
+	{
+		"es"		"Consorcio"
+	}
+
+	"Round End Usage"
+	{
+		"es"		"No puedes utilizar esta opción después de terminar la ronda"
+	}
+
+	"Round Start Usage"
+	{
+		"es"		"Por favor espera a que la partida haya empezado"	
+	}
+
+	"Already Voted"
+	{
+		"es"		"Ya has votado"
+	}
+	
+	"On Team"
+	{
+		"es"		"Debes estar en un equipo para usar este comando."
+	}
+}

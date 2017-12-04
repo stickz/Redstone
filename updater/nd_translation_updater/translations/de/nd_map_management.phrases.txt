@@ -10,27 +10,27 @@
 
 	"Retrigger Map Vote"
 	{
-		"de"		"Die Kartenwahl wird aufgrund geringer Beteiligung neugestartet."
+		"de"		"Die Kartenwahl wird aufgrund geringer Beteiligung neugestartet"
 	}
 
 	"Not Enough Players"
 	{
-		"de"		"Nicht genügend Spieler für die Karte {1}! Wechsle zu {2}!"
+		"de"		"Nicht genügend Spieler für die Karte {1}! Wechsle zu {2}"
 	}
 
 	"Too Many Players"
 	{
-		"de"		"Es gibt zu viele Spieler für die nächste Karte {1}! Wechsle zu {2}!"
+		"de"		"Es gibt zu viele Spieler für die nächste Karte {1}! Wechsle zu {2}"
 	}
 
 	"Wait Map List"
 	{
-		"de"		"In {1} Sekunden kannst du die Liste nochmal abrufen!"
+		"de"		"In {1} Sekunden kannst du die Liste nochmal abrufen"
 	}
 
 	"Prev Maps Listed"
 	{
-		"de"		"Die Liste der vorherigen Karten wurden erfolgreich in die Konsole geschrieben. "
+		"de"		"Die Liste der vorherigen Karten wurden erfolgreich in die Konsole geschrieben"
 	}
 
 }

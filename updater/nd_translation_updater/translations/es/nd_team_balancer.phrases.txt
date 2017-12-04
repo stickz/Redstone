@@ -100,7 +100,7 @@
 
 	"Spectator Joined"
 	{
-		"es"		"En modo espectador! Para salir escribe !spec."
+		"es"		"En modo espectador! Para salir escribe !spec"
 	}
 
 	"Teamdiff Round Wait"
@@ -110,7 +110,7 @@
 
 	"Ether Team Stack"
 	{
-		"es"		"Unirse a cualquier equipo provocara una pila. Restringido por unos minutos o hasta que cambie de estado."
+		"es"		"Unirse a cualquier equipo provocara una pila. Restringido por unos minutos o hasta que cambie de estado"
 	}
 
 	"Could Be Switched"
@@ -142,17 +142,7 @@
 	{
 		"es"		"Balanceador de equipos actualmente apagado"
 	}
-
-	"Waiting"
-	{
-		"es"		"Esperando que se conecten los jugadores"
-	}
-
-	"Please Wait"
-	{
-		"es"		"Por favor espere"
-	}
-
+	
 	"Status"
 	{
 		"es"		"Estado"
@@ -176,16 +166,6 @@
 	"Heavily Imbalanced"
 	{
 		"es"		"Altamente desbalanceado"
-	}
-
-	"Empire"
-	{
-		"es"		"Imperio"
-	}
-
-	"Consortium"
-	{
-		"es"		"Consorcio"
 	}
 
 	"Skill"

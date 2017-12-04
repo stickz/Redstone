@@ -30,22 +30,7 @@
 
 	"Already Passed"
 	{
-		"de"		"Anstehender Kartenwechsel, bitte warten."
-	}
-
-	"Already RTVed"
-	{
-		"de"		"Dem Kartenwechsel wurde bereits zugestimmt"
-	}
-
-	"Round Ended"
-	{
-		"de"		"RTV kann nicht nach Rundenende benutzt werden"
-	}
-
-	"Round Start"
-	{
-		"de"		"Bitte warten, bis die Runde gestartet hat"
+		"de"		"Anstehender Kartenwechsel, bitte warten"
 	}
 
 	"RTV Changing"
@@ -55,12 +40,12 @@
 
 	"RTV Wait"
 	{
-		"de"		"RTV Erfolgreich: Auswahl für die Folgekarte aktiviert."
+		"de"		"RTV Erfolgreich: Auswahl für die Folgekarte aktiviert"
 	}
 
 	"Typed Change Map"
 	{
-		"de"		"{1} hat einen Kartenwechsel vorgeschlagen: {2} weitere Unterstützer benötigt."
+		"de"		"{1} hat einen Kartenwechsel vorgeschlagen: {2} weitere Unterstützer benötigt"
 	}
 
 }

@@ -5,6 +5,9 @@
 
 #include <nd_structures>
 
+// Fires when a structure is fully created. Less overhead than OnEntityCreated()
+forward void ND_OnStructureCreated(int entity, const char[] classname);
+
 /* Create structure build started forwards */
 forward void OnBuildStarted_Bunker(int team);
 forward void OnBuildStarted_MGTurret(int team);

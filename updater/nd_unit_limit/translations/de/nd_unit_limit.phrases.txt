@@ -7,25 +7,14 @@
 //
 "Phrases"
 {
-
-	"Empire"
-	{
-		"de"		"Imperium"
-	}
-
-	"Consortium"
-	{
-		"de"		"Konsortium"
-	}
-
 	"Only Commanders"
 	{
-		"de"		"Dieses Feature ist den Kommandeuren vorbehalten"
+		"de"		"Dieses Funktion ist den Kommandanten vorbehalten"
 	}
 
 	"Commander Disabled"
 	{
-		"de"		"Die Option, dass Kommandeure die Anzahl an Heckenschützen festlegen können, wurde deaktiviert"
+		"de"		"Die Option, dass Kommandanten die Anzahl an Heckenschützen festlegen können, wurde deaktiviert"
 	}
 
 	"Invalid Team"
@@ -35,17 +24,17 @@
 
 	"Sniper Limit Reached"
 	{
-		"de"		"Heckenschützenlimit erreicht, zu Assault zurückgesetzt"
+		"de"		"Zu viele Heckenschützen, auf Assault zurückgesetzt"
 	}
 
 	"Stealth Limit Reached"
 	{
-		"de"		"Tarn-Limit erreicht, Auswahl wurde auf Assault zurückgesetzt"
+		"de"		"Zu viele getarnte Einheiten, auf Assault zurückgesetzt"
 	}
 
 	"AntiStructure Limit Reached"
 	{
-		"de"		"Anti-Gebäude-Limit erreicht, Auswahl wurde auf Assault zurückgesetzt"
+		"de"		"Zu viele Anti-Gebäude-Einheiten, auf Assault zurückgesetzt"
 	}
 
 	"Proper Sniper Usage"
@@ -65,17 +54,17 @@
 
 	"Set Sniper Limit"
 	{
-		"de"		"Sniper count limited to {1}"
+		"de"		"Heckenschützen-Limit beträgt jetzt {1}"
 	}
 
 	"Set Stealth Limit"
 	{
-		"de"		"Stealth count limited to {1}"
+		"de"		"Tarneinheiten-Limit beträgt jetzt{1}"
 	}
 
 	"Set Structure Limit"
 	{
-		"de"		"Anti-Structure limited to {1} percent"
+		"de"		"Anti-Gebäude-Limit beträgt jetzt {1} percent"
 	}
 
 	"Invalid Args"

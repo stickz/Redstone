@@ -98,6 +98,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_rtv", CMD_RockTheVote);
 	RegConsoleCmd("sm_changemap", CMD_RockTheVote);
 	
+	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_rockthevote.phrases");
 	LoadTranslations("numbers.phrases");
 	
@@ -183,13 +184,13 @@ void callRockTheVote(int client)
 		PrintMessage(client, "Already Passed");	
 
 	else if (g_hasVoted[client])
-		PrintMessage(client, "Already RTVed");
+		PrintMessage(client, "Already Voted");
 	
 	else if (ND_RoundEnded())
-		PrintMessage(client, "Round Ended");
+		PrintMessage(client, "Round End Usage");
 		
 	else if (!ND_WarmupCompleted() && !ND_RoundStarted())
-		PrintMessage(client, "Round Start");
+		PrintMessage(client, "Round Start Usage");
 
 	else
 	{

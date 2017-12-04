@@ -23,14 +23,9 @@
 		"de"		"Pro Karte kann nur einmal verlängert werden"
 	}
 
-	"On Team"
-	{
-		"de"		"Du musst dich in einem Team befinden um diese Funktion zu nutzen"
-	}
-
 	"You Extended"
 	{
-		"de"		"Du hast der Weiterführung bereits zugestimmt"
+		"de"		"Du hast der Verlängerung bereits zugestimmt"
 	}
 
 	"Round Ended"
@@ -40,7 +35,7 @@
 
 	"Wait End"
 	{
-		"de"		"Bitte warte bis 5 Minuten vor Rundenende mit dem Verlängern."
+		"de"		"Bitte warte mit dem Verlängern bis 5 Minuten vor Rundenende"
 	}
 
 	"Regular Time"
@@ -50,7 +45,7 @@
 
 	"Time Disabled"
 	{
-		"de"		"Das Zeitlimit ist deaktiviert bis mehr Spieler verbunden sind"
+		"de"		"Das Zeitlimit ist deaktiviert, bis mehr Spieler verbunden sind"
 	}
 
 	"Time End"
@@ -60,12 +55,12 @@
 
 	"Limit Effect"
 	{
-		"de"		"Das Zeitlimit ist jetzt eine Stunde aktiv"
+		"de"		"Das Zeitlimit beträgt ab jetzt eine Stunde"
 	}
 
 	"Round Extended"
 	{
-		"de"		"Das Zeitlimit wurde um 15 Minuten verlängert"
+		"de"		"Das Zeitlimit wurde um 15 Minuten erhöht"
 	}
 
 	"Extend Availible"
@@ -75,17 +70,17 @@
 
 	"Extend Both"
 	{
-		"de"		"{1} will verlängern : Es werden noch {2} Unterstützer vom Konsortium & {3} Unterstützer aus dem Reich benötigt."
+		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer vom Konsortium & {3} Unterstützer aus dem Imperium benötigt"
 	}
 
 	"Extend Empire"
 	{
-		"de"		"{1} will verlängern : Es werden noch {2} Unterstützer aus dem Reich benötigt."
+		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer aus dem Imperium benötigt"
 	}
 
 	"Extend Consort"
 	{
-		"de"		"{1} will verlängern : Es werden noch {2} Unterstützer vom Konsortium benötigt."
+		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer aus dem Konsortium benötigt"
 	}
 
 }

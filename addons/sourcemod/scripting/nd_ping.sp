@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #pragma newdecls required
 #include <sourcemod>
+#include <nd_print>
 
 //Version is auto-filled by the travis builder
 public Plugin myinfo =
@@ -51,6 +52,8 @@ public void OnPluginStart()
 	gH_Cvar_Type = CreateConVar("sm_ping_type", "3", "The type of map blip to use. Check the source for details.", _, true, 0.0);
 
 	AddUpdaterLibrary(); //auto-updater
+	
+	LoadTranslations("nd_common.phrases");
 }
 
 public Action Command_Ping(int client, int args)
@@ -63,7 +66,7 @@ public Action Command_Ping(int client, int args)
 	
 	if (GetClientTeam(client) <= 1)
 	{
-		ReplyToCommand(client, "Invalid team");
+		PrintMessage(client, "On Team");
 		return Plugin_Handled;
 	}
 	

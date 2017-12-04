@@ -2,17 +2,17 @@
 {
 	"Vote Nextmap"
 	{
-		"fr"		"Votez pour la Map suivante !"
+		"fr"		"Votez pour la Map suivante"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"fr"		"Un Vote pour choisir la Map suivante est commencé."
+		"fr"		"Un Vote pour choisir la Map suivante est commencé"
 	}
 
 	"Nextmap Voting Finished"
 	{
-		"fr"		"Le vote est terminé. La map suivante sera {1}. (Recu {2}%% des {3} votes) "
+		"fr"		"Le vote est terminé. La map suivante sera {1}. (Recu {2}%% des {3} votes)"
 	}
 
 	"Current Map Extended"
@@ -37,12 +37,12 @@
 
 	"Changed Next Map"
 	{
-		"fr"		"Map suivante changée pour \"{1}\"."
+		"fr"		"Map suivante changée pour \"{1}\""
 	}
 
 	"Starting Runoff"
 	{
-		"fr"		"Aucune map n'a reçu plus de {1}%% des votes ({2} [{3}%%] & {4} [{5}%%]), un vote direct est lancé."
+		"fr"		"Aucune map n'a reçu plus de {1}%% des votes ({2} [{3}%%] & {4} [{5}%%]), un vote direct est lancé"
 	}
 
 }

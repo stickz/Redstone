@@ -15,7 +15,7 @@
 	"Four Required"
 	{
 		"es"		"São necessários ao menos 8 jogadores para utilizar esta funcionalidade"	
-	}	
+	}
 	
 	"Too Soon"
 	{
@@ -25,21 +25,6 @@
 	"Team Surrendered"
 	{
 		"pt"		"Seu time já se rendeu"
-	}
-	
-	"On Team"
-	{
-		"pt"		"Você precisa estar em um time para votar rendição"	
-	}
-	
-	"You Surrendered"
-	{
-		"pt"		"Você já votou para rendição"	
-	}
-	
-	"Round Ended"
-	{
-		"pt"		"A partida já está encerrada"	
 	}
 	
 	"Consort Surrendered"

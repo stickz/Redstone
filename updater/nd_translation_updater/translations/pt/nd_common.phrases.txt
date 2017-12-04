@@ -1,0 +1,27 @@
+"Phrases"
+{
+	"Empire"
+	{
+		"es"		"Imperium"
+	}
+
+	"Consortium"
+	{
+		"es"		"Consortium"
+	}
+
+	"Round End Usage"
+	{
+		"pt"		"Não pode usar esta funcionalidade após o final da partida"
+	}
+
+	"Round Start Usage"
+	{
+		"pt"		"Por favor espere até o começo da partida para destituição"
+	}
+
+	"Already Voted"
+	{
+		"pt"		"Você já votou"
+	}
+}

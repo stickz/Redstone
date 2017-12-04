@@ -19,25 +19,10 @@
 	{
 		"en"		"You cannot surrender so soon into the match"
 	}
-	
+
 	"Team Surrendered"
 	{
 		"en"		"Your team has already surrendered"
-	}
-	
-	"On Team"
-	{
-		"en"		"You must be on a team to vote surrender"
-	}
-	
-	"You Surrendered"
-	{
-		"en"		"You've already voted to surrender"
-	}
-	
-	"Round Ended"
-	{
-		"en"		"The round has already ended"
 	}
 	
 	"Low Bunker Health"
@@ -62,7 +47,7 @@
 		//{1} = Player's Name
 		//{2} = Translated numbers from number.phrases		
 		"#format"	"{1:s},{2:s}"
-		"en"		"{1} typed surrender : {2} more required."
+		"en"		"{1} typed surrender : {2} more required"
 	}
 	
 	// Veto Feature

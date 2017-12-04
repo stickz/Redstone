@@ -74,7 +74,7 @@
 	}
 	"Spectator Joined"
 	{
-		"en"		"You're now spectator mode! To exit retype !spec."
+		"en"		"You're now spectator mode! To exit retype !spec"
 	}
 	"Teamdiff Round Wait"
 	{
@@ -82,7 +82,7 @@
 	}
 	"Ether Team Stack"
 	{
-		"en"		"Joining ether team will cause an stack. Restricted for a few minutes or status change."
+		"en"		"Joining ether team will cause an stack. Restricted for a few minutes or status change"
 	}
 	"Could Be Switched"
 	{
@@ -107,14 +107,6 @@
 	"Balancer Off"
 	{
 		"en"		"There was NOT enough players, to run the warmup-round shuffle"
-	}
-	"Waiting"
-	{
-		"en"		"Waiting for Players to Connect"	
-	}
-	"Please Wait"
-	{
-		"en"		"Please Wait"
 	}
 	"Status"
 	{
@@ -147,14 +139,6 @@
 	"Heavily Imbalanced"
 	{
 		"en"		"Heavily Imbalanced"	
-	}
-	"Empire"
-	{
-		"en"		"Empire"
-	}
-	"Consortium"
-	{
-		"en"		"Consort"
 	}
 	"Skill"	
 	{

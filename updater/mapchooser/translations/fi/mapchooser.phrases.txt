@@ -2,12 +2,12 @@
 {
 	"Vote Nextmap"
 	{
-		"fi"		"Äänestä seuraavaa karttaa!"
+		"fi"		"Äänestä seuraavaa karttaa"
 	}
 
 	"Nextmap Voting Started"
 	{
-		"fi"		"Seuraavan kartan äänestys alkoi."
+		"fi"		"Seuraavan kartan äänestys alkoi"
 	}
 
 	"Nextmap Voting Finished"
@@ -37,7 +37,7 @@
 
 	"Changed Next Map"
 	{
-		"fi"		"Vaihdettiin seuraavaksi kartaksi \"{1}\"."
+		"fi"		"Vaihdettiin seuraavaksi kartaksi \"{1}\""
 	}
 
 	"Starting Runoff"

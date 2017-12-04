@@ -78,6 +78,7 @@ public void OnPluginStart()
 
 	HookEvent("player_entered_bunker_building", Event_EnterBunker);
 	
+	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
 	AutoExecConfig(true, "nd_commander_demote");
@@ -214,10 +215,10 @@ void callMutiny(int client, int team)
 		PrintMessage(client, "Already Voted"); //You've already voted to demote the commander
 	
 	else if (ND_RoundEnded())
-		PrintMessage(client, "Round End"); //You cannot demote after the round has ended
+		PrintMessage(client, "Round End Usage"); //You cannot demote after the round has ended
 	
 	else if (!ND_RoundStarted())
-		PrintMessage(client, "Round Started"); //You cannot demote before the round has started
+		PrintMessage(client, "Round Start Usage"); //You cannot demote before the round has started
 	
 	else if (g_hasBeenDemoted[client] && voteCount[teamIDX] == 0)
 		PrintMessage(client, "Demote First"); //You cannot cast the first demote vote after demotion

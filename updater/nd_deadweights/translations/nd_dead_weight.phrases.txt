@@ -22,41 +22,41 @@
 	
 	"Cannot Lock"
 	{
-		"en"		"This player currently cannot be locked seige."	
+		"en"		"This player currently cannot be locked siege"	
 	}
 	
 	"Enabled Seige Lock"
 	{
-		"en"		"Player succesfully locked into exo seige kit"		
+		"en"		"Player succesfully locked into exo siege kit"		
 	}
 	
 	"Disabled Seige Lock"
 	{
-		"en"		"Player exo seige kit lock succesfully removed"		
+		"en"		"Player exo siege kit lock succesfully removed"		
 	}
 	
 	"Admin Lock Enabled"
 	{
-		"en"		"An admin locked you into exo seige kit due to lack of team contribution."	
+		"en"		"An admin locked you into exo siege kit due to lack of team contribution"	
 	}
 	
 	"Commander Lock Enabled"
 	{
-		"en"		"The commander locked you into exo seige kit due to a lack of meaningful team contribution."	
+		"en"		"The commander locked you into exo siege kit due to a lack of meaningful team contribution"
 	}
 	
 	"Admin Lock Disbled"
 	{
-		"en"		"An admin disbled your exo seige kit lock"	
+		"en"		"An admin disabled your exo siege kit lock"	
 	}
 	
 	"Commander Lock Disbled"
 	{
-		"en"		"The commander disbled your exo seige kit lock"	
+		"en"		"The commander disabled your exo siege kit lock"	
 	}
 	
 	"Locked Siege"
 	{
-		"en"		"You're locked into seige and cannot change class"	
+		"en"		"You're locked into siege and cannot change class"	
 	}
 }

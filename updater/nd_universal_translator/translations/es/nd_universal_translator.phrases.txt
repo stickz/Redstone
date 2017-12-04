@@ -10,7 +10,7 @@
 
 	"Team Languages"
 	{
-		"es"		"Idiomas de equipo: {1}"
+		"es"		"Idiomas de equipo: {1}."
 	}
 
 	"Commander Language"
@@ -53,14 +53,9 @@
 		"es"		"No se ha encontrado la traducción."
 	}
 
-	"Not On Team"
-	{
-		"es"		"Debes estar en un equipo para usar este comando"
-	}
-
 	"No Team Commander"
 	{
-		"es"		"Este equipo no tiene un comandante actualmente"
+		"es"		"Este equipo no tiene un comandante actualmente."
 	}
 
 	"Roof"
@@ -130,7 +125,7 @@
 
 	"Extended Capture Request"
 	{
-		"es"		" {1} dice capturar {2} {3} "
+		"es"		"{1} dice capturar {2} {3}."
 	}
 
 	"Advanced Kits"
