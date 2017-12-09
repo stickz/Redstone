@@ -11,7 +11,7 @@ public Plugin myinfo =
    	url = "https://github.com/stickz/Redstone"
 };
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_resource_spawner/nd_resource_spawner.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_dynamic_start_locations/nd_dynamic_start_locations.txt"
 #include "updater/standard.sp"
 
 ConVar cvar_kv_path;
