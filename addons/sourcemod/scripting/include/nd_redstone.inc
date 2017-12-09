@@ -52,7 +52,7 @@ stock int RED_ValidClientCount()
 	int clientCount = 0;
 	
 	for (int ix = 1; ix <= MaxClients; ix++) 
-		if (IsValidClient(ix) && !playerIsBot[ix])
+		if (RED_ValidClient(ix))
 			clientCount++;
 			
 	return clientCount;
