@@ -26,6 +26,13 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			int client = GetClientOfUserId(selectedPlayer);				
 		
 			last_choice[cur_team_choosing - 2] = selectedPlayer;
+			
+			if (DebugTeamPicking)
+			{
+				char message[32];
+				Format(message, sizeof(message), "the client index is %d", client);
+				ConsoleToAdmins(message, "b");
+			}
 
 			// If the selected player is valid, do the picking routine
 			if (IsValidClient(client, !DebugTeamPicking) && RED_IsValidCIndex(client))
@@ -73,7 +80,8 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 				ConsoleToAdmins("Handle_PickPlayerMenu(): MenuAction_Cancel", "b");
 			
 			// Switch to the other team and set their last choice to canceled
-			SwitchPickingTeam();			
+			SetPickingTeam();
+			//SwitchPickingTeam();			
 			
 			if (!lastTimerEnded || noChoiceFound)
 				last_choice[cur_team_choosing - 2] = NO_PLAYER_SELECTED;
@@ -248,5 +256,5 @@ void FinishPicking(bool forced = false)
 	g_bPickStarted = false;
 
 	if (!forced)
-		PrintMessageAllEx("Team Captain Left");
+		PrintMessageAllEx("Picking Completed");
 }

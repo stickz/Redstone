@@ -168,6 +168,16 @@ stock int ValidTeamCount(int teamName)
 	return clientCount;
 }
 
+stock int ValidTeamCountEx(int teamName)
+{
+	int clientCount;
+	for (int idx = 1; idx <= MaxClients; idx++) 
+		if (IsClientInGame(idx) && GetClientTeam(idx) == teamName)
+			clientCount++;
+	
+	return clientCount;
+}
+
 stock int getOverBalance()
 {
 	int clientCount[2], team;

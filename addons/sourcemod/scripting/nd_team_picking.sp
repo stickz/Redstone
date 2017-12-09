@@ -57,7 +57,7 @@ public void OnPluginStart()
 }
 
 public void OnMapStart() {
-	ReloadThePlugin();
+	FinishPicking(true);
 }
 
 public Action Command_JoinTeam(int client, char[] command, int argc)

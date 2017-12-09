@@ -1,4 +1,5 @@
 #define INVALID_USERID 0
+#define NO_PLAYERS_LEFT 0
 bool lastTimerEnded = false;
 bool noChoiceFound = false;
 int PickTimeRemaining = 0;
@@ -25,6 +26,17 @@ public Action TIMER_CountdownPickTime(Handle timer, any:userid)
 	if (client == INVALID_USERID)		
 		return Plugin_Stop;
 	
+	if (DebugTeamPicking)
+		ConsoleToAdmins( "TIMER_CountdownPickTime(): valid client", "b");
+	
+	// Get the spectator team count, if zero stop the timer
+	int specCount = DebugTeamPicking ? ValidTeamCountEx(TEAM_SPEC) : RED_GetTeamCount(TEAM_SPEC);
+	if (specCount == NO_PLAYERS_LEFT)
+		return Plugin_Stop;
+	
+	if (DebugTeamPicking)
+		ConsoleToAdmins( "TIMER_CountdownPickTime(): spectators left", "b");
+	
 	// Decincrement and check if the timer has ran out
 	if (--PickTimeRemaining <= 0)
 	{
@@ -37,7 +49,7 @@ public Action TIMER_CountdownPickTime(Handle timer, any:userid)
 	}
 
 	// Display a countdown in the pickers server chat, when it's about to pick for them
-	else if (PickTimeRemaining == 10 || (PickTimeRemaining <= 5 && PickTimeRemaining >= 1))
+	else if (DisplayPickWarning())
 		PrintToChat(client, "\x05[xG] %t.", "Auto Select", PickTimeRemaining);
 	
 	if (DebugTeamPicking)
@@ -48,6 +60,15 @@ public Action TIMER_CountdownPickTime(Handle timer, any:userid)
 	}
 
 	return Plugin_Continue;
+}
+
+bool DisplayPickWarning()
+{
+	switch (PickTimeRemaining) {
+		case 10, 5, 4, 3, 2, 1: return true;	
+	}
+	
+	return false;
 }
 
 void AutoSelectPlayer(int picker)
