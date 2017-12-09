@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <nd_stocks>
+#include <nd_structures>
 
 public Plugin myinfo =
 {
@@ -94,8 +95,8 @@ public void ND_OnRoundStarted()
 		EMP_start = GetRandomInt(1, num_start_locations);
 	}
 	
-	IntToString(CT_start, sz_start_locations[TEAM_CT - TEAM_CT], 2);
-	IntToString(EMP_start, sz_start_locations[TEAM_EMP - TEAM_CT], 2);
+	IntToString(CT_start, sz_start_locations[TEAM_CONSORT - TEAM_CONSORT], 2);
+	IntToString(EMP_start, sz_start_locations[TEAM_EMPIRE - TEAM_CONSORT], 2);
 	
 	float origin[3];
 	float angles[3];
@@ -113,28 +114,22 @@ public void ND_OnRoundStarted()
 				KvGetVector(kv, "origin", origin);
 				KvGetVector(kv, "angles", angles);
 				
-				if (StrEqual(entity_class, "struct_transport_gate"))
+				if (StrEqual(entity_class, STRUCT_TRANSPORT))
 				{
 					entity = LookupEntity(entity_class, team, entity_first_gate);
 					entity_first_gate = entity; //since there are 2 tgates per team, we must track the one we've already teleported.
 				}
 				else if (StrEqual(entity_class, "point_viewcontrol"))
-				{
 					entity = LookupCameraEntity(team, -1);
-				}
 				else
-				{
 					entity = LookupEntity(entity_class, team, -1);
-				}
 				
 				if (entity > -1)
-				{
 					TeleportEntity(entity, origin, angles, NULL_VECTOR);
-				}
+
 				else
-				{
 					LogError("Could not find entity: %s", entity_class);
-				}
+
 				
 			} while(KvGotoNextKey(kv, false))
 		}
@@ -172,17 +167,15 @@ public int LookupCameraEntity(int team, int start_point)
 
 	if (entity > -1)
 	{
-		GetEntPropString(entity, Prop_Data, "m_iName", entity_name, sizeof(entity_name));
-
-		if (	(team == TEAM_CT && StrEqual(entity_name, "wincam_consortium"))
-		     || (team == TEAM_EMP && StrEqual(entity_name, "wincam_empire"))) 
-		{
-			return entity;
-		}
-		
-		return LookupCameraEntity(team, entity);
+		GetEntPropString(entity, Prop_Data, "m_iName", entity_name, sizeof(entity_name));		
+		return FoundTeamCamera(team, entity_name) ? entity : LookupCameraEntity(team, entity);
 	}
 	
 	return -1;
 }
-	
+
+bool FoundTeamCamera(int team, const char[] entity_name)
+{
+	return (team == TEAM_CT && StrEqual(entity_name, "wincam_consortium"))
+	    || (team == TEAM_EMP && StrEqual(entity_name, "wincam_empire"));
+}
