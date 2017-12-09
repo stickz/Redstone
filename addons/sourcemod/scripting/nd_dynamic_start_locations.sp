@@ -2,6 +2,7 @@
 #include <sdktools>
 #include <nd_stocks>
 #include <nd_structures>
+#include <nd_rounds>
 
 public Plugin myinfo =
 {
