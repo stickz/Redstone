@@ -13,8 +13,7 @@ native bool RED_Donator(int ClientIDX);
 
 #define RED_D_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "RED_Donator") == FeatureStatus_Available)
 
-stock bool RED_IsDonator(int ClientIDX)
-{
+stock bool RED_IsDonator(int ClientIDX) {
 	return RED_D_AVAILABLE() && RED_Donator(ClientIDX);
 }
 
