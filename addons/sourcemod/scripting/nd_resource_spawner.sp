@@ -116,12 +116,6 @@ public void ND_OnRoundStarted()
 	}
 }
 
-void AdjustMarsSpawns()
-{
-
-
-}
-
 void CheckTertiarySpawns()
 {
 	char map_name[64];   
