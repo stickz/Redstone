@@ -4,22 +4,6 @@
 #define _nd_redstone_included_
 
 /**
- * Gets the client count on the server from Redstone
- * Excludes AFK spectators who are not currently playing
- *
- * Returns the client count (excluding afk spec) integer
- *
- * @return Integer client count.
- */
-native int RED_ClientCount();
-
-#define RED_CC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "RED_ClientCount") == FeatureStatus_Available)
-
-stock int ND_GetClientCount() {
-	return RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount();
-}
-
-/**
  * Get's if the client is marked as a donator
  *
  * @parm1 ClientIDX 'index of client'
@@ -47,8 +31,7 @@ native bool RED_ValidClient(int ClientIDX);
 
 #define RED_VC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "RED_ValidClient") == FeatureStatus_Available)
 
-stock bool RED_IsValidClient(int ClientIDX)
-{
+stock bool RED_IsValidClient(int ClientIDX) {
 	return RED_VC_AVAILABLE() && RED_ValidClient(ClientIDX);
 }
 
@@ -56,9 +39,27 @@ native bool RED_ValidCIndex(int ClientIDX);
 
 #define RED_VCI_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "RED_ValidCIndex") == FeatureStatus_Available)
 
-stock bool RED_IsValidCIndex(int ClientIDX)
-{
+stock bool RED_IsValidCIndex(int ClientIDX) {
 	return RED_VCI_AVAILABLE() && RED_ValidCIndex(ClientIDX);
+}
+
+/**
+ * Gets the client count on the server from Redstone
+ * Excludes AFK spectators who are not currently playing
+ */
+stock int RED_ValidClientCount()
+{
+	int clientCount = 0;
+	
+	for (int ix = 1; ix <= MaxClients; ix++) 
+		if (IsValidClient(ix) && !playerIsBot[ix])
+			clientCount++;
+			
+	return clientCount;
+}
+
+stock int ND_GetClientCount() {
+	return RED_VC_AVAILABLE() ? RED_ValidClientCount() : ValidClientCount();
 }
 
 stock int RED_GetTeamCount(int team)
