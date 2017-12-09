@@ -79,8 +79,17 @@ void CreatePluginConvars()
 }
 
 public void OnClientPutInServer(int client) {
-	if (!tertsSpawned[SECOND_TIER] && ND_RoundStarted() && ND_GetServerType() >= SERVER_TYPE_BETA)
-		CheckTertiarySpawns();
+	if (!tertsSpawned[SECOND_TIER] && ND_RoundStarted())
+	{
+		int serverType = ND_GetServerType();
+		if (serverType >= SERVER_TYPE_STABLE)
+		{
+			CheckStableSpawns();
+			
+			if (serverType >= SERVER_TYPE_BETA)
+				CheckTertiarySpawns();
+		}
+	}
 }
 
 public void ND_OnRoundStarted()
@@ -93,6 +102,7 @@ public void ND_OnRoundStarted()
 	if (serverType >= SERVER_TYPE_STABLE)
 	{
 		AdjustMarsSpawns();
+		CheckStableSpawns();
 	
 		if (serverType >= SERVER_TYPE_BETA)
 		{
@@ -100,41 +110,18 @@ public void ND_OnRoundStarted()
 			CheckTertiarySpawns();
 		}
 	}
-	
-	// always spawn extra tertaries on submarine
-	else if (serverType != SERVER_TYPE_DISABLE)
-	{
-		char map_name[64];   
-		GetCurrentMap(map_name, sizeof(map_name));
-
-		// Will throw tag mismatch warning, it's okay
-		if (ND_CustomMapEquals(map_name, ND_Submarine))
-		{
-			SpawnTertiaryPoint({987.0, -7562.0, 23.0});
-			SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
-		}	
-	}
 }
 
-void CheckTertiarySpawns()
+void CheckStableSpawns()
 {
 	char map_name[64];   
 	GetCurrentMap(map_name, sizeof(map_name));
-	
+
 	// Will throw tag mismatch warning, it's okay
 	if (ND_CustomMapEquals(map_name, ND_Submarine))
 	{
 		SpawnTertiaryPoint({987.0, -7562.0, 23.0});
 		SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
-		
-		if (ND_GetServerType() == SERVER_TYPE_ALPHA)
-		{
-			SpawnTertiaryPoint({2366.0, 3893.0, 13.8});
-			SpawnTertiaryPoint({-1000.0, -3820.0, -186.0});
-			SpawnTertiaryPoint({1350.0, -2153.0, 54.0});
-			SpawnTertiaryPoint({1001.0, 1523.0, -112.0});
-		}
-		
 		tertsSpawned[SECOND_TIER] = true;
 	}
 	
@@ -156,6 +143,26 @@ void CheckTertiarySpawns()
 			SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
+	}
+}
+
+void CheckTertiarySpawns()
+{
+	char map_name[64];   
+	GetCurrentMap(map_name, sizeof(map_name));
+	
+	// Will throw tag mismatch warning, it's okay
+	if (ND_CustomMapEquals(map_name, ND_Submarine))
+	{
+		if (ND_GetServerType() == SERVER_TYPE_ALPHA)
+		{
+			SpawnTertiaryPoint({2366.0, 3893.0, 13.8});
+			SpawnTertiaryPoint({-1000.0, -3820.0, -186.0});
+			SpawnTertiaryPoint({1350.0, -2153.0, 54.0});
+			SpawnTertiaryPoint({1001.0, 1523.0, -112.0});
+		}
+		
+		tertsSpawned[SECOND_TIER] = true;
 	}
 	
 	else if (ND_StockMapEquals(map_name, ND_Gate))
