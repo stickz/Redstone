@@ -15,7 +15,8 @@ enum ND_CustomMapCount {
 	ND_Corner,
 	ND_Submarine,
 	ND_MetroImp,
-	ND_Port
+	ND_Port,
+	ND_DowntownDyn
 }
 stock int cm(ND_CustomMapCount map) {
 	return view_as<int>(map);
@@ -31,7 +32,8 @@ stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] =
 	"corner_intermediate_04",
 	"nd_submarine",
 	"metro_imp2",
-	"port"
+	"port",
+	"downtown_dyn_v0"
 };
 
 stock bool ND_IsCustomMap(char[] mapName)
