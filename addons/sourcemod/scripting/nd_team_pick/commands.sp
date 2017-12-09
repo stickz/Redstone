@@ -21,7 +21,7 @@ public Action ReloadTeamPicker(int client, int args)
 	DisplayReloadedPlugin(client);
 	
 	// Reload the team picking plugin
-	ServerCommand("sm plugins reload nd_team_picking");	
+	ReloadThePlugin();	
 	return Plugin_Handled;
 }
 
@@ -30,6 +30,10 @@ void DisplayReloadedPlugin(int client)
 	char Name[32];
 	GetClientName(client, Name, sizeof(Name));	
 	PrintToChatAll("\x05[xG] %s reloaded the team picker plugin!", Name);
+}
+
+void ReloadThePlugin() {
+	ServerCommand("sm plugins reload nd_team_picking");
 }
 
 public Action DisableTeamChg(int client, intargs) 
