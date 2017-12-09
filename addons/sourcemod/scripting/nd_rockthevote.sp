@@ -206,10 +206,8 @@ void checkForPass(bool display = false, int client = -1)
 	float passPercent = getPassPercentage(InsRTV); // Changes based on timeout and map
 	
 	// Get the client count on the server. Try Redstone native first.
-	int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 
-	
 	// Calculate the number of players for pass, based on player counts
-	float countFloat = clientCount * (passPercent / 100.0);
+	float countFloat = ND_GetClientCount() * (passPercent / 100.0);
 
 	/* Set min votes for rtv or percentage (which ever is greater) */
 	int rCount = RoundToNearest(countFloat);
