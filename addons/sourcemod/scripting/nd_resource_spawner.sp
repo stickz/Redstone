@@ -287,7 +287,7 @@ void CheckTertiarySpawns()
 			{
 				// Respawn coutyard and near secondary resources
 				SpawnTertiaryPoint({-5028.0, -2906.0, -1396.0});
-				SpawnTertiaryPoint({-1550.0, -2764.0, -1200.0});
+				SpawnTertiaryPoint({-1550.0, 2764.0, -1200.0});
 				tertsSpawned[FIRST_TIER] = true;
 			}
 			
