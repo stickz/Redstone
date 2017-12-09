@@ -5,7 +5,7 @@
 
 public Plugin myinfo =
 {
-	name = "ND Dynamic Starting Locations",
+	name = "[ND] Dynamic Starting Locations",
 	author = "Xander",
 	description = "Randomize starting locations based on pre-defined coordinates written to a key-value structure.",
 	version = "dummy",
@@ -104,9 +104,9 @@ public void ND_OnRoundStarted()
 	int entity;
 	int entity_first_gate = -1;
 	
-	for (int team = TEAM_CT; team <= TEAM_EMP; team++)
+	for (int team = TEAM_CONSORT; team <= TEAM_EMPIRE; team++)
 	{
-		if (KvJumpToKey(kv, sz_start_locations[team - TEAM_CT], false) && KvGotoFirstSubKey(kv, true))
+		if (KvJumpToKey(kv, sz_start_locations[team - TEAM_CONSORT], false) && KvGotoFirstSubKey(kv, true))
 		{
 			do
 			{
@@ -176,6 +176,6 @@ public int LookupCameraEntity(int team, int start_point)
 
 bool FoundTeamCamera(int team, const char[] entity_name)
 {
-	return (team == TEAM_CT && StrEqual(entity_name, "wincam_consortium"))
-	    || (team == TEAM_EMP && StrEqual(entity_name, "wincam_empire"));
+	return (team == TEAM_CONSORT && StrEqual(entity_name, "wincam_consortium"))
+	    || (team == TEAM_EMPIRE && StrEqual(entity_name, "wincam_empire"));
 }
