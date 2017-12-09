@@ -56,10 +56,6 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapStart() {
-	ReloadThePlugin();
-}
-
 public Action Command_JoinTeam(int client, char[] command, int argc)
 {
 	if (!ND_RoundStarted() && g_bEnabled)
