@@ -85,6 +85,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 	
 	/* Cast a few varriables we're going to need */
 	int clientCount = ND_GetClientCount();
+	int serverType = ND_GetServerType();
 	
 	// Always allow clocktower in map voting
 	// But restrict decrease cycling with less players
@@ -92,7 +93,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 	ND_NominateMap(ND_StockMaps[ND_Clocktower], resAdjust);
 	ND_NominateMap(ND_CustomMaps[ND_Roadwork], resAdjust);
 	
-	if (ND_GetServerType() == SERVER_TYPE_BETA)
+	if (serverType == SERVER_TYPE_BETA)
 		ND_NominateMap(ND_CustomMaps[ND_Rock], resAdjust);
 		
 	/* Run through the 'less than' x players to include maps */		
@@ -108,7 +109,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 			{
 				ND_NominateMap(ND_CustomMaps[ND_Sandbrick], 80.0);
 				
-				float marsPer = ND_GetServerType() >= SERVER_TYPE_BETA ? 60.0 : 40.0;
+				float marsPer = serverType >= SERVER_TYPE_BETA ? 60.0 : 40.0;
 				ND_NominateMap(ND_CustomMaps[ND_Mars], marsPer);
 			}
 		}
@@ -120,12 +121,16 @@ void CreateMapThresholdList(bool debugFunction = false)
 		float plyAdjust = 1.5 * (clientCount - 14);
 		ND_NominateMap(ND_CustomMaps[ND_Submarine], 40 + plyAdjust);
 		ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
-		ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);
 		ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
 		ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);
 		
-		if (ND_GetServerType() <= SERVER_TYPE_STABLE)
+		if (serverType <= SERVER_TYPE_STABLE)
+		{
 			ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
+			ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);	
+		}
+		else
+			ND_NominateMap(ND_CustomMaps[ND_DowntownDyn], 88 + plyAdjust);
 	}	
 	
 	if (debugFunction)
