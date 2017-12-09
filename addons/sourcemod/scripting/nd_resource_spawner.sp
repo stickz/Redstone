@@ -90,10 +90,15 @@ public void ND_OnRoundStarted()
 	tertsSpawned[SECOND_TIER] = false;
 	
 	int serverType = ND_GetServerType();
-	if (serverType >= SERVER_TYPE_BETA)
+	if (serverType >= SERVER_TYPE_STABLE)
 	{
-		AdjustTertiarySpawns();
-		CheckTertiarySpawns();
+		AdjustMarsSpawns();
+	
+		if (serverType >= SERVER_TYPE_BETA)
+		{
+			AdjustTertiarySpawns();
+			CheckTertiarySpawns();
+		}
 	}
 	
 	// always spawn extra tertaries on submarine
@@ -109,6 +114,12 @@ public void ND_OnRoundStarted()
 			SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
 		}	
 	}
+}
+
+void AdjustMarsSpawns()
+{
+
+
 }
 
 void CheckTertiarySpawns()
@@ -305,6 +316,19 @@ void CheckTertiarySpawns()
 		tertsSpawned[SECOND_TIER] = true;
 }
 
+void AdjustMarsSpawns()
+{
+	char map_name[64];   
+	GetCurrentMap(map_name, sizeof(map_name));
+	
+	if (ND_CustomMapEquals(map_name, ND_Mars))
+	{
+		// Remove 2 out of 5 tertaries on top of the map
+		RemoveTertiaryPoint("tertiary_res_02", "tertiary_res_area_02");
+		RemoveTertiaryPoint("tertiary_res_05", "tertiary_res_area_05");		
+	}
+}
+
 void AdjustTertiarySpawns()
 {
 	char map_name[64];   
@@ -332,13 +356,6 @@ void AdjustTertiarySpawns()
 	{
 		RemoveTertiaryPoint("tertiary02", "tertiary_area02");
 		RemoveTertiaryPoint("tertiary05", "tertiary_area05");
-	}
-	
-	else if (ND_CustomMapEquals(map_name, ND_Mars))
-	{
-		// Remove 2 out of 5 tertaries on top of the map
-		RemoveTertiaryPoint("tertiary_res_02", "tertiary_res_area_02");
-		RemoveTertiaryPoint("tertiary_res_05", "tertiary_res_area_05");		
 	}
 	
 	else if (ND_CustomMapEquals(map_name, ND_Rock))
