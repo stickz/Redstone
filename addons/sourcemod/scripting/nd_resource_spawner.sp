@@ -66,7 +66,7 @@ void CreatePluginConvars()
 	cvarOasisTertiarySpawns = CreateConVar("sm_tertiary_oasis", "18", "Sets number of players to spawn extra tertaries on oasis.");
 	cvarCoastTertiarySpawns = CreateConVar("sm_tertiary_coast", "16", "Sets number of players to spawn extra tertaries on coast.");	
 	cvarNuclearTertiarySpawns = CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
-	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown.");
+	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown and downtown_dyn.");
 	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
 	cvarGateTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
 	cvarGateTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
@@ -191,6 +191,16 @@ void CheckTertiarySpawns()
 		if (RED_OnTeamCount() >= cvarDowntownTertiarySpawns.IntValue)
 		{
 			SpawnTertiaryPoint({-2160.0, 6320.0, -3840.0});
+			SpawnTertiaryPoint({753.0, 1468.0, -3764.0});
+			tertsSpawned[SECOND_TIER] = true;
+		}
+	}
+	
+	else if (ND_CustomMapEquals(map_name, ND_DowntownDyn))
+	{
+		if (RED_OnTeamCount() >= cvarDowntownTertiarySpawns.IntValue)
+		{
+			SpawnTertiaryPoint({2224.0, -784.0, -3200.0});
 			SpawnTertiaryPoint({753.0, 1468.0, -3764.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
@@ -349,8 +359,15 @@ void AdjustTertiarySpawns()
 	else if (ND_StockMapEquals(map_name, ND_Downtown))
 	{
 		// Remove tertiary by prime and secondary
-		RemoveTertiaryPoint("tertiary_cr", "tertiary_areacr");
-		RemoveTertiaryPoint("tertiary_mb", "tertiary_areamb");
+		RemoveTertiaryPoint("tertiary_cr", "tertiary_cr_area");
+		RemoveTertiaryPoint("tertiary_mb", "tertiary_mb_area");
+	}
+	
+	else if (ND_CustomMapEquals(map_name, ND_DowntownDyn))
+	{
+		// Remove tertiary by prime
+		RemoveTertiaryPoint("tertiary_bank", "tertiary_bank_area");
+		RemoveTertiaryPoint("tertiary_mb", "tertiary_mb_area");
 	}
 	
 	else if (ND_CustomMapEquals(map_name, ND_Roadwork))
