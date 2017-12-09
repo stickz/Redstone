@@ -1,17 +1,18 @@
 #include <sourcemod>
 #include <sdktools>
+#include <nd_stocks>
 
 public Plugin myinfo =
 {
 	name = "ND Dynamic Starting Locations",
 	author = "Xander",
 	description = "Randomize starting locations based on pre-defined coordinates written to a key-value structure.",
-	version = "1.0",
-	url = "http://localhost/"
+	version = "dummy",
+   	url = "https://github.com/stickz/Redstone"
 };
 
-#define TEAM_CT 2
-#define TEAM_EMP 3
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_resource_spawner/nd_resource_spawner.txt"
+#include "updater/standard.sp"
 
 ConVar cvar_kv_path;
 char gs_kv_mapname[64];
@@ -19,28 +20,24 @@ char gs_kv_mapname[64];
 public void OnPluginStart()
 {
 	cvar_kv_path = CreateConVar("nd_dyn_kv_path", "addons/sourcemod/data/dynamic-start-keyvalues.txt", "Define the path to the dynamic start key values file relative to SourceMod's working directory.");
-	HookEvent("round_start", OnRoundStart, EventHookMode_PostNoCopy);
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public void OnMapStart()
 {
-	char map_name[64];
-	
+	char map_name[64];	
 	GetCurrentMap(map_name, sizeof(map_name))
 	
-//	the string formating is to not confuse versions if map revisions are required.
+	// the string formating is to not confuse versions if map revisions are required.
 	if ( StrContains(map_name, "downtown_dyn", false) != -1 )
-	{
 		Format(gs_kv_mapname, sizeof(gs_kv_mapname), "downtown_dyn");
-	}
 		
 	else
-	{
 		Format(gs_kv_mapname, sizeof(gs_kv_mapname), "-NULL-");
-	}
 }
 
-public void OnRoundStart(Event event, const char[] name, bool dontBroadcast)
+public void ND_OnRoundStarted()
 {
 	char kv_path[256];
 	GetConVarString(cvar_kv_path, kv_path, sizeof(kv_path));
@@ -91,10 +88,9 @@ public void OnRoundStart(Event event, const char[] name, bool dontBroadcast)
 	CT_start = GetRandomInt(1, num_start_locations);
 	EMP_start = GetRandomInt(1, num_start_locations);
 	
-//loop forever until the start locations are not the same
-//this assumes the start locations under the map's hierarchy are single char numbers starting from `1`.
-	while (EMP_start == CT_start)
-	{
+	//loop forever until the start locations are not the same
+	//this assumes the start locations under the map's hierarchy are single char numbers starting from `1`.
+	while (EMP_start == CT_start) {
 		EMP_start = GetRandomInt(1, num_start_locations);
 	}
 	
@@ -161,21 +157,12 @@ public int LookupEntity(const char[] classname, int team, int start_point)
 {
 	int entity = FindEntityByClassname(start_point, classname);
 	
-	if (entity > -1)
-	{
-		if (team == GetEntProp(entity, Prop_Send, "m_iTeamNum"))
-		{
-			return entity;
-		}
-		else
-		{
-			return LookupEntity(classname, team, entity);
-		}
+	if (entity > -1) {
+		return 	team == GetEntProp(entity, Prop_Send, "m_iTeamNum") 
+			? entity : LookupEntity(classname, team, entity);
 	}
-	else
-	{
-		return -1;
-	}
+	
+	return -1;
 }
 
 public int LookupCameraEntity(int team, int start_point)
@@ -186,23 +173,16 @@ public int LookupCameraEntity(int team, int start_point)
 	if (entity > -1)
 	{
 		GetEntPropString(entity, Prop_Data, "m_iName", entity_name, sizeof(entity_name));
+
+		if (	(team == TEAM_CT && StrEqual(entity_name, "wincam_consortium"))
+		     || (team == TEAM_EMP && StrEqual(entity_name, "wincam_empire"))) 
+		{
+			return entity;
+		}
 		
-		if (team == TEAM_CT && StrEqual(entity_name, "wincam_consortium"))
-		{
-			return entity;
-		}
-		else if (team == TEAM_EMP && StrEqual(entity_name, "wincam_empire"))
-		{
-			return entity;
-		}
-		else
-		{
-			return LookupCameraEntity(team, entity);
-		}
+		return LookupCameraEntity(team, entity);
 	}
-	else
-	{
-		return -1;
-	}
+	
+	return -1;
 }
 	
