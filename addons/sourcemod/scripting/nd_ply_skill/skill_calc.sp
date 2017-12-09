@@ -67,7 +67,7 @@ void UpdateSkillAverage()
 
 void UpdateSkillMedian()
 {
-	int count = RED_ClientCount();	
+	int count = ND_GetClientCount();	
 	if (count == 0)
 		return;
 	

@@ -134,10 +134,8 @@ bool CurMapIsStock()
 bool CheckRapidStart()
 {
 	// Get the client count on the server. Try Redstone native first.
-	int clientCount = RED_CC_AVAILABLE() ? RED_ClientCount() : ValidClientCount(); 	
-
 	// If the client count is within range, start the game faster
-	if (clientCount <= g_Cvar[rapidStartClientCount].IntValue)
+	if (ND_GetClientCount() <= g_Cvar[rapidStartClientCount].IntValue)
 	{
 		SetWarmupEndType();
 		return true;				
