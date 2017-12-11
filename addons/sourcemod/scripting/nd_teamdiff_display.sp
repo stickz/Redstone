@@ -26,6 +26,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	LoadTranslations("common.phrases"); //required for on and off
+	LoadTranslations("nd_common.phrases") // required for common phrases
 	LoadTranslations("nd_team_balancer.phrases"); //required until seperated
 	
 	loadHudDisplayFeature(); // hud_display.sp
