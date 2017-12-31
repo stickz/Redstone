@@ -1,4 +1,4 @@
-# Redstone ND Server Project
+# Redstone Nuclear Dawn Server Project
 Get Started Using Github Here: https://guides.github.com/activities/hello-world/
 
 The current stable build environment for this github is sourcemod 1.7 build 5294.
