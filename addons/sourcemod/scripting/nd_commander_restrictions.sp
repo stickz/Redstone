@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_rounds>
 #include <nd_print>
 #include <nd_com_dep>
+#include <nd_com_ban>
 #include <nd_entities>
 
 #define INVALID_CLIENT 0
@@ -125,6 +126,13 @@ public Action Command_Apply(int client, const char[] command, int argc)
 		return Plugin_Handled;
 	}
 	#endif
+	
+	// Check if the commander is banned, if so don't let them apply
+	if (ND_COMB_AVAILABLE() && ND_IsCommanderBanned(client))
+	{	
+		PrintToChat(client, "You are banned from using commander.");
+		return Plugin_Handled;
+	}
 	
 	if (g_cvar[eRestrictions].BoolValue)
 	{	
