@@ -191,3 +191,9 @@ int getBotFillerQuota(int teamCount, bool addSpectators = false)
 	// Set a ceiling of 29 to be returned
 	return total > 29 ? 29 : total;
 }
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	MarkNativeAsOptional("ND_GetTurretCount");
+	MarkNativeAsOptional("ND_GetTeamTurretCount");
+}

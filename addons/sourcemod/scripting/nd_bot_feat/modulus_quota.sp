@@ -91,7 +91,7 @@ int GetBotReductionCount(const char[] map)
 
 /* Gets the max number of bots, based on the number of turrets on the map */
 int GetTurretMaxQuota() {
-	return ND_GetTurretCount() >= g_cvar[turretCountDec].IntValue ? g_cvar[turretBotDec].IntValue 
+	return ND_TurretCount() >= g_cvar[turretCountDec].IntValue ? g_cvar[turretBotDec].IntValue 
 				   				      : g_cvar[BoosterQuota].IntValue;
 }
 
