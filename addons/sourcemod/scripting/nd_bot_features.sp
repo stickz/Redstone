@@ -17,6 +17,7 @@
 #include <nd_balancer>
 #include <nd_rounds>
 #include <nd_maps>
+#include <nd_turret_eng>
 
 #include "nd_bot_feat/convars.sp"
 //functions required to create a modulous bot quota
