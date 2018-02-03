@@ -43,8 +43,8 @@ void deincrement(Event ev)
 /* Event Management */
 public void OnPluginStart() 
 {
-	HookEvent("buildingure_death", Event_BuildingDeath);
-	HookEvent("commander_start_buildingure_build", Event_StructBuildStarted);
+	HookEvent("structure_death", Event_BuildingDeath);
+	HookEvent("commander_start_structure_build", Event_StructBuildStarted);
 	AddUpdaterLibrary();
 }
 public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast)
