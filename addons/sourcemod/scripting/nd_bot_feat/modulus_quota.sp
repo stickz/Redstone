@@ -89,11 +89,17 @@ int GetBotReductionCount(const char[] map)
 	return g_cvar[BotReduction].IntValue;
 }
 
+/* Gets the max number of bots, based on the number of turrets on the map */
+int GetTurretMaxQuota() {
+	return ND_GetTurretCount() >= g_cvar[turretCountDec].IntValue ? g_cvar[turretBotDec].IntValue 
+				   				      : g_cvar[BoosterQuota].IntValue;
+}
+
 /* Get the number of bots after the reduction */
 int GetSmallMapCount(int totalCount, int specCount, int rQuota)
 {
 	// Get max quota and reduce amount
-	int maxQuota = g_cvar[BoosterQuota].IntValue;
+	int maxQuota = GetTurretMaxQuota();
 
 	// Caculate the value for the bot cvar
 	int botAmount = totalCount - rQuota + (maxQuota - totalCount);
