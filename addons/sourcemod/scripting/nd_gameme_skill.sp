@@ -35,7 +35,7 @@ public Plugin myinfo =
 	name = "[ND] GameMe Skill Calculator",
 	author = "Stickz",
 	description = "Creates a skill level based on each player's GameME data.",
-	version = "rebuild",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone"
 };
 
