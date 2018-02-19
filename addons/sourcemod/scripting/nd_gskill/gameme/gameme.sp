@@ -198,7 +198,7 @@ void GameME_SetDecaySkill(int client, int skill, int teir, int base)
 void GameME_AddInSkillModifiers(int client)
 {
 	// Set final skill varriable to the exponential base
-	GameME_FinalSkill[client] = GameME_SkillBase[client];
+	GameME_FinalSkill[client] = GameME_GetModifiedSkillBase(client);
 	
 	// Cache values of wether or not to use modifers
 	bool useModifers[2];
