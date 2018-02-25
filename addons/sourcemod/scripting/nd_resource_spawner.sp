@@ -101,7 +101,6 @@ public void ND_OnRoundStarted()
 	int serverType = ND_GetServerType();
 	if (serverType >= SERVER_TYPE_STABLE)
 	{
-		AdjustMarsSpawns();
 		CheckStableSpawns();
 	
 		if (serverType >= SERVER_TYPE_BETA)
@@ -327,19 +326,6 @@ void CheckTertiarySpawns()
 		tertsSpawned[SECOND_TIER] = true;
 }
 
-void AdjustMarsSpawns()
-{
-	char map_name[64];   
-	GetCurrentMap(map_name, sizeof(map_name));
-	
-	if (ND_CustomMapEquals(map_name, ND_Mars))
-	{
-		// Remove 2 out of 5 tertaries on top of the map
-		RemoveTertiaryPoint("tertiary_res_02", "tertiary_res_area_02");
-		RemoveTertiaryPoint("tertiary_res_05", "tertiary_res_area_05");		
-	}
-}
-
 void AdjustTertiarySpawns()
 {
 	char map_name[64];   
@@ -427,6 +413,13 @@ void AdjustTertiarySpawns()
 		// Move the sand tertiary over more
 		RemoveTertiaryPoint("tertiary_sand", "tertiary_area");
 		SpawnTertiaryPoint({6700.0, 6800.0, 45.0});
+	}
+	
+	else if (ND_CustomMapEquals(map_name, ND_Mars))
+	{
+		// Remove 2 out of 5 tertaries on top of the map
+		RemoveTertiaryPoint("tertiary_res_02", "tertiary_res_area_02");
+		RemoveTertiaryPoint("tertiary_res_05", "tertiary_res_area_05");		
 	}
 	
 	//else if (ND_StockMapEquals(map_name, ND_Silo))
