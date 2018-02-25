@@ -76,7 +76,7 @@ stock void PrintMessageTeamTI1(int team, char[] transString, int intArg)
 	{
 		if (IsClientInGame(client) && GetClientTeam(client) == team)
 		{
-			PrintToChat(client, "%s %t!", PREFIX, transString, intgArg);
+			PrintToChat(client, "%s %t!", PREFIX, transString, intArg);
 		}
 	}
 }
