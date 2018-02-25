@@ -66,24 +66,22 @@ stock bool IsSniperClass(int class, int subClass)
 	return 	   (class == MAIN_CLASS_ASSAULT && subClass == ASSAULT_CLASS_SNIPER) 
 	        || (class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SNIPER)
 }
-stock bool IsStealthClass(int class)
-{
+stock bool IsStealthClass(int class) {
 	return class == MAIN_CLASS_STEALTH;
 }
-stock bool IsExoSeigeKit(int class, int subClass)
-{
+stock bool IsExoClass(int class) {
+	return class == MAIN_CLASS_EXO;	
+}
+stock bool IsExoSeigeKit(int class, int subClass) {
 	return class == MAIN_CLASS_EXO && subClass == EXO_CLASS_SEIGE_KIT;
 }
-stock bool IsSupportBBQ(int class, int subClass)
-{
+stock bool IsSupportBBQ(int class, int subClass) {
 	return class == MAIN_CLASS_SUPPORT && subClass == SUPPORT_CLASS_BBQ;
 }
-stock bool IsStealthSab(int class, int subClass)
-{
+stock bool IsStealthSab(int class, int subClass) {
 	return class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SABATEUR;
 }
-stock bool IsStealthAss(int class, int subClass)
-{
+stock bool IsStealthAss(int class, int subClass) {
 	return class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_ASSASSIN;
 }
 
