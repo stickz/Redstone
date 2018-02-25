@@ -106,7 +106,7 @@ public void OnPluginEnd() {
 public void OnInfantryBoostResearched(int team, int level) 
 {
 	UpdateTeamMoveSpeeds(team);
-	int sSpeed = RoundFloat((1.0 - InfantryBoostConVars[level].FloatValue) * 100.0);
+	int sSpeed = RoundFloat((InfantryBoostConVars[level].FloatValue - 1.0) * 100.0);
 	PrintMessageTeamTS1(team, "Stealth Speed Increase", sSpeed);
 }
 void UpdateMovementSpeeds()
