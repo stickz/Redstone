@@ -69,3 +69,14 @@ stock void PrintMessageAllTI1(char[] transString, int intArg)
 		}
 	}	
 }
+
+stock void PrintMessageTeamTI1(int team, char[] transString, int intArg)
+{
+	for (int client = 1; client <= MaxClients; client++) 
+	{
+		if (IsClientInGame(client) && GetClientTeam(client) == team)
+		{
+			PrintToChat(client, "%s %t!", PREFIX, transString, intgArg);
+		}
+	}
+}
