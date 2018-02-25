@@ -40,7 +40,7 @@ public int move(MovementClasses mc) {
 }
 
 ConVar StealthIBConVars[IBLEVELS];
-ConVar ExoIBConvars[IBLEVELS];
+ConVar ExoIBConVars[IBLEVELS];
 
 ConVar AssassinSpeedConVar;
 ConVar BBQSpeedConVar;
@@ -68,9 +68,9 @@ public void OnPluginStart()
 	StealthIBConVars[2] = CreateConVar("sm_speed_ib2_stealth", "1.04", "Sets ib2 speed of stealth class");
 	StealthIBConVars[3] = CreateConVar("sm_speed_ib3_stealth", "1.06", "Sets ib3 speed of stealth class");
 	
-	ExoIBConvars[1] = CreateConVar("sm_speed_ib1_exo", "1.01", "Sets ib1 speed of exo class");
-	ExoIBConvars[2] = CreateConVar("sm_speed_ib2_exo", "1.02", "Sets ib2 speed of exo class");
-	ExoIBConvars[3] = CreateConVar("sm_speed_ib3_exo", "1.03", "Sets ib3 speed of exo class");
+	ExoIBConVars[1] = CreateConVar("sm_speed_ib1_exo", "1.01", "Sets ib1 speed of exo class");
+	ExoIBConVars[2] = CreateConVar("sm_speed_ib2_exo", "1.02", "Sets ib2 speed of exo class");
+	ExoIBConVars[3] = CreateConVar("sm_speed_ib3_exo", "1.03", "Sets ib3 speed of exo class");
 	
 	AutoExecConfig(true, "nd_player_speed"); // Create configuration file for convars
 	
