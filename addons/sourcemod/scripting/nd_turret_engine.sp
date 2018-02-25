@@ -7,7 +7,7 @@ public Plugin myinfo =
 {
 	name 		= "[ND] Turret Engine",
 	author 		= "Stickz",
-	description = "Creates forwards and natives for turret events",
+	description 	= "Creates forwards and natives for turret events",
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
@@ -19,15 +19,18 @@ public Plugin myinfo =
 int totalTurrets = 0;
 int turretCount[TEAM_COUNT] = { 0, ... };
 
-public void ND_OnRoundEndedEX() {
+public void ND_OnRoundStarted() {
+	resetVars();
+}
+public void OnMapEnd() {
 	resetVars();
 }
 void resetVars()
 {
-	totalTurrets = 0;
+	totalTurrets = 2;
 	
 	for (int team = 0; team < TEAM_COUNT; team++)
-		turretCount[team] = 0;
+		turretCount[team] = 1;
 }
 void increment(Event ev) 
 {
@@ -47,7 +50,7 @@ public void OnPluginStart()
 	HookEvent("commander_start_structure_build", Event_StructBuildStarted);
 	AddUpdaterLibrary();
 }
-public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast)
+public Action Event_StructBuildStarted(Event event, const char[] name, bool dontBroadcast)
 {
 	switch (event.GetInt("type"))
 	{
@@ -57,7 +60,7 @@ public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroad
 		case view_as<int>(Rocket_Turret):	increment(event);
 	}
 }
-public Action Event_StructBuildStarted(Event event, const char[] name, bool dontBroadcast) 
+public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast) 
 {
 	switch (event.GetInt("type"))
 	{
