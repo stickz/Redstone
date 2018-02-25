@@ -1,5 +1,11 @@
 "Phrases"
 {
+	"Exo Speed Increase"
+	{
+		"#format"	"{1:i}"
+		"en"		"Exo movement speed increased by {1}%"
+	}
+	
 	"Stealth Speed Increase"
 	{
 		"#format"	"{1:i}"
