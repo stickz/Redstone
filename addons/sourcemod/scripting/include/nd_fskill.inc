@@ -15,6 +15,16 @@ stock float ND_GetPrecisePSkill(int client) {
 }
 
 native float ND_GetCommanderSkill(int client);
+#define ND_GCS_AVAILBLE() (GetFeatureStatus(FeatureType_Native, "ND_GetCommanderSkill") == FeatureStatus_Available)
+
+stock int ND_GetRoundedCSkill(int client) {
+	return !ND_GCS_AVAILBLE() ? 0 : RoundFloat(ND_GetCommanderSkill(client));
+}
+
+stock float ND_GetPreciseCSkill(int client) {
+	return !ND_GCS_AVAILBLE() ? 0.0 : ND_GetCommanderSkill(client);
+}
+
 native int ND_GetPlayerLevel(int client);
 
 #define ND_GSM_AVAILBLE2() (GetFeatureStatus(FeatureType_Native, "ND_GetSkillMedian") == FeatureStatus_Available)
