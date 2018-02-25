@@ -107,7 +107,7 @@ public void OnInfantryBoostResearched(int team, int level)
 {
 	UpdateTeamMoveSpeeds(team);
 	int sSpeed = RoundFloat((1.0 - InfantryBoostConVars[level].FloatValue) * 100.0);
-	PrintMessageAllTI1("Stealth Speed Increase", sSpeed);
+	PrintMessageTeamTS1(team, "Stealth Speed Increase", sSpeed);
 }
 void UpdateMovementSpeeds()
 {	
