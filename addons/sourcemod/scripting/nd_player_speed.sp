@@ -141,7 +141,7 @@ void UpdateTeamMoveSpeeds(int team)
 	{
 		MovementSpeedFloat[team][move(StealthAssassin)] *= StealthIBConVars[ibLevel].FloatValue;
 		MovementSpeedFloat[team][move(StealthClass)] *= StealthIBConVars[ibLevel].FloatValue;
-		MovementSpeedFloat[team][move(ExoClass)] *= ExoIBConVars[level].FloatValue;
+		MovementSpeedFloat[team][move(ExoClass)] *= ExoIBConVars[ibLevel].FloatValue;
 	}
 	
 	DisableTeamMoveSpeeds(team);
