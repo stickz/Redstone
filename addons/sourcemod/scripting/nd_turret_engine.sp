@@ -1,13 +1,13 @@
 #include <sourcemod>
 #include <nd_stocks>
-#include <nd_structures>
+#include <nd_struct_eng>
 #include <nd_rounds>
 
 public Plugin myinfo = 
 {
-	name 		= "[ND] Turret Engine",
+	name 		= "[ND] Turret Counter",
 	author 		= "Stickz",
-	description 	= "Creates forwards and natives for turret events",
+	description 	= "Counts the number of turrets on the battlefield",
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
@@ -32,10 +32,10 @@ void resetVars()
 	for (int team = 0; team < TEAM_COUNT; team++)
 		turretCount[team] = 1;
 }
-void increment(Event ev) 
+void increment(int team) 
 {
 	totalTurrets++;
-	turretCount[ev.GetInt("team")]++;
+	turretCount[team]++;
 }
 void deincrement(Event ev, const char[] teamName)
 {
@@ -58,25 +58,28 @@ public void OnPluginStart()
 {
 	HookEvent("structure_sold", Event_BuildingSold);
 	HookEvent("structure_death", Event_BuildingDeath);
-	HookEvent("commander_start_structure_build", Event_StructBuildStarted);
 	AddUpdaterLibrary();
 }
-public Action Event_StructBuildStarted(Event event, const char[] name, bool dontBroadcast)
-{
-	switch (event.GetInt("type"))
-	{
-		case view_as<int>(MG_Turret): 		increment(event);
-		case view_as<int>(FT_Turret):	 	increment(event);	
-		case view_as<int>(Sonic_Turret):	increment(event);
-		case view_as<int>(Rocket_Turret):	increment(event);
-	}
-}
+
 public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast) {
 	DoStructureRemoved(event, "team");
 }
-
 public Action Event_BuildingSold(Event event, const char[] name, bool dontBroadcast) {
 	DoStructureRemoved(event, "ownerteam");
+}
+
+/* Increment turret count when one is built */
+public void OnBuildStarted_MGTurret(int team) {
+	increment(team);
+}
+public void OnBuildStarted_FlameTurret(int team) {
+	increment(team);
+}
+public void OnBuildStarted_SonicTurret(int team) {
+	increment(team);
+}
+public void OnBuildStarted_RocketTurret(int team) {
+	increment(team);
 }
 
 /* Native Management */
