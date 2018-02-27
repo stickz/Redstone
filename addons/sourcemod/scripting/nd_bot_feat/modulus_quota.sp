@@ -99,7 +99,7 @@ int GetTurretMaxQuota() {
 int GetSmallMapCount(int totalCount, int specCount, int rQuota)
 {
 	// Get max quota and reduce amount
-	int maxQuota = GetTurretMaxQuota();
+	int maxQuota = g_cvar[BoosterQuota].IntValue;
 
 	// Caculate the value for the bot cvar
 	int botAmount = totalCount - rQuota + (maxQuota - totalCount);
@@ -110,6 +110,12 @@ int GetSmallMapCount(int totalCount, int specCount, int rQuota)
 	// If the bot value is greater than max, we must return max instead
 	if (botAmount >= totalCount)
 		return totalCount;
+	
+	// If the bot value is greater than the max allocated for turrets
+	// We must return the max allocated for turrets instead
+	int maxTurretQuota = GetTurretMaxQuota();
+	if (botAmount >= maxTurretQuota)
+		return maxTurretQuota;		
 					
 	// If required, modulate the bot count so the number is even
 	if (botAmount % 2 != totalCount % 2)
