@@ -107,19 +107,19 @@ int GetSmallMapCount(int totalCount, int specCount, int rQuota)
 	// Adjust bot value to offset the spectators 
 	botAmount += specCount;
 	
-	// If the bot value is greater than max, we must return max instead
+	// If the bot value is greater than max, we must use the max instead
 	if (botAmount >= totalCount)
-		return totalCount;
+		botAmount = totalCount;
 	
-	// If the bot value is greater than the max allocated for turrets
-	// We must return the max allocated for turrets instead
+	// If the bot value is greater the amount allocated for turrets,
+	// We must use the max turret allocation instead
 	int maxTurretQuota = GetTurretMaxQuota();
 	if (botAmount >= maxTurretQuota)
-		return maxTurretQuota;		
+		botAmount = maxTurretQuota;	
 					
 	// If required, modulate the bot count so the number is even
 	if (botAmount % 2 != totalCount % 2)
-		return botAmount+ 1;
+		return botAmount - 1;
 
 	return botAmount;
 }
