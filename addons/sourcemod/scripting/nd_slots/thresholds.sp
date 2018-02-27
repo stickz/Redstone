@@ -14,14 +14,11 @@ int GetMapPlayerCount(const char[] checkMap)
 		return GetSlotCount(26, 28, 30);	
 	}
 	
-	if (largeMap)
-		return GetSlotCount(26, 30, 30);
+	if (largeMap || ND_IsMediumMap(checkMap))
+		return GetSlotCount(26, 28, 28);
 		
 	else if (tinyMap)
 		return GetSlotCount(22, 26, 26);
-		
-	else if (ND_IsMediumMap(checkMap))
-		return GetSlotCount(26, 28, 30);
 
 	/* metro, silo, oasis, coast, hydro, roadwork */
 	return GetSlotCount(24, 28, 28);
