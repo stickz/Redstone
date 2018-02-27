@@ -20,8 +20,8 @@ int GetMapPlayerCount(const char[] checkMap)
 	else if (tinyMap)
 		return GetSlotCount(22, 26, 26);
 
-	/* metro, silo, oasis, coast, hydro, roadwork */
-	return GetSlotCount(24, 28, 28);
+	/* oasis, coast, hydro, roadwork */
+	return GetSlotCount(24, 26, 28);
 }
 
 bool ND_IsLargeMap(const char[] checkMap)
