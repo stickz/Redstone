@@ -87,7 +87,11 @@ void CreateMapThresholdList(bool debugFunction = false)
 	int clientCount = ND_GetClientCount();
 	int serverType = ND_GetServerType();
 	
-	// Always allow clocktower in map voting
+	// Always allow cycling of metro and silo
+	ND_NominateMap(ND_CustomMaps[ND_MetroImp]);
+	ND_NominateMap(ND_StockMaps[ND_Silo]);
+	
+	// Always allow clocktower and roadwork in map voting
 	// But restrict decrease cycling with less players
 	float resAdjust = 60 + 2.5 * clientCount;
 	ND_NominateMap(ND_StockMaps[ND_Clocktower], resAdjust);
@@ -138,19 +142,14 @@ void CreateMapThresholdList(bool debugFunction = false)
 }
 
 /* Handle nominating the popular maps */
-#define SP_MAP_SIZE 4
+#define SP_MAP_SIZE 3
 int ndsPopular[SP_MAP_SIZE] = {
 	view_as<int>(ND_Hydro),
 	view_as<int>(ND_Oasis),
-	view_as<int>(ND_Coast),
-	view_as<int>(ND_Silo)
+	view_as<int>(ND_Coast)
 }
-void ND_NominatePopularMaps()
-{	
+void ND_NominatePopularMaps() {	
 	for (int idx = 0; idx < SP_MAP_SIZE; idx++) {
 		ND_NominateMap(ND_StockMaps[ndsPopular[idx]]);	
-	}
-	
-	// Nominate metro improved
-	ND_NominateMap(ND_CustomMaps[cm(ND_MetroImp)]);
+	}	
 }
