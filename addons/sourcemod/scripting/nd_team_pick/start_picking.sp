@@ -2,7 +2,7 @@
 
 void RegisterPickingCommand()
 {
-	RegAdminCmd("PlayerPicking", StartPicking, ADMFLAG_GENERIC);
+	RegAdminCmd("PlayerPicking", StartPicking, ADMFLAG_CUSTOM6);
 }
 
 /* Functions for starting the team pick process
