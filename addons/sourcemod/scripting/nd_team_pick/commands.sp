@@ -1,9 +1,9 @@
 void RegisterCommands()
 {
-	RegAdminCmd("ToggleLocks", DisableTeamChg, ADMFLAG_GENERIC);
-	RegAdminCmd("ShowPickMenu", ShowPickMenu, ADMFLAG_GENERIC);	
-	RegAdminCmd("ReloadPicker", ReloadTeamPicker, ADMFLAG_GENERIC);
-	RegAdminCmd("StopPicker", StopTeamPicking, ADMFLAG_GENERIC);	
+	RegAdminCmd("ToggleLocks", DisableTeamChg, ADMFLAG_CUSTOM6);
+	RegAdminCmd("ShowPickMenu", ShowPickMenu, ADMFLAG_ROOT);	
+	RegAdminCmd("ReloadPicker", ReloadTeamPicker, ADMFLAG_CUSTOM6);
+	RegAdminCmd("StopPicker", StopTeamPicking, ADMFLAG_CUSTOM6);	
 }
 
 public Action StopTeamPicking(int client, int args)
