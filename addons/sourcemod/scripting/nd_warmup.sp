@@ -61,7 +61,7 @@ public void OnPluginStart()
 	
 	CreatePluginConvars();
 	
-	RegAdminCmd("sm_NextPick", CMD_TriggerPicking, ADMFLAG_RESERVATION, "enable/disable picking for next map");
+	RegAdminCmd("sm_NextPick", CMD_TriggerPicking, ADMFLAG_CUSTOM6, "enable/disable picking for next map");
 	g_OnWarmupCompleted = CreateGlobalForward("ND_OnWarmupComplete", ET_Ignore);
 	
 	g_Bool[pauseWarmup] = false;
