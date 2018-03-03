@@ -86,7 +86,7 @@ public void OnClientPutInServer(int client) {
 		{
 			CheckStableSpawns();
 			
-			if (serverType >= SERVER_TYPE_BETA)
+			if (serverType >= SERVER_TYPE_ALPHA)
 				CheckTertiarySpawns();
 		}
 	}
