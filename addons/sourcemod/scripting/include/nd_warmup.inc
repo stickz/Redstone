@@ -12,3 +12,7 @@ native bool ND_TeamPickMode();
 stock bool IsTeamPickRunning() {
 	return !ND_TPM_AVAILABLE() ? true : ND_TeamPickMode();
 }
+
+stock bool HasTeamPickAccess(int client) {
+	return IsTeamPickRunning() || GetAdminFlag(client, Admin_Root, Access_Real);
+}
