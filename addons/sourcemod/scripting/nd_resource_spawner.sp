@@ -81,7 +81,7 @@ void CreatePluginConvars()
 public void OnClientPutInServer(int client) {
 	if (!tertsSpawned[SECOND_TIER] && ND_RoundStarted())
 	{
-		int serverType = ND_GetServerTypeEx(ND_SType_Disable);
+		int serverType = ND_GetServerTypeEx();
 		if (serverType >= SERVER_TYPE_STABLE)
 		{
 			CheckStableSpawns();
@@ -98,7 +98,7 @@ public void ND_OnRoundStarted()
 	tertsSpawned[FIRST_TIER] = false;
 	tertsSpawned[SECOND_TIER] = false;
 	
-	int serverType = ND_GetServerTypeEx(ND_SType_Disable);
+	int serverType = ND_GetServerTypeEx();
 	if (serverType >= SERVER_TYPE_STABLE)
 	{
 		CheckStableSpawns();
