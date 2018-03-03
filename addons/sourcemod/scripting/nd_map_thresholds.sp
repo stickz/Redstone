@@ -85,7 +85,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 	
 	/* Cast a few varriables we're going to need */
 	int clientCount = ND_GetClientCount();
-	int serverType = ND_GetServerType();
+	int serverType = ND_GetServerTypeEx();
 	
 	// Always allow cycling of metro and silo
 	ND_NominateMap(ND_CustomMaps[ND_MetroImp]);
@@ -97,7 +97,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 	ND_NominateMap(ND_StockMaps[ND_Clocktower], resAdjust);
 	ND_NominateMap(ND_CustomMaps[ND_Roadwork], resAdjust);
 	
-	if (serverType == SERVER_TYPE_BETA)
+	if (serverType == SERVER_TYPE_ALPHA)
 		ND_NominateMap(ND_CustomMaps[ND_Rock], resAdjust);
 		
 	/* Run through the 'less than' x players to include maps */		
@@ -113,7 +113,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 			{
 				ND_NominateMap(ND_CustomMaps[ND_Sandbrick], 80.0);
 				
-				float marsPer = serverType >= SERVER_TYPE_BETA ? 60.0 : 40.0;
+				float marsPer = serverType == SERVER_TYPE_ALPHA ? 60.0 : 40.0;
 				ND_NominateMap(ND_CustomMaps[ND_Mars], marsPer);
 			}
 		}
@@ -127,14 +127,10 @@ void CreateMapThresholdList(bool debugFunction = false)
 		ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
 		ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
 		ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);
+		ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);
 		
-		if (serverType <= SERVER_TYPE_STABLE)
-		{
+		if (serverType <= SERVER_TYPE_BETA)
 			ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
-			ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);	
-		}
-		else
-			ND_NominateMap(ND_CustomMaps[ND_DowntownDyn], 88 + plyAdjust);
 	}	
 	
 	if (debugFunction)
