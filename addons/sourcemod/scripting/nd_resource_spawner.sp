@@ -103,7 +103,7 @@ public void ND_OnRoundStarted()
 	{
 		CheckStableSpawns();
 	
-		if (serverType >= SERVER_TYPE_BETA)
+		if (serverType >= SERVER_TYPE_ALPHA)
 		{
 			AdjustTertiarySpawns();
 			CheckTertiarySpawns();
