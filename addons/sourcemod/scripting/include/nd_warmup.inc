@@ -9,6 +9,6 @@ native bool ND_WarmupCompleted();
 native bool ND_TeamPickMode();
 #define ND_TPM_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_TeamPickMode") == FeatureStatus_Available)
 
-stock bool IsTeamPickRunning(bool default = true) {
-	return !ND_TPM_AVAILABLE() ? default : ND_TeamPickMode();
+stock bool IsTeamPickRunning() {
+	return !ND_TPM_AVAILABLE() ? true : ND_TeamPickMode();
 }
