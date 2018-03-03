@@ -68,10 +68,10 @@ public OnAdminMenuReady(Handle:topmenu)
 
 public Action Cmd_SetCommander(int client, int args)
 {
-	if (!HasTeamPickAccess())
+	if (!HasTeamPickAccess(client))
 	{
 		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
-		return Plugin_Handled;	
+		return Plugin_Handled;
 	}
 	
 	if (!args)
@@ -97,10 +97,10 @@ public Action Cmd_SetCommander(int client, int args)
 
 public Action Cmd_Demote(int client, int args)
 {
-	if (!HasTeamPickAccess())
+	if (!HasTeamPickAccess(client))
 	{
 		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
-		return Plugin_Handled;	
+		return Plugin_Handled;
 	}
 	
 	if (!args)
