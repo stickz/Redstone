@@ -1,23 +1,9 @@
 int GetMapPlayerCount(const char[] checkMap)
 {
-	bool largeMap = ND_IsLargeMap(checkMap);
-	bool tinyMap = ND_IsTinyMap(checkMap);
-	
-	if (ND_STYPE_AVAILABLE() && ND_GetServerType() >= SERVER_TYPE_BETA)
-	{
-		if (largeMap)
-			return GetSlotCount(26, 30, 30);
-		
-		else if (tinyMap)
-			return GetSlotCount(22, 26, 26);
-			
-		return GetSlotCount(26, 28, 30);	
-	}
-	
-	if (largeMap || ND_IsMediumMap(checkMap))
+	if (ND_IsLargeMap(checkMap) || ND_IsMediumMap(checkMap))
 		return GetSlotCount(26, 28, 28);
 		
-	else if (tinyMap)
+	else if (ND_IsTinyMap(checkMap))
 		return GetSlotCount(22, 26, 26);
 
 	/* oasis, coast, hydro, roadwork */
