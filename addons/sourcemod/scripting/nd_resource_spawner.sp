@@ -81,7 +81,7 @@ void CreatePluginConvars()
 public void OnClientPutInServer(int client) {
 	if (!tertsSpawned[SECOND_TIER] && ND_RoundStarted())
 	{
-		int serverType = ND_GetServerType();
+		int serverType = ND_GetServerTypeEx();
 		if (serverType >= SERVER_TYPE_STABLE)
 		{
 			CheckStableSpawns();
@@ -98,7 +98,7 @@ public void ND_OnRoundStarted()
 	tertsSpawned[FIRST_TIER] = false;
 	tertsSpawned[SECOND_TIER] = false;
 	
-	int serverType = ND_GetServerType();
+	int serverType = ND_GetServerTypeEx();
 	if (serverType >= SERVER_TYPE_STABLE)
 	{
 		CheckStableSpawns();
@@ -153,7 +153,7 @@ void CheckTertiarySpawns()
 	// Will throw tag mismatch warning, it's okay
 	if (ND_CustomMapEquals(map_name, ND_Submarine))
 	{
-		if (ND_GetServerType() == SERVER_TYPE_ALPHA)
+		if (ND_GetServerTypeEx() == SERVER_TYPE_ALPHA)
 		{
 			SpawnTertiaryPoint({2366.0, 3893.0, 13.8});
 			SpawnTertiaryPoint({-1000.0, -3820.0, -186.0});
