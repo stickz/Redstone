@@ -8,3 +8,7 @@ native bool ND_WarmupCompleted();
 /* Ask the warmup plugin if TeamPick mode is running */
 native bool ND_TeamPickMode();
 #define ND_TPM_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_TeamPickMode") == FeatureStatus_Available)
+
+stock bool IsTeamPickRunning(bool default = true) {
+	return !ND_TPM_AVAILABLE() ? default : ND_TeamPickMode();
+}
