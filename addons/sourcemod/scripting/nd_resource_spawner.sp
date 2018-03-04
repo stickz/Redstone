@@ -86,8 +86,13 @@ public void OnClientPutInServer(int client) {
 		{
 			CheckStableSpawns();
 			
-			if (serverType >= SERVER_TYPE_ALPHA)
-				CheckTertiarySpawns();
+			if (serverType >= SERVER_TYPE_BETA)
+			{
+				CheckBetaSpawns();
+				
+				if (serverType >= SERVER_TYPE_ALPHA)
+					CheckTertiarySpawns();
+			}
 		}
 	}
 }
@@ -102,11 +107,17 @@ public void ND_OnRoundStarted()
 	if (serverType >= SERVER_TYPE_STABLE)
 	{
 		CheckStableSpawns();
-	
-		if (serverType >= SERVER_TYPE_ALPHA)
+		
+		if (serverType >= SERVER_TYPE_BETA)
 		{
-			AdjustTertiarySpawns();
-			CheckTertiarySpawns();
+			AdjustBetaSpawns();
+			CheckBetaSpawns();
+			
+			if (serverType >= SERVER_TYPE_ALPHA)
+			{
+				AdjustTertiarySpawns();
+				CheckTertiarySpawns();
+			}
 		}
 	}
 }
@@ -145,26 +156,12 @@ void CheckStableSpawns()
 	}
 }
 
-void CheckTertiarySpawns()
+void CheckBetaSpawns()
 {
 	char map_name[64];   
 	GetCurrentMap(map_name, sizeof(map_name));
 	
-	// Will throw tag mismatch warning, it's okay
-	if (ND_CustomMapEquals(map_name, ND_Submarine))
-	{
-		if (ND_GetServerTypeEx() == SERVER_TYPE_ALPHA)
-		{
-			SpawnTertiaryPoint({2366.0, 3893.0, 13.8});
-			SpawnTertiaryPoint({-1000.0, -3820.0, -186.0});
-			SpawnTertiaryPoint({1350.0, -2153.0, 54.0});
-			SpawnTertiaryPoint({1001.0, 1523.0, -112.0});
-		}
-		
-		tertsSpawned[SECOND_TIER] = true;
-	}
-	
-	else if (ND_StockMapEquals(map_name, ND_Gate))
+	if (ND_StockMapEquals(map_name, ND_Gate))
 	{
 		int teamCount = RED_OnTeamCount();
 		if (teamCount >= cvarGateTertiarySpawns[FIRST_TIER].IntValue)
@@ -183,6 +180,26 @@ void CheckTertiarySpawns()
 				tertsSpawned[SECOND_TIER] = true;
 			}
 		}
+	}
+}
+
+void CheckTertiarySpawns()
+{
+	char map_name[64];   
+	GetCurrentMap(map_name, sizeof(map_name));
+	
+	// Will throw tag mismatch warning, it's okay
+	if (ND_CustomMapEquals(map_name, ND_Submarine))
+	{
+		if (ND_GetServerTypeEx() == SERVER_TYPE_ALPHA)
+		{
+			SpawnTertiaryPoint({2366.0, 3893.0, 13.8});
+			SpawnTertiaryPoint({-1000.0, -3820.0, -186.0});
+			SpawnTertiaryPoint({1350.0, -2153.0, 54.0});
+			SpawnTertiaryPoint({1001.0, 1523.0, -112.0});
+		}
+		
+		tertsSpawned[SECOND_TIER] = true;
 	}
 	
 	else if (ND_StockMapEquals(map_name, ND_Downtown))
@@ -326,7 +343,7 @@ void CheckTertiarySpawns()
 		tertsSpawned[SECOND_TIER] = true;
 }
 
-void AdjustTertiarySpawns()
+void AdjustBetaSpawns()
 {
 	char map_name[64];   
 	GetCurrentMap(map_name, sizeof(map_name));
@@ -341,8 +358,14 @@ void AdjustTertiarySpawns()
 		RemoveTertiaryPoint("tertiary013", "tertiary_area013");
 		RemoveTertiaryPoint("tertiary07", "tertiary_area07");
 	}
+}
+
+void AdjustTertiarySpawns()
+{
+	char map_name[64];   
+	GetCurrentMap(map_name, sizeof(map_name));
 	
-	else if (ND_StockMapEquals(map_name, ND_Downtown))
+	if (ND_StockMapEquals(map_name, ND_Downtown))
 	{
 		// Remove tertiary by prime and secondary
 		RemoveTertiaryPoint("tertiary_cr", "tertiary_cr_area");
