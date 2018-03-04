@@ -190,7 +190,7 @@ void CheckBetaSpawns()
 			// Respawn tunnel resources			
 			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
 			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
-			tertsSpawned[FIRST_TIER] = true;
+			tertsSpawned[SECOND_TIER] = true;
 		}		
 	}
 }
