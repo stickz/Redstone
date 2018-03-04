@@ -181,6 +181,18 @@ void CheckBetaSpawns()
 			}
 		}
 	}
+	
+	else if (ND_StockMapEquals(map_name, ND_Clocktower))
+	{
+		int teamCount = RED_OnTeamCount();
+		if (teamCount >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue)
+		{
+			// Respawn tunnel resources			
+			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
+			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
+			tertsSpawned[SECOND_TIER] = true;
+		}		
+	}
 }
 
 void CheckTertiarySpawns()
@@ -357,6 +369,12 @@ void AdjustBetaSpawns()
 		// Tertaries by the secondary and prime
 		RemoveTertiaryPoint("tertiary013", "tertiary_area013");
 		RemoveTertiaryPoint("tertiary07", "tertiary_area07");
+	}
+	
+	else if (ND_StockMapEquals(map_name, ND_Clocktower))
+	{
+		RemoveTertiaryPoint("tertiary_1", "tertiary_area1");	
+		RemoveTertiaryPoint("tertiary_tunnel", "tertiary_tunnel_area");	
 	}
 }
 
