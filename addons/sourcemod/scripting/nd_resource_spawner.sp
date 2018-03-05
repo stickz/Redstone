@@ -373,8 +373,13 @@ void AdjustBetaSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
 	{
+		// Remove tunnel resources
 		RemoveTertiaryPoint("tertiary_1", "tertiary_area1");	
-		RemoveTertiaryPoint("tertiary_tunnel", "tertiary_tunnel_area");	
+		RemoveTertiaryPoint("tertiary_tunnel", "tertiary_tunnel_area");
+		
+		// Spawn new tertiary near consort base
+		// So empire + consort have same resource acess
+		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0});
 	}
 }
 
