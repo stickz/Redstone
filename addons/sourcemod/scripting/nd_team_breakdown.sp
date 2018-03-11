@@ -51,6 +51,8 @@ public void OnPluginStart()
 		LateLoadStart();
 	}
 	
+	HookEvent("player_changeclass", Event_ChangeClass);
+	
 	AddUpdaterLibrary(); //Auto-Updater
 }
 
@@ -236,9 +238,7 @@ void AddClientClass(int client)
 	}	
 }
 
-void disableBreakdowns()
-{
-	UnhookEvent("player_changeclass", Event_ChangeClass);
+void disableBreakdowns() {
 	UnhookEvent("player_death", Event_PlayerDeath);
 }
 
@@ -247,7 +247,6 @@ void startPlugin()
 	statusChanged = true;
 	CreateTimer(BREAKDOWN_UPDATE_RATE, UpdateBreakdowns, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	
-	HookEvent("player_changeclass", Event_ChangeClass);
 	HookEvent("player_death", Event_PlayerDeath);
 }
 

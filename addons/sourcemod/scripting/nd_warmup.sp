@@ -30,7 +30,8 @@ enum Bools
 	runBalancer,
 	enableBalancer,
 	pauseWarmup,
-	warmupCompleted
+	warmupCompleted,
+	currentlyPicking
 };
 
 enum Integers
@@ -61,7 +62,7 @@ public void OnPluginStart()
 	
 	CreatePluginConvars();
 	
-	RegAdminCmd("sm_NextPick", CMD_TriggerPicking, ADMFLAG_RESERVATION, "enable/disable picking for next map");
+	RegAdminCmd("sm_NextPick", CMD_TriggerPicking, ADMFLAG_CUSTOM6, "enable/disable picking for next map");
 	g_OnWarmupCompleted = CreateGlobalForward("ND_OnWarmupComplete", ET_Ignore);
 	
 	g_Bool[pauseWarmup] = false;
@@ -230,7 +231,10 @@ void SetWarmupEndType()
 		ServerCommand("sm_balance 0"); // Disable team balancer plugin
 		ServerCommand("sm_commander_restrictions 0"); // Disable commander restrictions
 		ServerCommand("sm_cvar nd_commander_election_time 15.0");
-		PrintToAdmins("\x05[xG] Team Picking is now availible!", "b");
+		
+		g_Bool[currentlyPicking] = true;
+		PrintToAdmins("\x05[xG] Team Picking is now availible!", "b");		
+		
 		FireWarmupCompleteForward();
 		
 		return;
@@ -288,6 +292,7 @@ void SetVarDefaults()
 	g_Bool[useBalancer] = false;
 	g_Bool[runBalancer] = true;
 	g_Bool[warmupCompleted] = false;
+	g_Bool[currentlyPicking] = false;
 	g_Bool[enableBalancer] = g_Cvar[enableWarmupBalance].BoolValue;
 	g_Integer[warmupTextType] = 0;
 }
@@ -317,5 +322,5 @@ public Native_GetWarmupCompleted(Handle plugin, int numParms) {
 }
 
 public Native_GetTeamPickMode(Handle plugin, int numParms) {
-	return _:g_Bool[pauseWarmup];
+	return _:g_Bool[currentlyPicking];
 }

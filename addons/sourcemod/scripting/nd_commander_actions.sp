@@ -17,6 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <adminmenu>
+#include <nd_warmup>
 
 public Plugin myinfo =
 {
@@ -67,6 +68,12 @@ public OnAdminMenuReady(Handle:topmenu)
 
 public Action Cmd_SetCommander(int client, int args)
 {
+	if (!HasTeamPickAccess(client))
+	{
+		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+		return Plugin_Handled;
+	}
+	
 	if (!args)
 	{
 		ReplyToCommand(client, "[SM] Usage: sm_setcommander <Name|#Userid>");
@@ -90,6 +97,12 @@ public Action Cmd_SetCommander(int client, int args)
 
 public Action Cmd_Demote(int client, int args)
 {
+	if (!HasTeamPickAccess(client))
+	{
+		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+		return Plugin_Handled;
+	}
+	
 	if (!args)
 	{
 		ReplyToCommand(client, "[SM] Usage: sm_demotecommander <ct | emp>");

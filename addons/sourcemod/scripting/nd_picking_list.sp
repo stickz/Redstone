@@ -12,7 +12,7 @@ public Plugin myinfo =
 {
 	name 		= "[ND] Team Pick List",
 	author 		= "stickz",
-	description = "Creates a list of players who want to command",
+	description 	= "Creates a list of players who want to command",
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
@@ -24,9 +24,9 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_command", 	 CMD_VolunteerCommander);
 	RegConsoleCmd("sm_PrintComList", CMD_PrintCommanderList);
 	
-	RegAdminCmd("sm_AddComList", 	CMD_AddCommanderList, 	 ADMFLAG_GENERIC);
-	RegAdminCmd("sm_RemoveComList", CMD_RemoveCommanderList, ADMFLAG_GENERIC);
-	RegAdminCmd("sm_ClearComList", 	CMD_ClearCommanderList,  ADMFLAG_GENERIC);
+	RegAdminCmd("sm_AddComList", 	CMD_AddCommanderList, 	 ADMFLAG_CUSTOM6);
+	RegAdminCmd("sm_RemoveComList", CMD_RemoveCommanderList, ADMFLAG_CUSTOM6);
+	RegAdminCmd("sm_ClearComList", 	CMD_ClearCommanderList,  ADMFLAG_CUSTOM6);
 	
 	LoadTranslations("nd_common.phrases");
 	AddUpdaterLibrary();
