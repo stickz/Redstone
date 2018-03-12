@@ -26,12 +26,14 @@ int Colour_Gray[COLOUR_SCALE_SIZE] = { 158, 158, 158, 255 };
 
 public Plugin myinfo =
 {
-	name 			= "[ND] Grenade Trails V2",
-	author 			= "Stickz",
+	name 		= "[ND] Grenade Trails V2",
+	author 		= "Stickz",
 	description 	= "Adds lightbeams to grenades/rockets",
-	version 		= "dummy",
-	url 			= "https://github.com/stickz/Redstone/"
+	version 	= "dummy",
+	url 		= "https://github.com/stickz/Redstone/"
 };
+
+#include "nd_trails/clientprefs.sp"
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_grenade_trails_deux/nd_grenade_trails_deux.txt"
 #include "updater/standard.sp"
@@ -45,6 +47,8 @@ public void OnPluginStart()
 	if (ND_MapStarted())
 		PrecacheTrails();
 	
+	LoadTranslations("nd_grenade_trails_deux.phrases");
+	AddClientPrefSupport(); // clientprefs.sp
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -77,7 +81,7 @@ public void OnEmpGrenadeSpawned(int entity)
 		RED_LOOP_CLIENTS(idx) 
 		{
 			clientTeam = GetClientTeam(idx);
-			if (clientTeam >= 2 && clientTeam == ownerTeam)
+			if (clientTeam >= 2 && clientTeam == ownerTeam && && option_trails[client])
 				players.Push(idx);
 		}
 		
@@ -102,7 +106,7 @@ public void OnTrailItemSpawned(int entity)
 		/* Send to all players currently in spectator or unassigned */
 		RED_LOOP_CLIENTS(idx) 
 		{
-			if (GetClientTeam(idx) < 2)
+			if (GetClientTeam(idx) < 2 && option_trails[client])
 				players.Push(idx);
 		}
 		
@@ -129,14 +133,14 @@ void Trail_SendEffect(ArrayList &players, int entity, int colour[COLOUR_SCALE_SI
 void Trail_SetupBeamFollow(int entity, int colour[COLOUR_SCALE_SIZE])
 {
 	TE_SetupBeamFollow(	entity, 
-						SpotlightModel, 
-						0, 
-						TRAIL_LIFETIME, 
-						TRAIL_WIDTH, 
-						TRAIL_WIDTH, 
-						TRAIL_FADE, 
-						colour
-					  );
+				SpotlightModel, 
+				0, 
+				TRAIL_LIFETIME, 
+				TRAIL_WIDTH, 
+				TRAIL_WIDTH, 
+				TRAIL_FADE, 
+				colour
+			  );
 }
 
 int GetEntClientInt(int entity)
