@@ -81,7 +81,7 @@ public void OnEmpGrenadeSpawned(int entity)
 		RED_LOOP_CLIENTS(idx) 
 		{
 			clientTeam = GetClientTeam(idx);
-			if (clientTeam >= 2 && clientTeam == ownerTeam && && option_trails[client])
+			if (clientTeam >= 2 && clientTeam == ownerTeam && option_trails[client])
 				players.Push(idx);
 		}
 		
