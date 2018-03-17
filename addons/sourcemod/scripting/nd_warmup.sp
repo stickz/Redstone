@@ -4,6 +4,7 @@
 #include <nd_shuffle>
 #include <nd_rounds>
 #include <nd_redstone>
+#include <nd_rstart>
 
 #define VALUE_TYPE_ENABLED 1
 #define VALUE_TYPE_DISABLED 0
@@ -29,7 +30,6 @@ enum Bools
 	useBalancer,
 	runBalancer,
 	enableBalancer,
-	pauseWarmup,
 	warmupCompleted,
 	currentlyPicking
 };
@@ -61,11 +61,8 @@ public void OnPluginStart()
 	LoadTranslations("nd_warmup.phrases");
 	
 	CreatePluginConvars();
-	
-	RegAdminCmd("sm_NextPick", CMD_TriggerPicking, ADMFLAG_CUSTOM6, "enable/disable picking for next map");
+
 	g_OnWarmupCompleted = CreateGlobalForward("ND_OnWarmupComplete", ET_Ignore);
-	
-	g_Bool[pauseWarmup] = false;
 	
 	AddUpdaterLibrary(); //Add updater support if included
 }
@@ -145,42 +142,6 @@ bool CheckRapidStart()
 	return false;
 }
 
-/* Toggle player picking mode */
-public Action CMD_TriggerPicking(int client, int args)
-{
-	if (args != 1)
-	{
-		ReplyToCommand(client, "[SM] Usage: !NextPick <on or off>");
-		return Plugin_Handled;	
-	}
-	
-	char arg1[64];
-	GetCmdArg(1, arg1, sizeof(arg1));
-	
-	char Name[32];
-	GetClientName(client, Name, sizeof(Name));	
-		
-	if (StrEqual(arg1, "on", false))
-	{
-		g_Bool[pauseWarmup] = true;
-		PrintToChatAll("\x05%s triggered picking game(s) next map!", Name);		
-	}
-	
-	else if (StrEqual(arg1, "off", false))
-	{
-		g_Bool[pauseWarmup] = false;
-		PrintToChatAll("\x05%s triggered regular game(s) next map!", Name);		
-	}
-	
-	else
-	{
-		ReplyToCommand(client, "[SM] Usage: !NextPick <on or off>");
-		return Plugin_Handled;	
-	}
-		
-	return Plugin_Handled;	
-}
-
 bool RunWarmupBalancer()
 {
 	if (BT2_AVAILABLE() && g_Bool[runBalancer] && g_Bool[enableBalancer])
@@ -225,7 +186,7 @@ void DisplayHudText()
 void SetWarmupEndType()
 {	
 	/* Start Round using team picker if applicable */
-	if (g_Bool[pauseWarmup])
+	if (ND_PauseWarmupRound())
 	{
 		ServerCommand("sm_cvar sv_alltalk 0"); //Disable AT while picking, but enable FF.
 		ServerCommand("sm_balance 0"); // Disable team balancer plugin
