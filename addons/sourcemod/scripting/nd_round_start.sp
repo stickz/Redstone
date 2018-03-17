@@ -13,6 +13,7 @@ public Plugin myinfo =
 /* Include different modules of plug-in */
 #include "nd_rstart/countdown.sp"
 #include "nd_rstart/nextpick.sp"
+#include "nd_rstart/natives.sp"
 
 /* For auto updater support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_round_start/nd_round_start.txt"
