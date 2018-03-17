@@ -1,5 +1,7 @@
 #include <sourcemod>
 #include <nd_rounds>
+#include <nd_warmup>
+#include <nd_shuffle>
  
 public Plugin myinfo =
 {
@@ -13,6 +15,7 @@ public Plugin myinfo =
 /* Include different modules of plug-in */
 #include "nd_rstart/countdown.sp"
 #include "nd_rstart/nextpick.sp"
+#include "nd_rstart/start.sp"
 #include "nd_rstart/natives.sp"
 
 /* For auto updater support */
