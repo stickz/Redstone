@@ -27,9 +27,6 @@ public Plugin myinfo =
 
 enum Bools
 {
-	useBalancer,
-	runBalancer,
-	enableBalancer,
 	warmupCompleted,
 	currentlyPicking
 };
@@ -144,7 +141,7 @@ bool CheckRapidStart()
 
 bool RunWarmupBalancer()
 {
-	if (BT2_AVAILABLE() && g_Bool[runBalancer] && g_Bool[enableBalancer])
+	if (BT2_AVAILABLE() && g_Cvar[enableWarmupBalance].BoolValue)
 		return ReadyToBalanceCount() >= g_Cvar[minPlayersForBalance].IntValue;
 	
 	return false;
@@ -250,11 +247,8 @@ void StartRound()
 
 void SetVarDefaults()
 {
-	g_Bool[useBalancer] = false;
-	g_Bool[runBalancer] = true;
 	g_Bool[warmupCompleted] = false;
 	g_Bool[currentlyPicking] = false;
-	g_Bool[enableBalancer] = g_Cvar[enableWarmupBalance].BoolValue;
 	g_Integer[warmupTextType] = 0;
 }
 
