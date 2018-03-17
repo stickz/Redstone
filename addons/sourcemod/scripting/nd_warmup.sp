@@ -109,7 +109,7 @@ public Action TIMER_WarmupRound(Handle timer)
 		
 		case 1: 
 		{
-			SetWarmupEndType();
+			FireWarmupCompleteForward();
 			return Plugin_Stop;
 		}
 	}
@@ -132,7 +132,7 @@ bool CheckRapidStart()
 	// If the client count is within range, start the game faster
 	if (ND_GetClientCount() <= g_Cvar[rapidStartClientCount].IntValue)
 	{
-		SetWarmupEndType();
+		FireWarmupCompleteForward();
 		return true;				
 	}
 	
