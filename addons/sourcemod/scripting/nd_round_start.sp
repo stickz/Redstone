@@ -42,8 +42,16 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
+public void OnMapStart() {
+	SetVarDefaults();
+}
+
 public void OnMapEnd() {
 	ClearCountDownHandle(); // for countdown.sp
+}
+
+void SetVarDefaults() {
+	currentlyPicking = false;
 }
 
 void CreatePluginConvars()
