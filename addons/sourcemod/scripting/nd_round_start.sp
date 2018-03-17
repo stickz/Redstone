@@ -43,8 +43,11 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapStart() {
+public void OnMapStart() 
+{
 	SetVarDefaults();
+	
+	ServerCommand("bot_quota 0"); //Make sure bots are disabled
 }
 
 public void OnMapEnd() {
