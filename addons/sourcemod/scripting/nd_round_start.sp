@@ -48,7 +48,21 @@ public void OnMapStart() {
 }
 
 public void OnMapEnd() {
+	InitiateRoundEnd();
+}
+
+public void ND_OnRoundEnded() {
+	InitiateRoundEnd();	
+}
+
+public void OnMapEnd() {
 	ClearCountDownHandle(); // for countdown.sp
+}
+
+void InitiateRoundEnd()
+{
+	ServerCommand("mp_minplayers 32");
+	ServerCommand("sm_cvar sv_alltalk 1");
 }
 
 void SetVarDefaults() {
