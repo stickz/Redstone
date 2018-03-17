@@ -1,37 +1,51 @@
+// Exported from SourceMod Translator
+// Date: 2018-03-17 15:06:41 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/242
+//
 "Phrases"
 {
+
 	"Eight Required"
 	{
 		"ru"		"���������� 8 ������� � ������ ��� ������� ����� �����"
 	}
-	
+
 	"Ten Required"
 	{
 		"ru"		"���������� 10 ������� � ������ ��� ������� ����� �����"
 	}
-	
+
 	"Twelve Required"
 	{
-		"ru"		"���������� 12 ������� � ������ ��� ������� ����� �����"	
+		"ru"		"���������� 12 ������� � ������ ��� ������� ����� �����"
 	}
-	
+
 	"Too Late"
 	{
-		"ru"		"������� ������ ��� ������������� RTV"	
+		"ru"		"������� ������ ��� ������������� RTV"
 	}
-	
+
 	"Already Passed"
 	{
 		"ru"		"����� �����, ���������� ���������"
 	}
-	
+
 	"RTV Changing"
 	{
-		"ru"		"RTV: ����� ����� ��������� ����� 5 ������"		
+		"ru"		"RTV: ����� ����� ��������� ����� 5 ������"
 	}
-	
+
 	"RTV Wait"
 	{
 		"ru"		"RTV: ��������� �� ��������� �����"
 	}
+
+	"Typed Change Map"
+	{
+		"ru"		"{1} запрос на смену карты : {2} нужно больше голосов"
+	}
+
 }
