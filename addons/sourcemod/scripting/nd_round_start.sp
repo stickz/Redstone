@@ -36,6 +36,9 @@ public void OnPluginStart()
 	
 	CreatePluginConvars(); // for convars
 	
+	// Too lazy to seperate "Balancer Off" phrase
+	LoadTranslations("nd_warmup.phrases");
+	
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -51,11 +54,13 @@ void CreatePluginConvars()
 	AutoExecConfig(true, "nd_rstart"); // store convars
 }
 
-void StartRound(bool teampick = false)
+void StartRound(bool teampick = false, bool balance = false)
 {
 	if (teampick)
-	{
 		PrintToChatAll("\x05Join the RedstoneND steam group!");
-		ServerCommand("mp_minplayers 1");
-	}	
+
+	else if (!balance)
+		PrintToChatAll("\x05[TB] %t", "Balancer Off");
+		
+	ServerCommand("mp_minplayers 1");
 }
