@@ -34,16 +34,21 @@ public void OnPluginStart()
 	RegCommandsCountDown(); // for countdown.sp
 	RegNextPickCommand(); // for nextpick.sp
 	
-	g_Cvar[enableWarmupBalance] 	=	CreateConVar("sm_warmup_balance", "1", "Warmup Balancer: 0 to disable, 1 to enable");
-	g_Cvar[minPlayersForBalance]	=	CreateConVar("sm_warmup_bmin", "6", "Sets minium number of players for warmup balance");
-	
-	AutoExecConfig(true, "nd_rstart"); // store convars
+	CreatePluginConvars(); // for convars
 	
 	AddUpdaterLibrary(); //auto-updater
 }
 
 public void OnMapEnd() {
 	ClearCountDownHandle(); // for countdown.sp
+}
+
+void CreatePluginConvars()
+{
+	g_Cvar[enableWarmupBalance] 	=	CreateConVar("sm_warmup_balance", "1", "Warmup Balancer: 0 to disable, 1 to enable");
+	g_Cvar[minPlayersForBalance]	=	CreateConVar("sm_warmup_bmin", "6", "Sets minium number of players for warmup balance");
+	
+	AutoExecConfig(true, "nd_rstart"); // store convars
 }
 
 void StartRound(bool teampick = false)
