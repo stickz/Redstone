@@ -6,6 +6,6 @@
 native bool ND_PauseWarmup();
 #define ND_PW_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_PauseWarmup") == FeatureStatus_Available)
 
-stoock bool ND_PauseWarmupRound() {
+stock bool ND_PauseWarmupRound() {
 	return ND_PW_AVAILABLE() && ND_PauseWarmup();
 }
