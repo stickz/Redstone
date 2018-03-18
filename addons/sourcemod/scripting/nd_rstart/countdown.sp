@@ -1,4 +1,5 @@
 int countdown;
+bool balanceTeams = false;
 Handle CountDownTimer = INVALID_HANDLE;
 
 void RegCommandsCountDown()
@@ -28,6 +29,13 @@ void CancelCountDown()
 
 public Action Command_Start(int client, int args)
 {
+	if (args == 1)
+	{
+		char runBalance[16]; // Get the argument inputed
+		GetCmdArg(1, runBalance, sizeof(runBalance));
+		balanceTeams = StrEqual(runBalance, "false", false);
+	}
+	
 	if (!ND_RoundStarted())
 		StartCountDown(15);     
 
@@ -47,7 +55,7 @@ public Action TheCountDownTimer(Handle timer)
 {  
 	if (countdown <= 0)
 	{
-		StartRound(true);
+		StartRound(balanceTeams);
 		CountDownTimer = INVALID_HANDLE;
 		return Plugin_Stop;
 	}

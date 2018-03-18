@@ -90,6 +90,7 @@ void StartRound(bool balance = false)
 		
 	else if (balance && RunWarmupBalancer())
 	{
+		ServerCommand("sm_balance 1");
 		WB2_BalanceTeams();
 		return;	
 	}
