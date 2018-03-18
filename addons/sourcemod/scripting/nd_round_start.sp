@@ -3,6 +3,7 @@
 #include <nd_rounds>
 #include <nd_warmup>
 #include <nd_shuffle>
+#include <nd_teampick>
  
 public Plugin myinfo =
 {
@@ -79,9 +80,9 @@ void CreatePluginConvars()
 	AutoExecConfig(true, "nd_rstart"); // store convars
 }
 
-void StartRound(bool teampick = false, bool balance = false)
+void StartRound(bool balance = false)
 {
-	if (teampick)
+	if (currentlyPicking && ND_TeamsPickedThisMap())
 	{
 		PrintToChatAll("\x05Join the RedstoneND steam group!");
 		ServerCommand("mp_minplayers 1");	
@@ -93,6 +94,6 @@ void StartRound(bool teampick = false, bool balance = false)
 		ServerCommand("mp_minplayers 1");	
 	}
 		
-	else if (balance && !currentlyPicking && RunWarmupBalancer())
+	else if (balance && RunWarmupBalancer())
 		WB2_BalanceTeams();
 }

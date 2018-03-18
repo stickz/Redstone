@@ -47,7 +47,7 @@ public Action TheCountDownTimer(Handle timer)
 {  
 	if (countdown <= 0)
 	{
-		StartRound(true, true);
+		StartRound(true);
 		CountDownTimer = INVALID_HANDLE;
 		return Plugin_Stop;
 	}
