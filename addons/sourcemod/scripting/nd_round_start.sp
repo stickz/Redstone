@@ -83,17 +83,16 @@ void CreatePluginConvars()
 void StartRound(bool balance = false)
 {
 	if (currentlyPicking && ND_TeamsPickedThisMap())
-	{
 		PrintToChatAll("\x05Join the RedstoneND steam group!");
-		ServerCommand("mp_minplayers 1");	
-	}
 
 	else if (!balance)
-	{
 		PrintToChatAll("\x05[TB] %t", "Balancer Off");
-		ServerCommand("mp_minplayers 1");	
-	}
 		
 	else if (balance && RunWarmupBalancer())
+	{
 		WB2_BalanceTeams();
+		return;	
+	}
+	
+	ServerCommand("mp_minplayers 1");
 }
