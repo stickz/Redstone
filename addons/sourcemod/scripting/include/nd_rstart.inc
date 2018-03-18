@@ -3,6 +3,8 @@
 #endif
 #define _nd_rstart_included_
 
+#include <nd_stocks>
+
 native bool ND_PauseWarmup();
 #define ND_PW_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_PauseWarmup") == FeatureStatus_Available)
 
@@ -19,5 +21,5 @@ stock bool IsTeamPickRunning() {
 }
 
 stock bool HasTeamPickAccess(int client) {
-	return IsTeamPickRunning() || GetAdminFlag(GetUserAdmin(client), Admin_Root, Access_Real);
+	return IsTeamPickRunning() || HasRootAccess(client);
 }
