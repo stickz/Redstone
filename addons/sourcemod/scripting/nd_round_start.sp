@@ -94,5 +94,5 @@ void StartRound(bool teampick = false, bool balance = false)
 	}
 		
 	else if (balance && !currentlyPicking && RunWarmupBalancer())
-		WB2_BalanceTeams();;
+		WB2_BalanceTeams();
 }
