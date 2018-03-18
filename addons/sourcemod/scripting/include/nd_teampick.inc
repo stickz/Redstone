@@ -3,6 +3,8 @@
 #endif
 #define _nd_teampick_included
 
+#include <nd_stocks>
+
 native bool ND_PickedTeamsThisMap();
 #define ND_PTTM_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_PickedTeamsThisMap") == FeatureStatus_Available)
 
