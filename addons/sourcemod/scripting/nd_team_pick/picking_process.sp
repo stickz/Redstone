@@ -256,5 +256,8 @@ void FinishPicking(bool forced = false)
 	g_bPickStarted = false;
 
 	if (!forced)
+	{
+		g_bPickedThisMap = true;
 		PrintMessageAllEx("Picking Completed");
+	}
 }
