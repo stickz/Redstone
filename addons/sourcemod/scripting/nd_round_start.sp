@@ -7,7 +7,7 @@
  
 public Plugin myinfo =
 {
-	name = "[ND] Round Start ",
+	name = "[ND] Round Start",
 	author = "Xander, Stickz",
 	description = "Starts the round when triggered",
 	version = "dummy",
@@ -94,6 +94,9 @@ void StartRound(bool balance = false)
 		WB2_BalanceTeams();
 		return;	
 	}
+	
+	else
+		PrintToChatAll("\x05[TB] %t", "Balancer Off");
 	
 	ServerCommand("mp_minplayers 1");
 }
