@@ -3,6 +3,7 @@
 #include <nd_rounds>
 #include <nd_warmup>
 #include <nd_shuffle>
+#include <nd_teampick>
  
 public Plugin myinfo =
 {
@@ -93,6 +94,6 @@ void StartRound(bool teampick = false, bool balance = false)
 		ServerCommand("mp_minplayers 1");	
 	}
 		
-	else if (balance && !currentlyPicking && RunWarmupBalancer())
+	else if (teampick && balance && ND_TeamsPickedThisMap() && RunWarmupBalancer())
 		WB2_BalanceTeams();
 }
