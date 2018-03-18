@@ -38,6 +38,7 @@ ConVar cvarFirstPickTime;
 #include "nd_team_pick/start_picking.sp"
 #include "nd_team_pick/picking_timer.sp"
 #include "nd_team_pick/picking_process.sp"
+#include "nd_team_pick/natives.sp"
 
 public void OnPluginStart()
 {
