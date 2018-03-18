@@ -17,7 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <adminmenu>
-#include <nd_rstart>
+#include <nd_teampick>
 
 public Plugin myinfo =
 {
@@ -68,7 +68,7 @@ public OnAdminMenuReady(Handle:topmenu)
 
 public Action Cmd_SetCommander(int client, int args)
 {
-	if (!HasTeamPickAccess(client))
+	if (!ND_HasTPRunAccess(client))
 	{
 		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
 		return Plugin_Handled;
@@ -97,7 +97,7 @@ public Action Cmd_SetCommander(int client, int args)
 
 public Action Cmd_Demote(int client, int args)
 {
-	if (!HasTeamPickAccess(client))
+	if (!ND_HasTPRunAccess(client))
 	{
 		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
 		return Plugin_Handled;
