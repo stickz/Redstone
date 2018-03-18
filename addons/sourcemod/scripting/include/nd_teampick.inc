@@ -9,3 +9,7 @@ native bool ND_PickedTeamsThisMap();
 stock bool ND_TeamsPickedThisMap() {
 	return ND_PTTM_AVAILABLE() && ND_PickedTeamsThisMap();
 }
+
+stock bool ND_HasTPRunAccess(int client) {
+	return ND_TeamsPickedThisMap() || HasRootAccess(client);
+}
