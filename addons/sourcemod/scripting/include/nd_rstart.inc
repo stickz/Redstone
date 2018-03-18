@@ -19,5 +19,5 @@ stock bool IsTeamPickRunning() {
 }
 
 stock bool HasTeamPickAccess(int client) {
-	return IsTeamPickRunning() || GetAdminFlag(GetUserAdmin(client), Admin_Root, Access_Real);
+	return IsTeamPickRunning() || HasRootAccess(client);
 }
