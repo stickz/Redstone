@@ -3,7 +3,6 @@
 #include <nd_maps>
 #include <nd_rounds>
 #include <nd_redstone>
-#include <nd_rstart>
 
 #define VALUE_TYPE_ENABLED 1
 #define VALUE_TYPE_DISABLED 0
