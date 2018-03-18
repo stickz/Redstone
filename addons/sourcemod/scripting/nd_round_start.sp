@@ -94,6 +94,6 @@ void StartRound(bool teampick = false, bool balance = false)
 		ServerCommand("mp_minplayers 1");	
 	}
 		
-	else if (teampick && balance && ND_TeamsPickedThisMap() && RunWarmupBalancer())
+	else if (teampick && balance && !ND_TeamsPickedThisMap() && RunWarmupBalancer())
 		WB2_BalanceTeams();
 }
