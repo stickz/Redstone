@@ -50,16 +50,15 @@ public void OnMapStart()
 	ServerCommand("bot_quota 0"); //Make sure bots are disabled
 }
 
-public void OnMapEnd() {
+public void OnMapEnd()
+{
+	ClearCountDownHandle(); // for countdown.sp
+	
 	InitiateRoundEnd();
 }
 
 public void ND_OnRoundEnded() {
 	InitiateRoundEnd();	
-}
-
-public void OnMapEnd() {
-	ClearCountDownHandle(); // for countdown.sp
 }
 
 void InitiateRoundEnd()
