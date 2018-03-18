@@ -21,6 +21,7 @@ int team_captain[2];
 
 bool g_bEnabled = false;
 bool g_bPickStarted = false;
+bool g_bPickedThisMap = false;
 bool doublePlace = true;
 bool firstPlace = true;
 bool checkPlacement = true;
@@ -60,6 +61,14 @@ public void OnMapStart() {
 	FinishPicking(true);
 }
 
+public void OnMapEnd() {
+	InitiateRoundEnd();
+}
+
+public void ND_OnRoundEnded() {
+	InitiateRoundEnd();	
+}
+
 public Action Command_JoinTeam(int client, char[] command, int argc)
 {
 	if (!ND_RoundStarted() && g_bEnabled)
@@ -69,6 +78,10 @@ public Action Command_JoinTeam(int client, char[] command, int argc)
 	}
 	
 	return Plugin_Continue;
+}
+
+void InitiateRoundEnd() {
+	g_bPickedThisMap = true;
 }
 
 bool PlayerIsPickable(int client) {
