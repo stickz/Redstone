@@ -88,8 +88,7 @@ stock bool IsValidClient(int client, bool nobots = true)
     return IsClientInGame(client); 
 } 
 
-stock bool IsValidBounds(int client)
-{
+stock bool IsValidBounds(int client) {
 	return client > 0 && client <= MaxClients;
 } 
 
@@ -97,7 +96,11 @@ stock bool IsValidAdmin(int client, const char[] flags)
 { 
 	new ibFlags = ReadFlagString(flags); 
 	return ((GetUserFlagBits(client) & ibFlags) == ibFlags || GetUserFlagBits(client) & ADMFLAG_ROOT);
-}  
+}
+
+stock bool HasRootAccess(int client) {
+	return GetAdminFlag(GetUserAdmin(client), Admin_Root, Access_Real);
+}
 
 stock void PrintToAdmins(const char[] message, const char[] flags) 
 { 
