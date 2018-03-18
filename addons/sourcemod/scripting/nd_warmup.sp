@@ -1,7 +1,6 @@
 #include <sourcemod>
 #include <nd_stocks>
 #include <nd_maps>
-#include <nd_shuffle>
 #include <nd_rounds>
 #include <nd_redstone>
 #include <nd_rstart>
@@ -25,12 +24,6 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_warmup/nd_warmup.txt"
 #include "updater/standard.sp"
 
-enum Bools
-{
-	warmupCompleted,
-	currentlyPicking
-};
-
 enum Integers
 {
 	warmupCountdown,
@@ -39,14 +32,12 @@ enum Integers
 
 enum Convars
 {
-	ConVar:enableWarmupBalance,
 	ConVar:stockWarmupTime,
 	ConVar:customWarmupTime,
-	ConVar:rapidStartClientCount,
-	ConVar:minPlayersForBalance
+	ConVar:rapidStartClientCount
 };
 
-bool g_Bool[Bools];
+bool warmupCompleted;
 int g_Integer[Integers];
 ConVar g_Cvar[Convars];
 
@@ -68,18 +59,9 @@ public void OnMapStart()
 {	
 	SetVarDefaults();
 	
-	SetMapWarmupTime();	
-	ServerCommand("bot_quota 0"); //Make sure bots are disabled
+	SetMapWarmupTime();
 	
 	StartWarmupRound();
-}
-
-public OnMapEnd() {
-	InitiateRoundEnd();
-}
-
-public void ND_OnRoundEnded() {
-	InitiateRoundEnd();	
 }
 
 public void ND_OnRoundStarted() {
@@ -109,7 +91,7 @@ public Action TIMER_WarmupRound(Handle timer)
 		
 		case 1: 
 		{
-			SetWarmupEndType();
+			FireWarmupCompleteForward();
 			return Plugin_Stop;
 		}
 	}
@@ -132,28 +114,18 @@ bool CheckRapidStart()
 	// If the client count is within range, start the game faster
 	if (ND_GetClientCount() <= g_Cvar[rapidStartClientCount].IntValue)
 	{
-		SetWarmupEndType();
+		FireWarmupCompleteForward();
 		return true;				
 	}
 	
 	return false;
 }
 
-bool RunWarmupBalancer()
-{
-	if (BT2_AVAILABLE() && g_Cvar[enableWarmupBalance].BoolValue)
-		return ReadyToBalanceCount() >= g_Cvar[minPlayersForBalance].IntValue;
-	
-	return false;
-}
-
 void CreatePluginConvars()
 {
-	g_Cvar[enableWarmupBalance] 	=	CreateConVar("sm_warmup_balance", "1", "Warmup Balancer: 0 to disable, 1 to enable");
 	g_Cvar[stockWarmupTime]		=	CreateConVar("sm_warmup_rtime", "40", "Sets the warmup time for stock maps");
 	g_Cvar[customWarmupTime]	=	CreateConVar("sm_warmup_ctime", "55", "Sets the warmup time for custom maps");
 	g_Cvar[rapidStartClientCount]	=	CreateConVar("sm_warmup_rscc", "4", "Sets the number of players for rapid starting");
-	g_Cvar[minPlayersForBalance]	=	CreateConVar("sm_warmup_bmin", "6", "Sets minium number of players for warmup balance");
 	
 	AutoExecConfig(true, "nd_warmup");
 }
@@ -180,50 +152,13 @@ void DisplayHudText()
 	CloseHandle(HudText);
 }
 
-void SetWarmupEndType()
-{	
-	/* Start Round using team picker if applicable */
-	if (ND_PauseWarmupRound())
-	{
-		ServerCommand("sm_cvar sv_alltalk 0"); //Disable AT while picking, but enable FF.
-		ServerCommand("sm_balance 0"); // Disable team balancer plugin
-		ServerCommand("sm_commander_restrictions 0"); // Disable commander restrictions
-		ServerCommand("sm_cvar nd_commander_election_time 15.0");
-		
-		g_Bool[currentlyPicking] = true;
-		PrintToAdmins("\x05[xG] Team Picking is now availible!", "b");		
-		
-		FireWarmupCompleteForward();
-		
-		return;
-	}
-			
-	/* Start Round using team balancer if applicable */		
-	else if (RunWarmupBalancer())
-		WB2_BalanceTeams();
-			
-	/* Otherwise, Start the Round normally */			
-	else
-		StartRound();
-	
-	FireWarmupCompleteForward();
-	ServerCommand("sm_balance 1");
-	ServerCommand("sm_cvar nd_commander_election_time 90.0");
-}
-
 void FireWarmupCompleteForward()
 {
-	g_Bool[warmupCompleted] = true;
+	warmupCompleted = true;
 	
 	Action dummy;
 	Call_StartForward(g_OnWarmupCompleted);
 	Call_Finish(dummy);
-}
-
-void InitiateRoundEnd()
-{
-	ServerCommand("mp_minplayers 32");		
-	ServerCommand("sm_cvar sv_alltalk 1");
 }
 
 void StartWarmupRound()
@@ -239,16 +174,9 @@ void SetMapWarmupTime()
 	g_Integer[warmupCountdown] = ND_IsCustomMap(currentMap) ? g_Cvar[customWarmupTime].IntValue : g_Cvar[stockWarmupTime].IntValue;
 }
 
-void StartRound()
-{
-	ServerCommand("mp_minplayers 1"); //start round
-	PrintToChatAll("\x05[TB] %t", "Balancer Off");
-}
-
 void SetVarDefaults()
 {
-	g_Bool[warmupCompleted] = false;
-	g_Bool[currentlyPicking] = false;
+	warmupCompleted = false;
 	g_Integer[warmupTextType] = 0;
 }
 
@@ -268,14 +196,9 @@ ToogleWarmupConvars(value)
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_WarmupCompleted", Native_GetWarmupCompleted);
-	CreateNative("ND_TeamPickMode", Native_GetTeamPickMode);
 	return APLRes_Success;
 }
 
-public Native_GetWarmupCompleted(Handle plugin, int numParms) {
-	return _:g_Bool[warmupCompleted];
-}
-
-public Native_GetTeamPickMode(Handle plugin, int numParms) {
-	return _:g_Bool[currentlyPicking];
+public int Native_GetWarmupCompleted(Handle plugin, int numParms) {
+	return warmupCompleted;
 }

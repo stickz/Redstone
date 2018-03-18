@@ -17,7 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <adminmenu>
-#include <nd_warmup>
+#include <nd_rstart>
 
 public Plugin myinfo =
 {
