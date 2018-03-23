@@ -92,11 +92,13 @@ void PrepColour(int client, int userid)
 
 public Action TIMER_DisableProtection(Handle timer, any:userid)
 {
-	if (userid == INVALID_USERID)
+	// Get the client index, return if invalid
+	int client = GetClientOfUserId(userid);		
+	if (client == INVALID_USERID)
 		return Plugin_Handled;
-	
-	int client = GetClientOfUserId(userid);	
-	SetEntityRenderColor(client, COLOUR_DEFAULT, COLOUR_DEFAULT, COLOUR_DEFAULT, COLOUR_DEFAULT);            
+
+	// Restore the client player model colour back to default
+	SetEntityRenderColor(client, COLOUR_DEFAULT, COLOUR_DEFAULT, COLOUR_DEFAULT, COLOUR_DEFAULT);         
 	//PrintCenterText(client, "%t", "Spawn Protect lifted");
 	
 	return Plugin_Handled;
