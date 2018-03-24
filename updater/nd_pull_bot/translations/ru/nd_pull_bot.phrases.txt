@@ -1,0 +1,31 @@
+// Exported from SourceMod Translator
+// Date: 2018-03-24 19:25:28 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/301
+//
+"Phrases"
+{
+
+	"Pull Retry Delay"
+	{
+		"ru"		"Подождите {1} секунд для повтора"
+	}
+
+	"Bot Too Far"
+	{
+		"ru"		"Бот {1} слишком далеко чтобы подтянуть его к вам"
+	}
+
+	"Bot Pull Successful"
+	{
+		"ru"		"Бот успешно потянут к вам"
+	}
+
+	"Bot Not Found"
+	{
+		"ru"		"Ни один бот не попал в прицел"
+	}
+
+}
