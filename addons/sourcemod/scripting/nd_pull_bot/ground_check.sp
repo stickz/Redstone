@@ -1,5 +1,6 @@
 float coords[MAXPLAYERS+1][2];
 #define fMaxBunkerDistance 1500.0
+#define GROUND_CHECK_DELAY 8.0
 
 void RegBotGroundCheck() {
 	HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_PostNoCopy);
@@ -19,8 +20,8 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 		coords[client][0] = pos[0];
 		coords[client][1] = pos[1];
 		
-		// Check in three seconds if the bot is stuck
-		CreateTimer(3.0, Timer_CheckBot, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+		// Wait 8 seconds before checking, so bots can capture resources (if required)
+		CreateTimer(GROUND_CHECK_DELAY, Timer_CheckBot, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 	}
 	
 	return Plugin_Continue;
