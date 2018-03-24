@@ -2,6 +2,7 @@ bool CanPullBot[MAXPLAYERS+1] = { true , ... };
 
 void RegPullBotCommand() {
 	RegConsoleCmd("sm_PullBot", Command_pull);
+	RegConsoleCmd("sm_MoveBot", Command_pull);
 }
 
 void ResetPullCooldowns() {
