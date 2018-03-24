@@ -38,14 +38,19 @@ public Action Command_pull(client, args)
 		int target = TR_GetEntityIndex(hTrace);
 		if (target > 0 && IsFakeClient(target)) 
 		{
-			if(GetVectorDistance(vecOrigin, vecPos) < mBot_MaxDistance.FloatValue) 
+			float botDistance = GetVectorDistance(vecOrigin, vecPos);
+			float maxDistance = mBot_MaxDistance.FloatValue;
+			if(botDistance < maxDistance) 
 			{
 				TeleportEntity(target, vecOrigin, NULL_VECTOR, NULL_VECTOR);
 				PrintMessage(client, "Bot Pull Successful");
 			}
 			
 			else
-				PrintMessage(client, "Bot Too Far");
+			{
+				int units = botDistance - maxDistance; 
+				PrintMessageTI1(client, "Bot Too Far", units);
+			}
 		}
 		else
 			PrintMessage(client, "Bot Not Found");
