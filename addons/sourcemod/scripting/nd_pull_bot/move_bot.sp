@@ -1,15 +1,30 @@
 #define fMaxDistance 300.0
+#define RETRY_DELAY 8
+#define INVALID_USERID 0
+
+bool CanPullBot[MAXPLAYERS+1] = { true , ... };
 
 void RegPullBotCommand() {
 	RegConsoleCmd("sm_PullBot", Command_pull);
+}
+
+void ResetPullCooldowns() {
+	for (int client = 1; client <= MaxClients; client++)
+		CanPullBot[client] = true;
 }
 
 public Action Command_pull(client, args)
 {
 	if (!IsValidClient(client))
 		return Plugin_Handled;
+		
+	if (!CanPullBot[client])
+	{
+		PrintToChat(client, "Please try again in %s seconds.", NumberInEnglish(RETRY_DELAY));
+		return Plugin_Handled;
+	}
 
-    // Get the angle the player is looking
+    	// Get the angle the player is looking
 	float vecAngles[3];
 	GetClientEyeAngles(client, vecAngles);
 	
@@ -39,7 +54,21 @@ public Action Command_pull(client, args)
 	}	
 	CloseHandle(hTrace);
 	
+	// Create cooldown before the client can pull a bot again
+	CanPullBot[client] = false;
+	CreateTimer(float(RETRY_DELAY), PullBotCooldown, GetClientUserId(client), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
+	
 	return Plugin_Handled;
+}
+
+public Action PullBotCooldown(Handle timer, any userid)
+{
+	int client = GetClientOfUserId(userid);
+	if (client == INVALID_USERID)
+		return Plugin_Handled;
+	
+	CanPullBot[client] = true;	
+	return Plugin_Continue;
 }
 
 public bool TraceEntityFilterPlayer(entity, contentsMask) {
