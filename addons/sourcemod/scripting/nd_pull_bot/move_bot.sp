@@ -16,8 +16,7 @@ public Action Command_pull(client, args)
 		
 	if (!CanPullBot[client])
 	{
-		PrintToChat(client, "Please try again in %s seconds.", 
-				    NumberInEnglish(mBot_RetryDelay.IntValue));				     
+		PrintMessageTI1(client, "Pull Retry Delay", mBot_RetryDelay.IntValue);			     
 		return Plugin_Handled;
 	}
 
@@ -42,12 +41,14 @@ public Action Command_pull(client, args)
 			if(GetVectorDistance(vecOrigin, vecPos) < mBot_MaxDistance.FloatValue) 
 			{
 				TeleportEntity(target, vecOrigin, NULL_VECTOR, NULL_VECTOR);
-				PrintToChat(client, "bot moved");
+				PrintMessage(client, "Bot Pull Successful");
 			}
 			
 			else
-				PrintToChat(client, "bot too far");
+				PrintMessage(client, "Bot Too Far");
 		}
+		else
+			PrintMessage(client, "Bot Not Found");
 	}	
 	CloseHandle(hTrace);
 	
