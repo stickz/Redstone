@@ -16,6 +16,7 @@ public Action Command_pull(client, args)
 		
 	if (!CanPullBot[client])
 	{
+		// To Do: Move this phrase "Please wait %d seconds for this feature" to nd_common.phrases
 		PrintMessageTI1(client, "Pull Retry Delay", mBot_RetryDelay.IntValue);			     
 		return Plugin_Handled;
 	}
