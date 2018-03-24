@@ -1,6 +1,4 @@
 float coords[MAXPLAYERS+1][2];
-#define fMaxBunkerDistance 1500.0
-#define GROUND_CHECK_DELAY 8.0
 
 void RegBotGroundCheck() {
 	HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_PostNoCopy);
@@ -21,7 +19,7 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 		coords[client][1] = pos[1];
 		
 		// Wait 8 seconds before checking, so bots can capture resources (if required)
-		CreateTimer(GROUND_CHECK_DELAY, Timer_CheckBot, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+		CreateTimer(gCheck_SpawnDelay.FloatValue, Timer_CheckBot, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 	}
 	
 	return Plugin_Continue;
@@ -53,7 +51,7 @@ public Action Timer_CheckBot(Handle timer, any userid)
 		GetEntPropVector(bunker, Prop_Send, "m_vecOrigin", bunkerPos);			
 		
 		// Teleport bot out, if they're close to the bunker (base spawn)
-		if (GetVectorDistance(pos, bunkerPos) < fMaxBunkerDistance)
+		if (GetVectorDistance(pos, bunkerPos) < gCheck_BunkerDistance.FloatValue)
 			TeleportEntity(client, pos, NULL_VECTOR, NULL_VECTOR);
 	}
 	
