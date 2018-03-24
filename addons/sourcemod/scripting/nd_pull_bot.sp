@@ -3,6 +3,7 @@
 #include <nd_stocks>
 #include <nd_entities>
 #include <nd_stype>
+#include <nd_print>
 
 #define INVALID_USERID 0
 
