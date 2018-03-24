@@ -40,7 +40,7 @@ public void OnPluginStart()
 	if (ND_GetServerTypeEx(ND_SType_Stable) == SERVER_TYPE_ALPHA)
 		RegBotGroundCheck(); // for ground_check.sp
 	
-	LoadTranslations(nd_pull_bot.phrases"); // Translated messages	
+	LoadTranslations("nd_pull_bot.phrases"); // Translated messages	
 	AutoExecConfig(true, "nd_pull_bot"); // for convars
 	AddUpdaterLibrary(); //auto-updater
 }
