@@ -1,15 +1,27 @@
-#define fMaxDistance 300.0
+bool CanPullBot[MAXPLAYERS+1] = { true , ... };
 
 void RegPullBotCommand() {
 	RegConsoleCmd("sm_PullBot", Command_pull);
+}
+
+void ResetPullCooldowns() {
+	for (int client = 1; client <= MaxClients; client++)
+		CanPullBot[client] = true;
 }
 
 public Action Command_pull(client, args)
 {
 	if (!IsValidClient(client))
 		return Plugin_Handled;
+		
+	if (!CanPullBot[client])
+	{
+		// To Do: Move this phrase "Please wait %d seconds for this feature" to nd_common.phrases
+		PrintMessageTI1(client, "Pull Retry Delay", mBot_RetryDelay.IntValue);			     
+		return Plugin_Handled;
+	}
 
-    // Get the angle the player is looking
+    	// Get the angle the player is looking
 	float vecAngles[3];
 	GetClientEyeAngles(client, vecAngles);
 	
@@ -27,19 +39,40 @@ public Action Command_pull(client, args)
 		int target = TR_GetEntityIndex(hTrace);
 		if (target > 0 && IsFakeClient(target)) 
 		{
-			if(GetVectorDistance(vecOrigin, vecPos) < fMaxDistance) 
+			float botDistance = GetVectorDistance(vecOrigin, vecPos);
+			float maxDistance = mBot_MaxDistance.FloatValue;
+			if(botDistance < maxDistance) 
 			{
 				TeleportEntity(target, vecOrigin, NULL_VECTOR, NULL_VECTOR);
-				PrintToChat(client, "bot moved");
+				PrintMessage(client, "Bot Pull Successful");
 			}
 			
 			else
-				PrintToChat(client, "bot too far");
+			{
+				int units = botDistance - maxDistance; 
+				PrintMessageTI1(client, "Bot Too Far", units);
+			}
 		}
+		else
+			PrintMessage(client, "Bot Not Found");
 	}	
 	CloseHandle(hTrace);
 	
+	// Create cooldown before the client can pull a bot again
+	CanPullBot[client] = false;
+	CreateTimer(mBot_RetryDelay.FloatValue, PullBotCooldown, GetClientUserId(client), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
+	
 	return Plugin_Handled;
+}
+
+public Action PullBotCooldown(Handle timer, any userid)
+{
+	int client = GetClientOfUserId(userid);
+	if (client == INVALID_USERID)
+		return Plugin_Handled;
+	
+	CanPullBot[client] = true;	
+	return Plugin_Continue;
 }
 
 public bool TraceEntityFilterPlayer(entity, contentsMask) {
