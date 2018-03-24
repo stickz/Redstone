@@ -1,7 +1,3 @@
-#define fMaxDistance 300.0
-#define RETRY_DELAY 8
-#define INVALID_USERID 0
-
 bool CanPullBot[MAXPLAYERS+1] = { true , ... };
 
 void RegPullBotCommand() {
@@ -20,7 +16,8 @@ public Action Command_pull(client, args)
 		
 	if (!CanPullBot[client])
 	{
-		PrintToChat(client, "Please try again in %s seconds.", NumberInEnglish(RETRY_DELAY));
+		PrintToChat(client, "Please try again in %s seconds.", 
+				    NumberInEnglish(mBot_RetryDelay.IntValue));				     
 		return Plugin_Handled;
 	}
 
@@ -42,7 +39,7 @@ public Action Command_pull(client, args)
 		int target = TR_GetEntityIndex(hTrace);
 		if (target > 0 && IsFakeClient(target)) 
 		{
-			if(GetVectorDistance(vecOrigin, vecPos) < fMaxDistance) 
+			if(GetVectorDistance(vecOrigin, vecPos) < mBot_MaxDistance.FloatValue) 
 			{
 				TeleportEntity(target, vecOrigin, NULL_VECTOR, NULL_VECTOR);
 				PrintToChat(client, "bot moved");
@@ -56,7 +53,7 @@ public Action Command_pull(client, args)
 	
 	// Create cooldown before the client can pull a bot again
 	CanPullBot[client] = false;
-	CreateTimer(float(RETRY_DELAY), PullBotCooldown, GetClientUserId(client), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(mBot_RetryDelay.FloatValue, PullBotCooldown, GetClientUserId(client), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
 	
 	return Plugin_Handled;
 }
