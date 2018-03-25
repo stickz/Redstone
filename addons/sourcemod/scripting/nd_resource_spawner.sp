@@ -44,6 +44,9 @@ ConVar cvarRockTertiarySpawns[2];
 ConVar cvarOilfeildTertiarySpawns[2];
 ConVar cvarClocktowerTertiarySpawns[2];
 
+// Store alpha spawns in seperate file to reduce clutter
+#include "nd_res_spawn/alpha.sp"
+
 public void OnPluginStart()
 {
 	// Fire round start event if plugin loads late
