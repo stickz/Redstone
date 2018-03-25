@@ -41,7 +41,11 @@ public void OnPluginStart()
 		RegBotGroundCheck(); // for ground_check.sp
 	
 	LoadTranslations("nd_pull_bot.phrases"); // Translated messages	
-	AutoExecConfig(true, "nd_pull_bot"); // for convars
+	
+	/* Create convars and exec config file */
+	CreatePluginConvars();
+	AutoExecConfig(true, "nd_pull_bot");
+	
 	AddUpdaterLibrary(); //auto-updater
 }
 
