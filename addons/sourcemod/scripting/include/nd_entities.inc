@@ -4,6 +4,27 @@ native int ND_GetTeamEntity(int team);
 native int ND_GetPlayerManagerEntity();
 native int ND_GetTeamBunkerEntity(int team);
 
+
+/** 
+ * Retreives the bunker distance from a given position
+ *
+ * @param team		Team index of Bunker.
+ * @param pos[3]	X,Y,Z vector position
+ *
+ * @return		The distance the vector is from the team's bunker
+ */ 
+stock float ND_GetBunkerDistance(int team, float[] pos) 
+{
+	// Get the bunker entity based on the team
+	int bunker = ND_GetTeamBunkerEntity(team);
+	
+	float bunkerPos[3]; // Get the position of the bunker
+	GetEntPropVector(bunker, Prop_Send, "m_vecOrigin", bunkerPos);
+	
+	// Return distance between inputted and bunker position
+	return GetVectorDistance(pos, bunkerPos);	
+}
+
 /** 
  * Retreives the level of a given client index
  *
