@@ -39,19 +39,13 @@ public Action Timer_CheckBot(Handle timer, any userid)
 	// If the bot is stuck in the ground, teleport them up
 	if (coords[client][0] == pos[0] && coords[client][1] == pos[1]) 
 	{
-		pos[2] += 20.0;
-
-		// Get the bunker belonging to the bot team
-		int team = GetClientTeam(client);
-		int bunker = ND_GetTeamBunkerEntity(team);
+		pos[2] += 20.0;		
 		
-		// To Do: Cache bunker position in the entity engine
-		// Note: nd_commander_checklist also references this		
-		float bunkerPos[3]; // Get the position of the bunker
-		GetEntPropVector(bunker, Prop_Send, "m_vecOrigin", bunkerPos);			
+		// Get the bunker distance from the bot position
+		float bunkerDistance = ND_GetBunkerDistance(GetClientTeam(client), pos);
 		
 		// Teleport bot out, if they're close to the bunker (base spawn)
-		if (GetVectorDistance(pos, bunkerPos) < gCheck_BunkerDistance.FloatValue)
+		if (bunkerDistance < gCheck_BunkerDistance.FloatValue)
 			TeleportEntity(client, pos, NULL_VECTOR, NULL_VECTOR);
 	}
 	
