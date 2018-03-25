@@ -13,7 +13,7 @@ native int ND_GetTeamBunkerEntity(int team);
  *
  * @return		The distance the vector is from the team's bunker
  */ 
-stock float ND_GetBunkerDistance(int team, float[] pos) 
+stock float ND_GetBunkerDistance(int team, float pos[3]) 
 {
 	// Get the bunker entity based on the team
 	int bunker = ND_GetTeamBunkerEntity(team);
