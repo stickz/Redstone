@@ -121,8 +121,8 @@ public void OnInfantryBoostResearched(int team, int level)
 	
 	/* Print messages for stealth, exo and bbq speed increases */
 	PrintSpeedIncrease(team, "Stealth Speed Increase", StealthIBConVars[level].FloatValue);
-	PintSpeedIncrease(team, "Exo Speed Increase", ExoIBConVars[level].FloatValue);
-	PintSpeedIncrease(team, "BBQ Speed Increase", BBQIBConVars[level].FloatValue);
+	PrintSpeedIncrease(team, "Exo Speed Increase", ExoIBConVars[level].FloatValue);
+	PrintSpeedIncrease(team, "BBQ Speed Increase", BBQIBConVars[level].FloatValue);
 }
 
 void PrintSpeedIncrease(int team, char[] phrase, float cValue)
