@@ -106,6 +106,7 @@ public void ND_OnRoundStarted()
 	int serverType = ND_GetServerTypeEx();
 	if (serverType >= SERVER_TYPE_STABLE)
 	{
+		AdjustStableSpawns();
 		CheckStableSpawns();
 		
 		if (serverType >= SERVER_TYPE_BETA)
@@ -353,6 +354,23 @@ void CheckTertiarySpawns()
 	
 	else
 		tertsSpawned[SECOND_TIER] = true;
+}
+
+void AdjustStableSpawns()
+{
+	char map_name[64];   
+	GetCurrentMap(map_name, sizeof(map_name));
+	
+	if (ND_StockMapEquals(map_name, ND_Clocktower))
+	{
+		// Remove tunnel resources
+		RemoveTertiaryPoint("tertiary_1", "tertiary_area1");	
+		RemoveTertiaryPoint("tertiary_tunnel", "tertiary_tunnel_area");
+		
+		// Spawn new tertiary near consort base
+		// So empire + consort have same resource acess
+		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0});
+	}
 }
 
 void AdjustBetaSpawns()
