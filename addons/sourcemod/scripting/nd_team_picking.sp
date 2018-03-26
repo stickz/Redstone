@@ -3,6 +3,7 @@
 #include <nd_rounds>
 #include <nd_redstone>
 #include <nd_print>
+#include <nd_afk>
 
 public Plugin myinfo = 
 {
@@ -87,7 +88,8 @@ void InitiateRoundEnd() {
 
 bool PlayerIsPickable(int client) {
 	// If the client is valid by Redstone standards and not already on a team
-	return IsValidClient(client, !DebugTeamPicking) && RED_IsValidCIndex(client) && GetClientTeam(client) < 2;
+	return IsValidClient(client, !DebugTeamPicking) && RED_IsValidCIndex(client) && 
+				     GetClientTeam(client) < 2 && !ND_IsMarkedAFK(client);
 }
 
 int GetPickingTimeLimit() {
