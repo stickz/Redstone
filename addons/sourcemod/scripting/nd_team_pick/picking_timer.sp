@@ -9,7 +9,7 @@ void ResetPickTimer(int client)
 {
 	if (lastTimerEnded)
 		lastTimerEnded = false
-	else if (hPickTimerHandler != INVALID_HANDLE)
+	else if (hPickTimerHandler != INVALID_HANDLE && IsValidHandle(hPickTimerHandler))
 		KillTimer(hPickTimerHandler, false);
 	
 	PickTimeRemaining = GetPickingTimeLimit();	
