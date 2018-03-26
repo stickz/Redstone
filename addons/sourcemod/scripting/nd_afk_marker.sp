@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <nd_stocks>
+#include <nd_rstart>
 
 #define INVALID_TARGET -1
 
@@ -59,7 +60,14 @@ void CheckAfkStatus(int client)
 }
 
 public Action CMD_MarkAfterPlayer(int client, int args)
-{
+{	
+	// If the player doesn't have command access, tell them why
+	if (!HasTeamPickAccess(client))
+	{
+		ReplyToCommand(client, "[SM] You only have team-pick access to this command.");
+		return Plugin_Handled;	
+	}
+	
 	// If no args are inputted, tell how to use the command
 	if (!args) 
 	{
