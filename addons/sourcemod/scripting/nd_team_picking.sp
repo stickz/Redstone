@@ -3,6 +3,7 @@
 #include <nd_rounds>
 #include <nd_redstone>
 #include <nd_print>
+#include <nd_afk>
 
 public Plugin myinfo = 
 {
