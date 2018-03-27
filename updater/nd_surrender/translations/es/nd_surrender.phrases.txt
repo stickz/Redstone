@@ -1,39 +1,71 @@
-﻿"Phrases"
+// Exported from SourceMod Translator
+// Date: 2018-03-27 19:47:13 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/253
+//
+"Phrases"
 {
+
 	"Twelve Required"
 	{
 		"es"		"Debe haber al menos 12 jugadores para utilizar esta opción"
-	}	
+	}
 
 	"Ten Required"
 	{
 		"es"		"Debe haber al menos 10 jugadores para utilizar esta opción"
 	}
 
-	//This phrase is incorrect, translate from this instead
-	//"Four players on your team are required to surrender"
 	"Four Required"
 	{
-		"es"		"Se necesitan cuatro jugadores en tu equipo para rendirte"	
+		"es"		"Se necesitan cuatro jugadores en tu equipo para rendirte"
 	}
-	
+
 	"Too Soon"
 	{
 		"es"		"No puedes rendirte tan pronto"
-	}	
+	}
 
 	"Team Surrendered"
 	{
 		"es"		"Tu equipo se ha rendido"
 	}
-		
+
 	"Consort Surrendered"
-	{	
+	{
 		"es"		"El Consorcio se ha rendido"
-	}	
+	}
 
 	"Empire Surrendered"
 	{
-		"es"		"El Imperio se ha rendido"	
+		"es"		"El Imperio se ha rendido"
 	}
+
+	"Typed Surrender"
+	{
+		"es"		"{1} escribió rendirse : {2} más requeridos."
+	}
+
+	"Low Bunker Health"
+	{
+		"es"		"No puedes rendirte si la salud del búnker está baja"
+	}
+
+	"Veto Already Used"
+	{
+		"es"		"Ya has vetado una rendición más rápida"
+	}
+
+	"Veto Commander Only"
+	{
+		"es"		"¡La función de vetar es solo para los comandantes!"
+	}
+
+	"Commander Used Veto"
+	{
+		"es"		"El comandante se ha volcado en una rendición rápida. Se requiere ahora la aprovación de la mayoría"
+	}
+
 }

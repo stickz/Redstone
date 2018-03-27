@@ -1,0 +1,31 @@
+// Exported from SourceMod Translator
+// Date: 2018-03-27 19:43:43 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/301
+//
+"Phrases"
+{
+
+	"Pull Retry Delay"
+	{
+		"es"		"Por favor, espera {1} segundos para usar esta función"
+	}
+
+	"Bot Too Far"
+	{
+		"es"		"El Bot está {1} unidades demasiado lejos como para tirar de él"
+	}
+
+	"Bot Pull Successful"
+	{
+		"es"		"El Bot ha sido tirado hacia ti exitosamente"
+	}
+
+	"Bot Not Found"
+	{
+		"es"		"No se encontró ningún Bot en tu punto de mira"
+	}
+
+}
