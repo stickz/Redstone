@@ -51,6 +51,7 @@ public void OnPluginStart()
 		LateLoadStart();
 	}
 	
+	HookEvent("player_death", Event_PlayerDeath);
 	HookEvent("player_changeclass", Event_ChangeClass);
 	
 	AddUpdaterLibrary(); //Auto-Updater
@@ -58,10 +59,6 @@ public void OnPluginStart()
 
 public void ND_OnRoundStarted() {
 	startPlugin();
-}
-
-public void ND_OnRoundEndedEX() {
-	disableBreakdowns();
 }
 
 public Action Event_ChangeClass(Event event, const char[] name, bool dontBroadcast)
@@ -76,11 +73,14 @@ public Action Event_ChangeClass(Event event, const char[] name, bool dontBroadca
 
 public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast)
 {
-	int userID = event.GetInt("userid");
-	int client = GetClientOfUserId(userID);
-	
-	if (RED_IsValidClient(client) && option_team_breakdown[client] && !ND_IsCommander(client))
-		CreateTimer(BREAKDOWN_UPDATE_RATE, DisplayBreakdownsClients, userID, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+	if (ND_RoundStarted())
+	{	
+		int userID = event.GetInt("userid");
+		int client = GetClientOfUserId(userID);
+
+		if (RED_IsValidClient(client) && option_team_breakdown[client] && !ND_IsCommander(client))
+			CreateTimer(BREAKDOWN_UPDATE_RATE, DisplayBreakdownsClients, userID, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+	}
 }
 
 public void ND_OnCommanderPromoted(int client, int team) {
@@ -238,16 +238,10 @@ void AddClientClass(int client)
 	}	
 }
 
-void disableBreakdowns() {
-	UnhookEvent("player_death", Event_PlayerDeath);
-}
-
 void startPlugin()
 {
 	statusChanged = true;
-	CreateTimer(BREAKDOWN_UPDATE_RATE, UpdateBreakdowns, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
-	
-	HookEvent("player_death", Event_PlayerDeath);
+	CreateTimer(BREAKDOWN_UPDATE_RATE, UpdateBreakdowns, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);	
 }
 
 /* Native to return values from unit array to other plugins */
