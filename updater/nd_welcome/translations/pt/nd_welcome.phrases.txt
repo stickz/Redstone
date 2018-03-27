@@ -1,0 +1,21 @@
+// Exported from SourceMod Translator
+// Date: 2018-03-27 20:02:12 UTC
+// Language: Brazilian Portuguese (pt)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/240
+//
+"Phrases"
+{
+
+	"Cookie Welcome Message"
+	{
+		"pt"		"Mensagem de boas-vindas"
+	}
+
+	"Welcome"
+	{
+		"pt"		"Bem-vindo ao Redstone, você pode personalizar sua estadia digitando !settings no bate-papo!"
+	}
+
+}
