@@ -4,8 +4,6 @@
 
 #define RESPAWN_COMMANDS_SIZE 6
 
-#define INVALID_USERID 0
-
 public Plugin myinfo =
 {
 	name = "[ND] Useful Tools",
