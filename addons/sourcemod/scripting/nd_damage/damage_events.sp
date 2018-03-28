@@ -205,6 +205,9 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 		damage = BLOCK_DAMAGE;
 		return Plugin_Changed;
 	}
+	
+	if (!IsValidEntity(inflictor))
+		return Plugin_Continue;
 
 	switch (damagetype)
 	{
