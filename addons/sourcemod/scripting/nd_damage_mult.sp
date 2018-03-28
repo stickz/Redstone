@@ -9,7 +9,7 @@ public Plugin myinfo =
 	name 		= "[ND] Damage Multiplers",
 	author 		= "Stickz",
 	description 	= "Creates new damage multiplers for better game balance",
-	version 	= "rebuild",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
