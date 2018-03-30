@@ -20,12 +20,12 @@
 
 	"three"
 	{
-		"fr"		" trois"
+		"fr"		"trois"
 	}
 
 	"four"
 	{
-		"fr"		" quatre"
+		"fr"		"quatre"
 	}
 
 	"five"
@@ -45,7 +45,7 @@
 
 	"eight"
 	{
-		"fr"		" huit"
+		"fr"		"huit"
 	}
 
 	"nine"
