@@ -1,51 +1,71 @@
-﻿"Phrases"
+// Exported from SourceMod Translator
+// Date: 2018-03-30 17:21:27 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/247
+//
+"Phrases"
 {
+
 	"one"
 	{
-		"es"		"one"
+		"es"		"uno"
 	}
+
 	"two"
 	{
-		"es"		"two"
+		"es"		"dos"
 	}
+
 	"three"
 	{
-		"es"		"three"
+		"es"		"tres"
 	}
+
 	"four"
 	{
-		"es"		"four"
+		"es"		"cuatro"
 	}
+
 	"five"
 	{
-		"es"		"five"
+		"es"		"cinco"
 	}
+
 	"six"
 	{
-		"es"		"six"
+		"es"		"seis"
 	}
+
 	"seven"
 	{
-		"es"		"seven"
+		"es"		"siete"
 	}
+
 	"eight"
 	{
-		"es"		"eight"
+		"es"		"ocho"
 	}
+
 	"nine"
 	{
-		"es"		"nine"
+		"es"		"nueve"
 	}
+
 	"ten"
 	{
-		"es"		"ten"
+		"es"		"diez"
 	}
+
 	"eleven"
 	{
-		"es"		"eleven"
+		"es"		"once"
 	}
+
 	"twelve"
 	{
-		"es"		"twelve"
+		"es"		"doce"
 	}
+
 }
