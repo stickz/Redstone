@@ -22,7 +22,8 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_suicide_controls/nd_suicide_controls.txt"
 #include "updater/standard.sp"
 
-ConVar hSuicideDelay;
+ConVar cvarSuicideDelayMin;
+ConVar cvarSuicideDelayMax;
 
 char nd_kill_commands[KILL_COMMANDS_SIZE][] =
 {
@@ -38,8 +39,10 @@ public void OnPluginStart()
 	/* Related to player suicide */
 	RegKillCommands(); // Chat commands to suicide
 	AddCommandListener(Command_InterceptSuicide, "kill"); // Interrupt for console suicide
-	hSuicideDelay = CreateConVar("sm_suicide_delay", "3", "set suicide delay between 0-8 seconds.");
 	
+	cvarSuicideDelayMin = CreateConVar("sm_suicide_delay_min", "7", "Set min suicide delay");
+	cvarSuicideDelayMax = CreateConVar("sm_suicide_delay_max", "12", "Set max suicide delay");
+		
 	AddUpdaterLibrary(); //Auto-Updater
 	
 	/* Translations for print-outs */
@@ -96,7 +99,7 @@ void commitSucide(int client)
 {
 	if (IsPlayerAlive(client))
 	{	
-		int delay = hSuicideDelay.IntValue;
+		int delay = getRandomSuicideDelay();
 
 		if (delay == 0 || ND_IsCommander(client) || !ND_RoundStarted())
 		{
@@ -107,6 +110,25 @@ void commitSucide(int client)
 		PrintToChat(client, "\x05[xG] %t", "Suicide Request", NumberInEnglish(delay));
 		CreateTimer(float(delay), TIMER_DelayedSucide, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 	}
+}
+
+int getRandomSuicideDelay()
+{
+	int min = cvarSuicideDelayMin.IntValue;
+	int max = cvarSuicideDelayMax.IntValue;
+	
+	// Generate two random numbers
+	int rNum[2] = { GetRandomInt(min, max), GetRandomInt(min, max) }
+	
+	// If they equal min or max, return them
+	for (int i = 0; i < 2; i++) {
+		if (rNum[i] == min || rNum[i] == max) {
+			return rNum[i];
+		}
+	}
+	
+	// Otherwise, return anther random number
+	return GetRandomInt(min, max);
 }
 
 public Action TIMER_DelayedSucide(Handle timer, any Userid)
