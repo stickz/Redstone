@@ -118,7 +118,7 @@ int getRandomSuicideDelay()
 	int max = cvarSuicideDelayMax.IntValue;
 	
 	// Generate two random numbers
-	int rNum[2] = { GetRandomInt(min, max), GetRandomInt(min, max) }
+	int rNum[2] = { GetRandomInt(min, max), GetRandomInt(min, max) };
 	
 	// If they equal min or max, return them
 	for (int i = 0; i < 2; i++) {
