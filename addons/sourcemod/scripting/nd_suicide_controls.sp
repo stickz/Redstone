@@ -22,6 +22,7 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_suicide_controls/nd_suicide_controls.txt"
 #include "updater/standard.sp"
 
+ConVar cvarSuicideRetrys;
 ConVar cvarSuicideDelayMin;
 ConVar cvarSuicideDelayMax;
 
