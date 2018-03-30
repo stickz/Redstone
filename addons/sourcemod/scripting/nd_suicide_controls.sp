@@ -42,6 +42,7 @@ public void OnPluginStart()
 	
 	cvarSuicideDelayMin = CreateConVar("sm_suicide_delay_min", "7", "Set min suicide delay");
 	cvarSuicideDelayMax = CreateConVar("sm_suicide_delay_max", "12", "Set max suicide delay");
+	cvarSuicideRetrys = CreateConVar("sm_suicide_delay_retrys", "2", "Number of times to randomly try for min or max values."); 
 		
 	AddUpdaterLibrary(); //Auto-Updater
 	
@@ -115,16 +116,16 @@ void commitSucide(int client)
 int getRandomSuicideDelay()
 {
 	int min = cvarSuicideDelayMin.IntValue;
-	int max = cvarSuicideDelayMax.IntValue;
+	int max = cvarSuicideDelayMax.IntValue;	
+	int retry = cvarSuicideRetrys.IntValue;
 	
-	// Generate two random numbers
-	int rNum[2] = { GetRandomInt(min, max), GetRandomInt(min, max) };
-	
-	// If they equal min or max, return them
-	for (int i = 0; i < 2; i++) {
-		if (rNum[i] == min || rNum[i] == max) {
-			return rNum[i];
-		}
+	// Try the number of specified times for a min or max value
+	for (int i = 0; i < retry; i++) 
+	{
+		// Generate random number, return if equals min or max
+		int rNum = GetRandomInt(min, max);
+		if (rNum == min || rNum == max) 
+			return rNum;
 	}
 	
 	// Otherwise, return anther random number
