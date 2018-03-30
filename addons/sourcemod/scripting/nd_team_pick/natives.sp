@@ -1,6 +1,7 @@
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_PickedTeamsThisMap", Native_GetPickedTeamsThisMap);
+	MarkNativeAsOptional("ND_IsPlayerMarkedAfk");
 	return APLRes_Success;
 }
 
