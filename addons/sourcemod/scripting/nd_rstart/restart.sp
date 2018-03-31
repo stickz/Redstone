@@ -11,11 +11,8 @@ void RegRestartCommand()
 /* Stop the round and instantly restart it again */
 public Action CMD_RestartRound(int client, int args)
 {
-	if (!ND_HasTPRunAccess(client))
-	{
-		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+	if (!CanRestartRound(client))
 		return Plugin_Handled;
-	}
 	
 	DoRoundRestart(client);	
 	return Plugin_Handled;	
@@ -24,16 +21,30 @@ public Action CMD_RestartRound(int client, int args)
 /* Stop the round and bring everyone back to warmup */
 public Action CMD_RestartWarmup(int client, int args)
 {
-	if (!ND_HasTPRunAccess(client))
-	{
-		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+	if (!CanRestartRound(client))
 		return Plugin_Handled;
-	}
 	
 	toWarmupRound = true; // Important: This boolean sends everyone to warmup
 	
 	DoRoundRestart(client);	
 	return Plugin_Handled;	
+}
+
+bool CanRestartRound(int client)
+{
+	if (!ND_HasTPRunAccess(client))
+	{
+		PrintToChat(client, "\x05[xG] You only have team-pick access to this command!");
+		return false;
+	}
+	
+	if (!ND_RoundStarted())
+	{
+		PrintToChat(client, "\x05[xG] This command can only be used after round start!");
+		return false;	
+	}
+
+	return true;
 }
 
 void DoRoundRestart(int client)
