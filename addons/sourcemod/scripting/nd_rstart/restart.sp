@@ -20,6 +20,13 @@ public Action CMD_RestartRound(int client, int args)
 	curRoundCount += 1;
 	ServerCommand("mp_maxrounds %d", curRoundCount);
 	
+	// Get the name of the admin who restarted the round
+	char clientName[64];
+	GetClientName(client, clientName, sizeof(clientName));
+	
+	// Print a message to everyone explaining what happened
+	PrintToChatAll("\x05%s has restarted the round!", clientName);
+	
 	// Delay ending the round, so other plugins have time to react
 	CreateTimer(1.5, TIMER_RestartTheRound, _, TIMER_FLAG_NO_MAPCHANGE);
 	
