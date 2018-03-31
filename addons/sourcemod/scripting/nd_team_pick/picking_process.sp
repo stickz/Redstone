@@ -1,5 +1,6 @@
 #include <nd_fskill>
 #define NO_PLAYER_SELECTED -1
+#define TEAM_PICKING_COMPLETE 0
 //Handle PickingMenu = INVALID_HANDLE;
 
 int cur_team_choosing = TEAM_CONSORT;
@@ -150,21 +151,32 @@ public void Menu_PlayerPick(int client)
 		ConsoleToAdmins("Menu_PlayerPick(): Initial menu created", "b");
 
 	// Precast varriables and loop through all the players on the server
-	char currentName[60], currentUser[30], skill[8];
+	char currentName[60], currentUser[30], skill[8]; int pCount = 0;
 	for (int player = 0; player <= MaxClients; player++) 
 	{
 		if (PlayerIsPickable(player))
 		{
 			// Get their name and attach skill value to it
 			GetClientName(player, currentName, sizeof(currentName));
-			Format(skill, sizeof(skill), " [%d]", 	IsFakeClient(player) ? 0 : 
-													ND_GetRoundedPSkill(player));			
+			Format(skill, sizeof(skill), " [%d]", IsFakeClient(player) ? 0 : ND_GetRoundedPSkill(player));			
 			StrCat(currentName, sizeof(currentName), skill);
 			
 			// Convert user id to a string. Add userid and name to menu item.
 			IntToString(GetClientUserId(player), currentUser, sizeof(currentUser));			
-			AddMenuItem(PickingMenu, currentUser, currentName);			
+			AddMenuItem(PickingMenu, currentUser, currentName);
+			
+			// Increment the pCount, to check for instant completion bellow
+			pCount += 1;
 		}
+	}
+	
+	// If there's no players to select, team picking is done
+	// Instantly finish things off to avoid un-needed hassle
+	if (pCount == TEAM_PICKING_COMPLETE)
+	{
+		FinishPicking(true);
+		CloseHandle(PickingMenu);		
+		return;
 	}
 	
 	if (DebugTeamPicking)

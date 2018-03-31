@@ -21,6 +21,10 @@ public Action TIMER_CountdownPickTime(Handle timer, any:userid)
 	if (DebugTeamPicking)
 		ConsoleToAdmins( "TIMER_CountdownPickTime(): iterated", "b");
 	
+	// If the team pick was stopped, kill the timer
+	if (!g_bPickStarted)
+		return Plugin_Stop;
+	
 	// Get the client from userid, if invalid stop timer
 	int client = GetClientOfUserId(userid);
 	if (client == INVALID_USERID)		
