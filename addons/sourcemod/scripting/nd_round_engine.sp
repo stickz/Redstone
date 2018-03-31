@@ -28,6 +28,7 @@ public Plugin myinfo =
 
 bool roundStarted = false;
 bool roundStartedThisMap = false;
+bool roundCanBeRestarted = false;
 bool roundEnded = false;
 bool mapStarted = false;
 
@@ -47,8 +48,7 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapStart()
-{
+public void OnMapStart() {
 	mapStarted = true;
 }
 
@@ -60,11 +60,25 @@ public void OnMapEnd()
 	roundEnded = false;
 }
 
+void DelayRoundRestart()
+{
+	roundCanBeRestarted = false;
+	CreateTimer(60.0, TIMER_RoundRestartAvailible, _, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public Action TIMER_RoundRestartAvailible(Handle timer)
+{
+	roundCanBeRestarted = true;
+	return Plugin_Handled;
+}
+
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {
+	DelayRoundRestart();
+	
 	roundStarted = true;
 	roundStartedThisMap = true;
-	
+
 	Action dummy;
 	Call_StartForward(g_OnRoundStartedForward);
 	Call_Finish(dummy);
@@ -93,8 +107,10 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	CreateNative("ND_RoundStart", Native_GetRoundStarted);
 	CreateNative("ND_RoundStarted", Native_GetRoundStarted);
-	CreateNative("ND_RoundStartedThisMap", Native_GetRoundStartedEX);
 	
+	CreateNative("ND_RoundStartedThisMap", Native_GetRoundStartedEX);
+	CreateNative("ND_RoundRestartable", Native_GetRoundRestartable);
+
 	CreateNative("ND_RoundEnd", Native_GetRoundEnded);
 	CreateNative("ND_RoundEnded", Native_GetRoundEnded);
 
@@ -104,27 +120,26 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	return APLRes_Success;
 }
 
-public int Native_GetRoundStarted(Handle plugin, int numParams)
-{
+public int Native_GetRoundStarted(Handle plugin, int numParams) {
 	return _:roundStarted;
 }
 
-public int Native_GetRoundStartedEX(Handle plugin, int numParams)
-{
+public int Native_GetRoundStartedEX(Handle plugin, int numParams) {
 	return _:roundStartedThisMap;
 }
 
-public int Native_GetRoundEnded(Handle plugin, int numParams)
-{
+public int Native_GetRoundEnded(Handle plugin, int numParams) {
 	return _:roundEnded;
 }
 
-public int Native_GetMapStarted(Handle plugin, int numParams)
-{
+public int Native_GetMapStarted(Handle plugin, int numParams) {
 	return _:mapStarted;
 }
 
-public int Native_FireRoundEnd(Handle plugin, int numParams)
-{
+public int Native_GetRoundRestartable(Handle plugin, int numParams) {
+	return _:roundCanBeRestarted;
+}
+
+public int Native_FireRoundEnd(Handle plugin, int numParams) {
 	Event_RoundEnd(null, "", false);
 }

@@ -43,6 +43,12 @@ bool CanRestartRound(int client)
 		PrintToChat(client, "\x05[xG] This command can only be used after round start!");
 		return false;	
 	}
+	
+	if (!ND_RoundRestartable())
+	{
+		PrintToChat(client, "\x05[xG] You must wait 60s after round start before using!");
+		return false;	
+	}
 
 	return true;
 }
