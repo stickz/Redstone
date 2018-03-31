@@ -25,6 +25,7 @@ ConVar g_Cvar[Convars];
 #include "nd_rstart/countdown.sp"
 #include "nd_rstart/nextpick.sp"
 #include "nd_rstart/start.sp"
+#include "nd_rstart/restart.sp"
 #include "nd_rstart/natives.sp"
 
 /* For auto updater support */
@@ -33,8 +34,7 @@ ConVar g_Cvar[Convars];
   
 public void OnPluginStart() 
 {
-	RegCommandsCountDown(); // for countdown.sp
-	RegNextPickCommand(); // for nextpick.sp
+	RegPluginCommands(); // admin commands
 	
 	CreatePluginConvars(); // for convars
 	
@@ -49,6 +49,7 @@ public void OnMapStart()
 	SetVarDefaults();
 	
 	ServerCommand("bot_quota 0"); //Make sure bots are disabled
+	ServerCommand("mp_maxrounds 1"); // Reset max rounds to 1
 }
 
 public void OnMapEnd()
@@ -68,8 +69,17 @@ void InitiateRoundEnd()
 	ServerCommand("sm_cvar sv_alltalk 1");
 }
 
-void SetVarDefaults() {
+void SetVarDefaults() 
+{
 	currentlyPicking = false;
+	curRoundCount = 1;
+}
+
+void RegPluginCommands()
+{
+	RegCommandsCountDown(); // for countdown.sp
+	RegNextPickCommand(); // for nextpick.sp
+	RegRestartCommand(); // for restart.sp
 }
 
 void CreatePluginConvars()
