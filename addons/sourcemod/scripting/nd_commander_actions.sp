@@ -304,3 +304,10 @@ public Handle_DemoteCommander_SelectTeam(Handle:menu, MenuAction:action, param1,
 	else if (action == MenuAction_End)
 		CloseHandle(menu);
 }
+
+// Mark team-pick native as optional
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	MarkNativeAsOptional("ND_PickedTeamsThisMap");
+	return APLRes_Success;
+}
