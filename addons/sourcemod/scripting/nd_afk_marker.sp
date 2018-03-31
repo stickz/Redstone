@@ -22,7 +22,6 @@ bool IsMarkedAfk[MAXPLAYERS+1] = { false, ... };
 public void OnPluginStart()
 {
 	RegAdminCmd("sm_MarkAFK", CMD_MarkAfterPlayer, ADMFLAG_CUSTOM6, "Manually marks as player as afk.");
-	RegAdminCmd("sm_MarkAfk", CMD_MarkAfterPlayer, ADMFLAG_CUSTOM6, "Manually marks as player as afk.");
 	
 	AddCommandListener(PlayerJoinTeam, "jointeam");	// Listen for when a player joins a team	
 	AddUpdaterLibrary(); // Add auto updater feature
