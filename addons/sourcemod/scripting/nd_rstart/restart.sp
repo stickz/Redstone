@@ -1,19 +1,54 @@
 #define INVALID_USERID	0
 int curRoundCount = 1;
+bool toWarmupRound = false;
 
-void RegRestartCommand() {
+void RegRestartCommand() 
+{
 	RegAdminCmd("sm_RestartRound", CMD_RestartRound, ADMFLAG_CUSTOM6, "Restarts the round when used");
+	RegAdminCmd("sm_RestartWarmup", CMD_RestartWarmup, ADMFLAG_CUSTOM6, "Restarts the warmup when used");
 }
 
-/* Toggle player picking mode */
+/* Stop the round and instantly restart it again */
 public Action CMD_RestartRound(int client, int args)
+{
+	if (!CanRestartRound(client))
+		return Plugin_Handled;
+	
+	DoRoundRestart(client);	
+	return Plugin_Handled;	
+}
+
+/* Stop the round and bring everyone back to warmup */
+public Action CMD_RestartWarmup(int client, int args)
+{
+	if (!CanRestartRound(client))
+		return Plugin_Handled;
+	
+	toWarmupRound = true; // Important: This boolean sends everyone to warmup
+	
+	DoRoundRestart(client);	
+	return Plugin_Handled;	
+}
+
+bool CanRestartRound(int client)
 {
 	if (!ND_HasTPRunAccess(client))
 	{
-		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
-		return Plugin_Handled;
+		PrintToChat(client, "\x05[xG] You only have team-pick access to this command!");
+		return false;
 	}
 	
+	if (!ND_RoundStarted())
+	{
+		PrintToChat(client, "\x05[xG] This command can only be used after round start!");
+		return false;	
+	}
+
+	return true;
+}
+
+void DoRoundRestart(int client)
+{
 	// Simulate round end, so other plugins get the message
 	ND_SimulateRoundEnd();
 	
@@ -23,8 +58,6 @@ public Action CMD_RestartRound(int client, int args)
 
 	// Delay ending the round, so other plugins have time to react
 	CreateTimer(1.5, TIMER_PrepRoundRestart, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
-	
-	return Plugin_Handled;	
 }
 
 public Action TIMER_PrepRoundRestart(Handle timer, any userid)
@@ -54,11 +87,17 @@ public Action TIMER_PrepRoundRestart(Handle timer, any userid)
 
 public Action TIMER_EngageRoundRestart(Handle timer)
 {
-	// Default time limit to 60, unless anther plugin changes it
-	ServerCommand("mp_roundtime 60");
+	// Default time limit to unlimited, unless anther plugin changes it
+	ServerCommand("mp_roundtime 0");
 	
 	// Set the round to start immediately without balancing
-	ServerCommand("mp_minplayers 1");
+	if (!toWarmupRound) // If player chooses instant start
+	{
+		ServerCommand("mp_minplayers 1");
+		PrintToChatAll("\x05The round has started again!");
+	}
 	
+	// Default the next restart to warmup to false
+	toWarmupRound = false;
 	return Plugin_Handled;
 }
