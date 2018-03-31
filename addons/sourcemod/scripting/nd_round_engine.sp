@@ -109,7 +109,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("ND_RoundStarted", Native_GetRoundStarted);
 	
 	CreateNative("ND_RoundStartedThisMap", Native_GetRoundStartedEX);
-	CreateNative("ND_RoundRestable", Native_GetRoundRestartable);
+	CreateNative("ND_RoundRestartable", Native_GetRoundRestartable);
 
 	CreateNative("ND_RoundEnd", Native_GetRoundEnded);
 	CreateNative("ND_RoundEnded", Native_GetRoundEnded);
