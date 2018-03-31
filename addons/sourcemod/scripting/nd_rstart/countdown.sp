@@ -33,7 +33,7 @@ public Action Command_Start(int client, int args)
 	{
 		char runBalance[16]; // Get the argument inputed
 		GetCmdArg(1, runBalance, sizeof(runBalance));
-		balanceTeams = StrEqual(runBalance, "false", false);
+		balanceTeams = StrEqual(runBalance, "true", false);
 	}
 	
 	if (!ND_RoundStarted())
