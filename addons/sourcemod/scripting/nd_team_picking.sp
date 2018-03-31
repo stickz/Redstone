@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name = "[ND] Team Picker",
 	author = "Stickz",
 	description = "Lets two selected commanders pick their team",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 }
 
@@ -68,7 +68,7 @@ public void OnMapEnd() {
 }
 
 public void ND_OnRoundEnded() {
-	InitiateRoundEnd();	
+	InitiateRoundEnd();
 }
 
 public Action Command_JoinTeam(int client, char[] command, int argc)
