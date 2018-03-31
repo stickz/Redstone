@@ -52,6 +52,18 @@ native bool ND_MapStarted();
 
 #define NDMS_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStarted") == FeatureStatus_Available)
 
+/**
+ * Checks wether the round can be restarted yet or not
+ *
+ * Plugins must wait 60s after round start before using this feature
+ * Time-limit killing is used to restart. It requires a 60s buffer.
+ *
+ * @return True or False 	Round Restartable.
+ */
+native bool ND_RoundRestartable();
+
+#define NDRR_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStarted") == FeatureStatus_Available)
+
 /* Round engine forwards */
 forward void ND_OnRoundStart();
 forward void ND_OnRoundStarted();
