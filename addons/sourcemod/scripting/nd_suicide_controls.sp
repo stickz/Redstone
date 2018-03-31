@@ -22,7 +22,7 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_suicide_controls/nd_suicide_controls.txt"
 #include "updater/standard.sp"
 
-ConVar cvarSuicideRetrys;
+ConVar cvarSuicideChance;
 ConVar cvarSuicideDelayMin;
 ConVar cvarSuicideDelayMax;
 
@@ -43,7 +43,7 @@ public void OnPluginStart()
 	
 	cvarSuicideDelayMin = CreateConVar("sm_suicide_delay_min", "7", "Set min suicide delay");
 	cvarSuicideDelayMax = CreateConVar("sm_suicide_delay_max", "12", "Set max suicide delay");
-	cvarSuicideRetrys = CreateConVar("sm_suicide_delay_retrys", "2", "Number of times to randomly try for min or max values."); 
+	cvarSuicideChance = CreateConVar("sm_suicide_chance", "25", "Set's chance of using min or max value"); 
 		
 	AddUpdaterLibrary(); //Auto-Updater
 	
@@ -116,19 +116,19 @@ void commitSucide(int client)
 
 int getRandomSuicideDelay()
 {
+	// Get the min and max values to use for sucide delay
 	int min = cvarSuicideDelayMin.IntValue;
 	int max = cvarSuicideDelayMax.IntValue;	
-	int retry = cvarSuicideRetrys.IntValue;
 	
-	// Try the number of specified times for a min or max value
-	for (int i = 0; i < retry; i++) 
-	{
-		// Generate random number, return if equals min or max
-		int rNum = GetRandomInt(min, max);
-		if (rNum == min || rNum == max) 
-			return rNum;
-	}
+	// Get the chance of using etheir min or max
+	// Generate random number for that chance
+	int chance = cvarSuicideChance.IntValue;	
+	int rNum = GetRandomInt(1, 100);
 	
+	// If the chance passes, return min or max
+	if (rNum <= chance) // Split in half to decide which one
+		return rNum <= chance / 2 ? max : min;
+
 	// Otherwise, return anther random number
 	return GetRandomInt(min, max);
 }
