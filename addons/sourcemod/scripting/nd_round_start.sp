@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name = "[ND] Round Start",
 	author = "Xander, Stickz",
 	description = "Starts the round when triggered",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone"
 }
 
