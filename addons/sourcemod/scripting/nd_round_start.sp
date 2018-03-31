@@ -25,6 +25,7 @@ ConVar g_Cvar[Convars];
 #include "nd_rstart/countdown.sp"
 #include "nd_rstart/nextpick.sp"
 #include "nd_rstart/start.sp"
+#include "nd_rstart/restart.sp"
 #include "nd_rstart/natives.sp"
 
 /* For auto updater support */
@@ -49,6 +50,7 @@ public void OnMapStart()
 	SetVarDefaults();
 	
 	ServerCommand("bot_quota 0"); //Make sure bots are disabled
+	ServerCommand("mp_maxrounds 1"); // Reset max rounds to 1
 }
 
 public void OnMapEnd()
@@ -70,6 +72,7 @@ void InitiateRoundEnd()
 
 void SetVarDefaults() {
 	currentlyPicking = false;
+	curRoundCount = 1;
 }
 
 void CreatePluginConvars()
