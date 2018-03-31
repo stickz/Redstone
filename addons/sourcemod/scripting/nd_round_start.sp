@@ -34,8 +34,7 @@ ConVar g_Cvar[Convars];
   
 public void OnPluginStart() 
 {
-	RegCommandsCountDown(); // for countdown.sp
-	RegNextPickCommand(); // for nextpick.sp
+	RegPluginCommands(); // admin commands
 	
 	CreatePluginConvars(); // for convars
 	
@@ -70,9 +69,17 @@ void InitiateRoundEnd()
 	ServerCommand("sm_cvar sv_alltalk 1");
 }
 
-void SetVarDefaults() {
+void SetVarDefaults() 
+{
 	currentlyPicking = false;
 	curRoundCount = 1;
+}
+
+void RegPluginCommands()
+{
+	RegCommandsCountDown(); // for countdown.sp
+	RegNextPickCommand(); // for nextpick.sp
+	RegRestartCommand(); // for restart.sp
 }
 
 void CreatePluginConvars()
