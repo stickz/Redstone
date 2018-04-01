@@ -22,8 +22,12 @@ public Plugin myinfo =
 bool CanKillBots[2] = {true, ...};
 bool BotsReset = false;
 
+ConVar cvarBotSlayCooldown;
+
 public void OnPluginStart()
 {
+	cvarBotSlayCooldown = CreateConvar("sm_bslay_cooldown", "180", "Set the cooldown for slaying bots");
+	
 	RegisterCommands(); // commands to slay bots
 	AddUpdaterLibrary(); // auto-updater
 }
@@ -121,7 +125,7 @@ void PerformKillBots(int team)
 void CreateCooldown(int team)
 {
 	CanKillBots[team - 2] = false;	
-	CreateTimer(300.0, Timer_EnableBotKill, team, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(cvarBotSlayCooldown.FloatValue, Timer_EnableBotKill, team, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 void ResetKillBots()
