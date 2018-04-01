@@ -77,7 +77,7 @@ public Action TIMER_PrepRoundRestart(Handle timer, any userid)
 		GetClientName(client, clientName, sizeof(clientName));
 
 		// Print a message to everyone explaining what happened
-		PrintToChatAll("\x05%s has restarted the round!", clientName);
+		PrintToChatAll("\x05%s has terminated the round!", clientName);
 	}
 	else
 		PrintToChatAll("\x05The round has been restarted!");
