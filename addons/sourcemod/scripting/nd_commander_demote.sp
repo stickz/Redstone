@@ -44,7 +44,6 @@ public Plugin myinfo =
 }
 
 int voteCount[2];
-bool g_hasEnteredBunker[2] = {false, ...};
 bool g_hasBeenDemoted[MAXPLAYERS+1];
 bool g_hasVoted[2][MAXPLAYERS+1];
 
@@ -62,22 +61,12 @@ char nd_demote_strings[DEMOTE_SCOUNT][] = {
 
 public void OnPluginStart()
 {
-	tNoBunkerDemoteTime 	= 	CreateConVar("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
-	cDemotePercentage	= 	CreateConVar("sm_demote_percent", "51", "Specifies the percent rounded to nearest required for demotion");
-	cDemotePercentEx	= 	CreateConVar("sm_demote_percentex", "60", "Specifies the percent demote a veteran commander");
-	cDemoteMinValue		= 	CreateConVar("sm_demote_vmin", "3", "Specifies the minimum number of votes required, regardless of percentage");
-	cDemoteVetSkill		=	CreateConVar("sm_demote_vet", "100", "Specifies the minimum commander skill to be a veteran");
+	CreatePluginConvars(); // for convars
+	RegPluginCommands(); // for commands
 	
 	AddCommandListener(PlayerJoinTeam, "jointeam");
-	
-	RegConsoleCmd("sm_mutiny", CMD_Demote);
-	RegConsoleCmd("sm_demote", CMD_Demote);
-	
-	RegConsoleCmd("sm_unmutiny", CMD_UnDemote);
-	RegConsoleCmd("sm_undemote", CMD_UnDemote);
+	AddCommandListener(view_as<CommandListener>(Command_Apply), "applyforcommander");
 
-	HookEvent("player_entered_bunker_building", Event_EnterBunker);
-	
 	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
@@ -86,12 +75,28 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
+void CreatePluginConvars()
+{
+	tNoBunkerDemoteTime 	= 	CreateConVar("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
+	cDemotePercentage	= 	CreateConVar("sm_demote_percent", "51", "Specifies the percent rounded to nearest required for demotion");
+	cDemotePercentEx	= 	CreateConVar("sm_demote_percentex", "60", "Specifies the percent demote a veteran commander");
+	cDemoteMinValue		= 	CreateConVar("sm_demote_vmin", "3", "Specifies the minimum number of votes required, regardless of percentage");
+	cDemoteVetSkill		=	CreateConVar("sm_demote_vet", "100", "Specifies the minimum commander skill to be a veteran");
+}
+
+void RegPluginCommands()
+{
+	RegConsoleCmd("sm_mutiny", CMD_Demote);
+	RegConsoleCmd("sm_demote", CMD_Demote);
+	
+	RegConsoleCmd("sm_unmutiny", CMD_UnDemote);
+	RegConsoleCmd("sm_undemote", CMD_UnDemote);
+}
+
 void resetForGameStart()
 {
-	for (int i = 0; i < 2; i++)
-	{
+	for (int i = 0; i < 2; i++) {
 		voteCount[i] = 0;
-		g_hasEnteredBunker[i] = false;
 	}
 
 	for (int client = 1; client <= MaxClients; client++)
@@ -102,9 +107,11 @@ void resetForGameStart()
 	}
 }
 
-public void OnMapStart()
-{
+public void OnMapStart() {
 	ServerCommand("nd_commander_mutiny_vote_threshold 51.0");
+}
+
+public void ND_OnRoundStarted() {
 	resetForGameStart();
 }
 
@@ -129,21 +136,15 @@ public void ND_OnCommanderPromoted(int client, int team) {
 	CreateTimer(tNoBunkerDemoteTime.FloatValue, TIMER_CheckCommanderDemote, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public Action Event_EnterBunker(Event event, const char[] name, bool dontBroadcast)
+public Action Command_Apply(int client, const char[] command, int argc)
 {
-	int client = GetClientOfUserId(GetEventInt(event, "userid"));
-
-	if (client != INVALID_CLIENT)
-	{		
-		int clientTeam = GetClientTeam(client);
-		if (clientTeam > 1)
-		{
-			int cTeamIDX = clientTeam - 2;
-			
-			if (!g_hasEnteredBunker[cTeamIDX])
-				g_hasEnteredBunker[cTeamIDX] = true;
-		}
+	if (g_hasBeenDemoted[client])
+	{
+		PrintMessage(client, "Demotion Reapply");
+		return Plugin_Handled;
 	}
+	
+	return Plugin_Continue;
 }
 
 public Action PlayerJoinTeam(int client, char[] command, int argc)
@@ -178,7 +179,7 @@ public Action TIMER_CheckCommanderDemote(Handle timer, any userid)
 	if (ND_IsCommander(client))
 	{
 		int team = GetClientTeam(client);
-		if (team > 1 && !g_hasEnteredBunker[team - 2])
+		if (team > 1 && !ND_HasEnteredCommanderMode(client))
 			demoteCommander(team);	
 	}		
 		
