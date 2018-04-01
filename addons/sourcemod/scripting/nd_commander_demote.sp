@@ -65,6 +65,7 @@ public void OnPluginStart()
 	RegPluginCommands(); // for commands
 	
 	AddCommandListener(PlayerJoinTeam, "jointeam");
+	AddCommandListener(view_as<CommandListener>(Command_Apply), "applyforcommander");
 
 	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_commander_restrictions.phrases");
@@ -106,9 +107,11 @@ void resetForGameStart()
 	}
 }
 
-public void OnMapStart()
-{
+public void OnMapStart() {
 	ServerCommand("nd_commander_mutiny_vote_threshold 51.0");
+}
+
+public void ND_OnRoundStarted() {
 	resetForGameStart();
 }
 
@@ -131,6 +134,17 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 
 public void ND_OnCommanderPromoted(int client, int team) {
 	CreateTimer(tNoBunkerDemoteTime.FloatValue, TIMER_CheckCommanderDemote, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public Action Command_Apply(int client, const char[] command, int argc)
+{
+	if (g_hasBeenDemoted[client])
+	{
+		PrintMessage(client, "Demotion Reapply");
+		return Plugin_Handled;
+	}
+	
+	return Plugin_Continue;
 }
 
 public Action PlayerJoinTeam(int client, char[] command, int argc)
