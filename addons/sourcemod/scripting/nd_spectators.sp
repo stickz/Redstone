@@ -26,6 +26,11 @@ public void OnPluginStart()
 	LoadTranslations("nd_team_balancer.phrases");
 }
 
+// Remove spectator status when a client disconnects
+public void OnClientDisconnect_Post(int client) {
+	g_isLockedToSpec[client] = false;
+}
+
 public void OnMapStart() {
 	RemoveSpecLocks();
 }
