@@ -26,7 +26,7 @@ ConVar cvarBotSlayCooldown;
 
 public void OnPluginStart()
 {
-	cvarBotSlayCooldown = CreateConvar("sm_bslay_cooldown", "180", "Set the cooldown for slaying bots");
+	cvarBotSlayCooldown = CreateConVar("sm_bslay_cooldown", "180", "Set the cooldown for slaying bots");
 	
 	RegisterCommands(); // commands to slay bots
 	AddUpdaterLibrary(); // auto-updater
