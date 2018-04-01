@@ -100,7 +100,7 @@ public Action TIMER_EngageRoundRestart(Handle timer)
 	if (!toWarmupRound) // If player chooses instant start
 	{
 		ServerCommand("mp_minplayers 1");
-		PrintToChatAll("\x05The round has started again!");
+		PrintToChatAll("\x05The round will restart shortly!");
 	}
 	
 	// Default the next restart to warmup to false
