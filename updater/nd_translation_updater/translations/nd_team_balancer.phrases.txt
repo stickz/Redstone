@@ -62,7 +62,7 @@
 	}
 	"Revoke Spectator"
 	{
-		"en"		"Spectator request must be revoked before joining"
+		"en"		"You must revoke spectator! To join type !spec"
 	}
 	"Spectator Avoid"
 	{
