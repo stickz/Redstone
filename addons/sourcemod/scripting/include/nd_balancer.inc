@@ -25,3 +25,18 @@ native float GetAverageSkill();
 native void RefreshTBCache();
 
 #define RTBC_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "RefreshTBCache") == FeatureStatus_Available)
+
+forward void TB_OnTeamPlacement(int client, int team);
+
+
+/**
+ * Return if after shuffle team locks are currently enabled
+ *
+ */
+native bool TB_TeamsLocked();
+
+#define TB_TL_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "TB_TeamsLocked") == FeatureStatus_Available)
+
+stock bool TB_AreTeamsLocked() {
+	return TB_TL_AVAILIBLE() && TB_TeamsLocked();
+}
