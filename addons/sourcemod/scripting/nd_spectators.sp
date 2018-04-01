@@ -27,7 +27,7 @@ public void OnPluginStart()
 }
 
 // Remove spectator status when a client connects/disconnects
-public void OnClientConnect(int client) {
+public void OnClientConnected((int client) {
 	g_isLockedToSpec[client] = false;
 }
 public void OnClientDisconnect(int client) {
