@@ -102,6 +102,8 @@ public Action TIMER_EngageRoundRestart(Handle timer)
 		ServerCommand("mp_minplayers 1");
 		PrintToChatAll("\x05The round will restart shortly!");
 	}
+	else
+		PrintToChatAll("\x05The match will pause shortly!");
 	
 	// Default the next restart to warmup to false
 	toWarmupRound = false;
