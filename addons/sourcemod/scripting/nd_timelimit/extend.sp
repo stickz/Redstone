@@ -1,0 +1,147 @@
+public Action CMD_Extend(int client, int args)
+{	
+	callExtend(client);	
+	return Plugin_Handled;
+}
+
+bool strEqualsExtend(int client, const char[] sArgs) 
+{
+	if (strcmp(sArgs, "extend", false) == 0)
+	{
+		callExtend(client);
+		return true;
+	}
+	
+	return false;
+}
+
+void PrintExtendToEnabled()
+{
+	for (int idx = 0; idx < MAXPLAYERS; idx++)
+	{
+		if (IsValidClient(idx) && option_timelimit_features[idx]) {
+			PrintToChat(idx, "\x05[xG] %t!", "Extend Availible");		
+		}
+	}
+}
+
+void callExtend(int client)
+{
+	int team = GetClientTeam(client);
+	
+	if (ValidTeamCount(team) < g_Cvar[extendMinPlayers].IntValue)
+		PrintToChat(client, "\x05[xG] %t!", "Six Required");
+	
+	else if (!g_Bool[enableExtend])
+		PrintToChat(client, "\x05[xG] %t!", "Wait End");
+		
+	else if (g_Bool[hasExtended])
+		PrintToChat(client, "\x05[xG] %t!", "Already Extended");
+		
+	else if (team < 2)
+		PrintToChat(client, "\x05[xG] %t!", "On Team");
+		
+	else if (g_hasVotedEmpire[client] || g_hasVotedConsort[client])
+		PrintToChat(client, "\x05[xG] %t!", "You Extended");
+		
+	else if (g_Bool[roundHasEnded])
+		PrintToChat(client, "\x05[xG] %t!", "Round Ended");
+
+	else
+	{
+		voteCount[team -2]++;
+		
+		switch (team)
+		{
+			case TEAM_CONSORT: g_hasVotedConsort[client] = true;
+			case TEAM_EMPIRE: g_hasVotedEmpire[client] = true;
+		}
+
+		checkVotes(true, team, client);		
+	}
+}
+
+void resetValues(int client)
+{
+	int team;
+	
+	if (g_hasVotedConsort[client])
+	{
+		team = TEAM_CONSORT;
+		g_hasVotedConsort[client] = false;
+	}
+	
+	else if (g_hasVotedEmpire[client])
+	{
+		team = TEAM_EMPIRE;
+		g_hasVotedEmpire[client] = false;
+	}	
+	
+	if (team > TEAM_SPEC)
+	{
+		voteCount[team - 2]--;
+		if (ND_GetClientCount() < g_Cvar[extendMinPlayers].IntValue && !g_Bool[roundHasEnded] && !g_Bool[hasExtended] && g_Bool[enableExtend])
+			checkVotes(false);		
+	}
+}
+
+void checkVotes(bool display, int team = -1, int client = -1)
+{
+	float teamPercent = g_Cvar[extendPercentage].FloatValue / 100.0;
+	
+	float teamEmpireCount = ValidTeamCount(TEAM_EMPIRE) * teamPercent;
+	float teamConsortCount = ValidTeamCount(TEAM_CONSORT) * teamPercent;
+	float empireRemainder = teamEmpireCount - float(voteCount[TEAM_EMPIRE - 2]);
+	float consortRemainder = teamConsortCount - float(voteCount[TEAM_CONSORT - 2]);		
+			
+	if (empireRemainder <= 0 && consortRemainder <= 0)
+		extendTime();
+		
+	else if (display)
+		displayVotes(team, empireRemainder, consortRemainder , client);
+}
+
+void extendTime()
+{
+	char currentMap[32];
+	GetCurrentMap(currentMap, sizeof(currentMap));
+	
+	if (!g_Bool[noTimeLimit])
+	{
+		int roundTime = g_Cvar[extendTimeLimit].IntValue; // the time we extend matches by		
+		roundTime += StrContains(currentMap, "corner", false) == 0 ? g_Cvar[cornerTimeLimit].IntValue : g_Cvar[regularTimeLimit].IntValue; //the time elapsed so far (method works, but not proper)		
+		ServerCommand("mp_roundtime %d", roundTime);
+	}
+	else
+		g_Integer[totalTimeLeft] = g_Cvar[extendTimeLimit].IntValue;		
+		
+	g_Bool[hasExtended] = true;
+	g_Bool[justExtended] = true;
+	PrintToChatAll("\x05[xG] %t!", "Round Extended");
+}
+
+void displayVotes(int team, float empireRemainder, float consortRemainder, int client)
+{
+	char name[64];
+	GetClientName(client, name, sizeof(name));
+	
+	if (empireRemainder >= 1 && consortRemainder >= 1)
+	{
+		PrintToChatAll("\x05%t", "Extend Both", name, RoundToCeil(consortRemainder), RoundToCeil(empireRemainder));
+		//PrintToChatAll("\x05%s typed extend: %d Con & %d Emp required.", name, RoundToCeil(consortRemainder), RoundToCeil(empireRemainder));
+		return;
+	}
+	
+	switch (team) //get the casters team
+	{
+		case TEAM_EMPIRE:
+			if (consortRemainder <= 0)
+				PrintToChatAll("\x05%t", "Extend Empire", name, RoundToCeil(empireRemainder));	
+				//PrintToChatAll("\x05%s typed extend: %d empire required", name, RoundToCeil(empireRemainder));			
+			
+		case TEAM_CONSORT:
+			if (empireRemainder <= 0)
+				PrintToChatAll("\x05%t", "Extend Consort", name, RoundToCeil(consortRemainder));
+				//PrintToChatAll("\x05%s typed extend: %d consort required", name, RoundToCeil(consortRemainder));			
+	}
+}
