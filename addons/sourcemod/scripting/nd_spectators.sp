@@ -64,7 +64,7 @@ public Action CMD_GoSpec(int client, int args)
 	
 	g_isLockedToSpec[client] = !g_isLockedToSpec[client];
 	
-	if (g_isLockedToSpec[client])
+	if (!g_isLockedToSpec[client])
 		PrintMessage(client, "Spectator Unlocked");
 	
 	else
