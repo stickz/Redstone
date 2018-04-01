@@ -26,6 +26,10 @@ public void OnPluginStart()
 	LoadTranslations("nd_team_balancer.phrases");
 }
 
+public void OnMapStart() {
+	RemoveSpecLocks();
+}
+
 public void OnMapEnd() {
 	RemoveSpecLocks();
 }
