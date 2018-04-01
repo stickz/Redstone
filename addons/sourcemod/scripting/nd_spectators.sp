@@ -65,7 +65,10 @@ public Action CMD_GoSpec(int client, int args)
 	
 	else
 	{
-		RefreshTBCache();
+		// Update team balancer, if native is availible
+		if (RTBC_AVAILIBLE()) 
+			RefreshTBCache();
+			
 		ChangeClientTeam(client, TEAM_SPEC);
 		PrintMessage(client, "Spectator Joined");
 	}
