@@ -131,6 +131,11 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 				damage *= g_Float[red_ft_turret_mult];
 				return Plugin_Changed;
 			}
+			else if (InflictorIsGL(className))
+			{
+				damage *= g_Float[gl_ft_turret_mult];
+				return Plugin_Changed;
+			}
 		}
 		
 		case WEAPON_BULLET_DT:
@@ -187,7 +192,10 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 				return Plugin_Changed;
 			}
 			else if (InflictorIsGL(className))
-				return Plugin_Continue;
+			{
+				damage *= g_Float[gl_transport_mult];
+				return Plugin_Changed;
+			}
 		}
 		
 		case WEAPON_BULLET_DT: 
@@ -218,7 +226,10 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 				return Plugin_Changed;
 			}
 			else if (InflictorIsGL(className))
-				return Plugin_Continue;
+			{				
+				damage *= g_Float[gl_assembler_mult]; 
+				return Plugin_Changed;
+			}
 		}
 		
 		case WEAPON_BULLET_DT:
@@ -262,7 +273,10 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 				return Plugin_Changed;
 			}			
 			else if (InflictorIsGL(className))
-				return Plugin_Continue;
+			{
+				damage *= g_Float[gl_bunker_mult];
+				return Plugin_Changed;
+			}
 		}
 		
 		case WEAPON_BULLET_DT:	
