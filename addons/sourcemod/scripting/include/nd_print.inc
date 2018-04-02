@@ -37,7 +37,7 @@ stock void PrintMessageAllEx(const char[] phrase)
 	}
 }
 
-stock void PrintTMessageAll(char[] transString, any argValue)
+stock void PrintTMessageAll(char[] transString, any:argValue)
 {
 	for (int client = 1; client <= MaxClients; client++) 
 	{
@@ -48,7 +48,7 @@ stock void PrintTMessageAll(char[] transString, any argValue)
 	}
 }
 
-stock void PrintTMessageTeam(int team, char[] transString, any argValue)
+stock void PrintTMessageTeam(int team, char[] transString, any:argValue)
 {
 	for (int client = 1; client <= MaxClients; client++) 
 	{
