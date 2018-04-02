@@ -1,10 +1,7 @@
 #define WEAPON_NX300_DT -2147481592
-#define WEAPON_EXPLO_DT 64
+#define WEAPON_RED_DT 64
 #define WEAPON_BULLET_DT 2
 #define BLOCK_DAMAGE 0
-
-#define WEAPON_GL_CNAME "grenade_launcher_proj"
-#define WEAPON_RED_CNAME "sticky_grenade_ent"
 
 public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
@@ -46,13 +43,10 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 	
 	switch (damagetype)
 	{
-		case WEAPON_EXPLO_DT:
-		{		
-			if (InflictorIsRED(iClass(inflictor)))
-			{			
-				damage *= g_Float[red_radar_mult];
-				return Plugin_Changed;
-			}
+		case WEAPON_RED_DT:
+		{
+			damage *= g_Float[red_radar_mult];
+			return Plugin_Changed;
 		}
 		
 		case WEAPON_BULLET_DT:
@@ -72,13 +66,10 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 	
 	switch (damagetype)
 	{
-		case WEAPON_EXPLO_DT:
+		case WEAPON_RED_DT:
 		{
-			if (InflictorIsRED(iClass(inflictor)))
-			{
-				damage *= g_Float[red_armoury_mult];
-				return Plugin_Changed;
-			}
+			damage *= g_Float[red_armoury_mult];
+			return Plugin_Changed;			
 		}
 		
 		case WEAPON_BULLET_DT:
@@ -98,13 +89,10 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 	
 	switch(damagetype)
 	{
-		case WEAPON_EXPLO_DT:
+		case WEAPON_RED_DT:
 		{
-			if (InflictorIsRED(iClass(inflictor)))
-			{
-				damage *= g_Float[red_power_plant_mult];
-				return Plugin_Changed;
-			}
+			damage *= g_Float[red_power_plant_mult];
+			return Plugin_Changed;			
 		}
 		
 		case WEAPON_BULLET_DT:
@@ -124,21 +112,10 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 	
 	switch (damagetype)
 	{
-		case WEAPON_EXPLO_DT:
+		case WEAPON_RED_DT:
 		{
-			char className[64];
-			GetEntityClassname(inflictor, className, sizeof(className));
-			
-			if (InflictorIsRED(className))
-			{
-				damage *= g_Float[red_ft_turret_mult];
-				return Plugin_Changed;
-			}
-			else if (InflictorIsGL(className))
-			{
-				damage *= g_Float[gl_ft_turret_mult];
-				return Plugin_Changed;
-			}
+			damage *= g_Float[red_ft_turret_mult];
+			return Plugin_Changed;			
 		}
 		
 		case WEAPON_BULLET_DT:
@@ -158,13 +135,10 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 	
 	switch (damagetype)
 	{
-		case WEAPON_EXPLO_DT:
+		case WEAPON_RED_DT:
 		{
-			if (InflictorIsRED(iClass(inflictor)))
-			{
-				damage *= g_Float[red_artillery_mult];
-				return Plugin_Changed;
-			}
+			damage *= g_Float[red_artillery_mult];
+			return Plugin_Changed;
 		}
 		
 		case WEAPON_BULLET_DT: 
@@ -184,21 +158,10 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 	
 	switch (damagetype)
 	{
-		case WEAPON_EXPLO_DT:
+		case WEAPON_RED_DT:
 		{
-			char className[64];
-			GetEntityClassname(inflictor, className, sizeof(className));
-			
-			if (InflictorIsRED(className))
-			{
-				damage *= g_Float[red_transport_mult];
-				return Plugin_Changed;
-			}
-			else if (InflictorIsGL(className))
-			{
-				damage *= g_Float[gl_transport_mult];
-				return Plugin_Changed;
-			}
+			damage *= g_Float[red_transport_mult];
+			return Plugin_Changed;
 		}
 		
 		case WEAPON_BULLET_DT: 
@@ -218,21 +181,10 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 	
 	switch (damagetype)
 	{
-		case WEAPON_EXPLO_DT:	 
+		case WEAPON_RED_DT:	 
 		{ 
-			char className[64];
-			GetEntityClassname(inflictor, className, sizeof(className));
-			
-			if (InflictorIsRED(className))
-			{
-				damage *= g_Float[red_assembler_mult]; 
-				return Plugin_Changed;
-			}
-			else if (InflictorIsGL(className))
-			{				
-				damage *= g_Float[gl_assembler_mult]; 
-				return Plugin_Changed;
-			}
+			damage *= g_Float[red_assembler_mult]; 
+			return Plugin_Changed;
 		}
 		
 		case WEAPON_BULLET_DT:
@@ -265,21 +217,10 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 			return Plugin_Changed; 
 		}
 		
-		case WEAPON_EXPLO_DT:
+		case WEAPON_RED_DT:
 		{ 
-			char className[64];
-			GetEntityClassname(inflictor, className, sizeof(className));
-			
-			if (InflictorIsRED(className))
-			{
-				damage *= g_Float[red_bunker_mult];
-				return Plugin_Changed;
-			}			
-			else if (InflictorIsGL(className))
-			{
-				damage *= g_Float[gl_bunker_mult];
-				return Plugin_Changed;
-			}
+			damage *= g_Float[red_bunker_mult]; 		
+			return Plugin_Changed; 
 		}
 		
 		case WEAPON_BULLET_DT:	
@@ -290,19 +231,4 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	}
 	
 	return Plugin_Continue;
-}
-
-bool InflictorIsRED(const char[] className) {
-	return StrEqual(className, WEAPON_RED_CNAME, true);
-}
-
-bool InflictorIsGL(const char[] className) {
-	return StrEqual(className, WEAPON_GL_CNAME, true);
-}
-
-char iClass(int &inflictor)
-{
-	char className[64];
-	GetEntityClassname(inflictor, className, sizeof(className));
-	return className;			
 }
