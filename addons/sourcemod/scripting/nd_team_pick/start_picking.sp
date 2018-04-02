@@ -45,7 +45,7 @@ public Action StartPicking(int client, int args)
 		// If the starting team is invalid, don't countinue and have the command run again
 		else
 		{
-			PrintMessageAllTS1("Invalid Starting Team", startTeam);
+			PrintTMessageAll("Invalid Starting Team", startTeam);
 			return Plugin_Handled;		
 		}
 	}
@@ -111,13 +111,13 @@ bool TargetingIsInvalid(int target1, char[] con_name, int target2, char[] emp_na
 {
 	if (target1 == INVALID_TARGET) 
 	{
-		PrintMessageAllTS1("Name Segment Invalid", con_name);
+		PrintTMessageAll("Name Segment Invalid", con_name);
 		return true;
 	}	
 
 	if (target2 == INVALID_TARGET)
 	{
-		PrintMessageAllTS1("Name Segment Invalid", emp_name);
+		PrintTMessageAll("Name Segment Invalid", emp_name);
 		return true;
 	}
 
@@ -125,7 +125,7 @@ bool TargetingIsInvalid(int target1, char[] con_name, int target2, char[] emp_na
 	{
 		char pickerName[64];
 		GetClientName(target1, pickerName, sizeof(pickerName));
-		PrintMessageAllTS1("Name Segment Duplicate", pickerName);
+		PrintTMessageAll("Name Segment Duplicate", pickerName);
 		return true;	
 	}
 	

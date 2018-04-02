@@ -17,6 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <nd_com_eng>
 #include <smlib/math>
+#include <nd_print>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_unit_limit/nd_unit_limit.txt"
@@ -25,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #pragma newdecls required
 #include <sourcemod>
 #include <nd_stocks>
-#include <nd_print>
 
 #include <nd_breakdown>
 #include <nd_rounds>

@@ -1,3 +1,8 @@
+#if defined _nd_print_included_
+  #endinput
+#endif
+#define _nd_print_included_
+
 #define PREFIX "\x05[xG]"
 #define COLOUR "\x05"
 
@@ -37,51 +42,45 @@ stock void PrintMessageAllEx(const char[] phrase)
 	}
 }
 
-stock void PrintMessageAllTS1(char[] transString, char[] stringArg) 
+stock void PrintTMessageAll(char[] transString, any:argValue)
 {
 	for (int client = 1; client <= MaxClients; client++) 
 	{
 		if (IsClientInGame(client))
 		{	
-			PrintToChat(client, "%s %t!", PREFIX, transString, stringArg);	
+			PrintToChat(client, "%s %t!", PREFIX, transString, argValue);	
 		}
 	}
 }
 
-stock void PrintMessageTeamTS1(int team, char[] transString, char[] stringArg)
+stock void PrintTMessageTeam(int team, char[] transString, any:argValue)
 {
 	for (int client = 1; client <= MaxClients; client++) 
 	{
 		if (IsClientInGame(client) && GetClientTeam(client) == team)
 		{
-			PrintToChat(client, "%s %t!", PREFIX, transString, stringArg);
+			PrintToChat(client, "%s %t!", PREFIX, transString, argValue);
 		}
 	}
 }
 
-stock void PrintMessageAllTI1(char[] transString, int intArg) 
-{
-	for (int client = 1; client <= MaxClients; client++)
-	{
-		if (IsClientInGame(client))
-		{
-			PrintToChat(client, "%s %t!", PREFIX, transString, intArg);
-		}
-	}	
+stock void PrintMessageAllTS1(char[] transString, char[] stringArg) {
+	PrintTMessageAll(transString, stringArg);
 }
 
-stock void PrintMessageTeamTI1(int team, char[] transString, int intArg)
-{
-	for (int client = 1; client <= MaxClients; client++) 
-	{
-		if (IsClientInGame(client) && GetClientTeam(client) == team)
-		{
-			PrintToChat(client, "%s %t!", PREFIX, transString, intArg);
-		}
-	}
+stock void PrintMessageTeamTS1(int team, char[] transString, char[] stringArg) {
+	PrintTMessageTeam(team, transString, stringArg);
+}
+
+stock void PrintMessageAllTI1(char[] transString, int intArg) {
+	PrintTMessageAll(transString, intArg);	
+}
+
+stock void PrintMessageTeamTI1(int team, char[] transString, int intArg) {
+	PrintTMessageTeam(team, transString, intArg);
 }
 
 // This function is an alais, to symbolize printing translations instead of strings
 stock void PrintMessageTeamTT1(int team, char[] transString, char[] transArg) {
-	return PrintMessageTeamTS1(team, transString, transArg);
+	PrintTMessageAll(transString, transArg);
 }
