@@ -47,13 +47,13 @@
 	
 	"Set Sniper Limit"
 	{
-		"#format"	"{1:s}"
+		"#format"	"{1:t}"
 		"en"		"Sniper count limited to {1}"
 	}
 	
 	"Set Stealth Limit"
 	{
-		"#format"	"{1:s}"
+		"#format"	"{1:t}"
 		"en"		"Stealth count limited to {1}"
 	}
 	
