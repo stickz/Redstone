@@ -1,5 +1,5 @@
 /* The convar mess starts here! */
-#define CONFIG_VARS 24
+#define CONFIG_VARS 20
 enum
 {
     	nx300_bunker_mult = 0,
@@ -25,13 +25,7 @@ enum
 	bullet_radar_mult,
 	bullet_mg_turret_mult,
 	bullet_rocket_turret_mult,
-	bullet_supply_station_mult,
-	
-	// GLs (Grenade Launchers)
-	gl_bunker_mult,
-	gl_assembler_mult,
-	gl_transport_mult,
-	gl_ft_turret_mult
+	bullet_supply_station_mult
 }
 ConVar g_Cvar[CONFIG_VARS];
 float g_Float[CONFIG_VARS];
@@ -65,13 +59,7 @@ void CreatePluginConVars()
 		"sm_mult_radar_bullet",
 		"sm_mult_mg_turret_bullet",
 		"sm_mult_rocket_turret_bullet",
-		"sm_mult_supply_station_bullet",
-		
-		// GLs (Grenade Launchers)
-		"sm_mult_bunker_gl",
-		"sm_mult_assembler_gl",
-		"sm_mult_transport_gl",
-		"sm_mult_ft_turret_gl"
+		"sm_mult_supply_station_bullet"
 	};
 	
 	char convarDef[CONFIG_VARS][] = { 
@@ -79,9 +67,7 @@ void CreatePluginConVars()
 		// REDs (Remote Explosive Devices)
 		"120", "105", "150", "110", "140", "105", "105", "105",
 		// Bullets (Chainguns, Pistols, Rifles, SMGs etc)
-		"150", "140", "135", "95", "115", "125", "115", "100", "115", "100", "75",
-		// GLs (Grenade Launchers)
-		"120", "110", "125", "115"};
+		"150", "140", "135", "95", "115", "125", "115", "100", "115", "100", "75"};
 	
 	char convarDesc[CONFIG_VARS][] = {
 		"Percentage of normal damage nx300 does to bunker",
@@ -107,13 +93,7 @@ void CreatePluginConVars()
 		"Percentage of normal damage bullets deal to radars",
 		"Percentage of normal damage bullets deal to mg turrets",
 		"Percentage of normal damage bullets deal to rocket turrets",
-		"Percentage of normal damage bullets deal to supply stations",
-		
-		// GLs (Grenade Launchers)
-		"Percentage of normal damage GLs deal to the bunker",
-		"Percentage of normal damage GLs deal to assemblers",
-		"Percentage of normal damage GLs deal to transport gates",
-		"Percentage of normal damage REDs deal to ft/sonic turrets"		
+		"Percentage of normal damage bullets deal to supply stations"
 	};
 	
 	for (int convar = 0; convar < CONFIG_VARS; convar++) {
