@@ -16,6 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sdktools>
 #include <nd_com_eng>
+#include <smlib/math>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_unit_limit/nd_unit_limit.txt"
@@ -219,16 +220,11 @@ public Action CMD_ChangeTeamSnipersLimit(int client, int args)
 	if (CheckCommonFailure(client, TYPE_SNIPER, args))
 		return Plugin_Handled;
 
-    	char strvalue[32];
+    	// Get the sniper limit value and clamp it
+	char strvalue[32];
 	GetCmdArg(1, strvalue, sizeof(strvalue));
-	int value = StringToInt(strvalue);
-	
-	if (value > 10)
-        	value = 10;
-
-	else if (value < MIN_SNIPER_VALUE)
-        	value = MIN_SNIPER_VALUE;
-        	
+	int value = Math_Clamp(StringToInt(strvalue), MIN_SNIPER_VALUE, 10);
+      	
         SetUnitLimit(GetClientTeam(client), TYPE_SNIPER, value);
 	return Plugin_Handled;
 }
@@ -238,16 +234,11 @@ public Action CMD_ChangeTeamStealthLimit(int client, int args)
 	if (CheckCommonFailure(client, TYPE_STEALTH, args))
 		return Plugin_Handled;
 	
+	// Get the stealth limit value and clamp it
 	char strvalue[32];
 	GetCmdArg(1, strvalue, sizeof(strvalue));
-	int value = StringToInt(strvalue);
+	int value = Math_Clamp(StringToInt(strvalue), MIN_STEALTH_LOW_VALUE, 10);
 	
-	if (value > 10)
-        	value = 10;
-
-	else if (value < MIN_STEALTH_LOW_VALUE)
-        	value = MIN_STEALTH_LOW_VALUE;
-        	
         SetUnitLimit(GetClientTeam(client), TYPE_STEALTH, value);
 	return Plugin_Handled;
 }
@@ -257,16 +248,11 @@ public Action CMD_ChangeTeamAntiStructureLimit(int client, int args)
 	if (CheckCommonFailure(client, TYPE_STRUCTURE, args))
 		return Plugin_Handled;
 	
+	// Get the structure-limit value and clamp it
 	char strvalue[32];
 	GetCmdArg(1, strvalue, sizeof(strvalue));
-	int value = StringToInt(strvalue);
+	int value = Math_Clamp(StringToInt(strvalue), MIN_ANTI_STRUCTURE_PER, 100);
 	
-	if (value > 100)
-        	value = 100;
-
-	else if (value < MIN_ANTI_STRUCTURE_PER)
-        	value = MIN_ANTI_STRUCTURE_PER;
-        	
         SetUnitLimit(GetClientTeam(client), TYPE_STRUCTURE, value);
 	return Plugin_Handled;
 }
