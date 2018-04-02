@@ -3,6 +3,7 @@
 #include <sdkhooks>
 #include <nd_rounds>
 #include <nd_struct_eng>
+#include <nd_research_eng>
 
 public Plugin myinfo = 
 {
