@@ -396,48 +396,12 @@ void SetUnitLimit(int team, int type, int value)
 	PrintLimitSet(team, type, value);
 }
 
-stock char GetLimitPhrase(int type)
-{
-	char LimitPhrase[32];
-	
-	switch (type)
-        {
-        	case TYPE_SNIPER: 	LimitPhrase = "Set Sniper Limit";
-        	case TYPE_STEALTH:	LimitPhrase = "Set Stealth Limit"; 
-        	case TYPE_STRUCTURE: 	LimitPhrase = "Set Structure Limit";
-        }
-        
-        return LimitPhrase;
-}
-
 void PrintLimitSet(int team, int type, int limit)
 {
-	if (type == TYPE_STRUCTURE)
+	switch (type)
 	{
-		for (int client = 1; client <= MaxClients; client++)
-		{
-			if (IsValidClient(client) && GetClientTeam(client) == team)
-			{
-				PrintToChat(client, "%s %t.", PREFIX, "Set Structure Limit", limit);
-			}
-		}
-	}
-	else
-	{
-		char Phrase[32];
-		Format(Phrase, sizeof(Phrase), GetLimitPhrase(type));
-		
-		for (int client = 1; client <= MaxClients; client++)
-		{
-			if (IsValidClient(client) && GetClientTeam(client) == team)
-			{
-				char TranslatedLimit[32];
-				Format(TranslatedLimit, sizeof(TranslatedLimit), "%T", NumberInEnglish(limit), client);
-				
-				char Message[64];
-				Format(Message, sizeof(Message), "%s %T.", PREFIX, Phrase, client, TranslatedLimit);
-				PrintToChat(client, Message);
-			}
-		}
+		case TYPE_STRUCTURE: PrintMessageTeamTI1(team, "Set Structure Limit", limit);
+		case TYPE_STEALTH: PrintMessageTeamTT1(team, "Set Stealth Limit", NumberInEnglish(limit));
+		case TYPE_SNIPER: PrintMessageTeamTT1(team, "Set Sniper Limit", NumberInEnglish(limit));
 	}
 }
