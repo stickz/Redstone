@@ -291,9 +291,9 @@ bool CheckCommonFailure(int client, int type, int args)
 	{
         	switch (type)
         	{
-        		case TYPE_SNIPER: 	PrintToChat(client, "%s %t", PREFIX, "Proper Sniper Usage");
-        		case TYPE_STEALTH:	PrintToChat(client, "%s %t", PREFIX, "Proper Stealth Usage");
-        		case TYPE_STRUCTURE: 	PrintToChat(client, "%s %t", PREFIX, "Proper Structure Usage");
+        		case TYPE_SNIPER: PrintMessage(client, "Proper Sniper Usage");
+        		case TYPE_STEALTH: PrintMessage(client, "Proper Stealth Usage");
+        		case TYPE_STRUCTURE: PrintMessage(client, "Proper Structure Usage");
         	}
 
         	return true;
