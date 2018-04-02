@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <clientprefs>
+#include <nd_print>
 #include <nd_stocks>
 #include <nd_com_eng>
 #include <nd_entities>
