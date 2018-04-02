@@ -88,5 +88,5 @@ stock void PrintMessageTeamTI1(int team, char[] transString, int intArg)
 
 // This function is an alais, to symbolize printing translations instead of strings
 stock void PrintMessageTeamTT1(int team, char[] transString, char[] transArg) {
-	return PrintMessageTeamTS1(team, transString, transArg);
+	PrintMessageTeamTS1(team, transString, transArg);
 }
