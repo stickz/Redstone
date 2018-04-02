@@ -1,3 +1,8 @@
+#if defined _nd_print_included_
+  #endinput
+#endif
+#define _nd_print_included_
+
 #define PREFIX "\x05[xG]"
 #define COLOUR "\x05"
 
