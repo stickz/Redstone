@@ -124,7 +124,7 @@ public void OnClientPutInServer(int client)
 {
 	if (g_Bool[noTimeLimit] && ND_RoundStarted() && !g_Bool[startedCountdown] && ND_GetClientCount() > g_Cvar[enableTimeLimit].IntValue)
 	{
-		PrintToChatAll("\x05[xG] %t!", "Limit Effect");	
+		PrintMessageAll("Limit Effect");
 			
 		CreateTimer(g_Bool[reducedResumeTime] ? g_Cvar[reducedTimeLimit].FloatValue : g_Cvar[regularTimeLimit].FloatValue, 
 					TIMER_TotalTimeLeft, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
@@ -255,7 +255,7 @@ public Action TIMER_ShowMinLeft(Handle timer)
 		case 0:
 		{
 			if (g_Bool[noTimeLimit])
-				PrintToChatAll("\x05[xG] %t.", "Time End")
+				PrintMessageAll("Time End");
 			
 			ServerCommand("mp_roundtime 1");
 			return Plugin_Stop;
@@ -273,24 +273,28 @@ public Action TIMER_TotalTimeLeft(Handle timer)
 	
 	switch (g_Integer[totalTimeLeft])
 	{
-		case 45,30,15: PrintToChatAll("\x05 %d Minutes remaining!", g_Integer[totalTimeLeft]);
+		case 45,30,15: PrintTimeLeft();
 		
 		case 5:
 		{
 			g_Bool[enableExtend] = true;
 		
-			PrintToChatAll("\x05 %d Minutes remaining!", g_Integer[totalTimeLeft]);
+			PrintTimeLeft();
 		}
 		
 		case 1: 
 		{
-			PrintToChatAll("\x05 One minute remaining!");			
+			PrintTimeLeft();
 			CreateTimer(1.0, TIMER_ShowMinLeft, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 			return Plugin_Stop;
 		}
 	}
 	
 	return Plugin_Continue;
+}
+
+void PrintTimeLeft() {
+	PrintToChatAll("\x05 %d Minutes remaining!", g_Integer[totalTimeLeft]);
 }
 
 public Action TIMER_CheckAutoCycleMap(Handle timer)
