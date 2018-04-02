@@ -126,7 +126,10 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 	{
 		case WEAPON_EXPLO_DT:
 		{
-			if (InflictorIsRED(iClass(inflictor)))
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
+			
+			if (InflictorIsRED(className))
 			{
 				damage *= g_Float[red_ft_turret_mult];
 				return Plugin_Changed;
