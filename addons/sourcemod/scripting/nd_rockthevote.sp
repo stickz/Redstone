@@ -17,6 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <mapchooser>
 #include <nextmap>
 #include <nd_warmup>
+#include <nd_print>
 
 // Hack - Too lazy to create include file
 native bool ND_TriggerMapVote();
@@ -30,7 +31,6 @@ native bool ND_TriggerMapVote();
 #include <nd_stocks>
 #include <nd_rounds>
 #include <nd_redstone>
-#include <nd_print>
 #include <nd_maps>
 #include <mapchooser>
 
