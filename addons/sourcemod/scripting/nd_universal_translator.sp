@@ -20,13 +20,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "updater/standard.sp"
 
 #include <sdktools>
+#include <nd_print>
 
 #pragma newdecls required
 #include <sourcemod>
 #include <nd_stocks>
 #include <nd_com_eng>
 #include <nd_rounds>
-#include <nd_print>
 
 public Plugin myinfo =
 {
