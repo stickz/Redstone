@@ -16,6 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sdktools>
 #include <nd_com_eng>
+#include <smlib/math>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_unit_limit/nd_unit_limit.txt"
@@ -219,16 +220,11 @@ public Action CMD_ChangeTeamSnipersLimit(int client, int args)
 	if (CheckCommonFailure(client, TYPE_SNIPER, args))
 		return Plugin_Handled;
 
-    	char strvalue[32];
+    	// Get the sniper limit value and clamp it
+	char strvalue[32];
 	GetCmdArg(1, strvalue, sizeof(strvalue));
-	int value = StringToInt(strvalue);
-	
-	if (value > 10)
-        	value = 10;
-
-	else if (value < MIN_SNIPER_VALUE)
-        	value = MIN_SNIPER_VALUE;
-        	
+	int value = Math_Clamp(StringToInt(strvalue), MIN_SNIPER_VALUE, 10);
+      	
         SetUnitLimit(GetClientTeam(client), TYPE_SNIPER, value);
 	return Plugin_Handled;
 }
@@ -238,16 +234,11 @@ public Action CMD_ChangeTeamStealthLimit(int client, int args)
 	if (CheckCommonFailure(client, TYPE_STEALTH, args))
 		return Plugin_Handled;
 	
+	// Get the stealth limit value and clamp it
 	char strvalue[32];
 	GetCmdArg(1, strvalue, sizeof(strvalue));
-	int value = StringToInt(strvalue);
+	int value = Math_Clamp(StringToInt(strvalue), MIN_STEALTH_LOW_VALUE, 10);
 	
-	if (value > 10)
-        	value = 10;
-
-	else if (value < MIN_STEALTH_LOW_VALUE)
-        	value = MIN_STEALTH_LOW_VALUE;
-        	
         SetUnitLimit(GetClientTeam(client), TYPE_STEALTH, value);
 	return Plugin_Handled;
 }
@@ -257,16 +248,11 @@ public Action CMD_ChangeTeamAntiStructureLimit(int client, int args)
 	if (CheckCommonFailure(client, TYPE_STRUCTURE, args))
 		return Plugin_Handled;
 	
+	// Get the structure-limit value and clamp it
 	char strvalue[32];
 	GetCmdArg(1, strvalue, sizeof(strvalue));
-	int value = StringToInt(strvalue);
+	int value = Math_Clamp(StringToInt(strvalue), MIN_ANTI_STRUCTURE_PER, 100);
 	
-	if (value > 100)
-        	value = 100;
-
-	else if (value < MIN_ANTI_STRUCTURE_PER)
-        	value = MIN_ANTI_STRUCTURE_PER;
-        	
         SetUnitLimit(GetClientTeam(client), TYPE_STRUCTURE, value);
 	return Plugin_Handled;
 }
@@ -291,9 +277,9 @@ bool CheckCommonFailure(int client, int type, int args)
 	{
         	switch (type)
         	{
-        		case TYPE_SNIPER: 	PrintToChat(client, "%s %t", PREFIX, "Proper Sniper Usage");
-        		case TYPE_STEALTH:	PrintToChat(client, "%s %t", PREFIX, "Proper Stealth Usage");
-        		case TYPE_STRUCTURE: 	PrintToChat(client, "%s %t", PREFIX, "Proper Structure Usage");
+        		case TYPE_SNIPER: PrintMessage(client, "Proper Sniper Usage");
+        		case TYPE_STEALTH: PrintMessage(client, "Proper Stealth Usage");
+        		case TYPE_STRUCTURE: PrintMessage(client, "Proper Structure Usage");
         	}
 
         	return true;
@@ -396,48 +382,12 @@ void SetUnitLimit(int team, int type, int value)
 	PrintLimitSet(team, type, value);
 }
 
-stock char GetLimitPhrase(int type)
-{
-	char LimitPhrase[32];
-	
-	switch (type)
-        {
-        	case TYPE_SNIPER: 	LimitPhrase = "Set Sniper Limit";
-        	case TYPE_STEALTH:	LimitPhrase = "Set Stealth Limit"; 
-        	case TYPE_STRUCTURE: 	LimitPhrase = "Set Structure Limit";
-        }
-        
-        return LimitPhrase;
-}
-
 void PrintLimitSet(int team, int type, int limit)
 {
-	if (type == TYPE_STRUCTURE)
+	switch (type)
 	{
-		for (int client = 1; client <= MaxClients; client++)
-		{
-			if (IsValidClient(client) && GetClientTeam(client) == team)
-			{
-				PrintToChat(client, "%s %t.", PREFIX, "Set Structure Limit", limit);
-			}
-		}
-	}
-	else
-	{
-		char Phrase[32];
-		Format(Phrase, sizeof(Phrase), GetLimitPhrase(type));
-		
-		for (int client = 1; client <= MaxClients; client++)
-		{
-			if (IsValidClient(client) && GetClientTeam(client) == team)
-			{
-				char TranslatedLimit[32];
-				Format(TranslatedLimit, sizeof(TranslatedLimit), "%T", NumberInEnglish(limit), client);
-				
-				char Message[64];
-				Format(Message, sizeof(Message), "%s %T.", PREFIX, Phrase, client, TranslatedLimit);
-				PrintToChat(client, Message);
-			}
-		}
+		case TYPE_STRUCTURE: PrintMessageTeamTI1(team, "Set Structure Limit", limit);
+		case TYPE_STEALTH: PrintMessageTeamTT1(team, "Set Stealth Limit", NumberInEnglish(limit));
+		case TYPE_SNIPER: PrintMessageTeamTT1(team, "Set Sniper Limit", NumberInEnglish(limit));
 	}
 }
