@@ -283,7 +283,7 @@ bool InflictorIsGL(const char[] className) {
 	return StrEqual(className, WEAPON_GL_CNAME, true);
 }
 
-char iClass(const char[] className)
+char iClass(int &inflictor)
 {
 	char className[64];
 	GetEntityClassname(inflictor, className, sizeof(className));
