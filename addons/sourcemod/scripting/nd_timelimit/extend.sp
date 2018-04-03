@@ -20,7 +20,7 @@ void PrintExtendToEnabled()
 	for (int idx = 0; idx < MAXPLAYERS; idx++)
 	{
 		if (IsValidClient(idx) && option_timelimit_features[idx]) {
-			PrintToChat(idx, "\x05[xG] %t!", "Extend Availible");		
+			PrintMessage(idx, "Extend Availible");	
 		}
 	}
 }
@@ -30,22 +30,22 @@ void callExtend(int client)
 	int team = GetClientTeam(client);
 	
 	if (ValidTeamCount(team) < g_Cvar[extendMinPlayers].IntValue)
-		PrintToChat(client, "\x05[xG] %t!", "Six Required");
+		PrintMessage(client, "Six Required");
 	
 	else if (!g_Bool[enableExtend])
-		PrintToChat(client, "\x05[xG] %t!", "Wait End");
+		PrintMessage(client, "Wait End");
 		
 	else if (g_Bool[hasExtended])
-		PrintToChat(client, "\x05[xG] %t!", "Already Extended");
+		PrintMessage(client, "Already Extended");
 		
 	else if (team < 2)
-		PrintToChat(client, "\x05[xG] %t!", "On Team");
+		PrintMessage(client, "On Team");
 		
 	else if (g_hasVotedEmpire[client] || g_hasVotedConsort[client])
-		PrintToChat(client, "\x05[xG] %t!", "You Extended");
+		PrintMessage(client, "You Extended");
 		
 	else if (g_Bool[roundHasEnded])
-		PrintToChat(client, "\x05[xG] %t!", "Round Ended");
+		PrintMessage(client, "Round Ended");
 
 	else
 	{
@@ -117,7 +117,7 @@ void extendTime()
 		
 	g_Bool[hasExtended] = true;
 	g_Bool[justExtended] = true;
-	PrintToChatAll("\x05[xG] %t!", "Round Extended");
+	PrintMessageAll("Round Extended");
 }
 
 void displayVotes(int team, float empireRemainder, float consortRemainder, int client)

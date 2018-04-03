@@ -1,3 +1,8 @@
+#if defined _nd_print_included_
+  #endinput
+#endif
+#define _nd_print_included_
+
 #define PREFIX "\x05[xG]"
 #define COLOUR "\x05"
 
@@ -79,4 +84,9 @@ stock void PrintMessageTeamTI1(int team, char[] transString, int intArg)
 			PrintToChat(client, "%s %t!", PREFIX, transString, intArg);
 		}
 	}
+}
+
+// This function is an alais, to symbolize printing translations instead of strings
+stock void PrintMessageTeamTT1(int team, char[] transString, char[] transArg) {
+	PrintMessageTeamTS1(team, transString, transArg);
 }
