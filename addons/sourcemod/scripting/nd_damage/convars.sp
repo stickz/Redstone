@@ -51,6 +51,9 @@ float gFloat_Other[multOther];
 /* Functions for creating covnars */
 void CreatePluginConVars()
 {
+	// Tell the wrapper to create the files. Required for multiples.
+	AutoExecConfig_SetCreateFile(true);
+	
 	CreateRedConVars();
 	CreateBulletConVars();
 	CreateOtherConVars();
