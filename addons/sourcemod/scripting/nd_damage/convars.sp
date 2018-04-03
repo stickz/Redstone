@@ -184,7 +184,7 @@ void UpdateConVarCache()
 	}
 	
 	for (int o = 0; o < view_as<int>(multOther); o++) {
-		gFloat_Other[o] = g_Cvar_Other[o].FloatValue / 100.0;
+		gFloat_Other[o] = gCvar_Other[o].FloatValue / 100.0;
 	}
 }
 void HookConVarChanges()
