@@ -22,6 +22,7 @@
 #endif
 #define _autoexecconfig_included
 
+// GitHub Repo: https://github.com/Impact123/AutoExecConfig
 
 #include <sourcemod>
 
