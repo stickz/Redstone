@@ -137,7 +137,7 @@ void CreateOtherConVars()
 	AutoExecConfig_SetFile("nd_mult_other");
 	
 	char convarName[multOther][] = {	
-		sm_mult_bunker_nx300",
+		"sm_mult_bunker_nx300",
 		
 		// GLs (Grenade Launchers)
 		"sm_mult_bunker_gl",
@@ -146,7 +146,7 @@ void CreateOtherConVars()
 		"sm_mult_ft_turret_gl"
 	};
 	
-	char convarDef[multOther][] = { "120", "110", "125", "115" };
+	char convarDef[multOther][] = { "85", "120", "110", "125", "115" };
 	
 	char convarDesc[multOther][] = {
 		"Percentage of normal damage nx300 does to bunker",
@@ -180,11 +180,11 @@ void UpdateConVarCache()
 	}
 	
 	for (int b = 0; b < view_as<int>(multBullets); b++) {
-		g_Float_Bullet[b] = gCvar_Bullets[b].FloatValue / 100.0;
+		gFloat_Bullet[b] = gCvar_Bullets[b].FloatValue / 100.0;
 	}
 	
 	for (int o = 0; o < view_as<int>(multOther); o++) {
-		g_Float_Other[o] = g_Cvar_Other[o].FloatValue / 100.0;
+		gFloat_Other[o] = g_Cvar_Other[o].FloatValue / 100.0;
 	}
 }
 void HookConVarChanges()
