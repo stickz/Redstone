@@ -180,7 +180,7 @@ void UpdateConVarCache()
 	}
 	
 	for (int b = 0; b < view_as<int>(multBullets); b++) {
-		gFloat_Bullet[b] = gCvar_Bullets[b].FloatValue / 100.0;
+		gFloat_Bullet[b] = gCvar_Bullet[b].FloatValue / 100.0;
 	}
 	
 	for (int o = 0; o < view_as<int>(multOther); o++) {
@@ -194,7 +194,7 @@ void HookConVarChanges()
 	}
 	
 	for (int b = 0; b < view_as<int>(multBullets); b++) {
-		HookConVarChange(gCvar_Bullets[b], OnConfigPercentChange);
+		HookConVarChange(gCvar_Bullet[b], OnConfigPercentChange);
 	}
 	
 	for (int o = 0; o < view_as<int>(multOther); o++) {
