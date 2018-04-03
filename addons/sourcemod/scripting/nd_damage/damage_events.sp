@@ -10,7 +10,7 @@ public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflicto
 {
 	if (IsValidEntity(inflictor) && damagetype == WEAPON_BULLET_DT)
 	{
-		damage *= g_Float[bullet_supply_station_mult];
+		damage *= gFloat_Bullet[bullet_supply_station_mult];
 		return Plugin_Changed;
 	}
 	
@@ -21,7 +21,7 @@ public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor
 {
 	if (IsValidEntity(inflictor) && damagetype == WEAPON_BULLET_DT)
 	{
-		damage *= g_Float[bullet_rocket_turret_mult];
+		damage *= gFloat_Bullet[bullet_rocket_turret_mult];
 		return Plugin_Changed;
 	}
 	
@@ -32,7 +32,7 @@ public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, fl
 {
 	if (IsValidEntity(inflictor) && damagetype == WEAPON_BULLET_DT)
 	{
-		damage *= g_Float[bullet_mg_turret_mult];
+		damage *= gFloat_Bullet[bullet_mg_turret_mult];
 		return Plugin_Changed;
 	}
 	
@@ -50,14 +50,14 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 		{		
 			if (InflictorIsRED(iClass(inflictor)))
 			{			
-				damage *= g_Float[red_radar_mult];
+				damage *= gFloat_Red[red_radar_mult];
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:
 		{
-			damage *= g_Float[bullet_radar_mult];
+			damage *= gFloat_Bullet[bullet_radar_mult];
 			return Plugin_Changed;			
 		}		
 	}
@@ -76,14 +76,14 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 		{
 			if (InflictorIsRED(iClass(inflictor)))
 			{
-				damage *= g_Float[red_armoury_mult];
+				damage *= gFloat_Red[red_armoury_mult];
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:
 		{
-			damage *= g_Float[bullet_armoury_mult];
+			damage *= gFloat_Bullet[bullet_armoury_mult];
 			return Plugin_Changed;			
 		}		
 	}
@@ -102,14 +102,14 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 		{
 			if (InflictorIsRED(iClass(inflictor)))
 			{
-				damage *= g_Float[red_power_plant_mult];
+				damage *= gFloat_Red[red_power_plant_mult];
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:
 		{
-			damage *= g_Float[bullet_power_plant_mult];
+			damage *= gFloat_Bullet[bullet_power_plant_mult];
 			return Plugin_Changed;			
 		}		
 	}
@@ -131,19 +131,19 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 			
 			if (InflictorIsRED(className))
 			{
-				damage *= g_Float[red_ft_turret_mult];
+				damage *= gFloat_Red[red_ft_turret_mult];
 				return Plugin_Changed;
 			}
 			else if (InflictorIsGL(className))
 			{
-				damage *= g_Float[gl_ft_turret_mult];
+				damage *= gFloat_Other[gl_ft_turret_mult];
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:
 		{
-			damage *= g_Float[bullet_ft_turret_mult];
+			damage *= gFloat_Bullet[bullet_ft_turret_mult];
 			return Plugin_Changed;			
 		}		
 	}
@@ -162,14 +162,14 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 		{
 			if (InflictorIsRED(iClass(inflictor)))
 			{
-				damage *= g_Float[red_artillery_mult];
+				damage *= gFloat_Red[red_artillery_mult];
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT: 
 		{
-			damage *= g_Float[bullet_artillery_mult];
+			damage *= gFloat_Bullet[bullet_artillery_mult];
 			return Plugin_Changed;			
 		}		
 	}
@@ -191,19 +191,19 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 			
 			if (InflictorIsRED(className))
 			{
-				damage *= g_Float[red_transport_mult];
+				damage *= gFloat_Red[red_transport_mult];
 				return Plugin_Changed;
 			}
 			else if (InflictorIsGL(className))
 			{
-				damage *= g_Float[gl_transport_mult];
+				damage *= gFloat_Other[gl_transport_mult];
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT: 
 		{
-			damage *= g_Float[bullet_transport_mult];
+			damage *= gFloat_Bullet[bullet_transport_mult];
 			return Plugin_Changed;
 		}		
 	}
@@ -225,19 +225,19 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 			
 			if (InflictorIsRED(className))
 			{
-				damage *= g_Float[red_assembler_mult]; 
+				damage *= gFloat_Red[red_assembler_mult]; 
 				return Plugin_Changed;
 			}
 			else if (InflictorIsGL(className))
 			{				
-				damage *= g_Float[gl_assembler_mult]; 
+				damage *= gFloat_Other[gl_assembler_mult]; 
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:
 		{
-			damage *= g_Float[bullet_assembler_mult]; 
+			damage *= gFloat_Bullet[bullet_assembler_mult]; 
 			return Plugin_Changed;
 		}		
 	}
@@ -261,7 +261,7 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	{
 		case WEAPON_NX300_DT:
 		{ 
-			damage *= g_Float[nx300_bunker_mult]; 	
+			damage *= gFloat_Other[nx300_bunker_mult]; 	
 			return Plugin_Changed; 
 		}
 		
@@ -272,19 +272,19 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 			
 			if (InflictorIsRED(className))
 			{
-				damage *= g_Float[red_bunker_mult];
+				damage *= gFloat_Red[red_bunker_mult];
 				return Plugin_Changed;
 			}			
 			else if (InflictorIsGL(className))
 			{
-				damage *= g_Float[gl_bunker_mult];
+				damage *= gFloat_Other[gl_bunker_mult];
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:	
 		{ 
-			damage *= g_Float[bullet_bunker_mult];	
+			damage *= gFloat_Bullet[bullet_bunker_mult];	
 			return Plugin_Changed;
 		}
 	}
