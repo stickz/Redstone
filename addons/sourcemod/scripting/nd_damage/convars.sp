@@ -113,7 +113,7 @@ void CreatePluginConVars()
 		"Percentage of normal damage GLs deal to the bunker",
 		"Percentage of normal damage GLs deal to assemblers",
 		"Percentage of normal damage GLs deal to transport gates",
-		"Percentage of normal damage REDs deal to ft/sonic turrets"		
+		"Percentage of normal damage GLs deal to ft/sonic turrets"		
 	};
 	
 	for (int convar = 0; convar < CONFIG_VARS; convar++) {
