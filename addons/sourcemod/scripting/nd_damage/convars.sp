@@ -40,7 +40,7 @@ enum multOther
 
 /* ConVar and float arrays for the different types */
 ConVar gCvar_Red[multREDs];
-ConVar gCvar_Bullets[multBullets];
+ConVar gCvar_Bullet[multBullets];
 ConVar gCvar_Other[multOther];
 ConVar cvarNoWarmupBunkerDamage;
 
