@@ -198,7 +198,7 @@ void HookConVarChanges()
 	}
 	
 	for (int o = 0; o < view_as<int>(multOther); o++) {
-		HookConVarChange(g_Cvar_Other[o], OnConfigPercentChange);
+		HookConVarChange(gCvar_Other[o], OnConfigPercentChange);
 	}
 }
 public void OnConfigPercentChange(ConVar convar, char[] oldValue, char[] newValue) {	
