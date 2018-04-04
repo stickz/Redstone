@@ -28,7 +28,7 @@ public void OnPluginStart()
 	
 	CreatePluginConVars();
 	HookConVarChanges();
-	AutoExecConfig(true, "nd_damage_mult");
+	//AutoExecConfig(true, "nd_damage_mult");
 	
 	// Account for plugin late-loading
 	if (ND_RoundStarted())
