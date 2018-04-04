@@ -4,7 +4,7 @@
 /* Enumerated values for accessing ConVar arrays */
 enum multREDs 
 {
-	red_bunker_mult,
+	red_bunker_mult = 0,
 	red_assembler_mult,
 	red_transport_mult,
 	red_artillery_mult,
@@ -15,7 +15,7 @@ enum multREDs
 }
 enum multBullets
 {
-	bullet_bunker_mult,
+	bullet_bunker_mult = 0,
 	bullet_assembler_mult,
 	bullet_transport_mult,
 	bullet_artillery_mult,
