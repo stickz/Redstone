@@ -94,5 +94,5 @@ void UpdateSkillMedian()
 	}
 	
 	// Clear arraylist when complete, to curve memory leaks
-	players.clear();
+	players.Clear();
 }
