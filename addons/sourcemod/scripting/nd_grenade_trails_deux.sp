@@ -118,7 +118,7 @@ public void OnTrailItemSpawned(int entity)
 		Trail_SendEffect(players, entity, Colours[ownerTeam-2]);
 		
 		// Clear arraylist when complete, to curve memory leaks
-		players.clear();
+		players.Clear();
 	}
 }
 
