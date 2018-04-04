@@ -71,7 +71,7 @@ void UpdateSkillMedian()
 	if (count == 0)
 		return;
 	
-	ArrayList players = new ArrayList();	
+	ArrayList players = new ArrayList(32);
 	
 	RED_LOOP_CLIENTS(client) {
 		players.Push(GetSkillLevel(client));
@@ -91,5 +91,8 @@ void UpdateSkillMedian()
 		int right = RoundToCeil(float(count) / 2.0);
 		
 		lastMedian = players.Get(left) + players.Get(right) / 2.0;			
-	}	
+	}
+	
+	// Clear arraylist when complete, to curve memory leaks
+	players.clear();
 }
