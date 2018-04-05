@@ -30,6 +30,7 @@ enum multBullets
 enum multOther
 {
 	nx300_bunker_mult = 0,
+	artillery_bunker_mult,
 	
 	// GLs (Grenade Launchers)
 	gl_bunker_mult,
@@ -147,6 +148,7 @@ void CreateOtherConVars()
 	
 	char convarName[multOther][] = {	
 		"sm_mult_bunker_nx300",
+		"sm_mult_bunker_artillery",
 		
 		// GLs (Grenade Launchers)
 		"sm_mult_bunker_gl",
@@ -163,6 +165,7 @@ void CreateOtherConVars()
 	
 	char convarDef[multOther][] = { 
 		"85", // nx300 bunker damage
+		"100", // artillery bunker damage
 		// GLs (Grenade Launchers)
 		"120", "110", "125", "115",
 		// Siegers (m95 & x01)
@@ -170,6 +173,7 @@ void CreateOtherConVars()
 	
 	char convarDesc[multOther][] = {
 		"Percentage of normal damage nx300 does to bunker",
+		"Percentage of normal damage artillery does to the bunker",
 		
 		// GLs (Grenade Launchers)
 		"Percentage of normal damage GLs deal to the bunker",
