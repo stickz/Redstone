@@ -1,10 +1,15 @@
 #define WEAPON_NX300_DT -2147481592
+#define WEAPON_BEAM DT 0
 #define WEAPON_EXPLO_DT 64
 #define WEAPON_BULLET_DT 2
+
 #define BLOCK_DAMAGE 0
 
 #define WEAPON_GL_CNAME "grenade_launcher_proj"
 #define WEAPON_RED_CNAME "sticky_grenade_ent"
+
+#define WEAPON_M95_CNAME "weapon_m95" //DT: 64
+#define WEAPON_X01_CNAME "weapon_x01" //DT: 0
 
 // Notice: gFloat arrays must be assigned to a varriable first, other it will crash the server.
 // See Here: https://github.com/alliedmodders/sourcemod/issues/800
@@ -136,6 +141,13 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 	
 	switch (damagetype)
 	{
+		case WEAPON_BEAM DT:
+		{
+			float multiplier = gFloat_Other[siege_ft_turret_mult];
+			damage *= multiplier;
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_EXPLO_DT:
 		{
 			char className[64];
@@ -150,6 +162,12 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 			else if (InflictorIsGL(className))
 			{
 				float multiplier = gFloat_Other[gl_ft_turret_mult];
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflcitorIsM95(className))
+			{
+				float multiplier = gFloat_Other[siege_ft_turret_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -201,6 +219,13 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 	
 	switch (damagetype)
 	{
+		case WEAPON_BEAM DT:
+		{
+			float multiplier = gFloat_Other[siege_transport_mult];
+			damage *= multiplier;
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_EXPLO_DT:
 		{
 			char className[64];
@@ -215,6 +240,12 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 			else if (InflictorIsGL(className))
 			{
 				float multiplier = gFloat_Other[gl_transport_mult];
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflcitorIsM95(className))
+			{
+				float multiplier = gFloat_Other[siege_transport_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -238,6 +269,13 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 	
 	switch (damagetype)
 	{
+		case WEAPON_BEAM DT:
+		{
+			float multiplier = gFloat_Other[siege_assembler_mult];
+			damage *= multiplier;
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_EXPLO_DT:	 
 		{ 
 			char className[64];
@@ -253,6 +291,12 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 			{				
 				float multiplier = gFloat_Other[gl_assembler_mult];
 				damage *= multiplier; 
+				return Plugin_Changed;
+			}
+			else if (InflcitorIsM95(className))
+			{
+				float multiplier = gFloat_Other[siege_assembler_mult];
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 		}
@@ -282,6 +326,13 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 
 	switch (damagetype)
 	{
+		case WEAPON_BEAM DT:
+		{
+			float multiplier = gFloat_Other[siege_bunker_mult];
+			damage *= multiplier;
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_NX300_DT:
 		{ 
 			float multiplier = gFloat_Other[nx300_bunker_mult];
@@ -306,6 +357,12 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
+			else if (InflcitorIsM95(className))
+			{
+				float multiplier = gFloat_Other[siege_bunker_mult];
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
 		}
 		
 		case WEAPON_BULLET_DT:	
@@ -325,6 +382,10 @@ bool InflictorIsRED(const char[] className) {
 
 bool InflictorIsGL(const char[] className) {
 	return StrEqual(className, WEAPON_GL_CNAME, true);
+}
+
+bool InflcitorIsM95(const char[] className) {
+	return StrEqual(className, WEAPON_M95_CNAME, true);
 }
 
 char iClass(int &inflictor)
