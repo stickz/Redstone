@@ -7,10 +7,13 @@
 #include <nd_print>
 #include <nd_maps>
 #include <nd_stype>
+#include <nd_gameme>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_managed_slots/nd_managed_slots.txt"
 #include "updater/standard.sp"
+
+#define ROOKIE_MAX_SLOTS 12
 
 public Plugin myinfo =
 {
@@ -50,8 +53,8 @@ public void OnPluginStart()
 
 	/* Notice: Please launch server with 32 or 33 slots, this plugin will cap slots as required */	
 	g_Cvar[MaxServerSlots] 		= CreateConVar("sm_serverslots_max", "32", "Set Maximum  slots");
-	g_Cvar[HighSkill] 			= CreateConVar("sm_serverslots_hskill", "85", "Set the skill to decrease slots");
-	g_Cvar[LowSkill] 			= CreateConVar("sm_serverslots_lskill", "65", "Set the skill to decrease slots");
+	g_Cvar[HighSkill] 		= CreateConVar("sm_serverslots_hskill", "85", "Set the skill to decrease slots");
+	g_Cvar[LowSkill] 		= CreateConVar("sm_serverslots_lskill", "65", "Set the skill to decrease slots");
 	g_Cvar[MinPlayServerSlots] 	= CreateConVar("sm_serverslots_pmin", "14", "Set min amount of players to decrease slots");
 	g_Cvar[AfkKickSlots]		= CreateConVar("sm_serverslots_afk", "3", "Set amount of afk players to kick from ceiling");
 	
@@ -182,6 +185,9 @@ void setMapPlayerCount(int cap)
 	
 	if (newCap > maxSlots)
 		newCap = maxSlots;
+		
+	if (RookieServerType())
+		newCap = ROOKIE_MAX_SLOTS;
 	
 	g_Integer[maxKickCount] = g_Integer[maxKickCount] > newCap ? g_Integer[maxKickCount] : newCap;
 	g_Integer[mapTargetPlayers] = newCap;	
