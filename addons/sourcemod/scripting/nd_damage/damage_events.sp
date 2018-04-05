@@ -1,7 +1,7 @@
 #define WEAPON_NX300_DT -2147481592
-#define WEAPON_BEAM DT 0
-#define WEAPON_EXPLO_DT 64
+#define WEAPON_BEAM_DT 0
 #define WEAPON_BULLET_DT 2
+#define WEAPON_EXPLO_DT 64
 
 #define BLOCK_DAMAGE 0
 
@@ -141,7 +141,7 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 	
 	switch (damagetype)
 	{
-		case WEAPON_BEAM DT:
+		case WEAPON_BEAM_DT:
 		{
 			float multiplier = gFloat_Other[siege_ft_turret_mult];
 			damage *= multiplier;
@@ -219,7 +219,7 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 	
 	switch (damagetype)
 	{
-		case WEAPON_BEAM DT:
+		case WEAPON_BEAM_DT:
 		{
 			float multiplier = gFloat_Other[siege_transport_mult];
 			damage *= multiplier;
@@ -269,7 +269,7 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 	
 	switch (damagetype)
 	{
-		case WEAPON_BEAM DT:
+		case WEAPON_BEAM_DT:
 		{
 			float multiplier = gFloat_Other[siege_assembler_mult];
 			damage *= multiplier;
@@ -326,7 +326,7 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 
 	switch (damagetype)
 	{
-		case WEAPON_BEAM DT:
+		case WEAPON_BEAM_DT:
 		{
 			float multiplier = gFloat_Other[siege_bunker_mult];
 			damage *= multiplier;
