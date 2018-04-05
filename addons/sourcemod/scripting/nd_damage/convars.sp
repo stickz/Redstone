@@ -148,7 +148,7 @@ void CreateOtherConVars()
 	
 	char convarName[multOther][] = {	
 		"sm_mult_bunker_nx300",
-		"sm_mult_bunker_artillery,
+		"sm_mult_bunker_artillery",
 		
 		// GLs (Grenade Launchers)
 		"sm_mult_bunker_gl",
