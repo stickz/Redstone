@@ -185,7 +185,8 @@ void setMapPlayerCount(int cap)
 	
 	if (newCap > maxSlots)
 		newCap = maxSlots;
-	else if (RookieServerType())
+		
+	if (RookieServerType())
 		newCap = ROOKIE_MAX_SLOTS;
 	
 	g_Integer[maxKickCount] = g_Integer[maxKickCount] > newCap ? g_Integer[maxKickCount] : newCap;
