@@ -7,6 +7,7 @@
 #include <nd_print>
 #include <nd_maps>
 #include <nd_stype>
+#include <nd_gameme>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_managed_slots/nd_managed_slots.txt"
