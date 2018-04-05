@@ -5,11 +5,14 @@
 
 #define BLOCK_DAMAGE 0
 
+/* These constants use damage type 64 */
+#define WEAPON_M95_CNAME "weapon_m95"
 #define WEAPON_GL_CNAME "grenade_launcher_proj"
 #define WEAPON_RED_CNAME "sticky_grenade_ent"
+#define WEAPON_ART_CNAME "struct_artillery_explosion"
 
-#define WEAPON_M95_CNAME "weapon_m95" //DT: 64
-#define WEAPON_X01_CNAME "weapon_x01" //DT: 0
+// This constant uses damage type 0
+#define WEAPON_X01_CNAME "weapon_x01"
 
 // Notice: gFloat arrays must be assigned to a varriable first, other it will crash the server.
 // See Here: https://github.com/alliedmodders/sourcemod/issues/800
@@ -323,7 +326,7 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	
 	if (!IsValidEntity(inflictor))
 		return Plugin_Continue;
-
+		
 	switch (damagetype)
 	{
 		case WEAPON_BEAM_DT:
@@ -363,6 +366,12 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
+			else if (InflictorIsArtillery(className))
+			{
+				float multiplier = gFloat_Other[artillery_bunker_mult];
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
 		}
 		
 		case WEAPON_BULLET_DT:	
@@ -386,6 +395,10 @@ bool InflictorIsGL(const char[] className) {
 
 bool InflcitorIsM95(const char[] className) {
 	return StrEqual(className, WEAPON_M95_CNAME, true);
+}
+
+bool InflictorIsArtillery(const char[] className) {
+	return StrEqual(className, WEAPON_ART_CNAME, true);
 }
 
 char iClass(int &inflictor)
