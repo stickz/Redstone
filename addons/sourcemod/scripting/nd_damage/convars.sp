@@ -35,7 +35,13 @@ enum multOther
 	gl_bunker_mult,
 	gl_assembler_mult,
 	gl_transport_mult,
-	gl_ft_turret_mult
+	gl_ft_turret_mult,
+	
+	// Siegers (m95 & x01)
+	siege_bunker_mult,
+	siege_assembler_mult,
+	siege_transport_mult,
+	siege_ft_turret_mult
 }
 
 /* ConVar and float arrays for the different types */
@@ -146,10 +152,21 @@ void CreateOtherConVars()
 		"sm_mult_bunker_gl",
 		"sm_mult_assembler_gl",
 		"sm_mult_transport_gl",
-		"sm_mult_ft_turret_gl"
+		"sm_mult_ft_turret_gl",
+		
+		// Siegers (m95 & x01)
+		"sm_mult_bunker_siege",
+		"sm_mult_assembler_siege",
+		"sm_mult_transport_siege",
+		"sm_mult_ft_turret_siege"
 	};
 	
-	char convarDef[multOther][] = { "85", "120", "110", "125", "115" };
+	char convarDef[multOther][] = { 
+		"85", // nx300 bunker damage
+		// GLs (Grenade Launchers)
+		"120", "110", "125", "115",
+		// Siegers (m95 & x01)
+		"110", "105", "105", "110"};
 	
 	char convarDesc[multOther][] = {
 		"Percentage of normal damage nx300 does to bunker",
@@ -158,7 +175,13 @@ void CreateOtherConVars()
 		"Percentage of normal damage GLs deal to the bunker",
 		"Percentage of normal damage GLs deal to assemblers",
 		"Percentage of normal damage GLs deal to transport gates",
-		"Percentage of normal damage GLs deal to ft/sonic turrets"
+		"Percentage of normal damage GLs deal to ft/sonic turrets",
+		
+		// Siegers (Grenade Launchers)
+		"Percentage of normal damage Siegers deal to the bunker",
+		"Percentage of normal damage Siegers deal to assemblers",
+		"Percentage of normal damage Siegers deal to transport gates",
+		"Percentage of normal damage Siegers deal to ft/sonic turrets"		
 	};
 	
 	for (int convar = 0; convar < view_as<int>(multOther); convar++) {
