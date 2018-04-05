@@ -326,7 +326,7 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	
 	if (!IsValidEntity(inflictor))
 		return Plugin_Continue;
-		
+
 	switch (damagetype)
 	{
 		case WEAPON_BEAM_DT:
