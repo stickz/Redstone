@@ -6,11 +6,15 @@
 #define WEAPON_GL_CNAME "grenade_launcher_proj"
 #define WEAPON_RED_CNAME "sticky_grenade_ent"
 
+// Notice: gFloat arrays must be assigned to a varriable first, other it will crash the server.
+// See Here: https://github.com/alliedmodders/sourcemod/issues/800
+
 public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
 	if (IsValidEntity(inflictor) && damagetype == WEAPON_BULLET_DT)
 	{
-		damage *= gFloat_Bullet[bullet_supply_station_mult];
+		float multiplier = gFloat_Bullet[bullet_supply_station_mult];
+		damage *= multiplier;
 		return Plugin_Changed;
 	}
 	
@@ -21,7 +25,8 @@ public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor
 {
 	if (IsValidEntity(inflictor) && damagetype == WEAPON_BULLET_DT)
 	{
-		damage *= gFloat_Bullet[bullet_rocket_turret_mult];
+		float multiplier = gFloat_Bullet[bullet_rocket_turret_mult];
+		damage *= multiplier;
 		return Plugin_Changed;
 	}
 	
@@ -32,7 +37,8 @@ public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, fl
 {
 	if (IsValidEntity(inflictor) && damagetype == WEAPON_BULLET_DT)
 	{
-		damage *= gFloat_Bullet[bullet_mg_turret_mult];
+		float multiplier = gFloat_Bullet[bullet_mg_turret_mult];
+		damage *= multiplier;
 		return Plugin_Changed;
 	}
 	
@@ -50,14 +56,16 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 		{		
 			if (InflictorIsRED(iClass(inflictor)))
 			{			
-				damage *= gFloat_Red[red_radar_mult];
+				float multiplier = gFloat_Red[red_radar_mult];
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:
 		{
-			damage *= gFloat_Bullet[bullet_radar_mult];
+			float multiplier = gFloat_Bullet[bullet_radar_mult];
+			damage *= multiplier;
 			return Plugin_Changed;			
 		}		
 	}
@@ -76,14 +84,16 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 		{
 			if (InflictorIsRED(iClass(inflictor)))
 			{
-				damage *= gFloat_Red[red_armoury_mult];
+				float multiplier = gFloat_Red[red_armoury_mult];
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:
 		{
-			damage *= gFloat_Bullet[bullet_armoury_mult];
+			float multiplier = gFloat_Bullet[bullet_armoury_mult];
+			damage *= multiplier;
 			return Plugin_Changed;			
 		}		
 	}
@@ -102,14 +112,16 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 		{
 			if (InflictorIsRED(iClass(inflictor)))
 			{
-				damage *= gFloat_Red[red_power_plant_mult];
+				float multiplier = gFloat_Red[red_power_plant_mult];
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:
 		{
-			damage *= gFloat_Bullet[bullet_power_plant_mult];
+			float multiplier = gFloat_Bullet[bullet_power_plant_mult];
+			damage *= multiplier;
 			return Plugin_Changed;			
 		}		
 	}
@@ -131,19 +143,22 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 			
 			if (InflictorIsRED(className))
 			{
-				damage *= gFloat_Red[red_ft_turret_mult];
+				float multiplier = gFloat_Red[red_ft_turret_mult];
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 			else if (InflictorIsGL(className))
 			{
-				damage *= gFloat_Other[gl_ft_turret_mult];
+				float multiplier = gFloat_Other[gl_ft_turret_mult];
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:
 		{
-			damage *= gFloat_Bullet[bullet_ft_turret_mult];
+			float multiplier = gFloat_Bullet[bullet_ft_turret_mult];
+			damage *= multiplier;
 			return Plugin_Changed;			
 		}		
 	}
@@ -162,14 +177,16 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 		{
 			if (InflictorIsRED(iClass(inflictor)))
 			{
-				damage *= gFloat_Red[red_artillery_mult];
+				float multiplier = gFloat_Red[red_artillery_mult];
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT: 
 		{
-			damage *= gFloat_Bullet[bullet_artillery_mult];
+			float multiplier = gFloat_Bullet[bullet_artillery_mult];
+			damage *= multiplier;
 			return Plugin_Changed;			
 		}		
 	}
@@ -191,19 +208,22 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 			
 			if (InflictorIsRED(className))
 			{
-				damage *= gFloat_Red[red_transport_mult];
+				float multiplier = gFloat_Red[red_transport_mult];
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 			else if (InflictorIsGL(className))
 			{
-				damage *= gFloat_Other[gl_transport_mult];
+				float multiplier = gFloat_Other[gl_transport_mult];
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT: 
 		{
-			damage *= gFloat_Bullet[bullet_transport_mult];
+			float multiplier = gFloat_Bullet[bullet_transport_mult];
+			damage *= multiplier;
 			return Plugin_Changed;
 		}		
 	}
@@ -225,19 +245,22 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 			
 			if (InflictorIsRED(className))
 			{
-				damage *= gFloat_Red[red_assembler_mult]; 
+				float multiplier = gFloat_Red[red_assembler_mult];
+				damage *= multiplier; 
 				return Plugin_Changed;
 			}
 			else if (InflictorIsGL(className))
 			{				
-				damage *= gFloat_Other[gl_assembler_mult]; 
+				float multiplier = gFloat_Other[gl_assembler_mult];
+				damage *= multiplier; 
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:
 		{
-			damage *= gFloat_Bullet[bullet_assembler_mult]; 
+			float multiplier = gFloat_Bullet[bullet_assembler_mult];
+			damage *= multiplier; 
 			return Plugin_Changed;
 		}		
 	}
@@ -261,7 +284,8 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	{
 		case WEAPON_NX300_DT:
 		{ 
-			damage *= gFloat_Other[nx300_bunker_mult]; 	
+			float multiplier = gFloat_Other[nx300_bunker_mult];
+			damage *= multiplier;
 			return Plugin_Changed; 
 		}
 		
@@ -272,19 +296,22 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 			
 			if (InflictorIsRED(className))
 			{
-				damage *= gFloat_Red[red_bunker_mult];
+				float multiplier = gFloat_Red[red_bunker_mult]; 
+				damage *= multiplier;
 				return Plugin_Changed;
 			}			
 			else if (InflictorIsGL(className))
 			{
-				damage *= gFloat_Other[gl_bunker_mult];
+				float multiplier = gFloat_Other[gl_bunker_mult];
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 		}
 		
 		case WEAPON_BULLET_DT:	
 		{ 
-			damage *= gFloat_Bullet[bullet_bunker_mult];	
+			float multiplier = gFloat_Bullet[bullet_bunker_mult];
+			damage *= multiplier;
 			return Plugin_Changed;
 		}
 	}
