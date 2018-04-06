@@ -103,6 +103,7 @@ void BalanceTeams()
 		}		
 	}
 	
+	delete players;
 	FireTeamsShuffledForward();
 }
 

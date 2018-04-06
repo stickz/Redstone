@@ -56,7 +56,6 @@ void WriteSteamId(char[] steamid)
 void RemoveSteamId(char[] steamid)
 {
 	ArrayList steamAuths = new ArrayList(32);
-	steamAuths.Clear();
 	
 	/* Build the file path based on the array index */		
 	char path[PLATFORM_MAX_PATH];
@@ -90,5 +89,6 @@ void RemoveSteamId(char[] steamid)
 		file.WriteLine(toWrite);		
 	}
 	
-	file.Close();	
+	file.Close();
+	delete steamAuths;
 }
