@@ -58,6 +58,12 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
+public void OnClientDisconnect_Post(int client)
+{
+	TeamCommander[0] = TeamCommander[0] == client ? -1 : TeamCommander[0];
+	TeamCommander[1] = TeamCommander[1] == client ? -1 : TeamCommander[1];	
+}
+
 public void OnMapEnd() {
 	ResetVariableDefaults();
 }
