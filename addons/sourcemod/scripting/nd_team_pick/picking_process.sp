@@ -174,7 +174,7 @@ public void Menu_PlayerPick(int client)
 	// Instantly finish things off to avoid un-needed hassle
 	if (pCount == TEAM_PICKING_COMPLETE)
 	{
-		FinishPicking(true);
+		FinishPicking();
 		CloseHandle(PickingMenu);		
 		return;
 	}
