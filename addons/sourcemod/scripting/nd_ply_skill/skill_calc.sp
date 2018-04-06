@@ -93,6 +93,6 @@ void UpdateSkillMedian()
 		lastMedian = players.Get(left) + players.Get(right) / 2.0;			
 	}
 	
-	// Clear arraylist when complete, to curve memory leaks
+	// Delete ArrayList when complete, to curve memory leaks
 	delete players;
 }
