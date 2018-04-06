@@ -37,6 +37,6 @@ enum ND_Structures {
 #define STRUCT_BARRIER "struct_barrier"
 #define STRUCT_WALL "struct_wall"
 
-stock bool ND_CNameIsStructure(const char[] classname) {
-	return StrEqual(classname, STRUCT_SUPPLY, true);
+stock bool ND_CNameIsStructure(const char[] classname, const char[] structure) {
+	return StrEqual(classname, structure, true);
 }
