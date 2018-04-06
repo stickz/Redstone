@@ -13,8 +13,6 @@
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_managed_slots/nd_managed_slots.txt"
 #include "updater/standard.sp"
 
-#define ROOKIE_MAX_SLOTS 12
-
 public Plugin myinfo =
 {
 	name = "[ND] Dynamic Sever Slots",
@@ -186,9 +184,6 @@ void setMapPlayerCount(int cap)
 	if (newCap > maxSlots)
 		newCap = maxSlots;
 		
-	if (RookieServerType())
-		newCap = ROOKIE_MAX_SLOTS;
-	
 	g_Integer[maxKickCount] = g_Integer[maxKickCount] > newCap ? g_Integer[maxKickCount] : newCap;
 	g_Integer[mapTargetPlayers] = newCap;	
 	ServerCommand("sv_visiblemaxplayers %d", newCap);
