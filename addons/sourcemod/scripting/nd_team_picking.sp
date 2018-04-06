@@ -83,7 +83,7 @@ public Action Command_JoinTeam(int client, char[] command, int argc)
 }
 
 void InitiateRoundEnd() {
-	g_bPickedThisMap = true;
+	g_bPickedThisMap = false;
 }
 
 bool PlayerIsPickable(int client) {
