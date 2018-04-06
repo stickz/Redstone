@@ -24,6 +24,8 @@
 //simply calling getBotModulusQuota() will return the integer
 #include "nd_bot_feat/modulus_quota.sp"
 
+bool disableBots = false;
+
 public Plugin myinfo =
 {
 	name = "[ND] Bot Features",
@@ -41,12 +43,14 @@ public void OnPluginStart()
 {
 	CreatePluginConvars(); //convars.sp
 	AddCommandListener(PlayerJoinTeam, "jointeam");
+	RegAdminCmd("sm_DisableBots", CMD_DisableBots, ADMFLAG_ROOT, "dummy");
 
 	AutoExecConfig(true, "nd_bot_features");	
 	AddUpdaterLibrary(); //auto-updater
 }
 
 public void OnMapEnd() {
+	disableBots = false;
 	SignalMapChange();	
 }
 
@@ -58,11 +62,22 @@ public void TB_OnTeamPlacement(int client, int team) {
 	CheckBotCounts(client);
 }
 
-void CheckBotCounts(int client)
+public Action CMD_DisableBots(int client, int args)
 {
-	if (IsValidClient(client)) {
-		CreateTimer(0.1, TIMER_CC, _, TIMER_FLAG_NO_MAPCHANGE);
+	disableBots = !disableBots;
+	
+	if (disableBots)
+	{
+		PrintToChat(client, "Server bots disabled until round end.");
+		SignalMapChange(); // Disable booster and set bot count to 0
 	}
+	else
+	{
+		PrintToChat(client, "Server bots have been re-enabled.");
+		InitializeServerBots(); // Add the bots back in before the next update
+	}
+	
+	return Plugin_Handled;
 }
 
 public Action TIMER_CC(Handle timer)
@@ -72,12 +87,20 @@ public Action TIMER_CC(Handle timer)
 }
 
 public void ND_OnRoundEnded() {
+	disableBots = false;
 	SignalMapChange();
+}
+
+void CheckBotCounts(int client)
+{
+	if (IsValidClient(client)) {
+		CreateTimer(0.1, TIMER_CC, _, TIMER_FLAG_NO_MAPCHANGE);
+	}
 }
 
 void checkCount()
 {
-	if (ND_RoundStarted())
+	if (ND_RoundStarted() && !disableBots)
 	{
 		int quota = 0;		
 		
@@ -123,7 +146,11 @@ void checkCount()
 	}
 }
 
-public void ND_OnRoundStarted()
+public void ND_OnRoundStarted() {
+	InitializeServerBots();
+}
+
+void InitializeServerBots()
 {
 	int quota = 0;	
 	
