@@ -89,8 +89,8 @@ public void OnEmpGrenadeSpawned(int entity)
 		/* Setup the beam and send it to the array list of players */
 		Trail_SendEffect(players, entity, Colour_Gray);
 		
-		// Clear arraylist when complete, to curve memory leaks
-		players.Clear();
+		// Must delete arraylist when complete, to curve memory leaks
+		delete players;
 	}
 }
 
