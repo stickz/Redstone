@@ -17,6 +17,14 @@
 // Notice: gFloat arrays must be assigned to a varriable first, other it will crash the server.
 // See Here: https://github.com/alliedmodders/sourcemod/issues/800
 
+// To Do: Do something with these structures later
+public Action ND_OnBarrierDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) {
+	return Plugin_Continue;
+}
+public Action ND_OnWallDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) {
+	return Plugin_Continue;
+}
+
 public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
 	if (IsValidEntity(inflictor) && damagetype == WEAPON_BULLET_DT)

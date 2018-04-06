@@ -42,37 +42,43 @@ public void ND_OnStructureCreated(int entity, const char[] classname)
 {
 	if (ND_RoundStarted())
 	{		
-		if (StrEqual(classname, STRUCT_ASSEMBLER, true))
+		if (StrEqual(classname, STRUCT_ASSEMBLER))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnAssemblerDamaged);
 		
-		else if (StrEqual(classname, STRUCT_TRANSPORT, true))
+		else if (StrEqual(classname, STRUCT_TRANSPORT))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnTransportDamaged);
 
-		else if (StrEqual(classname, STRUCT_ARTILLERY, true))
+		else if (StrEqual(classname, STRUCT_ARTILLERY))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnArtilleryDamaged);
 		
-		else if (StrEqual(classname, STRUCT_SONIC_TURRET, true) ||
-				 StrEqual(classname, STRUCT_FT_TURRET, true))
+		else if (StrEqual(classname, STRUCT_SONIC_TURRET) ||
+				 StrEqual(classname, STRUCT_FT_TURRET))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnFlamerTurretDamaged);
 		
-		else if (StrEqual(classname, STRUCT_POWER_STATION, true))
+		else if (StrEqual(classname, STRUCT_POWER_STATION))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnPowerPlantDamaged);
 		
-		else if (StrEqual(classname, STRUCT_ARMOURY, true))
+		else if (StrEqual(classname, STRUCT_ARMOURY))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnArmouryDamaged);
 		
-		else if (StrEqual(classname, STRUCT_RADAR, true))
+		else if (StrEqual(classname, STRUCT_RADAR))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnRadarDamaged);
 		
-		else if (StrEqual(classname, STRUCT_MG_TURRET, true))
+		else if (StrEqual(classname, STRUCT_MG_TURRET))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnMGTurretDamaged);
 		
-		else if (StrEqual(classname, STRUCT_ROCKET_TURRET, true))
+		else if (StrEqual(classname, STRUCT_ROCKET_TURRET))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnRocketTurretDamaged);
 		
-		else if (StrEqual(classname, STRUCT_SUPPLY, true))
+		else if (StrEqual(classname, STRUCT_SUPPLY))
 			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnSupplyStationDamaged);
-	}	
+			
+		else if (StrEqual(classname, STRUCT_WALL))
+			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnWallDamaged);
+			
+		else if (StrEqual(classname, STRUCT_BARRIER))
+			SDKHook(entity, SDKHook_OnTakeDamage, ND_OnBarrierDamaged);
+	}
 }
 
 public void ND_OnRoundStarted()
@@ -104,6 +110,8 @@ void HookEntitiesDamaged(bool lateLoad = false)
 		SDK_HookEntityDamaged(STRUCT_MG_TURRET, ND_OnMGTurretDamaged);
 		SDK_HookEntityDamaged(STRUCT_ROCKET_TURRET, ND_OnRocketTurretDamaged);
 		SDK_HookEntityDamaged(STRUCT_SUPPLY, ND_OnSupplyStationDamaged);
+		SDK_HookEntityDamaged(STRUCT_WALL, ND_OnWallDamaged);
+		SDK_HookEntityDamaged(STRUCT_BARRIER, ND_OnBarrierDamaged);
 	}
 }
 
@@ -121,6 +129,8 @@ void UnHookEntitiesDamaged()
 	SDK_UnHookEntityDamaged(STRUCT_MG_TURRET, ND_OnMGTurretDamaged);
 	SDK_UnHookEntityDamaged(STRUCT_ROCKET_TURRET, ND_OnRocketTurretDamaged);
 	SDK_UnHookEntityDamaged(STRUCT_SUPPLY, ND_OnSupplyStationDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_WALL, ND_OnWallDamaged);
+	SDK_UnHookEntityDamaged(STRUCT_BARRIER, ND_OnBarrierDamaged);
 }
 
 void SDK_HookEntityDamaged(const char[] classname, SDKHookCB callback)

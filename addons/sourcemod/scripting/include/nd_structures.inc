@@ -34,3 +34,5 @@ enum ND_Structures {
 #define STRUCT_MG_TURRET "struct_machinegun_turret"
 #define STRUCT_ROCKET_TURRET "struct_rocket_turret"
 #define STRUCT_SUPPLY "struct_support_station"
+#define STRUCT_BARRIER "struct_barrier"
+#define STRUCT_WALL "struct_wall"
