@@ -71,10 +71,3 @@ void CreatePluginConvars()
 	
 	AutoExecConfig_EC_File();
 }
-
-void AutoExecConfig_EC_File()
-{
-	// Execute and clean the cfg file
-	AutoExecConfig_ExecuteFile();	
-	AutoExecConfig_CleanFile();
-}
