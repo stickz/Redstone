@@ -5,6 +5,8 @@
 #include <nd_stype>
 #include <nd_print>
 
+#include <autoexecconfig>
+
 #define INVALID_USERID 0
 
 public Plugin myinfo =
@@ -59,8 +61,20 @@ public void OnClientConnected(int client) {
 
 void CreatePluginConvars()
 {
-	gCheck_BunkerDistance	= CreateConVar("sm_gcheck_bdistance", "1500", "Distance away from bunker spawn must be to use feature");
-	gCheck_SpawnDelay 	= CreateConVar("sm_gcheck_sdelay", "8", "Delay after spawning to perform bot ground check");
-	mBot_MaxDistance	= CreateConVar("sm_mbot_bdistance", "300", "Distance player must be away from bot to pull them");
-	mBot_RetryDelay		= CreateConVar("sm_mbot_bdistance", "8", "Delay player must wait before performing pulls");
+	AutoExecConfig_SetCreateFile(true);
+	AutoExecConfig_SetFile("nd_pull_bot");
+	
+	gCheck_BunkerDistance	= AutoExecConfig_CreateConVar("sm_gcheck_bdistance", "1500", "Distance away from bunker spawn must be to use feature");
+	gCheck_SpawnDelay 	= AutoExecConfig_CreateConVar("sm_gcheck_sdelay", "8", "Delay after spawning to perform bot ground check");
+	mBot_MaxDistance	= AutoExecConfig_CreateConVar("sm_mbot_bdistance", "300", "Distance player must be away from bot to pull them");
+	mBot_RetryDelay		= AutoExecConfig_CreateConVar("sm_mbot_pdelay", "8", "Delay player must wait before performing pulls");
+	
+	AutoExecConfig_EC_File();
+}
+
+void AutoExecConfig_EC_File()
+{
+	// Execute and clean the cfg file
+	AutoExecConfig_ExecuteFile();	
+	AutoExecConfig_CleanFile();
 }
