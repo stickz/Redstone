@@ -71,7 +71,7 @@ void UpdateSkillMedian()
 	if (count == 0)
 		return;
 	
-	ArrayList players = new ArrayList(32);
+	ArrayList players = new ArrayList();
 	
 	RED_LOOP_CLIENTS(client) {
 		players.Push(GetSkillLevel(client));
