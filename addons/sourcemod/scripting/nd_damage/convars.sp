@@ -195,13 +195,6 @@ void CreateOtherConVars()
 	AutoExecConfig_EC_File();	
 }
 
-void AutoExecConfig_EC_File()
-{
-	// Execute and clean the cfg file
-	AutoExecConfig_ExecuteFile();	
-	AutoExecConfig_CleanFile();
-}
-
 /* Manage when ConVars change mid-game */
 void UpdateConVarCache()
 {
