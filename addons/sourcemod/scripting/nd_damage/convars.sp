@@ -169,7 +169,7 @@ void CreateOtherConVars()
 		// GLs (Grenade Launchers)
 		"120", "110", "125", "115",
 		// Siegers (m95 & x01)
-		"110", "105", "105", "110"};
+		"110", "105", "110", "105"};
 	
 	char convarDesc[multOther][] = {
 		"Percentage of normal damage nx300 does to bunker",
