@@ -80,7 +80,13 @@ static int g_bCreateDirectoryMode = FPERM_U_READ|FPERM_U_WRITE|FPERM_U_EXEC|FPER
 static int g_iLastFindResult;
 static int g_iLastAppendResult;
 
-
+// Custom wrapper for Redstone GitHub
+stock void AutoExecConfig_EC_File()
+{
+	// Execute and clean the cfg file
+	AutoExecConfig_ExecuteFile();	
+	AutoExecConfig_CleanFile();
+}
 
 
 /**
