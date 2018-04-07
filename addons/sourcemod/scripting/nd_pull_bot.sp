@@ -37,7 +37,7 @@ public void OnPluginStart()
 	RegPullBotCommand(); // for move_bot.sp
 	
 	// Only enable ground checks on the alpha server for now
-	if (ND_GetServerTypeEx(ND_SType_Stable) == SERVER_TYPE_ALPHA)
+	if (ND_GetServerTypeEx(ND_SType_Stable) >= SERVER_TYPE_BETA)
 		RegBotGroundCheck(); // for ground_check.sp
 	
 	LoadTranslations("nd_pull_bot.phrases"); // Translated messages	
