@@ -149,9 +149,6 @@ void PrintPickingMessages()
 
 void SetVarriableDefaults()
 {
-	last_choice[CONSORT_aIDX] = 0;
-	last_choice[EMPIRE_aIDX] = 0;
-	
 	team_captain[CONSORT_aIDX] = -1;
 	team_captain[EMPIRE_aIDX] = -1;
 	

@@ -17,7 +17,6 @@ public Plugin myinfo =
 #define CONSORT_aIDX 0
 #define EMPIRE_aIDX 1
 
-int last_choice[2];
 int team_captain[2];
 
 bool g_bEnabled = false;

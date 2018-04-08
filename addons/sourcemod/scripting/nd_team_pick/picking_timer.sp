@@ -1,7 +1,6 @@
 #define INVALID_USERID 0
 #define NO_PLAYERS_LEFT 0
 bool lastTimerEnded = false;
-bool noChoiceFound = false;
 int PickTimeRemaining = 0;
 Handle hPickTimerHandler = INVALID_HANDLE;
 
@@ -110,12 +109,8 @@ void AutoSelectPlayer(int picker)
 		// Print the auto assignment to server chat
 		PrintAutoSelected(playerToSelect, team);
 	}
-	else 
-	{
-		noChoiceFound = true;
-		if (DebugTeamPicking)
-			ConsoleToAdmins( "AutoSelectPlayer(): Didn't find anybody", "b");
-	}
+	else if (DebugTeamPicking) 
+		ConsoleToAdmins( "AutoSelectPlayer(): Didn't find anybody", "b");
 }
 
 void PrintAutoSelected(int player, int team)
