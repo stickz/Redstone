@@ -61,7 +61,7 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			}
 			
 			// If picking is not done, display menu to opposite team incase a skip was sent
-			else if (!PickingComplete())
+			else
 			{
 				SetPickingTeam(); // Decide which team gets the next pick
 				Menu_PlayerPick(next_comm);
