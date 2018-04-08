@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name = "[ND] Commander Ban",
 	author = "Stickz",
 	description = "Allow admins to ban people from commanding",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 }
 
