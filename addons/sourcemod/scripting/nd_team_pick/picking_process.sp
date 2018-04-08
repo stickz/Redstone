@@ -24,10 +24,8 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			GetMenuItem(menu, param2, selectedItem, sizeof(selectedItem));	
 			
 			int selectedPlayer = StringToInt(selectedItem);
-			int client = GetClientOfUserId(selectedPlayer);				
-		
-			last_choice[cur_team_choosing - 2] = selectedPlayer;
-			
+			int client = GetClientOfUserId(selectedPlayer);			
+
 			if (DebugTeamPicking)
 			{
 				char message[32];
@@ -48,17 +46,13 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 
 					// Set the player's team to the team captain's team.
 					ChangeClientTeam(client, cur_team_choosing);
-					
-					// Send the team picking menu to the next captain
-					Menu_PlayerPick(next_comm);
 				}
 				
 				// If the picking is not done, continue displaying the menu to pick players.
-				else if (!PickingComplete())
-					Menu_PlayerPick(next_comm);
+				Menu_PlayerPick(next_comm);
 			}
 			
-			// If selected item was a player, refresh to pick anther option.
+			// If selected item wasn't a player, refresh to pick anther option.
 			else if (selectedPlayer != NO_PLAYER_SELECTED)
 			{
 				PrintMessage(client, "Pick Again");
@@ -81,15 +75,10 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 				ConsoleToAdmins("Handle_PickPlayerMenu(): MenuAction_Cancel", "b");
 			
 			// Switch to the other team and set their last choice to canceled
-			SetPickingTeam();
-			//SwitchPickingTeam();			
-			
-			if (!lastTimerEnded || noChoiceFound)
-				last_choice[cur_team_choosing - 2] = NO_PLAYER_SELECTED;
+			SetPickingTeam(); //SwitchPickingTeam();
 
 			// If the picking is not done, continue displaying the menu to pick players.
-			if (!PickingComplete())
-				CreateTimer(3.0, TIMER_DelayNextPick, _, TIMER_FLAG_NO_MAPCHANGE);
+			CreateTimer(3.0, TIMER_DelayNextPick, _, TIMER_FLAG_NO_MAPCHANGE);
 		}
 	}
 
@@ -251,17 +240,6 @@ void PrintPickOrderMessage(char[] phrase, int team)
 	}	
 }
 
-bool PickingComplete()
-{
-	if (	last_choice[CONSORT_aIDX] == NO_PLAYER_SELECTED && 	
-		last_choice[EMPIRE_aIDX] == NO_PLAYER_SELECTED)
-	{
-		FinishPicking();			
-		return true;
-	}
-	
-	return false;
-}
 void FinishPicking(bool forced = false)
 {
 	g_bEnabled = false;
