@@ -173,7 +173,9 @@ public void Menu_PlayerPick(int client)
 
 	// Add the menu item skip and display the menu to the team captain
 	AddMenuItem(PickingMenu, "-1", "End/Skip");
-	DisplayMenu(PickingMenu, client, GetPickingTimeLimit());
+	
+	// Close menu before auto-assignment to prevent double picking
+	DisplayMenu(PickingMenu, client, GetPickingTimeLimit()-1);
 	
 	// Reset the team picking timer for the next commander
 	// Let the timer know if it's the first two picks
