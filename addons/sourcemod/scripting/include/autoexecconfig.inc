@@ -87,6 +87,11 @@ stock void AutoExecConfig_EC_File()
 	AutoExecConfig_ExecuteFile();	
 	AutoExecConfig_CleanFile();
 }
+stock void AutoExecConfig_Setup(char[] file, bool create = true)
+{
+	AutoExecConfig_SetCreateFile(true);
+	AutoExecConfig_SetFile(file);
+}
 
 
 /**
