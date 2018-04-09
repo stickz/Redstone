@@ -3,8 +3,9 @@
 #include <nd_classes>
 #include <nd_rounds>
 #include <nd_stocks>
-#include <nd_research_eng>
 #include <nd_print>
+#include <nd_research_eng>
+#include <autoexecconfig>
 
 // Bug: "m_flLaggedMovementValue" is reset if a player change class fails
 // Continuously leaving the pre-hook think running doesn't change anything.
@@ -57,31 +58,7 @@ bool FirstBBQSpawn[MAXPLAYERS+1] = {false, ...};
 
 public void OnPluginStart()
 {
-	// Don't hook convar change for now. It disables the players movement speed. This feature is optional.
-	
-	AssassinSpeedConVar = CreateConVar("sm_speed_assassin", "1.06", "Sets speed of stealth assassin class");
-	//AssassinSpeedConVar.AddChangeHook(OnConvarChanged);
-	
-	BBQSpeedConVar = CreateConVar("sm_speed_bbqkit", "1.06", "Sets speed of bbq kit class");
-	//BBQSpeedConVar.AddChangeHook(OnConvarChanged);
-	
-	StealthIBConVars[1] = CreateConVar("sm_speed_ib1_stealth", "1.02", "Sets ib1 speed of stealth class");
-	StealthIBConVars[2] = CreateConVar("sm_speed_ib2_stealth", "1.04", "Sets ib2 speed of stealth class");
-	StealthIBConVars[3] = CreateConVar("sm_speed_ib3_stealth", "1.06", "Sets ib3 speed of stealth class");
-	
-	ExoIBConVars[1] = CreateConVar("sm_speed_ib1_exo", "1.01", "Sets ib1 speed of exo class");
-	ExoIBConVars[2] = CreateConVar("sm_speed_ib2_exo", "1.02", "Sets ib2 speed of exo class");
-	ExoIBConVars[3] = CreateConVar("sm_speed_ib3_exo", "1.03", "Sets ib3 speed of exo class");
-	
-	BBQIBConVars[1] = CreateConVar("sm_speed_ib1_bbq", "1.01", "Sets ib1 speed of bbq class");
-	BBQIBConVars[2] = CreateConVar("sm_speed_ib2_bbq", "1.02", "Sets ib2 speed of bbq class");
-	BBQIBConVars[3] = CreateConVar("sm_speed_ib3_bbq", "1.03", "Sets ib3 speed of bbq class");
-	
-	AutoExecConfig(true, "nd_player_speed"); // Create configuration file for convars
-	
-	/*for (int i = 1; i < IBLEVELS; i++) {
-		InfantryBoostConVars[i].AddChangeHook(OnConvarChanged);
-	}*/
+	CreatePluginConVars();
 	
 	HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_PostNoCopy);
 	HookEvent("player_death", OnPlayerDeath, EventHookMode_PostNoCopy);
@@ -89,6 +66,28 @@ public void OnPluginStart()
 	
 	LoadTranslations("nd_player_speed.phrases");		
 	AddUpdaterLibrary(); //auto-updater
+}
+
+void CreatePluginConVars()
+{	
+	AutoExecConfig_Setup("nd_player_speed");
+	
+	AssassinSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_assassin", "1.06", "Sets speed of stealth assassin class");	
+	BBQSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_bbqkit", "1.06", "Sets speed of bbq kit class");
+	
+	StealthIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_stealth", "1.02", "Sets ib1 speed of stealth class");
+	StealthIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_stealth", "1.04", "Sets ib2 speed of stealth class");
+	StealthIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_stealth", "1.06", "Sets ib3 speed of stealth class");
+	
+	ExoIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_exo", "1.01", "Sets ib1 speed of exo class");
+	ExoIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_exo", "1.02", "Sets ib2 speed of exo class");
+	ExoIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_exo", "1.03", "Sets ib3 speed of exo class");
+	
+	BBQIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_bbq", "1.01", "Sets ib1 speed of bbq class");
+	BBQIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_bbq", "1.02", "Sets ib2 speed of bbq class");
+	BBQIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_bbq", "1.03", "Sets ib3 speed of bbq class");
+	
+	AutoExecConfig_EC_File();
 }
 
 /* Functions that restore varriables to default */
