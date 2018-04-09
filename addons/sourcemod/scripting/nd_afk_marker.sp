@@ -101,10 +101,8 @@ void ToogleAfkStatus(int client, int target)
 	GetClientName(target, pName, sizeof(pName));
 	
 	// Print the target player name and status change to admin
-	if (IsMarkedAfk[target])	
-		PrintToChat(client, "[SM] %s has been marked as AFK.", pName);
-	else
-		PrintToChat(client, "[SM] %s has been removed as AFK.", pName);	
+	PrintToChat(client, "[SM] %s has been %s as AFK.",
+		pName, IsMarkedAfk[target] ? "marked" : "removed");	
 }
 
 /* Naive ND_IsPlayerMarkedAfk() boolean */
