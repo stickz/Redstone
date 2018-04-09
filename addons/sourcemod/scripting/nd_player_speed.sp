@@ -69,9 +69,8 @@ public void OnPluginStart()
 }
 
 void CreatePluginConVars()
-{
-	AutoExecConfig_SetCreateFile(true);
-	AutoExecConfig_SetFile("nd_player_speed");
+{	
+	AutoExecConfig_Setup("nd_player_speed");
 	
 	AssassinSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_assassin", "1.06", "Sets speed of stealth assassin class");	
 	BBQSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_bbqkit", "1.06", "Sets speed of bbq kit class");
