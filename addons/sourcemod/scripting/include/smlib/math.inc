@@ -19,11 +19,11 @@ enum VecAngle
 	ANG_GAMMA
 }
 
-stock int RoundToNearestMultiple(int value, int mult) {
+stock int RoundToMult(int value, int mult) {
 	return (value + mult -1) / mult * mult;
 }
 
-stock float RoundToNearestMultipleEx(int value, int mult) {
+stock float RoundToMultEx(int value, int mult) {
 	return (value + mult -1) / mult * mult;
 }
 

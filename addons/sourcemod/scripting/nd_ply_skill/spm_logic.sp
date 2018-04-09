@@ -31,7 +31,7 @@ void startSPMTimer() {
 void UpdateSPM()
 {
 	int clientScore;
-	int spmAverage[2];
+	int	spmAverage[2];
 	int cTeamM2;
 	float SPM;
 	float cSkill;

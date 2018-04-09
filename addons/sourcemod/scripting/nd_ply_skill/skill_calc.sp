@@ -4,13 +4,27 @@ float GetSkillLevel(int client)
 	int clientLevel = getClientLevel(client);
 	int skillFloor = ND_GetSkillFloor(client);
 	
-	// If the gameme player skill is found...
-	// If the player is under-performing, set their skill to the average		
-	// Otherwise, return the max of the clientLevel, gameMeSkill or Skill Floor
+	/* Try to use the gameme skill value first */
 	float gameMeSkill = GameME_PlayerSkill[client];
 	if (gameMeSkill > -1)
-		return 	PlayerUnderPerforming(client, gameMeSkill) ? lastAverage : 
-			Math_Max(Math_Max(gameMeSkill, clientLevel), skillFloor);		
+	{
+		/* If the player is under-performing, lower their skill */
+		if (g_isWeakVeteran[client] && gameMeSkill > lastAverage)
+			gameMeSkill = lastAverage;
+		else
+		{
+			/* Enforce of min skill of clientLevel * 0.8 */
+			float minSkill = clientLevel * 0.8;
+			if (gameMeSkill < minSkill)
+				gameMeSkill = minSkill;
+			
+			/* Or Enforce a min skill of the set floor */
+			else if (gameMeSkill < skillFloor)
+				gameMeSkill = float(skillFloor);
+		}
+			
+		return gameMeSkill;			
+	}
 	
 	/* Then check if a client has a skill floor */
 	if (skillFloor != -1)
@@ -23,11 +37,10 @@ float GetSkillLevel(int client)
 		if (clientLevel < cachedAverage)
 			return cachedAverage;	
 	}
-
+				
 	if (EnableSkillPrediction())
-		return PredictedSkill(clientLevel);
-		
-	// Return a min skill multiple or the client level (whichever is greater)
+		return PredictedSkill(clientLevel);		
+			
 	return MinSkillValue(clientLevel, RookieClassify() ? 10 : 20);
 }
 
@@ -37,11 +50,20 @@ float GetCommanderSkill(int client)
 	int clientLevel = getClientLevel(client);
 	int skillFloor = ND_GetSkillFloor(client);
 	
-	// If the gameme commander skill is found... 
-	// Return the max of the clientLevel, GameMeCommSkill or Skill Floor
+	/* Try to use the gameme skill value first */
 	float gameMeComSkill = GameME_CommanderSkill[client];
 	if (gameMeComSkill > -1)
-		return Math_Max(Math_Max(gameMeComSkill, clientLevel), skillFloor);
+	{
+		/* Enforce of min skill of clientLevel */
+		if (gameMeComSkill < clientLevel)
+			gameMeComSkill = float(clientLevel);
+			
+		/* Or Enforce a min skill of the set floor */
+		else if (gameMeComSkill < skillFloor)
+			gameMeComSkill = float(skillFloor);
+		
+		return gameMeComSkill;
+	}
 
 	// If the client has a skill floor then return that otherwise...
 	// Return a min skill multiple or the client level (whichever is greater)
@@ -71,7 +93,7 @@ void UpdateSkillMedian()
 	if (count == 0)
 		return;
 	
-	ArrayList players = new ArrayList();
+	ArrayList players = new ArrayList();	
 	
 	RED_LOOP_CLIENTS(client) {
 		players.Push(GetSkillLevel(client));
@@ -93,6 +115,5 @@ void UpdateSkillMedian()
 		lastMedian = players.Get(left) + players.Get(right) / 2.0;			
 	}
 	
-	// Delete ArrayList when complete, to curve memory leaks
-	delete players;
+	delete players; // must delete to stop memory leaks
 }

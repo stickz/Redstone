@@ -11,12 +11,12 @@ bool RookieClassify() {
 	return lastAverage < SERVER_IS_ROOKIE;
 }
 
-bool PlayerUnderPerforming(int client, float gameMeSkill) {
-	return g_isWeakVeteran[client] && gameMeSkill > lastAverage;
-}
-
-float MinSkillValue(int clientLevel, int endLevel = 20, int multiple = 5) {
-	return clientLevel < endLevel ? RoundToNearestMultipleEx(clientLevel, multiple) : float(clientLevel);
+float MinSkillValue(int clientLevel, int endLevel = 20, int multiple = 5) 
+{
+	if (clientLevel < endLevel)
+		return float(RoundToMult(clientLevel, multiple));
+	
+	return float(clientLevel);
 }
 
 float PredictedSkill(int clientLevel)
@@ -25,7 +25,12 @@ float PredictedSkill(int clientLevel)
 	 * int players are worth 4 average players
 	 * Semi-int players are worth 3 average players
 	 * Otherwise, use the client level for regular clients.
-	 */
+	 */	
+	
 	float min = lastAverage / 4.25;
-	return clientLevel < min ? min : Math_Max(clientLevel, lastAverage / 3.0);
+	float max = lastAverage / 3.0;
+						
+	return 	clientLevel < min ? min : 
+			clientLevel < max ? max : 
+			float(clientLevel);
 }

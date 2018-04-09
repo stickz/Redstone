@@ -55,11 +55,16 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone"
 };
 
+/* Auto-Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_player_skill/nd_player_skill.txt"
+#include "updater/standard.sp"
+
 public void OnPluginStart()
 {
 	CreatePluginConvars();
 	RegisterCommands();
 	
+	AddUpdaterLibrary(); //auto-updater
 	AutoExecConfig(true, "nd_final_skill");
 	
 	if (ND_MapStarted())
