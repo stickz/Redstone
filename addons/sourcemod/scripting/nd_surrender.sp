@@ -98,8 +98,10 @@ public void ND_OnRoundStarted()
 	}
 }
 
-public void ND_OnRoundEnded() {
-	if (!g_Bool[enableSurrender] && SurrenderDelayTimer != INVALID_HANDLE)
+public void ND_OnRoundEnded() 
+{
+	if (!g_Bool[enableSurrender] 	&& SurrenderDelayTimer != INVALID_HANDLE 
+					&& IsValidHandle(SurrenderDelayTimer))
 		CloseHandle(SurrenderDelayTimer);
 }
 
