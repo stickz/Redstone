@@ -76,6 +76,8 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 {
 	DelayRoundRestart();
 	
+	roundEnded = false;
+	
 	roundStarted = true;
 	roundStartedThisMap = true;
 
