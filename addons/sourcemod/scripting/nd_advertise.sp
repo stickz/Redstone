@@ -23,6 +23,7 @@ Handle cookie_adverts = INVALID_HANDLE;
 
 public void OnPluginStart()
 {
+	LoadTranslations("nd_advertise.phrases");	
 	AddUpdaterLibrary(); //auto-updater
 	AddClientPrefSupport(); // client prefs
 }
