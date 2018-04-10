@@ -1,0 +1,12 @@
+﻿"Phrases"
+{
+	"Cookie Server Adverts"
+	{
+		"en"		"Advertisements"
+	}
+	
+	"Join RedstoneND"
+	{
+		"en"		"Join the RedstoneND steam group"
+	}	
+}
