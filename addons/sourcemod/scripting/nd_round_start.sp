@@ -49,7 +49,6 @@ public void OnMapStart()
 	SetVarDefaults();
 	
 	ServerCommand("bot_quota 0"); //Make sure bots are disabled
-	ServerCommand("mp_maxrounds 1"); // Reset max rounds to 1
 }
 
 public void OnMapEnd()
