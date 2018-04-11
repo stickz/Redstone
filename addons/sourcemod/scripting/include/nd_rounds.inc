@@ -64,6 +64,21 @@ native bool ND_RoundRestartable();
 
 #define NDRR_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RoundStarted") == FeatureStatus_Available)
 
+/**
+ * Cause the round to be restarted if possible. Check ND_RoundRestartable() first.
+ *
+ * Plugins must wait 60s after round start before using this feature
+ * Time-limit killing is used to restart. It requires a 60s buffer.
+ *
+ * If toWarmup is set true, the round will pause for manual restart.
+ * If toWarmup is set false, the round will restart immediately.
+ *
+ * @throws Native error If the round is not restartable
+ * @param toWarmup true or false
+ * @noreturn
+ */
+native void ND_RestartRound(bool toWarmup);
+
 /* Round engine forwards */
 forward void ND_OnRoundStart();
 forward void ND_OnRoundStarted();
