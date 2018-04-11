@@ -40,8 +40,7 @@ bool CanRestartRound(int client)
 	
 	if (!ND_RoundRestartable())
 	{
-		PrintToChat(client, "\x05[xG] This command can only while the round is in-progress!");
-		PrintToChat(client, "\x05[xG] You must also wait 60s after round start before using!");
+		PrintToChat(client, "\x05[xG] The round is not restartable at this time!");
 		return false;	
 	}
 
