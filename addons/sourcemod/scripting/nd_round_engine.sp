@@ -87,7 +87,7 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 	if (roundShowRestartMsg)
 	{
 		roundShowRestartMsg = false;
-		PrintToChatAll("\x05The match has succesfully restarted!");
+		PrintToChatAll("\x05The round has succesfully restarted!");
 	}
 	
 	roundEnded = false;
