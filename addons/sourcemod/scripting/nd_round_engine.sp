@@ -167,7 +167,11 @@ public int Native_FireRoundRestart(Handle plugin, int numParams)
 	}
 	
 	if (roundCanBeRestarted) {
-		return ThrowNativeError(SP_ERROR_NATIVE, "Restart Failure: Round not restartable");
+		return ThrowNativeError(SP_ERROR_NATIVE, "Restart Failure: Started less than 60s ago");
+	}
+	
+	if (roundRestartPending) {
+		return ThrowNativeError(SP_ERROR_NATIVE, "Restart Failure: Restart already in-progress");
 	}
 		
 	// Get wether to return to the warmup round
