@@ -31,6 +31,7 @@ int curRoundCount = 1;
 bool roundStarted = false;
 bool roundStartedThisMap = false;
 bool roundCanBeRestarted = false;
+bool roundRestartPending = false;
 bool roundEnded = false;
 bool mapStarted = false;
 
@@ -60,6 +61,7 @@ public void OnMapEnd()
 {
 	roundStarted = false;
 	roundStartedThisMap = false;
+	roundRestartPending = false;
 	mapStarted = false;
 	roundEnded = false;
 }
@@ -79,6 +81,12 @@ public Action TIMER_RoundRestartAvailible(Handle timer)
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {
 	DelayRoundRestart();
+	
+	if (roundRestartPending)
+	{
+		roundRestartPending = false;
+		PrintToChatAll("\x05The match has succesfully restarted!");
+	}
 	
 	roundEnded = false;
 	
@@ -160,6 +168,9 @@ public int Native_FireRoundRestart(Handle plugin, int numParams)
 		
 	// Get wether to return to the warmup round
 	bool toWarmup = GetNativeCell(1);
+	
+	// Tell the engine round restart is pending
+	roundRestartPending = true;
 	
 	// Simulate round end by sending to plugins
 	Event_RoundEnd(null, "", false);
