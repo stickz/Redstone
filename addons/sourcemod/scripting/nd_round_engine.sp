@@ -26,9 +26,12 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_round_engine/nd_round_engine.txt"
 #include "updater/standard.sp"
 
+int curRoundCount = 1;
+
 bool roundStarted = false;
 bool roundStartedThisMap = false;
 bool roundCanBeRestarted = false;
+bool roundRestartPending = false;
 bool roundEnded = false;
 bool mapStarted = false;
 
@@ -48,14 +51,17 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapStart() {
+public void OnMapStart() 
+{
 	mapStarted = true;
+	curRoundCount = 1;
 }
 
 public void OnMapEnd()
 {
 	roundStarted = false;
 	roundStartedThisMap = false;
+	roundRestartPending = false;
 	mapStarted = false;
 	roundEnded = false;
 }
@@ -75,6 +81,12 @@ public Action TIMER_RoundRestartAvailible(Handle timer)
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {
 	DelayRoundRestart();
+	
+	if (roundRestartPending)
+	{
+		roundRestartPending = false;
+		PrintToChatAll("\x05The match has succesfully restarted!");
+	}
 	
 	roundEnded = false;
 	
@@ -119,6 +131,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("ND_MapStarted", Native_GetMapStarted)
 	
 	CreateNative("ND_SimulateRoundEnd", Native_FireRoundEnd);
+	CreateNative("ND_RestartRound", Native_FireRoundRestart);
 	return APLRes_Success;
 }
 
@@ -139,9 +152,66 @@ public int Native_GetMapStarted(Handle plugin, int numParams) {
 }
 
 public int Native_GetRoundRestartable(Handle plugin, int numParams) {
-	return _:roundCanBeRestarted;
+	return _:(roundStarted && roundCanBeRestarted && !roundRestartPending);
 }
 
 public int Native_FireRoundEnd(Handle plugin, int numParams) {
 	Event_RoundEnd(null, "", false);
+}
+
+/* Round restart logic with native */
+public int Native_FireRoundRestart(Handle plugin, int numParams) 
+{
+	if (roundStarted) {
+		return ThrowNativeError(SP_ERROR_NATIVE, "Restart Failure: Round not started");
+	}
+	
+	if (roundCanBeRestarted) {
+		return ThrowNativeError(SP_ERROR_NATIVE, "Restart Failure: Started less than 60s ago");
+	}
+	
+	if (roundRestartPending) {
+		return ThrowNativeError(SP_ERROR_NATIVE, "Restart Failure: Restart already in-progress");
+	}
+		
+	// Get wether to return to the warmup round
+	bool toWarmup = GetNativeCell(1);
+	
+	// Tell the engine round restart is pending
+	roundRestartPending = true;
+	
+	// Simulate round end by sending to plugins
+	Event_RoundEnd(null, "", false);
+	
+	// Increment the round count and increase it
+	curRoundCount += 1;
+	ServerCommand("mp_maxrounds %d", curRoundCount);
+	
+	CreateTimer(1.5, TIMER_PrepRoundRestart, toWarmup, TIMER_FLAG_NO_MAPCHANGE);
+}
+public Action TIMER_PrepRoundRestart(Handle timer, any toWarmup)
+{	
+	// End the round by sending the timelimit to 1 minute
+	ServerCommand("mp_roundtime 1");
+	
+	// Delay the round start, so the server has time to react
+	CreateTimer(1.5, TIMER_EngageRoundRestart, toWarmup, TIMER_FLAG_NO_MAPCHANGE);
+	
+	return Plugin_Handled;
+}
+public Action TIMER_EngageRoundRestart(Handle timer, any toWarmup)
+{
+	// Default time limit to unlimited, unless anther plugin changes it
+	ServerCommand("mp_roundtime 0");
+	
+	// Set the round to start immediately without balancing
+	if (!toWarmup)
+	{
+		ServerCommand("mp_minplayers 1");
+		PrintToChatAll("\x05The round will restart shortly!");
+	}
+	else
+		PrintToChatAll("\x05The match will pause shortly!");	
+
+	return Plugin_Handled;
 }

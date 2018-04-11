@@ -69,10 +69,8 @@ void InitiateRoundEnd()
 	ServerCommand("sm_cvar sv_alltalk 1");
 }
 
-void SetVarDefaults() 
-{
+void SetVarDefaults() {
 	currentlyPicking = false;
-	curRoundCount = 1;
 }
 
 void RegPluginCommands()
