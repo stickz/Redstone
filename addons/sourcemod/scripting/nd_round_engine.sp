@@ -176,7 +176,7 @@ public Action TIMER_PrepRoundRestart(Handle timer, any toWarmup)
 	ServerCommand("mp_roundtime 1");
 	
 	// Delay the round start, so the server has time to react
-	CreateTimer(1.5, TIMER_EngageRoundRestart, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(1.5, TIMER_EngageRoundRestart, toWarmup, TIMER_FLAG_NO_MAPCHANGE);
 	
 	return Plugin_Handled;
 }
@@ -186,7 +186,7 @@ public Action TIMER_EngageRoundRestart(Handle timer, any toWarmup)
 	ServerCommand("mp_roundtime 0");
 	
 	// Set the round to start immediately without balancing
-	if (!toWarmupRound)
+	if (!toWarmup)
 	{
 		ServerCommand("mp_minplayers 1");
 		PrintToChatAll("\x05The round will restart shortly!");
