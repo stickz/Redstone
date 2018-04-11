@@ -1,6 +1,4 @@
 #define INVALID_USERID	0
-int curRoundCount = 1;
-bool toWarmupRound = false;
 
 void RegRestartCommand() 
 {
@@ -13,8 +11,10 @@ public Action CMD_RestartRound(int client, int args)
 {
 	if (!CanRestartRound(client))
 		return Plugin_Handled;
+		
+	ND_RestartRound(false); // Restart instantly without warmup.
+	CreateTimer(1.0, TIMER_ShowRoundRestart, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 	
-	DoRoundRestart(client);	
 	return Plugin_Handled;	
 }
 
@@ -23,10 +23,10 @@ public Action CMD_RestartWarmup(int client, int args)
 {
 	if (!CanRestartRound(client))
 		return Plugin_Handled;
-	
-	toWarmupRound = true; // Important: This boolean sends everyone to warmup
-	
-	DoRoundRestart(client);	
+		
+	ND_RestartRound(true); // Pause after round. Go back to warmup round.
+	CreateTimer(1.0, TIMER_ShowRoundRestart, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+
 	return Plugin_Handled;	
 }
 
@@ -53,20 +53,7 @@ bool CanRestartRound(int client)
 	return true;
 }
 
-void DoRoundRestart(int client)
-{
-	// Simulate round end, so other plugins get the message
-	ND_SimulateRoundEnd();
-	
-	// Increment the round count and increase it
-	curRoundCount += 1;
-	ServerCommand("mp_maxrounds %d", curRoundCount);	
-
-	// Delay ending the round, so other plugins have time to react
-	CreateTimer(1.5, TIMER_PrepRoundRestart, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
-}
-
-public Action TIMER_PrepRoundRestart(Handle timer, any userid)
+public Action TIMER_ShowRoundRestart(Handle timer, any userid)
 {	
 	// Get the client. If valid, print who restarted the round
 	int client = GetClientOfUserId(userid);	
@@ -79,33 +66,6 @@ public Action TIMER_PrepRoundRestart(Handle timer, any userid)
 		// Print a message to everyone explaining what happened
 		PrintToChatAll("\x05%s has terminated the round!", clientName);
 	}
-	else
-		PrintToChatAll("\x05The round has been restarted!");
 	
-	// End the round by sending the timelimit to 1 minute
-	ServerCommand("mp_roundtime 1");
-	
-	// Delay the round start, so the server has time to react
-	CreateTimer(1.5, TIMER_EngageRoundRestart, _, TIMER_FLAG_NO_MAPCHANGE);
-	
-	return Plugin_Handled;
-}
-
-public Action TIMER_EngageRoundRestart(Handle timer)
-{
-	// Default time limit to unlimited, unless anther plugin changes it
-	ServerCommand("mp_roundtime 0");
-	
-	// Set the round to start immediately without balancing
-	if (!toWarmupRound) // If player chooses instant start
-	{
-		ServerCommand("mp_minplayers 1");
-		PrintToChatAll("\x05The round will restart shortly!");
-	}
-	else
-		PrintToChatAll("\x05The match will pause shortly!");
-	
-	// Default the next restart to warmup to false
-	toWarmupRound = false;
 	return Plugin_Handled;
 }
