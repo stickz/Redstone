@@ -56,6 +56,7 @@ public void OnMapStart()
 {
 	mapStarted = true;
 	curRoundCount = 1;
+	ServerCommand("mp_maxrounds 1"); // Reset max rounds to 1
 }
 
 public void OnMapEnd()
