@@ -162,11 +162,11 @@ public int Native_FireRoundEnd(Handle plugin, int numParams) {
 /* Round restart logic with native */
 public int Native_FireRoundRestart(Handle plugin, int numParams) 
 {
-	if (roundStarted) {
+	if (!roundStarted) {
 		return ThrowNativeError(SP_ERROR_NATIVE, "Restart Failure: Round not started");
 	}
 	
-	if (roundCanBeRestarted) {
+	if (!roundCanBeRestarted) {
 		return ThrowNativeError(SP_ERROR_NATIVE, "Restart Failure: Started less than 60s ago");
 	}
 	
