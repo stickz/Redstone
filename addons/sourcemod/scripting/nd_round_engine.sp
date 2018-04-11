@@ -162,8 +162,12 @@ public int Native_FireRoundEnd(Handle plugin, int numParams) {
 /* Round restart logic with native */
 public int Native_FireRoundRestart(Handle plugin, int numParams) 
 {
+	if (roundStarted) {
+		return ThrowNativeError(SP_ERROR_NATIVE, "Restart Failure: Round not started");
+	}
+	
 	if (roundCanBeRestarted) {
-		return ThrowNativeError(SP_ERROR_NATIVE, "Round not restartable");
+		return ThrowNativeError(SP_ERROR_NATIVE, "Restart Failure: Round not restartable");
 	}
 		
 	// Get wether to return to the warmup round
