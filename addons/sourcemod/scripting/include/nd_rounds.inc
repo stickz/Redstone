@@ -67,9 +67,6 @@ native bool ND_RoundRestartable();
 /**
  * Cause the round to be restarted if possible. Check ND_RoundRestartable() first.
  *
- * Plugins must wait 60s after round start before using this feature
- * Time-limit killing is used to restart. It requires a 60s buffer.
- *
  * If toWarmup is set true, the round will pause for manual restart.
  * If toWarmup is set false, the round will restart immediately.
  *
