@@ -32,6 +32,7 @@ bool roundStarted = false;
 bool roundStartedThisMap = false;
 bool roundCanBeRestarted = false;
 bool roundRestartPending = false;
+bool roundShowRestartMsg = false;
 bool roundEnded = false;
 bool mapStarted = false;
 
@@ -62,6 +63,7 @@ public void OnMapEnd()
 	roundStarted = false;
 	roundStartedThisMap = false;
 	roundRestartPending = false;
+	roundShowRestartMsg = false;
 	mapStarted = false;
 	roundEnded = false;
 }
@@ -82,13 +84,14 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 {
 	DelayRoundRestart();
 	
-	if (roundRestartPending)
+	if (roundShowRestartMsg)
 	{
-		roundRestartPending = false;
+		roundShowRestartMsg = false;
 		PrintToChatAll("\x05The match has succesfully restarted!");
 	}
 	
 	roundEnded = false;
+	roundRestartPending = false;
 	
 	roundStarted = true;
 	roundStartedThisMap = true;
@@ -207,6 +210,7 @@ public Action TIMER_EngageRoundRestart(Handle timer, any toWarmup)
 	// Set the round to start immediately without balancing
 	if (!toWarmup)
 	{
+		roundShowRestartMsg = true;
 		ServerCommand("mp_minplayers 1");
 		PrintToChatAll("\x05The round will restart shortly!");
 	}
