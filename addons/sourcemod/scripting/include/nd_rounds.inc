@@ -54,10 +54,10 @@ native bool ND_MapStarted();
 
 /**
  * Checks wether the round can be restarted yet or not
- * Round must be currently in-progress to be restarted.
- *
- * Plugins must wait 60s after round start before using this feature
- * Time-limit killing is used to restart. It requires a 60s buffer.
+ * 
+ * Is the round currently in progress?
+ * Has it started more than 60s ago?
+ * Is the round not already restarting?
  *
  * @return True or False 	Round Restartable.
  */
@@ -67,6 +67,9 @@ native bool ND_RoundRestartable();
 
 /**
  * Cause the round to be restarted if possible. Check ND_RoundRestartable() first.
+ *
+ * Plugins must wait 60s after round start before using this feature
+ * Time-limit killing is used to restart. It requires a 60s buffer.
  *
  * If toWarmup is set true, the round will pause for manual restart.
  * If toWarmup is set false, the round will restart immediately.
