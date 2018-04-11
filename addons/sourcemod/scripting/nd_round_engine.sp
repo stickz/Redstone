@@ -152,7 +152,7 @@ public int Native_GetMapStarted(Handle plugin, int numParams) {
 }
 
 public int Native_GetRoundRestartable(Handle plugin, int numParams) {
-	return _:(roundStarted && roundCanBeRestarted);
+	return _:(roundStarted && roundCanBeRestarted && !roundRestartPending);
 }
 
 public int Native_FireRoundEnd(Handle plugin, int numParams) {
