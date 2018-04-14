@@ -8,7 +8,7 @@
 #define VALUE_TYPE_DISABLED 0
 
 #define STOCK_RAPID_START 15
-#define CUSTOM_RAPID_START 30
+#define CUSTOM_RAPID_START 15
 
 public Plugin myinfo =
 {
