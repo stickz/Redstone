@@ -7,8 +7,7 @@
 #define VALUE_TYPE_ENABLED 1
 #define VALUE_TYPE_DISABLED 0
 
-#define STOCK_RAPID_START 15
-#define CUSTOM_RAPID_START 15
+#define RAPID_START 15
 
 public Plugin myinfo =
 {
@@ -74,16 +73,11 @@ public Action TIMER_WarmupRound(Handle timer)
 	switch (g_Integer[warmupCountdown])
 	{
 		// Notice: These hacks assume short circuit evaluation is used.
-		case CUSTOM_RAPID_START:
+		case RAPID_START:
 		{
-			if (!CurMapIsStock() && CheckRapidStart())
+			if (CheckRapidStart())
 				return Plugin_Stop;
 		}		
-		case STOCK_RAPID_START:
-		{
-			if (CurMapIsStock() && CheckRapidStart())
-				return Plugin_Stop;
-		}
 		
 		case 4: ServerCommand("bot_quota 0");		
 		case 3: g_Integer[warmupTextType] = 1;
@@ -97,14 +91,6 @@ public Action TIMER_WarmupRound(Handle timer)
 	
 	DisplayHudText();
 	return Plugin_Continue;
-}
-
-bool CurMapIsStock()
-{
-	char curMap[32];
-	GetCurrentMap(curMap, sizeof(curMap));
-	
-	return ND_IsStockMap(curMap);
 }
 
 bool CheckRapidStart()
