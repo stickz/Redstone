@@ -55,8 +55,11 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 			// If selected item wasn't a player, refresh to pick anther option.
 			else if (selectedPlayer != NO_PLAYER_SELECTED)
 			{
-				PrintMessage(client, "Pick Again");
+				// Set the constant picking team first
 				SetConstantPickingTeam();
+				
+				// The use the picker index to execute it
+				PrintMessage(next_comm, "Pick Again");
 				Menu_PlayerPick(next_comm);
 			}
 			
@@ -141,7 +144,7 @@ public void Menu_PlayerPick(int client)
 
 	// Precast varriables and loop through all the players on the server
 	char currentName[60], currentUser[30], skill[8]; int pCount = 0;
-	for (int player = 0; player <= MaxClients; player++) 
+	for (int player = 1; player <= MaxClients; player++)
 	{
 		if (PlayerIsPickable(player))
 		{
