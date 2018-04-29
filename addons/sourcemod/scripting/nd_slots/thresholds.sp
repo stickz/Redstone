@@ -1,6 +1,9 @@
 int GetMapPlayerCount(const char[] checkMap)
 {
-	if (ND_IsLargeMap(checkMap) || ND_IsMediumMap(checkMap))
+	if (ND_IsLargeMap(checkMap))
+		return GetSlotCount(26, 28, 30);
+		
+	else if	(ND_IsMediumMap(checkMap))
 		return GetSlotCount(26, 28, 28);
 		
 	else if (ND_IsTinyMap(checkMap))
