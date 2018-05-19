@@ -1,6 +1,9 @@
 int GetMapPlayerCount(const char[] checkMap)
 {
-	if (ND_IsLargeMap(checkMap))
+	if (ND_StockMapEquals(checkMap, ND_Oilfield))
+		return GetSlotCount(30, 30, 30);
+	
+	else if (ND_IsLargeMap(checkMap))
 		return GetSlotCount(26, 28, 30);
 		
 	else if	(ND_IsMediumMap(checkMap))
@@ -15,9 +18,8 @@ int GetMapPlayerCount(const char[] checkMap)
 
 bool ND_IsLargeMap(const char[] checkMap)
 {
-	return ND_StockMapEquals(checkMap, ND_Oilfield)
+	return	   ND_StockMapEquals(checkMap, ND_Gate)
 		|| ND_CustomMapEquals(checkMap, ND_Rock)
-		|| ND_StockMapEquals(checkMap, ND_Gate) 		
 		|| ND_StockMapEquals(checkMap, ND_Downtown)
 		|| ND_StockMapEquals(checkMap, ND_Clocktower);
 }
