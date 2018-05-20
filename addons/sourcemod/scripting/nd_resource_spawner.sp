@@ -172,8 +172,8 @@ void CheckStableSpawns()
 			
 			if (teamCount >= cvarSiloTertiarySpawns[SECOND_TIER].IntValue)
 			{
-				SpawnTertiaryPoint({-5402.0, -3859.0, 114.0});
-				SpawnTertiaryPoint({2340.0, 2558.0, 50.0});
+				SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
+				SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
 				tertsSpawned[SECOND_TIER] = true;			
 			}
 		}		
