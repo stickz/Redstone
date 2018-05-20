@@ -52,10 +52,6 @@ ConVar cvarClocktowerTertiarySpawns[2];
 
 public void OnPluginStart()
 {
-	// Fire round start event if plugin loads late
-	if (ND_RoundStarted())
-		ND_OnRoundStarted();
-	
 	CreatePluginConvars();
 	
 	RegAdminSpawnCmds();
@@ -63,6 +59,13 @@ public void OnPluginStart()
 	AutoExecConfig(true, "nd_res_spawner");
 	
 	AddUpdaterLibrary(); //auto-updater
+}
+
+public void OnMapStart()
+{
+	// Fire round start event if plugin loads late
+	if (ND_RoundStarted())
+		ND_OnRoundStarted();
 }
 
 void CreatePluginConvars()
