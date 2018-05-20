@@ -61,7 +61,7 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapStart()
+public void OnConfigsExecuted()
 {
 	// Fire round start event if plugin loads late
 	if (ND_RoundStarted())
