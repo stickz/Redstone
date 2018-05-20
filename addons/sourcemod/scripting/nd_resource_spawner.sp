@@ -47,6 +47,9 @@ ConVar cvarClocktowerTertiarySpawns[2];
 // Store alpha spawns in seperate file to reduce clutter
 #include "nd_res_spawn/alpha.sp"
 
+// Allow root to spawn tertiary to test them
+#include "nd_res_spawn/commands.sp"
+
 public void OnPluginStart()
 {
 	// Fire round start event if plugin loads late
@@ -54,6 +57,8 @@ public void OnPluginStart()
 		ND_OnRoundStarted();
 	
 	CreatePluginConvars();
+	
+	RegAdminSpawnCmds();
 	
 	AutoExecConfig(true, "nd_res_spawner");
 	
