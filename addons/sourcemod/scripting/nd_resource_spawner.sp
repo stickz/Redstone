@@ -32,13 +32,13 @@ bool tertsSpawned[2] = { false, ... };
 
 /* Plugin Convars */
 ConVar cvarMarsTertiarySpawns;
-ConVar cvarSiloTertiarySpawns;
 ConVar cvarMetroTertiarySpawns;
 ConVar cvarOasisTertiarySpawns;
 ConVar cvarCoastTertiarySpawns;
 ConVar cvarNuclearTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
+ConVar cvarSiloTertiarySpawns[2];
 ConVar cvarGateTertiarySpawns[2];
 ConVar cvarRockTertiarySpawns[2];
 ConVar cvarOilfeildTertiarySpawns[2];
@@ -64,13 +64,14 @@ void CreatePluginConvars()
 {
 	// Create convars for resoruce spawning and generate the configuration file
 	cvarMarsTertiarySpawns = CreateConVar("sm_tertiary_mars", "16", "Sets number of players to spawn extra tertaries on mars.");
-	cvarSiloTertiarySpawns = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
 	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
 	cvarOasisTertiarySpawns = CreateConVar("sm_tertiary_oasis", "18", "Sets number of players to spawn extra tertaries on oasis.");
 	cvarCoastTertiarySpawns = CreateConVar("sm_tertiary_coast", "16", "Sets number of players to spawn extra tertaries on coast.");	
 	cvarNuclearTertiarySpawns = CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
 	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown and downtown_dyn.");
 	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
+	cvarSiloTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
+	cvarSiloTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_silo", "26", "Sets number of players to spawn extra tertaries on silo.");	
 	cvarGateTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
 	cvarGateTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
 	cvarRockTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_rock1", "8", "Sets number of players to spawn extra tertaries on rock.");
@@ -151,12 +152,23 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
-		if (RED_OnTeamCount() >= cvarSiloTertiarySpawns.IntValue)
+		int teamCount = RED_OnTeamCount();
+		if (teamCount >= cvarSiloTertiarySpawns[FIRST_TIER].IntValue)
 		{
-			SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
-			SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
-			tertsSpawned[SECOND_TIER] = true;
-		}
+			if (!tertsSpawned[FIRST_TIER])
+			{
+				SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
+				SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
+				tertsSpawned[FIRST_TIER] = true;
+			}
+			
+			if (teamCount >= cvarSiloTertiarySpawns[SECOND_TIER].IntValue)
+			{
+				SpawnTertiaryPoint({-5402.0, -3859.0, 114.0});
+				SpawnTertiaryPoint({2340.0, 2558.0, 50.0});
+				tertsSpawned[SECOND_TIER] = true;			
+			}
+		}		
 	}
 	
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
