@@ -78,8 +78,8 @@ void CreatePluginConvars()
 	cvarNuclearTertiarySpawns = CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
 	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown and downtown_dyn.");
 	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
-	cvarSiloTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_silo", "14", "Sets number of players to spawn extra tertaries on silo.");
-	cvarSiloTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_silo", "26", "Sets number of players to spawn extra tertaries on silo.");	
+	cvarSiloTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_silo1", "14", "Sets number of players to spawn extra tertaries on silo.");
+	cvarSiloTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_silo2", "26", "Sets number of players to spawn extra tertaries on silo.");	
 	cvarGateTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
 	cvarGateTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
 	cvarRockTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_rock1", "8", "Sets number of players to spawn extra tertaries on rock.");
