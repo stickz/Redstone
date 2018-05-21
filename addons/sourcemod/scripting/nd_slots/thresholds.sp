@@ -4,7 +4,7 @@ int GetMapPlayerCount(const char[] checkMap)
 		return GetSlotCount(32, 32, 32);
 		
 	else if (ND_IsBalancedMap(checkMap))
-		return GetSlotCount(28, 30, 22);
+		return GetSlotCount(28, 30, 32);
 	
 	else if (ND_IsLargeMap(checkMap))
 		return GetSlotCount(26, 28, 30);
