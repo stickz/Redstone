@@ -35,6 +35,7 @@ ConVar cvarMarsTertiarySpawns;
 ConVar cvarMetroTertiarySpawns;
 ConVar cvarOasisTertiarySpawns;
 ConVar cvarCoastTertiarySpawns;
+Convar cvarCornerTertiarySpawns;
 ConVar cvarNuclearTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
@@ -75,6 +76,7 @@ void CreatePluginConvars()
 	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
 	cvarOasisTertiarySpawns = CreateConVar("sm_tertiary_oasis", "18", "Sets number of players to spawn extra tertaries on oasis.");
 	cvarCoastTertiarySpawns = CreateConVar("sm_tertiary_coast", "16", "Sets number of players to spawn extra tertaries on coast.");	
+	cvarCornerTertiarySpawns = CreateConVar("sm_tertiary_corner", "20", "Sets number of players to spawn extra tertaries on corner.");
 	cvarNuclearTertiarySpawns = CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
 	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown and downtown_dyn.");
 	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
@@ -189,6 +191,16 @@ void CheckStableSpawns()
 			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}		
+	}
+	
+	else if (ND_CustomMapEquals(map_name, ND_Corner))
+	{
+		if (RED_OnTeamCount() >= cvarCornerTertiarySpawns.IntValue)
+		{
+			SpawnTertiaryPoint({-3485.0, 11688.0, 5.0});
+			SpawnTertiaryPoint({-1947.0, -1942.0, 7.0});
+			tertsSpawned[SECOND_TIER] = true;		
+		}	
 	}
 }
 
