@@ -22,8 +22,7 @@ bool ND_IsHighSlotMap(const char[] checkMap)
 	     || ND_StockMapEquals(checkMap, ND_Oilfield);
 }
 
-bool ND_IsBalancedMap(const char[] checkMap)
-
+bool ND_IsBalancedMap(const char[] checkMap) {
 	return ND_CustomMapEquals(checkMap, ND_MetroImp);
 }
 
