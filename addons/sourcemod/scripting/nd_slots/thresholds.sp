@@ -12,7 +12,7 @@ int GetMapPlayerCount(const char[] checkMap)
 	else if (ND_IsTinyMap(checkMap))
 		return GetSlotCount(24, 26, 26);
 
-	/* oasis, coast, hydro, roadwork */
+	/* oasis, coast, hydro, roadwork, corner */
 	return GetSlotCount(26, 26, 28);
 }
 
@@ -38,10 +38,10 @@ bool ND_IsLargeMap(const char[] checkMap)
 
 bool ND_IsTinyMap(const char[] checkMap)
 {
-	return ND_CustomMapEquals(checkMap, ND_Corner)
-		|| ND_CustomMapEquals(checkMap, ND_Mars)
+	return 	   ND_CustomMapEquals(checkMap, ND_Mars)
 		|| ND_CustomMapEquals(checkMap, ND_Sandbrick)
-		|| ND_CustomMapEquals(checkMap, ND_Port);	
+		|| ND_CustomMapEquals(checkMap, ND_Port);
+		//ND_CustomMapEquals(checkMap, ND_Corner)
 }
 
 int GetSlotCount(int min, int med, int max)
