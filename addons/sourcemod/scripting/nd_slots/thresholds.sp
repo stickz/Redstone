@@ -4,7 +4,7 @@ int GetMapPlayerCount(const char[] checkMap)
 		return GetSlotCount(32, 32, 32);
 		
 	else if (ND_IsBalancedMap(checkMap))
-		return GetSlotCount(28, 28, 28);
+		return GetSlotCount(28, 30, 22);
 	
 	else if (ND_IsLargeMap(checkMap))
 		return GetSlotCount(26, 28, 30);
@@ -22,16 +22,17 @@ bool ND_IsHighSlotMap(const char[] checkMap)
 	     || ND_StockMapEquals(checkMap, ND_Oilfield);
 }
 
-bool ND_IsBalancedMap(const char[] checkMap) {
-	return ND_CustomMapEquals(checkMap, ND_MetroImp);
+bool ND_IsBalancedMap(const char[] checkMap) 
+{
+	return 	   ND_CustomMapEquals(checkMap, ND_MetroImp)
+		|| ND_StockMapEquals(checkMap, ND_Clocktower)
+		|| ND_StockMapEquals(checkMap, ND_Downtown)
+		|| ND_StockMapEquals(checkMap, ND_Gate);
 }
 
 bool ND_IsLargeMap(const char[] checkMap)
 {
-	return	   ND_StockMapEquals(checkMap, ND_Gate)
-		|| ND_CustomMapEquals(checkMap, ND_Rock)
-		|| ND_StockMapEquals(checkMap, ND_Downtown)
-		|| ND_StockMapEquals(checkMap, ND_Clocktower)
+	return	   ND_CustomMapEquals(checkMap, ND_Rock)
 		|| ND_CustomMapEquals(checkMap, ND_Nuclear);
 }
 
