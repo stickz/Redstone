@@ -10,8 +10,8 @@ public Action CMD_SpawnSilo(int client, int args)
 	SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
 	
 	// Near base
-	SpawnTertiaryPoint({-5402.0, -3859.0, 114.0});
-	SpawnTertiaryPoint({2340.0, 2558.0, 50.0});
+	SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
+	SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
 	
 	return Plugin_Handled;
 }
