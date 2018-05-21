@@ -85,7 +85,7 @@ public void OnClientPutInServer(int client)
 
 public void OnClientAuthorized(int client)
 {	
-	if (!IsFakeClient(client) && GetClientCount(false) > g_Integer[maxKickCount])
+	if (!IsFakeClient(client) && GetClientCount() > g_Integer[maxKickCount])
 	{		
 		if (eDynamicSlots)
 		{			
