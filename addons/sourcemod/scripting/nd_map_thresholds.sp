@@ -110,7 +110,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 	{
 		ND_NominatePopularMaps();
 		
-		if (clientCount < 14)
+		if (clientCount < 16)
 		{
 			ND_NominateMap(ND_CustomMaps[ND_Corner]);
 					
