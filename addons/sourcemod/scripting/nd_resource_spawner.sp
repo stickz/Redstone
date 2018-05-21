@@ -35,7 +35,7 @@ ConVar cvarMarsTertiarySpawns;
 ConVar cvarMetroTertiarySpawns;
 ConVar cvarOasisTertiarySpawns;
 ConVar cvarCoastTertiarySpawns;
-Convar cvarCornerTertiarySpawns;
+ConVar cvarCornerTertiarySpawns;
 ConVar cvarNuclearTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
