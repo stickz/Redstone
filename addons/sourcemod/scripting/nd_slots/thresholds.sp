@@ -19,14 +19,14 @@ int GetMapPlayerCount(const char[] checkMap)
 bool ND_IsHighSlotMap(const char[] checkMap)
 {
 	return  ND_StockMapEquals(checkMap, ND_Silo)
-	     || ND_StockMapEquals(checkMap, ND_Oilfield);
+	     || ND_StockMapEquals(checkMap, ND_Oilfield)
+	     || ND_StockMapEquals(checkMap, ND_Downtown);
 }
 
 bool ND_IsBalancedMap(const char[] checkMap) 
 {
 	return 	   ND_CustomMapEquals(checkMap, ND_MetroImp)
 		|| ND_StockMapEquals(checkMap, ND_Clocktower)
-		|| ND_StockMapEquals(checkMap, ND_Downtown)
 		|| ND_StockMapEquals(checkMap, ND_Gate);
 }
 
