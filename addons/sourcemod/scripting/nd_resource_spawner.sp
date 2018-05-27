@@ -178,7 +178,7 @@ void CheckStableSpawns()
 				SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
 				tertsSpawned[SECOND_TIER] = true;			
 			}
-		}		
+		}	
 	}
 	
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
@@ -190,7 +190,7 @@ void CheckStableSpawns()
 			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
 			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
 			tertsSpawned[SECOND_TIER] = true;
-		}		
+		}
 	}
 	
 	else if (ND_CustomMapEquals(map_name, ND_Corner))
@@ -200,7 +200,16 @@ void CheckStableSpawns()
 			SpawnTertiaryPoint({-3485.0, 11688.0, 5.0});
 			SpawnTertiaryPoint({-1947.0, -1942.0, 7.0});
 			tertsSpawned[SECOND_TIER] = true;		
-		}	
+		}
+	}
+	else if (ND_StockMapEquals(map_name, ND_Downtown))
+	{
+		if (RED_OnTeamCount() >= cvarDowntownTertiarySpawns.IntValue)
+		{
+			SpawnTertiaryPoint({2385.0, -5582.0, -3190.0});
+			SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0});
+			tertsSpawned[SECOND_TIER] = true;		
+		}
 	}
 }
 
