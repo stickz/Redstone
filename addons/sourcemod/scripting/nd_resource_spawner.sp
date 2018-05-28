@@ -5,6 +5,8 @@
 #include <nd_maps>
 #include <nd_redstone>
 #include <nd_stype>
+#include <nd_fskill>
+#include <autoexecconfig>
 
 #define TERTIARY_MODEL "models/rts_structures/rts_resource/rts_resource_tertiary.mdl"
 #define VECTOR_SIZE 3
@@ -27,6 +29,9 @@ public Plugin myinfo =
 #define FIRST_TIER 	0
 #define SECOND_TIER 	1
 
+#define SKILL_LOW 	0
+#define SKILL_HIGH 	1
+
 int resSpawnCount = 0;
 bool tertsSpawned[2] = { false, ... };
 
@@ -44,6 +49,8 @@ ConVar cvarGateTertiarySpawns[2];
 ConVar cvarRockTertiarySpawns[2];
 ConVar cvarOilfeildTertiarySpawns[2];
 ConVar cvarClocktowerTertiarySpawns[2];
+
+ConVar cvarSpawnSkill[2];
 
 // Store alpha spawns in seperate file to reduce clutter
 #include "nd_res_spawn/alpha.sp"
@@ -71,25 +78,53 @@ public void OnConfigsExecuted()
 
 void CreatePluginConvars()
 {
-	// Create convars for resoruce spawning and generate the configuration file
-	cvarMarsTertiarySpawns = CreateConVar("sm_tertiary_mars", "16", "Sets number of players to spawn extra tertaries on mars.");
-	cvarMetroTertiarySpawns = CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
-	cvarOasisTertiarySpawns = CreateConVar("sm_tertiary_oasis", "18", "Sets number of players to spawn extra tertaries on oasis.");
-	cvarCoastTertiarySpawns = CreateConVar("sm_tertiary_coast", "16", "Sets number of players to spawn extra tertaries on coast.");	
-	cvarCornerTertiarySpawns = CreateConVar("sm_tertiary_corner", "20", "Sets number of players to spawn extra tertaries on corner.");
-	cvarNuclearTertiarySpawns = CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
-	cvarDowntownTertiarySpawns = CreateConVar("sm_tertiary_downtown", "18", "Sets number of players to spawn extra tertaries on downtown and downtown_dyn.");
-	cvarRoadworkTertiarySpawns = CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
-	cvarSiloTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_silo1", "14", "Sets number of players to spawn extra tertaries on silo.");
-	cvarSiloTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_silo2", "26", "Sets number of players to spawn extra tertaries on silo.");	
-	cvarGateTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
-	cvarGateTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
-	cvarRockTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_rock1", "8", "Sets number of players to spawn extra tertaries on rock.");
-	cvarRockTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_rock2", "16", "Sets number of players to spawn extra tertaries on rock.");
-	cvarOilfeildTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_oilfeild1", "12", "Sets number of players to spawn extra tertaries on oilfield.");
-	cvarOilfeildTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_oilfeild2", "20", "Sets number of players to spawn extra tertaries on oilfield.");
-	cvarClocktowerTertiarySpawns[FIRST_TIER] = CreateConVar("sm_tertiary_clocktower1", "12", "Sets number of players to spawn extra tertaries on clocktower.");
-	cvarClocktowerTertiarySpawns[SECOND_TIER] = CreateConVar("sm_tertiary_clocktower2", "18", "Sets number of players to spawn extra tertaries on clocktower.");
+	// Tell the wrapper to create the files. Required for multiples.
+	AutoExecConfig_SetCreateFile(true);
+	
+	CreateSkillConvars();	
+	CreateMapConvars();
+}
+
+void CreateSkillConvars()
+{
+	// Set the file to the thresholds to control player skill
+	AutoExecConfig_SetFile("nd_res_skill");
+	
+	// Create the convars to control the high and lowest skill thresholds
+	cvarSpawnSkill[SKILL_LOW] = AutoExecConfig_CreateConVar("sm_res_slow", "60", "Sets the skill for the lowest tertiary spawn threshold.");
+	cvarSpawnSkill[SKILL_HIGH] = AutoExecConfig_CreateConVar("sm_res_shigh", "110", "Sets the skill for the highest tertiary spawn threshold.");
+	
+	// Execute and clean the configuration file
+	AutoExecConfig_EC_File()
+}
+
+void CreateMapConvars()
+{
+	// Set the file to the resource spawner
+	AutoExecConfig_SetFile("nd_res_maps");
+	
+	// Create convars for resoruce spawning on a per map basis
+	cvarMarsTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_mars", "16", "Sets number of players to spawn extra tertaries on mars.");
+	cvarMetroTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
+	cvarOasisTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_oasis", "18", "Sets number of players to spawn extra tertaries on oasis.");
+	cvarCoastTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_coast", "16", "Sets number of players to spawn extra tertaries on coast.");	
+	cvarCornerTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_corner", "20", "Sets number of players to spawn extra tertaries on corner.");
+	cvarNuclearTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
+	cvarDowntownTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_downtown", "28", "Sets number of players to spawn extra tertaries on downtown and downtown_dyn.");
+	cvarRoadworkTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
+	cvarSiloTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_silo1", "14", "Sets number of players to spawn extra tertaries on silo.");
+	cvarSiloTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_silo2", "26", "Sets number of players to spawn extra tertaries on silo.");	
+	cvarGateTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
+	cvarGateTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
+	cvarRockTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_rock1", "8", "Sets number of players to spawn extra tertaries on rock.");
+	cvarRockTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_rock2", "16", "Sets number of players to spawn extra tertaries on rock.");
+	cvarOilfeildTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_oilfeild1", "12", "Sets number of players to spawn extra tertaries on oilfield.");
+	cvarOilfeildTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_oilfeild2", "20", "Sets number of players to spawn extra tertaries on oilfield.");
+	cvarClocktowerTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_clocktower1", "20", "Sets number of players to spawn extra tertaries on clocktower.");
+	cvarClocktowerTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_clocktower2", "18", "Sets number of players to spawn extra tertaries on clocktower.");
+
+	// Execute and clean the configuration file
+	AutoExecConfig_EC_File()
 }
 
 public void OnClientPutInServer(int client) {
@@ -172,7 +207,7 @@ void CheckStableSpawns()
 				tertsSpawned[FIRST_TIER] = true;
 			}
 			
-			if (teamCount >= cvarSiloTertiarySpawns[SECOND_TIER].IntValue)
+			if (teamCount >= GetSpawnCount(26, 28, 30))
 			{
 				SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
 				SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
@@ -204,7 +239,7 @@ void CheckStableSpawns()
 	}
 	else if (ND_StockMapEquals(map_name, ND_Downtown))
 	{
-		if (RED_OnTeamCount() >= cvarDowntownTertiarySpawns.IntValue)
+		if (RED_OnTeamCount() >= GetSpawnCount(28, 28, 30))
 		{
 			SpawnTertiaryPoint({2385.0, -5582.0, -3190.0});
 			SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0});
@@ -343,4 +378,15 @@ public int LookupEntity(const char[] classname, const char[] lookup_name, int st
 	}
 	
 	return -1;
+}
+
+int GetSpawnCount(int min, int med, int max)
+{
+	if (!ND_GEA_AVAILBLE())
+		return med;	
+		
+	float avSkill = ND_GetEnhancedAverage();
+	return 	avSkill >= cvarSpawnSkill[SKILL_HIGH] ? min :
+		avSkill >= cvarSpawnSkill[SKILL_LOW]  ? med :
+							max ;
 }
