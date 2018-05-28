@@ -382,7 +382,7 @@ public int LookupEntity(const char[] classname, const char[] lookup_name, int st
 
 int GetSpawnCount(int min, int med, int max)
 {
-	if (!ND_GEA_AVAILBLE() || !eSkillBasedSlots())
+	if (!ND_GEA_AVAILBLE())
 		return med;	
 		
 	float avSkill = ND_GetEnhancedAverage();
