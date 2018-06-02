@@ -237,6 +237,7 @@ void CheckStableSpawns()
 			tertsSpawned[SECOND_TIER] = true;		
 		}
 	}
+	
 	else if (ND_StockMapEquals(map_name, ND_Downtown))
 	{
 		if (RED_OnTeamCount() >= GetSpawnCount(28, 28, 30))
@@ -244,6 +245,16 @@ void CheckStableSpawns()
 			SpawnTertiaryPoint({2385.0, -5582.0, -3190.0});
 			SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0});
 			tertsSpawned[SECOND_TIER] = true;		
+		}
+	}
+	
+	else if (ND_StockMapEquals(map_name, ND_Hydro))
+	{
+		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 28))
+		{
+			SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
+			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
+			tertsSpawned[SECOND_TIER] = true;	
 		}
 	}
 }
