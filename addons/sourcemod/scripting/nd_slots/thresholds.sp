@@ -19,6 +19,7 @@ int GetMapPlayerCount(const char[] checkMap)
 bool ND_IsHighSlotMap(const char[] checkMap)
 {
 	return  ND_StockMapEquals(checkMap, ND_Silo)
+	     || ND_StockMapEquals(checkMap, ND_Hydro)
 	     || ND_StockMapEquals(checkMap, ND_Oilfield)
 	     || ND_StockMapEquals(checkMap, ND_Downtown);
 }
