@@ -41,10 +41,9 @@ public Action CMD_SpawnDowntown(int client, int args)
 
 public Action CMD_SpawnHydro(int client, int args)
 {
-	SpawnTertiaryPoint({-3392.0, -2384.0, 0.0});
-	SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
+	SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
+	SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
 	tertsSpawned[SECOND_TIER] = true;
-
 
 	return Plugin_Handled;
 }
