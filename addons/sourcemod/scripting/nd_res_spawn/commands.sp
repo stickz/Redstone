@@ -3,6 +3,7 @@ RegAdminSpawnCmds()
 	RegAdminCmd("sm_SpawnSilo", CMD_SpawnSilo, ADMFLAG_ROOT, "dummy");
 	RegAdminCmd("sm_SpawnCorner", CMD_SpawnCorner, ADMFLAG_ROOT, "dummy");
 	RegAdminCmd("sm_SpawnDowntown", CMD_SpawnDowntown, ADMFLAG_ROOT, "dummy");
+	RegAdminCmd("sm_SpawnHydro", CMD_SpawnHydro, ADMFLAG_ROOT, "dummy");
 }
 
 public Action CMD_SpawnSilo(int client, int args)
@@ -34,6 +35,16 @@ public Action CMD_SpawnDowntown(int client, int args)
 	SpawnTertiaryPoint({2385.0, -5582.0, -3190.0});
 	SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0});
 	tertsSpawned[SECOND_TIER] = true;
+
+	return Plugin_Handled;
+}
+
+public Action CMD_SpawnHydro(int client, int args)
+{
+	SpawnTertiaryPoint({-3392.0, -2384.0, 0.0});
+	SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
+	tertsSpawned[SECOND_TIER] = true;
+
 
 	return Plugin_Handled;
 }
