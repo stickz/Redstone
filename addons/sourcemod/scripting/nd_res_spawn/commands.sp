@@ -3,7 +3,7 @@ RegAdminSpawnCmds()
 	RegAdminCmd("sm_SpawnSilo", CMD_SpawnSilo, ADMFLAG_ROOT, "dummy");
 	RegAdminCmd("sm_SpawnCorner", CMD_SpawnCorner, ADMFLAG_ROOT, "dummy");
 	RegAdminCmd("sm_SpawnDowntown", CMD_SpawnDowntown, ADMFLAG_ROOT, "dummy");
-	RegAdminCmd("sm_SpawnHydro", CMD_SpawnHydro, AMDFLAG_ROOT, "dummy");
+	RegAdminCmd("sm_SpawnHydro", CMD_SpawnHydro, ADMFLAG_ROOT, "dummy");
 }
 
 public Action CMD_SpawnSilo(int client, int args)
