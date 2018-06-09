@@ -108,8 +108,13 @@ void extendTime()
 	
 	if (!g_Bool[noTimeLimit])
 	{
-		int roundTime = g_Cvar[extendTimeLimit].IntValue; // the time we extend matches by		
-		roundTime += StrContains(currentMap, "corner", false) == 0 ? g_Cvar[cornerTimeLimit].IntValue : g_Cvar[regularTimeLimit].IntValue; //the time elapsed so far (method works, but not proper)		
+		int roundTime = g_Cvar[regularTimeLimit].IntValue; // the time we extend matches by
+		
+		if (	StrEqual(currentMap, ND_CustomMaps[ND_Corner], false) == 0) || 
+			StrEqual(currentMap, ND_StockMaps[ND_Silo], false)) {
+				roundTime = g_Cvar[extendedTimeLimit].IntValue;
+		}		
+			
 		ServerCommand("mp_roundtime %d", roundTime);
 	}
 	else
