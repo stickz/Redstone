@@ -56,7 +56,7 @@ enum Bools
 enum Convars {
 	ConVar:enableTimeLimit,
 	ConVar:regularTimeLimit,
-	ConVar:cornerTimeLimit,
+	ConVar:extendedTimeLimit,
 	
 	ConVar:reducedTimeLimit,
 	ConVar:reducedResumeTime,
@@ -185,7 +185,7 @@ void createConVars()
 	g_Cvar[enableTimeLimit] = CreateConVar("sm_timelimit_enable", "13", "Sets the number of players required to enable the time limit");
 	
 	g_Cvar[regularTimeLimit] = CreateConVar("sm_timelimit_regular", "60", "Sets the regular time limit on the server");
-	g_Cvar[cornerTimeLimit] = CreateConVar("sm_timelimit_corner", "75", "Sets the time for the corner map");
+	g_Cvar[extendedTimeLimit] = CreateConVar("sm_timelimit_corner", "75", "Sets the time for the corner map");
 	
 	g_Cvar[reducedTimeLimit] = CreateConVar("sm_timelimit_reduced", "45", "Sets the reduced time limit on resume");
 	g_Cvar[reducedResumeTime] = CreateConVar("sm_timelimit_rtime", "20", "Sets the time required for a reduced resume");
@@ -220,11 +220,12 @@ void SetTimeLimit(const char[] currentMap)
 {
 	int fiveMinutesRemaining = 60;
 		
-	if (StrEqual(currentMap, ND_CustomMaps[ND_Corner], false))
+	if (	StrEqual(currentMap, ND_CustomMaps[ND_Corner], false) ||
+		StrEqual(currentMap, ND_StockMaps[ND_Silo], flase))
 	{
-		int cornerTime = g_Cvar[cornerTimeLimit].IntValue;
-		ServerCommand("mp_roundtime %d", cornerTime);
-		fiveMinutesRemaining *= (cornerTime - 5);
+		int extendTime = g_Cvar[extendedTimeLimit].IntValue;
+		ServerCommand("mp_roundtime %d", extendTime);
+		fiveMinutesRemaining *= (extendTime - 5);
 	}
 	else
 	{
