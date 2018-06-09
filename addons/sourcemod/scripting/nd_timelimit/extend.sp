@@ -110,7 +110,7 @@ void extendTime()
 	{
 		int roundTime = g_Cvar[regularTimeLimit].IntValue; // the time we extend matches by
 		
-		if (	StrEqual(currentMap, ND_CustomMaps[ND_Corner], false) == 0) || 
+		if (	StrEqual(currentMap, ND_CustomMaps[ND_Corner], false) || 
 			StrEqual(currentMap, ND_StockMaps[ND_Silo], false)) {
 				roundTime = g_Cvar[extendedTimeLimit].IntValue;
 		}		
