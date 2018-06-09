@@ -223,9 +223,9 @@ void SetTimeLimit(const char[] currentMap)
 	if (	StrEqual(currentMap, ND_CustomMaps[ND_Corner], false) ||
 		StrEqual(currentMap, ND_StockMaps[ND_Silo], false))
 	{
-		int extendTime = g_Cvar[extendedTimeLimit].IntValue;
-		ServerCommand("mp_roundtime %d", extendTime);
-		fiveMinutesRemaining *= (extendTime - 5);
+		int newTime = g_Cvar[extendedTimeLimit].IntValue;
+		ServerCommand("mp_roundtime %d", newTime);
+		fiveMinutesRemaining *= (newTime - 5);
 	}
 	else
 	{
