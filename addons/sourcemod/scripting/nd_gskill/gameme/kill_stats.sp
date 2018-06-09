@@ -101,7 +101,7 @@ float GameME_GetModifiedSkillBase(int client)
 	float ClientHpk = GameME_GetModifiedHpk(client, true);
 	float ClientMinHpk = percentToDecimal(gc_GameMe[hpkMiddleTendency].FloatValue);
 	
-	if (ClientHpk < ClientMinHpk && GameME_UseHPK_Modifier(client))
+	if (ClientHpk < ClientMinHpk && GameME_UseHPK_Modifier(client) && GameME_SkillBase[client] > 80)
 	{
 		// calculate the percent taken off for every hpk percent missing
 		float ClientHpkMod = (ClientMinHpk - ClientHpk) * gc_GameMe[hpkSkillBaseModifer].FloatValue;
