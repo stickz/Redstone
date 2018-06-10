@@ -19,11 +19,13 @@ public Plugin myinfo =
 
 ArrayList g_MapThresholdList;
 ConVar cvarStockMapCount;
+ConVar cvarCornerMapCount;
 
 public void OnPluginStart() 
 {
 	g_MapThresholdList 	= 	new ArrayList(ND_MAX_MAP_SIZE);
 	cvarStockMapCount	=	CreateConVar("sm_voter_scount", "23", "Sets the maximum number of players for stock maps");
+	cvarCornerMapCount	=	CreateConVar("sm_voter_ccount", "20", "Sets the maximum number of players for corner");
 	RegAdminCmd("sm_DebugMapVote", CMD_DebugMapVote, ADMFLAG_KICK, "Debugs the map vote list");
 	
 	AddUpdaterLibrary(); //auto-updater
@@ -110,14 +112,14 @@ void CreateMapThresholdList(bool debugFunction = false)
 	{
 		ND_NominatePopularMaps();
 		
-		if (clientCount < 16)
-		{
+		if (clientCount <= cvarCornerMapCount.IntValue)
+		{		
 			ND_NominateMap(ND_CustomMaps[ND_Corner]);
-					
+
 			if (clientCount < 8)
 			{
 				ND_NominateMap(ND_CustomMaps[ND_Sandbrick], 80.0);
-				
+
 				float marsPer = serverType == SERVER_TYPE_ALPHA ? 60.0 : 40.0;
 				ND_NominateMap(ND_CustomMaps[ND_Mars], marsPer);
 			}
