@@ -9,7 +9,7 @@ float GameME_GetKpdFactor(int client)
 		float base = gc_GameMe[kdrNegativeBase].FloatValue;
 		float divider = 1.0 / (1.0 - base);
 		
-		return base + ClientKdr / divider;
+		return GameME_SkillBase[client] <= 80 ? 1.0 : base + ClientKdr / divider;
 	}
 
 	//If the client kdr is greater than one
@@ -57,13 +57,18 @@ float GameME_GetHpkFactor(int client)
 	/* Reseratively get the client's modified hpk */
 	float ClientHpk = GameME_GetModifiedHpk(client, true);
 	
-	//turn convars values into a decimal for the calculation
+	// Turn convars values into a decimal for the calculation
 	float negKdrDrop 	= percentToDecimal(gc_GameMe[hpkNegativeDrop].FloatValue);
 	float posKdrBoost 	= percentToDecimal(gc_GameMe[hpkPositiveBoost].FloatValue);	
 	float hpkMiddle		= 1 - percentToDecimal(gc_GameMe[hpkMiddleTendency].FloatValue);
 	
+	// Check if the hpk factor is negative. Disable if Skill base is not 80+.
+	bool IsNegativeFactor = (hpkMiddle + ClientHpk) < 1;
+	if (IsNegativeFactor && GameME_SkillBase[client] <= 80)
+		return 1.0;
+	
 	//multiply total hpk by 15% for positive users
-	float hpkMultiplier = (hpkMiddle + ClientHpk) < 1 ? 1 - negKdrDrop : 1 + posKdrBoost;												
+	float hpkMultiplier = IsNegativeFactor ? 1 - negKdrDrop : 1 + posKdrBoost;												
 	return hpkMiddle + (ClientHpk * hpkMultiplier);
 }
 
