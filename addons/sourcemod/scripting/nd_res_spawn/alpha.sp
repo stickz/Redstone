@@ -68,12 +68,13 @@ void AdjustTertiarySpawns()
 	else if (ND_StockMapEquals(map_name, ND_Coast))
 	{
 		// Remove two tertiary points near the secondary
+		RemoveTertiaryPoint("tertiary_park", "tertiary_park_area");
 		RemoveTertiaryPoint("tertiary_sideroom", "tertiary_sideroom_area");
-		RemoveTertiaryPoint("tertiary_gameshop", "tertiary_gameshop_area");
+		//RemoveTertiaryPoint("tertiary_gameshop", "tertiary_gameshop_area");
 		
 		// Move the sand tertiary over more
-		RemoveTertiaryPoint("tertiary_sand", "tertiary_area");
-		SpawnTertiaryPoint({6700.0, 6800.0, 45.0});
+		//RemoveTertiaryPoint("tertiary_sand", "tertiary_area");
+		//SpawnTertiaryPoint({6700.0, 6800.0, 45.0});
 	}
 	
 	else if (ND_CustomMapEquals(map_name, ND_Mars))
