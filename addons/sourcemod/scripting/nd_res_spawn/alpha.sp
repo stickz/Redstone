@@ -69,8 +69,8 @@ void AdjustTertiarySpawns()
 	{
 		// Remove two tertiary points near the secondary
 		RemoveTertiaryPoint("tertiary_park", "tertiary_park_area");
-		RemoveTertiaryPoint("tertiary_sideroom", "tertiary_sideroom_area");
-		//RemoveTertiaryPoint("tertiary_gameshop", "tertiary_gameshop_area");
+		RemoveTertiaryPoint("tertiary_gameshop", "tertiary_gameshop_area");
+		//RemoveTertiaryPoint("tertiary_sideroom", "tertiary_sideroom_area");
 		
 		// Move the sand tertiary over more
 		//RemoveTertiaryPoint("tertiary_sand", "tertiary_area");
