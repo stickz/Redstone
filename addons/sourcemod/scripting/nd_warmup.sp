@@ -32,10 +32,12 @@ enum Convars
 {
 	ConVar:stockWarmupTime,
 	ConVar:customWarmupTime,
-	ConVar:rapidStartClientCount
+	ConVar:rapidStartClientCount,
+	ConVar:funFeaturesClientCount
 };
 
 bool warmupCompleted;
+bool enableFunFeatures = false;
 int g_Integer[Integers];
 ConVar g_Cvar[Convars];
 
@@ -64,6 +66,10 @@ public void OnMapStart()
 
 public void ND_OnRoundStarted() {
 	ToogleWarmupConvars(VALUE_TYPE_DISABLED);
+}
+
+public void ND_OnRoundEnded() {
+	enableFunFeatures = ND_GetClientCount() >= g_Cvar[funFeaturesClientCount].IntValue;
 }
 
 public Action TIMER_WarmupRound(Handle timer)
@@ -111,6 +117,7 @@ void CreatePluginConvars()
 	g_Cvar[stockWarmupTime]		=	CreateConVar("sm_warmup_rtime", "40", "Sets the warmup time for stock maps");
 	g_Cvar[customWarmupTime]	=	CreateConVar("sm_warmup_ctime", "55", "Sets the warmup time for custom maps");
 	g_Cvar[rapidStartClientCount]	=	CreateConVar("sm_warmup_rscc", "4", "Sets the number of players for rapid starting");
+	g_Cvar[funFeaturesClientCount] 	=	CreateConVar("sm_warmup_ffcc", "8", "Sets the number of players for fun features");
 	
 	AutoExecConfig(true, "nd_warmup");
 }
@@ -166,7 +173,10 @@ void SetVarDefaults()
 }
 
 ToogleWarmupConvars(value)
-{
+{	
+	// Only enable these if enough players are connected
+	value = value ? enableFunFeatures : value;
+	
 	ServerCommand("sm_cvar sv_alltalk %d", value);
 	ServerCommand("sm_cvar mp_friendlyfire %d", value);	
 	
