@@ -70,6 +70,7 @@ public void ND_OnRoundStarted() {
 
 public void ND_OnRoundEnded() {
 	enableFunFeatures = ND_GetClientCount() >= g_Cvar[funFeaturesClientCount].IntValue;
+	ToogleWarmupConvars(VALUE_TYPE_ENABLED);
 }
 
 public Action TIMER_WarmupRound(Handle timer)
