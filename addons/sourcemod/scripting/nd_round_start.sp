@@ -65,7 +65,7 @@ public void ND_OnRoundEnded() {
 void InitiateRoundEnd()
 {
 	ServerCommand("mp_minplayers 32");
-	ServerCommand("sm_cvar sv_alltalk 1");
+	//ServerCommand("sm_cvar sv_alltalk 1");
 }
 
 void SetVarDefaults() {
