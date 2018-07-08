@@ -240,7 +240,7 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Downtown))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(28, 28, 30))
+		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 30))
 		{
 			SpawnTertiaryPoint({2385.0, -5582.0, -3190.0});
 			SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0});
