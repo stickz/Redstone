@@ -28,7 +28,9 @@ public void OnPluginStart()
 	RegAdminCmd("sm_RemoveComList", CMD_RemoveCommanderList, ADMFLAG_CUSTOM6);
 	RegAdminCmd("sm_ClearComList", 	CMD_ClearCommanderList,  ADMFLAG_CUSTOM6);
 	
+	LoadTranslations("common.phrases");
 	LoadTranslations("nd_common.phrases");
+	
 	AddUpdaterLibrary();
 }
 
