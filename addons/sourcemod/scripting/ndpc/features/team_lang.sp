@@ -76,7 +76,7 @@ void PrintTeamLanguages(int client = -1)
 	{
 		if (IsValidClient(client))
 		{
-			int team = GetClientTeam(client);
+			int team = GetClientTeam(client) -2;
 			
 			if (!ShowMessage[team])
 			{
