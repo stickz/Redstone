@@ -130,7 +130,8 @@ int GetBotShutOffCount()
 	GetCurrentMap(map, sizeof(map));
 
 	// Disable bots sooner if it's a tiny/broken map
-	if (ND_StockMapEquals(map, ND_Oilfield) || ND_CustomMapEquals(map, ND_Sandbrick) || ND_CustomMapEquals(map, ND_Corner))
+	// ND_StockMapEquals(map, ND_Oilfield) || ND_CustomMapEquals(map, ND_Corner)
+	if (ND_CustomMapEquals(map, ND_Sandbrick))
 		return g_cvar[DisableBotsAtDec].IntValue;
 	
 	// Disable bots later if it's a large stock map
