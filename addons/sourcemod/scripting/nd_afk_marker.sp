@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <nd_stocks>
 #include <nd_rstart>
+#include <nd_rounds>
 
 #define INVALID_TARGET -1
 
@@ -33,7 +34,9 @@ public void OnClientPutInServer(int client) {
 
 public Action PlayerJoinTeam(int client, char[] command, int argc) 
 {
-	CheckAfkStatus(client);	
+	if (ND_RoundStarted())
+		CheckAfkStatus(client);	
+		
 	return Plugin_Continue;
 }
 
