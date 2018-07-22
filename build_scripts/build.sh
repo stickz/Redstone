@@ -216,8 +216,7 @@ do
     -i${COMPILE_INCLUDE_DIR} \
     -o${plugin_dest_path}
 
-  # Only write plugin updater file if it has a directory in /updater
-  if [ -d "$PLUGINS_DIR/$plugin_name" ]; then
+  # Add updater file with a directory in /updater
     echo '"Updater" {' >> $plugin_updater_path
     echo '  "Information" {' >> $plugin_updater_path
     echo '    "Version" {' >> $plugin_updater_path
@@ -239,7 +238,6 @@ do
     if [ "$verbose" = true ]; then
       echo "- Generated Updater file for plugin '$plugin_name'"
     fi
-  fi
 done
 
 # restore previously backed up addons directory
