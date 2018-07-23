@@ -35,6 +35,11 @@ public CookieMenuHandler_Trails(int client, CookieMenuAction:action, any:info, S
 	}
 }
 
+// Disable trails, if the client leaves the steam group
+public void SWGM_OnLeaveGroup(int iClient) {
+	option_trails[client] = false;
+}
+
 public void OnClientCookiesCached(int client) {
 	option_trails[client] = GetCookieTrails(client);
 }
