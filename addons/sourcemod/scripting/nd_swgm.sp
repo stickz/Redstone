@@ -42,9 +42,6 @@ public void OnPluginStart()
 {
 	SetupPluginConvars();
 	
-	if(g_hTimer) KillTimer(g_hTimer); g_hTimer = null;
-	g_hTimer = CreateTimer(CVAR.FloatValue, Check_Timer, _, TIMER_REPEAT);
-	
 	RegAdminCmd("swgm_check", CMD_Check, ADMFLAG_ROOT);
 	RegAdminCmd("swgm_list", CMD_List, ADMFLAG_KICK);
 	
@@ -70,16 +67,19 @@ void FetchUserGroupStats()
 void SetupPluginConvars()
 {	
 	AutoExecConfig_Setup("nd_swgm");
-
-	ConVar CVAR;
-
+	ConVar myConVar;
+	
+	/* Retreive and parse the steam group id into the g_iGroupId interger */
 	char sBuffer[14];
-	(CVAR = AutoExecConfig_CreateConVar("swgm_groupid", "25462375",	"Steam Group ID.")).AddChangeHook(OnGroupChange);
-	CVAR.GetString(sBuffer, sizeof(sBuffer));
+	(myConVar = AutoExecConfig_CreateConVar("swgm_groupid", "25462375", "Steam Group ID.")).AddChangeHook(OnGroupChange);
+	myConVar.GetString(sBuffer, sizeof(sBuffer));
 	g_iGroupId = StringToInt(sBuffer);
 
-	(CVAR = AutoExecConfig_CreateConVar("swgm_timer", "60.0", "Interval beetwen steam group checks.")).AddChangeHook(OnTimeChange);
-
+	/* Create and start the steam group check update timer */
+	(myConVar = AutoExecConfig_CreateConVar("swgm_timer", "60.0", "Interval beetwen steam group checks.")).AddChangeHook(OnTimeChange);
+	if(g_hTimer) KillTimer(g_hTimer); g_hTimer = null;
+	g_hTimer = CreateTimer(myConVar.FloatValue, Check_Timer, _, TIMER_REPEAT);	
+	
 	AutoExecConfig_EC_File();
 }
 
