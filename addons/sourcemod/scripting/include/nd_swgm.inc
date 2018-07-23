@@ -78,14 +78,9 @@ public SharedPlugin __pl_SWGM=
 {
 	name = "SWGM",
 	file = "SWGM.smx",
-#if defined REQUIRE_PLUGIN
-	required = 1
-#else
 	required = 0
-#endif
 };
 
-#if !defined REQUIRE_PLUGIN
 public __pl_SWGM_SetNTVOptional()
 {
 	MarkNativeAsOptional("SWGM_InGroup");
@@ -94,4 +89,3 @@ public __pl_SWGM_SetNTVOptional()
 	MarkNativeAsOptional("SWGM_CheckPlayer");
 	MarkNativeAsOptional("SWGM_CheckPlayers");
 }
-#endif
