@@ -24,6 +24,8 @@ public void OnPluginStart()
 {
 	RegAdminCmd("sm_MarkAFK", CMD_MarkAfterPlayer, ADMFLAG_CUSTOM6, "Manually marks as player as afk.");
 	
+	LoadTranslations("common.phrases");
+	
 	AddCommandListener(PlayerJoinTeam, "jointeam");	// Listen for when a player joins a team	
 	AddUpdaterLibrary(); // Add auto updater feature
 }
