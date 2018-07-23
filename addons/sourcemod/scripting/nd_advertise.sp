@@ -100,6 +100,11 @@ public CookieMenuHandler_ServerAverts(int client, CookieMenuAction:action, any:i
 	}
 }
 
+// Enable advertisments, if the client leaves the steam group
+public void SWGM_OnLeaveGroup(int client) {
+	option_adverts[client] = true;
+}
+
 public void OnClientCookiesCached(int client) {
 	option_adverts[client] = GetCookieAdverts(client);
 }
