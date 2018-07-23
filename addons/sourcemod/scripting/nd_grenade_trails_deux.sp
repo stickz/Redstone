@@ -8,6 +8,7 @@
 #include <nd_com_eng>
 #include <nd_redstone>
 #include <nd_swgm>
+#include <nd_print>
 
 #define NO_COMMANDER -1
 #define MAX_DISPLAYNAME_SIZE 30
@@ -50,6 +51,7 @@ public void OnPluginStart()
 		PrecacheTrails();
 	
 	LoadTranslations("nd_grenade_trails_deux.phrases");
+	LoadTranslations("nd_common.phrases");
 	AddClientPrefSupport(); // clientprefs.sp
 	AddUpdaterLibrary(); //auto-updater
 }
