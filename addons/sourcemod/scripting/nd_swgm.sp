@@ -2,7 +2,6 @@
 #include <nd_swgm>
 
 #pragma semicolon 1
-#pragma newdecls required
 
 public Plugin myinfo =
 {
