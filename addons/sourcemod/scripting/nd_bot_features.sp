@@ -18,6 +18,7 @@
 #include <nd_rounds>
 #include <nd_maps>
 #include <nd_turret_eng>
+#include <nd_commands>
 
 #include "nd_bot_feat/convars.sp"
 //functions required to create a modulous bot quota
@@ -59,6 +60,10 @@ public Action PlayerJoinTeam(int client, char[] command, int argc) {
 }
 
 public void TB_OnTeamPlacement(int client, int team) {
+	CheckBotCounts(client);
+}
+
+public void ND_OnClientTeamSet(int client, int team) {
 	CheckBotCounts(client);
 }
 
