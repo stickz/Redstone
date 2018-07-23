@@ -3,6 +3,7 @@
 #include <nd_print>
 #include <nd_stocks>
 #include <clientprefs>
+#include <nd_swgm>
 
 public Plugin myinfo =
 {
@@ -35,19 +36,28 @@ public void ND_OnTeamsShuffled() {
 public Action TIMER_AdvertiseSteamGroup(Handle timer)
 {
 	// Join the RedstoneND steam group!
-	PrintServerAdvert("Join RedstoneND");
+	PrintSteamGroupAdvert("Join RedstoneND");
 	
 	return Plugin_Handled;
 }
 
-void PrintServerAdvert(const char[] phrase)
+void PrintSteamGroupAdvert(const char[] phrase)
+{
+	for (int client = 1; client <= MaxClients; client++) {
+		if (IsValidClient(client) && option_adverts[client] && !SWGM_IsInGroup(client)) {
+			PrintMessageEx(client, phrase);
+		}
+	}
+}
+
+/*void PrintServerAdvert(const char[] phrase)
 {
 	for (int client = 1; client <= MaxClients; client++) {
 		if (IsValidClient(client) && option_adverts[client]) {
 			PrintMessageEx(client, phrase);
 		}
 	}
-}
+}*/
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
