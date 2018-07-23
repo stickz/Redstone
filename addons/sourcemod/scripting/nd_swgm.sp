@@ -1,4 +1,4 @@
-#include <steamworks>
+#include <SteamWorks>
 #include <swgm>
 
 #pragma semicolon 1
