@@ -40,8 +40,8 @@ forward void SWGM_OnLeaveGroup(int iClient);
 native bool SWGM_InGroup(int iClient);
 #define SWGM_IG_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "SWGM_InGroup") == FeatureStatus_Available)
 
-stock bool SWGM_IsInGroup(int iClient, bool default = true) {
-	return !SWGM_IG_AVAILIBLE() ? default : SWGM_InGroup(iClient);
+stock bool SWGM_IsInGroup(int iClient, bool bDefault) {
+	return !SWGM_IG_AVAILIBLE() ? bDefault : SWGM_InGroup(iClient);
 }
 
 /**
