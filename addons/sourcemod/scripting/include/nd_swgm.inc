@@ -77,7 +77,7 @@ native void SWGM_CheckPlayers();
 public SharedPlugin __pl_SWGM= 
 {
 	name = "SWGM",
-	file = "SWGM.smx",
+	file = "nd_swgm.smx",
 	required = 0
 };
 
