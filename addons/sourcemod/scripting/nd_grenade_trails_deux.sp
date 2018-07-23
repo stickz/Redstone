@@ -7,6 +7,7 @@
 #include <nd_rounds>
 #include <nd_com_eng>
 #include <nd_redstone>
+#include <nd_swgm>
 
 #define NO_COMMANDER -1
 #define MAX_DISPLAYNAME_SIZE 30
