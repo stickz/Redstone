@@ -38,6 +38,7 @@ forward void SWGM_OnLeaveGroup(int iClient);
  *  @error                  Invalid client index, client not in game, or client bot.
  */
 native bool SWGM_InGroup(int iClient);
+#define SWGM_IG_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "SWGM_InGroup") == FeatureStatus_Available)
 
 /**
  *  Check is player in group and officer.
