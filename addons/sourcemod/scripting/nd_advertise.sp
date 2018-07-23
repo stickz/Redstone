@@ -89,10 +89,14 @@ public CookieMenuHandler_ServerAverts(int client, CookieMenuAction:action, any:i
 		
 		case CookieMenuAction_SelectOption:
 		{
-			option_adverts[client] = !option_adverts[client];		
+			if (option_adverts[client] && !SWGM_IsInGroup(client, true))
+				PrintMessage(client, "Steam Group Usage");
+			else
+				option_adverts[client] = !option_adverts[client];			
+
 			SetClientCookie(client, cookie_adverts, option_adverts[client] ? "On" : "Off");		
 			ShowCookieMenu(client);		
-		}	
+		}
 	}
 }
 
@@ -105,5 +109,5 @@ bool GetCookieAdverts(int client)
 	char buffer[10];
 	GetClientCookie(client, cookie_adverts, buffer, sizeof(buffer));
 	
-	return !StrEqual(buffer, "Off");
+	return !SWGM_IsInGroup(client, true) ? "On" : !StrEqual(buffer, "Off");
 }
