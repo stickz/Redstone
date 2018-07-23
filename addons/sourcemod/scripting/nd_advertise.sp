@@ -44,7 +44,7 @@ public Action TIMER_AdvertiseSteamGroup(Handle timer)
 void PrintSteamGroupAdvert(const char[] phrase)
 {
 	for (int client = 1; client <= MaxClients; client++) {
-		if (IsValidClient(client) && option_adverts[client] && !SWGM_IsInGroup(client)) {
+		if (IsValidClient(client) && option_adverts[client] && !SWGM_IsInGroup(client, false)) {
 			PrintMessageEx(client, phrase);
 		}
 	}
