@@ -3,6 +3,7 @@
 #include <nd_print>
 #include <nd_stocks>
 #include <clientprefs>
+#include <nd_swgm>
 
 public Plugin myinfo =
 {
@@ -35,19 +36,28 @@ public void ND_OnTeamsShuffled() {
 public Action TIMER_AdvertiseSteamGroup(Handle timer)
 {
 	// Join the RedstoneND steam group!
-	PrintServerAdvert("Join RedstoneND");
+	PrintSteamGroupAdvert("Join RedstoneND");
 	
 	return Plugin_Handled;
 }
 
-void PrintServerAdvert(const char[] phrase)
+void PrintSteamGroupAdvert(const char[] phrase)
+{
+	for (int client = 1; client <= MaxClients; client++) {
+		if (IsValidClient(client) && option_adverts[client] && !SWGM_IsInGroup(client, false)) {
+			PrintMessageEx(client, phrase);
+		}
+	}
+}
+
+/*void PrintServerAdvert(const char[] phrase)
 {
 	for (int client = 1; client <= MaxClients; client++) {
 		if (IsValidClient(client) && option_adverts[client]) {
 			PrintMessageEx(client, phrase);
 		}
 	}
-}
+}*/
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
@@ -79,11 +89,20 @@ public CookieMenuHandler_ServerAverts(int client, CookieMenuAction:action, any:i
 		
 		case CookieMenuAction_SelectOption:
 		{
-			option_adverts[client] = !option_adverts[client];		
+			if (option_adverts[client] && !SWGM_IsInGroup(client, true))
+				PrintMessage(client, "Steam Group Usage");
+			else
+				option_adverts[client] = !option_adverts[client];			
+
 			SetClientCookie(client, cookie_adverts, option_adverts[client] ? "On" : "Off");		
 			ShowCookieMenu(client);		
-		}	
+		}
 	}
+}
+
+// Enable advertisments, if the client leaves the steam group
+public void SWGM_OnLeaveGroup(int client) {
+	option_adverts[client] = true;
 }
 
 public void OnClientCookiesCached(int client) {
@@ -95,5 +114,5 @@ bool GetCookieAdverts(int client)
 	char buffer[10];
 	GetClientCookie(client, cookie_adverts, buffer, sizeof(buffer));
 	
-	return !StrEqual(buffer, "Off");
+	return !SWGM_IsInGroup(client, true) ? true : !StrEqual(buffer, "Off");
 }

@@ -38,6 +38,11 @@ forward void SWGM_OnLeaveGroup(int iClient);
  *  @error                  Invalid client index, client not in game, or client bot.
  */
 native bool SWGM_InGroup(int iClient);
+#define SWGM_IG_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "SWGM_InGroup") == FeatureStatus_Available)
+
+stock bool SWGM_IsInGroup(int iClient, bool bDefault) {
+	return !SWGM_IG_AVAILIBLE() ? bDefault : SWGM_InGroup(iClient);
+}
 
 /**
  *  Check is player in group and officer.
@@ -76,15 +81,10 @@ native void SWGM_CheckPlayers();
 public SharedPlugin __pl_SWGM= 
 {
 	name = "SWGM",
-	file = "SWGM.smx",
-#if defined REQUIRE_PLUGIN
-	required = 1
-#else
+	file = "nd_swgm.smx",
 	required = 0
-#endif
 };
 
-#if !defined REQUIRE_PLUGIN
 public __pl_SWGM_SetNTVOptional()
 {
 	MarkNativeAsOptional("SWGM_InGroup");
@@ -93,4 +93,3 @@ public __pl_SWGM_SetNTVOptional()
 	MarkNativeAsOptional("SWGM_CheckPlayer");
 	MarkNativeAsOptional("SWGM_CheckPlayers");
 }
-#endif

@@ -22,11 +22,22 @@ public CookieMenuHandler_Trails(int client, CookieMenuAction:action, any:info, S
 		
 		case CookieMenuAction_SelectOption:
 		{
-			option_trails[client] = !option_trails[client];		
-			SetClientCookie(client, cookie_trails, option_trails[client] ? "On" : "Off");		
+			if (!option_trails[client] && !SWGM_IsInGroup(client, true))
+				PrintMessage(client, "Steam Group Usage");
+			else
+			{
+				option_trails[client] = !option_trails[client];		
+				SetClientCookie(client, cookie_trails, option_trails[client] ? "On" : "Off");			
+			}
+		
 			ShowCookieMenu(client);		
 		}	
 	}
+}
+
+// Disable trails, if the client leaves the steam group
+public void SWGM_OnLeaveGroup(int client) {
+	option_trails[client] = false;
 }
 
 public void OnClientCookiesCached(int client) {
@@ -38,5 +49,5 @@ bool GetCookieTrails(int client)
 	char buffer[10];
 	GetClientCookie(client, cookie_trails, buffer, sizeof(buffer));
 	
-	return !StrEqual(buffer, "Off");
+	return !StrEqual(buffer, "Off") && SWGM_IsInGroup(client, true);
 }

@@ -1,6 +1,6 @@
 "Phrases"
 {
-    "Empire"
+   	"Empire"
 	{
 		"en"		"Empire"
 	}
@@ -33,5 +33,10 @@
 	"On Team"
 	{
 		"en"		"You must be on a team to use this command"
+	}
+	
+	"Steam Group Usage"
+	{
+		"en"		"You must join the RedstoneND steam group to use this feature"
 	}
 }
