@@ -1,5 +1,5 @@
 #include <SteamWorks>
-#include <swgm>
+#include <nd_swgm>
 
 #pragma semicolon 1
 #pragma newdecls required
