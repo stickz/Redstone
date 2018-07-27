@@ -79,9 +79,12 @@ public void OnEmpGrenadeSpawned(int entity)
 		int ownerTeam = GetClientTeam(owner);
 		RED_LOOP_CLIENTS(idx) 
 		{
-			clientTeam = GetClientTeam(idx);
-			if (clientTeam >= 2 && clientTeam == ownerTeam && option_trails[idx])
-				players.Push(idx);
+			if (idx != owner)
+			{
+				clientTeam = GetClientTeam(idx);
+				if (clientTeam >= 2 && clientTeam == ownerTeam && option_trails[idx])
+					players.Push(idx);
+			}
 		}
 		
 		/* Setup the beam and send it to the array list of players */
@@ -109,9 +112,12 @@ public void OnTrailItemSpawned(int entity)
 		int clientTeam = -1;
 		RED_LOOP_CLIENTS(idx) 
 		{
-			clientTeam = GetClientTeam(idx);
-			if (clientTeam < 2 || (clientTeam == ownerTeam && option_trails[idx]))
-				players.Push(idx);
+			if (idx != owner)
+			{
+				clientTeam = GetClientTeam(idx);
+				if (clientTeam < 2 || (clientTeam == ownerTeam && option_trails[idx]))
+					players.Push(idx);
+			}
 		}
 		
 		/* Setup the beam and send it to the array list of players */
