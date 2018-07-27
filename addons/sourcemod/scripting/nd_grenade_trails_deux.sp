@@ -62,8 +62,8 @@ public void OnEntityCreated(int entity, const char[] classname)
 	{
 		if (StrEqual(classname, "emp_grenade_ent", true))
 			SDKHook(entity, SDKHook_Spawn, OnEmpGrenadeSpawned);
-
-		SDKHook(entity, SDKHook_Spawn, OnTrailItemSpawned);
+		else
+			SDKHook(entity, SDKHook_Spawn, OnTrailItemSpawned);
 	}
 }
 
