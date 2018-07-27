@@ -2,6 +2,6 @@
 {
     "Cookie Trails"
     {
-        "en"        "Grenade Trails"
+        "en"        "Team Trails"
     } 
 }
