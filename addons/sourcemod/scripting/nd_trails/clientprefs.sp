@@ -36,10 +36,7 @@ public CookieMenuHandler_Trails(int client, CookieMenuAction:action, any:info, S
 		{
 			char status[10];
 			Format(status, sizeof(status), "%T", option_trails[i][client] ? "On" : "Off", client);
-			
-			char num[4];
-			IntToString(i, num, sizeof(num));			
-			TrailMenu.AddItem(num, "%s: %s", TrailName[i], status);
+			TrailMenu.AddItem(i, "%s: %s", TrailName[i], status);
 		}
 		
 		// Set back button to enabled and display the menu forever
