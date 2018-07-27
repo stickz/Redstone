@@ -74,14 +74,9 @@ public void OnEmpGrenadeSpawned(int entity)
 	{
 		ArrayList players = new ArrayList(32);
 		
-		/* Send to the commander, when NOT in commander view */
-		int ownerTeam = GetClientTeam(owner);
-		int commander = ND_GetTeamCommander(ownerTeam);	
-		if (commander != NO_COMMANDER && !ND_InCommanderMode(commander))
-			players.Push(commander);
-		
 		/* Send to all players currently on a team */
 		int clientTeam = -1;
+		int ownerTeam = GetClientTeam(owner);
 		RED_LOOP_CLIENTS(idx) 
 		{
 			clientTeam = GetClientTeam(idx);
