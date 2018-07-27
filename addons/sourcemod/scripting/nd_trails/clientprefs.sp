@@ -79,13 +79,13 @@ public int GrenadeTrailsMenu(Menu menu, MenuAction action, int client, int choic
 
 // Disable trails, if the client leaves the steam group
 public void SWGM_OnLeaveGroup(int client) {
-	DisableTrails();
+	DisableTrails(client);
 }
 
 public void OnClientCookiesCached(int client) 
 {
 	if (SWGM_IsInGroup(client, true))
-		DisableTrails();
+		DisableTrails(client);
 	else
 	{	
 		for (int i = 1; i <=3; i++) {
@@ -102,7 +102,7 @@ bool GetCookieTrails(int client, Handle &cTrails)
 	return !StrEqual(buffer, "Off") && SWGM_IsInGroup(client, true);
 }
 
-void DisableTrails() {
+void DisableTrails(int client) {
 	for (int i = 1; i <=3; i++) {
 		option_trails[i][client] = false;
 	}
