@@ -2,7 +2,7 @@
 #define TRAIL_PLAYER 	2
 #define TRAIL_SPECTATE	3
 
-bool option_trails[4][MAXPLAYERS + 1] = { {true, ...}, ...};
+bool option_trails[4][MAXPLAYERS + 1];
 Handle cookie_trails[4] = {INVALID_HANDLE, ...};
 
 void AddClientPrefSupport()
@@ -37,7 +37,10 @@ public CookieMenuHandler_Trails(int client, CookieMenuAction:action, any:info, S
 			char status[10];
 			Format(status, sizeof(status), "%T", option_trails[i][client] ? "On" : "Off", client);
 			
-			TrailMenu.AddItem(IntToString(i), "%s: %s", TrailName[i], status);		
+			char info[32];
+			Format(info, sizeof(info), "%s: %s", TrailName[i], status);
+			
+			TrailMenu.AddItem(IntToString(i), info);		
 		}
 		
 		// Set back button to enabled and display the menu forever
