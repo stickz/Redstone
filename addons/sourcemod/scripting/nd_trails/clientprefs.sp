@@ -2,7 +2,7 @@
 #define TRAIL_PLAYER 	2
 #define TRAIL_SPECTATE	3
 
-bool option_trails[4][MAXPLAYERS + 1] = {true,...};
+bool option_trails[4][MAXPLAYERS + 1] = { {true, ...}, ...};
 Handle cookie_trails[4] = {INVALID_HANDLE, ...};
 
 void AddClientPrefSupport()
@@ -41,8 +41,8 @@ public CookieMenuHandler_Trails(int client, CookieMenuAction:action, any:info, S
 		}
 		
 		// Set back button to enabled and display the menu forever
-		TrialMenu.ExitBackButton = true;
-		TrialMenu.Display(client, MENU_TIME_FOREVER);
+		TrailMenu.ExitBackButton = true;
+		TrailMenu.Display(client, MENU_TIME_FOREVER);
 	}
 }
 
@@ -62,13 +62,13 @@ public int GrenadeTrailsMenu(Menu menu, MenuAction action, int client, int choic
 			if (option_trails[tI][client])
 			{
 				PrintToChat(client, "Trail Option Enabled");
-				SetClientCookie(client, cookie_trails, "On");
+				SetClientCookie(client, cookie_trails[tI], "On");
 			}
 
 			else if (option_trails[tI][client])
 			{
 				PrintToChat(client, "Trial Option Disabled");
-				SetClientCookie(client, cookie_trails, "Off");				
+				SetClientCookie(client, cookie_trails[tI], "Off");				
 			}
 		}
 		
