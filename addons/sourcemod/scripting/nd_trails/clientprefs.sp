@@ -6,7 +6,7 @@ void AddClientPrefSupport()
 	LoadTranslations("common.phrases");
 	cookie_trails = RegClientCookie("Trails On/Off", "", CookieAccess_Protected);
 	new info;
-	SetCookieMenuItem(CookieMenuHandler_Trails, any:info, "Grenade Trails");	
+	SetCookieMenuItem(CookieMenuHandler_Trails, any:info, "Team Trails");	
 }
  
 public CookieMenuHandler_Trails(int client, CookieMenuAction:action, any:info, String:buffer[], maxlen)
