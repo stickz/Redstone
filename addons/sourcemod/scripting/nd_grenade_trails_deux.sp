@@ -111,9 +111,11 @@ public void OnTrailItemSpawned(int entity)
 			players.Push(commander);
 		
 		/* Send to all players currently in spectator or unassigned */
+		int clientTeam = -1;
 		RED_LOOP_CLIENTS(idx) 
 		{
-			if (GetClientTeam(idx) < 2 && option_trails[idx])
+			clientTeam = GetClientTeam(idx);
+			if (clientTeam < 2 || (clientTeam == ownerTeam && option_trails[idx]))
 				players.Push(idx);
 		}
 		
