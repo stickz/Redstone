@@ -32,7 +32,7 @@ public Plugin myinfo =
 	name 		= "[ND] Grenade Trails V2",
 	author 		= "Stickz",
 	description 	= "Adds lightbeams to grenades/rockets",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

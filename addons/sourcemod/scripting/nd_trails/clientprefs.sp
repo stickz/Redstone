@@ -49,5 +49,5 @@ bool GetCookieTrails(int client)
 	char buffer[10];
 	GetClientCookie(client, cookie_trails, buffer, sizeof(buffer));
 	
-	return !StrEqual(buffer, "Off") && SWGM_IsInGroup(client, true);
+	return StrEqual(buffer, "On") && SWGM_IsInGroup(client, true);
 }
