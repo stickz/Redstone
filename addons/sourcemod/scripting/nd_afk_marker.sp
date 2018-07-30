@@ -23,7 +23,7 @@ bool IsMarkedAfk[MAXPLAYERS+1] = { false, ... };
 
 public void OnPluginStart()
 {
-	RegAdminCmd("sm_MarkAFK", CMD_MarkAfterPlayer, ADMFLAG_CUSTOM6, "Manually marks as player as afk.");
+	RegConsoleCmd("sm_MarkAFK", CMD_MarkAfterPlayer, "Manually marks as player as afk.");
 	
 	LoadTranslations("common.phrases");
 	
