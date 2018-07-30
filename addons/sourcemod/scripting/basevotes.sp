@@ -1,16 +1,19 @@
 #pragma semicolon 1
-
 #include <sourcemod>
+
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/basevotes/basevotes.txt"
+#include "updater/standard.sp"
+
 #undef REQUIRE_PLUGIN
 #include <adminmenu>
 
 public Plugin myinfo =
 {
 	name = "Basic Votes",
-	author = "AlliedModders LLC",
+	author = "AlliedModders LLC, Stickz",
 	description = "Basic Vote Commands",
-	version = SOURCEMOD_VERSION,
-	url = "http://www.sourcemod.net/"
+	version = "dummy",
+	url = "https://github.com/stickz/Redstone/"
 };
 
 #define VOTE_NO "###no###"
@@ -92,6 +95,8 @@ public void OnPluginStart()
 	char mapListPath[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, mapListPath, sizeof(mapListPath), "configs/adminmenu_maplist.ini");
 	SetMapListCompatBind("sm_votemap menu", mapListPath);
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public void OnConfigsExecuted()
