@@ -2,8 +2,8 @@
 
 void RegRestartCommand() 
 {
-	RegAdminCmd("sm_RestartRound", CMD_RestartRound, ADMFLAG_CUSTOM6, "Restarts the round when used");
-	RegAdminCmd("sm_RestartWarmup", CMD_RestartWarmup, ADMFLAG_CUSTOM6, "Restarts the warmup when used");
+	RegConsoleCmd("sm_RestartRound", CMD_RestartRound, "Restarts the round when used");
+	RegConsoleCmd("sm_RestartWarmup", CMD_RestartWarmup, "Restarts the warmup when used");
 }
 
 /* Stop the round and instantly restart it again */
@@ -32,6 +32,12 @@ public Action CMD_RestartWarmup(int client, int args)
 
 bool CanRestartRound(int client)
 {
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		PrintToChat(client, "\x05[xG] You must be a RedstoneND officer to use this command!");
+		return false;
+	}
+	
 	if (!ND_HasTPRunAccess(client))
 	{
 		PrintToChat(client, "\x05[xG] You only have team-pick access to this command!");
