@@ -1,6 +1,7 @@
 #include <autoexecconfig>
 #include <SteamWorks>
 #include <nd_swgm>
+#include <nd_stocks>
 
 #pragma semicolon 1
 
@@ -43,7 +44,7 @@ public void OnPluginStart()
 	SetupPluginConvars();
 	
 	RegAdminCmd("swgm_check", CMD_Check, ADMFLAG_ROOT);
-	RegAdminCmd("swgm_list", CMD_List, ADMFLAG_KICK);
+	RegConsoleCmd("swgm_list", CMD_List, "Check players currently in the steam group");
 	
 	FetchUserGroupStats();
 
@@ -127,6 +128,12 @@ void Check()
 
 public Action CMD_List(int iClient, int args)
 {
+	if (!g_bInGroupOfficer[iClient] || !HasRootAccess(iClient))
+	{
+		ReplyToCommand(iClient, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	char sAuth[24];
 	int iCount, iCountInGroup, iCountNotInGroup;
 	
