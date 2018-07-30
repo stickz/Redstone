@@ -4,7 +4,7 @@ Handle CountDownTimer = INVALID_HANDLE;
 
 void RegCommandsCountDown()
 {
-	RegConsoleCmd("sm_start", Command_Start, "Manually start the round);
+	RegConsoleCmd("sm_start", Command_Start, "Manually start the round");
 	RegConsoleCmd("sm_stop", Command_Cancel, "Stop the countdown timer");
 }
 
