@@ -58,6 +58,12 @@ stock bool SWGM_IsGroupOfficer(int iClient, bool bDefault) {
 	return !SWGM_GO_AVAILIBLE() ? bDefault : SWGM_InGroupOfficer(iClient);
 }
 
+stock bool SWMG_OfficerOrRoot(int iClient)
+{
+	return SWGM_IsGroupOfficer(iClient, false)) ||		
+		GetAdminFlag(GetUserAdmin(client), Admin_Root, Access_Real);
+}
+
 /**
  *  Return player status.
  *
