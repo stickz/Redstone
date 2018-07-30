@@ -3,6 +3,7 @@
 #include <nd_fskill>
 #include <nd_print>
 #include <nd_rounds>
+#include <nd_swgm>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_picking_list/nd_picking_list.txt"
@@ -24,9 +25,10 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_command", 	 CMD_VolunteerCommander);
 	RegConsoleCmd("sm_PrintComList", CMD_PrintCommanderList);
 	
-	RegAdminCmd("sm_AddComList", 	CMD_AddCommanderList, 	 ADMFLAG_CUSTOM6);
-	RegAdminCmd("sm_RemoveComList", CMD_RemoveCommanderList, ADMFLAG_CUSTOM6);
-	RegAdminCmd("sm_ClearComList", 	CMD_ClearCommanderList,  ADMFLAG_CUSTOM6);
+	/* Require steam group officer or root to access */
+	RegConsoleCmd("sm_AddComList", 		CMD_AddCommanderList, 	 "Add a commander to the list");
+	RegConsoleCmd("sm_RemoveComList", 	CMD_RemoveCommanderList, "Remove a commander from the list");
+	RegConsoleCmd("sm_ClearComList", 	CMD_ClearCommanderList,  "Clear the commander list");
 	
 	LoadTranslations("common.phrases");
 	LoadTranslations("nd_common.phrases");
@@ -62,6 +64,12 @@ public Action CMD_VolunteerCommander(int client, int args)
 
 public Action CMD_AddCommanderList(int client, int args)
 {
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	// Check if the command was used properly
 	if (args != 1) 
 	{
@@ -86,6 +94,12 @@ public Action CMD_AddCommanderList(int client, int args)
 
 public Action CMD_RemoveCommanderList(int client, int args)
 {
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	// Check if the command was used properly
 	if (args != 1) 
 	{
@@ -110,6 +124,12 @@ public Action CMD_RemoveCommanderList(int client, int args)
 
 public Action CMD_ClearCommanderList(int client, int args)
 {
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	ClearCommanderList();
 	return Plugin_Handled;
 }
