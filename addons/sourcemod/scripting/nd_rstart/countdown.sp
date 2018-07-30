@@ -4,8 +4,8 @@ Handle CountDownTimer = INVALID_HANDLE;
 
 void RegCommandsCountDown()
 {
-	RegAdminCmd("sm_start", Command_Start, ADMFLAG_GENERIC);
-	RegAdminCmd("sm_stop", Command_Cancel, ADMFLAG_GENERIC);
+	RegConsoleCmd("sm_start", Command_Start, "Manually start the round);
+	RegConsoleCmd("sm_stop", Command_Cancel, "Stop the countdown timer");
 }
 
 void ClearCountDownHandle() {
@@ -29,6 +29,12 @@ void CancelCountDown()
 
 public Action Command_Start(int client, int args)
 {
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	if (args == 1)
 	{
 		char runBalance[16]; // Get the argument inputed
@@ -47,6 +53,12 @@ public Action Command_Start(int client, int args)
  
 public Action Command_Cancel(int client, int args)
 {
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	CancelCountDown();
 	return Plugin_Handled;
 }
