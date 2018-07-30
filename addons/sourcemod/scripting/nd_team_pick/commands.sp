@@ -1,19 +1,31 @@
 void RegisterCommands()
 {
-	RegAdminCmd("ToggleLocks", DisableTeamChg, ADMFLAG_CUSTOM6);
-	RegAdminCmd("ShowPickMenu", ShowPickMenu, ADMFLAG_ROOT);	
-	RegAdminCmd("ReloadPicker", ReloadTeamPicker, ADMFLAG_CUSTOM6);
-	RegAdminCmd("StopPicker", StopTeamPicking, ADMFLAG_CUSTOM6);	
+	RegConsoleCmd("ToggleLocks", DisableTeamChg, "Disable team locks");
+	RegConsoleCmd("ShowPickMenu", ShowPickMenu, "Show team pick menu");	
+	RegConsoleCmd("ReloadPicker", ReloadTeamPicker, "Reload team picker");
+	RegConsoleCmd("StopPicker", StopTeamPicking, "Stop team picker");	
 }
 
 public Action StopTeamPicking(int client, int args)
 {
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	FinishPicking(true);	
 	return Plugin_Handled;
 }
 
 public Action ReloadTeamPicker(int client, int args)
 {
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	// Terminate team picking procress before reloading
 	FinishPicking(true);
 	
@@ -38,6 +50,12 @@ void ReloadThePlugin() {
 
 public Action DisableTeamChg(int client, intargs) 
 {	
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	PrintToChatAll("Team Changing is now %s!", g_bEnabled ? "allowed" : "disabled");
 	g_bEnabled = !g_bEnabled;
 	return Plugin_Handled;
@@ -45,6 +63,12 @@ public Action DisableTeamChg(int client, intargs)
 
 public Action ShowPickMenu(int client, int args) 
 {
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	if (g_bPickStarted)
 	{
 		ReplyToCommand(client, "[SM] Cannot use while picking is running!");
