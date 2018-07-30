@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <nd_teampick>
+#include <nd_swgm>
 
 public Plugin myinfo =
 {
@@ -29,11 +30,8 @@ public void OnPluginStart()
 /*Switch a target player's team */
 public Action Command_Swap(int client, int args) 
 {
-	if (!ND_HasTPRunAccess(client))
-	{
-		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+	if (!HasSetTeamAccess(client))
 		return Plugin_Handled;
-	}
 	
 	if (!args)
 	{
@@ -74,11 +72,8 @@ void PerformSwap(int client)
 //Spec Command
 public Action Command_Spec(int client, int args)
 {
-	if (!ND_HasTPRunAccess(client))
-	{
-		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+	if (!HasSetTeamAccess(client))
 		return Plugin_Handled;
-	}
 	
 	if (!args)
 	{
@@ -110,11 +105,8 @@ public Action Command_Spec(int client, int args)
 
 public Action Command_SetTeam(int client, int args)
 {
-	if (!ND_HasTPRunAccess(client))
-	{
-		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+	if (!HasSetTeamAccess(client))
 		return Plugin_Handled;
-	}
 	
 	if (args != 2)
 	{
@@ -223,9 +215,26 @@ void PerformGetID(int client, int target)
 void RegisterCommands()
 {
 	RegAdminCmd("sm_pid", CMD_GetID, ADMFLAG_GENERIC, "Checks player ID");
-	RegAdminCmd("sm_swap", Command_Swap, ADMFLAG_CUSTOM3, "Swaps the team of targeted player.");
-	RegAdminCmd("sm_forcespec", Command_Spec, ADMFLAG_CUSTOM3, "Swaps the targeted player to spectator team.");
-	RegAdminCmd("sm_SetTeam", Command_SetTeam, ADMFLAG_CUSTOM3, "Sets the team of a target player");
+	RegConsoleCmd("sm_swap", Command_Swap, "Swaps the team of targeted player.");
+	RegConsoleCmd("sm_forcespec", Command_Spec, "Swaps the targeted player to spectator team.");
+	RegConsoleCmd("sm_SetTeam", Command_SetTeam, "Sets the team of a target player");
+}
+
+bool HasSetTeamAccess(int client)
+{
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		PrintToChat(client, "You must be a RedstoneND officer to use this command!");
+		return false;
+	}
+	
+	if (!ND_HasTPRunAccess(client))
+	{
+		PrintToChat(client, "You only have team-pick access to this command!");
+		return false;
+	}
+	
+	return true;
 }
 
 
