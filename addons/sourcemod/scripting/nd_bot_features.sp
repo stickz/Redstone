@@ -7,6 +7,7 @@
 #include <sdktools>
 #include <nd_stocks>
 #include <nd_slots>
+#include <nd_swgm>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_bot_features/nd_bot_features.txt"
@@ -44,7 +45,7 @@ public void OnPluginStart()
 {
 	CreatePluginConvars(); //convars.sp
 	AddCommandListener(PlayerJoinTeam, "jointeam");
-	RegAdminCmd("sm_DisableBots", CMD_DisableBots, ADMFLAG_ROOT, "dummy");
+	RegConsoleCmd("sm_DisableBots", CMD_DisableBots, "Disables bots until round end");
 
 	AutoExecConfig(true, "nd_bot_features");	
 	AddUpdaterLibrary(); //auto-updater
@@ -69,6 +70,12 @@ public void ND_OnClientTeamSet(int client, int team) {
 
 public Action CMD_DisableBots(int client, int args)
 {
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	disableBots = !disableBots;
 	
 	if (disableBots)
