@@ -60,7 +60,7 @@ stock bool SWGM_IsGroupOfficer(int iClient, bool bDefault) {
 
 stock bool SWMG_OfficerOrRoot(int iClient)
 {
-	return SWGM_IsGroupOfficer(iClient, false)) ||		
+	return SWGM_IsGroupOfficer(iClient, false) ||		
 		GetAdminFlag(GetUserAdmin(client), Admin_Root, Access_Real);
 }
 
