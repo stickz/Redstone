@@ -1,7 +1,7 @@
 bool pauseWarmup = false;
 
 void RegNextPickCommand() {
-	RegAdminCmd("sm_NextPick", CMD_TriggerPicking, ADMFLAG_CUSTOM6, "enable/disable picking for next map");
+	RegConsoleCmd("sm_NextPick", CMD_TriggerPicking, "enable/disable picking for next map");
 }
 
 /* Toggle player picking mode */
@@ -11,6 +11,12 @@ public Action CMD_TriggerPicking(int client, int args)
 	{
 		ReplyToCommand(client, "[SM] Usage: !NextPick <on or off>");
 		return Plugin_Handled;	
+	}
+	
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
 	}
 	
 	char arg1[64];
