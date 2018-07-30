@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <adminmenu>
 #include <nd_teampick>
+#include <nd_swgm>
 
 public Plugin myinfo =
 {
@@ -36,8 +37,8 @@ Handle hAdminMenu = INVALID_HANDLE;
 
 public void OnPluginStart()
 {
-	RegAdminCmd("sm_promote", Cmd_SetCommander, ADMFLAG_CUSTOM1, "<Name|#UserID> - Promote a player to commander.");
-	RegAdminCmd("sm_forcedemote", Cmd_Demote, ADMFLAG_CUSTOM1, "<ct | emp> - Remove a team's commander.");	
+	RegConsoleCmd("sm_promote", Cmd_SetCommander, "<Name|#UserID> - Promote a player to commander.");
+	RegConsoleCmd("sm_forcedemote", Cmd_Demote, "<ct | emp> - Remove a team's commander.");	
 	
 	LoadTranslations("common.phrases"); //required for FindTarget	
 	
@@ -68,11 +69,8 @@ public OnAdminMenuReady(Handle:topmenu)
 
 public Action Cmd_SetCommander(int client, int args)
 {
-	if (!ND_HasTPRunAccess(client))
-	{
-		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+	if (!CanUseCommanderAction(client))
 		return Plugin_Handled;
-	}
 	
 	if (!args)
 	{
@@ -97,11 +95,8 @@ public Action Cmd_SetCommander(int client, int args)
 
 public Action Cmd_Demote(int client, int args)
 {
-	if (!ND_HasTPRunAccess(client))
-	{
-		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+	if (!CanUseCommanderAction(client))
 		return Plugin_Handled;
-	}
 	
 	if (!args)
 	{
@@ -133,6 +128,23 @@ public Action Cmd_Demote(int client, int args)
 		PerformDemote(client, target);
 	
 	return Plugin_Handled;
+}
+
+bool CanUseCommanderAction(int client)
+{
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return false;
+	}
+	
+	if (!ND_HasTPRunAccess(client))
+	{
+		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+		return false;
+	}
+	
+	return true;
 }
 
 void PerformPromote(int client, int target)
