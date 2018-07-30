@@ -52,6 +52,17 @@ stock bool SWGM_IsInGroup(int iClient, bool bDefault) {
  *  @error                  Invalid client index, client not in game, or client bot.
  */
 native bool SWGM_InGroupOfficer(int iClient);
+#define SWGM_GO_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "SWGM_InGroupOfficer") == FeatureStatus_Available)
+
+stock bool SWGM_IsGroupOfficer(int iClient, bool bDefault) {
+	return !SWGM_GO_AVAILIBLE() ? bDefault : SWGM_InGroupOfficer(iClient);
+}
+
+stock bool SWMG_OfficerOrRoot(int iClient)
+{
+	return SWGM_IsGroupOfficer(iClient, false) ||		
+		GetAdminFlag(GetUserAdmin(iClient), Admin_Root, Access_Real);
+}
 
 /**
  *  Return player status.

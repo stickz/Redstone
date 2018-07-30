@@ -2,7 +2,7 @@
 
 void RegisterPickingCommand()
 {
-	RegAdminCmd("PlayerPicking", StartPicking, ADMFLAG_CUSTOM6);
+	RegConsoleCmd("PlayerPicking", StartPicking, "Start the team picker");
 }
 
 /* Functions for starting the team pick process
@@ -10,6 +10,12 @@ void RegisterPickingCommand()
  */
 public Action StartPicking(int client, int args) 
 {
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	// If there's a common error condition, we can't continue
 	if (CatchCommonFailure(args))
 		return Plugin_Handled;	

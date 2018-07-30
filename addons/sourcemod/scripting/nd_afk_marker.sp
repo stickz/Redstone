@@ -2,6 +2,7 @@
 #include <nd_stocks>
 #include <nd_rstart>
 #include <nd_rounds>
+#include <nd_swgm>
 
 #define INVALID_TARGET -1
 
@@ -22,7 +23,7 @@ bool IsMarkedAfk[MAXPLAYERS+1] = { false, ... };
 
 public void OnPluginStart()
 {
-	RegAdminCmd("sm_MarkAFK", CMD_MarkAfterPlayer, ADMFLAG_CUSTOM6, "Manually marks as player as afk.");
+	RegConsoleCmd("sm_MarkAFK", CMD_MarkAfterPlayer, "Manually marks as player as afk.");
 	
 	LoadTranslations("common.phrases");
 	
@@ -65,6 +66,12 @@ void CheckAfkStatus(int client)
 
 public Action CMD_MarkAfterPlayer(int client, int args)
 {	
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return Plugin_Handled;
+	}
+	
 	// If the player doesn't have command access, tell them why
 	if (!HasTeamPickAccess(client))
 	{

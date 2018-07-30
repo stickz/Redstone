@@ -4,6 +4,7 @@
 #include <nd_warmup>
 #include <nd_shuffle>
 #include <nd_teampick>
+#include <nd_swgm>
  
 public Plugin myinfo =
 {
