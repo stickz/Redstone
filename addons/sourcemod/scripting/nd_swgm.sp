@@ -128,7 +128,7 @@ void Check()
 
 public Action CMD_List(int iClient, int args)
 {
-	if (!g_bInGroupOfficer[iClient] || !HasRootAccess(iClient))
+	if (!g_bInGroupOfficer[iClient] && !HasRootAccess(iClient))
 	{
 		ReplyToCommand(iClient, "You must be a RedstoneND officer to use this command!");
 		return Plugin_Handled;
