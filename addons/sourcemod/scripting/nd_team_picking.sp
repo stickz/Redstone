@@ -4,6 +4,7 @@
 #include <nd_redstone>
 #include <nd_print>
 #include <nd_afk>
+#include <nd_swgm>
 
 public Plugin myinfo = 
 {
