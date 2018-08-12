@@ -232,3 +232,8 @@ stock int getRandomTeam()
 {
 	return GetRandomInt(2, 3);
 }
+
+stock int getTeamLessPlayers(int cCount, int eCount)
+{
+	return cCount > eCount ? TEAM_CONSORT : TEAM_EMPIRE;
+}
