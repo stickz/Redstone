@@ -237,8 +237,7 @@ public int Native_InGroup(Handle hPlugin, int iNumParams)
 	char sError[64];
 	if (!CheckClient(iClient, sError, sizeof(sError)))
 	{
-		LogError(sError);
-		return false;
+		ThrowNativeError(SP_ERROR_NATIVE, sError);
 	}
 	
 	return g_bInGroup[iClient];
@@ -251,8 +250,7 @@ public int Native_InGroupOfficer(Handle hPlugin, int iNumParams)
 	char sError[64];
 	if (!CheckClient(iClient, sError, sizeof(sError)))
 	{
-		LogError(sError);
-		return false;
+		ThrowNativeError(SP_ERROR_NATIVE, sError);
 	}
 	
 	return g_bInGroupOfficer[iClient];
@@ -265,8 +263,7 @@ public int Native_GetPlayerStatus(Handle hPlugin, int iNumParams)
 	char sError[64];
 	if (!CheckClient(iClient, sError, sizeof(sError)))
 	{
-		LogError(sError);
-		return view_as<int>(UNASSIGNED);
+		ThrowNativeError(SP_ERROR_NATIVE, sError);
 	}
 
 	return view_as<int>(g_PlayerStatus[iClient]);
@@ -279,8 +276,7 @@ public int Native_CheckPlayer(Handle hPlugin, int iNumParams)
 	char sError[64];
 	if (!CheckClient(iClient, sError, sizeof(sError)))
 	{
-		LogError(sError);
-		return;
+		ThrowNativeError(SP_ERROR_NATIVE, sError);
 	}
 	
 	SteamWorks_GetUserGroupStatusAuthID(g_iAuthID[iClient], g_iGroupId);
