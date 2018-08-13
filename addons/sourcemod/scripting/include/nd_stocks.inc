@@ -238,7 +238,7 @@ stock int getRandomTeam()
 
 // Get team with less players. Return empire or consort.
 // Return -1 if both teams have the same count
-stock int getTeamLessPlayers(int cCount, int eCount)
+stock int getTeamLessPlayers()
 {
 	int teamCount[2];
 	teamCount[CONSORT_AIDX] = ValidTeamCount(TEAM_CONSORT);
