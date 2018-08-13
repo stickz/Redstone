@@ -134,7 +134,7 @@ void checkCount()
 		{	
 			// If one team has less players than the other
 			int teamLessPlys = getTeamLessPlayers();			
-			if (teamLessPly != TEAM_NONE)
+			if (teamLessPlys != TEAM_NONE)
 			{
 				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
 				int teamCount = OnTeamCount(); // Team count, with bot filter
