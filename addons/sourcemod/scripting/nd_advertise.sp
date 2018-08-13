@@ -114,5 +114,8 @@ bool GetCookieAdverts(int client)
 	char buffer[10];
 	GetClientCookie(client, cookie_adverts, buffer, sizeof(buffer));
 	
-	return !SWGM_IsInGroup(client, true) ? true : !StrEqual(buffer, "Off");
+	if (IsValidClient(client) && !SWGM_IsInGroup(client, true))
+		return true;
+	
+	return !StrEqual(buffer, "Off");
 }

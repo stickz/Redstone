@@ -9,8 +9,12 @@
 #define TEAM_CONSORT		2
 #define TEAM_EMPIRE		3
 
-#define TEAM_START			2
-#define TEAM_COUNT			4
+#define CONSORT_AIDX		0
+#define EMPIRE_AIDX		1
+
+#define TEAM_NONE		-1
+#define TEAM_START		2
+#define TEAM_COUNT		4
 
 stock char NumberInEnglish(int num)
 {
@@ -207,7 +211,6 @@ stock int getPositiveOverBalance()
 }
 
 /* Team Constants */
-
 stock int getOtherTeam(int team)
 {
 	return TEAM_CONSORT + TEAM_EMPIRE - team;
@@ -231,4 +234,18 @@ stock int getStackedTeam(float teamdiff)
 stock int getRandomTeam() 
 {
 	return GetRandomInt(2, 3);
+}
+
+// Get team with less players. Return empire or consort.
+// Return -1 if both teams have the same count
+stock int getTeamLessPlayers()
+{
+	int teamCount[2];
+	teamCount[CONSORT_AIDX] = ValidTeamCount(TEAM_CONSORT);
+	teamCount[EMPIRE_AIDX] = ValidTeamCount(TEAM_EMPIRE);
+
+	if (teamCount[CONSORT_AIDX] == teamCount[EMPIRE_AIDX])
+		return TEAM_NONE;
+	
+	return teamCount[CONSORT_AIDX] > teamCount[EMPIRE_AIDX] ? TEAM_CONSORT : TEAM_EMPIRE;
 }
