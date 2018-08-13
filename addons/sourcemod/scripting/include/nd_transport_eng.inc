@@ -3,6 +3,8 @@
 #endif
 #define _nd_transport_eng_included
 
+#include <nd_structures>
+
 #define NGTGC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_GetTeamTGCache") == FeatureStatus_Available)
 native int ND_GetTeamTGCache(int team);
 
@@ -19,8 +21,8 @@ stock int ND_GetTransportCount(int team)
 	
 	while ((loopEntity = FindEntityByClassname(loopEntity, STRUCT_TRANSPORT)) != INVALID_ENT_REFERENCE)
 	{
-		int team = GetEntProp(loopEntity, Prop_Send, "m_iTeamNum");
-		gates[team]++;
+		int owner = GetEntProp(loopEntity, Prop_Send, "m_iTeamNum");
+		gates[owner]++;
 	}
 	
 	return gates[team];
