@@ -114,8 +114,8 @@ void checkCount()
 {
 	if (ND_RoundStarted() && !disableBots)
 	{
-		int quota = 0;		
-		
+		int quota = 0;
+	
 		// Team count means the requirement for modulous bot quota
 		if (RED_OnTeamCount() < GetBotShutOffCount())
 		{
@@ -132,22 +132,27 @@ void checkCount()
 		// The plugin to get the server slot is available
 		else if (GDSC_AVAILABLE())
 		{	
-			// Get the bot count to fill empty team slots
-			int dynamicSlots = GetDynamicSlotCount() - 2;
-			
-			// Must use actual team count here to count properly
-			int teamCount = OnTeamCount();			
-			quota = getBotFillerQuota(teamCount, ValidClientCount() < dynamicSlots);		
-			
-			if (quota >= dynamicSlots && getPositiveOverBalance() >= 2)
+			// If one team has less players than the other
+			int teamLessPlys = getTeamLessPlayers();			
+			if (teamLessPlys != TEAM_NONE)
 			{
-				quota = getBotFillerQuota(teamCount);	
-			
-				if (!visibleBoosted)
-					toggleBooster(true, false);
+				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
+				int teamCount = OnTeamCount(); // Team count, with bot filter
+				quota = getBotFillerQuota(teamCount, ValidClientCount() < dynamicSlots);		
+
+				if (quota >= dynamicSlots && getPositiveOverBalance() >= 2)
+				{
+					quota = getBotFillerQuota(teamCount);
+
+					if (!visibleBoosted)
+						toggleBooster(true, false);
+				}
+				else if (visibleBoosted)
+					toggleBooster(false);
+					
+				CreateTimer(0.3, TIMER_CheckAndSwitchBots, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);			
 			}
-			else if (visibleBoosted)
-				toggleBooster(false);			
+			else { quota = 0; } // Otherwise, set filler quota to 0
 		}
 		
 		// If the server slots are boosted to 32, disable that feature
@@ -216,19 +221,36 @@ void SignalMapChange()
 }
 
 //When teams have two or more less players
-int getBotFillerQuota(int teamCount, bool addSpectators = false) 
+int getBotFillerQuota(int teamCount, bool addSpectators = false)
 {
-	if (ValidTeamCount(TEAM_EMPIRE) == ValidTeamCount(TEAM_CONSORT))
-		return 0;
-		
-	int total = teamCount + getPositiveOverBalance();
-		
+	// Set bot count to team difference * 2 minus 1 bot.
+	// Team count offset required to fill the quota properly.
+	int total = teamCount + getPositiveOverBalance() * 2 - 1;
+	
 	/* Notice: It's assumed this code will only call ValidTeamCount() once for performance reasons */
 	if (addSpectators)
 		total += ValidTeamCount(TEAM_SPEC);		
-		
+	
 	// Set a ceiling of 29 to be returned
 	return total > 29 ? 29 : total;
+}
+
+public Action TIMER_CheckAndSwitchBots(Handle timer, any team)
+{
+	CheckAndSwitchBots(team);
+	return Plugin_Handled;
+}
+
+void CheckAndSwitchBots(int teamLessPlys)
+{
+	for (int bot = 1; bot < MaxClients; bot++)
+	{
+		if (IsFakeClient(bot) && IsClientInGame(bot) && GetClientTeam(bot) != teamLessPlys)
+		{
+			ChangeClientTeam(bot, TEAM_SPEC);
+			ChangeClientTeam(bot, teamLessPlys);
+		}
+	}
 }
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
