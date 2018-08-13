@@ -49,13 +49,18 @@ public void OnPluginStart()
 public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast) 
 {
 	if (event.GetInt("type") == view_as<int>(Transport_Gate))
-		RefreshTransports();
+	{
+		// Must use long delay becuase this event is delayed due to the animation effect.
+		CreateTimer(7.0, TIMER_DelayTgRefresh, _, TIMER_FLAG_NO_MAPCHANGE);
+		tgCountRefreshing = true;
+	}
 }
 public Action Event_BuildingSold(Event event, const char[] name, bool dontBroadcast) 
 {
 	if (event.GetInt("type") == view_as<int>(Transport_Gate))
 	{
 		// Don't spam this event, if multiple gates are sold at once
+		// Or if the count has to update soon anyways, due to building death
 		if (!tgCountRefreshing)
 			CreateTimer(0.3, TIMER_DelayTgRefresh, _, TIMER_FLAG_NO_MAPCHANGE);
 		
