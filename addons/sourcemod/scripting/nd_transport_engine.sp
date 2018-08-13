@@ -17,6 +17,7 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 int gateCount[TEAM_COUNT] = { 0, ... };
+bool tgCountRefreshing = false;
 
 public void ND_OnRoundStarted() {
 	resetVars();
@@ -26,6 +27,7 @@ void resetVars()
 {
 	gateCount[TEAM_CONSORT] = 2;
 	gateCount[TEAM_EMPIRE] = 2;
+	tgCountRefreshing = false;
 }
 
 /* Event Management */
@@ -35,26 +37,41 @@ public void OnPluginStart()
 	HookEvent("structure_sold", Event_BuildingSold);
 	HookEvent("transport_gate_created", Event_GateCreated);	
 	
+	if (ND_RoundStarted())
+	{
+		resetVars();
+		RefreshTransports();
+	}
+	
 	AddUpdaterLibrary();
 }
 
 public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast) 
 {
 	if (event.GetInt("type") == view_as<int>(Transport_Gate))
-	{
 		RefreshTransports();
-	}
 }
 public Action Event_BuildingSold(Event event, const char[] name, bool dontBroadcast) 
 {
 	if (event.GetInt("type") == view_as<int>(Transport_Gate))
 	{
-		RefreshTransports();
+		// Don't spam this event, if multiple gates are sold at once
+		if (!tgCountRefreshing)
+			CreateTimer(0.3, TIMER_DelayTgRefresh, _, TIMER_FLAG_NO_MAPCHANGE);
+		
+		tgCountRefreshing = true;
 	}
 }
 public Action Event_GateCreated(Event event, const char[] name, bool dontBroadcast)
 {
 	RefreshTransports();
+}
+
+public Action TIMER_DelayTgRefresh(Handle timer)
+{
+	RefreshTransports();
+	tgCountRefreshing = false;
+	return Plugin_Handled;
 }
 
 void RefreshTransports()
