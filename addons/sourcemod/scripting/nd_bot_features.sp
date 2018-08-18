@@ -223,9 +223,9 @@ void SignalMapChange()
 //When teams have two or more less players
 int getBotFillerQuota(int teamCount, bool addSpectators = false)
 {
-	// Set bot count to team difference * 2 minus 1 bot.
+	// Set bot count to player count difference * x - 1.
 	// Team count offset required to fill the quota properly.
-	int total = teamCount + getPositiveOverBalance() * 2 - 1;
+	int total = teamCount + RoundToNearest(getPositiveOverBalance() * g_cvar[BotDiffMult].FloatValue) - 1;
 	
 	/* Notice: It's assumed this code will only call ValidTeamCount() once for performance reasons */
 	if (addSpectators)
