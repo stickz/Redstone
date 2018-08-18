@@ -150,7 +150,7 @@ void checkCount()
 				else if (visibleBoosted)
 					toggleBooster(false);
 					
-				CreateTimer(0.3, TIMER_CheckAndSwitchBots, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);			
+				CreateTimer(0.3, TIMER_CheckAndSwitchFiller, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);			
 			}
 			else { quota = 0; } // Otherwise, set filler quota to 0
 		}
@@ -235,13 +235,13 @@ int getBotFillerQuota(int teamCount, bool addSpectators = false)
 	return total > 29 ? 29 : total;
 }
 
-public Action TIMER_CheckAndSwitchBots(Handle timer, any team)
+public Action TIMER_CheckAndSwitchFiller(Handle timer, any team)
 {
-	CheckAndSwitchBots(team);
+	CheckAndSwitchFiller(team);
 	return Plugin_Handled;
 }
 
-void CheckAndSwitchBots(int teamLessPlys)
+void CheckAndSwitchFiller(int teamLessPlys)
 {
 	for (int bot = 1; bot < MaxClients; bot++)
 	{
