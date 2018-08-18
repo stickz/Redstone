@@ -14,7 +14,7 @@ enum convars
 	 ConVar:BotOverblance,
 	 ConVar:RegOverblance,
 	 ConVar:turretCountDec,
-	 ConVar:turretBotDec	 
+	 ConVar:turretBotDec
 };
 
 ConVar g_cvar[convars];
