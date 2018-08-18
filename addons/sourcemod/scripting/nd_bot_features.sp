@@ -150,7 +150,7 @@ void checkCount()
 				else if (visibleBoosted)
 					toggleBooster(false);
 					
-				CreateTimer(0.7, TIMER_CheckAndSwitchFiller, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);			
+				CreateTimer(1.0, TIMER_CheckAndSwitchFiller, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);		
 			}
 			else { quota = 0; } // Otherwise, set filler quota to 0
 		}
