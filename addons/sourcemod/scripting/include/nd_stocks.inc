@@ -247,5 +247,5 @@ stock int getTeamLessPlayers()
 	if (teamCount[CONSORT_AIDX] == teamCount[EMPIRE_AIDX])
 		return TEAM_NONE;
 	
-	return teamCount[CONSORT_AIDX] > teamCount[EMPIRE_AIDX] ? TEAM_CONSORT : TEAM_EMPIRE;
+	return teamCount[CONSORT_AIDX] < teamCount[EMPIRE_AIDX] ? TEAM_CONSORT : TEAM_EMPIRE;
 }
