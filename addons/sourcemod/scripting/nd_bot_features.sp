@@ -138,8 +138,9 @@ void checkCount()
 			{
 				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
 				int teamCount = OnTeamCount(); // Team count, with bot filter
-				quota = getBotFillerQuota(teamCount, ValidClientCount() < dynamicSlots);		
-
+				quota = getBotFillerQuota(teamCount, ValidClientCount() < dynamicSlots);
+				
+				float timerDuration = 1.0;
 				if (quota >= dynamicSlots && getPositiveOverBalance() >= 2)
 				{
 					quota = getBotFillerQuota(teamCount);
@@ -148,9 +149,12 @@ void checkCount()
 						toggleBooster(true, false);
 				}
 				else if (visibleBoosted)
+				{
 					toggleBooster(false);
-					
-				CreateTimer(1.0, TIMER_CheckAndSwitchFiller, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);		
+					timerDuration = 3.0;	
+				}
+				
+				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);	
 			}
 			else { quota = 0; } // Otherwise, set filler quota to 0
 		}
