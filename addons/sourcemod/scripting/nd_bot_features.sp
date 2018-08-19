@@ -140,7 +140,7 @@ void checkCount()
 				int teamCount = OnTeamCount(); // Team count, with bot filter
 				quota = getBotFillerQuota(teamCount, ValidClientCount() < dynamicSlots);
 				
-				float timerDuration = 1.0;
+				float timerDuration = 1.5;
 				if (quota >= dynamicSlots && getPositiveOverBalance() >= 2)
 				{
 					quota = getBotFillerQuota(teamCount);
@@ -151,7 +151,7 @@ void checkCount()
 				else if (visibleBoosted)
 				{
 					toggleBooster(false);
-					timerDuration = 5.0;
+					timerDuration = 3.0;
 				}
 				
 				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);	
