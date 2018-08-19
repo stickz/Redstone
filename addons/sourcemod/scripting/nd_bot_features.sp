@@ -151,7 +151,7 @@ void checkCount()
 				else if (visibleBoosted)
 				{
 					toggleBooster(false);
-					timerDuration = 3.0;	
+					timerDuration = 5.0;
 				}
 				
 				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);	
