@@ -30,14 +30,23 @@ public void OnPluginStart()
 }
 
 public void ND_OnTeamsShuffled() {
-	CreateTimer(15.0, TIMER_AdvertiseSteamGroup, _, TIMER_FLAG_NO_MAPCHANGE);	
+	CreateTimer(15.0, TIMER_AdvertiseEventsSG, _, TIMER_FLAG_NO_MAPCHANGE);	
 }
 
-public Action TIMER_AdvertiseSteamGroup(Handle timer)
+public void ND_OnRoundStarted() {
+	CreateTimer(60.0, TIMER_AdvertiseFeatureSG, _, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public Action TIMER_AdvertiseEventsSG(Handle timer)
 {
 	// Join the RedstoneND steam group!
-	PrintSteamGroupAdvert("Join RedstoneND");
-	
+	PrintSteamGroupAdvert("Join RedstoneND Events");	
+	return Plugin_Handled;
+}
+
+public Action TIMER_AdvertiseFeatureSG(Handle timer)
+{
+	PrintSteamGroupAdvert("Join RedstoneND Features");
 	return Plugin_Handled;
 }
 
