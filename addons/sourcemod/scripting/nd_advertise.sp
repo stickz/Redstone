@@ -29,15 +29,30 @@ public void OnPluginStart()
 	AddClientPrefSupport(); // client prefs
 }
 
-public void ND_OnTeamsShuffled() {
-	CreateTimer(15.0, TIMER_AdvertiseSteamGroup, _, TIMER_FLAG_NO_MAPCHANGE);	
+public void ND_OnRoundStarted() {
+	CreateTimer(30.0, TIMER_AdvertiseEventsSG, _, TIMER_FLAG_NO_MAPCHANGE);	
+	CreateTimer(60.0, TIMER_AdvertiseFeatureSG, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(90.0, TIMER_AdvertiseDisableSG, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public Action TIMER_AdvertiseSteamGroup(Handle timer)
+public Action TIMER_AdvertiseEventsSG(Handle timer)
 {
-	// Join the RedstoneND steam group!
-	PrintSteamGroupAdvert("Join RedstoneND");
-	
+	// Join the RedstoneND steam group. We host community teampick events
+	PrintSteamGroupAdvert("Join RedstoneND Events");	
+	return Plugin_Handled;
+}
+
+public Action TIMER_AdvertiseFeatureSG(Handle timer)
+{
+	// Join the RedstoneND steam group. For access to exclusive server features
+	PrintSteamGroupAdvert("Join RedstoneND Features");
+	return Plugin_Handled;
+}
+
+public Action TIMER_AdvertiseDisableSG(Handle timer)
+{
+	// Join the RedstoneND steam group. To disable server advertisements
+	PrintSteamGroupAdvert("Join RedstoneND Advertise");
 	return Plugin_Handled;
 }
 
