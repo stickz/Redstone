@@ -222,6 +222,7 @@ void SignalMapChange()
 		toggleBooster(false);	
 
 	ServerCommand("bot_quota 0");
+	ServerCommand("mp_limitteams 1");
 }
 
 //When teams have two or more less players
