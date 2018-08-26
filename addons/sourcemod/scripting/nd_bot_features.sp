@@ -250,7 +250,7 @@ void CheckAndSwitchFiller(int teamLessPlys)
 {
 	for (int bot = 1; bot < MaxClients; bot++)
 	{
-		if (IsFakeClient(bot) && IsClientInGame(bot) && GetClientTeam(bot) != teamLessPlys)
+		if (IsValidClient(bot, false) && GetClientTeam(bot) != teamLessPlys)
 		{
 			ChangeClientTeam(bot, TEAM_SPEC);
 			ChangeClientTeam(bot, teamLessPlys);
