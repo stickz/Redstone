@@ -28,9 +28,6 @@
 
 #define SECONDS_IN_DAY			86400
 
-#define ND_TRANSPORT_GATE 		2
-#define ND_TRANSPORT_NAME 		"struct_transport_gate"
-
 #define LOG_FOLDER			"logs"
 #define LOG_PREFIX			"afkm_"
 #define LOG_EXT				"log"
@@ -402,9 +399,6 @@ void HookEvents() // Event Hook Registrations
 	HookEvent("player_team", Event_PlayerTeam);
 	HookEvent("player_spawn", Event_PlayerSpawn);
 	HookEvent("player_death", Event_PlayerDeathPost, EventHookMode_Post);
-	
-	//Add hooks for Nuclear Dawn
-	HookEvent("structure_death", Event_StructDeath);
 }
 
 void HookConVars() // ConVar Hook Registrations
@@ -723,34 +717,6 @@ public void ND_OnRoundEnded() {
 	g_bWaitRound = true; // Pause Plugin During Map Transitions?
 }
 
-//Look for if a team has any transport gates left, if not pause the plugin
-public Action Event_StructDeath(Event event, const char[] name, bool dontBroadcast)
-{
-	if (event.GetInt("type") == ND_TRANSPORT_GATE)
-	{
-		int 	client = GetClientOfUserId(event.GetInt("attacker")),	
-			team = getOtherTeam(GetClientTeam(client));
-		
-		if (ND_HasNoTransportGates(team))
-			g_bWaitRound = true; // Pause Plugin When all Transport Gates Die
-	}
-}
-
-bool ND_HasNoTransportGates(int team)
-{
-	// loop through all entities finding transport gates
-	int loopEntity = INVALID_ENT_REFERENCE;
-	while ((loopEntity = FindEntityByClassname(loopEntity, ND_TRANSPORT_NAME)) != INVALID_ENT_REFERENCE)
-	{
-		if (GetEntProp(loopEntity, Prop_Send, "m_iTeamNum") == team) //if the owner equals the team arg
-		{
-			return false;	
-		}	
-	}
-	
-	return true;
-}
-
 public Action Timer_MoveClientsToSpectate(Handle Timer) // General AFK Timers
 {
 	for (int client = 1; client <= MaxClients; client++)
@@ -841,6 +807,13 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 		if (SkipAfkCheck(client))
 		{
 			g_iAFKTime[client]++;
+			return Plugin_Continue;
+		}
+		
+		// If there's no spawns left, reset the clients afk time to 0
+		if (g_iPlayerTeam[client] > 1 && ND_TeamTGCount(g_iPlayerTeam[client]) <= 0)
+		{
+			g_iAFKTime[client] = 0;
 			return Plugin_Continue;
 		}
 
