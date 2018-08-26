@@ -15,7 +15,7 @@
 
 	"Join RedstoneND Events"
 	{
-		"ru"		"Присоединяйтесь к группе RedstoneND в стиме. Мы проводим командные турниры в сообществе "Teampick"."
+		"ru"		"Присоединяйтесь к группе RedstoneND в стиме. Мы проводим командные турниры в сообществе 'Teampick'."
 	}
 
 	"Join RedstoneND Features"
