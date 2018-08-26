@@ -43,8 +43,7 @@
 #define CONVAR_PREFIXCOLORS		2
 #define CONVAR_TIMETOMOVE		3
 #define CONVAR_TIMETOKICK		4
-#define CONVAR_EXCLUDEDEAD		5
-#define CONVAR_SIZE			6
+#define CONVAR_SIZE			5
 
 // Arrays
 char AFKM_LogFile[PLATFORM_MAX_PATH]; // Log File
