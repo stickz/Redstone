@@ -15,6 +15,7 @@
 #include <nd_rounds>
 #include <nd_redstone>
 #include <nd_com_eng>
+#include <nd_transport_eng>
 
 #pragma semicolon 1
 
@@ -504,6 +505,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     MarkNativeAsOptional("GetUserMessageType");
 #endif
 	MarkNativeAsOptional("GetEngineVersion");
+	MarkNativeAsOptional("ND_GetTeamTGCache");
 	return APLRes_Success;
 }
 
