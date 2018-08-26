@@ -797,7 +797,7 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 		}
 		
 		// If there's no spawns left, reset the clients afk time to 0
-		if (ND_TeamTGCount(g_iPlayerTeam[client]) <= 0)
+		if (g_iPlayerTeam[client] > 1 && ND_TeamTGCount(g_iPlayerTeam[client]) <= 0)
 		{
 			g_iAFKTime[client] = 0;
 			return Plugin_Continue;
