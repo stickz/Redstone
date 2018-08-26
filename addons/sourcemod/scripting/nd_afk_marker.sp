@@ -4,6 +4,10 @@
 #include <nd_rounds>
 #include <nd_swgm>
 
+#undef REQUIRE_PLUGIN
+#include <afk_manager>
+#define REQUIRE_PLUGIN
+
 #define INVALID_TARGET -1
 
 public Plugin myinfo =
@@ -35,18 +39,24 @@ public void OnClientPutInServer(int client) {
 	IsMarkedAfk[client] = false;
 }
 
+public void AFKM_OnClientAFK(int client) {
+	CheckAfkStatus(client);
+}
+
+public void AFKM_OnClientBack(int client) {
+	CheckAfkStatus(client, false);
+}
+
 public Action PlayerJoinTeam(int client, char[] command, int argc) 
 {
-	if (ND_RoundStarted())
-		CheckAfkStatus(client);	
-		
+	CheckAfkStatus(client);		
 	return Plugin_Continue;
 }
 
-void CheckAfkStatus(int client)
+void CheckAfkStatus(int client, bool rStart = true)
 {
 	// If the client is currently marked as afk
-	if (IsMarkedAfk[client])
+	if ((!rStart || ND_RoundStarted()) && IsMarkedAfk[client])
 	{
 		// Set the client's afk status to false
 		IsMarkedAfk[client] = false;
@@ -121,6 +131,7 @@ void ToogleAfkStatus(int client, int target)
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_IsPlayerMarkedAFK", Native_IsPlayerMarkedAfk);
+	RegPluginLibrary("afkmanager");
 	return APLRes_Success;
 }
 
