@@ -8,7 +8,7 @@ public Plugin myinfo =
 {
 	name 		= "[ND] Transport Engine",
 	author 		= "Stickz",
-	description = "Caches and returns transport gate count",
+	description 	= "Caches and returns transport gate count",
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
