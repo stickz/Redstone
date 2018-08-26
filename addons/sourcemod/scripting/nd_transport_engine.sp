@@ -17,17 +17,16 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 int gateCount[TEAM_COUNT] = { 0, ... };
-bool tgCountRefreshing = false;
 
 public void ND_OnRoundStarted() {
 	resetVars();
+	RefreshTransports();
 }
 
 void resetVars()
 {
 	gateCount[TEAM_CONSORT] = 2;
 	gateCount[TEAM_EMPIRE] = 2;
-	tgCountRefreshing = false;
 }
 
 /* Event Management */
@@ -46,37 +45,18 @@ public void OnPluginStart()
 	AddUpdaterLibrary();
 }
 
-public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast) 
-{
-	if (event.GetInt("type") == view_as<int>(Transport_Gate))
-	{
-		// Must use long delay becuase this event is delayed due to the animation effect.
-		CreateTimer(7.0, TIMER_DelayTgRefresh, _, TIMER_FLAG_NO_MAPCHANGE);
-		tgCountRefreshing = true;
+public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast) {
+	if (event.GetInt("type") == view_as<int>(Transport_Gate)) {
+		gateCount[event.GetInt("team")]--;
 	}
 }
-public Action Event_BuildingSold(Event event, const char[] name, bool dontBroadcast) 
-{
-	if (event.GetInt("type") == view_as<int>(Transport_Gate))
-	{
-		// Don't spam this event, if multiple gates are sold at once
-		// Or if the count has to update soon anyways, due to building death
-		if (!tgCountRefreshing)
-			CreateTimer(0.3, TIMER_DelayTgRefresh, _, TIMER_FLAG_NO_MAPCHANGE);
-		
-		tgCountRefreshing = true;
+public Action Event_BuildingSold(Event event, const char[] name, bool dontBroadcast) {
+	if (event.GetInt("type") == view_as<int>(Transport_Gate)) {
+		gateCount[event.GetInt("ownerteam")]--;
 	}
 }
-public Action Event_GateCreated(Event event, const char[] name, bool dontBroadcast)
-{
-	RefreshTransports();
-}
-
-public Action TIMER_DelayTgRefresh(Handle timer)
-{
-	RefreshTransports();
-	tgCountRefreshing = false;
-	return Plugin_Handled;
+public Action Event_GateCreated(Event event, const char[] name, bool dontBroadcast) {
+	gateCount[event.GetInt("teamid")]++;
 }
 
 void RefreshTransports()
