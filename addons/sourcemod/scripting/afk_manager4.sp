@@ -912,10 +912,9 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 // Helper Function for above
 bool SkipAfkCheck(int client)
 {
-	// Is the player on a team
 	// Are we waiting for the round to start
 	// Do we have enough players to start taking action
-	return g_iPlayerTeam[client] <= 1 || g_bWaitRound || ((bMovePlayers == false) && (bKickPlayers == false));
+	return g_bWaitRound || ((bMovePlayers == false) && (bKickPlayers == false));
 }
 bool IsNotAdminImmune(int client, bool moveType)
 {
