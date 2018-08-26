@@ -43,8 +43,7 @@
 #define CONVAR_PREFIXCOLORS		2
 #define CONVAR_TIMETOMOVE		3
 #define CONVAR_TIMETOKICK		4
-#define CONVAR_EXCLUDEDEAD		5
-#define CONVAR_SIZE			6
+#define CONVAR_SIZE			5
 
 // Arrays
 char AFKM_LogFile[PLATFORM_MAX_PATH]; // Log File
@@ -71,7 +70,6 @@ char g_sPrefix[] 		=	"AFK Manager";
 #if defined _colors_included
 bool g_bPrefixColors 		=	false;
 #endif
-bool g_bExcludeDead 		=	false;
 int g_iTimeToMove 		=	-1;
 int g_iTimeToKick 		=	-1;
 
@@ -107,7 +105,6 @@ enum
 	WarnTimeToKick,
 	SpawnTime,
 	WarnSpawnTime,
-	ExcludeDead,
 	
 #if defined _colors_included
 	PrefixColor,
@@ -372,8 +369,6 @@ public void CvarChange_Status(ConVar cvar, const char[] oldvalue, const char[] n
 				EnablePlugin();
 			else if (cvar == g_cvar[PrefixShort])
 				g_sPrefix = "AFK";
-			else if (cvar == g_cvar[ExcludeDead])
-				g_bExcludeDead = true;
 #if defined _colors_included
 			else if (cvar == g_cvar[PrefixColor])
 				g_bPrefixColors = true;
@@ -385,8 +380,6 @@ public void CvarChange_Status(ConVar cvar, const char[] oldvalue, const char[] n
 				DisablePlugin();
 			else if (cvar == g_cvar[PrefixShort])
 				g_sPrefix = "AFK Manager";
-			else if (cvar == g_cvar[ExcludeDead])
-				g_bExcludeDead = false;
 #if defined _colors_included
 			else if (cvar == g_cvar[PrefixColor])
 				g_bPrefixColors = false;
@@ -442,14 +435,6 @@ void HookConVars() // ConVar Hook Registrations
 
 		g_iTimeToKick = g_cvar[TimeToKick].IntValue;
 	}
-	if (!bCvarIsHooked[CONVAR_EXCLUDEDEAD])
-	{
-		g_cvar[ExcludeDead].AddChangeHook(CvarChange_Status); // Hook Exclude Dead Variable
-		bCvarIsHooked[CONVAR_EXCLUDEDEAD] = true;
-
-		if (g_cvar[ExcludeDead].BoolValue)
-			g_bExcludeDead = true;
-	}
 }
 
 void RegisterCvars() // Cvar Registrations
@@ -471,8 +456,7 @@ void RegisterCvars() // Cvar Registrations
 	g_cvar[WarnTimeToKick] 	= CreateConVar("sm_afk_kick_warn_time", "30.0", "Time in seconds remaining, player should be warned before being kicked for AFK. [DEFAULT: 30.0 seconds]");
 	g_cvar[SpawnTime] 	= CreateConVar("sm_afk_spawn_time", "20.0", "Time in seconds (total) that player should have moved from their spawn position. [0 = DISABLED, DEFAULT: 20.0 seconds]");
 	g_cvar[WarnSpawnTime] 	= CreateConVar("sm_afk_spawn_warn_time", "15.0", "Time in seconds remaining, player should be warned for being AFK in spawn. [DEFAULT: 15.0 seconds]");
-	g_cvar[ExcludeDead] 	= CreateConVar("sm_afk_exclude_dead", "0", "Should the AFK Manager exclude checking dead players? [0 = FALSE, 1 = TRUE, DEFAULT: 0]", FCVAR_NONE, true, 0.0, true, 1.0);
-
+	
 	#if defined _colors_included
 	g_cvar[PrefixColor]	= CreateConVar("sm_afk_prefix_color", "1", "Should the AFK Manager use color for the prefix tag? [0 = DISABLED, 1 = ENABLED, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
 	#endif
@@ -813,7 +797,7 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 		}
 		
 		// If there's no spawns left, reset the clients afk time to 0
-		if (g_iPlayerTeam[client] > 1 && ND_TeamTGCount(g_iPlayerTeam[client]) <= 0)
+		if (ND_TeamTGCount(g_iPlayerTeam[client]) <= 0)
 		{
 			g_iAFKTime[client] = 0;
 			return Plugin_Continue;
@@ -928,13 +912,10 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 // Helper Function for above
 bool SkipAfkCheck(int client)
 {
-	// Make sure player is on a team and not dead
-	if ((g_iPlayerTeam[client] != 0) && (g_iPlayerTeam[client] != g_iSpec_Team))
-		return !IsPlayerAlive(client) && (g_bExcludeDead);
-		
+	// Is the player on a team
 	// Are we waiting for the round to start
 	// Do we have enough players to start taking action
-	return g_bWaitRound || ((bMovePlayers == false) && (bKickPlayers == false));
+	return g_iPlayerTeam[client] <= 1 || g_bWaitRound || ((bMovePlayers == false) && (bKickPlayers == false));
 }
 bool IsNotAdminImmune(int client, bool moveType)
 {
