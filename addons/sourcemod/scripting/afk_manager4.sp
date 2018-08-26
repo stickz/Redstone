@@ -790,7 +790,8 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			return Plugin_Continue;
 		}
 
-		if (SkipAfkCheck(client))
+		// Are we waiting for the round to start, are both move and kick ready?
+		if (g_bWaitRound || ((bMovePlayers == false) && (bKickPlayers == false)))
 		{
 			g_iAFKTime[client]++;
 			return Plugin_Continue;
@@ -909,13 +910,7 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 	//g_hAFKTimer[client] = INVALID_HANDLE;
 	return Plugin_Continue;
 }
-// Helper Function for above
-bool SkipAfkCheck(int client)
-{
-	// Are we waiting for the round to start
-	// Do we have enough players to start taking action
-	return g_bWaitRound || ((bMovePlayers == false) && (bKickPlayers == false));
-}
+
 bool IsNotAdminImmune(int client, bool moveType)
 {
 	int adminImmune = g_cvar[AdminsImmune].IntValue;
