@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name = "[ND] Server Advertisements",
 	author = "Stickz",
 	description = "Creates server advertisements, with option to disable",
-	version = "push",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone"
 };
 
