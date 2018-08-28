@@ -9,6 +9,10 @@
 #include <nd_slots>
 #include <nd_swgm>
 
+#undef REQUIRE_PLUGIN
+#include <afk_manager>
+#define REQUIRE_PLUGIN
+
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_bot_features/nd_bot_features.txt"
 #include "updater/standard.sp"
@@ -65,6 +69,10 @@ public void TB_OnTeamPlacement(int client, int team) {
 }
 
 public void ND_OnClientTeamSet(int client, int team) {
+	CheckBotCounts(client);
+}
+
+public void AFKM_OnClientAFK(int client) {
 	CheckBotCounts(client);
 }
 
@@ -262,4 +270,5 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	MarkNativeAsOptional("ND_GetTurretCount");
 	MarkNativeAsOptional("ND_GetTeamTurretCount");
+	RegPluginLibrary("afkmanager");
 }
