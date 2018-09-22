@@ -19,7 +19,7 @@ public Plugin myinfo =
     name = "[ND] Resource Spawner",
     author = "Xander, Stickz",
     description = "Add additional resource points to maps.",
-    version = "recompile",
+    version = "dummy",
     url = "https://github.com/stickz/Redstone"
 };
 
