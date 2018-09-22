@@ -31,7 +31,7 @@ stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] =
 	"nuclear_forest02",
 	"corner_intermediate_04",
 	"nd_submarine",
-	"metro_imp2",
+	"metro_imp3",
 	"port",
 	"downtown_dyn_v0"
 };
