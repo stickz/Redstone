@@ -90,7 +90,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 	int serverType = ND_GetServerTypeEx();
 	
 	// Always allow cycling of metro and silo
-	ND_NominateMap(ND_CustomMaps[ND_MetroImp]);
+	ND_NominateMap(ND_StockMaps[ND_Metro]);
 	ND_NominateMap(ND_StockMaps[ND_Silo]);
 	
 	// Always allow clocktower and roadwork in map voting
