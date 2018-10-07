@@ -185,7 +185,7 @@ void CheckStableSpawns()
 		tertsSpawned[SECOND_TIER] = true;
 	}
 	
-	else if (ND_CustomMapEquals(map_name, ND_MetroImp))
+	else if (ND_MapEqualsAnyMetro(map_name))
 	{
 		if (RED_OnTeamCount() >= cvarMetroTertiarySpawns.IntValue)
 		{
