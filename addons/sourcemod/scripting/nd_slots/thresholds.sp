@@ -26,7 +26,7 @@ bool ND_IsHighSlotMap(const char[] checkMap)
 
 bool ND_IsBalancedMap(const char[] checkMap) 
 {
-	return 	   ND_CustomMapEquals(checkMap, ND_MetroImp)
+	return	   ND_MapEqualsAnyMetro(checkMap)
 		|| ND_StockMapEquals(checkMap, ND_Clocktower)
 		|| ND_StockMapEquals(checkMap, ND_Gate);
 }
