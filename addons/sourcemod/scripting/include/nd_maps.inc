@@ -96,3 +96,9 @@ stock bool ND_IsStockMap(char[] mapName)
 stock bool ND_StockMapEquals(const char[] currentMap, ND_StockMapCount searchMap) {
 	return StrEqual(currentMap, ND_StockMaps[view_as<int>(searchMap)], false);
 }
+
+stock bool ND_MapEqualsAnyMetro(const char[] currentMap)
+{
+	return 	StrEqual(currentMap, ND_StockMaps[sm(ND_Metro)], false) ||
+		StrEqual(currentMap, ND_CustomMaps[cm(ND_MetroImp)], false);
+}
