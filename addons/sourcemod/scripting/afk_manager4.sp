@@ -22,6 +22,7 @@
 // Defines
 #define AFK_WARNING_INTERVAL		5
 #define AFK_CHECK_INTERVAL		1.0
+#define AFK_SPAWN_INTERVAL		120.0
 
 #if !defined MAX_MESSAGE_LENGTH
 	#define MAX_MESSAGE_LENGTH	250
@@ -32,6 +33,8 @@
 #define LOG_FOLDER			"logs"
 #define LOG_PREFIX			"afkm_"
 #define LOG_EXT				"log"
+
+#define INVALID_USERID	0
 
 // Spectator Related Variables
 #define g_iSpec_Team 1
@@ -59,6 +62,7 @@ int iObserverTarget[MAXPLAYERS+1] 	=	{-1, ...}; // Observer Target
 //int iMouse[MAXPLAYERS+1][2]; // X = Vertical, Y = Horizontal
 bool bPlayerAFK[MAXPLAYERS+1] 		=	{true, ...}; // Player AFK Status
 bool bPlayerDeath[MAXPLAYERS+1] 	=	{false, ...};
+bool bPlayerFirstSpawn[MAXPLAYERS+1] 	=	{false, ...};
 float fEyeAngles[MAXPLAYERS+1][3]; // X = Vertical, Y = Height, Z = Horizontal
 
 bool bCvarIsHooked[CONVAR_SIZE] =	{false, ...}; // Console Variable Hook Status
@@ -393,6 +397,7 @@ void HookEvents() // Event Hook Registrations
 	HookEvent("player_team", Event_PlayerTeam);
 	HookEvent("player_spawn", Event_PlayerSpawn);
 	HookEvent("player_death", Event_PlayerDeathPost, EventHookMode_Post);
+	AddCommandListener(PlayerJoinTeam, "jointeam");
 }
 
 void HookConVars() // ConVar Hook Registrations
@@ -639,9 +644,10 @@ public Action Event_PlayerSpawn(Event event, const char[] name, bool dontBroadca
 	if (g_bEnabled)
 	{
 		int client = GetClientOfUserId(event.GetInt("userid"));
-
+		
 		if (client > 0 && IsValidClient(client))
 		{
+			bPlayerFirstSpawn[client] = true;
 			if (g_hAFKTimer[client] != INVALID_HANDLE)
 			{
 				if (g_iPlayerTeam[client] == 0) // Unassigned Team? Fires in CSTRIKE?
@@ -661,6 +667,35 @@ public Action Event_PlayerSpawn(Event event, const char[] name, bool dontBroadca
 			}
 		}
 	}
+	return Plugin_Continue;
+}
+
+public Action PlayerJoinTeam(int client, char[] command, int argc) 
+{
+	// Reset variable so they have 120s to spawn
+	bPlayerFirstSpawn[client] = false;
+
+	// Add 120s after sweep after a client joins a team, if transport gates are left
+	if (ND_RoundStarted() && ND_TeamTGCount(g_iPlayerTeam[client]) > 0)
+		CreateTimer(AFK_SPAWN_INTERVAL, TIMER_CheckSpawnSweep, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+	
+	return Plugin_Continue;
+}
+
+public Action TIMER_CheckSpawnSweep(Handle timer, any userid)
+{
+	int client = GetClientOfUserId(userid);	
+	if (client != INVALID_USERID)
+	{	
+		// If no transport gates are left, we must stop the check
+		if (ND_TeamTGCount(g_iPlayerTeam[client]) <=0)
+			return Plugin_Continue;
+
+		// Otherwise, if player has not spawned and is on a team - move them to spectate
+		if (!bPlayerFirstSpawn[client] && g_iPlayerTeam[client] > 1)
+			return MoveAFKClient(client);
+	}
+	
 	return Plugin_Continue;
 }
 
@@ -697,6 +732,15 @@ public void ND_OnRoundStarted()
 {
 	g_bWaitRound = false; // Un-Pause Plugin on Map Start
 	CreateTimer(3.0, Timer_MoveClientsToSpectate, _, TIMER_FLAG_NO_MAPCHANGE);
+	
+	// Add 120s after sweep when the round starts
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		if (IsValidClient(client) && GetClientTeam(client) > 1)
+		{
+			CreateTimer(AFK_SPAWN_INTERVAL, TIMER_CheckSpawnSweep, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);			
+		}
+	}
 }
 
 public void ND_OnRoundEnded() {
