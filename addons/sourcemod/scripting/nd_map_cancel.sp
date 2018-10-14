@@ -7,6 +7,18 @@
 #include <nd_maps>
 #include <nd_stype>
 
+public Plugin myinfo =
+{
+    name = "[ND] Map Cancel",
+    author = "Stickz",
+    description = "Cancels cycling to maps based on certain conditions",
+    version = "dummy",
+    url = "https://github.com/stickz/Redstone"
+};
+
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_map_cancel/nd_map_cancel.txt"
+#include "updater/standard.sp"
+
 ConVar cvarUsePlayerThresolds;
 //ConVar cvarStockMapCount;
 
@@ -14,8 +26,10 @@ public void OnPluginStart()
 {
 	cvarUsePlayerThresolds	= CreateConVar("sm_mcancel_thresholds", "1", "Specifies wehter or not to cancel map cycling by player count");
 	//cvarStockMapCount	= CreateConVar("sm_mcancel_stock", "23", "Sets the maximum number of players for stock maps");
+	
 	LoadTranslations("nd_map_management.phrases"); //load the plugin's translations	
 	AutoExecConfig(true, "nd_mcancel");
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public void OnClientPutInServer(int client)
