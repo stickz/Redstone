@@ -96,3 +96,21 @@ void checkMapExcludes()
 		}
 	}
 }
+
+/*int ndsPopular[SP_MAP_SIZE] = {
+	view_as<int>(ND_Hydro),
+	view_as<int>(ND_Oasis),
+	view_as<int>(ND_Coast),
+	view_as<int>(ND_Silo),
+	view_as<int>(ND_Metro)
+}
+
+bool StrEqual_PopularMap(char[] checkMap)
+{
+	for (int idx = 0; idx < SP_MAP_SIZE; idx++) {
+		if (StrEqual(checkMap, ND_StockMaps[ndsPopular[idx]], false))
+			return true;
+	}
+	
+	return false;
+}*/
