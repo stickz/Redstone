@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <mapchooser>
+#include <nd_stocks>
 #include <nd_rounds>
 #include <nd_mvote>
 #include <nd_redstone>
@@ -18,13 +19,17 @@ public void OnPluginStart()
 public void OnClientPutInServer(int client)
 {
 	// Only check map thresholds if the round is started and the map voter isn't running
-	if (cvarUsePlayerThresolds.BoolValue && ND_RoundStarted() && CanMapChooserStartVote())
+	if (cvarUsePlayerThresolds.BoolValue && CanStartMapVote())
 		checkMapExcludes();
 }
 
-void TriggerMapVote()
+bool CanStartMapVote() {
+	return ND_RoundStarted() && CanMapChooserStartVote();
+}
+
+void TriggerMapVote(char[] nextMap)
 {
-	if (ND_RoundStarted() && CanMapChooserStartVote())
+	if (CanStartMapVote())
 	{	
 		PrintToChatAll("\x05[xG] %t", "Retrigger Map Vote", nextMap);	
 		ND_TriggerMapVote();
@@ -43,7 +48,7 @@ void checkMapExcludes()
 		if (	ND_GetServerTypeEx() != SERVER_TYPE_BETA &&
 			StrEqual(nextMap, ND_StockMaps[ND_Gate], false))
 		{
-			TriggerMapVote();
+			TriggerMapVote(nextMap);
 			return;
 		}		
 		
@@ -51,7 +56,7 @@ void checkMapExcludes()
 			StrEqual(nextMap, ND_StockMaps[ND_Oilfield], false) ||
 			StrEqual(nextMap, ND_CustomMaps[ND_Nuclear], false))
 		{
-			TriggerMapVote();
+			TriggerMapVote(nextMap);
 			return;	
 		}		
 			
@@ -59,7 +64,7 @@ void checkMapExcludes()
 		{
 			if (StrEqual(nextMap, ND_CustomMaps[ND_Rock], false))
 			{
-				TriggerMapVote();
+				TriggerMapVote(nextMap);
 				return;					
 			}				
 		}
@@ -69,7 +74,7 @@ void checkMapExcludes()
 	{
 		if (StrEqual(nextMap, ND_CustomMaps[ND_Sandbrick], false))
 		{
-			TriggerMapVote();
+			TriggerMapVote(nextMap);
 			return;
 		}
 		
@@ -78,14 +83,14 @@ void checkMapExcludes()
 			if (	StrEqual(nextMap, ND_CustomMaps[ND_Mars], false) || 
 				StrEqual(nextMap, ND_CustomMaps[ND_Corner], false))
 			{
-				TriggerMapVote();
+				TriggerMapVote(nextMap);
 				return;
 			}
 			
 			/*if (clientCount > cvarStockMapCount.IntValue && 
 			     (StrEqual_PopularMap(nextMap) || StrEqual(nextMap, ND_StockMaps[ND_Silo], false)))
 			{
-				ChangeMapByPlayerCount(CHANGE_TYPE_HIGH, nextMap, roundEnd);
+				TriggerMapVote(nextMap);
 				return;
 			}*/
 		}
