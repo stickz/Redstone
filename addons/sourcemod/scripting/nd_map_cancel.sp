@@ -8,10 +8,12 @@
 #include <nd_stype>
 
 ConVar cvarUsePlayerThresolds;
+//ConVar cvarStockMapCount;
 
 public void OnPluginStart()
 {
-	cvarUsePlayerThresolds	= CreateConVar("sm_mcanel_thresholds", "1", "Specifies wehter or not to cancel map cycling by player count");
+	cvarUsePlayerThresolds	= CreateConVar("sm_mcancel_thresholds", "1", "Specifies wehter or not to cancel map cycling by player count");
+	//cvarStockMapCount	= CreateConVar("sm_mcancel_stock", "23", "Sets the maximum number of players for stock maps");
 	LoadTranslations("nd_map_management.phrases"); //load the plugin's translations	
 	AutoExecConfig(true, "nd_mcancel");
 }
