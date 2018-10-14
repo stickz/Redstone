@@ -6,6 +6,7 @@
 #include <nd_redstone>
 #include <nd_maps>
 #include <nd_stype>
+#include <nd_mlist>
 
 public Plugin myinfo =
 {
@@ -43,9 +44,29 @@ bool CanStartMapVote() {
 	return ND_RoundStarted() && CanMapChooserStartVote();
 }
 
+bool MapNotInVoterList(char[] nextMap) 
+{
+	ArrayList voteList = ND_GetMapVoteList();
+	
+	char mapName[32];
+	int index = voteList.Length - 1;
+	
+	while (index >= 0)
+	{
+		voteList.GetString(index, mapName, sizeof(mapName));
+		
+		if (StrEqual(mapName, nextMap, true))
+			return true;
+			
+		index--;
+	}
+	
+	return false;	
+}
+
 void TriggerMapVote(char[] nextMap)
 {
-	if (CanStartMapVote())
+	if (CanStartMapVote() && MapNotInVoterList(nextMap))
 	{	
 		PrintToChatAll("\x05[xG] %t", "Retrigger Map Vote", nextMap);	
 		ND_TriggerMapVote();
