@@ -46,14 +46,15 @@ bool CanStartMapVote() {
 
 bool MapNotInVoterList(char[] nextMap) 
 {
-	ArrayList voteList = ND_GetMapVoteList();
-	
-	char mapName[32];
+	ArrayList voteList = ND_GetMapVoteList();	
 	int index = voteList.Length - 1;
 	
 	while (index >= 0)
 	{
+		// Get the map name, and trim it for comparison
+		char mapName[32];
 		voteList.GetString(index, mapName, sizeof(mapName));
+		TrimString(mapName);
 		
 		if (StrEqual(mapName, nextMap, true))
 			return true;
