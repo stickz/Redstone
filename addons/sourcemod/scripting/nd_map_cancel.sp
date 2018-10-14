@@ -56,7 +56,9 @@ bool MapNotInVoterList(char[] nextMap)
 		voteList.GetString(index, mapName, sizeof(mapName));
 		
 		if (StrEqual(mapName, nextMap, true))
-			return true;	
+			return true;
+			
+		index--;
 	}
 	
 	return false;	
