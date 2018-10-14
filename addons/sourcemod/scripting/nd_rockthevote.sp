@@ -17,9 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <mapchooser>
 #include <nextmap>
 #include <nd_warmup>
-
-// Hack - Too lazy to create include file
-native bool ND_TriggerMapVote();
+#include <nd_mvote>
 
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_rockthevote/nd_rockthevote.txt"
