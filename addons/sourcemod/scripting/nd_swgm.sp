@@ -14,12 +14,14 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"
 };
 
+#define XG_GROUPID 1858772
+
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_swgm/nd_swgm.txt"
 #include "updater/standard.sp"
 
 Handle g_hForward_OnLeaveCheck, g_hForward_OnJoinCheck, g_hTimer = null;
-bool g_bInGroup[MAXPLAYERS+1], g_bInGroupOfficer[MAXPLAYERS+1], g_bLeave[MAXPLAYERS+1];
+bool g_bInGroup[MAXPLAYERS+1], g_bInGroupOfficer[MAXPLAYERS+1], g_bLeave[MAXPLAYERS+1], g_bInXgGroup[MAXPLAYERS+1];
 int g_iGroupId, g_iAuthID[MAXPLAYERS+1];
 Status g_PlayerStatus[MAXPLAYERS+1];
 
@@ -171,12 +173,12 @@ public Action CMD_List(int iClient, int args)
 public void OnClientDisconnect(int iClient)
 {
 	g_bInGroup[iClient] = false;
+	g_bInXgGroup[iClient] = false;
 	g_bInGroupOfficer[iClient] = false;
 	g_bLeave[iClient] = false;
 	g_iAuthID[iClient] = 0;
 	g_PlayerStatus[iClient] = UNASSIGNED;
 }
-
 
 public void OnClientPutInServer(int iClient)
 {
@@ -193,28 +195,33 @@ public void OnClientPutInServer(int iClient)
 public int SteamWorks_OnClientGroupStatus(int iAuth, int iGroupID, bool isMember, bool isOfficer)
 {
 	static int iClient;
-	if(iGroupID == g_iGroupId && (iClient = GetUserFromAuthID(iAuth)) > 0)
+	if ((iClient = GetUserFromAuthID(iAuth)) > 0)
 	{
-		if(g_bInGroup[iClient] && !g_bLeave[iClient] && !isMember)
+		if(iGroupID == g_iGroupId)
 		{
-			g_bInGroup[iClient] = false;
-			g_bLeave[iClient] = true;
-			Forward_OnLeaveCheck(iClient);
-			if(g_bInGroupOfficer[iClient] && !isOfficer) g_bInGroupOfficer[iClient] = false;
-			g_PlayerStatus[iClient] = LEAVER;
-		}
-		else if(!g_bInGroup[iClient] && !g_bLeave[iClient] && isMember)
-		{
-			g_bInGroup[iClient] = true;
-			
-			if(isOfficer)
+			if(g_bInGroup[iClient] && !g_bLeave[iClient] && !isMember)
 			{
-				g_bInGroupOfficer[iClient] = true;	
-				g_PlayerStatus[iClient] = OFFICER;
+				g_bInGroup[iClient] = false;
+				g_bLeave[iClient] = true;
+				Forward_OnLeaveCheck(iClient);
+				if(g_bInGroupOfficer[iClient] && !isOfficer) g_bInGroupOfficer[iClient] = false;
+				g_PlayerStatus[iClient] = LEAVER;
 			}
-			else	g_PlayerStatus[iClient] = MEMBER;
-			Forward_OnJoinCheck(iClient, isOfficer);
+			else if(!g_bInGroup[iClient] && !g_bLeave[iClient] && isMember)
+			{
+				g_bInGroup[iClient] = true;
+
+				if(isOfficer)
+				{
+					g_bInGroupOfficer[iClient] = true;	
+					g_PlayerStatus[iClient] = OFFICER;
+				}
+				else	g_PlayerStatus[iClient] = MEMBER;
+				Forward_OnJoinCheck(iClient, isOfficer);
+			}		
 		}
+		else if (iGroupID == XG_GROUPID && !g_bInXgGroup[iClient] && isMember)
+			g_bInXgGroup[iClient] = true;
 	}
 }
 
@@ -240,7 +247,7 @@ public int Native_InGroup(Handle hPlugin, int iNumParams)
 		ThrowNativeError(SP_ERROR_NATIVE, sError);
 	}
 	
-	return g_bInGroup[iClient];
+	return g_bInGroup[iClient] || g_bInXgGroup[iClient];
 }
 
 public int Native_InGroupOfficer(Handle hPlugin, int iNumParams)
