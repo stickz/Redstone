@@ -389,9 +389,9 @@ bool ClassEqualsType(int client, int type)
 	
 	switch (type)
 	{
-		case TYPE_SNIPER: return IsSniperClass(client, main, sub);
-		case TYPE_STEALTH: return IsStealthClass(client, main);
-		case TYPE_STRUCTURE: return IsAntiStructure(client, main, sub);	
+		case TYPE_SNIPER: return IsSniperClass(main, sub);
+		case TYPE_STEALTH: return IsStealthClass(main);
+		case TYPE_STRUCTURE: return IsAntiStructure(main, sub);	
 	}
 	
 	return false;
