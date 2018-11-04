@@ -16,9 +16,19 @@ enum ND_ClassBreakdown
 /**
  * Retreive the number of units on a given team
  *
- * If an invlaid teamIDX is sent, will return -1.
+ * @error Invalid team index sent; Use TEAM_EMPIRE or TEAM_CONSORT
  *
  * @param teamIDX  		The index of the team.
  * @param unitType		The type of unit to retreive.
  * @return        		The number of class unit clients. */
 native int NDB_GetUnitCount(int teamIDX, int unitType);
+
+/**
+ * Retreive the number of Anti-Structure units on a given team
+ *
+ * @error Invalid team index sent; Use TEAM_EMPIRE or TEAM_CONSORT
+ *
+ * @param teamIDX  		The index of the team.
+ * @param includeSabs		Do we include saboteurs in the count?
+ * @return        		The number of class unit clients. */
+native int NDB_GetAntiStructureCount(int teamIDX, bool includeSabs);
