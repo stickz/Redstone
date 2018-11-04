@@ -58,7 +58,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define m_iDesiredPlayerSubclass(%1) (GetEntProp(%1, Prop_Send, "m_iDesiredPlayerSubclass"))
 
 ConVar eCommanders;
-ConVar minTopPlayerSkill;
+ConVar minExemptionSkill;
 
 int UnitLimit[2][3];
 bool SetLimit[2][3];
@@ -105,7 +105,7 @@ public Plugin myinfo =
 public void OnPluginStart() 
 {
 	eCommanders = CreateConVar("sm_allow_commander_setting", "1", "Sets wetheir to allow commanders to set their own limits.");
-	minTopPlayerSkill = CreateConVar("sm_ul_min_skill", "90", "Specifies min skill value for possible unit limit exceptions.");
+	minExemptionSkill = CreateConVar("sm_ul_min_skill", "90", "Specifies min skill value for possible unit limit exemption.");
 	
 	HookEvent("player_changeclass", Event_SelectClass, EventHookMode_Pre);
 	
@@ -162,7 +162,7 @@ public Action Event_SelectClass(Event event, const char[] name, bool dontBroadca
 	if (IsSniperClass(cls, subcls)) 
 	{
         	int clientTeam = GetClientTeam(client);	
-		if (IsTooMuchSnipers(client, clientTeam) && !IsTopSkilledPlayer(client, clientTeam, TYPE_SNIPER)) 
+		if (IsTooMuchSnipers(clientTeam) && !IsTopSkilledPlayer(client, clientTeam, TYPE_SNIPER)) 
 		{
 	            	ResetPlayerClass(client);
 	            	PrintMessage(client, "Sniper Limit Reached");
@@ -173,7 +173,7 @@ public Action Event_SelectClass(Event event, const char[] name, bool dontBroadca
 	else if (IsStealthClass(cls))
 	{
 		int clientTeam = GetClientTeam(client);	
-		if (IsTooMuchStealth(client, clientTeam) && !IsTopSkilledPlayer(client, clientTeam, TYPE_STEALTH)) 
+		if (IsTooMuchStealth(clientTeam) && !IsTopSkilledPlayer(client, clientTeam, TYPE_STEALTH)) 
 		{
 	            	ResetPlayerClass(client);
 	            	PrintMessage(client, "Stealth Limit Reached");
@@ -312,7 +312,7 @@ bool IsInvalidTeam(int client, int team)
 }
 
 // HELPER FUNCTIONS: Are there too many of a particular unit type?
-bool IsTooMuchSnipers(int client, int clientTeam) 
+bool IsTooMuchSnipers(int clientTeam) 
 {
 	int clientCount = RED_GetTeamCount(clientTeam);
 	int sniperCount = NDB_GetUnitCount(clientTeam, view_as<int>(uSnipers));
@@ -329,7 +329,7 @@ bool IsTooMuchSnipers(int client, int clientTeam)
 
 	return sniperCount >= sniperLimit;
 }
-bool IsTooMuchStealth(int client, int clientTeam)
+bool IsTooMuchStealth(int clientTeam)
 {
 	int teamIDX = clientTeam - 2;
 	
@@ -369,7 +369,7 @@ bool IsTopSkilledPlayer(int player, int team, int type)
 	
 	for (int client = 1; client <= MaxClients; client++)
 	{
-		if (IsValidClient(client) && GetClientTeam(client) == team) && ClassEqualsType(client, type))
+		if (IsValidClient(client) && GetClientTeam(client) == team && ClassEqualsType(client, type))
 		{
 			float skillValue = ND_GetPrecisePSkill(client);
 			if (skillValue > topSkill)
@@ -381,7 +381,7 @@ bool IsTopSkilledPlayer(int player, int team, int type)
 	}
 	
 	// Is the player skill the top for this particular unit type? Do they also meet the minimum skill value?
-	return player == topPlayer && ND_GetPrecisePSkill(player) >= minTopPlayerSkill.FloatValue;
+	return player == topPlayer && ND_GetPrecisePSkill(player) >= minExemptionSkill.FloatValue;
 }
 bool ClassEqualsType(int client, int type)
 {
