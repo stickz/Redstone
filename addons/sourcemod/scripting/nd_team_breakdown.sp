@@ -24,6 +24,7 @@ enum ClassBreakdown
 }
  
 int g_Layout[2][ClassBreakdown];
+int SaboteurCount[2];
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_team_breakdown/nd_team_breakdown.txt"
 #include "updater/standard.sp"
@@ -176,8 +177,12 @@ public Action UpdateBreakdowns(Handle timer)
 	{
 		// clear breakdown list
 		for (int i = 0; i < 2; i++)
+		{
 			for (int y = 0; y < _:ClassBreakdown; y++)
 				g_Layout[i][y] = 0;
+				
+			SaboteurCount[i] = 0;
+		}
 	
 		// update breakdown list
 		for (int client = 1; client <= MaxClients; client++)
@@ -222,7 +227,7 @@ void AddClientClass(int client)
 			{
 				case seAssassin: g_Layout[cTeamIDX][DirectCombat]++; 
 				case seSniper: g_Layout[cTeamIDX][Snipers]++;
-				case seSabateur: g_Layout[cTeamIDX][AntiStructure]++;
+				case seSabateur: SaboteurCount[cTeamIDX]++;
 			}
 		}
 	
@@ -252,8 +257,18 @@ public Native_GetUnitCount(Handle:plugin, numParams)
 	return g_Layout[GetNativeCell(1)-2][GetNativeCell(2)];
 }
 
+public Native_GetAntiStructureCount(Handle:plugin, numParms)
+{
+	int team = GetNativeCell(1);
+	bool includeSaboteurs = false;
+	
+	int asCount = g_Layout[team][AntiStructure];
+	return includeSaboteurs ? asCount + SaboteurCount[team] : asCount;
+}
+
 public APLRes:AskPluginLoad2(Handle:myself, bool late, String:error[], err_max)
 {
 	CreateNative("NDB_GetUnitCount", Native_GetUnitCount);
+	CreateNative("NDB_GetAntiStructureCount", Native_GetAntiStructureCount);
 	return APLRes_Success;
 }
