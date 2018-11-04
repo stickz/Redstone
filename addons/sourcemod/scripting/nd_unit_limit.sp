@@ -156,12 +156,13 @@ public Action Event_SelectClass(Event event, const char[] name, bool dontBroadca
 		return Plugin_Continue;
 	
 	int client = GetClientOfUserId(event.GetInt("userid"));
+	int clientTeam = GetClientTeam(client);	
+	
     	int cls = event.GetInt("class");
     	int subcls = event.GetInt("subclass");
 
 	if (IsSniperClass(cls, subcls)) 
 	{
-        	int clientTeam = GetClientTeam(client);	
 		if (IsTooMuchSnipers(clientTeam) && !IsTopSkilledPlayer(client, clientTeam, TYPE_SNIPER)) 
 		{
 	            	ResetPlayerClass(client);
@@ -172,7 +173,6 @@ public Action Event_SelectClass(Event event, const char[] name, bool dontBroadca
 	
 	else if (IsStealthClass(cls))
 	{
-		int clientTeam = GetClientTeam(client);	
 		if (IsTooMuchStealth(clientTeam) && !IsTopSkilledPlayer(client, clientTeam, TYPE_STEALTH)) 
 		{
 	            	ResetPlayerClass(client);
@@ -183,7 +183,7 @@ public Action Event_SelectClass(Event event, const char[] name, bool dontBroadca
 	
 	else if (IsAntiStructure(cls, subcls))
 	{
-		if (IsTooMuchAntiStructure(client)) 
+		if (IsTooMuchAntiStructure(clientTeam) && !IsTopSkilledPlayer(client, clientTeam, TYPE_STRUCTURE)) 
 		{
 	            	ResetPlayerClass(client);
 	            	PrintMessage(client, "AntiStructure Limit Reached");
@@ -342,9 +342,8 @@ bool IsTooMuchStealth(int clientTeam)
 	
 	return NDB_GetUnitCount(clientTeam, view_as<int>(uStealth)) >= stealthLimit;
 }
-bool IsTooMuchAntiStructure(int client)
+bool IsTooMuchAntiStructure(int clientTeam)
 {
-	int clientTeam = GetClientTeam(client);	
 	int teamIDX = clientTeam - 2;
 	
 	if (!SetLimit[teamIDX][TYPE_STRUCTURE])
