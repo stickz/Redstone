@@ -269,6 +269,6 @@ public Native_GetAntiStructureCount(Handle:plugin, numParms)
 public APLRes:AskPluginLoad2(Handle:myself, bool late, String:error[], err_max)
 {
 	CreateNative("NDB_GetUnitCount", Native_GetUnitCount);
-	CreateNative("NDB_GetAntiStructureCount, Native_GetAntiStructureCount);
+	CreateNative("NDB_GetAntiStructureCount", Native_GetAntiStructureCount);
 	return APLRes_Success;
 }
