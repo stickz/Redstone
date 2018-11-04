@@ -348,7 +348,8 @@ bool IsTooMuchAntiStructure(int client)
 	if (!SetLimit[teamIDX][TYPE_STRUCTURE])
 		return false;
 	
-	float AntiStructureFloat = float(NDB_GetUnitCount(clientTeam, view_as<int>(uAntiStructure)));
+	// Get the anti-structure count and do not include saboteurs for now
+	float AntiStructureFloat = float(NDB_GetAntiStructureCount(clientTeam, false));
 	float teamFloat = float(RED_GetTeamCount(clientTeam));
 	float AntiStructurePercent = (AntiStructureFloat / teamFloat) * 100.0;
 	
