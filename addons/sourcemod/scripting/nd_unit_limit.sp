@@ -39,7 +39,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define MIN_SNIPER_VALUE		1
 #define MIN_STEALTH_LOW_VALUE 		2
-#define MIN_STEALTH_HIGH_VALUE 		2
+#define MIN_STEALTH_HIGH_VALUE 		3
 #define MIN_ANTI_STRUCTURE_VALUE	4
 
 #define MIN_ANTI_STRUCTURE_PER 	60
@@ -50,7 +50,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define SNIPER_MIN_LIMIT	2
 #define SNIPER_EPLY_COUNT	10
-#define STEALTH_EPLY_COUNT	7
+#define STEALTH_EPLY_COUNT	12
 
 #define DEBUG 0
 
