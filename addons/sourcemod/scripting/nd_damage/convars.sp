@@ -29,7 +29,8 @@ enum multBullets
 }
 enum multOther
 {
-	nx300_bunker_mult = 0,
+	nx300_ib1_base_mult = 0,
+	nx300_bunker_mult,
 	artillery_bunker_mult,
 	
 	// GLs (Grenade Launchers)
@@ -147,6 +148,7 @@ void CreateOtherConVars()
 	AutoExecConfig_SetFile("nd_mult_other");
 	
 	char convarName[multOther][] = {	
+		"sm_mult_baseIB1_nx300",
 		"sm_mult_bunker_nx300",
 		"sm_mult_bunker_artillery",
 		
@@ -164,6 +166,7 @@ void CreateOtherConVars()
 	};
 	
 	char convarDef[multOther][] = { 
+		"105", // nx300 ib1 base damage
 		"85", // nx300 bunker damage
 		"100", // artillery bunker damage
 		// GLs (Grenade Launchers)
@@ -172,6 +175,7 @@ void CreateOtherConVars()
 		"110", "105", "110", "105"};
 	
 	char convarDesc[multOther][] = {
+		"Percentage of normal damage nx300 does after IB1",
 		"Percentage of normal damage nx300 does to bunker",
 		"Percentage of normal damage artillery does to the bunker",
 		
