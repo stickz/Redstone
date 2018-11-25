@@ -3,6 +3,6 @@
 	"BBQ Damage Increase"
 	{
 		"#format"	"{1:i}"
-		"en"		"BBQ movement speed increased by {1}%"
+		"en"		"BBQ weapon damage increased by {1}%"
 	}
 }
