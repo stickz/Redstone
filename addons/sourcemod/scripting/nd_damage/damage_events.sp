@@ -5,15 +5,13 @@
 
 #define BLOCK_DAMAGE 0
 
-/* These constants after checking the damage type */
+/* Check name constants after damage type */
 #define WEAPON_M95_CNAME "weapon_m95"
+#define WEAPON_X01_CNAME "weapon_x01"
 #define WEAPON_NX300_CNAME "weapon_nx300"
 #define WEAPON_GL_CNAME "grenade_launcher_proj"
 #define WEAPON_RED_CNAME "sticky_grenade_ent"
 #define WEAPON_ART_CNAME "struct_artillery_explosion"
-
-// This constant uses damage type 0
-#define WEAPON_X01_CNAME "weapon_x01"
 
 // Notice: gFloat arrays must be assigned to a varriable first, other it will crash the server.
 // See Here: https://github.com/alliedmodders/sourcemod/issues/800
