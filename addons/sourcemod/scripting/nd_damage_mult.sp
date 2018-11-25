@@ -45,7 +45,7 @@ public void OnInfantryBoostResearched(int team, int level)
 	// Notify team the bbq damage has increased by three percent
 	if (level == 1)
 	{
-		float percent = Float_Other[nx300_ib1_base_mult].FloatValue;
+		float percent = gFloat_Other[nx300_ib1_base_mult].FloatValue;
 		int speed = RoundFloat(percent - 100.0);
 		PrintMessageTeamTI1(team, "BBQ Damage Increase", speed);
 	}
