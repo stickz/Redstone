@@ -166,7 +166,7 @@ void CreateOtherConVars()
 	};
 	
 	char convarDef[multOther][] = { 
-		"105", // nx300 ib1 base damage
+		"103", // nx300 ib1 base damage
 		"85", // nx300 bunker damage
 		"100", // artillery bunker damage
 		// GLs (Grenade Launchers)
