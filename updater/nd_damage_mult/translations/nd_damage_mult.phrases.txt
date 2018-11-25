@@ -1,0 +1,8 @@
+"Phrases"
+{
+	"BBQ Damage Increase"
+	{
+		"#format"	"{1:i}"
+		"en"		"BBQ movement speed increased by {1}%"
+	}
+}
