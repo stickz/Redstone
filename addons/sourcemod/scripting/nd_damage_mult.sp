@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <sdkhooks>
+#include <nd_print>
 #include <nd_rounds>
 #include <nd_struct_eng>
 #include <nd_research_eng>
@@ -28,6 +29,7 @@ public void OnPluginStart()
 	
 	CreatePluginConVars();
 	HookConVarChanges();
+	LoadTranslations("nd_damage_mult.phrases");
 	//AutoExecConfig(true, "nd_damage_mult");
 	
 	// Account for plugin late-loading
@@ -35,6 +37,17 @@ public void OnPluginStart()
 	{
 		HookEntitiesDamaged(true);
 		UpdateConVarCache();	
+	}
+}
+
+public void OnInfantryBoostResearched(int team, int level) 
+{
+	// Notify team the bbq damage has increased by three percent
+	if (level == 1)
+	{
+		float percent = gFloat_Other[nx300_ib1_base_mult];
+		int speed = RoundFloat(percent - 100.0);
+		PrintMessageTeamTI1(team, "BBQ Damage Increase", speed);
 	}
 }
 
