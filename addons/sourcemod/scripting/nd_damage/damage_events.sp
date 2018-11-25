@@ -1,12 +1,13 @@
-#define WEAPON_NX300_DT -2147481592
+#define WEAPON_FLAME_DT -2147481592
 #define WEAPON_BEAM_DT 0
 #define WEAPON_BULLET_DT 2
 #define WEAPON_EXPLO_DT 64
 
 #define BLOCK_DAMAGE 0
 
-/* These constants use damage type 64 */
+/* These constants after checking the damage type */
 #define WEAPON_M95_CNAME "weapon_m95"
+#define WEAPON_NX300_CNAME "weapon_nx300"
 #define WEAPON_GL_CNAME "grenade_launcher_proj"
 #define WEAPON_RED_CNAME "sticky_grenade_ent"
 #define WEAPON_ART_CNAME "struct_artillery_explosion"
@@ -344,11 +345,17 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 			return Plugin_Changed;
 		}
 		
-		case WEAPON_NX300_DT:
+		case WEAPON_FLAME_DT:
 		{ 
-			float multiplier = gFloat_Other[nx300_bunker_mult];
-			damage *= multiplier;
-			return Plugin_Changed; 
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
+			
+			if (InflictorIsNX300(className))
+			{			
+				float multiplier = gFloat_Other[nx300_bunker_mult];
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
 		}
 		
 		case WEAPON_EXPLO_DT:
@@ -407,6 +414,10 @@ bool InflcitorIsM95(const char[] className) {
 
 bool InflictorIsArtillery(const char[] className) {
 	return StrEqual(className, WEAPON_ART_CNAME, true);
+}
+
+bool InflictorIsNX300(const char[] className) {
+	return StrEqual(className, WEAPON_NX300_CNAME, true);
 }
 
 char iClass(int &inflictor)
