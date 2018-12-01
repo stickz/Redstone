@@ -46,7 +46,7 @@ public void OnInfantryBoostResearched(int team, int level)
 	if (level == 1)
 	{
 		float percent = gFloat_Other[nx300_ib1_base_mult];
-		int speed = RoundFloat(percent * 100.0);
+		int speed = RoundFloat((1.0 - percent) * 100.0);
 		PrintMessageTeamTI1(team, "BBQ Damage Increase", speed);
 	}
 }
