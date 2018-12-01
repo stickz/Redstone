@@ -67,7 +67,7 @@ bool MapNotInVoterList(char[] nextMap)
 
 void TriggerMapVote(char[] nextMap)
 {
-	if (CanStartMapVote() && MapNotInVoterList(nextMap))
+	if (CanStartMapVote() && !MapNotInVoterList(nextMap))
 	{	
 		PrintToChatAll("\x05[xG] %t", "Retrigger Map Vote", nextMap);	
 		ND_TriggerMapVote();
