@@ -40,6 +40,7 @@ Handle g_OnCommanderResignForward;
 Handle g_OnCommanderMutinyForward;
 Handle g_OnCommanderPromotedForward;
 Handle g_OnCommanderStateChangeForward;
+Handle g_OnCommanderEnterSeatForward;
 
 public void OnPluginStart()
 {
@@ -50,6 +51,7 @@ public void OnPluginStart()
 	
 	g_OnCommanderResignForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell);
 	g_OnCommanderMutinyForward = CreateGlobalForward("ND_OnCommanderMutiny", ET_Event, Param_Cell, Param_Cell, Param_Cell);
+	g_OnCommanderEnterSeatForward = CreateGlobalForward("ND_OnCommanderEnterChair", ET_Event, Param_Cell, Param_Cell);
 	g_OnCommanderPromotedForward = CreateGlobalForward("ND_OnCommanderPromoted", ET_Ignore, Param_Cell, Param_Cell);
 	g_OnCommanderStateChangeForward = CreateGlobalForward("ND_OnCommanderStateChanged", ET_Ignore, Param_Cell);
 	
@@ -72,10 +74,22 @@ public Action Event_CommanderModeEnter(Event event, const char[] name, bool dont
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	int team = GetClientTeam(client);
+		
+	/* Fire forward when commander enters the seat */
+	Action blockSeat;
+	Call_StartForward(g_OnCommanderEnterSeatForward);
+	Call_PushCell(client);
+	Call_PushCell(team);
+	
+	// Does the plugin want to block the commander from entering the seat?
+	Call_Finish(blockSeat);	
+	if (blockSeat == Plugin_Handled)
+		return Plugin_Handled;
 	
 	InCommanderMode[team - 2] = true;
 	EnteredCommanderMode[team -2] = true;
 	CommanderStateChangeForward(team);
+	
 	return Plugin_Continue;
 }
 
@@ -134,7 +148,7 @@ public Action startmutiny(int client, const char[] command, int argc)
 		Call_PushCell(client);
 		Call_PushCell(team);
 		
-		/* Does the plugin want to block the commander from resigning? */
+		// Does the plugin want to block the commander from resigning?
 		Call_Finish(blockResign);
 		
 		if (blockResign == Plugin_Continue)
@@ -150,7 +164,7 @@ public Action startmutiny(int client, const char[] command, int argc)
 	Call_PushCell(TeamCommander[teamIDX]);
 	Call_PushCell(team);
 	
-	/* Does the plugin want to block the commander munity */
+	// Does the plugin want to block the commander munity?
 	Call_Finish(blockMutiny);	
 	return blockMutiny;
 }
