@@ -41,6 +41,7 @@ Handle g_OnCommanderMutinyForward;
 Handle g_OnCommanderPromotedForward;
 Handle g_OnCommanderStateChangeForward;
 Handle g_OnCommanderEnterSeatForward;
+Handle g_OnCommanderFirstEnterSeatForward;
 
 public void OnPluginStart()
 {
@@ -51,9 +52,11 @@ public void OnPluginStart()
 	
 	g_OnCommanderResignForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell);
 	g_OnCommanderMutinyForward = CreateGlobalForward("ND_OnCommanderMutiny", ET_Event, Param_Cell, Param_Cell, Param_Cell);
-	g_OnCommanderEnterSeatForward = CreateGlobalForward("ND_OnCommanderEnterChair", ET_Event, Param_Cell, Param_Cell);
 	g_OnCommanderPromotedForward = CreateGlobalForward("ND_OnCommanderPromoted", ET_Ignore, Param_Cell, Param_Cell);
 	g_OnCommanderStateChangeForward = CreateGlobalForward("ND_OnCommanderStateChanged", ET_Ignore, Param_Cell);
+	
+	g_OnCommanderEnterSeatForward = CreateGlobalForward("ND_OnCommanderEnterChair", ET_Event, Param_Cell, Param_Cell);
+	g_OnCommanderFirstEnterSeatForward = CreateGlobalForward("ND_OnCommanderFirstEnterChair", ET_Ignore, Param_Cell, Param_Cell);
 	
 	AddCommandListener(startmutiny, "startmutiny");
 	
@@ -85,6 +88,16 @@ public Action Event_CommanderModeEnter(Event event, const char[] name, bool dont
 	Call_Finish(blockSeat);	
 	if (blockSeat == Plugin_Handled)
 		return Plugin_Handled;
+	
+	// Fire first seat enter forward, if this is the first time entering the seat
+	if (!EnteredCommanderMode[team -2])
+	{
+		Action dummy;
+		Call_StartForward(g_OnCommanderFirstEnterSeatForward);
+		Call_PushCell(client);
+		Call_PushCell(team);
+		Call_Finish(dummy);
+	}
 	
 	InCommanderMode[team - 2] = true;
 	EnteredCommanderMode[team -2] = true;
@@ -152,7 +165,12 @@ public Action startmutiny(int client, const char[] command, int argc)
 		Call_Finish(blockResign);
 		
 		if (blockResign == Plugin_Continue)
-			TeamCommander[teamIDX] = -1; // Mark on the engine the commander resigned
+		{
+			// Mark on the engine the commander resigned
+			TeamCommander[teamIDX] = -1;
+			InCommanderMode[teamIDX] = false;
+			EnteredCommanderMode[teamIDX] = false;
+		}
 
 		return blockResign;
 	}
@@ -175,7 +193,7 @@ void ResetVariableDefaults()
 	{
 		InCommanderMode[i] = false;
 		TeamCommander[i] = -1;
-		EnteredCommanderMode[i] = -1;
+		EnteredCommanderMode[i] = false;
 	}
 }
 
