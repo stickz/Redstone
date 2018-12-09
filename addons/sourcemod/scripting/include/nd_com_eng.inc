@@ -105,7 +105,7 @@ forward Action ND_OnCommanderMutiny(int client, int commander, int team);
 forward void ND_OnCommanderStateChanged(int team);
 
 forward void ND_OnCommanderPromoted(int client, int team);
-foward void ND_BothCommandersPromoted(int consort, int empire);
+forward void ND_BothCommandersPromoted(int consort, int empire);
 
 forward Action ND_OnCommanderEnterChair(int client, int team);
 forward void ND_OnCommanderFirstEnterChair(int client, int team);
