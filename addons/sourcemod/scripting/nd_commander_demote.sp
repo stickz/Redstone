@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <sourcecomms>
 #include <nd_stocks>
+#include <autoexecconfig>
 
 #pragma newdecls required
 
@@ -31,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_print>
 #include <nd_fskill>
 #include <nd_com_dep>
+#include <nd_struct_eng>
 
 #define INVALID_CLIENT 0
 
@@ -47,6 +49,7 @@ int voteCount[2];
 bool g_hasBeenDemoted[MAXPLAYERS+1];
 bool g_hasVoted[2][MAXPLAYERS+1];
 
+ConVar tNoBuildDemoteTime;
 ConVar tNoBunkerDemoteTime;
 ConVar cDemotePercentage;
 ConVar cDemoteMinValue;
@@ -70,18 +73,21 @@ public void OnPluginStart()
 	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
-	AutoExecConfig(true, "nd_commander_demote");
-	
 	AddUpdaterLibrary(); //auto-updater
 }
 
 void CreatePluginConvars()
 {
-	tNoBunkerDemoteTime 	= 	CreateConVar("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
-	cDemotePercentage	= 	CreateConVar("sm_demote_percent", "51", "Specifies the percent rounded to nearest required for demotion");
-	cDemotePercentEx	= 	CreateConVar("sm_demote_percentex", "60", "Specifies the percent demote a veteran commander");
-	cDemoteMinValue		= 	CreateConVar("sm_demote_vmin", "3", "Specifies the minimum number of votes required, regardless of percentage");
-	cDemoteVetSkill		=	CreateConVar("sm_demote_vet", "100", "Specifies the minimum commander skill to be a veteran");
+	AutoExecConfig_Setup("nd_commander_demote");
+	
+	tNoBuildDemoteTime 	= 	AutoExecConfig_CreateConVar("sm_demote_build", "150", "How long should we demote the commander, after not building anything");
+	tNoBunkerDemoteTime 	= 	AutoExecConfig_CreateConVar("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
+	cDemotePercentage	= 	AutoExecConfig_CreateConVar("sm_demote_percent", "51", "Specifies the percent rounded to nearest required for demotion");
+	cDemotePercentEx	=	AutoExecConfig_CreateConVar("sm_demote_percentex", "60", "Specifies the percent demote a veteran commander");
+	cDemoteMinValue		= 	AutoExecConfig_CreateConVar("sm_demote_vmin", "3", "Specifies the minimum number of votes required, regardless of percentage");
+	cDemoteVetSkill		=	AutoExecConfig_CreateConVar("sm_demote_vet", "100", "Specifies the minimum commander skill to be a veteran");
+
+	AutoExecConfig_EC_File();
 }
 
 void RegPluginCommands()
@@ -132,8 +138,14 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	return Plugin_Continue;
 }
 
-public void ND_OnCommanderPromoted(int client, int team) {
-	CreateTimer(tNoBunkerDemoteTime.FloatValue, TIMER_CheckCommanderDemote, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+public void ND_OnCommanderFirstEnterChair(int client, int team) {
+	CreateTimer(tNoBuildDemoteTime.FloatValue, TIMER_CheckBuildDemote, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public void ND_BothCommandersPromoted(int consort, int empire)
+{
+	CreateTimer(tNoBunkerDemoteTime.FloatValue, TIMER_CheckChairDemote, GetClientUserId(consort), TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(tNoBunkerDemoteTime.FloatValue, TIMER_CheckChairDemote, GetClientUserId(empire), TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action Command_Apply(int client, const char[] command, int argc)
@@ -170,7 +182,7 @@ public void OnClientDisconnect(int client) {
 	resetValues(client);
 }
 
-public Action TIMER_CheckCommanderDemote(Handle timer, any userid)
+public Action TIMER_CheckChairDemote(Handle timer, any userid)
 {
 	int client = GetClientOfUserId(userid);	
 	if (client == INVALID_CLIENT)
@@ -185,6 +197,23 @@ public Action TIMER_CheckCommanderDemote(Handle timer, any userid)
 		
 	return Plugin_Handled;
 }
+
+public Action TIMER_CheckBuildDemote(Handle timer, any userid)
+{
+	int client = GetClientOfUserId(userid);	
+	if (client == INVALID_CLIENT)
+		return Plugin_Handled;
+		
+	if (ND_IsCommander(client))
+	{
+		int team = GetClientTeam(client);
+		if (team > 1 && !ND_TeamPlacedStructure(team, true))
+			demoteCommander(team);	
+	}		
+		
+	return Plugin_Handled;
+}
+
 
 public Action ND_OnCommanderResigned(int client, int team)
 {

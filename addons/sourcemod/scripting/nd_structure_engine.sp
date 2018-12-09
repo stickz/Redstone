@@ -16,6 +16,8 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_structure_engine/nd_structure_engine.txt"
 #include "updater/standard.sp"
 
+bool FirstStructurePlaced[2] = { false, ... };
+
 Handle OnStructBuildStarted[ND_Structures];
 Handle OnStructCreated;
 
@@ -42,11 +44,24 @@ public void OnPluginStart()
 {
 	CreateBuildStartForwards(); // Create structure forwards
 	HookEvent("commander_start_structure_build", Event_StructureBuildStarted);
+	HookEvent("round_win", Event_RoundEnd, EventHookMode_PostNoCopy);
 	AddUpdaterLibrary(); // Add auto updater feature
 }
 
-public Action Event_StructureBuildStarted(Event event, const char[] name, bool dontBroadcast) {
-	FireStructBuildForward(event.GetInt("type"), event.GetInt("team"));	
+public Action Event_StructureBuildStarted(Event event, const char[] name, bool dontBroadcast) 
+{
+	// Mark first structure placed
+	int team = event.GetInt("team");
+	FirstStructurePlaced[team -2] = true;
+	
+	// Add fire the structure build forward
+	FireStructBuildForward(event.GetInt("type"), team);	
+}
+
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) 
+{
+	FirstStructurePlaced[0] = false;
+	FirstStructurePlaced[1] = false;
 }
 
 public void OnEntityCreated(int entity, const char[] classname)
@@ -79,4 +94,19 @@ void CreateBuildStartForwards()
 	}
 	
 	OnStructCreated = CreateGlobalForward("ND_OnStructureCreated", ET_Ignore, Param_Cell, Param_String);	
+}
+
+/* Natives */
+typedef NativeCall = function int (Handle plugin, int numParams);
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	CreateNative("ND_FirstStructurePlaced", Native_GetFirstStructurePlaced);
+	return APLRes_Success;
+}
+
+public int Native_GetFirstStructurePlaced(Handle plugin, int numParams)
+{
+	int team = GetNativeCell(1);
+	return FirstStructurePlaced[team -2];
 }

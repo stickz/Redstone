@@ -92,8 +92,20 @@ stock bool ND_IsCommander(int clientIDX) {
 	return ND_ICC_AVAILABLE() && ND_IsCommanderClient(clientIDX);
 }
 
+native bool ND_InitialCommandersPromoted();
+#define ND_ICP_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_InitialCommandersPromoted") == FeatureStatus_Available)
+
+stock bool ND_InitialCommandersReady(bool bDefault) {
+	return !ND_ICP_AVAILABLE() ? bDefault : ND_InitialCommandersPromoted();
+}
+
 /* A few forwards */
 forward Action ND_OnCommanderResigned(int client, int team);
 forward Action ND_OnCommanderMutiny(int client, int commander, int team);
-forward void ND_OnCommanderPromoted(int client, int team);
 forward void ND_OnCommanderStateChanged(int team);
+
+forward void ND_OnCommanderPromoted(int client, int team);
+forward void ND_BothCommandersPromoted(int consort, int empire);
+
+forward Action ND_OnCommanderEnterChair(int client, int team);
+forward void ND_OnCommanderFirstEnterChair(int client, int team);

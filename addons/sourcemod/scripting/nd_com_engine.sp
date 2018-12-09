@@ -18,6 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_com_engine/nd_com_engine.txt"
 #include "updater/standard.sp"
 
+#define NO_COMMMANDER -1
+
 #include <sdktools>
 #include <nd_stocks>
 #pragma newdecls required
@@ -32,14 +34,19 @@ public Plugin myinfo =
 	url 		= "https://github.com/stickz/Redstone/"	
 };
 
+bool InitialCommandersPromoted = false;
 bool InCommanderMode[2] = {false, ...};
 bool EnteredCommanderMode[2] = {false, ...};
+
 int TeamCommander[2] = {-1, ...};
 
 Handle g_OnCommanderResignForward;
 Handle g_OnCommanderMutinyForward;
 Handle g_OnCommanderPromotedForward;
 Handle g_OnCommanderStateChangeForward;
+Handle g_OnCommanderEnterSeatForward;
+Handle g_OnCommanderFirstEnterSeatForward;
+Handle g_OnBothTeamsHaveCommanderForward;
 
 public void OnPluginStart()
 {
@@ -50,8 +57,13 @@ public void OnPluginStart()
 	
 	g_OnCommanderResignForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell);
 	g_OnCommanderMutinyForward = CreateGlobalForward("ND_OnCommanderMutiny", ET_Event, Param_Cell, Param_Cell, Param_Cell);
-	g_OnCommanderPromotedForward = CreateGlobalForward("ND_OnCommanderPromoted", ET_Ignore, Param_Cell, Param_Cell);
 	g_OnCommanderStateChangeForward = CreateGlobalForward("ND_OnCommanderStateChanged", ET_Ignore, Param_Cell);
+	
+	g_OnCommanderPromotedForward = CreateGlobalForward("ND_OnCommanderPromoted", ET_Ignore, Param_Cell, Param_Cell);
+	g_OnBothTeamsHaveCommanderForward = CreateGlobalForward("ND_BothCommandersPromoted", ET_Ignore, Param_Cell, Param_Cell);
+	
+	g_OnCommanderEnterSeatForward = CreateGlobalForward("ND_OnCommanderEnterChair", ET_Event, Param_Cell, Param_Cell);
+	g_OnCommanderFirstEnterSeatForward = CreateGlobalForward("ND_OnCommanderFirstEnterChair", ET_Ignore, Param_Cell, Param_Cell);
 	
 	AddCommandListener(startmutiny, "startmutiny");
 	
@@ -72,10 +84,32 @@ public Action Event_CommanderModeEnter(Event event, const char[] name, bool dont
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	int team = GetClientTeam(client);
+		
+	/* Fire forward when commander enters the seat */
+	Action blockSeat;
+	Call_StartForward(g_OnCommanderEnterSeatForward);
+	Call_PushCell(client);
+	Call_PushCell(team);
+	
+	// Does the plugin want to block the commander from entering the seat?
+	Call_Finish(blockSeat);	
+	if (blockSeat == Plugin_Handled)
+		return Plugin_Handled;
+	
+	// Fire first seat enter forward, if this is the first time entering the seat
+	if (!EnteredCommanderMode[team -2])
+	{
+		Action dummy;
+		Call_StartForward(g_OnCommanderFirstEnterSeatForward);
+		Call_PushCell(client);
+		Call_PushCell(team);
+		Call_Finish(dummy);
+	}
 	
 	InCommanderMode[team - 2] = true;
 	EnteredCommanderMode[team -2] = true;
 	CommanderStateChangeForward(team);
+	
 	return Plugin_Continue;
 }
 
@@ -98,6 +132,9 @@ public Action Event_CommanderPromo(Event event, const char[] name, bool dontBroa
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	int team = event.GetInt("teamid");
 	TeamCommander[team-2] = client;
+	
+	// Check Initial commander promotion and fire forward
+	InitCommandersPromotion(team);
 	
 	/* Fire a forward when a commander is promoted */
 	Action dummy;
@@ -134,11 +171,16 @@ public Action startmutiny(int client, const char[] command, int argc)
 		Call_PushCell(client);
 		Call_PushCell(team);
 		
-		/* Does the plugin want to block the commander from resigning? */
+		// Does the plugin want to block the commander from resigning?
 		Call_Finish(blockResign);
 		
 		if (blockResign == Plugin_Continue)
-			TeamCommander[teamIDX] = -1; // Mark on the engine the commander resigned
+		{
+			// Mark on the engine the commander resigned
+			TeamCommander[teamIDX] = -1;
+			InCommanderMode[teamIDX] = false;
+			EnteredCommanderMode[teamIDX] = false;
+		}
 
 		return blockResign;
 	}
@@ -150,7 +192,7 @@ public Action startmutiny(int client, const char[] command, int argc)
 	Call_PushCell(TeamCommander[teamIDX]);
 	Call_PushCell(team);
 	
-	/* Does the plugin want to block the commander munity */
+	// Does the plugin want to block the commander munity?
 	Call_Finish(blockMutiny);	
 	return blockMutiny;
 }
@@ -161,8 +203,10 @@ void ResetVariableDefaults()
 	{
 		InCommanderMode[i] = false;
 		TeamCommander[i] = -1;
-		EnteredCommanderMode[i] = -1;
+		EnteredCommanderMode[i] = false;
 	}
+	
+	InitialCommandersPromoted = false;
 }
 
 void CommanderStateChangeForward(int team)
@@ -173,6 +217,34 @@ void CommanderStateChangeForward(int team)
 	Call_Finish(dummy);
 }
 
+void InitCommandersPromotion(int team)
+{
+	if (!InitialCommandersPromoted)
+	{
+		int otherTeam = getOtherTeam(team);
+		
+		if (TeamCommander[otherTeam -2] != NO_COMMMANDER)
+		{
+			InitialCommandersPromoted = true;
+			
+			/* Fire a forward when both teams obtain a commander */
+			Action dummy;
+			Call_StartForward(g_OnBothTeamsHaveCommanderForward);
+			
+			// Send the empire commander as the first cell
+			int empireCommander = TeamCommander[TEAM_EMPIRE -2];
+			Call_PushCell(empireCommander);
+			
+			// Send the consort commander as the second cell
+			int consortCommander = TeamCommander[TEAM_CONSORT -2];
+			Call_PushCell(consortCommander);
+			
+			// Finish calling the forward void with a dummy action
+			Call_Finish(dummy);
+		}
+	}
+}
+
 /* Natives */
 typedef NativeCall = function int (Handle plugin, int numParams);
 
@@ -181,6 +253,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("ND_IsInCommanderMode", Native_InCommanderMode);
 	CreateNative("ND_EnteredCommanderMode", Native_EnteredCommanderMode);
 	CreateNative("ND_GetTeamCommander", Native_GetTeamCommander);
+	CreateNative("ND_InitialCommandersPromoted", Native_InitCommandersPromoted);
 	CreateNative("ND_IsCommanderClient", Native_IsCommanderClient);
 	
 	return APLRes_Success;
@@ -210,6 +283,10 @@ public int Native_GetTeamCommander(Handle plugin, int numParams)
 {
 	int team = GetNativeCell(1);
 	return TeamCommander[team - 2];
+}
+
+public int Native_InitCommandersPromoted(Handle plugin, int numParams) {
+	return InitialCommandersPromoted;
 }
 
 /* 
