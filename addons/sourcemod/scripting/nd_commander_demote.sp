@@ -139,8 +139,10 @@ public void ND_OnCommanderFirstEnterChair(int client, int team) {
 	CreateTimer(tNoBuildDemoteTime.FloatValue, TIMER_CheckBuildDemote, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public void ND_OnCommanderPromoted(int client, int team) {
-	CreateTimer(tNoBunkerDemoteTime.FloatValue, TIMER_CheckChairDemote, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+public void ND_BothCommandersPromoted(int consort, int empire)
+{
+	CreateTimer(tNoBunkerDemoteTime.FloatValue, TIMER_CheckChairDemote, GetClientUserId(consort), TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(tNoBunkerDemoteTime.FloatValue, TIMER_CheckChairDemote, GetClientUserId(empire), TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action Command_Apply(int client, const char[] command, int argc)
