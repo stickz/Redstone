@@ -206,7 +206,7 @@ void ResetVariableDefaults()
 		EnteredCommanderMode[i] = false;
 	}
 	
-	BothTeamsHaveCommander = false;
+	InitialCommandersPromoted = false;
 }
 
 void CommanderStateChangeForward(int team)
