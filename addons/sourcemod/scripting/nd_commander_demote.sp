@@ -81,7 +81,7 @@ void CreatePluginConvars()
 	AutoExecConfig_Setup("nd_commander_demote");
 	
 	tNoBuildDemoteTime 	= 	AutoExecConfig_CreateConVar("sm_demote_build", "150", "How long should we demote the commander, after not building anything");
-	tNoBunkerDemoteTime 	= 	AutoExecConfig_CreateConVarr("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
+	tNoBunkerDemoteTime 	= 	AutoExecConfig_CreateConVar("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
 	cDemotePercentage	= 	AutoExecConfig_CreateConVar("sm_demote_percent", "51", "Specifies the percent rounded to nearest required for demotion");
 	cDemotePercentEx	=	AutoExecConfig_CreateConVar("sm_demote_percentex", "60", "Specifies the percent demote a veteran commander");
 	cDemoteMinValue		= 	AutoExecConfig_CreateConVar("sm_demote_vmin", "3", "Specifies the minimum number of votes required, regardless of percentage");
