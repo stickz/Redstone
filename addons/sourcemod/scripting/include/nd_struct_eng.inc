@@ -8,6 +8,11 @@
 // Check if the team has placed their first structure
 native bool ND_FirstStructurePlaced(int team);
 
+#define ND_FSP_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "ND_FirstStructurePlaced") == FeatureStatus_Available)
+stock bool ND_TeamPlacedStructure(int iTeam, bool bDefault) {
+	return !ND_FSP_AVAILIBLE() ? bDefault :  ND_FirstStructurePlaced(iTeam);
+}
+
 // Fires when a structure is fully created. Less overhead than OnEntityCreated()
 forward void ND_OnStructureCreated(int entity, const char[] classname);
 
