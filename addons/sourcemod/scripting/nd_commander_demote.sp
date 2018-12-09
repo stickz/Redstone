@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sdktools>
 #include <sourcecomms>
 #include <nd_stocks>
+#include <autoexecconfig>
 
 #pragma newdecls required
 
@@ -72,19 +73,21 @@ public void OnPluginStart()
 	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
-	AutoExecConfig(true, "nd_commander_demote");
-	
 	AddUpdaterLibrary(); //auto-updater
 }
 
 void CreatePluginConvars()
 {
-	tNoBuildDemoteTime 	= 	CreateConVar("sm_demote_build", "150", "How long should we demote the commander, after not building anything");
-	tNoBunkerDemoteTime 	= 	CreateConVar("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
-	cDemotePercentage	= 	CreateConVar("sm_demote_percent", "51", "Specifies the percent rounded to nearest required for demotion");
-	cDemotePercentEx	= 	CreateConVar("sm_demote_percentex", "60", "Specifies the percent demote a veteran commander");
-	cDemoteMinValue		= 	CreateConVar("sm_demote_vmin", "3", "Specifies the minimum number of votes required, regardless of percentage");
-	cDemoteVetSkill		=	CreateConVar("sm_demote_vet", "100", "Specifies the minimum commander skill to be a veteran");
+	AutoExecConfig_Setup("nd_commander_demote");
+	
+	tNoBuildDemoteTime 	= 	AutoExecConfig_CreateConVar("sm_demote_build", "150", "How long should we demote the commander, after not building anything");
+	tNoBunkerDemoteTime 	= 	AutoExecConfig_CreateConVarr("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
+	cDemotePercentage	= 	AutoExecConfig_CreateConVar("sm_demote_percent", "51", "Specifies the percent rounded to nearest required for demotion");
+	cDemotePercentEx	=	AutoExecConfig_CreateConVar("sm_demote_percentex", "60", "Specifies the percent demote a veteran commander");
+	cDemoteMinValue		= 	AutoExecConfig_CreateConVar("sm_demote_vmin", "3", "Specifies the minimum number of votes required, regardless of percentage");
+	cDemoteVetSkill		=	AutoExecConfig_CreateConVar("sm_demote_vet", "100", "Specifies the minimum commander skill to be a veteran");
+
+	AutoExecConfig_EC_File();
 }
 
 void RegPluginCommands()
