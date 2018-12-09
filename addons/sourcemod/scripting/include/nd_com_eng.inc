@@ -96,7 +96,7 @@ native bool ND_InitialCommandersPromoted();
 #define ND_ICP_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_InitialCommandersPromoted") == FeatureStatus_Available)
 
 stock bool ND_InitialCommandersReady(bool bDefault) {
-	return !ND_ICP_AVAILABLE() ? bDefault : ND_InitialCommandersPromoted(clientIDX);
+	return !ND_ICP_AVAILABLE() ? bDefault : ND_InitialCommandersPromoted();
 }
 
 /* A few forwards */
