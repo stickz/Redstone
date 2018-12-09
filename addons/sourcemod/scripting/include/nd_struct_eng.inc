@@ -5,6 +5,9 @@
 
 #include <nd_structures>
 
+// Check if the team has placed their first structure
+native bool ND_FirstStructurePlaced(int team);
+
 // Fires when a structure is fully created. Less overhead than OnEntityCreated()
 forward void ND_OnStructureCreated(int entity, const char[] classname);
 
