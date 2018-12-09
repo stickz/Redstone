@@ -44,6 +44,7 @@ public void OnPluginStart()
 {
 	CreateBuildStartForwards(); // Create structure forwards
 	HookEvent("commander_start_structure_build", Event_StructureBuildStarted);
+	HookEvent("round_win", Event_RoundEnd, EventHookMode_PostNoCopy);
 	AddUpdaterLibrary(); // Add auto updater feature
 }
 
@@ -55,6 +56,12 @@ public Action Event_StructureBuildStarted(Event event, const char[] name, bool d
 	
 	// Add fire the structure build forward
 	FireStructBuildForward(event.GetInt("type"), team);	
+}
+
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) 
+{
+	FirstStructurePlaced[0] = false;
+	FirstStructurePlaced[1] = false;
 }
 
 public void OnEntityCreated(int entity, const char[] classname)
