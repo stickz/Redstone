@@ -19,11 +19,17 @@ public Plugin myinfo =
 
 bool g_isLockedToSpec[MAXPLAYERS+1] = { false, ... };
 
+Handle g_OnPlayerLockedSpecForward;
+Handle g_OnPlayerLockedSpecPostForward;
+
 public void OnPluginStart()
 {
 	RegConsoleCmd("sm_spec", CMD_GoSpec);
-	AddUpdaterLibrary(); //auto-updater
 	LoadTranslations("nd_team_balancer.phrases");
+	g_OnPlayerLockedSpecForward = CreateGlobalForward("ND_OnPlayerLockSpec", ET_Event, Param_Cell, Param_Cell);
+	g_OnPlayerLockedSpecPostForward = CreateGlobalForward("ND_OnPlayerLockSpecPost", ET_Ignore, Param_Cell, Param_Cell);
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 // Remove spectator status when a client connects/disconnects
@@ -77,12 +83,31 @@ public Action CMD_GoSpec(int client, int args)
 	
 	else
 	{
+		// Call forward before player is about to be locked spec
+		// Allow the action to be blocked, by anther plugin		
+		Action lockSpec;
+		Call_StartForward(g_OnPlayerLockedSpecForward);
+		Call_PushCell(client);
+		Call_PushCell(team);
+		Call_Finish(lockSpec);
+		
+		if (lockSpec == Plugin_Handled)
+			return Plugin_Handled;
+		
 		// Update team balancer, if native is availible
 		if (RTBC_AVAILIBLE()) 
 			RefreshTBCache();
 			
+		// Put the player in spec and print a message
 		ChangeClientTeam(client, TEAM_SPEC);
 		PrintMessage(client, "Spectator Joined");
+		
+		// Call forward after the player has been locked spec
+		Action dummy;
+		Call_StartForward(g_OnPlayerLockedSpecPostForward);
+		Call_PushCell(client);
+		Call_PushCell(team);
+		Call_Finish(dummy);
 	}
 	
 	return Plugin_Handled;
