@@ -2,6 +2,9 @@
 // Allows the action to be canceled by anther plugin
 forward Action ND_OnPlayerLockSpec(int client, int team);
 
+// Called after the player is locked in spectator
+forward void ND_OnPlayerLockSpecPost(int client, int team);
+
 native bool ND_PlayerSpecLocked(int client);
 
 #define ND_PSL_AVAILIBLE() (GetFeatureStatus(FeatureType_Native, "TB_TeamsLocked") == FeatureStatus_Available)
