@@ -1,5 +1,5 @@
-// Call when a player is about to be locked spec
-// Allows the action to be canceled from anther plugin
+// Called when a player is about to be locked spec
+// Allows the action to be canceled by anther plugin
 forward Action ND_OnPlayerLockSpec(int client, int team);
 
 native bool ND_PlayerSpecLocked(int client);
