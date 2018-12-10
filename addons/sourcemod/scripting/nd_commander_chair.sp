@@ -100,7 +100,7 @@ void CreatePluginConvars()
 	AutoExecConfig_Setup("nd_commander_chair");
 	
 	cvarMinPlys		=	AutoExecConfig_CreateConVar("sm_chair_plys", "8", "Min number of players on a team required to block the command chair");
-	cvarMaxTime		= 	AutoExecConfig_CreateConVar("sm_chair_max", "150", "How long should we block chair if nobody applies for commander?");
+	cvarMaxTime		= 	AutoExecConfig_CreateConVar("sm_chair_max", "120", "How long should we block chair if nobody applies for commander?");
 	
 	AutoExecConfig_EC_File();
 }
