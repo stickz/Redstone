@@ -24,6 +24,7 @@
 #include <nd_maps>
 #include <nd_turret_eng>
 #include <nd_commands>
+#include <nd_spec>
 
 #include "nd_bot_feat/convars.sp"
 //functions required to create a modulous bot quota
@@ -73,6 +74,10 @@ public void ND_OnClientTeamSet(int client, int team) {
 }
 
 public void AFKM_OnClientAFK(int client) {
+	CheckBotCounts(client);
+}
+
+public void ND_OnPlayerLockSpecPost(int client, int team) {
 	CheckBotCounts(client);
 }
 
@@ -270,5 +275,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	MarkNativeAsOptional("ND_GetTurretCount");
 	MarkNativeAsOptional("ND_GetTeamTurretCount");
+	MarkNativeAsOptional("ND_PlayerSpecLocked");
 	RegPluginLibrary("afkmanager");
 }
