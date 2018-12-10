@@ -1,0 +1,20 @@
+"Phrases"
+{
+	"Wait Enter Chair"
+	{
+		"#format"	"{1:i}"
+		"en" 		"Please wait {1} seconds or until both teams get a commander"	
+	}
+	
+	"Wait Enter Expired"
+	{
+		"#format"	"{1:i}"
+		"en"		"Command chairs unlocked after {1} seconds"
+	}
+	
+	"Chair Unlocked"
+	{
+		"en" 		"Both teams have a commander. The chairs are now unlocked"
+	}
+}
+	
