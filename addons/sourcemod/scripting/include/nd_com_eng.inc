@@ -61,6 +61,10 @@ stock bool ND_TeamHasCommander(int teamIDX) {
 	return ND_GetCommanderOnTeam(teamIDX) != -1;	
 }
 
+stock bool ND_IsCommanderOnTeam(int client, int team) {
+	return ND_GetCommanderOnTeam(team) == client;
+}
+
 stock int ND_GetCommanderCount()
 {
 	int count = 0;
