@@ -89,7 +89,7 @@ public Action TIMER_EnterChairDelay(Handle timer)
 
 public Action ND_OnCommanderEnterChair(int client, int team)
 {	
-	if (!ChairWaitTimeElapsed && RED_OnTeamCount() > cvarMinPlys.IntValue && !ND_InitialCommandersReady(true))
+	if (!ChairWaitTimeElapsed && RED_OnTeamCount() >= cvarMinPlys.IntValue && !ND_InitialCommandersReady(true))
 	{
 		PrintMessage(client, "Wait Enter Chair");
 		return Plugin_Handled;
