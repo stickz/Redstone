@@ -91,7 +91,7 @@ public Action CMD_GoSpec(int client, int args)
 			return Plugin_Handled;
 			
 		// Put the player in spec and print a message
-		g_isLockedToSpec[client] = truel
+		g_isLockedToSpec[client] = true;
 		ChangeClientTeam(client, TEAM_SPEC);
 		PrintMessage(client, "Spectator Joined");
 		
