@@ -50,9 +50,9 @@ Handle g_OnBothTeamsHaveCommanderForward;
 
 public void OnPluginStart()
 {
-	HookEvent("player_entered_commander_mode", Event_CommanderModeEnter);
-	HookEvent("player_left_commander_mode", Event_CommanderModeLeft);
-	HookEvent("promoted_to_commander", Event_CommanderPromo);
+	HookEvent("player_entered_commander_mode", Event_CommanderModeEnter, EventHookMode_Pre);
+	HookEvent("player_left_commander_mode", Event_CommanderModeLeft, EventHookMode_PostNoCopy);
+	HookEvent("promoted_to_commander", Event_CommanderPromo, EventHookMode_PostNoCopy);
 	HookEvent("round_win", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
 	g_OnCommanderResignForward = CreateGlobalForward("ND_OnCommanderResigned", ET_Event, Param_Cell, Param_Cell);
