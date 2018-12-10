@@ -19,11 +19,15 @@ public Plugin myinfo =
 
 bool g_isLockedToSpec[MAXPLAYERS+1] = { false, ... };
 
+Handle g_OnPlayerLockedSpecForward;
+
 public void OnPluginStart()
 {
 	RegConsoleCmd("sm_spec", CMD_GoSpec);
-	AddUpdaterLibrary(); //auto-updater
 	LoadTranslations("nd_team_balancer.phrases");
+	g_OnPlayerLockedSpecForward = CreateGlobalForward("ND_OnPlayerLockSpec", ET_Event, Param_Cell, Param_Cell);
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 // Remove spectator status when a client connects/disconnects
@@ -77,6 +81,15 @@ public Action CMD_GoSpec(int client, int args)
 	
 	else
 	{
+		Action lockSpec;
+		Call_StartForward(g_OnPlayerLockedSpecForward);
+		Call_PushCell(client);
+		Call_PushCell(team);
+		Call_Finish(lockSpec);
+		
+		if (lockSpec == Plugin_Handled)
+			return Plugin_Handled;
+		
 		// Update team balancer, if native is availible
 		if (RTBC_AVAILIBLE()) 
 			RefreshTBCache();
