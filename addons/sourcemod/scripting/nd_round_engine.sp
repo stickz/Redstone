@@ -37,6 +37,7 @@ bool roundEnded = false;
 bool mapStarted = false;
 
 Handle g_OnRoundStartedForward;
+Handle g_OnRoundStartEXForward;
 Handle g_OnRoundEndedForward;
 Handle g_OnRoundEndedEXForward;
 
@@ -46,6 +47,7 @@ public void OnPluginStart()
 	HookEvent("round_win", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
 	g_OnRoundStartedForward = CreateGlobalForward("ND_OnRoundStarted", ET_Ignore);
+	g_OnRoundStartEXForward = CreateGlobalForward("ND_OnPreRoundStart", ET_Ignore);
 	g_OnRoundEndedForward = CreateGlobalForward("ND_OnRoundEnded", ET_Ignore);
 	g_OnRoundEndedEXForward = CreateGlobalForward("ND_OnRoundEndedEX", ET_Ignore);
 	
@@ -134,6 +136,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 	CreateNative("ND_MapStarted", Native_GetMapStarted)
 	
+	CreateNative("ND_PerformRoundStart", Native_FireRoundStart);
 	CreateNative("ND_SimulateRoundEnd", Native_FireRoundEnd);
 	CreateNative("ND_RestartRound", Native_FireRoundRestart);
 	return APLRes_Success;
@@ -157,6 +160,15 @@ public int Native_GetMapStarted(Handle plugin, int numParams) {
 
 public int Native_GetRoundRestartable(Handle plugin, int numParams) {
 	return _:(roundStarted && roundCanBeRestarted && !roundRestartPending);
+}
+
+public int Native_FireRoundStart(Handle plugin, int numParams)
+{
+	Action dummy;
+	Call_StartForward(g_OnRoundStartEXForward);
+	Call_Finish(dummy);
+	
+	ServerCommand("mp_minplayers 1");
 }
 
 public int Native_FireRoundEnd(Handle plugin, int numParams) {
