@@ -54,6 +54,9 @@ public void OnPluginStart()
 	LoadTranslations("nd_commander_chair.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
+	
+	// If the plugin loads late, disable the chair waiting
+	ChairWaitTimeElapsed = ND_RoundStarted();
 }
 
 public void ND_OnRoundStarted() 
