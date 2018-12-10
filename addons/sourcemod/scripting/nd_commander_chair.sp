@@ -61,14 +61,17 @@ public void OnPluginStart()
 	ChairWaitTimeElapsed = ND_RoundStarted();
 }
 
+public void ND_OnPreRoundStart()
+{
+	// If we have enough players, set commander selection time to min; otherwise, set it to max.
+	int selectTime = RED_OnTeamCount() >= cvarMinPlys.IntValue ? cvarSelectMin.IntValue : cvarSelectMax.IntValue;
+	ServerCommand("sm_cvar nd_commander_election_time %d", selectTime);
+}
+
 public void ND_OnRoundStarted() 
 {
 	ChairWaitTimeElapsed = false;
 	BunkerDelayTimer = CreateTimer(cvarMaxTime.FloatValue, TIMER_EnterChairDelay, _, TIMER_FLAG_NO_MAPCHANGE);
-	
-	// If we have enough players, set commander selection time to min; otherwise, set it to max.
-	int selectTime = RED_OnTeamCount() >= cvarMinPlys.IntValue ? cvarSelectMin.IntValue : cvarSelectMax.IntValue;
-	ServerCommand("sm_cvar nd_commander_election_time %d", selectTime);
 }
 
 public void ND_OnRoundEnded() 

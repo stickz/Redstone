@@ -81,14 +81,15 @@ native bool ND_RoundRestartable();
 native void ND_RestartRound(bool toWarmup);
 
 /* Round engine forwards */
-forward void ND_OnRoundStart();
+forward void ND_OnPreRoundStart();
 forward void ND_OnRoundStarted();
-
-forward void ND_OnRoundEnd();
 forward void ND_OnRoundEnded();
 
-/* Only fires if the round has started this map */
+// Only fires if the round has started this map
 forward void ND_OnRoundEndedEX();
 
-/* Fires the RoundEnd forward to all plugins */
-native void ND_SimulateRoundEnd()
+// Simulate the round ending to contact other plugins
+native void ND_SimulateRoundEnd();
+
+// Start the round and contact other plugins beforehand
+native void ND_PerformRoundStart();
