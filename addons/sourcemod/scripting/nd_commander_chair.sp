@@ -41,6 +41,8 @@ public Plugin myinfo =
 
 ConVar cvarMinPlys;
 ConVar cvarMaxTime;
+ConVar cvarSelectMin;
+ConVar cvarSelectMax;
 
 bool ChairWaitTimeElapsed = false;
 
@@ -63,6 +65,10 @@ public void ND_OnRoundStarted()
 {
 	ChairWaitTimeElapsed = false;
 	BunkerDelayTimer = CreateTimer(cvarMaxTime.FloatValue, TIMER_EnterChairDelay, _, TIMER_FLAG_NO_MAPCHANGE);
+	
+	// If we have enough players, set commander selection time to min; otherwise, set it to max.
+	int selectTime = RED_OnTeamCount() >= cvarMinPlys.IntValue ? cvarSelectMin.IntValue : cvarSelectMax.IntValue;
+	ServerCommand("sm_cvar nd_commander_election_time %d", selectTime);
 }
 
 public void ND_OnRoundEnded() 
@@ -104,6 +110,8 @@ void CreatePluginConvars()
 	
 	cvarMinPlys		=	AutoExecConfig_CreateConVar("sm_chair_plys", "8", "Min number of players on a team required to block the command chair");
 	cvarMaxTime		= 	AutoExecConfig_CreateConVar("sm_chair_max", "120", "How long should we block chair if nobody applies for commander?");
+	cvarSelectMin		=	AutoExecConfig_CreateConVar("sm_chair_select_min", "15", "Duration to wait to select commanders, with chair blocking");
+	cvarSelectMax		=	AutoExecConfig_CreateConVar("sm_chair_select_max", "30", "Duration to wait to select commanders, without chair blocks");
 	
 	AutoExecConfig_EC_File();
 }
