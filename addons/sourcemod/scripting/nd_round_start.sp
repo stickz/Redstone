@@ -106,5 +106,6 @@ void StartRound(bool balance = false)
 	else
 		PrintToChatAll("\x05[TB] %t", "Balancer Off");
 	
-	ServerCommand("mp_minplayers 1");
+	// Fires mp_minplayers 1, but contacts other plugins first
+	ND_PerformRoundStart();
 }
