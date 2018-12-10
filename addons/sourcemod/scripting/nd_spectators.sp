@@ -69,7 +69,7 @@ public Action CMD_GoSpec(int client, int args)
 		return Plugin_Handled;
 	}
 
-	if (!g_isLockedToSpec[client])
+	if (g_isLockedToSpec[client])
 	{
 		g_isLockedToSpec[client] = false;
 		PrintMessage(client, "Spectator Unlocked");
