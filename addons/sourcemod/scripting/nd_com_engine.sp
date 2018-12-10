@@ -93,8 +93,13 @@ public Action Event_CommanderModeEnter(Event event, const char[] name, bool dont
 	
 	// Does the plugin want to block the commander from entering the seat?
 	Call_Finish(blockSeat);	
+	
 	if (blockSeat == Plugin_Handled)
+	{
+		// Eject client from rts view, since we can't block this event
+		FakeClientCommand(client, "rtsview");
 		return Plugin_Handled;
+	}
 	
 	// Fire first seat enter forward, if this is the first time entering the seat
 	if (!EnteredCommanderMode[team -2])
