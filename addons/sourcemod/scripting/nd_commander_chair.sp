@@ -115,7 +115,7 @@ public Action TIMER_EnterChairRStartDelay(Handle timer)
 	
 	// Show chair lock expire message, if commanders aren't selected in-time
 	if (!ND_InitialCommandersReady(true))
-		PrintMessageAll("Wait Enter Expired");
+		PrintMessageAllTI1("Wait Enter Expired", cvarMaxRStart.IntValue);
 }
 
 public Action TIMER_EnterChairPromoteDelay(Handle timer)
