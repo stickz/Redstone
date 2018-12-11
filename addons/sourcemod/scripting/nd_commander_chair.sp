@@ -103,10 +103,7 @@ public void ND_BothCommandersPromoted(int consort, int empire)
 {
 	// Show early chair unlock message
 	if (!ChairWaitRStartElapsed)
-	{
-		ToggleWaitPromote(true);
 		PrintMessageAll("Chair Unlocked");
-	}
 }
 
 public Action TIMER_EnterChairRStartDelay(Handle timer)
