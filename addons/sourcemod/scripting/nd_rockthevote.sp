@@ -39,10 +39,6 @@ enum Bools
 	hasMapVoteStarted
 };
 
-#define TEAM_SPEC		1
-#define TEAM_CONSORT		2
-#define TEAM_EMPIRE		3
-
 #define RTV_COMMANDS_SIZE 	3
 
 char nd_rtv_commands[RTV_COMMANDS_SIZE][] = 
