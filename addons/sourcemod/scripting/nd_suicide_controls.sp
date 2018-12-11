@@ -7,7 +7,6 @@
 #include <nd_com_eng>
 
 #define KILL_COMMANDS_SIZE 6
-#define INVALID_USERID 0
 
 public Plugin myinfo =
 {

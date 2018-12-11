@@ -1,5 +1,3 @@
-#define INVALID_USERID	0
-
 void RegRestartCommand() 
 {
 	RegConsoleCmd("sm_RestartRound", CMD_RestartRound, "Restarts the round when used");

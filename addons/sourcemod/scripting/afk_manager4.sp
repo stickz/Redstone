@@ -34,8 +34,6 @@
 #define LOG_PREFIX			"afkm_"
 #define LOG_EXT				"log"
 
-#define INVALID_USERID	0
-
 // Spectator Related Variables
 #define g_iSpec_Team 1
 #define g_iSpec_FLMode 6
