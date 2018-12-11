@@ -16,6 +16,8 @@
 #define TEAM_START		2
 #define TEAM_COUNT		4
 
+#define INVALID_USERID 		0
+
 stock char NumberInEnglish(int num)
 {
 	char englishNumber[16];
