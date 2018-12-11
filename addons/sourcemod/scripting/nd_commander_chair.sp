@@ -19,12 +19,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "updater/standard.sp"
 
 #include <sourcemod>
+#include <autoexecconfig>
 #include <sdktools>
 #include <nd_stocks>
-#include <autoexecconfig>
-
-#pragma newdecls required
-
 #include <nd_com_eng>
 #include <nd_redstone>
 #include <nd_rounds>
