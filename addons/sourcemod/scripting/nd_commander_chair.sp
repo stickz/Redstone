@@ -103,7 +103,7 @@ public void ND_BothCommandersPromoted(int consort, int empire)
 {
 	// Show early chair unlock message
 	if (!ChairWaitRStartElapsed)
-		PrintMessageAll("Chair Unlocked");
+		NotifyCommandersOfChairUnlock("Chair Unlocked");
 }
 
 public Action TIMER_EnterChairRStartDelay(Handle timer)
@@ -112,7 +112,7 @@ public Action TIMER_EnterChairRStartDelay(Handle timer)
 	
 	// Show chair lock expire message, if commanders aren't selected in-time
 	if (!ND_InitialCommandersReady(true))
-		PrintMessageAllTI1("Wait Enter Expired", cvarMaxRStart.IntValue);
+		NotifyCommandersOfChairUnlock("May Enter Chair");
 }
 
 public Action TIMER_EnterChairPromoteDelay(Handle timer)
@@ -127,8 +127,8 @@ public Action TIMER_EnterChairPromoteDelay(Handle timer)
 	ChairWaitPromoteElapsed[team-2] = true;
 	
 	// Show chair lock expire message, if commanders aren't selected in-time
-	if (!ND_InitialCommandersReady(true))
-		PrintMessage(client, "Wait Promote Expired");
+	if (!ND_InitialCommandersReady(true) && ChairWaitRStartElapsed)
+		PrintMessage(client, "May Enter Chair");
 }
 
 public Action ND_OnCommanderEnterChair(int client, int team)
@@ -158,8 +158,21 @@ bool ChairBlockThresholdReached()
 
 void ToggleWaitPromote(bool value)
 {
-	ChairWaitPromoteElapsed[0] = value
-	ChairWaitPromoteElapsed[1] = value
+	ChairWaitPromoteElapsed[0] = value;
+	ChairWaitPromoteElapsed[1] = value;
+}
+
+void NotifyCommandersOfChairUnlock(const char[] phrase)
+{
+	// Send may enter chair to empire commander, if availible
+	int empireCommander = ND_GetCommanderOnTeam(TEAM_EMPIRE);
+	if (empireCommander != -1)
+		PrintMessage(empireCommander, phrase);
+			
+	// Send may enter chair to consort commander, if availible
+	int consortCommander =  ND_GetCommanderOnTeam(TEAM_CONSORT);
+	if (consortCommander != -1)
+		PrintMessage(consortCommander, phrase);
 }
 
 void CreatePluginConvars()
