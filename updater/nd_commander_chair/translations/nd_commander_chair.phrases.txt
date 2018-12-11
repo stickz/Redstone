@@ -8,7 +8,7 @@
 	
 	"May Enter Chair"
 	{
-		"en"		"Your command chair is now unlocked. Consider waiting for the other team get a commander"
+		"en"		"Command chair unlocked. Consider waiting for the other team get a commander"
 	}
 	
 	"Chair Unlocked"
