@@ -116,6 +116,8 @@ void CreatePluginConvars()
 	cvarPercentPass		= 	CreateConVar("sm_restart_percent", "40", "Set's percent to restart the round before the timeout");
 	cvarPercentPassEX 	= 	CreateConVar("sm_restart_percentex", "51", "Set's percent to restart the round after the timeout"); 
 	cvarRestartDelay	=	CreateConVar("sm_restart_delay", "4.5", "Specifies how many seconds to wait before restarting round on pass"); 
+
+	AutoExecConfig(true, "nd_round_start");
 }
 
 void resetValues(int client)
