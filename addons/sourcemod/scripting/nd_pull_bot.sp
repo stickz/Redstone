@@ -7,8 +7,6 @@
 
 #include <autoexecconfig>
 
-#define INVALID_USERID 0
-
 public Plugin myinfo =
 {
     name = "[ND] Teleport Bots",

@@ -10,7 +10,6 @@
 #include <nd_rounds>
 
 #define DEBUG			0
-#define INVALID_USERID 		0
 
 //Handle hudSync;
 

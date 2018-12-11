@@ -2,8 +2,6 @@
 #include <sdktools>
 #include <nd_stocks>
 
-#define INVALID_USERID 		0
-
 #define COLOUR_DEFAULT 		255
 #define COLOUR_NONE 		0
 
