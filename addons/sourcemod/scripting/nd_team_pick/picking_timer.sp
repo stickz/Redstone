@@ -1,4 +1,3 @@
-#define INVALID_USERID 0
 #define NO_PLAYERS_LEFT 0
 bool lastTimerEnded = false;
 int PickTimeRemaining = 0;
