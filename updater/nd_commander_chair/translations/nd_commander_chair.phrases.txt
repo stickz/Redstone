@@ -6,10 +6,9 @@
 		"en" 		"Please wait {1} seconds or until both teams get a commander"	
 	}
 	
-	"Wait Enter Expired"
+	"May Enter Chair"
 	{
-		"#format"	"{1:i}"
-		"en"		"Command chairs unlocked after {1} seconds"
+		"en"		"Your command chair is now unlocked. Consider waiting for the other team get a commander"
 	}
 	
 	"Chair Unlocked"
