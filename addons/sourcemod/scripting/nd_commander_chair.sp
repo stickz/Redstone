@@ -39,7 +39,8 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"
 }
 
-ConVar cvarMinPlys;
+ConVar cvarMinTeam;
+ConVar cvarMinTotal;
 ConVar cvarMaxTime;
 ConVar cvarSelectMin;
 ConVar cvarSelectMax;
@@ -64,7 +65,7 @@ public void OnPluginStart()
 public void ND_OnPreRoundStart()
 {
 	// If we have enough players, set commander selection time to min; otherwise, set it to max.
-	int selectTime = RED_OnTeamCount() >= cvarMinPlys.IntValue ? cvarSelectMin.IntValue : cvarSelectMax.IntValue;
+	int selectTime = ChairBlockThresholdReached() ? cvarSelectMin.IntValue : cvarSelectMax.IntValue;
 	ServerCommand("sm_cvar nd_commander_election_time %d", selectTime);
 }
 
@@ -98,7 +99,7 @@ public Action TIMER_EnterChairDelay(Handle timer)
 
 public Action ND_OnCommanderEnterChair(int client, int team)
 {	
-	if (!ChairWaitTimeElapsed && RED_OnTeamCount() >= cvarMinPlys.IntValue && !ND_InitialCommandersReady(true))
+	if (!ChairWaitTimeElapsed && ChairBlockThresholdReached() && !ND_InitialCommandersReady(true))
 	{
 		PrintMessage(client, "Wait Enter Chair");
 		return Plugin_Handled;
@@ -107,11 +108,18 @@ public Action ND_OnCommanderEnterChair(int client, int team)
 	return Plugin_Continue;
 }
 
+bool ChairBlockThresholdReached()
+{
+	return 	RED_OnTeamCount() >= cvarMinTeam.IntValue || 
+		ND_GetClientCount() >= cvarMinTotal.IntValue;
+}
+
 void CreatePluginConvars()
 {
 	AutoExecConfig_Setup("nd_commander_chair");
 	
-	cvarMinPlys		=	AutoExecConfig_CreateConVar("sm_chair_plys", "8", "Min number of players on a team required to block the command chair");
+	cvarMinTeam		=	AutoExecConfig_CreateConVar("sm_chair_block_team", "8", "Min number of players on a team required to block the command chair");
+	cvarMinTotal		=	AutoExecConfig_CreateConVar("sm_chair_block_total", "12", "Min number of total players required to block the command chair");
 	cvarMaxTime		= 	AutoExecConfig_CreateConVar("sm_chair_max", "120", "How long should we block chair if nobody applies for commander?");
 	cvarSelectMin		=	AutoExecConfig_CreateConVar("sm_chair_select_min", "15", "Duration to wait to select commanders, with chair blocking");
 	cvarSelectMax		=	AutoExecConfig_CreateConVar("sm_chair_select_max", "30", "Duration to wait to select commanders, without chair blocks");
