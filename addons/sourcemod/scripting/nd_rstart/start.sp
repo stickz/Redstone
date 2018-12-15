@@ -30,7 +30,6 @@ void RestoreServerConvars()
 {
 	ServerCommand("sm_balance 1");
 	ServerCommand("sm_commander_restrictions 1");
-	ServerCommand("sm_cvar nd_commander_election_time 90.0");
 }
 
 bool RunWarmupBalancer()
