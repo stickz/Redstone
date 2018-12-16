@@ -81,11 +81,16 @@ public void ND_OnRoundStarted()
 public void ND_OnRoundEnded() 
 {
 	if (BunkerDelayTimer != INVALID_HANDLE && IsValidHandle(BunkerDelayTimer))
+	{
 		CloseHandle(BunkerDelayTimer);
+		BunkerDelayTimer = INVALID_HANDLE;
+	}
 	
 	for (int h = 0; h < 2; h++) {
-		if (PromoteDelayTimer[h] != INVALID_HANDLE && IsValidHandle(PromoteDelayTimer[h])) {
+		if (PromoteDelayTimer[h] != INVALID_HANDLE && IsValidHandle(PromoteDelayTimer[h])) 
+		{
 			CloseHandle(PromoteDelayTimer[h]);
+			PromoteDelayTimer[h] = INVALID_HANDLE;
 		}
 	}
 }
