@@ -81,11 +81,16 @@ public void ND_OnRoundStarted()
 public void ND_OnRoundEnded() 
 {
 	if (BunkerDelayTimer != INVALID_HANDLE && IsValidHandle(BunkerDelayTimer))
+	{
 		CloseHandle(BunkerDelayTimer);
+		BunkerDelayTimer = INVALID_HANDLE;
+	}
 	
 	for (int h = 0; h < 2; h++) {
-		if (PromoteDelayTimer[h] != INVALID_HANDLE && IsValidHandle(PromoteDelayTimer[h])) {
+		if (PromoteDelayTimer[h] != INVALID_HANDLE && IsValidHandle(PromoteDelayTimer[h])) 
+		{
 			CloseHandle(PromoteDelayTimer[h]);
+			PromoteDelayTimer[h] = INVALID_HANDLE;
 		}
 	}
 }
@@ -108,7 +113,7 @@ public Action TIMER_EnterChairRStartDelay(Handle timer)
 	ChairWaitRStartElapsed = true;
 	
 	// Show chair lock expire message, if commanders aren't selected in-time
-	if (!ND_InitialCommandersReady(true))
+	if (!BothTeamsHadCommander())
 		NotifyCommandersOfChairUnlock("May Enter Chair");
 		
 	return Plugin_Continue;
@@ -126,7 +131,7 @@ public Action TIMER_EnterChairPromoteDelay(Handle timer, any:userid)
 	ChairWaitPromoteElapsed[team-2] = true;
 	
 	// Show chair lock expire message, if commanders aren't selected in-time
-	if (!ND_InitialCommandersReady(true) && ChairWaitRStartElapsed)
+	if (!BothTeamsHadCommander() && ChairWaitRStartElapsed)
 		PrintMessage(client, "May Enter Chair");
 		
 	return Plugin_Continue;
@@ -134,7 +139,7 @@ public Action TIMER_EnterChairPromoteDelay(Handle timer, any:userid)
 
 public Action ND_OnCommanderEnterChair(int client, int team)
 {	
-	if (!ND_InitialCommandersReady(true) && ChairBlockThresholdReached())
+	if (!BothTeamsHadCommander() && ChairBlockThresholdReached())
 	{
 		if (!ChairWaitRStartElapsed)
 		{
@@ -155,6 +160,10 @@ bool ChairBlockThresholdReached()
 {
 	return 	RED_OnTeamCount() >= cvarMinTeam.IntValue || 
 		ND_GetClientCount() >= cvarMinTotal.IntValue;
+}
+
+bool BothTeamsHadCommander() {
+	return ND_InitialCommandersReady(true) || ND_GetCommanderCount() >= 2;
 }
 
 void ToggleWaitPromote(bool value)
