@@ -131,16 +131,7 @@ void checkCount()
 	
 		// Team count means the requirement for modulous bot quota
 		if (RED_OnTeamCount() < GetBotShutOffCount())
-		{
-			if(boostBots())
-				quota += getBotModulusQuota();
-
-			else
-			{
-				quota += g_cvar[BotCount].IntValue;
-				ServerCommand("mp_limitteams %d", g_cvar[BotOverblance].IntValue);
-			}
-		}
+			quota += boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
 		
 		// The plugin to get the server slot is available
 		else if (GDSC_AVAILABLE())
@@ -151,20 +142,15 @@ void checkCount()
 			{
 				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
 				int teamCount = OnTeamCount(); // Team count, with bot filter
-				quota = getBotFillerQuota(teamCount, ValidClientCount() < dynamicSlots);
+				quota = getBotFillerQuota(teamCount);
 				
 				float timerDuration = 1.5;
 				if (quota >= dynamicSlots && getPositiveOverBalance() >= 2)
 				{
 					quota = getBotFillerQuota(teamCount);
 					
-					// If the filler quota is greater than 2, unlock teams;
-					// So we don't confuse players about which team they can join
-					if (quota > 2)
-						ServerCommand("mp_limitteams %d", quota + 1);
-
 					if (!visibleBoosted)
-						toggleBooster(true, false);
+						toggleBooster(true);
 				}
 				else if (visibleBoosted)
 				{
@@ -199,6 +185,7 @@ void InitializeServerBots()
 		quota = boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
 	
 	ServerCommand("bot_quota %d", quota);
+	ServerCommand("mp_limitteams %d, g_cvar[RegOverblance].IntValue);
 }
 
 bool boostBots()
@@ -215,7 +202,7 @@ bool boostBots()
 }
 
 //Turn 32 slots on or off for bot quota
-void toggleBooster(bool state, bool teamCaps = true)
+void toggleBooster(bool state)
 {	
 	visibleBoosted = state;
 	
@@ -227,10 +214,6 @@ void toggleBooster(bool state, bool teamCaps = true)
 		PrintToChatAll("\x05[xG] ToggleDynamicSlots() is broken. Please notify a server admin.");
 		ServerCommand("sv_visiblemaxplayers 32");
 	}
-		
-	//Unlock team joining when bots are blasting
-	if (teamCaps)
-		ServerCommand("mp_limitteams %d", state ? g_cvar[BotOverblance].IntValue : g_cvar[RegOverblance].IntValue);
 }
 
 //Disable the 32 slots (if activate) when the map changes
