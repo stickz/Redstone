@@ -70,7 +70,7 @@ public void TB_OnTeamPlacement(int client, int team) {
 }
 
 public void ND_OnClientTeamSet(int client, int team) {
-	CheckBotCounts(client);
+	CheckBotCounts(client, 0.5);
 }
 
 public void AFKM_OnClientAFK(int client) {
@@ -116,10 +116,10 @@ public void ND_OnRoundEnded() {
 	SignalMapChange();
 }
 
-void CheckBotCounts(int client)
+void CheckBotCounts(int client, float duration = 0.1)
 {
 	if (IsValidClient(client)) {
-		CreateTimer(0.1, TIMER_CC, _, TIMER_FLAG_NO_MAPCHANGE);
+		CreateTimer(duration, TIMER_CC, _, TIMER_FLAG_NO_MAPCHANGE);
 	}
 }
 
