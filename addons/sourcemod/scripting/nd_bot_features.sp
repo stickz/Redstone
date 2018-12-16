@@ -157,6 +157,11 @@ void checkCount()
 				if (quota >= dynamicSlots && getPositiveOverBalance() >= 2)
 				{
 					quota = getBotFillerQuota(teamCount);
+					
+					// If the filler quota is greater than 2, unlock teams;
+					// So we don't confuse players about which team they can join
+					if (quota > 2)
+						ServerCommand("mp_limitteams %d", quota + 1);
 
 					if (!visibleBoosted)
 						toggleBooster(true, false);
