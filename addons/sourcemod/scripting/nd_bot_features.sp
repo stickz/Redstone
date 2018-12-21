@@ -185,7 +185,7 @@ void InitializeServerBots()
 		quota = boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
 	
 	ServerCommand("bot_quota %d", quota);
-	ServerCommand("mp_limitteams %d, g_cvar[RegOverblance].IntValue);
+	ServerCommand("mp_limitteams %d", g_cvar[RegOverblance].IntValue);
 }
 
 bool boostBots()
