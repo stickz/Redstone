@@ -120,21 +120,3 @@ bool CheckShutOffBots()
 	// Otherwise, if the total on team count is reached, disable bots
 	return g_cvar[DisableBotsAt].IntValue;	
 }
-
-int GetBotShutOffCount()
-{
-	char map[32];
-	GetCurrentMap(map, sizeof(map));
-
-	// Disable bots sooner if it's a tiny/broken map
-	// ND_StockMapEquals(map, ND_Oilfield) || ND_CustomMapEquals(map, ND_Corner)
-	if (ND_CustomMapEquals(map, ND_Sandbrick))
-		return g_cvar[DisableBotsAtDec].IntValue;
-	
-	// Disable bots later if it's a large stock map
-	if (ND_StockMapEquals(map, ND_Gate) || ND_StockMapEquals(map, ND_Downtown))
-		return g_cvar[DisableBotsAtInc].IntValue;
-	
-	/* Otherwise, return the default value */
-	return g_cvar[DisableBotsAt].IntValue;
-}
