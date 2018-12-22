@@ -232,7 +232,7 @@ int getBotFillerQuota(int teamCount, bool addSpectators, int posOverbalance)
 {
 	// Set bot count to player count difference * x - 1.
 	// Team count offset required to fill the quota properly.
-	int total = teamCount + RoundToNearest(getPositiveOverBalance() * g_cvar[BotDiffMult].FloatValue);
+	int total = teamCount + RoundToNearest(posOverbalance * g_cvar[BotDiffMult].FloatValue);
 	
 	// Subtract 1 from the algorithum if the player difference is 2 or less
 	if (posOverbalance <= 2)
