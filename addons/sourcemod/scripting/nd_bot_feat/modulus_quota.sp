@@ -86,29 +86,29 @@ bool CheckShutOffBots()
 	// Get the empire, consort and total on team count
 	int empireCount = RED_GetTeamCount(TEAM_EMPIRE);
 	int consortCount = RED_GetTeamCount(TEAM_CONSORT);	
-	int totalCount = empireCount + consortCount;
+	int totalDisable, teamDisable;
 	
 	// Disable bots sooner if it's a tiny maps
 	if (ND_CustomMapEquals(map, ND_Sandbrick))
 	{		
-		// If total count on one or both teams is reached, disable bots
-		bool teamDisableDec = TCDisableBots(empireCount, consortCount, g_cvar[DisableBotsTeamDec].IntValue);
-		return teamDisableDec || totalCount >= g_cvar[DisableBotsAtDec].IntValue;
+		teamDisable = g_cvar[DisableBotsTeamDec].IntValue;
+		totalDisable = g_cvar[DisableBotsAtDec].IntValue;
 	}
 	
 	// Disable bots later on big maps, to compensate for the size
 	else if (ND_StockMapEquals(map, ND_Gate) || ND_StockMapEquals(map, ND_Downtown))
 	{
-		// If total count on one or both teams is reached, disable bots
-		bool teamDisableInc = TCDisableBots(empireCount, consortCount, g_cvar[DisableBotsTeamInc].IntValue);
-		return teamDisableInc || totalCount >= g_cvar[DisableBotsAtInc].IntValue;	
+		teamDisable = g_cvar[DisableBotsTeamInc].IntValue;
+		totalDisable = g_cvar[DisableBotsAtInc].IntValue;	
+	}
+	
+	else
+	{
+		teamDisable = g_cvar[DisableBotsTeam].IntValue;
+		totalDisable = g_cvar[DisableBotsAt].IntValue
 	}
 	
 	// If total count on one or both teams is reached, disable bots
-	bool teamDisableReg = TCDisableBots(empireCount, consortCount, g_cvar[DisableBotsTeam].IntValue);
-	return teamDisableReg || g_cvar[DisableBotsAt].IntValue;	
-}
-
-bool TCDisableBots(int empire, int consort, int threshold){
-	return empire >= threshold || consort >= threshold;
+	bool isTotalDisable = (empireCount + consortCount) >= totalDisable;
+	return isTotalDisable || empireCount >= teamDisable || consortCount >= teamDisable;
 }
