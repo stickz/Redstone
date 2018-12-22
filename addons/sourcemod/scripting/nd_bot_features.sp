@@ -130,7 +130,7 @@ void checkCount()
 		int quota = 0;
 	
 		// Team count means the requirement for modulous bot quota
-		if (RED_OnTeamCount() < GetBotShutOffCount())
+		if (CheckShutOffBots())
 			quota += boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
 		
 		// The plugin to get the server slot is available
@@ -142,12 +142,12 @@ void checkCount()
 			{
 				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
 				int teamCount = OnTeamCount(); // Team count, with bot filter
-				quota = getBotFillerQuota(teamCount);
+				quota = getBotFillerQuota(teamCount, true);
 				
 				float timerDuration = 1.5;
 				if (quota >= dynamicSlots && getPositiveOverBalance() >= 2)
 				{
-					quota = getBotFillerQuota(teamCount);
+					quota = getBotFillerQuota(teamCount, false);
 					
 					if (!visibleBoosted)
 						toggleBooster(true);
@@ -181,7 +181,7 @@ void InitializeServerBots()
 	
 	// Team count means the requirement for modulous bot quota
 	// Decide which type of modulous quota we're using (boosted or regular)
-	if (RED_OnTeamCount() < GetBotShutOffCount())
+	if (CheckShutOffBots())
 		quota = boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
 	
 	ServerCommand("bot_quota %d", quota);
@@ -227,7 +227,7 @@ void SignalMapChange()
 }
 
 //When teams have two or more less players
-int getBotFillerQuota(int teamCount, bool addSpectators = false)
+int getBotFillerQuota(int teamCount, bool addSpectators)
 {
 	// Set bot count to player count difference * x - 1.
 	// Team count offset required to fill the quota properly.
