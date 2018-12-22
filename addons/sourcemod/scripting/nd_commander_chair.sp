@@ -142,12 +142,12 @@ public Action ND_OnCommanderEnterChair(int client, int team)
 {	
 	if (!BothTeamsHadCommander())
 	{
-		if (!ChairWaitRStartElapsed && ChairBlockThresholdReached())
+		if (!ChairWaitRStartElapsed && RStartThresholdReached())
 		{
 			PrintMessageTI1(client, "Wait Enter Chair", cvarMaxRStart.IntValue);
 			return Plugin_Handled;
 		}
-		else if (!ChairWaitPromoteElapsed[team-2] && ChairWaitThresholdReached())
+		else if (!ChairWaitPromoteElapsed[team-2] && WaitPromotionThresholdReached())
 		{
 			PrintMessageTI1(client, "Wait Enter Chair", cvarMaxPromote.IntValue);
 			return Plugin_Handled;
@@ -161,13 +161,13 @@ bool TotalPlayerTresholdReached() {
 	return ND_GetClientCount() >= cvarMinTotal.IntValue;
 }
 
-bool ChairBlockThresholdReached()
+bool RStartThresholdReached()
 {
 	bool teamThreshold = RED_OnTeamCount() >= cvarMinTeam.IntValue;
 	return teamThreshold || TotalPlayerTresholdReached();
 }
 
-bool ChairWaitThresholdReached()
+bool WaitPromotionThresholdReached()
 {
 	int min = cvarMinEach.IntValue;
 	int empire = RED_GetTeamCount(TEAM_EMPIRE);
