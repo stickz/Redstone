@@ -90,33 +90,25 @@ bool CheckShutOffBots()
 	
 	// Disable bots sooner if it's a tiny maps
 	if (ND_CustomMapEquals(map, ND_Sandbrick))
-	{
-		// If empire or consort has the min team players, disable bots
-		int teamDisableDec = g_cvar[DisableBotsTeamDec].IntValue;		
-		if (empireCount >= teamDisableDec || consortCount >= teamDisableDec)
-			return true;
-		
-		// Otherwise, if the total on team count is reached, disable bots
-		return totalCount >= g_cvar[DisableBotsAtDec].IntValue;
+	{		
+		// If total count on one or both teams is reached, disable bots
+		bool teamDisableDec = TCDisableBots(empireCount, consortCount, g_cvar[DisableBotsTeamDec].IntValue);
+		return teamDisableDec || totalCount >= g_cvar[DisableBotsAtDec].IntValue;
 	}
 	
 	// Disable bots later on big maps, to compensate for the size
 	else if (ND_StockMapEquals(map, ND_Gate) || ND_StockMapEquals(map, ND_Downtown))
 	{
-		// If empire or consort has the min team players, disable bots
-		int teamDisableInc = g_cvar[DisableBotsTeamInc].IntValue;
-		if (empireCount >= teamDisableInc || consortCount >= teamDisableInc)
-			return true;
-			
-		// Otherwise, if the total on team count is reached, disable bots
-		return totalCount >= g_cvar[DisableBotsAtInc].IntValue;	
+		// If total count on one or both teams is reached, disable bots
+		bool teamDisableInc = TCDisableBots(empireCount, consortCount, g_cvar[DisableBotsTeamInc].IntValue);
+		return teamDisableInc || totalCount >= g_cvar[DisableBotsAtInc].IntValue;	
 	}
 	
-	// If empire or consort has the min team players, disable bots
-	int teamDisableReg = g_cvar[DisableBotsTeam].IntValue;
-	if (empireCount >= teamDisableReg || consortCount >= teamDisableReg)
-		return true;
-		
-	// Otherwise, if the total on team count is reached, disable bots
-	return g_cvar[DisableBotsAt].IntValue;	
+	// If total count on one or both teams is reached, disable bots
+	bool teamDisableReg = TCDisableBots(empireCount, consortCount, g_cvar[DisableBotsTeam].IntValue);
+	return teamDisableReg || g_cvar[DisableBotsAt].IntValue;	
+}
+
+bool TCDisableBots(int empire, int consort, int threshold){
+	return empire >= threshold || consort >= threshold;
 }
