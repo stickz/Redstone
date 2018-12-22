@@ -140,7 +140,7 @@ void checkCount()
 			int teamLessPlys = getTeamLessPlayers();			
 			if (teamLessPlys != TEAM_NONE)
 			{
-				int posOverBalance = getPositiveOverBalance(); // The player skill between the two teams				
+				int posOverBalance = getPositiveOverBalance(); // The player difference between the two teams				
 				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
 				int teamCount = OnTeamCount(); // Team count, with bot filter
 				quota = getBotFillerQuota(teamCount, true, posOverBalance);
