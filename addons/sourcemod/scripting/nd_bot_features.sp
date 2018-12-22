@@ -140,14 +140,15 @@ void checkCount()
 			int teamLessPlys = getTeamLessPlayers();			
 			if (teamLessPlys != TEAM_NONE)
 			{
+				int posOverBalance = getPositiveOverBalance(); // The player skill between the two teams				
 				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
 				int teamCount = OnTeamCount(); // Team count, with bot filter
-				quota = getBotFillerQuota(teamCount, true);
+				quota = getBotFillerQuota(teamCount, true, posOverBalance);
 				
 				float timerDuration = 1.5;
-				if (quota >= dynamicSlots && getPositiveOverBalance() >= 2)
+				if (quota >= dynamicSlots && posOverBalance >= 2)
 				{
-					quota = getBotFillerQuota(teamCount, false);
+					quota = getBotFillerQuota(teamCount, false, posOverBalance);
 					
 					if (!visibleBoosted)
 						toggleBooster(true);
@@ -227,11 +228,15 @@ void SignalMapChange()
 }
 
 //When teams have two or more less players
-int getBotFillerQuota(int teamCount, bool addSpectators)
+int getBotFillerQuota(int teamCount, bool addSpectators, int posOverbalance)
 {
 	// Set bot count to player count difference * x - 1.
 	// Team count offset required to fill the quota properly.
-	int total = teamCount + RoundToNearest(getPositiveOverBalance() * g_cvar[BotDiffMult].FloatValue) - 1;
+	int total = teamCount + RoundToNearest(getPositiveOverBalance() * g_cvar[BotDiffMult].FloatValue);
+	
+	// Subtract 1 from the algorithum if the player difference is 2 or less
+	if (posOverbalance <= 2)
+		total--;
 	
 	/* Notice: It's assumed this code will only call ValidTeamCount() once for performance reasons */
 	if (addSpectators)
