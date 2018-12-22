@@ -68,7 +68,7 @@ public void OnPluginStart()
 public void ND_OnPreRoundStart()
 {
 	// If we have enough players, set commander selection time to min; otherwise, set it to max.
-	int selectTime = ChairBlockThresholdReached() ? cvarSelectMin.IntValue : cvarSelectMax.IntValue;
+	int selectTime = RStartThresholdReached() ? cvarSelectMin.IntValue : cvarSelectMax.IntValue;
 	ServerCommand("sm_cvar nd_commander_election_time %d", selectTime);
 }
 
