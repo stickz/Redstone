@@ -36,6 +36,7 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"
 }
 
+ConVar cvarMinEach;
 ConVar cvarMinTeam;
 ConVar cvarMinTotal;
 ConVar cvarMaxRStart;
@@ -139,14 +140,14 @@ public Action TIMER_EnterChairPromoteDelay(Handle timer, any:userid)
 
 public Action ND_OnCommanderEnterChair(int client, int team)
 {	
-	if (!BothTeamsHadCommander() && ChairBlockThresholdReached())
+	if (!BothTeamsHadCommander())
 	{
-		if (!ChairWaitRStartElapsed)
+		if (!ChairWaitRStartElapsed && ChairBlockThresholdReached())
 		{
 			PrintMessageTI1(client, "Wait Enter Chair", cvarMaxRStart.IntValue);
 			return Plugin_Handled;
 		}
-		else if (!ChairWaitPromoteElapsed[team-2])
+		else if (!ChairWaitPromoteElapsed[team-2] && ChairWaitThresholdReached())
 		{
 			PrintMessageTI1(client, "Wait Enter Chair", cvarMaxPromote.IntValue);
 			return Plugin_Handled;
@@ -156,10 +157,23 @@ public Action ND_OnCommanderEnterChair(int client, int team)
 	return Plugin_Continue;
 }
 
+bool TotalPlayerTresholdReached() {
+	return ND_GetClientCount() >= cvarMinTotal.IntValue;
+}
+
 bool ChairBlockThresholdReached()
 {
-	return 	RED_OnTeamCount() >= cvarMinTeam.IntValue || 
-		ND_GetClientCount() >= cvarMinTotal.IntValue;
+	bool teamThreshold = RED_OnTeamCount() >= cvarMinTeam.IntValue;
+	return teamThreshold || TotalPlayerTresholdReached();
+}
+
+bool ChairWaitThresholdReached()
+{
+	int min = cvarMinEach.IntValue;
+	int empire = RED_GetTeamCount(TEAM_EMPIRE);
+	int consort = RED_GetTeamCount(TEAM_CONSORT);
+	bool teamThreshold = empire >= min && consort >= min;
+	return teamThreshold || TotalPlayerTresholdReached();
 }
 
 bool BothTeamsHadCommander() {
@@ -189,7 +203,8 @@ void CreatePluginConvars()
 {
 	AutoExecConfig_Setup("nd_commander_chair");
 	
-	cvarMinTeam		=	AutoExecConfig_CreateConVar("sm_chair_block_team", "8", "Min number of players on a team required to block the command chair");
+	cvarMinEach		=	AutoExecConfig_CreateConVar("sm_chair_wait_each", "3", "Min number of players on each team to block chair after promotion");
+	cvarMinTeam		=	AutoExecConfig_CreateConVar("sm_chair_block_team", "8", "Min number of players on any team required to block char after round start");
 	cvarMinTotal		=	AutoExecConfig_CreateConVar("sm_chair_block_total", "12", "Min number of total players required to block the command chair");
 	cvarMaxRStart		= 	AutoExecConfig_CreateConVar("sm_chair_max_rstart", "120", "How long to block chair after round start if nobody applies for commander?");
 	cvarMaxPromote		= 	AutoExecConfig_CreateConVar("sm_chair_max_promote", "60", "How long to block chair after promotion if nobody applies for commander?");	
