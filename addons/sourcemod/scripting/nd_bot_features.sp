@@ -130,7 +130,7 @@ void checkCount()
 		int quota = 0;
 	
 		// Team count means the requirement for modulous bot quota
-		if (RED_OnTeamCount() < GetBotShutOffCount())
+		if (CheckShutOffBots())
 			quota += boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
 		
 		// The plugin to get the server slot is available
@@ -181,7 +181,7 @@ void InitializeServerBots()
 	
 	// Team count means the requirement for modulous bot quota
 	// Decide which type of modulous quota we're using (boosted or regular)
-	if (RED_OnTeamCount() < GetBotShutOffCount())
+	if (CheckShutOffBots())
 		quota = boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
 	
 	ServerCommand("bot_quota %d", quota);
