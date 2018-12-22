@@ -77,6 +77,50 @@ int GetSmallMapCount(int totalCount, int specCount, int rQuota)
 	return botAmount;
 }
 
+bool CheckShutOffBots()
+{
+	// Get the current map we're playing
+	char map[32];
+	GetCurrentMap(map, sizeof(map));
+	
+	// Get the empire, consort and total on team count
+	int empireCount = RED_GetTeamCount(TEAM_EMPIRE);
+	int consortCount = RED_GetTeamCount(TEAM_CONSORT);	
+	int totalCount = empireCount + consortCount;
+	
+	// Disable bots sooner if it's a tiny maps
+	if (ND_CustomMapEquals(map, ND_Sandbrick))
+	{
+		// If empire or consort has the min team players, disable bots
+		int teamDisableDec = g_cvar[DisableBotsTeamDec].IntValue;		
+		if (empireCount >= teamDisableDec || consortCount >= teamDisableDec)
+			return true;
+		
+		// Otherwise, if the total on team count is reached, disable bots
+		return totalCount >= g_cvar[DisableBotsAtDec].IntValue;
+	}
+	
+	// Disable bots later on big maps, to compensate for the size
+	else if (ND_StockMapEquals(map, ND_Gate) || ND_StockMapEquals(map, ND_Downtown))
+	{
+		// If empire or consort has the min team players, disable bots
+		int teamDisableInc = g_cvar[DisableBotsTeamInc].IntValue;
+		if (empireCount >= teamDisableInc || consortCount >= teamDisableInc)
+			return true;
+			
+		// Otherwise, if the total on team count is reached, disable bots
+		return totalCount >= g_cvar[DisableBotsAtInc].IntValue;	
+	}
+	
+	// If empire or consort has the min team players, disable bots
+	int teamDisableReg = g_cvar[DisableBotsTeam].IntValue;
+	if (empireCount >= teamDisableReg || consortCount >= teamDisableReg)
+		return true;
+		
+	// Otherwise, if the total on team count is reached, disable bots
+	return g_cvar[DisableBotsAt].IntValue;	
+}
+
 int GetBotShutOffCount()
 {
 	char map[32];
