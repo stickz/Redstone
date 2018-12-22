@@ -40,9 +40,9 @@ void CreatePluginConvars()
 	g_cvar[DisableBotsAt] = AutoExecConfig_CreateConVar("sm_disable_bots_at", "8", "sets when disable bots"); 
 	g_cvar[DisableBotsAtDec] = AutoExecConfig_CreateConVar("sm_disable_bots_at_dec", "6", "sets when disable bots sooner on certain maps");
 	g_cvar[DisableBotsAtInc] = AutoExecConfig_CreateConVar("sm_disable_bots_at_inc", "8", "sets when disable bots later on certain maps");
-	g_cvar[DisableBotsTeam] = AutoExecConfig_CreateConVar("sm_disable_bots_at", "5", "sets when team-based disable bots"); 
-	g_cvar[DisableBotsTeamDec] = AutoExecConfig_CreateConVar("sm_disable_bots_at_dec", "4", "sets when team disable bots sooner on certain maps");
-	g_cvar[DisableBotsTeamInc] = AutoExecConfig_CreateConVar("sm_disable_bots_at_inc", "5", "sets when team disable bots later on certain maps");
+	g_cvar[DisableBotsTeam] = AutoExecConfig_CreateConVar("sm_disable_bots_team", "5", "sets when team-based disable bots"); 
+	g_cvar[DisableBotsTeamDec] = AutoExecConfig_CreateConVar("sm_disable_bots_team_dec", "4", "sets when team disable bots sooner on certain maps");
+	g_cvar[DisableBotsTeamInc] = AutoExecConfig_CreateConVar("sm_disable_bots_team_inc", "5", "sets when team disable bots later on certain maps");
 	
 	g_cvar[BotOverblance] = AutoExecConfig_CreateConVar("sm_bot_overbalance", "3", "sets team difference allowed with bots enabled"); 
 	g_cvar[RegOverblance] = AutoExecConfig_CreateConVar("sm_reg_overbalance", "1", "sets team difference allowed with bots disabled");
