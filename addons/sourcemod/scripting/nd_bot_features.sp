@@ -147,7 +147,7 @@ void checkCount()
 				float timerDuration = 1.5;
 				if (quota >= dynamicSlots && getPositiveOverBalance() >= 2)
 				{
-					quota = getBotFillerQuota(teamCount);
+					quota = getBotFillerQuota(teamCount, false);
 					
 					if (!visibleBoosted)
 						toggleBooster(true);
@@ -227,7 +227,7 @@ void SignalMapChange()
 }
 
 //When teams have two or more less players
-int getBotFillerQuota(int teamCount, bool addSpectators = false)
+int getBotFillerQuota(int teamCount, bool addSpectators)
 {
 	// Set bot count to player count difference * x - 1.
 	// Team count offset required to fill the quota properly.
