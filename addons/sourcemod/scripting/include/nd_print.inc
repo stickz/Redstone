@@ -24,6 +24,12 @@ stock void PrintMessageExTI1(int client, const char[] phrase, int intArg) {
 	PrintToChat(client, "%s%t.", COLOUR, phrase, intArg);
 }
 
+stock void PrintMessageCom(int client, const char[] phrase) {
+	if (commander != -1) {
+		PrintMessage(client, phrase);
+	}
+}
+
 stock void PrintMessageAll(const char[] phrase) 
 {
 	for (int client = 1; client <= MaxClients; client++) 
