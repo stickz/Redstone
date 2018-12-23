@@ -228,15 +228,11 @@ void SignalMapChange()
 }
 
 //When teams have two or more less players
-int getBotFillerQuota(int teamCount, bool addSpectators, int posOverbalance)
+int getBotFillerQuota(int teamCount, bool addSpectators, int plyDiff)
 {
 	// Set bot count to player count difference * x - 1.
 	// Team count offset required to fill the quota properly.
-	int total = teamCount + RoundToNearest(posOverbalance * g_cvar[BotDiffMult].FloatValue);
-	
-	// Subtract 1 from the algorithum if the player difference is 2 or less
-	if (posOverbalance <= 2)
-		total--;
+	int total = teamCount + GetBotCountByPow(plyDiff, g_cvar[BotDiffMult].FloatValue);
 	
 	/* Notice: It's assumed this code will only call ValidTeamCount() once for performance reasons */
 	if (addSpectators)
@@ -244,6 +240,10 @@ int getBotFillerQuota(int teamCount, bool addSpectators, int posOverbalance)
 	
 	// Set a ceiling of 29 to be returned
 	return total > 29 ? 29 : total;
+}
+
+int GetBotCountByPow(int diff, float exp) {
+	return RoundToNearest(Pow(diff, exp));
 }
 
 public Action TIMER_CheckAndSwitchFiller(Handle timer, any team)
