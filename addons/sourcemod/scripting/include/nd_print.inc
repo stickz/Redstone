@@ -25,7 +25,7 @@ stock void PrintMessageExTI1(int client, const char[] phrase, int intArg) {
 }
 
 stock void PrintMessageCom(int client, const char[] phrase) {
-	if (commander != -1) {
+	if (client != -1) {
 		PrintMessage(client, phrase);
 	}
 }
