@@ -221,8 +221,9 @@ int getBotFillerQuota(int plyDiff)
 	// Add the spectator count becuase it takes away one bot by default
 	total += ValidTeamCount(TEAM_SPEC);
 	
-	// Set a ceiling of 29 to be returned
-	return total > 29 ? 29 : total;
+	// Set a ceiling to be returned, leave two connecting slots
+	int max = 30 - ValidTeamCount(TEAM_UNASSIGNED);
+	return total > max ? max : total;
 }
 
 int GetBotCountByPow(int diff, float exp) {
