@@ -143,16 +143,12 @@ void checkCount()
 				int posOverBalance = getPositiveOverBalance(); // The player difference between the two teams				
 				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
 				int teamCount = OnTeamCount(); // Team count, with bot filter
-				quota = getBotFillerQuota(teamCount, true, posOverBalance);
+				quota = getBotFillerQuota(teamCount, posOverBalance);
 				
 				float timerDuration = 1.5;
 				if (quota >= dynamicSlots && posOverBalance >= 2)
-				{
-					quota = getBotFillerQuota(teamCount, false, posOverBalance);
-					
-					if (!visibleBoosted)
-						toggleBooster(true);
-				}
+					toggleBooster(true);	
+	
 				else if (visibleBoosted)
 				{
 					toggleBooster(false);
@@ -191,20 +187,18 @@ void InitializeServerBots()
 
 bool boostBots()
 {
-	if (g_cvar[BoostBots].BoolValue && TDS_AVAILABLE())
-	{
-		if (!visibleBoosted)
-			toggleBooster(true);
-		
-		return true;
-	}
-
-	return false;
+	bool boost = g_cvar[BoostBots].BoolValue;
+	toggleBooster(boost);
+	return boost;
 }
 
 //Turn 32 slots on or off for bot quota
 void toggleBooster(bool state)
 {	
+	// Exit function if the state is not changing
+	if (visibleBoosted == state)
+		return;
+	
 	visibleBoosted = state;
 	
 	if (TDS_AVAILABLE())
@@ -220,23 +214,20 @@ void toggleBooster(bool state)
 //Disable the 32 slots (if activate) when the map changes
 void SignalMapChange()
 {
-	if (visibleBoosted)
-		toggleBooster(false);	
-
+	toggleBooster(false);
 	ServerCommand("bot_quota 0");
 	ServerCommand("mp_limitteams 1");
 }
 
 //When teams have two or more less players
-int getBotFillerQuota(int teamCount, bool addSpectators, int plyDiff)
+int getBotFillerQuota(int teamCount, int plyDiff)
 {
 	// Set bot count to player count difference * x - 1.
 	// Team count offset required to fill the quota properly.
 	int total = teamCount + GetBotCountByPow(plyDiff, g_cvar[BotDiffMult].FloatValue);
 	
-	/* Notice: It's assumed this code will only call ValidTeamCount() once for performance reasons */
-	if (addSpectators)
-		total += ValidTeamCount(TEAM_SPEC);		
+	// Add the spectator count becuase it takes away one bot by default
+	total += ValidTeamCount(TEAM_SPEC);
 	
 	// Set a ceiling of 29 to be returned
 	return total > 29 ? 29 : total;
