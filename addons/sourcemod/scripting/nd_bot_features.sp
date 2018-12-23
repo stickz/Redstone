@@ -146,7 +146,7 @@ void checkCount()
 				quota = getBotFillerQuota(teamCount, posOverBalance);
 				
 				float timerDuration = 1.5;
-				if (quota >= dynamicSlots && posOverBalance >= 2 && !visibleBoosted)
+				if (quota >= dynamicSlots && posOverBalance >= 2)
 					toggleBooster(true);	
 	
 				else if (visibleBoosted)
@@ -187,20 +187,18 @@ void InitializeServerBots()
 
 bool boostBots()
 {
-	if (g_cvar[BoostBots].BoolValue && TDS_AVAILABLE())
-	{
-		if (!visibleBoosted)
-			toggleBooster(true);
-		
-		return true;
-	}
-
-	return false;
+	bool boost = g_cvar[BoostBots].BoolValue;
+	toggleBooster(boost);
+	return boost;
 }
 
 //Turn 32 slots on or off for bot quota
 void toggleBooster(bool state)
 {	
+	// Exit function if the state is not changing
+	if (visibleBoosted == state)
+		return;
+	
 	visibleBoosted = state;
 	
 	if (TDS_AVAILABLE())
@@ -216,9 +214,7 @@ void toggleBooster(bool state)
 //Disable the 32 slots (if activate) when the map changes
 void SignalMapChange()
 {
-	if (visibleBoosted)
-		toggleBooster(false);	
-
+	toggleBooster(false);
 	ServerCommand("bot_quota 0");
 	ServerCommand("mp_limitteams 1");
 }
