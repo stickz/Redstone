@@ -32,6 +32,7 @@
 #include "nd_bot_feat/modulus_quota.sp"
 
 bool disableBots = false;
+float timerDuration = 1.5;
 
 public Plugin myinfo =
 {
@@ -142,19 +143,9 @@ void checkCount()
 			{
 				int posOverBalance = getPositiveOverBalance(); // The player difference between the two teams				
 				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
-				int teamCount = OnTeamCount(); // Team count, with bot filter
-				quota = getBotFillerQuota(teamCount, posOverBalance);
+				quota = getBotFillerQuota(posOverBalance);
 				
-				float timerDuration = 1.5;
-				if (quota >= dynamicSlots && posOverBalance >= 2)
-					toggleBooster(true);	
-	
-				else if (visibleBoosted)
-				{
-					toggleBooster(false);
-					timerDuration = 5.0;
-				}
-				
+				toggleBooster(quota >= dynamicSlots && posOverBalance >= 2);
 				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);	
 			}
 			else { quota = 0; } // Otherwise, set filler quota to 0
@@ -200,6 +191,7 @@ void toggleBooster(bool state)
 		return;
 	
 	visibleBoosted = state;
+	timerDuration = visibleBoosted ? 5.0 : 1.5
 	
 	if (TDS_AVAILABLE())
 		ToggleDynamicSlots(!state);
@@ -220,11 +212,11 @@ void SignalMapChange()
 }
 
 //When teams have two or more less players
-int getBotFillerQuota(int teamCount, int plyDiff)
+int getBotFillerQuota(int plyDiff)
 {
 	// Set bot count to player count difference * x - 1.
 	// Team count offset required to fill the quota properly.
-	int total = teamCount + GetBotCountByPow(plyDiff, g_cvar[BotDiffMult].FloatValue);
+	int total = OnTeamCount() + GetBotCountByPow(plyDiff, g_cvar[BotDiffMult].FloatValue);
 	
 	// Add the spectator count becuase it takes away one bot by default
 	total += ValidTeamCount(TEAM_SPEC);
