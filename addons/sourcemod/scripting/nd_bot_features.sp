@@ -143,12 +143,12 @@ void checkCount()
 				int posOverBalance = getPositiveOverBalance(); // The player difference between the two teams				
 				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
 				int teamCount = OnTeamCount(); // Team count, with bot filter
-				quota = getBotFillerQuota(teamCount, posOverBalance, false);
+				quota = getBotFillerQuota(teamCount, posOverBalance);
 				
 				float timerDuration = 1.5;
 				if (quota >= dynamicSlots && posOverBalance >= 2)
 				{
-					quota = getBotFillerQuota(teamCount, posOverBalance, true);
+					quota = getBotFillerQuota(teamCount, posOverBalance);
 					
 					if (!visibleBoosted)
 						toggleBooster(true);
@@ -229,7 +229,7 @@ void SignalMapChange()
 }
 
 //When teams have two or more less players
-int getBotFillerQuota(int teamCount, int plyDiff, bool substractUnassigned)
+int getBotFillerQuota(int teamCount, int plyDiff)
 {
 	// Set bot count to player count difference * x - 1.
 	// Team count offset required to fill the quota properly.
@@ -237,10 +237,6 @@ int getBotFillerQuota(int teamCount, int plyDiff, bool substractUnassigned)
 	
 	// Add the spectator count becuase it takes away one bot by default
 	total += ValidTeamCount(TEAM_SPEC);
-	
-	// Subtract unassigned if necessary to allow players to connect
-	if (substractUnassigned && total >= 29)
-		total -= ValidTeamCount(TEAM_UNASSIGNED);
 	
 	// Set a ceiling of 29 to be returned
 	return total > 29 ? 29 : total;
