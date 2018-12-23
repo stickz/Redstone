@@ -146,13 +146,8 @@ void checkCount()
 				quota = getBotFillerQuota(teamCount, posOverBalance);
 				
 				float timerDuration = 1.5;
-				if (quota >= dynamicSlots && posOverBalance >= 2)
-				{
-					quota = getBotFillerQuota(teamCount, posOverBalance);
-					
-					if (!visibleBoosted)
-						toggleBooster(true);
-				}
+				if (quota >= dynamicSlots && posOverBalance >= 2 && !visibleBoosted)
+					toggleBooster(true);	
 	
 				else if (visibleBoosted)
 				{
