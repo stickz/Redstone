@@ -151,7 +151,7 @@ void checkCount()
 					quota = getBotFillerQuota(teamCount, posOverBalance, true);
 					
 					if (!visibleBoosted)
-						toggleBooster(true);					
+						toggleBooster(true);
 				}
 	
 				else if (visibleBoosted)
