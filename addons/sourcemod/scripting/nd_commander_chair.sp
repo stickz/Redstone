@@ -188,15 +188,9 @@ void ToggleWaitPromote(bool value)
 
 void NotifyCommandersOfChairUnlock(const char[] phrase)
 {
-	// Send may enter chair to empire commander, if availible
-	int empireCommander = ND_GetCommanderOnTeam(TEAM_EMPIRE);
-	if (empireCommander != -1)
-		PrintMessage(empireCommander, phrase);
-			
-	// Send may enter chair to consort commander, if availible
-	int consortCommander =  ND_GetCommanderOnTeam(TEAM_CONSORT);
-	if (consortCommander != -1)
-		PrintMessage(consortCommander, phrase);
+	// Print phrase to empire & consort commanders, if availible
+	PrintMessageCom(ND_GetCommanderOnTeam(TEAM_EMPIRE), phrase);
+	PrintMessageCom(ND_GetCommanderOnTeam(TEAM_CONSORT), phrase);
 }
 
 void CreatePluginConvars()
