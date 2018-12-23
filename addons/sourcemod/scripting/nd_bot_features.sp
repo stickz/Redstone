@@ -145,7 +145,7 @@ void checkCount()
 				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
 				quota = getBotFillerQuota(posOverBalance);
 				
-				toggleBooster(quota >= dynamicSlots && posOverBalance >= 2);				
+				toggleBooster(quota >= dynamicSlots && posOverBalance >= 2);
 				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);	
 			}
 			else { quota = 0; } // Otherwise, set filler quota to 0
