@@ -49,15 +49,21 @@ public void OnPluginStart()
 	CreatePluginConvars(); //convars.sp
 	AddCommandListener(PlayerJoinTeam, "jointeam");
 	RegConsoleCmd("sm_DisableBots", CMD_DisableBots, "Disables bots until round end");
-
-	AutoExecConfig(true, "nd_bot_features");	
 	AddUpdaterLibrary(); //auto-updater
+	
+	// Late-Loading Support
+	if (ND_MapStarted())
+		SetBotValues();
 }
 
-public void OnMapStart() 
+public void OnMapStart() {
+	SetBotValues();
+}
+
+void SetBotValues()
 {
 	SetBotDisableValues(); // convars.sp
-	SetBotReductionValues(); // convars.sp
+	SetBotReductionValues(); // convars.sp	
 }
 
 public void OnMapEnd() 
