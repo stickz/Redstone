@@ -10,18 +10,15 @@ int getBotModulusQuota()
 	int assignCount = ValidTeamCount(TEAM_UNASSIGNED);
 	
 	// Caculate the value for the bot cvar. Adjust bot value to offset the spectators
-	int botAmount = maxQuota - rQuota + GetNumEvenM1(specCount);
+	int botAmount = maxQuota - rQuota + specCount;
 	
 	// If the bot value is greater than max, we must use the max instead
-	int totalCount = GetNumEvenM1(maxQuota - specCount - assignCount);
+	int totalCount = maxQuota - specCount - assignCount;
 	if (botAmount >= totalCount)
 		botAmount = totalCount;
-		
-	// If required, modulate the bot count so the number is even
-	if (botAmount % 2 != totalCount % 2)
-		return botAmount - 1;
 	
-	return botAmount;
+	// If required, modulate the bot count so the number is even
+	return GetNumEvenM1(botAmount);
 }
 
 bool CheckShutOffBots()
