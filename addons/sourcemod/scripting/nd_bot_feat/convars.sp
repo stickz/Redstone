@@ -23,6 +23,7 @@ enum convars
 ConVar g_cvar[convars];
 
 bool visibleBoosted = false;
+int totalDisable, teamDisable;
 
 void CreatePluginConvars()
 {
@@ -60,5 +61,34 @@ public void OnBotBoostChange(ConVar convar, char[] oldValue, char[] newValue)
 			ToggleDynamicSlots(visibleBoosted);
 			visibleBoosted = convar.BoolValue;
 		}
+	}
+	
+	SetBotDisableValues();
+}
+
+void SetBotDisableValues()
+{
+	// Get the current map we're playing
+	char map[32];
+	GetCurrentMap(map, sizeof(map));
+
+	// Disable bots sooner if it's a tiny maps
+	if (ND_CustomMapEquals(map, ND_Sandbrick))
+	{		
+		teamDisable = g_cvar[DisableBotsTeamDec].IntValue;
+		totalDisable = g_cvar[DisableBotsAtDec].IntValue;
+	}
+	
+	// Disable bots later on big maps, to compensate for the size
+	else if (ND_StockMapEquals(map, ND_Gate) || ND_StockMapEquals(map, ND_Downtown))
+	{
+		teamDisable = g_cvar[DisableBotsTeamInc].IntValue;
+		totalDisable = g_cvar[DisableBotsAtInc].IntValue;	
+	}
+	
+	else
+	{
+		teamDisable = g_cvar[DisableBotsTeam].IntValue;
+		totalDisable = g_cvar[DisableBotsAt].IntValue
 	}
 }
