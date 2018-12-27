@@ -1,3 +1,32 @@
+int totalDisable, teamDisable;
+
+void SetBotDisableValues()
+{
+	// Get the current map we're playing
+	char map[32];
+	GetCurrentMap(map, sizeof(map));
+
+	// Disable bots sooner if it's a tiny maps
+	if (ND_CustomMapEquals(map, ND_Sandbrick))
+	{		
+		teamDisable = g_cvar[DisableBotsTeamDec].IntValue;
+		totalDisable = g_cvar[DisableBotsAtDec].IntValue;
+	}
+	
+	// Disable bots later on big maps, to compensate for the size
+	else if (ND_StockMapEquals(map, ND_Gate) || ND_StockMapEquals(map, ND_Downtown))
+	{
+		teamDisable = g_cvar[DisableBotsTeamInc].IntValue;
+		totalDisable = g_cvar[DisableBotsAtInc].IntValue;	
+	}
+	
+	else
+	{
+		teamDisable = g_cvar[DisableBotsTeam].IntValue;
+		totalDisable = g_cvar[DisableBotsAt].IntValue
+	}
+}
+
 /* Functions for Bot Modulus Quota */
 int getBotModulusQuota()
 {
@@ -66,35 +95,10 @@ int GetSmallMapCount(int totalCount, int specCount, int rQuota)
 }
 
 bool CheckShutOffBots()
-{
-	// Get the current map we're playing
-	char map[32];
-	GetCurrentMap(map, sizeof(map));
-	
+{	
 	// Get the empire, consort and total on team count
 	int empireCount = RED_GetTeamCount(TEAM_EMPIRE);
 	int consortCount = RED_GetTeamCount(TEAM_CONSORT);	
-	int totalDisable, teamDisable;
-	
-	// Disable bots sooner if it's a tiny maps
-	if (ND_CustomMapEquals(map, ND_Sandbrick))
-	{		
-		teamDisable = g_cvar[DisableBotsTeamDec].IntValue;
-		totalDisable = g_cvar[DisableBotsAtDec].IntValue;
-	}
-	
-	// Disable bots later on big maps, to compensate for the size
-	else if (ND_StockMapEquals(map, ND_Gate) || ND_StockMapEquals(map, ND_Downtown))
-	{
-		teamDisable = g_cvar[DisableBotsTeamInc].IntValue;
-		totalDisable = g_cvar[DisableBotsAtInc].IntValue;	
-	}
-	
-	else
-	{
-		teamDisable = g_cvar[DisableBotsTeam].IntValue;
-		totalDisable = g_cvar[DisableBotsAt].IntValue
-	}
 	
 	// If total count on one or both teams is reached, disable bots
 	bool isTotalDisable = (empireCount + consortCount) >= totalDisable;
