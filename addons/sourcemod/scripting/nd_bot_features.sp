@@ -181,13 +181,6 @@ void InitializeServerBots()
 	ServerCommand("mp_limitteams %d", g_cvar[RegOverblance].IntValue);
 }
 
-bool boostBots()
-{
-	bool boost = g_cvar[BoostBots].BoolValue;
-	toggleBooster(boost);
-	return boost;
-}
-
 //Turn 32 slots on or off for bot quota
 void toggleBooster(bool state)
 {	
@@ -216,7 +209,6 @@ void SignalMapChange()
 	ServerCommand("mp_limitteams 1");
 }
 
-//When teams have two or more less players
 int getBotFillerQuota(int plyDiff)
 {
 	// Set bot count to player count difference * x - 1.
@@ -248,6 +240,13 @@ int getBotModulusQuota()
 	
 	// If required, modulate the bot count so the number is even
 	return GetNumEvenM1(botAmount);
+}
+
+bool boostBots()
+{
+	bool boost = g_cvar[BoostBots].BoolValue;
+	toggleBooster(boost);
+	return boost;
 }
 
 bool CheckShutOffBots()
