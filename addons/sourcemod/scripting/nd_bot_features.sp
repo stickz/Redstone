@@ -56,7 +56,12 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapEnd() {
+public void OnMapStart() {
+	SetBotDisableValues(); // modulus_quota.sp
+}
+
+public void OnMapEnd() 
+{
 	disableBots = false;
 	SignalMapChange();	
 }
