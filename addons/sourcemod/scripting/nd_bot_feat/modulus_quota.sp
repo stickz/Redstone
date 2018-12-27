@@ -5,12 +5,16 @@ int getBotModulusQuota()
 	int rQuota = botReductionValue;
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
 	
-	// Get the spec count and the max total bot count
+	// Get the spec count and the unassigned count
 	int specCount = ValidTeamCount(TEAM_SPEC);
-	int totalCount = GetMaxBotCount(maxQuota, specCount);
+	int assignCount = ValidTeamCount(TEAM_UNASSIGNED);
+	
+	// Get the number of bots to subtract and the max number of bots
+	int substractCount = GetNumEvenM1(specCount + assignCount);
+	int totalCount = GetNumEvenM1(maxQuota - substractCount);
 
 	// Caculate the value for the bot cvar. Adjust bot value to offset the spectators
-	int botAmount = totalCount - rQuota + (maxQuota - totalCount) + GetSpecEven(specCount);
+	int botAmount = totalCount - rQuota + substractCount + GetNumEvenM1(specCount);
 	
 	// If the bot value is greater than max, we must use the max instead
 	if (botAmount >= totalCount)
@@ -23,14 +27,8 @@ int getBotModulusQuota()
 	return botAmount;
 }
 
-int GetSpecEven(int specCount) {
-	return specCount % 2 == 0 ? specCount : specCount -1;
-}
-
-int GetMaxBotCount(int maxQuota, int spec)
-{
-	int total = maxQuota - spec - ValidTeamCount(TEAM_UNASSIGNED);	
-	return total % 2 == 0 ? total : total - 1;
+int GetNumEvenM1(int num) {
+	return num % 2 == 0 ? num : num - 1;
 }
 
 bool CheckShutOffBots()
