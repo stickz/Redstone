@@ -213,7 +213,7 @@ stock int getPositiveOverBalance()
 }
 
 stock int GetNumEvenP1(int num) {
-	return num % 2 == 0 ? num : num - 1;
+	return num % 2 == 0 ? num : num + 1;
 }
 
 stock int GetNumEvenM1(int num) {
