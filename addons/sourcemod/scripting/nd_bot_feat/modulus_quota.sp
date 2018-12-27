@@ -2,7 +2,6 @@
 int getBotModulusQuota()
 {	
 	// Get max quota and reduce amount from convars.sp
-	int rQuota = botReductionValue;
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
 	
 	// Get the spec count and the unassigned count
@@ -10,7 +9,7 @@ int getBotModulusQuota()
 	int assignCount = ValidTeamCount(TEAM_UNASSIGNED);
 	
 	// Caculate the value for the bot cvar. Adjust bot value to offset the spectators
-	int botAmount = maxQuota - rQuota + specCount;
+	int botAmount = maxQuota - botReductionValue + specCount;
 	
 	// If the bot value is greater than max, we must use the max instead
 	int totalCount = maxQuota - specCount - assignCount;
