@@ -219,10 +219,11 @@ int getBotFillerQuota(int plyDiff)
 	int total = OnTeamCount() + GetBotCountByPow(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
 	
 	// Add the spectator count becuase it takes away one bot by default
-	total += ValidTeamCount(TEAM_SPEC);
+	int specCount = ValidTeamCount(TEAM_SPEC);
+	total += specCount;
 	
 	// Set a ceiling to be returned, leave two connecting slots
-	int max = 30 - ValidTeamCount(TEAM_UNASSIGNED);
+	int max = 30 - ValidTeamCount(TEAM_UNASSIGNED) - specCount;
 	return total > max ? max : total;
 }
 
