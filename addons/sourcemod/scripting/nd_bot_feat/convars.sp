@@ -24,6 +24,7 @@ ConVar g_cvar[convars];
 
 bool visibleBoosted = false;
 int totalDisable, teamDisable;
+int botReductionValue;
 
 void CreatePluginConvars()
 {
@@ -90,5 +91,16 @@ void SetBotDisableValues()
 	{
 		teamDisable = g_cvar[DisableBotsTeam].IntValue;
 		totalDisable = g_cvar[DisableBotsAt].IntValue
-	}
+	}	
+}
+
+void SetBotReductionValues()
+{
+	// Get the current map we're playing
+	char map[32];
+	GetCurrentMap(map, sizeof(map));
+	
+	// If small map, reduce the mnumber of bots. Otherwise, use the regular bot count
+	bool smallMap = ND_CustomMapEquals(map, ND_Sandbrick) || ND_CustomMapEquals(map, ND_Mars);
+	botReductionValue = smallMap ? g_cvar[BotReductionDec].IntValue : g_cvar[BotReduction].IntValue;
 }
