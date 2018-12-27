@@ -25,10 +25,8 @@
 #include <nd_commands>
 #include <nd_spec>
 
+// Include the file which stores config values
 #include "nd_bot_feat/convars.sp"
-//functions required to create a modulous bot quota
-//simply calling getBotModulusQuota() will return the integer
-#include "nd_bot_feat/modulus_quota.sp"
 
 bool disableBots = false;
 float timerDuration = 1.5;
