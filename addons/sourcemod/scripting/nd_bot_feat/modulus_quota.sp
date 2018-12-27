@@ -24,10 +24,6 @@ int getBotModulusQuota()
 	return botAmount;
 }
 
-int GetNumEvenM1(int num) {
-	return num % 2 == 0 ? num : num - 1;
-}
-
 bool CheckShutOffBots()
 {	
 	// Get the empire, consort and total on team count
