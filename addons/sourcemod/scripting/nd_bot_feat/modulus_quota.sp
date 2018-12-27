@@ -1,20 +1,19 @@
 /* Functions for Bot Modulus Quota */
 int getBotModulusQuota()
-{
-	// Get the spec count and the max total bot count
-	int specCount = getSpectatorAdjustment();
-	int toSubtract = getUnassignedAdjustment();
-	int totalCount = g_cvar[BoosterQuota].IntValue - specCount - toSubtract;	
-
+{	
 	// Get max quota and reduce amount from convars.sp
 	int rQuota = botReductionValue;
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
 	
+	// Get the spec count and the max total bot count
+	int specCount = ValidTeamCount(TEAM_SPEC);
+	int totalCount = GetMaxBotCount(maxQuota, specCount);
+
 	// Caculate the value for the bot cvar
 	int botAmount = totalCount - rQuota + (maxQuota - totalCount);
 	
 	// Adjust bot value to offset the spectators 
-	botAmount += specCount;
+	botAmount += GetSpecAdjustment(specCount);
 	
 	// If the bot value is greater than max, we must use the max instead
 	if (botAmount >= totalCount)
@@ -27,14 +26,16 @@ int getBotModulusQuota()
 	return botAmount;
 }
 
-int getSpectatorAdjustment() {
-	return ValidTeamCount(TEAM_SPEC) % 2 == 0 ? 2 : 1;
+int GetSpecAdjustment(int specCount) { 
+	return specCount % 2 == 0 ? specCount : specCount -1;
 }
 
-int getUnassignedAdjustment() //Fix bug which prevents connecting to the server
-{	
-	int NotAssignedCount = ValidTeamCount(TEAM_UNASSIGNED);	
-	return NotAssignedCount % 2 == 0 ? NotAssignedCount : NotAssignedCount - 1;
+int GetMaxBotCount(int maxQuota, int spec)
+{
+	int assign = ValidTeamCount(TEAM_UNASSIGNED);	
+	int total = maxQuota + spec + assign;
+	
+	return total % 2 == 0 ? total : total - 1;
 }
 
 bool CheckShutOffBots()
