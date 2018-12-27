@@ -22,14 +22,11 @@
 #include <nd_balancer>
 #include <nd_rounds>
 #include <nd_maps>
-#include <nd_turret_eng>
 #include <nd_commands>
 #include <nd_spec>
 
+// Include the file which stores config values
 #include "nd_bot_feat/convars.sp"
-//functions required to create a modulous bot quota
-//simply calling getBotModulusQuota() will return the integer
-#include "nd_bot_feat/modulus_quota.sp"
 
 bool disableBots = false;
 float timerDuration = 1.5;
@@ -57,7 +54,14 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapEnd() {
+public void OnMapStart() 
+{
+	SetBotDisableValues(); // convars.sp
+	SetBotReductionValues(); // convars.sp
+}
+
+public void OnMapEnd() 
+{
 	disableBots = false;
 	SignalMapChange();	
 }
@@ -138,15 +142,16 @@ void checkCount()
 		else if (GDSC_AVAILABLE())
 		{	
 			// If one team has less players than the other
-			int teamLessPlys = getTeamLessPlayers();			
-			if (teamLessPlys != TEAM_NONE)
-			{
-				int posOverBalance = getPositiveOverBalance(); // The player difference between the two teams				
-				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
-				quota = getBotFillerQuota(posOverBalance);
+			int posOverBalance = getPositiveOverBalance();	
+			if (posOverBalance >= 1)
+			{				
+				quota = getBotFillerQuota(posOverBalance); // Get number of bots to fill
 				
-				toggleBooster(quota >= dynamicSlots && posOverBalance >= 2);
-				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);	
+				// Boost server slots if quota extends cap and team difference is 2+
+				toggleBooster(quota >= GetDynamicSlotCount()-2 && posOverBalance >= 2);
+				
+				// Create a timer after envoking bot quota, to switch bots to the fill team
+				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, _, TIMER_FLAG_NO_MAPCHANGE);	
 			}
 			else { quota = 0; } // Otherwise, set filler quota to 0
 		}
@@ -174,13 +179,6 @@ void InitializeServerBots()
 	
 	ServerCommand("bot_quota %d", quota);
 	ServerCommand("mp_limitteams %d", g_cvar[RegOverblance].IntValue);
-}
-
-bool boostBots()
-{
-	bool boost = g_cvar[BoostBots].BoolValue;
-	toggleBooster(boost);
-	return boost;
 }
 
 //Turn 32 slots on or off for bot quota
@@ -211,33 +209,66 @@ void SignalMapChange()
 	ServerCommand("mp_limitteams 1");
 }
 
-//When teams have two or more less players
 int getBotFillerQuota(int plyDiff)
 {
 	// Set bot count to player count difference * x - 1.
 	// Team count offset required to fill the quota properly.
-	int total = OnTeamCount() + GetBotCountByPow(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
+	int total = OnTeamCount() + RoundPowToNearest(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
 	
 	// Add the spectator count becuase it takes away one bot by default
-	total += ValidTeamCount(TEAM_SPEC);
+	int specCount = ValidTeamCount(TEAM_SPEC);
+	total += specCount;
 	
 	// Set a ceiling to be returned, leave two connecting slots
-	int max = 30 - ValidTeamCount(TEAM_UNASSIGNED);
+	int max = 30 - ValidTeamCount(TEAM_UNASSIGNED) - specCount;
 	return total > max ? max : total;
 }
 
-int GetBotCountByPow(float diff, float exp) {
-	return RoundToNearest(Pow(diff, exp));
+int getBotModulusQuota()
+{	
+	// Get max quota and the current spectator count
+	int maxQuota = g_cvar[BoosterQuota].IntValue;
+	int specCount = ValidTeamCount(TEAM_SPEC);
+	
+	// Caculate the value for the bot cvar. Adjust bot value to offset the spectators
+	int botAmount = maxQuota - botReductionValue + specCount;
+	
+	// If the bot value is greater than max, we must use the max instead
+	int totalCount = maxQuota - specCount - ValidTeamCount(TEAM_UNASSIGNED);
+	if (botAmount >= totalCount)
+		botAmount = totalCount;
+	
+	// If required, modulate the bot count so the number is even
+	return GetNumEvenM1(botAmount);
 }
 
-public Action TIMER_CheckAndSwitchFiller(Handle timer, any team)
+bool boostBots()
 {
-	CheckAndSwitchFiller(team);
+	bool boost = g_cvar[BoostBots].BoolValue;
+	toggleBooster(boost);
+	return boost;
+}
+
+bool CheckShutOffBots()
+{	
+	// Get the empire, consort and total on team count
+	int empireCount = RED_GetTeamCount(TEAM_EMPIRE);
+	int consortCount = RED_GetTeamCount(TEAM_CONSORT);	
+	
+	// If total count on one or both teams is reached, disable bots
+	bool isTotalDisable = (empireCount + consortCount) >= totalDisable;
+	return isTotalDisable || empireCount >= teamDisable || consortCount >= teamDisable;
+}
+
+public Action TIMER_CheckAndSwitchFiller(Handle timer)
+{
+	CheckAndSwitchFiller();
 	return Plugin_Handled;
 }
 
-void CheckAndSwitchFiller(int teamLessPlys)
+void CheckAndSwitchFiller()
 {
+	int teamLessPlys = getTeamLessPlayers();	
 	for (int bot = 1; bot < MaxClients; bot++)
 	{
 		if (IsClientConnected(bot) && IsClientInGame(bot) && IsFakeClient(bot) && GetClientTeam(bot) != teamLessPlys)
@@ -250,8 +281,6 @@ void CheckAndSwitchFiller(int teamLessPlys)
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	MarkNativeAsOptional("ND_GetTurretCount");
-	MarkNativeAsOptional("ND_GetTeamTurretCount");
 	MarkNativeAsOptional("ND_PlayerSpecLocked");
 	RegPluginLibrary("afkmanager");
 }

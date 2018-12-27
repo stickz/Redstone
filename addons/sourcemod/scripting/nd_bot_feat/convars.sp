@@ -17,14 +17,14 @@ enum convars
 	 ConVar:DisableBotsTeamInc,
 	 
 	 ConVar:BotOverblance,
-	 ConVar:RegOverblance,
-	 ConVar:turretCountDec,
-	 ConVar:turretBotDec
+	 ConVar:RegOverblance
 };
 
 ConVar g_cvar[convars];
 
 bool visibleBoosted = false;
+int totalDisable, teamDisable;
+int botReductionValue;
 
 void CreatePluginConvars()
 {
@@ -46,8 +46,6 @@ void CreatePluginConvars()
 	
 	g_cvar[BotOverblance] = AutoExecConfig_CreateConVar("sm_bot_overbalance", "3", "sets team difference allowed with bots enabled"); 
 	g_cvar[RegOverblance] = AutoExecConfig_CreateConVar("sm_reg_overbalance", "1", "sets team difference allowed with bots disabled");
-	g_cvar[turretCountDec] = AutoExecConfig_CreateConVar("sm_bot_turrent", "40", "sets number of turrets to reduce bot counts");
-	g_cvar[turretBotDec] = AutoExecConfig_CreateConVar("sm_bot_quota_turret", "14", "sets max bot quota with turrets enabled");
 	
 	HookConVarChange(g_cvar[BoostBots], OnBotBoostChange);
 	
@@ -65,4 +63,45 @@ public void OnBotBoostChange(ConVar convar, char[] oldValue, char[] newValue)
 			visibleBoosted = convar.BoolValue;
 		}
 	}
+	
+	SetBotDisableValues();
+	SetBotReductionValues();
+}
+
+void SetBotDisableValues()
+{
+	// Get the current map we're playing
+	char map[32];
+	GetCurrentMap(map, sizeof(map));
+
+	// Disable bots sooner if it's a tiny maps
+	if (ND_CustomMapEquals(map, ND_Sandbrick))
+	{		
+		teamDisable = g_cvar[DisableBotsTeamDec].IntValue;
+		totalDisable = g_cvar[DisableBotsAtDec].IntValue;
+	}
+	
+	// Disable bots later on big maps, to compensate for the size
+	else if (ND_StockMapEquals(map, ND_Gate) || ND_StockMapEquals(map, ND_Downtown))
+	{
+		teamDisable = g_cvar[DisableBotsTeamInc].IntValue;
+		totalDisable = g_cvar[DisableBotsAtInc].IntValue;	
+	}
+	
+	else
+	{
+		teamDisable = g_cvar[DisableBotsTeam].IntValue;
+		totalDisable = g_cvar[DisableBotsAt].IntValue
+	}	
+}
+
+void SetBotReductionValues()
+{
+	// Get the current map we're playing
+	char map[32];
+	GetCurrentMap(map, sizeof(map));
+	
+	// If small map, reduce the mnumber of bots. Otherwise, use the regular bot count
+	bool smallMap = ND_CustomMapEquals(map, ND_Sandbrick) || ND_CustomMapEquals(map, ND_Mars);
+	botReductionValue = smallMap ? g_cvar[BotReductionDec].IntValue : g_cvar[BotReduction].IntValue;
 }
