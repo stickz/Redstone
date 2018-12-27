@@ -22,7 +22,6 @@
 #include <nd_balancer>
 #include <nd_rounds>
 #include <nd_maps>
-#include <nd_turret_eng>
 #include <nd_commands>
 #include <nd_spec>
 
@@ -253,8 +252,6 @@ void CheckAndSwitchFiller()
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	MarkNativeAsOptional("ND_GetTurretCount");
-	MarkNativeAsOptional("ND_GetTeamTurretCount");
 	MarkNativeAsOptional("ND_PlayerSpecLocked");
 	RegPluginLibrary("afkmanager");
 }
