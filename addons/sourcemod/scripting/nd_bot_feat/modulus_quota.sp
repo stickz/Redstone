@@ -1,30 +1,13 @@
 /* Functions for Bot Modulus Quota */
 int getBotModulusQuota()
 {
+	// Get the spec count and the max total bot count
 	int specCount = getSpectatorAdjustment();
-	int toSubtract = getUnassignedAdjustment();	
-
+	int toSubtract = getUnassignedAdjustment();
 	int totalCount = g_cvar[BoosterQuota].IntValue - specCount - toSubtract;	
-	return GetSmallMapCount(totalCount, specCount);
-}
 
-int getSpectatorAdjustment() {
-	return ValidTeamCount(TEAM_SPEC) % 2 == 0 ? 2 : 1;
-}
-
-int getUnassignedAdjustment() //Fix bug which prevents connecting to the server
-{	
-	int NotAssignedCount = ValidTeamCount(TEAM_UNASSIGNED);	
-	return NotAssignedCount % 2 == 0 ? NotAssignedCount : NotAssignedCount - 1;
-}
-
-/* Get the number of bots after the reduction */
-int GetSmallMapCount(int totalCount, int specCount)
-{
-	// Get the bot reduction value from convars.sp
+	// Get max quota and reduce amount from convars.sp
 	int rQuota = botReductionValue;
-	
-	// Get max quota and reduce amount
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
 	
 	// Caculate the value for the bot cvar
@@ -42,6 +25,16 @@ int GetSmallMapCount(int totalCount, int specCount)
 		return botAmount - 1;
 	
 	return botAmount;
+}
+
+int getSpectatorAdjustment() {
+	return ValidTeamCount(TEAM_SPEC) % 2 == 0 ? 2 : 1;
+}
+
+int getUnassignedAdjustment() //Fix bug which prevents connecting to the server
+{	
+	int NotAssignedCount = ValidTeamCount(TEAM_UNASSIGNED);	
+	return NotAssignedCount % 2 == 0 ? NotAssignedCount : NotAssignedCount - 1;
 }
 
 bool CheckShutOffBots()
