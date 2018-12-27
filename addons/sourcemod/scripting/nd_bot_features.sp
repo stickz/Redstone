@@ -138,15 +138,16 @@ void checkCount()
 		else if (GDSC_AVAILABLE())
 		{	
 			// If one team has less players than the other
-			int teamLessPlys = getTeamLessPlayers();			
-			if (teamLessPlys != TEAM_NONE)
-			{
-				int posOverBalance = getPositiveOverBalance(); // The player difference between the two teams				
-				int dynamicSlots = GetDynamicSlotCount() - 2; // Get the bot count to fill empty team slots
-				quota = getBotFillerQuota(posOverBalance);
+			int posOverBalance = getPositiveOverBalance();	
+			if (posOverBalance >= 1)
+			{				
+				quota = getBotFillerQuota(posOverBalance); // Get number of bots to fill
 				
-				toggleBooster(quota >= dynamicSlots && posOverBalance >= 2);
-				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, teamLessPlys, TIMER_FLAG_NO_MAPCHANGE);	
+				// Boost server slots if quota extends cap and team difference is 2+
+				toggleBooster(quota >= GetDynamicSlotCount()-2 && posOverBalance >= 2);
+				
+				// Create a timer after envoking bot quota, to switch bots to the fill team
+				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, _, TIMER_FLAG_NO_MAPCHANGE);	
 			}
 			else { quota = 0; } // Otherwise, set filler quota to 0
 		}
@@ -231,14 +232,15 @@ int GetBotCountByPow(float diff, float exp) {
 	return RoundToNearest(Pow(diff, exp));
 }
 
-public Action TIMER_CheckAndSwitchFiller(Handle timer, any team)
+public Action TIMER_CheckAndSwitchFiller(Handle timer)
 {
-	CheckAndSwitchFiller(team);
+	CheckAndSwitchFiller();
 	return Plugin_Handled;
 }
 
-void CheckAndSwitchFiller(int teamLessPlys)
+void CheckAndSwitchFiller()
 {
+	int teamLessPlys = getTeamLessPlayers();	
 	for (int bot = 1; bot < MaxClients; bot++)
 	{
 		if (IsClientConnected(bot) && IsClientInGame(bot) && IsFakeClient(bot) && GetClientTeam(bot) != teamLessPlys)
