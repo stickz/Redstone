@@ -65,6 +65,7 @@ public void OnBotBoostChange(ConVar convar, char[] oldValue, char[] newValue)
 	}
 	
 	SetBotDisableValues();
+	SetBotReductionValues();
 }
 
 void SetBotDisableValues()
