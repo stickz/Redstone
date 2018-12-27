@@ -221,7 +221,7 @@ int getBotFillerQuota(int plyDiff)
 {
 	// Set bot count to player count difference * x - 1.
 	// Team count offset required to fill the quota properly.
-	int total = OnTeamCount() + GetBotCountByPow(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
+	int total = OnTeamCount() + RoundPowToNearest(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
 	
 	// Add the spectator count becuase it takes away one bot by default
 	int specCount = ValidTeamCount(TEAM_SPEC);
@@ -230,10 +230,6 @@ int getBotFillerQuota(int plyDiff)
 	// Set a ceiling to be returned, leave two connecting slots
 	int max = 30 - ValidTeamCount(TEAM_UNASSIGNED) - specCount;
 	return total > max ? max : total;
-}
-
-int GetBotCountByPow(float diff, float exp) {
-	return RoundToNearest(Pow(diff, exp));
 }
 
 int getBotModulusQuota()
