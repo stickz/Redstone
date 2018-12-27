@@ -5,11 +5,7 @@ int getBotModulusQuota()
 	int toSubtract = getUnassignedAdjustment();	
 
 	int totalCount = g_cvar[BoosterQuota].IntValue - specCount - toSubtract;	
-	
-	int reducedCount = GetBotReductionCount();
-	totalCount = GetSmallMapCount(totalCount, specCount, reducedCount);		
-	
-	return totalCount;
+	return GetSmallMapCount(totalCount, specCount, botReductionValue);
 }
 
 int getSpectatorAdjustment() {
@@ -30,24 +26,12 @@ int getUnassignedAdjustment() //Fix bug which prevents connecting to the server
 	return NotAssignedCount;
 }
 
-/* List the really tinny maps to reduce further, (assume default if unlisted) */
-int GetBotReductionCount()
-{
-	char map[32];
-	GetCurrentMap(map, sizeof(map));
-	
-	if (ND_CustomMapEquals(map, ND_Sandbrick) || ND_CustomMapEquals(map, ND_Mars))
-		return g_cvar[BotReductionDec].IntValue;
-
-	return g_cvar[BotReduction].IntValue;
-}
-
 /* Get the number of bots after the reduction */
 int GetSmallMapCount(int totalCount, int specCount, int rQuota)
 {
 	// Get max quota and reduce amount
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
-
+	
 	// Caculate the value for the bot cvar
 	int botAmount = totalCount - rQuota + (maxQuota - totalCount);
 	
@@ -57,11 +41,11 @@ int GetSmallMapCount(int totalCount, int specCount, int rQuota)
 	// If the bot value is greater than max, we must use the max instead
 	if (botAmount >= totalCount)
 		botAmount = totalCount;
-			
+	
 	// If required, modulate the bot count so the number is even
 	if (botAmount % 2 != totalCount % 2)
 		return botAmount - 1;
-
+	
 	return botAmount;
 }
 
