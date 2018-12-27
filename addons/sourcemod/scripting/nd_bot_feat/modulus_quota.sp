@@ -9,16 +9,13 @@ int getBotModulusQuota()
 	int specCount = ValidTeamCount(TEAM_SPEC);
 	int totalCount = GetMaxBotCount(maxQuota, specCount);
 
-	// Caculate the value for the bot cvar
-	int botAmount = totalCount - rQuota + (maxQuota - totalCount);
-	
-	// Adjust bot value to offset the spectators 
-	botAmount += GetSpecAdjustment(specCount);
+	// Caculate the value for the bot cvar. Adjust bot value to offset the spectators
+	int botAmount = totalCount - rQuota + (maxQuota - totalCount) + GetSpecEven(specCount);
 	
 	// If the bot value is greater than max, we must use the max instead
 	if (botAmount >= totalCount)
 		botAmount = totalCount;
-	
+		
 	// If required, modulate the bot count so the number is even
 	if (botAmount % 2 != totalCount % 2)
 		return botAmount - 1;
@@ -26,15 +23,13 @@ int getBotModulusQuota()
 	return botAmount;
 }
 
-int GetSpecAdjustment(int specCount) { 
+int GetSpecEven(int specCount) {
 	return specCount % 2 == 0 ? specCount : specCount -1;
 }
 
 int GetMaxBotCount(int maxQuota, int spec)
 {
-	int assign = ValidTeamCount(TEAM_UNASSIGNED);	
-	int total = maxQuota + spec + assign;
-	
+	int total = maxQuota - spec - ValidTeamCount(TEAM_UNASSIGNED);	
 	return total % 2 == 0 ? total : total - 1;
 }
 
