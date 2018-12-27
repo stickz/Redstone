@@ -56,8 +56,10 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapStart() {
-	SetBotDisableValues(); // modulus_quota.sp
+public void OnMapStart() 
+{
+	SetBotDisableValues(); // convars.sp
+	SetBotReductionValues(); // convars.sp
 }
 
 public void OnMapEnd() 
