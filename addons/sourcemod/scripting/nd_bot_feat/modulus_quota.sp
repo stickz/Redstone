@@ -9,14 +9,11 @@ int getBotModulusQuota()
 	int specCount = ValidTeamCount(TEAM_SPEC);
 	int assignCount = ValidTeamCount(TEAM_UNASSIGNED);
 	
-	// Get the number of bots to subtract and the max number of bots
-	int substractCount = GetNumEvenM1(specCount + assignCount);
-	int totalCount = GetNumEvenM1(maxQuota - substractCount);
-
 	// Caculate the value for the bot cvar. Adjust bot value to offset the spectators
-	int botAmount = totalCount - rQuota + substractCount + GetNumEvenM1(specCount);
+	int botAmount = maxQuota - rQuota + GetNumEvenM1(specCount);
 	
 	// If the bot value is greater than max, we must use the max instead
+	int totalCount = GetNumEvenM1(maxQuota - specCount - assignCount);
 	if (botAmount >= totalCount)
 		botAmount = totalCount;
 		
