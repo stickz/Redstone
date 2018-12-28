@@ -35,7 +35,7 @@ public Action CMD_GetBotPow(int client, int args)
 	for (int num = 1; num <= 5; num++)
 	{
 		int value = RoundPowToNearest(float(num), exp);
-		PrintToConsole(client, "Round: %d ^ %f = %d", num, exp, value);
+		PrintToConsole(client, "Round: %d ^ %.2f = %d", num, exp, value);
 	}
 
 	return Plugin_Handled;
