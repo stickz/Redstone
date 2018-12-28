@@ -81,7 +81,7 @@ public void TB_OnTeamPlacement(int client, int team) {
 }
 
 public void ND_OnClientTeamSet(int client, int team) {
-	CheckBotCounts(client, 0.5);
+	CheckBotCounts(client);
 }
 
 public void AFKM_OnClientAFK(int client) {
@@ -127,10 +127,10 @@ public void ND_OnRoundEnded() {
 	SignalMapChange();
 }
 
-void CheckBotCounts(int client, float duration = 0.1)
+void CheckBotCounts(int client)
 {
 	if (IsValidClient(client)) {
-		CreateTimer(duration, TIMER_CC, _, TIMER_FLAG_NO_MAPCHANGE);
+		CreateTimer(0.5, TIMER_CC, _, TIMER_FLAG_NO_MAPCHANGE);
 	}
 }
 
@@ -232,9 +232,10 @@ int getBotFillerQuota(int plyDiff)
 
 int getBotModulusQuota()
 {	
-	// Get max quota and the current spectator count
+	// Get max quota and the current spectator & team count
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
 	int specCount = ValidTeamCount(TEAM_SPEC);
+	int teamCount = OnTeamCount();
 	
 	// Caculate the value for the bot cvar. Adjust bot value to offset the spectators
 	int botAmount = maxQuota - botReductionValue + specCount;
@@ -245,7 +246,7 @@ int getBotModulusQuota()
 		botAmount = totalCount;
 		
 	// If required, modulate the bot count so the number is even on the scoreboard
-	return OnTeamCount() % 2 == 0 ? botAmount : botAmount - 1;
+	return teamCount % 2 != 0 || teamCount == 1 ? botAmount - 1 : botAmount;
 }
 
 bool boostBots()
