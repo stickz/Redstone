@@ -34,7 +34,7 @@ public Action CMD_GetBotPow(int client, int args)
 	
 	for (int num = 1; num <= 5; num++)
 	{
-		int value = GetBotCountByPow(float(num), exp);
+		int value = RoundPowToNearest(float(num), exp);
 		PrintToConsole(client, "Round: %d ^ %f = %d", num, exp, value);
 	}
 
