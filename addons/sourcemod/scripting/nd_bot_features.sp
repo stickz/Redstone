@@ -25,11 +25,12 @@
 #include <nd_commands>
 #include <nd_spec>
 
-// Include the file which stores config values
-#include "nd_bot_feat/convars.sp"
-
 bool disableBots = false;
 float timerDuration = 1.5;
+
+// Include the file which stores config values
+#include "nd_bot_feat/convars.sp"
+#include "nd_bot_feat/commands.sp"
 
 public Plugin myinfo =
 {
@@ -46,10 +47,11 @@ public void OnClientDisconnect_Post(int client) {
 	
 public void OnPluginStart()
 {
-	CreatePluginConvars(); //convars.sp
-	AddCommandListener(PlayerJoinTeam, "jointeam");
-	RegConsoleCmd("sm_DisableBots", CMD_DisableBots, "Disables bots until round end");
+	CreatePluginConvars(); // convars.sp
+	RegisterPluginCMDS(); // commands.sp
 	AddUpdaterLibrary(); //auto-updater
+	
+	AddCommandListener(PlayerJoinTeam, "jointeam");
 	
 	// Late-Loading Support
 	if (ND_MapStarted())
@@ -90,30 +92,6 @@ public void AFKM_OnClientAFK(int client) {
 
 public void ND_OnPlayerLockSpecPost(int client, int team) {
 	CheckBotCounts(client);
-}
-
-public Action CMD_DisableBots(int client, int args)
-{
-	if (!SWMG_OfficerOrRoot(client))
-	{
-		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
-		return Plugin_Handled;
-	}
-	
-	disableBots = !disableBots;
-	
-	if (disableBots)
-	{
-		PrintToChat(client, "Server bots disabled until round end.");
-		SignalMapChange(); // Disable booster and set bot count to 0
-	}
-	else
-	{
-		PrintToChat(client, "Server bots have been re-enabled.");
-		InitializeServerBots(); // Add the bots back in before the next update
-	}
-	
-	return Plugin_Handled;
 }
 
 public Action TIMER_CC(Handle timer)
