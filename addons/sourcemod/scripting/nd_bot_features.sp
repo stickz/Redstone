@@ -28,7 +28,6 @@
 bool disableBots = false;
 float timerDuration = 1.5;
 
-// Include the file which stores config values
 #include "nd_bot_feat/convars.sp"
 #include "nd_bot_feat/commands.sp"
 
