@@ -242,10 +242,10 @@ int getBotModulusQuota()
 	// If the bot value is greater than max, we must use the max instead
 	int totalCount = maxQuota - specCount - ValidTeamCount(TEAM_UNASSIGNED);
 	if (botAmount >= totalCount)
-		botAmount = totalCount;
+	botAmount = totalCount;
 		
 	// If required, modulate the bot count so the number is even on the scoreboard
-	return botAmount % 2 != totalCount % 2 ? GetNumEvenM1(botAmount) : botAmount;
+	return OnTeamCount() % 2 == 0 ? botAmount : botAmount - 1;
 }
 
 bool boostBots()
