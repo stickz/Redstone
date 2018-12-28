@@ -235,7 +235,6 @@ int getBotModulusQuota()
 	// Get max quota and the current spectator & team count
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
 	int specCount = ValidTeamCount(TEAM_SPEC);
-	int teamCount = OnTeamCount();
 	
 	// Caculate the value for the bot cvar. Adjust bot value to offset the spectators
 	int botAmount = maxQuota - botReductionValue + specCount;
@@ -246,7 +245,7 @@ int getBotModulusQuota()
 		botAmount = totalCount;
 		
 	// If required, modulate the bot count so the number is even on the scoreboard
-	return teamCount % 2 != 0 || teamCount == 1 ? botAmount - 1 : botAmount;
+	return botAmount % 2 != specCount % 2 ? botAmount - 1 : botAmount;
 }
 
 bool boostBots()
