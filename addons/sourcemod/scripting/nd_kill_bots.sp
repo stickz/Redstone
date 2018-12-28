@@ -20,7 +20,6 @@ public Plugin myinfo =
 };
 
 bool CanKillBots[2] = {true, ...};
-bool BotsReset = false;
 
 ConVar cvarBotSlayCooldown;
 
@@ -130,12 +129,8 @@ void CreateCooldown(int team)
 
 void ResetKillBots()
 {
-	if (!BotsReset)
-	{		
-		CanKillBots[0] = true;
-		CanKillBots[1] = true;
-		BotsReset = true;
-	}
+	CanKillBots[0] = true;
+	CanKillBots[1] = true;
 }
 
 void RegisterCommands()
