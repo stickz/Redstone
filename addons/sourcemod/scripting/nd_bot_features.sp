@@ -40,8 +40,6 @@ public void OnPluginStart()
 	RegisterPluginCMDS(); // commands.sp
 	AddUpdaterLibrary(); //auto-updater
 	
-	AddCommandListener(PlayerJoinTeam, "jointeam");
-	
 	// Late-Loading Support
 	if (ND_MapStarted())
 		SetBotValues();
