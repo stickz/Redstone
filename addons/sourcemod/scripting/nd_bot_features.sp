@@ -9,21 +9,15 @@
 #include <nd_slots>
 #include <nd_swgm>
 
-#undef REQUIRE_PLUGIN
-#include <afk_manager>
-#define REQUIRE_PLUGIN
-
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_bot_features/nd_bot_features.txt"
 #include "updater/standard.sp"
 
 #pragma newdecls required
+#include <nd_team_eng>
 #include <nd_redstone>
-#include <nd_balancer>
 #include <nd_rounds>
 #include <nd_maps>
-#include <nd_commands>
-#include <nd_spec>
 
 bool disableBots = false;
 float timerDuration = 1.5;
@@ -40,10 +34,6 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"
 };
 
-public void OnClientDisconnect_Post(int client) {
-	checkCount();
-}
-	
 public void OnPluginStart()
 {
 	CreatePluginConvars(); // convars.sp
@@ -73,24 +63,13 @@ public void OnMapEnd()
 	SignalMapChange();	
 }
 
-public Action PlayerJoinTeam(int client, char[] command, int argc) {
-	CheckBotCounts(client);
-}
+public void ND_OnPlayerTeamChanged(int client, bool valid) 
+{
+	if (valid)
+		CreateTimer(0.5, TIMER_CC, _, TIMER_FLAG_NO_MAPCHANGE);
 
-public void TB_OnTeamPlacement(int client, int team) {
-	CheckBotCounts(client);
-}
-
-public void ND_OnClientTeamSet(int client, int team) {
-	CheckBotCounts(client);
-}
-
-public void AFKM_OnClientAFK(int client) {
-	CheckBotCounts(client);
-}
-
-public void ND_OnPlayerLockSpecPost(int client, int team) {
-	CheckBotCounts(client);
+	else if (!IsClientConnected(client))
+		checkCount();
 }
 
 public Action TIMER_CC(Handle timer)
@@ -102,13 +81,6 @@ public Action TIMER_CC(Handle timer)
 public void ND_OnRoundEnded() {
 	disableBots = false;
 	SignalMapChange();
-}
-
-void CheckBotCounts(int client)
-{
-	if (IsValidClient(client)) {
-		CreateTimer(0.5, TIMER_CC, _, TIMER_FLAG_NO_MAPCHANGE);
-	}
 }
 
 void checkCount()
@@ -260,10 +232,4 @@ void CheckAndSwitchFiller()
 			ChangeClientTeam(bot, teamLessPlys);
 		}
 	}
-}
-
-public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
-{
-	MarkNativeAsOptional("ND_PlayerSpecLocked");
-	RegPluginLibrary("afkmanager");
 }
