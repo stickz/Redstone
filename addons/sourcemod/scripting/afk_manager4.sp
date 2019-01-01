@@ -351,9 +351,10 @@ int AFK_GetClientCount(bool inGameOnly = true)
 
 void CheckMinPlayers()
 {
-	int players = RED_VC_AVAILABLE() ? RED_ValidClientCount() : AFK_GetClientCount();
-	bMovePlayers = players >= g_cvar[MinPlayersMove].IntValue;
-	bKickPlayers = players >= g_cvar[MinPlayersKick].IntValue;
+	bMovePlayers = RED_OnTeamCount() >= g_cvar[MinPlayersMove].IntValue;
+	
+	int kickPlayers = RED_VC_AVAILABLE() ? RED_ValidClientCount() : AFK_GetClientCount();
+	bKickPlayers = kickPlayers >= g_cvar[MinPlayersKick].IntValue;
 }
 
 // Cvar Hooks
