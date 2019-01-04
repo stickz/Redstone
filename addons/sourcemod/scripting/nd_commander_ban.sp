@@ -34,6 +34,10 @@ public void OnPluginStart()
 	LoadTranslations("common.phrases"); // required for find target
 }
 
+public void OnMapStart() {
+	ReadTextFile();
+}
+
 void AddComBan(int client)
 {
 	char steamid[STEAMID_SIZE];
