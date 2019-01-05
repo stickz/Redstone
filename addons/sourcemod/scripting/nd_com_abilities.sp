@@ -86,7 +86,7 @@ void SetReducedValues()
 {
 	float mult = cvarReducedDamage.FloatValue / 100.0;
 	for (int i = 0; i < 3; i++)
-		reducedValues[0] = RoundToNearest(float(levelDefault[0]) * mult);
+		reducedValues[i] = RoundToNearest(float(levelDefault[i]) * mult);
 }
 
 void SetCommanderDamage(int[] values)
