@@ -22,6 +22,7 @@ int levelDefault[] = { 630, 720, 810 };
 int reducedValues[] = { 630, 720, 810 };
 
 bool foundCorner = false;
+bool currentState = false;
 
 ConVar cvarNormalCount;
 ConVar cvarReducedDamage;
@@ -41,6 +42,7 @@ public void OnPluginStart()
 public void ND_OnPreRoundStart()
 {
 	foundCorner = FoundCornerMap();
+	currentState = false;
 	SetReducedValues();
 	
 	// If the map is corner, scale damage; otherwise, set it to default
@@ -72,14 +74,19 @@ bool FoundCornerMap()
 void RefreshComDamage()
 {
 	bool normal = RED_OnTeamCount() >= cvarNormalCount.IntValue;
-	SetCommanderDamage(normal ? levelDefault : reducedValues);
+	
+	if (currentState != normal)
+	{	
+		currentState = normal;
+		SetCommanderDamage(normal ? levelDefault : reducedValues);
+	}
 }
 
 void SetReducedValues()
 {
 	float mult = cvarReducedDamage.FloatValue / 100.0;
 	for (int i = 0; i < 3; i++)
-		reducedValues[0] = RoundToNearest(float(levelDefault[0]) * mult);	
+		reducedValues[0] = RoundToNearest(float(levelDefault[0]) * mult);
 }
 
 void SetCommanderDamage(int[] values)
