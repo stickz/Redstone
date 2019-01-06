@@ -8,6 +8,7 @@
 #include <nd_stocks>
 #include <nd_slots>
 #include <nd_swgm>
+#include <smlib/math>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_bot_features/nd_bot_features.txt"
@@ -184,7 +185,8 @@ int getBotModulusQuota()
 	int specCount = ValidTeamCount(TEAM_SPEC);
 	
 	// Caculate the value for the bot cvar. Adjust bot value to offset the spectators
-	int botAmount = maxQuota - botReductionValue + specCount;
+	int reduce = Math_Min(botReductionValue - specCount, 0);
+	int botAmount = maxQuota - reduce + specCount;
 	
 	// If the bot value is greater than max, we must use the max instead
 	int totalCount = maxQuota - specCount - ValidTeamCount(TEAM_UNASSIGNED);
