@@ -174,8 +174,8 @@ int getBotFillerQuota(int plyDiff)
 	total += specCount;
 	
 	// Set a ceiling to be returned, leave two connecting slots
-	int max = 30 - ValidTeamCount(TEAM_UNASSIGNED) - specCount;
-	return total > max ? max : total;
+	int assignCount = ValidTeamCount(TEAM_UNASSIGNED);
+	return Math_Max(total, 30 - assignCount - specCount);
 }
 
 int getBotModulusQuota()
@@ -184,14 +184,12 @@ int getBotModulusQuota()
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
 	int specCount = ValidTeamCount(TEAM_SPEC);
 	
-	// Caculate the value for the bot cvar. Adjust bot value to offset the spectators
+	// Caculate number of bots for the map. Adjust bot value to offset the spectators
 	int reduce = Math_Min(botReductionValue - specCount, 0);
-	int botAmount = maxQuota - reduce + specCount;
 	
 	// If the bot value is greater than max, we must use the max instead
 	int totalCount = maxQuota - specCount - ValidTeamCount(TEAM_UNASSIGNED);
-	if (botAmount >= totalCount)
-		botAmount = totalCount;
+	int botAmount = Math_Max(maxQuota - reduce + specCount, totalCount);
 		
 	// If required, modulate the bot count so the number is even on the scoreboard
 	return botAmount % 2 != specCount % 2 ? botAmount - 1 : botAmount;
