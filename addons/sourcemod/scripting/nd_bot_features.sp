@@ -8,6 +8,7 @@
 #include <nd_stocks>
 #include <nd_slots>
 #include <nd_swgm>
+#include <nd_fskill>
 #include <smlib/math>
 
 /* Auto-Updater Support */
@@ -165,17 +166,28 @@ void SignalMapChange()
 
 int getBotFillerQuota(int plyDiff)
 {
-	// Set bot count to player count difference * x - 1.
-	// Team count offset required to fill the quota properly.
-	int total = OnTeamCount() + RoundPowToNearest(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
-	
-	// Add the spectator count becuase it takes away one bot by default
+	// Get the team count offset to properly fill the bot quota
 	int specCount = ValidTeamCount(TEAM_SPEC);
-	total += specCount;
+	int teamCount = OnTeamCount() + specCount;
+	
+	// Set bot count to player count difference * x - 1 or skill difference * x - 1
+	int physical = teamCount + RoundPowToNearest(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
+	int skill = teamCount + RoundPowToNearest(getTeamDiffMult(), g_cvar[BotDiffMult].FloatValue);
 	
 	// Set a ceiling to be returned, leave two connecting slots
+	int maxQuota = g_cvar[BoosterQuota].IntValue;
 	int assignCount = ValidTeamCount(TEAM_UNASSIGNED);
-	return Math_Max(total, 30 - assignCount - specCount);
+	int maxBots = maxQuota - assignCount - specCount;
+	
+	// Determine the maximum bot count to use. Skill difference or player difference.
+	// Limit the bot count to the maximum available on the server. (if required)
+	return Math_Max(Max_Min(skill, physical), maxBots);
+}
+
+float getTeamDiffMult()
+{
+	return 	!ND_GEA_AVAILBLE() || !ND_GED_AVAILBLE() ? 0.0 :
+		ND_GetTeamDifference() / ND_GetEnhancedAverage();
 }
 
 int getBotModulusQuota()
