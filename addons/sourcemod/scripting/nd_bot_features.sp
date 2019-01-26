@@ -200,6 +200,7 @@ float getTeamDiffMult()
 		
 	// Otherwise, team / average. Convert teamDiff to positive number if required.
 	return teamDiff < 0 ? teamDiff * -1.0 / average : teamDiff / average;
+}
 
 int getLSTeam(float td) {
 	return td > 0 ? TEAM_CONSORT : TEAM_EMPIRE;
