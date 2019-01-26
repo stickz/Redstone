@@ -35,8 +35,8 @@ void CreatePluginConvars()
 	g_cvar[BotCount] = AutoExecConfig_CreateConVar("sm_botcount", "20", "sets the regular bot count.");
 	g_cvar[BotReduction] = AutoExecConfig_CreateConVar("sm_bot_quota_reduct", "8", "How many bots to take off max for small maps");
 	g_cvar[BotReductionDec] = AutoExecConfig_CreateConVar("sm_bot_quota_reduct_dec", "12", "How many bots to take off max for small maps");
-	g_cvar[BotDiffMult] = AutoExecConfig_CreateConVar("sm_bot_quota_dmult", "2.15", "Bot Fill = Player Count Difference * x - 1");
-	g_cvar[BotSkillMult] =	AutoExecConfig_CreateConVar("sm_bot_quota_smult", "1.2", "Multiply teamdiff by x to increase bots");
+	g_cvar[BotDiffMult] = AutoExecConfig_CreateConVar("sm_bot_quota_dmult", "1.65", "Physical player Difference ^ x");
+	g_cvar[BotSkillMult] =	AutoExecConfig_CreateConVar("sm_bot_quota_smult", "1.75", "Skill difference ^ x");
 	g_cvar[BoosterQuota] = AutoExecConfig_CreateConVar("sm_booster_bot_quota", "28", "sets the bota bot quota");
 	
 	g_cvar[DisableBotsAt] = AutoExecConfig_CreateConVar("sm_disable_bots_at", "8", "sets when disable bots"); 
