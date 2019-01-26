@@ -172,7 +172,7 @@ int getBotFillerQuota(int plyDiff)
 	
 	// Set bot count to player count difference * x - 1 or skill difference * x - 1
 	int physical = teamCount + RoundPowToNearest(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
-	int skill = teamCount + RoundPowToNearest(getTeamDiffMult(), g_cvar[BotDiffMult].FloatValue);
+	int skill = teamCount + RoundPowToNearest(getTeamDiffMult(), g_cvar[BotSkillMult].FloatValue);
 	
 	// Set a ceiling to be returned, leave two connecting slots
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
@@ -198,12 +198,8 @@ float getTeamDiffMult()
 	if (getLSTeam(teamDiff) != getTeamLessPlayers() || average < 0.0)
 		return 0.0;
 		
-	// Cauclate team difference mult with teamDiff / average. Convert teamDiff to positive number if required.
-	float difference = teamDiff < 0 ? teamDiff * -1.0 / average : teamDiff / average;
-	
-	// Multiply the difference multipler to increase the bot count.
-	return difference * g_cvar[BotSkillMult].FloatValue;
-}
+	// Otherwise, team / average. Convert teamDiff to positive number if required.
+	return teamDiff < 0 ? teamDiff * -1.0 / average : teamDiff / average;
 
 int getLSTeam(float td) {
 	return td > 0 ? TEAM_CONSORT : TEAM_EMPIRE;
