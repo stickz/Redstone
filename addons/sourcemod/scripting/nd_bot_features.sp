@@ -172,7 +172,7 @@ int getBotFillerQuota(int plyDiff)
 	
 	// Set bot count to player count difference * x - 1 or skill difference * x - 1
 	int physical = teamCount + RoundPowToNearest(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
-	int skill = teamCount + RoundPowToNearest(getTeamDiffMult(), g_cvar[BotDiffMult].FloatValue);
+	int skill = teamCount + RoundPowToNearest(getTeamDiffMult(), g_cvar[BotSkillMult].FloatValue);
 	
 	// Set a ceiling to be returned, leave two connecting slots
 	int maxQuota = g_cvar[BoosterQuota].IntValue;

@@ -30,12 +30,25 @@ public Action CMD_DisableBots(int client, int args)
 
 public Action CMD_GetBotPow(int client, int args)
 {
-	float exp = g_cvar[BotDiffMult].FloatValue;
-	
-	for (int num = 1; num <= 5; num++)
+	// Print the physical player difference from 1-5 for bot counts
+	PrintToConsole(client, "--> Physical Player Difference <--");	
+	float phys = g_cvar[BotDiffMult].FloatValue;	
+	for (int pNum = 1; pNum <= 5; pNum++)
 	{
-		int value = RoundPowToNearest(float(num), exp);
-		PrintToConsole(client, "Round: %d ^ %.2f = %d", num, exp, value);
+		int value = RoundPowToNearest(float(pNum), phys);
+		PrintToConsole(client, "Round: %d ^ %.2f = %d", pNum, phys, value);
+	}
+	
+	// Print a spacer in console, before starting the next section
+	PrintToConsole(client, "");
+	
+	// Print the skill percent difference from 1-5 for bot counts
+	PrintToConsole(client, "--> Skill Percent Difference <--");	
+	float skill = g_cvar[BotSkillMult].FloatValue;
+	for (int sNum = 1; sNum <= 5; sNum++)
+	{
+		int value = RoundPowToNearest(float(sNum), skill);
+		PrintToConsole(client, "Round: %d% ^ %.2f = %d", sNum*100, skill, value);
 	}
 
 	return Plugin_Handled;
