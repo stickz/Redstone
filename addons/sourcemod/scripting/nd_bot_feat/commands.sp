@@ -35,7 +35,7 @@ public Action CMD_GetBotPow(int client, int args)
 	float phys = g_cvar[BotDiffMult].FloatValue;	
 	for (int pNum = 1; pNum <= 5; pNum++)
 	{
-		int value = RoundPowToNearest(float(num), exp);
+		int value = RoundPowToNearest(float(num), phys);
 		PrintToConsole(client, "Round: %d ^ %.2f = %d", pNum, phys, value);
 	}
 	
@@ -47,7 +47,7 @@ public Action CMD_GetBotPow(int client, int args)
 	float skill = g_cvar[BotSkillMult].FloatValue;
 	for (int sNum = 1; sNum <= 5; sNum++)
 	{
-		int value = RoundPowToNearest(float(num), exp);
+		int value = RoundPowToNearest(float(num), skill);
 		PrintToConsole(client, "Round: %d% ^ %.2f = %d", sNum*100, skill, value);
 	}
 
