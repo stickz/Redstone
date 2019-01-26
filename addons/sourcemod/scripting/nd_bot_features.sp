@@ -198,8 +198,11 @@ float getTeamDiffMult()
 	if (getLSTeam(teamDiff) != getTeamLessPlayers() || average < 0.0)
 		return 0.0;
 		
-	// Otherwise, team / average. Convert teamDiff to positive number if required.
-	return teamDiff < 0 ? teamDiff * -1.0 / average : teamDiff / average;
+	// Cauclate team difference mult with teamDiff / average. Convert teamDiff to positive number if required.
+	float difference = teamDiff < 0 ? teamDiff * -1.0 / average : teamDiff / average;
+	
+	// Multiply the difference multipler to increase the bot count.
+	return difference * g_cvar[BotSkillMult].FloatValue;
 }
 
 int getLSTeam(float td) {
