@@ -202,10 +202,6 @@ float getTeamDiffMult()
 	return teamDiff < 0 ? teamDiff * -1.0 / average : teamDiff / average;
 }
 
-int getStackedTeam(float td) {
-	return td > 0 ? TEAM_CONSORT : TEAM_EMPIRE;
-}
-
 int getBotModulusQuota()
 {	
 	// Get max quota and the current spectator & team count
