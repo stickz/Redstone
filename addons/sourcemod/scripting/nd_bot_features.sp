@@ -195,15 +195,11 @@ float getTeamDiffMult()
 	float average = ND_GetEnhancedAverage();
 	
 	// Return zero if team with less players has more skill or one team has no players
-	if (getLSTeam(teamDiff) != getTeamLessPlayers() || average < 0.0)
+	if (getStackedTeam(teamDiff) == getTeamLessPlayers() || average < 0.0)
 		return 0.0;
 		
 	// Otherwise, team / average. Convert teamDiff to positive number if required.
 	return teamDiff < 0 ? teamDiff * -1.0 / average : teamDiff / average;
-}
-
-int getLSTeam(float td) {
-	return td > 0 ? TEAM_CONSORT : TEAM_EMPIRE;
 }
 
 int getBotModulusQuota()
