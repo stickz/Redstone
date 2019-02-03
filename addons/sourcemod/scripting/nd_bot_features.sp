@@ -110,7 +110,7 @@ void checkCount()
 			}
 			
 			// If both teams have the same number of players and one team has 150%+ more skill
-			else if (teamDiffMult >= g_cvar[BotEvenPlysEnable].FloatValue)
+			else if (teamDiffMult * 100.0 >= g_cvar[BotEvenPlysEnable].FloatValue)
 			{
 				quota = getBotEvenQuota(teamDiffMult); // Get number of bots to fill
 				
