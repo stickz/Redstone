@@ -6,12 +6,14 @@ enum convars
 	 ConVar:BoostBots,
 	 ConVar:BotReduction,
 	 ConVar:BotReductionDec,
-	 ConVar:BotDiffMult,
-	 ConVar:BotSkillMult,
 	 ConVar:BoosterQuota,
 	 
 	 ConVar:BotEvenPlysEnable,
 	 ConVar:BotEvenSkillMult,
+	 ConVar:BotSkillIncrease,
+	 ConVar:BotSkillMultHigh,
+	 ConVar:BotSkillMultLow,
+	 ConVar:BotDiffMult,
 	 
 	 ConVar:DisableBotsAt,
 	 ConVar:DisableBotsAtDec,
@@ -42,7 +44,9 @@ void CreatePluginConvars()
 	
 	g_cvar[BotEvenPlysEnable] = AutoExecConfig_CreateConVar("sm_bot_even_threshold", "150", "Sets min skill diff for bots with even player counts");
 	g_cvar[BotEvenSkillMult] = AutoExecConfig_CreateConVar("sm_bot_even_smult", "1.4", "Even skill difference ^ x");
-	g_cvar[BotSkillMult] =	AutoExecConfig_CreateConVar("sm_bot_quota_smult", "1.75", "Uneven skill difference ^ x");
+	g_cvar[BotSkillIncrease] = AutoExecConfig_CreateConVar("sm_bot_smult_inc", "100", "Specifies skill value to increase skill mult");
+	g_cvar[BotSkillMultHigh] = AutoExecConfig_CreateConVar("sm_bot_smult_high", "1.9", "High uneven skill difference ^ x");
+	g_cvar[BotSkillMultLow] = AutoExecConfig_CreateConVar("sm_bot_smult_low", "1.75", "Low uneven skill difference ^ x");
 	g_cvar[BotDiffMult] = AutoExecConfig_CreateConVar("sm_bot_quota_dmult", "1.65", "Player difference ^ x");
 	
 	g_cvar[DisableBotsAt] = AutoExecConfig_CreateConVar("sm_disable_bots_at", "8", "sets when disable bots"); 
