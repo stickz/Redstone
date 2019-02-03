@@ -254,12 +254,11 @@ stock int getRandomTeam()
 // Return -1 if both teams have the same count
 stock int getTeamLessPlayers()
 {
-	int teamCount[2];
-	teamCount[CONSORT_AIDX] = ValidTeamCount(TEAM_CONSORT);
-	teamCount[EMPIRE_AIDX] = ValidTeamCount(TEAM_EMPIRE);
+	int consortCount = ValidTeamCount(TEAM_CONSORT);
+	int empireCount = ValidTeamCount(TEAM_EMPIRE);	
 
-	if (teamCount[CONSORT_AIDX] == teamCount[EMPIRE_AIDX])
+	if (consortCount == empireCount)
 		return TEAM_NONE;
 	
-	return teamCount[CONSORT_AIDX] < teamCount[EMPIRE_AIDX] ? TEAM_CONSORT : TEAM_EMPIRE;
+	return consortCount < empireCount ? TEAM_CONSORT : TEAM_EMPIRE;
 }

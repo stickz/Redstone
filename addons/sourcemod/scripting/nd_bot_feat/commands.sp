@@ -42,14 +42,25 @@ public Action CMD_GetBotPow(int client, int args)
 	// Print a spacer in console, before starting the next section
 	PrintToConsole(client, "");
 	
-	// Print the skill percent difference from 1-5 for bot counts
-	PrintToConsole(client, "--> Skill Percent Difference <--");	
-	float skill = g_cvar[BotSkillMult].FloatValue;
-	for (int sNum = 1; sNum <= 5; sNum++)
-	{
-		int value = RoundPowToNearest(float(sNum), skill);
-		PrintToConsole(client, "Round: %d% ^ %.2f = %d", sNum*100, skill, value);
-	}
+	// Print the skill percent difference from 100% to 500% for uneven bot counts
+	PrintToConsole(client, "--> Uneven Skill Percent Difference <--");
+	WriteConsoleSkillValues(client, g_cvar[BotSkillMult].FloatValue, 100, 1, 5);
+
+	// Print a spacer in console, before starting the next section
+	PrintToConsole(client, "");
+	
+	// Print the skill percent difference from 150% to 400% for even bot counts
+	PrintToConsole(client, "--> Even Skill Percent Difference <--");
+	WriteConsoleSkillValues(client, g_cvar[BotEvenSkillMult].FloatValue, 50, 3, 8);
 
 	return Plugin_Handled;
+}
+
+void WriteConsoleSkillValues(int client, float mult, int interval, int start, int finish)
+{
+	for (int sNum = start; sNum <= finish; sNum++)
+	{
+		int value = RoundPowToNearest(float(sNum), mult);
+		PrintToConsole(client, "Round: %d% ^ %.2f = %d", sNum*interval, mult, value);
+	}
 }
