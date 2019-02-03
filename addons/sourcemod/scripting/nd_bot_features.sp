@@ -96,19 +96,33 @@ void checkCount()
 		// The plugin to get the server slot is available
 		else if (GDSC_AVAILABLE())
 		{	
+			// Get team count difference and team skill difference multiplier
+			int posOverBalance = getPositiveOverBalance();
+			float teamDiffMult = getTeamDiffMult();
+			
 			// If one team has less players than the other
-			int posOverBalance = getPositiveOverBalance();	
 			if (posOverBalance >= 1)
 			{				
-				quota = getBotFillerQuota(posOverBalance); // Get number of bots to fill
-				
-				// Boost server slots if quota extends cap and team difference is 2+
-				toggleBooster(quota >= GetDynamicSlotCount()-2 && posOverBalance >= 2);
+				quota = getBotFillerQuota(posOverBalance, teamDiffMult); // Get number of bots to fill
 				
 				// Create a timer after envoking bot quota, to switch bots to the fill team
 				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, _, TIMER_FLAG_NO_MAPCHANGE);	
 			}
-			else { quota = 0; } // Otherwise, set filler quota to 0
+			
+			// If both teams have the same number of players and one team has 150%+ more skill
+			else if (teamDiffMult >= g_cvar[BotEvenPlysEnable].FloatValue)
+			{
+				quota = getBotEvenQuota(teamDiffMult); // Get number of bots to fill
+				
+				// Create a timer after envoking bot quota, to switch bots to the fill team
+				CreateTimer(timerDuration, TIMER_CheckAndSwitchEven, _, TIMER_FLAG_NO_MAPCHANGE)			
+			}
+			
+			// Otherwise, set filler quota to 0
+			else { quota = 0; }
+			
+			// Boost server slots if quota extends cap and team difference is 2+
+			toggleBooster(quota >= GetDynamicSlotCount()-2 && posOverBalance >= 2);
 		}
 		
 		// If the server slots are boosted to 32, disable that feature
@@ -164,24 +178,38 @@ void SignalMapChange()
 	ServerCommand("mp_limitteams 1");
 }
 
-int getBotFillerQuota(int plyDiff)
+int getBotFillerQuota(int plyDiff, float teamDiffMult)
 {
 	// Get the team count offset to properly fill the bot quota
 	int specCount = ValidTeamCount(TEAM_SPEC);
-	int teamCount = OnTeamCount() + specCount;
+	int teamCount = GetOnTeamCount(specCount);
 	
-	// Set bot count to player count difference * x - 1 or skill difference * x - 1
+	// Set bot count to player count difference ^ x or skill difference ^ x 
 	int physical = teamCount + RoundPowToNearest(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
-	int skill = teamCount + RoundPowToNearest(getTeamDiffMult(), g_cvar[BotSkillMult].FloatValue);
+	int skill = teamCount + RoundPowToNearest(teamDiffMult, g_cvar[BotSkillMult].FloatValue);
 	
-	// Set a ceiling to be returned, leave two connecting slots
-	int maxQuota = g_cvar[BoosterQuota].IntValue;
-	int assignCount = ValidTeamCount(TEAM_UNASSIGNED);
-	int maxBots = maxQuota - assignCount - specCount;
-	
+	// Set a ceiling to be returned, leave two connecting slots	
 	// Determine the maximum bot count to use. Skill difference or player difference.
 	// Limit the bot count to the maximum available on the server. (if required)
-	return Math_Max(Math_Min(skill, physical), maxBots);
+	return Math_Max(Math_Min(skill, physical), GetMaxBotCount(specCount));
+}
+
+int getBotEvenQuota(float teamDiffMult)
+{
+	// Get the team count offset to fill the bot quota and set bot count to skill difference ^ x
+	int teamCount = GetOnTeamCount(ValidTeamCount(TEAM_SPEC));
+	int skillCount = RoundPowToNearest(teamDiffMult, g_cvar[BotEvenSkillMult].FloatValue);
+	
+	// Set a ceiling to be returned, leave two connecting slots
+	return Math_Max(teamCount + skillCount, GetMaxBotCount(specCount));
+}
+
+int GetMaxBotCount(int specCount) {
+	return maxBots = g_cvar[BoosterQuota].IntValue - ValidTeamCount(TEAM_UNASSIGNED) - specCount;
+}
+
+int GetOnTeamCount(int specCount) {
+	return OnTeamCount() + specCount;
 }
 
 float getTeamDiffMult()
@@ -239,16 +267,25 @@ bool CheckShutOffBots()
 
 public Action TIMER_CheckAndSwitchFiller(Handle timer)
 {
-	CheckAndSwitchFiller();
+	int teamLessPlys = getTeamLessPlayers();
+	SwitchBotsToTeam(teamLessPlys);
 	return Plugin_Handled;
 }
 
-void CheckAndSwitchFiller()
+public Action TIMER_CheckAndSwitchEven(Handle timer)
 {
-	int teamLessPlys = getTeamLessPlayers();	
+	float teamDiff = ND_GetTeamDifference();
+	int teamLessSkill = getLeastStackedTeam(teamDiff);
+
+	SwitchBotsToTeam(teamLessSkill);
+	return Plugin_Handled;
+}
+
+void SwitchBotsToTeam(int team)
+{
 	for (int bot = 1; bot < MaxClients; bot++)
 	{
-		if (IsClientConnected(bot) && IsClientInGame(bot) && IsFakeClient(bot) && GetClientTeam(bot) != teamLessPlys)
+		if (IsClientConnected(bot) && IsClientInGame(bot) && IsFakeClient(bot) && GetClientTeam(bot) != team)
 		{
 			ChangeClientTeam(bot, TEAM_SPEC);
 			ChangeClientTeam(bot, teamLessPlys);
