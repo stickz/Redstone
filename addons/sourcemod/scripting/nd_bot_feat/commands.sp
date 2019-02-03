@@ -44,19 +44,19 @@ public Action CMD_GetBotPow(int client, int args)
 	
 	// Print the skill percent difference from 100% to 500% for uneven bot counts
 	PrintToConsole(client, "--> Uneven Skill Percent Difference <--");
-	WriteConsoleSkillValues(g_cvar[BotSkillMult].FloatValue, 100, 1, 5);
+	WriteConsoleSkillValues(client, g_cvar[BotSkillMult].FloatValue, 100, 1, 5);
 
 	// Print a spacer in console, before starting the next section
 	PrintToConsole(client, "");
 	
 	// Print the skill percent difference from 150% to 400% for even bot counts
 	PrintToConsole(client, "--> Even Skill Percent Difference <--");
-	WriteConsoleSkillValues(g_cvar[BotEvenSkillMult].FloatValue, 50, 3, 8);
+	WriteConsoleSkillValues(client, g_cvar[BotEvenSkillMult].FloatValue, 50, 3, 8);
 
 	return Plugin_Handled;
 }
 
-WriteConsoleSkillValues(float mult, int interval, int start, int finish)
+void WriteConsoleSkillValues(int client, float mult, int interval, int start, int finish)
 {
 	for (int sNum = start; sNum <= finish; sNum++)
 	{
