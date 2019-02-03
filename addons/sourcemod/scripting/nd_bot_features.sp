@@ -197,15 +197,15 @@ int getBotFillerQuota(int plyDiff, float teamDiffMult)
 int getBotEvenQuota(float teamDiffMult)
 {
 	// Get the team count offset to fill the bot quota and set bot count to skill difference ^ x
-	int teamCount = GetOnTeamCount(ValidTeamCount(TEAM_SPEC));
-	int skillCount = RoundPowToNearest(teamDiffMult, g_cvar[BotEvenSkillMult].FloatValue);
+	int specCount = ValidTeamCount(TEAM_SPEC);
+	int skill = GetOnTeamCount(specCount) + RoundPowToNearest(teamDiffMult, g_cvar[BotEvenSkillMult].FloatValue);
 	
 	// Set a ceiling to be returned, leave two connecting slots
-	return Math_Max(teamCount + skillCount, GetMaxBotCount(specCount));
+	return Math_Max(skill, GetMaxBotCount(specCount));
 }
 
 int GetMaxBotCount(int specCount) {
-	return maxBots = g_cvar[BoosterQuota].IntValue - ValidTeamCount(TEAM_UNASSIGNED) - specCount;
+	return g_cvar[BoosterQuota].IntValue - ValidTeamCount(TEAM_UNASSIGNED) - specCount;
 }
 
 int GetOnTeamCount(int specCount) {
@@ -288,7 +288,7 @@ void SwitchBotsToTeam(int team)
 		if (IsClientConnected(bot) && IsClientInGame(bot) && IsFakeClient(bot) && GetClientTeam(bot) != team)
 		{
 			ChangeClientTeam(bot, TEAM_SPEC);
-			ChangeClientTeam(bot, teamLessPlys);
+			ChangeClientTeam(bot, team);
 		}
 	}
 }
