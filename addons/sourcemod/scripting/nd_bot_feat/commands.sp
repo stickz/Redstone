@@ -72,7 +72,7 @@ void WriteConsoleSkillValues(int client, float mult)
 	// 5 ^ x = 9 --> x = Logarithm(9, 5)
 	// x ^ 5 = 9 --> x = Pow(9, 1/5)
 	
-	for (int base = 1; base <= 10; base+)
+	for (int base = 1; base <= 10; base++)
 	{
 		float value = Pow(base, 1 / mult) * 100.0;
 		PrintToConsole(client, "Round: %d% ^ %.2f = %d", RoundFloat(value), mult, base);
