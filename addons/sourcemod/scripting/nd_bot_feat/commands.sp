@@ -44,21 +44,21 @@ public Action CMD_GetBotPow(int client, int args)
 	
 	// Print the high skill percent difference from 100% to 500% for uneven bot counts
 	PrintToConsole(client, "--> Low Uneven Skill Percent Difference <--");
-	WriteConsoleSkillValues(client, g_cvar[BotSkillMultLow].FloatValue, 100, 1, 5);
+	WriteConsoleSkillValues(client, g_cvar[BotSkillMultLow].FloatValue);
 	
 	// Print a spacer in console, before starting the next section
 	PrintToConsole(client, "");
 	
 	// Print the high skill percent difference from 100% to 500% for uneven bot counts
 	PrintToConsole(client, "--> High Uneven Skill Percent Difference <--");
-	WriteConsoleSkillValues(client, g_cvar[BotSkillMultHigh].FloatValue, 100, 1, 5);
+	WriteConsoleSkillValues(client, g_cvar[BotSkillMultHigh].FloatValue);
 	
 	// Print a spacer in console, before starting the next section
 	PrintToConsole(client, "");
 	
 	// Print the skill percent difference from 150% to 400% for even bot counts
 	PrintToConsole(client, "--> Even Skill Percent Difference <--");
-	WriteConsoleSkillValues(client, g_cvar[BotEvenSkillMult].FloatValue, 50, 3, 8);
+	WriteConsoleSkillValues(client, g_cvar[BotEvenSkillMult].FloatValue);
 	
 	// Print a spacer in console, before starting the next section
 	PrintToConsole(client, "");
@@ -66,12 +66,15 @@ public Action CMD_GetBotPow(int client, int args)
 	return Plugin_Handled;
 }
 
-void WriteConsoleSkillValues(int client, float mult, int interval, int start, int finish)
+void WriteConsoleSkillValues(int client, float mult)
 {
-	for (int sNum = start; sNum <= finish; sNum++)
+	// How to solve exponential equations
+	// 5 ^ x = 9 --> x = Logarithm(9, 5)
+	// x ^ 5 = 9 --> x = Pow(9, 1/5)
+	
+	for (int base = 1; base <= 10; base++)
 	{
-		float base = sNum * (float(interval) / 100.0);
-		int value = RoundPowToNearest(base, mult);
-		PrintToConsole(client, "Round: %d% ^ %.2f = %d", sNum*interval, mult, value);
+		float value = Pow(base, 1 / mult) * 100.0;
+		PrintToConsole(client, "Round: %d% ^ %.2f = %d", RoundFloat(value), mult, base);
 	}
 }
