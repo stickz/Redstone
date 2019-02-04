@@ -75,6 +75,6 @@ void WriteConsoleSkillValues(int client, float mult)
 	for (int base = 1; base <= 10; base++)
 	{
 		float value = Pow(float(base), 1 / mult) * 100.0;
-		PrintToConsole(client, "Round: %d% ^ %.2f = %d", RoundFloat(value), mult, base);
+		PrintToConsole(client, "Round: %d% ^ %.2f = %d", RoundToNearest(value), mult, base);
 	}
 }
