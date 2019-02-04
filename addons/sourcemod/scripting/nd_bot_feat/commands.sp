@@ -70,7 +70,7 @@ void WriteConsoleSkillValues(int client, float mult, int interval, int start, in
 {
 	for (int sNum = start; sNum <= finish; sNum++)
 	{
-		float base = sNum * (interval / 100);
+		float base = sNum * (float(interval) / 100.0);
 		int value = RoundPowToNearest(base, mult);
 		PrintToConsole(client, "Round: %d% ^ %.2f = %d", sNum*interval, mult, value);
 	}
