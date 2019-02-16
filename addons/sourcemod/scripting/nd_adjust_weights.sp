@@ -41,6 +41,10 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
+public void OnMapStart() {
+	ReadTextFiles();
+}
+
 void AddClientWeighting(int client, int fileIDX)
 {	
 	/* Get and trim the client's steamid */
