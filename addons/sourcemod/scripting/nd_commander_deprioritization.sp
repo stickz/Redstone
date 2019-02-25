@@ -34,7 +34,7 @@ public void OnPluginStart()
 	LoadTranslations("common.phrases"); // required for find target
 }
 
-public OnMapStart() {
+public void OnMapStart() {
 	ReadTextFile();
 }
 
