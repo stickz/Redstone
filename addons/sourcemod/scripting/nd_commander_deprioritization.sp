@@ -34,6 +34,10 @@ public void OnPluginStart()
 	LoadTranslations("common.phrases"); // required for find target
 }
 
+public OnMapStart() {
+	ReadTextFile();
+}
+
 void AddClientDep(int client)
 {
 	char steamid[STEAMID_SIZE];
