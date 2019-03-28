@@ -284,7 +284,7 @@ void castDemoteVote(int team, int teamIDX, int client, int commander)
 		
 	/* Get the number of votes required for demote, and round to nereast */
 	int minPercent = IncreaseDemotePercent(commander) ? cDemotePercentEx.IntValue : cDemotePercentage.IntValue;			 
-	int demotePercent = RoundToNearest(RED_GetTeamCount(team) * minPercent);
+	int demotePercent = RoundToNearest(float(RED_GetTeamCount(team)) * float(minPercent));
 	
 	/* Enforce a minium number of votes required for demote, regardless of percent */
 	int minDemoteCount = cDemoteMinValue.IntValue;
