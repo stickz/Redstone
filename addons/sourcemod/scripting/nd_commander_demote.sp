@@ -62,6 +62,8 @@ char nd_demote_strings[DEMOTE_SCOUNT][] = {
 	"mutiny"	
 };
 
+ArrayList g_DemotedSteamIdList;
+
 public void OnPluginStart()
 {
 	CreatePluginConvars(); // for convars
@@ -73,7 +75,19 @@ public void OnPluginStart()
 	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
+	g_DemotedSteamIdList = new ArrayList(MaxClients+1);
+	
 	AddUpdaterLibrary(); //auto-updater
+}
+
+public void OnClientAuthorized(int client)
+{	
+	/* retrieve client steam-id and check if client has been demoted */
+	char gAuth[32];
+	GetClientAuthId(client, AuthId_Steam2, gAuth, sizeof(gAuth));
+	
+	if (g_DemotedSteamIdList.FindString(gAuth) != -1)
+		g_hasBeenDemoted[client] = true;	
 }
 
 void CreatePluginConvars()
@@ -111,6 +125,8 @@ void resetForGameStart()
 		g_hasVoted[1][client] = false;
 		g_hasBeenDemoted[client] = false;		
 	}
+	
+	g_DemotedSteamIdList.Clear();
 }
 
 public void OnMapStart() {
@@ -326,8 +342,10 @@ void resetValues(int client)
 		{
 			g_hasVoted[team][client] = false;
 			voteCount[team]--;
-		}	
+		}
 	}
+	
+	g_hasBeenDemoted[client] = false;
 }
 
 void resetVotes(int team)
