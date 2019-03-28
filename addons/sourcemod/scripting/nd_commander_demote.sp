@@ -317,6 +317,11 @@ void demoteCommander(int team)
 		
 		/* Store for mutiny restrictions */
 		g_hasBeenDemoted[commander] = true;
+		
+		/* Push SteamID to ArrayList in-case of disconnect */
+		char gAuth[32];
+		GetClientAuthId(commander, AuthId_Steam2, gAuth, sizeof(gAuth));
+		g_DemotedSteamIdList.PushString(gAuth);
 						
 		/* Let the team know the demote was succesful */
 		PrintCommanderDemoted(team);
