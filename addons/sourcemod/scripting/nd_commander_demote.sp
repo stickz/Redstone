@@ -62,6 +62,8 @@ char nd_demote_strings[DEMOTE_SCOUNT][] = {
 	"mutiny"	
 };
 
+ArrayList g_DemotedSteamIdList;
+
 public void OnPluginStart()
 {
 	CreatePluginConvars(); // for convars
@@ -73,7 +75,19 @@ public void OnPluginStart()
 	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_commander_restrictions.phrases");
 	
+	g_DemotedSteamIdList = new ArrayList(MaxClients+1);
+	
 	AddUpdaterLibrary(); //auto-updater
+}
+
+public void OnClientAuthorized(int client)
+{	
+	/* retrieve client steam-id and check if client has been demoted */
+	char gAuth[32];
+	GetClientAuthId(client, AuthId_Steam2, gAuth, sizeof(gAuth));
+	
+	if (g_DemotedSteamIdList.FindString(gAuth) != -1)
+		g_hasBeenDemoted[client] = true;	
 }
 
 void CreatePluginConvars()
@@ -111,6 +125,8 @@ void resetForGameStart()
 		g_hasVoted[1][client] = false;
 		g_hasBeenDemoted[client] = false;		
 	}
+	
+	g_DemotedSteamIdList.Clear();
 }
 
 public void OnMapStart() {
@@ -268,7 +284,7 @@ void castDemoteVote(int team, int teamIDX, int client, int commander)
 		
 	/* Get the number of votes required for demote, and round to nereast */
 	int minPercent = IncreaseDemotePercent(commander) ? cDemotePercentEx.IntValue : cDemotePercentage.IntValue;			 
-	int demotePercent = RoundToNearest(RED_GetTeamCount(team) * minPercent);
+	int demotePercent = RoundToNearest(float(RED_GetTeamCount(team)) * float(minPercent));
 	
 	/* Enforce a minium number of votes required for demote, regardless of percent */
 	int minDemoteCount = cDemoteMinValue.IntValue;
@@ -301,6 +317,11 @@ void demoteCommander(int team)
 		
 		/* Store for mutiny restrictions */
 		g_hasBeenDemoted[commander] = true;
+		
+		/* Push SteamID to ArrayList in-case of disconnect */
+		char gAuth[32];
+		GetClientAuthId(commander, AuthId_Steam2, gAuth, sizeof(gAuth));
+		g_DemotedSteamIdList.PushString(gAuth);
 						
 		/* Let the team know the demote was succesful */
 		PrintCommanderDemoted(team);
@@ -326,8 +347,10 @@ void resetValues(int client)
 		{
 			g_hasVoted[team][client] = false;
 			voteCount[team]--;
-		}	
+		}
 	}
+	
+	g_hasBeenDemoted[client] = false;
 }
 
 void resetVotes(int team)
