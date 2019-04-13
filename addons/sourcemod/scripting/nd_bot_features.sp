@@ -17,6 +17,7 @@
 
 #pragma newdecls required
 #include <nd_team_eng>
+#include <nd_transport_eng>
 #include <nd_redstone>
 #include <nd_rounds>
 #include <nd_maps>
@@ -292,12 +293,22 @@ public Action TIMER_CheckAndSwitchEven(Handle timer)
 
 void SwitchBotsToTeam(int team)
 {
+	bool switchedBot = false;
+	
 	for (int bot = 1; bot < MaxClients; bot++)
 	{
 		if (IsClientConnected(bot) && IsClientInGame(bot) && IsFakeClient(bot) && GetClientTeam(bot) != team)
 		{
 			ChangeClientTeam(bot, TEAM_SPEC);
 			ChangeClientTeam(bot, team);
+			
+			// Mark switched bot, and force them to spawn after 8s
+			switchedBot = true;
+			ND_ForceSpawnPlayer(bot, 8.0);
 		}
 	}
+	
+	// Refresh the spawn locations, so bots spawn in a valid location
+	if (switchedBot)
+		ND_RefreshSpawnLocs(6.5);
 }
