@@ -159,7 +159,7 @@ void toggleBooster(bool state)
 		return;
 	
 	visibleBoosted = state;
-	timerDuration = visibleBoosted ? 5.0 : 1.5
+	timerDuration = visibleBoosted ? 5.0 : 2.5;
 	
 	if (TDS_AVAILABLE())
 		ToggleDynamicSlots(!state);
