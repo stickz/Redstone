@@ -28,8 +28,8 @@ stock int ND_GetTransportCount(int team)
 	return gates[team];
 }
 
-define NRSL_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RefreshSpawnLocs") == FeatureStatus_Available)
+#define NRSL_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_RefreshSpawnLocs") == FeatureStatus_Available)
 native void ND_RefreshSpawnLocs(float delay);
 
-define NFSP_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_ForceSpawnPlayer") == FeatureStatus_Available)
+#define NFSP_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_ForceSpawnPlayer") == FeatureStatus_Available)
 native void ND_ForceSpawnPlayer(int client, float delay);
