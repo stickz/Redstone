@@ -91,13 +91,22 @@ public int Native_GetTeamTGCount(Handle plugin, int numParams) {
 }
 
 public int Native_RefreshSpawnLocs(Handle plugin, int numParams) {
+	float delay = GetNativeCell(1);
+	CreateTimer(delay, RefreshSpawnLocs, _, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public Action RefreshSpawnLocs(Handle timer)
+{
 	RefreshTransports();
+	return Plugin_Handled;
 }
 
 public int Native_ForceSpawnPlayer(Handle plugin, int numParams)
 {
-	float delay = GetNativeCell(1);
-	CreateTimer(delay, ForceSpawn, GetClientUserId(GetNativeCell(1)), TIMER_FLAG_NO_MAPCHANGE);
+	int client = GetNativeCell(1);
+	float delay = GetNativeCell(2);
+	
+	CreateTimer(delay, ForceSpawn, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action ForceSpawn(Handle timer, any:Userid)
