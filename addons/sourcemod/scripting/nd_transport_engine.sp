@@ -17,6 +17,7 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 int gateCount[TEAM_COUNT] = { 0, ... };
+float gateVecs[2][3];
 
 public void ND_OnRoundStarted() {
 	resetVars();
@@ -67,6 +68,7 @@ void RefreshTransports()
 	while ((loopEntity = FindEntityByClassname(loopEntity, STRUCT_TRANSPORT)) != INVALID_ENT_REFERENCE)
 	{
 		int team = GetEntProp(loopEntity, Prop_Send, "m_iTeamNum");
+		GetEntPropVector(loopEntity, Prop_Send, "m_vecOrigin", gateVecs[team-2]);		
 		newGates[team]++;
 	}
 	
@@ -78,10 +80,61 @@ void RefreshTransports()
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_GetTeamTGCache", Native_GetTeamTGCount);
+	CreateNative("ND_RefreshSpawnLocs", Native_RefreshSpawnLocs);
+	CreateNative("ND_ForceSpawnPlayer", Native_ForceSpawnPlayer);
 	return APLRes_Success;
 }
 
 public int Native_GetTeamTGCount(Handle plugin, int numParams) {
 	// Return the transport gate count for the inputted team
 	return gateCount[GetNativeCell(1)];
+}
+
+public int Native_RefreshSpawnLocs(Handle plugin, int numParams) {
+	float delay = GetNativeCell(1);
+	CreateTimer(delay, RefreshSpawnLocs, _, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public Action RefreshSpawnLocs(Handle timer)
+{
+	RefreshTransports();
+	return Plugin_Handled;
+}
+
+public int Native_ForceSpawnPlayer(Handle plugin, int numParams)
+{
+	int client = GetNativeCell(1);
+	float delay = GetNativeCell(2);
+	
+	CreateTimer(delay, ForceSpawn, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public Action ForceSpawn(Handle timer, any:Userid)
+{
+	int client = GetClientOfUserId(Userid);	
+	if (client && IsClientInGame(client))
+	{
+		ForcePlayerSpawn(client);
+		return Plugin_Handled;
+	}	
+	
+	//CreateTimer(0.5, ForceSpawn, Userid, TIMER_FLAG_NO_MAPCHANGE);
+	return Plugin_Handled;
+}
+
+void ForcePlayerSpawn(int client) 
+{
+	int team = GetClientTeam(client);
+	if (team > 1) 
+	{
+		// Set the location of the spawn area from the cached vector coordinates
+		SetEntPropVector(client, Prop_Send, "m_vecSelectedSpawnArea", gateVecs[team-2]);
+		
+		// Set the player class to a random value, if they're not a bot
+		if (!IsFakeClient(client))		
+			FakeClientCommand(client, "joinclass %d 0", GetRandomInt(0,3));
+			
+		// Indicate ready to play, to force the spawn spawn to happen
+		FakeClientCommand(client, "readytoplay");	
+	}
 }
