@@ -131,7 +131,7 @@ void ForcePlayerSpawn(int client)
 		SetEntPropVector(client, Prop_Send, "m_vecSelectedSpawnArea", gateVecs[team-2]);
 		
 		// Set the player class to a random value, if they're not a bot
-		if (!IsFakeClient(client)		
+		if (!IsFakeClient(client))		
 			FakeClientCommand(client, "joinclass %d 0", GetRandomInt(0,3));
 			
 		// Indicate ready to play, to force the spawn spawn to happen
