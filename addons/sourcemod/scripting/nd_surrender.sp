@@ -76,7 +76,7 @@ public void OnPluginStart()
 
 void CreatePluginConvars()
 {
-	AutoExecConfig_Setup("nd_surrenderr");
+	AutoExecConfig_Setup("nd_surrender");
 	
 	cvarMinPlayers		= 	AutoExecConfig_CreateConVar("sm_surrender_minp", "4", "Set's the minimum number of team players required to surrender.");
 	cvarSurrenderPercent 	= 	AutoExecConfig_CreateConVar("sm_surrender_percent", "51", "Set's the regular percentage to surrender.");
