@@ -16,6 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sdktools>
 #include <autoexecconfig>
+#include <smlib/math>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_surrender/nd_surrender.txt"
@@ -214,17 +215,10 @@ void callSurrender(int client)
 void checkSurrender(int team, bool showVotes = false, int client = -1)
 {
 	int teamCount = RED_GetTeamCount(team);
-	
-	// Check if we're using the early surrender percentage requirement or not
-	float lateSurrenderPer =  ND_TeamsPickedThisMap() ? cvarTPSurrenderPercent.FloatValue : cvarSurrenderPercent.FloatValue;
-	float finalSurrenderPer = g_Bool[enableSurrender] ? lateSurrenderPer : cvarEarlySurrenderPer.FloatValue;
-	
-	float teamFloat = teamCount * (finalSurrenderPer / 100.0);
-	float minTeamFoat = cvarMinPlayers.FloatValue;
 
-	if (teamFloat < minTeamFoat)
-		teamFloat = minTeamFoat;
-		
+	// Get the team surrender percentage as a float. Clamp it to a minimum value.
+	float teamFloat = Math_Min(teamCount * getSurrenderPercentage(), cvarMinPlayers.FloatValue);
+
 	int rTeamCount = !g_commanderVoted[team - 2] ? RoundToCeil(teamFloat) : RoundToFloor(teamFloat);
 	int Remainder = rTeamCount - voteCount[team -2];
 
@@ -233,6 +227,18 @@ void checkSurrender(int team, bool showVotes = false, int client = -1)
 
 	else if (showVotes)
 		displayVotes(team, Remainder, client);
+}
+
+float getSurrenderPercentage()
+{
+	// Do we use the regular or team pick surrender vote percentage?
+	float lateSurrenderPer =  ND_TeamsPickedThisMap() ? cvarTPSurrenderPercent.FloatValue : cvarSurrenderPercent.FloatValue;
+	
+	// Do we use the early game or late game surrender vote percentage?
+	float finalSurrenderPer = g_Bool[enableSurrender] ? lateSurrenderPer : cvarEarlySurrenderPer.FloatValue;
+	
+	// Devide by 100 to convert percentage value to decimal
+	return finalSurrenderPer / 100.0;
 }
 
 void resetValues(int client)
