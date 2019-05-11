@@ -15,6 +15,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include <sdktools>
+#include <autoexecconfig>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_surrender/nd_surrender.txt"
@@ -28,6 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_rounds>
 #include <nd_print>
 #include <nd_entities>
+#include <nd_teampick>
 
 enum Bools
 {
@@ -44,6 +46,7 @@ Handle SurrenderDelayTimer = INVALID_HANDLE;
 
 ConVar cvarMinPlayers;
 ConVar cvarSurrenderPercent;
+ConVar cvarTPSurrenderPercent;
 ConVar cvarEarlySurrenderPer;
 ConVar cvarSurrenderTimeout;
 ConVar cvarLowBunkerHealth;
@@ -61,20 +64,28 @@ public void OnPluginStart()
 {
 	RegConsoleCmd("sm_surrender", CMD_Surrender);
 	
-	AddCommandListener(PlayerJoinTeam, "jointeam");
-	
-	cvarMinPlayers		= CreateConVar("sm_surrender_minp", "4", "Set's the minimum number of team players required to surrender.");
-	cvarSurrenderPercent 	= CreateConVar("sm_surrender_percent", "51", "Set's the percentage required to surrender.");
-	cvarEarlySurrenderPer	= CreateConVar("sm_surrender_early", "80", "Set's the percentage for early surrender.");
-	cvarSurrenderTimeout	= CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
-	cvarLowBunkerHealth	= CreateConVar("sm_surrender_bh", "10000", "Sets the min bunker health required to surrender");
+	AddCommandListener(PlayerJoinTeam, "jointeam");	
+	CreatePluginConvars(); // for convars
 	
 	LoadTranslations("nd_common.phrases"); // for all chat messages
 	LoadTranslations("nd_surrender.phrases"); // for all chat messages
 	LoadTranslations("numbers.phrases"); // for one,two,three etc.
 	
 	AddUpdaterLibrary(); //add updater support
-	AutoExecConfig(true, "nd_surrender"); // for plugin convars
+}
+
+void CreatePluginConvars()
+{
+	AutoExecConfig_Setup("nd_surrenderr");
+	
+	cvarMinPlayers		= 	AutoExecConfig_CreateConVar("sm_surrender_minp", "4", "Set's the minimum number of team players required to surrender.");
+	cvarSurrenderPercent 	= 	AutoExecConfig_CreateConVar("sm_surrender_percent", "51", "Set's the regular percentage to surrender.");
+	cvarTPSurrenderPercent 	= 	AutoExecConfig_CreateConVar("sm_surrender_percent", "60", "Set's the teampick percentage to surrender.");
+	cvarEarlySurrenderPer	= 	AutoExecConfig_CreateConVar("sm_surrender_early", "80", "Set's the percentage for early surrender.");
+	cvarSurrenderTimeout	= 	AutoExecConfig_CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
+	cvarLowBunkerHealth	= 	AutoExecConfig_CreateConVar("sm_surrender_bh", "10000", "Sets the min bunker health required to surrender");
+	
+	AutoExecConfig_EC_File();
 }
 
 public void ND_OnRoundStarted()
@@ -148,6 +159,12 @@ public Action TIMER_DisplaySurrender(Handle timer, any team)
 	}
 }
 
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	MarkNativeAsOptional("ND_PickedTeamsThisMap");
+	return APLRes_Success;
+}
+
 bool bunkerHealthTooLow(int team)
 {
 	int bunkerEnt = ND_GetTeamBunkerEntity(team);	
@@ -199,9 +216,10 @@ void checkSurrender(int team, bool showVotes = false, int client = -1)
 	int teamCount = RED_GetTeamCount(team);
 	
 	// Check if we're using the early surrender percentage requirement or not
-	float surrenderPer = g_Bool[enableSurrender] ? cvarSurrenderPercent.FloatValue : cvarEarlySurrenderPer.FloatValue;
+	float lateSurrenderPer =  ND_TeamsPickedThisMap() ? cvarTPSurrenderPercent.FloatValue : cvarSurrenderPercent.FloatValue;
+	float finalSurrenderPer = g_Bool[enableSurrender] ? lateSurrenderPer : cvarEarlySurrenderPer.FloatValue;
 	
-	float teamFloat = teamCount * (surrenderPer / 100.0);
+	float teamFloat = teamCount * (finalSurrenderPer / 100.0);
 	float minTeamFoat = cvarMinPlayers.FloatValue;
 
 	if (teamFloat < minTeamFoat)
