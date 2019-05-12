@@ -16,6 +16,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sdktools>
 #include <autoexecconfig>
+#include <smlib/math>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_surrender/nd_surrender.txt"
@@ -44,10 +45,15 @@ bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... };
 bool g_hasVotedConsort[MAXPLAYERS+1] = {false, ... };
 Handle SurrenderDelayTimer = INVALID_HANDLE;
 
+/* Plugin ConVars */
 ConVar cvarMinPlayers;
+ConVar cvarMinComVoteVotes;
+ConVar cvarMaxComVotePlys;
+
 ConVar cvarSurrenderPercent;
 ConVar cvarTPSurrenderPercent;
 ConVar cvarEarlySurrenderPer;
+
 ConVar cvarSurrenderTimeout;
 ConVar cvarLowBunkerHealth;
 
@@ -79,9 +85,13 @@ void CreatePluginConvars()
 	AutoExecConfig_Setup("nd_surrender");
 	
 	cvarMinPlayers		= 	AutoExecConfig_CreateConVar("sm_surrender_minp", "4", "Set's the minimum number of team players required to surrender.");
+	cvarMinComVoteVotes	=	AutoExecConfig_CreateConVar("sm_surrender_minp_com", "5", "Specifies min vote count to always give commander two votes.");
+	cvarMaxComVotePlys	=	AutoExecConfig_CreateConVar("sm_surrender_maxp_com", "4", "Specifies max team players to always give commander two votes.");
+	
 	cvarSurrenderPercent 	= 	AutoExecConfig_CreateConVar("sm_surrender_percent", "51", "Set's the regular percentage to surrender.");
 	cvarTPSurrenderPercent 	= 	AutoExecConfig_CreateConVar("sm_surrender_percent", "60", "Set's the teampick percentage to surrender.");
 	cvarEarlySurrenderPer	= 	AutoExecConfig_CreateConVar("sm_surrender_early", "80", "Set's the percentage for early surrender.");
+	
 	cvarSurrenderTimeout	= 	AutoExecConfig_CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
 	cvarLowBunkerHealth	= 	AutoExecConfig_CreateConVar("sm_surrender_bh", "10000", "Sets the min bunker health required to surrender");
 	
@@ -214,18 +224,11 @@ void callSurrender(int client)
 void checkSurrender(int team, bool showVotes = false, int client = -1)
 {
 	int teamCount = RED_GetTeamCount(team);
-	
-	// Check if we're using the early surrender percentage requirement or not
-	float lateSurrenderPer =  ND_TeamsPickedThisMap() ? cvarTPSurrenderPercent.FloatValue : cvarSurrenderPercent.FloatValue;
-	float finalSurrenderPer = g_Bool[enableSurrender] ? lateSurrenderPer : cvarEarlySurrenderPer.FloatValue;
-	
-	float teamFloat = teamCount * (finalSurrenderPer / 100.0);
-	float minTeamFoat = cvarMinPlayers.FloatValue;
 
-	if (teamFloat < minTeamFoat)
-		teamFloat = minTeamFoat;
-		
-	int rTeamCount = !g_commanderVoted[team - 2] ? RoundToCeil(teamFloat) : RoundToFloor(teamFloat);
+	// Get the team surrender percentage as a float. Clamp it to a minimum value.
+	float teamFloat = Math_Min(teamCount * getSurrenderPercentage(), cvarMinPlayers.FloatValue);
+
+	int rTeamCount = countTwoComVotes(team, teamCount, teamFloat) ? RoundToCeil(teamFloat) : RoundToFloor(teamFloat);
 	int Remainder = rTeamCount - voteCount[team -2];
 
 	if (Remainder <= 0)
@@ -233,6 +236,28 @@ void checkSurrender(int team, bool showVotes = false, int client = -1)
 
 	else if (showVotes)
 		displayVotes(team, Remainder, client);
+}
+
+float getSurrenderPercentage()
+{
+	// Do we use the regular or team pick surrender vote percentage?
+	float lateSurrenderPer =  ND_TeamsPickedThisMap() ? cvarTPSurrenderPercent.FloatValue : cvarSurrenderPercent.FloatValue;
+	
+	// Do we use the early game or late game surrender vote percentage?
+	float finalSurrenderPer = g_Bool[enableSurrender] ? lateSurrenderPer : cvarEarlySurrenderPer.FloatValue;
+	
+	// Devide by 100 to convert percentage value to decimal
+	return finalSurrenderPer / 100.0;
+}
+
+bool countTwoComVotes(int team, int teamCount, float voteCount) 
+{
+	// Is the team count 4 or less? Or is the surrender vote count 5 or more? If so...
+	// If the commander has voted, double the weight of their vote.
+	if (	teamCount <= cvarMaxComVotePlys.IntValue || voteCount >= cvarMinComVoteVotes.FloatValue)
+		return !g_commanderVoted[team - 2];
+	
+	return false;
 }
 
 void resetValues(int client)
