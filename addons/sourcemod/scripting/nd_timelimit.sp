@@ -63,7 +63,10 @@ enum Convars {
 	
 	ConVar:extendTimeLimit,
 	ConVar:extendMinPlayers,
-	ConVar:extendPercentage
+	ConVar:extendPercentage,
+	
+	ConVar:comIncSkill,
+	ConVar:comIncTime
 };
 
 ConVar g_Cvar[Convars];
@@ -126,11 +129,38 @@ public void OnClientPutInServer(int client)
 	{
 		PrintMessageAll("Limit Effect");
 			
-		CreateTimer(g_Bool[reducedResumeTime] ? g_Cvar[reducedTimeLimit].FloatValue : g_Cvar[regularTimeLimit].FloatValue, 
-					TIMER_TotalTimeLeft, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+		CreateTimer(GetTimeLimit(), TIMER_TotalTimeLeft, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 		
 		g_Bool[startedCountdown] = true;
 	}
+}
+
+float GetTimeLimit()
+{
+	// Decide wether to set the reduced time limit or the regular time limit
+	float time = g_Bool[reducedResumeTime] ? g_Cvar[reducedTimeLimit].FloatValue : g_Cvar[regularTimeLimit].FloatValue;
+	
+	if (ND_InitialCommandersReady() && IncComSkillTimeLimit())
+		time += comIncTime.FloatValue;
+		
+	return time;
+}
+
+bool IncComSkillTimeLimit()
+{
+	for (int team = TEAM_CONSORT; team <= TEAM_EMPIRE; team++)
+	{
+		int commander = ND_GetCommanderOnTeam(team);
+		
+		if (commander == NO_COMMANDER)
+			return false;
+		
+		if (ND_GetRoundedCSkil(commmander) >= comIncSkill.IntValue)
+			return false;		
+		}	
+	}
+	
+	return true;
 }
 
 public void OnClientDisconnect(int client) {
@@ -193,6 +223,9 @@ void createConVars()
 	g_Cvar[extendTimeLimit] = CreateConVar("sm_timelimit_extend", "15", "Sets how many minutes to add when an extension is voted"); 
 	g_Cvar[extendMinPlayers] = CreateConVar("sm_timelimit_eplayers", "6", "Sets the minimum number of players for an extension");
 	g_Cvar[extendPercentage] = CreateConVar("sm_timelimit_epercent", "40", "Sets the percent from each team required to extend timelimit");
+	
+	g_Cvar[comIncSkill] = CreateConVar("sm_timelimit_cominc_skill", "15", "Sets skill level of commanders to increase time limit");
+	g_Cvar[comIncTime] = CreateConVar("sm_timelimit_cominc_time", "30", "Sets the amount of time to add to the time limit);
 	
 	AutoExecConfig(true, "nd_timelimit");
 }
