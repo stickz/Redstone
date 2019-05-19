@@ -156,7 +156,7 @@ bool IncComSkillTimeLimit()
 		if (commander == NO_COMMANDER)
 			return false;
 		
-		if (ND_GetRoundedCSkil(commmander) >= comIncSkill.IntValue)
+		if (ND_GetRoundedCSkill(commmander) >= comIncSkill.IntValue)
 			return false;		
 		}	
 	}
