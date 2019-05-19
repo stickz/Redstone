@@ -7,6 +7,8 @@
 #include <nd_redstone>
 #include <nd_rounds>
 #include <nd_com_eng>
+#include <nd_fskill>
+#include <autoexecconfig>
 
 public Plugin myinfo =
 {
@@ -63,7 +65,10 @@ enum Convars {
 	
 	ConVar:extendTimeLimit,
 	ConVar:extendMinPlayers,
-	ConVar:extendPercentage
+	ConVar:extendPercentage,
+	
+	ConVar:comIncSkill,
+	ConVar:comIncTime
 };
 
 ConVar g_Cvar[Convars];
@@ -126,11 +131,37 @@ public void OnClientPutInServer(int client)
 	{
 		PrintMessageAll("Limit Effect");
 			
-		CreateTimer(g_Bool[reducedResumeTime] ? g_Cvar[reducedTimeLimit].FloatValue : g_Cvar[regularTimeLimit].FloatValue, 
-					TIMER_TotalTimeLeft, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+		CreateTimer(GetTimeLimit(), TIMER_TotalTimeLeft, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 		
 		g_Bool[startedCountdown] = true;
 	}
+}
+
+float GetTimeLimit()
+{
+	// Decide wether to set the reduced time limit or the regular time limit
+	float time = g_Bool[reducedResumeTime] ? g_Cvar[reducedTimeLimit].FloatValue : g_Cvar[regularTimeLimit].FloatValue;
+	
+	if (ND_InitialCommandersReady(false) && IncComSkillTimeLimit())
+		time += g_Cvar[comIncTime].FloatValue;
+		
+	return time;
+}
+
+bool IncComSkillTimeLimit()
+{
+	for (int team = TEAM_CONSORT; team <= TEAM_EMPIRE; team++)
+	{
+		int commander = ND_GetCommanderOnTeam(team);
+		
+		if (commander == NO_COMMANDER)
+			return false;
+		
+		if (ND_GetRoundedCSkill(commander) >= g_Cvar[comIncSkill].IntValue)
+			return false;
+	}
+	
+	return true;
 }
 
 public void OnClientDisconnect(int client) {
@@ -182,19 +213,24 @@ void setVarriableDefaults()
 
 void createConVars()
 {
-	g_Cvar[enableTimeLimit] = CreateConVar("sm_timelimit_enable", "13", "Sets the number of players required to enable the time limit");
+	AutoExecConfig_Setup("nd_timelimit");
 	
-	g_Cvar[regularTimeLimit] = CreateConVar("sm_timelimit_regular", "60", "Sets the regular time limit on the server");
-	g_Cvar[extendedTimeLimit] = CreateConVar("sm_timelimit_corner", "75", "Sets the time for the corner map");
+	g_Cvar[enableTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_enable", "13", "Sets the number of players required to enable the time limit");
 	
-	g_Cvar[reducedTimeLimit] = CreateConVar("sm_timelimit_reduced", "45", "Sets the reduced time limit on resume");
-	g_Cvar[reducedResumeTime] = CreateConVar("sm_timelimit_rtime", "20", "Sets the time required for a reduced resume");
+	g_Cvar[regularTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_regular", "60", "Sets the regular time limit on the server");
+	g_Cvar[extendedTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_corner", "75", "Sets the time for the corner map");
 	
-	g_Cvar[extendTimeLimit] = CreateConVar("sm_timelimit_extend", "15", "Sets how many minutes to add when an extension is voted"); 
-	g_Cvar[extendMinPlayers] = CreateConVar("sm_timelimit_eplayers", "6", "Sets the minimum number of players for an extension");
-	g_Cvar[extendPercentage] = CreateConVar("sm_timelimit_epercent", "40", "Sets the percent from each team required to extend timelimit");
+	g_Cvar[reducedTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_reduced", "45", "Sets the reduced time limit on resume");
+	g_Cvar[reducedResumeTime] = AutoExecConfig_CreateConVar("sm_timelimit_rtime", "20", "Sets the time required for a reduced resume");
 	
-	AutoExecConfig(true, "nd_timelimit");
+	g_Cvar[extendTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_extend", "15", "Sets how many minutes to add when an extension is voted"); 
+	g_Cvar[extendMinPlayers] = AutoExecConfig_CreateConVar("sm_timelimit_eplayers", "6", "Sets the minimum number of players for an extension");
+	g_Cvar[extendPercentage] = AutoExecConfig_CreateConVar("sm_timelimit_epercent", "40", "Sets the percent from each team required to extend timelimit");
+	
+	g_Cvar[comIncSkill] = AutoExecConfig_CreateConVar("sm_timelimit_cominc_skill", "15", "Sets skill level of commanders to increase time limit");
+	g_Cvar[comIncTime] = AutoExecConfig_CreateConVar("sm_timelimit_cominc_time", "30", "Sets the amount of time to add to the time limit");
+	
+	AutoExecConfig_EC_File();
 }
 
 /* Events */
