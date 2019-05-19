@@ -7,6 +7,7 @@
 #include <nd_redstone>
 #include <nd_rounds>
 #include <nd_com_eng>
+#include <nd_fskill>
 
 public Plugin myinfo =
 {
@@ -225,7 +226,7 @@ void createConVars()
 	g_Cvar[extendPercentage] = CreateConVar("sm_timelimit_epercent", "40", "Sets the percent from each team required to extend timelimit");
 	
 	g_Cvar[comIncSkill] = CreateConVar("sm_timelimit_cominc_skill", "15", "Sets skill level of commanders to increase time limit");
-	g_Cvar[comIncTime] = CreateConVar("sm_timelimit_cominc_time", "30", "Sets the amount of time to add to the time limit);
+	g_Cvar[comIncTime] = CreateConVar("sm_timelimit_cominc_time", "30", "Sets the amount of time to add to the time limit");
 	
 	AutoExecConfig(true, "nd_timelimit");
 }
