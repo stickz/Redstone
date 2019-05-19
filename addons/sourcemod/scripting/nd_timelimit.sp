@@ -8,6 +8,7 @@
 #include <nd_rounds>
 #include <nd_com_eng>
 #include <nd_fskill>
+#include <autoexecconfig>
 
 public Plugin myinfo =
 {
@@ -212,22 +213,24 @@ void setVarriableDefaults()
 
 void createConVars()
 {
-	g_Cvar[enableTimeLimit] = CreateConVar("sm_timelimit_enable", "13", "Sets the number of players required to enable the time limit");
+	AutoExecConfig_Setup("nd_timelimit");
 	
-	g_Cvar[regularTimeLimit] = CreateConVar("sm_timelimit_regular", "60", "Sets the regular time limit on the server");
-	g_Cvar[extendedTimeLimit] = CreateConVar("sm_timelimit_corner", "75", "Sets the time for the corner map");
+	g_Cvar[enableTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_enable", "13", "Sets the number of players required to enable the time limit");
 	
-	g_Cvar[reducedTimeLimit] = CreateConVar("sm_timelimit_reduced", "45", "Sets the reduced time limit on resume");
-	g_Cvar[reducedResumeTime] = CreateConVar("sm_timelimit_rtime", "20", "Sets the time required for a reduced resume");
+	g_Cvar[regularTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_regular", "60", "Sets the regular time limit on the server");
+	g_Cvar[extendedTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_corner", "75", "Sets the time for the corner map");
 	
-	g_Cvar[extendTimeLimit] = CreateConVar("sm_timelimit_extend", "15", "Sets how many minutes to add when an extension is voted"); 
-	g_Cvar[extendMinPlayers] = CreateConVar("sm_timelimit_eplayers", "6", "Sets the minimum number of players for an extension");
-	g_Cvar[extendPercentage] = CreateConVar("sm_timelimit_epercent", "40", "Sets the percent from each team required to extend timelimit");
+	g_Cvar[reducedTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_reduced", "45", "Sets the reduced time limit on resume");
+	g_Cvar[reducedResumeTime] = AutoExecConfig_CreateConVar("sm_timelimit_rtime", "20", "Sets the time required for a reduced resume");
 	
-	g_Cvar[comIncSkill] = CreateConVar("sm_timelimit_cominc_skill", "15", "Sets skill level of commanders to increase time limit");
-	g_Cvar[comIncTime] = CreateConVar("sm_timelimit_cominc_time", "30", "Sets the amount of time to add to the time limit");
+	g_Cvar[extendTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_extend", "15", "Sets how many minutes to add when an extension is voted"); 
+	g_Cvar[extendMinPlayers] = AutoExecConfig_CreateConVar("sm_timelimit_eplayers", "6", "Sets the minimum number of players for an extension");
+	g_Cvar[extendPercentage] = AutoExecConfig_CreateConVar("sm_timelimit_epercent", "40", "Sets the percent from each team required to extend timelimit");
 	
-	AutoExecConfig(true, "nd_timelimit");
+	g_Cvar[comIncSkill] = AutoExecConfig_CreateConVar("sm_timelimit_cominc_skill", "15", "Sets skill level of commanders to increase time limit");
+	g_Cvar[comIncTime] = AutoExecConfig_CreateConVar("sm_timelimit_cominc_time", "30", "Sets the amount of time to add to the time limit");
+	
+	AutoExecConfig_EC_File();
 }
 
 /* Events */
