@@ -142,7 +142,7 @@ float GetTimeLimit()
 	float time = g_Bool[reducedResumeTime] ? g_Cvar[reducedTimeLimit].FloatValue : g_Cvar[regularTimeLimit].FloatValue;
 	
 	if (ND_InitialCommandersReady(false) && IncComSkillTimeLimit())
-		time += comIncTime.FloatValue;
+		time += g_Cvar[comIncTime].FloatValue;
 		
 	return time;
 }
@@ -156,7 +156,7 @@ bool IncComSkillTimeLimit()
 		if (commander == NO_COMMANDER)
 			return false;
 		
-		if (ND_GetRoundedCSkill(commander) >= comIncSkill.IntValue)
+		if (ND_GetRoundedCSkill(commander) >= g_Cvar[comIncSkill].IntValue)
 			return false;		
 		}	
 	}
