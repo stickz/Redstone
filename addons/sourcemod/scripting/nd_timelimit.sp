@@ -141,7 +141,7 @@ float GetTimeLimit()
 	// Decide wether to set the reduced time limit or the regular time limit
 	float time = g_Bool[reducedResumeTime] ? g_Cvar[reducedTimeLimit].FloatValue : g_Cvar[regularTimeLimit].FloatValue;
 	
-	if (ND_InitialCommandersReady() && IncComSkillTimeLimit())
+	if (ND_InitialCommandersReady(false) && IncComSkillTimeLimit())
 		time += comIncTime.FloatValue;
 		
 	return time;
