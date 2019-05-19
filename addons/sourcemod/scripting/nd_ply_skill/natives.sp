@@ -51,6 +51,9 @@ public Native_GetEnhancedAverage(Handle plugin, int numParms) {
 	UpdateSkillAverage();
 	UpdateSkillMedian();
 	
-	float value = (lastAverage * 0.7) + (lastMedian * 0.3);
+	float avr = GetNativeCell(1);
+	float med = GetNativeCell(2);
+	
+	float value = (lastAverage * avr) + (lastMedian * med);
 	return _:value;
 }

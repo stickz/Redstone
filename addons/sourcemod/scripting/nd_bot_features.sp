@@ -25,6 +25,9 @@
 bool disableBots = false;
 float timerDuration = 1.5;
 
+#define FILL_AVR 0.85
+#define FILL_MED 0.15
+
 #include "nd_bot_feat/convars.sp"
 #include "nd_bot_feat/commands.sp"
 
@@ -230,7 +233,7 @@ float getTeamDiffMult()
 		
 	// Retrieve the team difference and average
 	float teamDiff = ND_GetTeamDifference();
-	float average = ND_GetEnhancedAverage();
+	float average = ND_GetEnhancedAverage(FILL_AVR, FILL_MED);
 	
 	// Return zero if team with less players has more skill or one team has no players
 	if (getStackedTeam(teamDiff) == getTeamLessPlayers() || average < 0.0)
