@@ -309,6 +309,12 @@ public Action TIMER_CheckAndSwitchEven(Handle timer)
 	return Plugin_Handled;
 }
 
+public Action TIMER_CooldownSwitchingBots(Handle timer)
+{
+	isSwitchingBots = false;
+	return Plugin_Handled;
+}
+
 void SwitchBotsToTeam(int team)
 {
 	bool switchedBot = false;
@@ -331,5 +337,6 @@ void SwitchBotsToTeam(int team)
 	if (switchedBot)
 		ND_RefreshSpawnLocs(6.5);
 		
-	isSwitchingBots = false;
+	// Create a cooldown before bots can be switched again, so they don't end up in spectator
+	CreateTimer(timerDuration, TIMER_CooldownSwitchingBots, _, TIMER_FLAG_NO_MAPCHANGE);
 }
