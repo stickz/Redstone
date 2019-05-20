@@ -23,6 +23,7 @@
 #include <nd_maps>
 
 bool disableBots = false;
+bool isSwitchingBots = false;
 float timerDuration = 1.5;
 
 #define FILL_AVR 0.85
@@ -64,6 +65,7 @@ void SetBotValues()
 public void OnMapEnd() 
 {
 	disableBots = false;
+	isSwitchingBots = false;
 	SignalMapChange();	
 }
 
@@ -110,7 +112,7 @@ void checkCount()
 				quota = getBotFillerQuota(posOverBalance, teamDiffMult); // Get number of bots to fill
 				
 				// Create a timer after envoking bot quota, to switch bots to the fill team
-				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, _, TIMER_FLAG_NO_MAPCHANGE);	
+				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, _, TIMER_FLAG_NO_MAPCHANGE);
 			}
 			
 			// If both teams have the same number of players and one team has 150%+ more skill
@@ -280,6 +282,13 @@ bool CheckShutOffBots()
 
 public Action TIMER_CheckAndSwitchFiller(Handle timer)
 {
+	// Recreate the timer, if bots are already in the procress of being switched
+	if (isSwitchingBots)
+	{
+		CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, _, TIMER_FLAG_NO_MAPCHANGE);
+		return Plugin_Handled;
+	}
+	
 	int teamLessPlys = getTeamLessPlayers();
 	SwitchBotsToTeam(teamLessPlys);
 	return Plugin_Handled;
@@ -287,16 +296,30 @@ public Action TIMER_CheckAndSwitchFiller(Handle timer)
 
 public Action TIMER_CheckAndSwitchEven(Handle timer)
 {
+	// Recreate the timer, if bots are already in the procress of being switched
+	if (isSwitchingBots)
+	{
+		CreateTimer(timerDuration, TIMER_CheckAndSwitchEven, _, TIMER_FLAG_NO_MAPCHANGE);
+		return Plugin_Handled;
+	}
+	
 	float teamDiff = ND_GetTeamDifference();
 	int teamLessSkill = getLeastStackedTeam(teamDiff);
-
+	
 	SwitchBotsToTeam(teamLessSkill);
+	return Plugin_Handled;
+}
+
+public Action TIMER_CooldownSwitchingBots(Handle timer)
+{
+	isSwitchingBots = false;
 	return Plugin_Handled;
 }
 
 void SwitchBotsToTeam(int team)
 {
 	bool switchedBot = false;
+	isSwitchingBots = true;
 	
 	for (int bot = 1; bot < MaxClients; bot++)
 	{
@@ -314,4 +337,7 @@ void SwitchBotsToTeam(int team)
 	// Refresh the spawn locations, so bots spawn in a valid location
 	if (switchedBot)
 		ND_RefreshSpawnLocs(6.5);
+		
+	// Create a cooldown before bots can be switched again, so they don't end up in spectator
+	CreateTimer(timerDuration, TIMER_CooldownSwitchingBots, _, TIMER_FLAG_NO_MAPCHANGE);
 }
