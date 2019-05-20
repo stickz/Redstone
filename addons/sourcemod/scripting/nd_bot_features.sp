@@ -65,6 +65,7 @@ void SetBotValues()
 public void OnMapEnd() 
 {
 	disableBots = false;
+	isSwitchingBots = false;
 	SignalMapChange();	
 }
 
