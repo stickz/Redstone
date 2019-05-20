@@ -23,7 +23,7 @@
 #include <nd_maps>
 
 bool disableBots = false;
-bool isSwitchingBots = true;
+bool isSwitchingBots = false;
 float timerDuration = 1.5;
 
 #define FILL_AVR 0.85
