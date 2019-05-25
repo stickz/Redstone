@@ -36,7 +36,7 @@ bool CanRestartRound(int client)
 		return false;
 	}
 	
-	if (!ND_HasTPRunAccess(client))
+	if (!ND_HasTPRunAccess(client) || currentlyPicking)
 	{
 		PrintToChat(client, "\x05[xG] You only have team-pick access to this command!");
 		return false;
