@@ -34,6 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_com_dep>
 #include <nd_com_ban>
 #include <nd_entities>
+#include <nd_teampick>
 
 #define INVALID_CLIENT 0
 
@@ -133,6 +134,10 @@ public Action Command_Apply(int client, const char[] command, int argc)
 		PrintToChat(client, "You are banned from using commander.");
 		return Plugin_Handled;
 	}
+	
+	// Check if we picked teams this map, if so disable commander restrictions
+	if (ND_PickedTeamsThisMap())
+		return Plugin_Continue;
 	
 	if (g_cvar[eRestrictions].BoolValue)
 	{	
@@ -234,4 +239,10 @@ public Action ND_OnCommanderResigned(int client, int team)
 		CreateTimer(60.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
 
 	return Plugin_Continue;
+}
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	MarkNativeAsOptional("ND_PickedTeamsThisMap");
+	return APLRes_Success;
 }
