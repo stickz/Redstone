@@ -292,7 +292,7 @@ void SetTimeLimit(const char[] currentMap)
 		
 	// Increase the time limit, if there are rookie commanders
 	if (ND_InitialCommandersReady(false) && IncComSkillTimeLimit())
-		time += g_Cvar[comIncTime].IntValue;
+		timeLimit += g_Cvar[comIncTime].IntValue;
 	
 	// Set the time limit via the server command
 	ServerCommand("mp_roundtime %d", timeLimit);
