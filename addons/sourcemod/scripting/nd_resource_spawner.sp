@@ -187,7 +187,7 @@ void CheckStableSpawns()
 	
 	else if (ND_MapEqualsAnyMetro(map_name))
 	{
-		if (RED_OnTeamCount() >= cvarMetroTertiarySpawns.IntValue)
+		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18))
 		{
 			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
 			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
