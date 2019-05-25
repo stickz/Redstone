@@ -285,6 +285,10 @@ public Action TIMER_CheckAndSwitchFiller(Handle timer)
 	// Recreate the timer, if bots are already in the procress of being switched
 	if (isSwitchingBots)
 	{
+		// Create a cooldown before bots can be switched again, so they don't end up in spectator
+		CreateTimer(timerDuration, TIMER_CooldownSwitchingBots, _, TIMER_FLAG_NO_MAPCHANGE);
+		
+		// Recreate the existing timer, to run after the bot cooldown has expired
 		CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, _, TIMER_FLAG_NO_MAPCHANGE);
 		return Plugin_Handled;
 	}
@@ -299,6 +303,10 @@ public Action TIMER_CheckAndSwitchEven(Handle timer)
 	// Recreate the timer, if bots are already in the procress of being switched
 	if (isSwitchingBots)
 	{
+		// Create a cooldown before bots can be switched again, so they don't end up in spectator
+		CreateTimer(timerDuration, TIMER_CooldownSwitchingBots, _, TIMER_FLAG_NO_MAPCHANGE);
+		
+		// Recreate the existing timer, to run after the bot cooldown has expired
 		CreateTimer(timerDuration, TIMER_CheckAndSwitchEven, _, TIMER_FLAG_NO_MAPCHANGE);
 		return Plugin_Handled;
 	}
@@ -330,14 +338,9 @@ void SwitchBotsToTeam(int team)
 			
 			// Mark switched bot, and force them to spawn after 8s
 			switchedBot = true;
-			ND_ForceSpawnPlayer(bot, 8.0);
 		}
 	}
 	
-	// Refresh the spawn locations, so bots spawn in a valid location
-	if (switchedBot)
-		ND_RefreshSpawnLocs(6.5);
-		
 	// Create a cooldown before bots can be switched again, so they don't end up in spectator
 	CreateTimer(timerDuration, TIMER_CooldownSwitchingBots, _, TIMER_FLAG_NO_MAPCHANGE);
 }
