@@ -52,7 +52,8 @@ enum Bools
 	hasExtended,
 	justExtended,
 	roundHasEnded,
-	reducedResumeTime
+	reducedResumeTime,
+	canChangeTimeLimit
 };
 
 enum Convars {
@@ -125,9 +126,27 @@ public Event_MinuteLeft(Event event, const char[] name, bool dontBroadcast) {
 	CreateTimer(1.0, TIMER_ShowMinLeft, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 }
 
+public void ND_BothCommandersPromoted(int consort, int empire) 
+{
+	if (g_Bool[canChangeTimeLimit])
+	{
+		// Get the current map name
+		char currentMap[32];
+		GetCurrentMap(currentMap, sizeof(currentMap));
+		
+		// Recheck the time limit, if thresholds are ment
+		if (ND_GetClientCount() > 10 || IsAutoCycleMap(currentMap))
+			SetTimeLimit(currentMap);
+		
+		// Reset the varriable, so we can't change it again
+		g_Bool[canChangeTimeLimit] = false;
+	}
+}
+
 public void OnClientPutInServer(int client)
 {
-	if (g_Bool[noTimeLimit] && ND_RoundStarted() && !g_Bool[startedCountdown] && ND_GetClientCount() > g_Cvar[enableTimeLimit].IntValue)
+	if (	g_Bool[noTimeLimit] && ND_RoundStarted() && !g_Bool[startedCountdown] && 
+		ND_GetClientCount() > g_Cvar[enableTimeLimit].IntValue)
 	{
 		PrintMessageAll("Limit Effect");
 			
@@ -209,6 +228,7 @@ void setVarriableDefaults()
 	g_Bool[justExtended] = false;
 	g_Bool[enableExtend] = false;
 	g_Bool[reducedResumeTime] = false;
+	g_Bool[canChangeTimeLimit] = false;
 }
 
 void createConVars()
@@ -238,9 +258,11 @@ public void ND_OnRoundStarted()
 {
 	setVarriableDefaults();
 	
+	// Get the current map name
 	char currentMap[32];
 	GetCurrentMap(currentMap, sizeof(currentMap));
-
+	
+	// Ether set the time limit now, or wait and set it later
 	if (ND_GetClientCount() > 10 || IsAutoCycleMap(currentMap))
 		SetTimeLimit(currentMap);
 	
@@ -248,34 +270,45 @@ public void ND_OnRoundStarted()
 	{
 		g_Bool[noTimeLimit] = true;
 		CreateTimer(g_Cvar[reducedResumeTime].FloatValue, TIMER_ChangeResumeTime, _, TIMER_FLAG_NO_MAPCHANGE);
-	}	
+	}
+	
+	// Allow the time limit to be changed in the first three minutes for rookie commanders
+	g_Bool[canChangeTimeLimit] = true;
+	CreateTimer(180.0, TIMER_CanChangeTimeLimit, _, TIMER_FLAG_NO_MAPCHANGE);	
 }
 
 //helper function for event round start
 void SetTimeLimit(const char[] currentMap)
 {
-	int fiveMinutesRemaining = 60;
-		
-	if (	StrEqual(currentMap, ND_CustomMaps[ND_Corner], false) ||
-		StrEqual(currentMap, ND_StockMaps[ND_Silo], false))
+	// Calculate the base time limit, based on the current map
+	int timeLimit = 60;
+	if (	StrEqual(currentMap, ND_CustomMaps[ND_Corner], false) || 
+		StrEqual(currentMap, ND_StockMaps[ND_Silo], false)) 
 	{
-		int newTime = g_Cvar[extendedTimeLimit].IntValue;
-		ServerCommand("mp_roundtime %d", newTime);
-		fiveMinutesRemaining *= (newTime - 5);
-	}
+		timeLimit = g_Cvar[extendedTimeLimit].IntValue;
+	}	
 	else
-	{
-		int regularTime = g_Cvar[regularTimeLimit].IntValue;
-		ServerCommand("mp_roundtime %d", regularTime);
-		fiveMinutesRemaining *= (regularTime - 5);
-	}
-			
+		timeLimit = g_Cvar[regularTimeLimit].IntValue;
+		
+	// Increase the time limit, if there are rookie commanders
+	if (ND_InitialCommandersReady(false) && IncComSkillTimeLimit())
+		timeLimit += g_Cvar[comIncTime].IntValue;
+	
+	// Set the time limit via the server command
+	ServerCommand("mp_roundtime %d", timeLimit);
+	
+	// Calculate and trigger a timer when five minutes are remaining
+	int fiveMinutesRemaining = 60 * (timeLimit - 5);			
 	CreateTimer(float(fiveMinutesRemaining), TIMER_FiveMinLeft, _,  TIMER_FLAG_NO_MAPCHANGE);
 }
 
 /* Timers */
 public Action TIMER_ChangeResumeTime(Handle timer) {
 	g_Bool[reducedResumeTime] = true;
+}
+
+public Action TIMER_CanChangeTimeLimit(Handle timer) {
+	g_Bool[canChangeTimeLimit] = false;
 }
 
 public Action TIMER_ShowMinLeft(Handle timer)

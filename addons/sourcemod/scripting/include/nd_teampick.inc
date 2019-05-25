@@ -15,3 +15,10 @@ stock bool ND_TeamsPickedThisMap() {
 stock bool ND_HasTPRunAccess(int client) {
 	return ND_TeamsPickedThisMap() || HasRootAccess(client);
 }
+
+native int ND_GetTeamCaptain(int team);
+#define ND_TP_GTC_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_PickedTeamsThisMap") == FeatureStatus_Available)
+
+stock int GetTeamPickCaptain(int team) {
+	return !ND_TP_GTC_AVAILABLE() ? -1 : ND_GetTeamCaptain(team);
+}
