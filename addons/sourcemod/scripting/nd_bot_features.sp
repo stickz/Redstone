@@ -197,7 +197,7 @@ int getBotFillerQuota(int plyDiff, float teamDiffMult)
 	// Set a ceiling to be returned, leave two connecting slots	
 	// Determine the maximum bot count to use. Skill difference or player difference.
 	// Limit the bot count to the maximum available on the server. (if required)
-	return Math_Max(Math_Min(skill, physical), GetMaxBotCount(specCount));
+	return Math_Max(Math_Max(skill, physical), GetMaxBotCount(specCount));
 }
 
 int getBotEvenQuota(float teamDiffMult)
