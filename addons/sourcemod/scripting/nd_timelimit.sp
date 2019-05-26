@@ -274,7 +274,7 @@ public void ND_OnRoundStarted()
 	
 	// Allow the time limit to be changed in the first three minutes for rookie commanders
 	g_Bool[canChangeTimeLimit] = true;
-	CreateTimer(180.0, TIMER_CanChangeTimeLimit, _, TIMER_FLAG_NO_MAPCHANGE);	
+	CreateTimer(float(60 * 5), TIMER_CanChangeTimeLimit, _, TIMER_FLAG_NO_MAPCHANGE);	
 }
 
 //helper function for event round start
