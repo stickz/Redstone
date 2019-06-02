@@ -1,0 +1,26 @@
+// Exported from SourceMod Translator
+// Date: 2019-06-02 14:49:09 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/318
+//
+"Phrases"
+{
+
+	"Wait Enter Chair"
+	{
+		"ru"		"Пожалуйста, подождите {1} секунд или пока у другой команды появиться свой командир."
+	}
+
+	"May Enter Chair"
+	{
+		"ru"		"Кресло командира в бункере доступно.Подождите пожалуйста пока у другой команды появиться свой командир."
+	}
+
+	"Chair Unlocked"
+	{
+		"ru"		"У обеих команд есть командиры. Кресло командира в бункере теперь доступно."
+	}
+
+}
