@@ -180,8 +180,18 @@ void CheckStableSpawns()
 	// Will throw tag mismatch warning, it's okay
 	if (ND_CustomMapEquals(map_name, ND_Submarine))
 	{
-		SpawnTertiaryPoint({987.0, -7562.0, 23.0});
-		SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
+		if (RED_OnTeamCount() >= GetSpawnCount(20, 22, 24))
+		{
+			// Base tertiary resource points
+			SpawnTertiaryPoint({987.0, -7562.0, 23.0});  
+			SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
+		}
+		
+		// Center map tertiary resource points
+		SpawnTertiaryPoint({-1475.0, 3475.0, -33.0});
+		SpawnTertiaryPoint({-1000.0, -3820.0, -216.0});
+		SpawnTertiaryPoint({1350.0, -2153.0, 20.0});
+		SpawnTertiaryPoint({2495.0, 5775.0, 150.0});
 		tertsSpawned[SECOND_TIER] = true;
 	}
 	
