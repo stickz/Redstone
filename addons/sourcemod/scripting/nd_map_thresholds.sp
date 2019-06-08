@@ -129,27 +129,24 @@ void CreateMapThresholdList(bool debugFunction = false)
 	{
 		float plyAdjust = 1.5 * (clientCount - 14);		
 		ND_NominateMap(ND_CustomMaps[ND_Roadwork], 60 + plyAdjust);
-		
-		if (clientCount >= 10)
+
+		/* Run through the 'greater than' x players to include maps */
+		if (clientCount >= 14)
 		{
 			ND_NominateMap(ND_CustomMaps[ND_Submarine], 50 + plyAdjust);
+			ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
+			ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
+			ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);		
 
-			/* Run through the 'greater than' x players to include maps */
-			if (clientCount >= 14)
+			if (serverType <= SERVER_TYPE_BETA)
 			{
-				ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
-				ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
-				ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);		
+				ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
 
-				if (serverType <= SERVER_TYPE_BETA)
-				{
-					ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
-
-					if (serverType == SERVER_TYPE_STABLE)
-						ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);
-				}
+				if (serverType == SERVER_TYPE_STABLE)
+					ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);
 			}
 		}
+
 	}
 	
 	if (debugFunction)
