@@ -35,6 +35,8 @@
 
 #include <sourcemod>
 #include <topmenus>
+#include <nd_teampick>
+#include <nd_swgm>
 
 public Plugin:myinfo = 
 {
