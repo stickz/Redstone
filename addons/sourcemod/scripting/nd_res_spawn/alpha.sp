@@ -94,20 +94,7 @@ void CheckTertiarySpawns()
 	GetCurrentMap(map_name, sizeof(map_name));
 	
 	// Will throw tag mismatch warning, it's okay
-	if (ND_CustomMapEquals(map_name, ND_Submarine))
-	{
-		if (ND_GetServerTypeEx() == SERVER_TYPE_ALPHA)
-		{
-			SpawnTertiaryPoint({2366.0, 3893.0, 13.8});
-			SpawnTertiaryPoint({-1000.0, -3820.0, -186.0});
-			SpawnTertiaryPoint({1350.0, -2153.0, 54.0});
-			SpawnTertiaryPoint({1001.0, 1523.0, -112.0});
-		}
-		
-		tertsSpawned[SECOND_TIER] = true;
-	}
-	
-	else if (ND_StockMapEquals(map_name, ND_Downtown))
+	if (ND_StockMapEquals(map_name, ND_Downtown))
 	{
 		if (RED_OnTeamCount() >= cvarDowntownTertiarySpawns.IntValue)
 		{
