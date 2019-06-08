@@ -80,7 +80,7 @@ public OnPluginStart()
 	hOnAdminMenuCreated = CreateGlobalForward("OnAdminMenuCreated", ET_Ignore, Param_Cell);
 	hOnAdminMenuReady = CreateGlobalForward("OnAdminMenuReady", ET_Ignore, Param_Cell);
 
-	RegAdminCmd("sm_admin", Command_DisplayMenu, ADMFLAG_GENERIC, "Displays the admin menu");
+	RegConsoleCmd("sm_admin", Command_DisplayMenu, "Displays the admin menu");
 	
 	AddUpdaterLibrary(); //auto-updater
 }
@@ -196,8 +196,28 @@ public Action:Command_DisplayMenu(int client, int args)
 		return Plugin_Handled;
 	}
 	
+	if (!CanUseAdminMenu(client))
+		return Plugin_Handled;	
+	
 	hAdminMenu.Display(client, TopMenuPosition_Start);
 	return Plugin_Handled;
+}
+
+bool CanUseAdminMenu(int client)
+{
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return false;
+	}
+	
+	if (!ND_HasTPRunAccess(client))
+	{
+		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+		return false;
+	}
+	
+	return true;
 }
 
 stock int UTIL_AddTargetsToMenu2(Menu menu, source_client, flags)
