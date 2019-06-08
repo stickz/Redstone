@@ -41,9 +41,13 @@ public Plugin:myinfo =
 	name = "Admin Menu",
 	author = "AlliedModders LLC",
 	description = "Administration Menu",
-	version = SOURCEMOD_VERSION,
+	version = "dummy",
 	url = "http://www.sourcemod.net/"
 };
+
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/adminmenu/adminmenu.txt"
+#include "updater/standard.sp"
 
 /* Forwards */
 new Handle:hOnAdminMenuReady = null;
@@ -77,6 +81,8 @@ public OnPluginStart()
 	hOnAdminMenuReady = CreateGlobalForward("OnAdminMenuReady", ET_Ignore, Param_Cell);
 
 	RegAdminCmd("sm_admin", Command_DisplayMenu, ADMFLAG_GENERIC, "Displays the admin menu");
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public OnConfigsExecuted()

@@ -42,9 +42,13 @@ public Plugin:myinfo =
 	name = "Basic Commands",
 	author = "AlliedModders LLC",
 	description = "Basic Admin Commands",
-	version = SOURCEMOD_VERSION,
+	version = "dummy",
 	url = "http://www.sourcemod.net/"
 };
+
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/basecommands/basecommands.txt"
+#include "updater/standard.sp"
 
 TopMenu hTopMenu;
 
@@ -93,6 +97,8 @@ public OnPluginStart()
 	ProtectVar("rcon_password");
 	ProtectVar("sm_show_activity");
 	ProtectVar("sm_immunity_mode");
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public OnMapStart()
