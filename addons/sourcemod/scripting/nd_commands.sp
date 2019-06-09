@@ -1,6 +1,5 @@
 #include <sourcemod>
-#include <nd_teampick>
-#include <nd_swgm>
+#include <nd_access>
 
 public Plugin myinfo =
 {
@@ -30,7 +29,7 @@ public void OnPluginStart()
 /*Switch a target player's team */
 public Action Command_Swap(int client, int args) 
 {
-	if (!HasSetTeamAccess(client))
+	if (!ND_HasTeamPickRunAccess(client))
 		return Plugin_Handled;
 	
 	if (!args)
@@ -72,7 +71,7 @@ void PerformSwap(int client)
 //Spec Command
 public Action Command_Spec(int client, int args)
 {
-	if (!HasSetTeamAccess(client))
+	if (!ND_HasTeamPickRunAccess(client))
 		return Plugin_Handled;
 	
 	if (!args)
@@ -105,7 +104,7 @@ public Action Command_Spec(int client, int args)
 
 public Action Command_SetTeam(int client, int args)
 {
-	if (!HasSetTeamAccess(client))
+	if (!ND_HasTeamPickRunAccess(client))
 		return Plugin_Handled;
 	
 	if (args != 2)

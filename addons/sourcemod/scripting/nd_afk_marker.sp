@@ -1,8 +1,7 @@
 #include <sourcemod>
 #include <nd_stocks>
-#include <nd_rstart>
+#include <nd_access>
 #include <nd_rounds>
-#include <nd_swgm>
 
 #undef REQUIRE_PLUGIN
 #include <afk_manager>
@@ -76,18 +75,8 @@ void CheckAfkStatus(int client, bool rStart = true)
 
 public Action CMD_MarkAfterPlayer(int client, int args)
 {	
-	if (!SWMG_OfficerOrRoot(client))
-	{
-		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+	if (!ND_HasTeamPickAccess(client))
 		return Plugin_Handled;
-	}
-	
-	// If the player doesn't have command access, tell them why
-	if (!HasTeamPickAccess(client))
-	{
-		ReplyToCommand(client, "[SM] You only have team-pick access to this command.");
-		return Plugin_Handled;	
-	}
 	
 	// If no args are inputted, tell how to use the command
 	if (!args) 

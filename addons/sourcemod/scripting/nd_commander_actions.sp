@@ -17,8 +17,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <adminmenu>
-#include <nd_teampick>
-#include <nd_swgm>
+#include <nd_access>
 
 public Plugin myinfo =
 {
@@ -69,7 +68,7 @@ public OnAdminMenuReady(Handle:topmenu)
 
 public Action Cmd_SetCommander(int client, int args)
 {
-	if (!CanUseCommanderAction(client))
+	if (!ND_HasTeamPickRunAccess(client))
 		return Plugin_Handled;
 	
 	if (!args)
@@ -95,7 +94,7 @@ public Action Cmd_SetCommander(int client, int args)
 
 public Action Cmd_Demote(int client, int args)
 {
-	if (!CanUseCommanderAction(client))
+	if (!ND_HasTeamPickRunAccess(client))
 		return Plugin_Handled;
 	
 	if (!args)
@@ -128,23 +127,6 @@ public Action Cmd_Demote(int client, int args)
 		PerformDemote(client, target);
 	
 	return Plugin_Handled;
-}
-
-bool CanUseCommanderAction(int client)
-{
-	if (!SWMG_OfficerOrRoot(client))
-	{
-		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
-		return false;
-	}
-	
-	if (!ND_HasTPRunAccess(client))
-	{
-		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
-		return false;
-	}
-	
-	return true;
 }
 
 void PerformPromote(int client, int target)
