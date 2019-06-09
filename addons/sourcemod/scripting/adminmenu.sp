@@ -35,8 +35,8 @@
 
 #include <sourcemod>
 #include <topmenus>
-#include <nd_teampick>
 #include <nd_swgm>
+#include <nd_rstart>
 
 public Plugin:myinfo = 
 {
@@ -213,7 +213,7 @@ bool CanUseAdminMenu(int client)
 		return false;
 	}
 	
-	if (!ND_HasTPRunAccess(client))
+	if (!HasTeamPickAccess(client))
 	{
 		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
 		return false;
