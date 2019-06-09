@@ -1,3 +1,8 @@
+#if defined _nd_access_included_
+  #endinput
+#endif
+#define _nd_access_included_
+
 #include <nd_swgm>
 #include <nd_rstart>
 
