@@ -34,9 +34,7 @@
 #pragma semicolon 1
 
 #include <sourcemod>
-#undef REQUIRE_PLUGIN
 #include <adminmenu>
-
 #include <nd_rstart>
 #include <nd_swgm>
 

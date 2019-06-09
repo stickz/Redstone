@@ -1,11 +1,9 @@
 #pragma semicolon 1
 #include <sourcemod>
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/basevotes/basevotes.txt"
-#include "updater/standard.sp"
-
-#undef REQUIRE_PLUGIN
 #include <adminmenu>
+#include <nd_rstart>
+#include <nd_swgm>
 
 public Plugin myinfo =
 {
@@ -15,6 +13,10 @@ public Plugin myinfo =
 	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 };
+
+/* Auto Updater */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/basevotes/basevotes.txt"
+#include "updater/standard.sp"
 
 #define VOTE_NO "###no###"
 #define VOTE_YES "###yes###"
