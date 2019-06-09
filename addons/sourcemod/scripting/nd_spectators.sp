@@ -29,7 +29,7 @@ ArrayList g_LockedSteamIdList;
 public void OnPluginStart()
 {
 	RegConsoleCmd("sm_spec", CMD_GoSpec);
-	RegConsoleCmd("sm_LockSpec, CMD_LockPlayerSpec);
+	RegConsoleCmd("sm_LockSpec", CMD_LockPlayerSpec);
 	
 	LoadTranslations("nd_team_balancer.phrases");
 	
@@ -98,14 +98,14 @@ public Action CMD_LockPlayerSpec(int client, int args)
 	// Get the players steam id. Check ArrayList to see if it's found
 	char gAuth[32];
 	GetClientAuthId(target, AuthId_Steam2, gAuth, sizeof(gAuth));
-	int found = g_DemotedSteamIdList.FindString(gAuth);
+	int found = g_LockedSteamIdList.FindString(gAuth);
 	
 	if (g_IsLockedSpecAdmin[client])
 	{
 		// Unlock player from spec and remove entry from steamid list
 		g_IsLockedSpecAdmin[client] = false;		
 		if (found != -1)
-			g_DemotedSteamIdList.Erase(found);
+			g_LockedSteamIdList.Erase(found);
 		
 		ReplyToCommand(client, "[SM] Player succesfully unlocked from spectator");
 	}
@@ -115,7 +115,7 @@ public Action CMD_LockPlayerSpec(int client, int args)
 		// Lock player in spec and add entry to steamid list
 		g_IsLockedSpecAdmin[client] = true;
 		if (found == -1)
-			g_DemotedSteamIdList.PushString(gAuth);			
+			g_LockedSteamIdList.PushString(gAuth);			
 			
 		ReplyToCommand(client, "[SM] Player succesfully locked into spectator");
 	}
@@ -209,6 +209,6 @@ public int Native_GetPlayerSpecLock(Handle plugin, int numParms) {
 	return _:g_isLockedToSpec[GetNativeCell(1)];
 }
 
-public int Native_GetPlayerSpecLock(Handle plugin, int numParms) {
+public int Native_GetAdminSpecLock(Handle plugin, int numParms) {
 	return _:g_IsLockedSpecAdmin[GetNativeCell(1)];
 }
