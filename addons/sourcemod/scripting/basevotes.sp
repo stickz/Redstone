@@ -62,7 +62,7 @@ public void OnPluginStart()
 	LoadTranslations("plugin.basecommands");
 	LoadTranslations("basebans.phrases");
 	
-	RegAdminCmd("sm_votemap", Command_Votemap, ADMFLAG_VOTE|ADMFLAG_CHANGEMAP, "sm_votemap <mapname> [mapname2] ... [mapname5] ");
+	RegConsoleCmd("sm_votemap", Command_Votemap, "sm_votemap <mapname> [mapname2] ... [mapname5] ");
 	RegAdminCmd("sm_votekick", Command_Votekick, ADMFLAG_VOTE|ADMFLAG_KICK, "sm_votekick <player> [reason]");
 	RegAdminCmd("sm_voteban", Command_Voteban, ADMFLAG_VOTE|ADMFLAG_BAN, "sm_voteban <player> [reason]");
 	RegAdminCmd("sm_vote", Command_Vote, ADMFLAG_VOTE, "sm_vote <question> [Answer1] [Answer2] ... [Answer5]");
@@ -124,7 +124,7 @@ public void OnAdminMenuReady(Handle aTopMenu)
 	{
 		hTopMenu.AddItem("sm_votekick", AdminMenu_VoteKick, voting_commands, "sm_votekick", ADMFLAG_VOTE|ADMFLAG_KICK);
 		hTopMenu.AddItem("sm_voteban", AdminMenu_VoteBan, voting_commands, "sm_voteban", ADMFLAG_VOTE|ADMFLAG_BAN);
-		hTopMenu.AddItem("sm_votemap", AdminMenu_VoteMap, voting_commands, "sm_votemap", ADMFLAG_VOTE|ADMFLAG_CHANGEMAP);
+		hTopMenu.AddItem("sm_votemap", AdminMenu_VoteMap, voting_commands);
 	}
 }
 

@@ -63,8 +63,8 @@ public OnAdminMenuReady(Handle:topmenu)
 	hAdminMenu = topmenu;
 	
 	new TopMenuObject:CMCategory = AddToTopMenu(topmenu, "Commander Actions", TopMenuObject_Category, CategoryHandler, INVALID_TOPMENUOBJECT);
-	AddToTopMenu(topmenu, "Set Commander", TopMenuObject_Item, CMHandleSETCommander, CMCategory, "sm_setcommander", ADMFLAG_CUSTOM1);
-	AddToTopMenu(topmenu, "Demote Commander", TopMenuObject_Item, CMHandleDEMOTECommander, CMCategory, "sm_demotecommander", ADMFLAG_CUSTOM1);
+	AddToTopMenu(topmenu, "Set Commander", TopMenuObject_Item, CMHandleSETCommander, CMCategory);
+	AddToTopMenu(topmenu, "Demote Commander", TopMenuObject_Item, CMHandleDEMOTECommander, CMCategory);
 }
 
 public Action Cmd_SetCommander(int client, int args)
