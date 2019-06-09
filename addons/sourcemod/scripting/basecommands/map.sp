@@ -86,6 +86,9 @@ public Action:Command_Map(client, args)
 		ReplyToCommand(client, "[SM] Usage: sm_map <map>");
 		return Plugin_Handled;
 	}
+	
+	if (!CanChangeMap(client))
+		return Plugin_Handled;
 
 	decl String:map[64];
 	GetCmdArg(1, map, sizeof(map));
@@ -105,6 +108,23 @@ public Action:Command_Map(client, args)
 	WritePackString(dp, map);
 
 	return Plugin_Handled;
+}
+
+bool CanChangeMap(int client)
+{
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return false;
+	}
+	
+	if (!HasTeamPickAccess(client))
+	{
+		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+		return false;
+	}
+	
+	return true;
 }
 
 public Action:Timer_ChangeMap(Handle:timer, Handle:dp)
