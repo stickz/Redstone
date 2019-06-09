@@ -116,7 +116,9 @@ BuildDynamicMenu()
 				
 		if ((categoryId = hAdminMenu.FindCategory(buffer)) == INVALID_TOPMENUOBJECT)
 		{
-			categoryId = hAdminMenu.AddCategory(buffer, DynamicMenuCategoryHandler);
+			categoryId = hAdminMenu.AddCategory(buffer,
+							DynamicMenuCategoryHandler);
+
 		}
 
 		decl String:category_name[NAME_LENGTH];
@@ -298,7 +300,9 @@ BuildDynamicMenu()
 			decl String:locString[10];
 			IntToString(location, locString, sizeof(locString));
 
-			if (hAdminMenu.AddItem(buffer, DynamicMenuItemHandler, categoryId) == INVALID_TOPMENUOBJECT)
+			if (hAdminMenu.AddItem(buffer,
+				DynamicMenuItemHandler,
+  				categoryId) == INVALID_TOPMENUOBJECT)
 			{
 				LogError("Duplicate command name \"%s\" in adminmenu_custom.txt category \"%s\"", buffer, category_name);
 			}
