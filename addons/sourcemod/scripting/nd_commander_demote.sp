@@ -131,6 +131,7 @@ void resetForGameStart()
 
 public void OnMapStart() {
 	ServerCommand("nd_commander_mutiny_vote_threshold 51.0");
+	resetForGameStart();
 }
 
 public void ND_OnRoundStarted() {
