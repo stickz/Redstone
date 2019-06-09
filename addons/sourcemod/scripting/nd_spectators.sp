@@ -3,8 +3,7 @@
 #include <nd_stocks>
 #include <nd_rounds>
 #include <nd_com_eng>
-#include <nd_swgm>
-#include <nd_rstart>
+#include <nd_access>
 
 public Plugin myinfo =
 {
@@ -74,7 +73,7 @@ void RemoveSpecLocks() {
 
 public Action CMD_LockPlayerSpec(int client, int args)
 {
-	if (!CanLockPlayerSpec(client))
+	if (!ND_HasTeamPickAccess(client))
 		return Plugin_Handled;
 	
 	if (!args)
@@ -122,23 +121,6 @@ public Action CMD_LockPlayerSpec(int client, int args)
 	
 	
 	return Plugin_Handled;
-}
-
-bool CanLockPlayerSpec(int client)
-{
-	if (!SWMG_OfficerOrRoot(client))
-	{
-		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
-		return false;
-	}
-
- 	if (!HasTeamPickAccess(client))
-	{
-		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
-		return false;
-	}
-
- 	return true;
 }
 
 /* Place yourself in spectator mode */
