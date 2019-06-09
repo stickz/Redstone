@@ -226,9 +226,10 @@ public Action:Command_Votemap(client, args)
 	}
 		
 	if (!TestVoteDelay(client))
-	{
 		return Plugin_Handled;
-	}
+		
+	if (!CanUseVoteMap(client))
+		return Plugin_Handled;
 	
 	decl String:text[256];
 	GetCmdArgString(text, sizeof(text));
@@ -258,6 +259,23 @@ public Action:Command_Votemap(client, args)
 	DisplayVoteMapMenu(client, mapCount, maps);
 	
 	return Plugin_Handled;	
+}
+
+bool CanUseVoteMap(int client)
+{
+	if (!SWMG_OfficerOrRoot(client))
+	{
+		ReplyToCommand(client, "You must be a RedstoneND officer to use this command!");
+		return false;
+	}
+	
+	if (!HasTeamPickAccess(client))
+	{
+		ReplyToCommand(client, "[SM] You only have team-pick access to this command!");
+		return false;
+	}
+	
+	return true;
 }
 
 new Handle:g_map_array = INVALID_HANDLE;
