@@ -35,6 +35,8 @@ public void OnPluginStart()
 	g_OnPlayerLockedSpecForward = CreateGlobalForward("ND_OnPlayerLockSpec", ET_Event, Param_Cell, Param_Cell);
 	g_OnPlayerLockedSpecPostForward = CreateGlobalForward("ND_OnPlayerLockSpecPost", ET_Ignore, Param_Cell, Param_Cell);
 	
+	g_LockedSteamIdList = new ArrayList(MaxClients+1);
+	
 	AddUpdaterLibrary(); //auto-updater
 }
 
