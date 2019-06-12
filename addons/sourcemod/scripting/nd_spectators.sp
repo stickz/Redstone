@@ -116,8 +116,12 @@ public Action CMD_LockPlayerSpec(int client, int args)
 		// Lock player in spec and add entry to steamid list
 		g_IsLockedSpecAdmin[client] = true;
 		if (found == -1)
-			g_LockedSteamIdList.PushString(gAuth);			
+			g_LockedSteamIdList.PushString(gAuth);
 			
+		// Change target team to spectator if currently on a team
+		if (IsValidClient(target) && GetClientTeam(target) != TEAM_SPEC)
+			ChangeClientTeam(target, TEAM_SPEC);
+		
 		ReplyToCommand(client, "[SM] Player succesfully locked into spectator");
 	}
 	
