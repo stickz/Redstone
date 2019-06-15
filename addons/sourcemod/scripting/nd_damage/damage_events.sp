@@ -702,9 +702,9 @@ float Artillery_StructureReinMult(int &attacker)
 	
 	switch(GetDefenderTeamSR(attacker))
 	{
-		case 1: mult = 0.95;
-		case 2: mult = 0.9;
-		case 3: mult = 0.85;	
+		case 1: mult = gFloat_Other[artillery_ib1_base_mult];
+		case 2: mult = gFloat_Other[artillery_ib2_base_mult];
+		case 3: mult = gFloat_Other[artillery_ib3_base_mult];	
 	}
 	
 	return mult;
