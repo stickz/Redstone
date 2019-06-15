@@ -20,6 +20,7 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 int InfantryBoostLevel[2] = { 0, ...};
+int StructureReinLevel[2] = { 0, ...};
 
 /* Plugin Includes */
 #include "nd_damage/convars.sp"
@@ -53,6 +54,10 @@ public void OnInfantryBoostResearched(int team, int level)
 		int speed = RoundFloat((percent - 1.0) * 100.0);
 		PrintMessageTeamTI1(team, "BBQ Damage Increase", speed);
 	}
+}
+
+public void OnStructureReinResearched(int team, int level) {
+	StructureReinLevel[team-2] = level;
 }
 
 public void ND_OnStructureCreated(int entity, const char[] classname)
@@ -100,19 +105,23 @@ public void ND_OnStructureCreated(int entity, const char[] classname)
 
 public void ND_OnRoundStarted()
 {
-	ResetIBLevel();
+	ResetResearchLevels();
 	HookEntitiesDamaged();
 	UpdateConVarCache();
 }
 
 public void ND_OnRoundEndedEX() {
 	UnHookEntitiesDamaged();
-	ResetIBLevel();
+	ResetResearchLevels();
 }
 
-void ResetIBLevel() {
-	InfantryBoostLevel[0] = 0;
-	InfantryBoostLevel[1] = 0;
+void ResetResearchLevels() 
+{
+	for (int i = 0; i < 2; i++)
+	{
+		InfantryBoostLevel[i] = 0;
+		StructureReinLevel[i] = 0;
+	}
 }
 
 void HookEntitiesDamaged(bool lateLoad = false)
