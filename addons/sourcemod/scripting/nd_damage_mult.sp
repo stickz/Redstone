@@ -68,8 +68,28 @@ float getInfantryBoostMult(int level)
 	return mult;
 }
 
-public void OnStructureReinResearched(int team, int level) {
+public void OnStructureReinResearched(int team, int level) 
+{
 	StructureReinLevel[team-2] = level;
+	
+	// Notify the team of artillery damage decreases at each level
+	float percent = getSRArtilleryMult(level);
+	int speed = RoundFloat((percent - 1.0) * 100.0);
+	PrintMessageTeamTI1(team, "Artillery Damage Decrease", speed);
+}
+
+float getSRArtilleryMult(int level)
+{
+	float mult = 1.0;
+	
+	switch(level)
+	{
+		case 1: mult = gFloat_Other[artillery_ib1_base_mult];
+		case 2: mult = gFloat_Other[artillery_ib2_base_mult];
+		case 3: mult = gFloat_Other[artillery_ib3_base_mult];	
+	}
+	
+	return mult;
 }
 
 public void ND_OnStructureCreated(int entity, const char[] classname)
