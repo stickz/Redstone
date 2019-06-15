@@ -26,7 +26,7 @@ public Action ND_OnBarrierDamaged(int victim, int &attacker, int &inflictor, flo
 	{
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -46,7 +46,7 @@ public Action ND_OnWallDamaged(int victim, int &attacker, int &inflictor, float 
 	{
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -67,7 +67,7 @@ public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflicto
 	{
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -95,7 +95,7 @@ public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor
 	{
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -123,7 +123,7 @@ public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, fl
 	{	
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -161,7 +161,7 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -199,7 +199,7 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -237,7 +237,7 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -265,14 +265,14 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 	{
 		case WEAPON_BEAM_DT:
 		{
-			float multiplier = gFloat_Other[siege_ft_turret_mult];
+			float multiplier = gFloat_Siege[siege_ft_turret_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
 		}
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -293,13 +293,13 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 			}
 			else if (InflictorIsGL(className))
 			{
-				float multiplier = gFloat_Other[gl_ft_turret_mult];
+				float multiplier = gFloat_GL[gl_ft_turret_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
 			else if (InflcitorIsM95(className))
 			{
-				float multiplier = gFloat_Other[siege_ft_turret_mult];
+				float multiplier = gFloat_Siege[siege_ft_turret_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -335,7 +335,7 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -363,14 +363,14 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 	{
 		case WEAPON_BEAM_DT:
 		{
-			float multiplier = gFloat_Other[siege_transport_mult];
+			float multiplier = gFloat_Siege[siege_transport_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
 		}
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -391,13 +391,13 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 			}
 			else if (InflictorIsGL(className))
 			{
-				float multiplier = gFloat_Other[gl_transport_mult];
+				float multiplier = gFloat_GL[gl_transport_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
 			else if (InflcitorIsM95(className))
 			{
-				float multiplier = gFloat_Other[siege_transport_mult];
+				float multiplier = gFloat_Siege[siege_transport_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -423,14 +423,14 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 	{
 		case WEAPON_BEAM_DT:
 		{
-			float multiplier = gFloat_Other[siege_assembler_mult];
+			float multiplier = gFloat_Siege[siege_assembler_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
 		}
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && AttackerTeamIB1(attacker))
+			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
 			{
 				float multIB = gFloat_Other[nx300_ib1_base_mult];
 				damage *= multIB;
@@ -451,13 +451,13 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 			}
 			else if (InflictorIsGL(className))
 			{				
-				float multiplier = gFloat_Other[gl_assembler_mult];
+				float multiplier = gFloat_GL[gl_assembler_mult];
 				damage *= multiplier; 
 				return Plugin_Changed;
 			}
 			else if (InflcitorIsM95(className))
 			{
-				float multiplier = gFloat_Other[siege_assembler_mult];
+				float multiplier = gFloat_Siege[siege_assembler_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -490,7 +490,7 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	{
 		case WEAPON_BEAM_DT:
 		{
-			float multiplier = gFloat_Other[siege_bunker_mult];
+			float multiplier = gFloat_Siege[siege_bunker_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
 		}
@@ -499,7 +499,7 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 		{ 
 			if (InflictorIsNX300(inflictor))
 			{			
-				if (AttackerTeamIB1(attacker))
+				if (GetAttackerTeamIB(attacker) >= 1)
 				{
 					float multIB = gFloat_Other[nx300_ib1_base_mult];
 					damage *= multIB;
@@ -524,13 +524,13 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 			}			
 			else if (InflictorIsGL(className))
 			{
-				float multiplier = gFloat_Other[gl_bunker_mult];
+				float multiplier = gFloat_GL[gl_bunker_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
 			else if (InflcitorIsM95(className))
 			{
-				float multiplier = gFloat_Other[siege_bunker_mult];
+				float multiplier = gFloat_Siege[siege_bunker_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -573,9 +573,9 @@ bool InflictorIsNX300(int &inflictor) {
 	return StrEqual(iClass(inflictor), WEAPON_NX300_CNAME, true);
 }
 
-bool AttackerTeamIB1(int &attacker) {
+int GetAttackerTeamIB(int &attacker) {
 	int team = GetClientTeam(attacker);
-	return ND_GetItemResearchLevel(team, Infantry_Boost) >= 1;
+	return InfantryBoostLevel[team-2];
 }
 
 char iClass(int &inflictor)

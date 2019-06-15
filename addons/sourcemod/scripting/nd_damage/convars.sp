@@ -27,33 +27,42 @@ enum multBullets
 	bullet_rocket_turret_mult,
 	bullet_supply_station_mult
 }
-enum multOther
+enum multSiege
 {
-	nx300_ib1_base_mult = 0,
-	nx300_bunker_mult,
-	artillery_bunker_mult,
-	
-	// GLs (Grenade Launchers)
-	gl_bunker_mult,
-	gl_assembler_mult,
-	gl_transport_mult,
-	gl_ft_turret_mult,
-	
 	// Siegers (m95 & x01)
-	siege_bunker_mult,
+	siege_bunker_mult = 0,
 	siege_assembler_mult,
 	siege_transport_mult,
 	siege_ft_turret_mult
 }
 
+enum multGL
+{
+	gl_bunker_mult = 0,
+	gl_assembler_mult,
+	gl_transport_mult,
+	gl_ft_turret_mult
+}
+
+enum multOther
+{
+	nx300_ib1_base_mult = 0,
+	nx300_bunker_mult,
+	artillery_bunker_mult
+}
+
 /* ConVar and float arrays for the different types */
 ConVar gCvar_Red[multREDs];
 ConVar gCvar_Bullet[multBullets];
+ConVar gCvar_Siege[multSiege];
+ConVar gCvar_GL[multGL];
 ConVar gCvar_Other[multOther];
 ConVar cvarNoWarmupBunkerDamage;
 
 float gFloat_Red[multREDs];
 float gFloat_Bullet[multBullets];
+float gFloat_Siege[multSiege];
+float gFloat_GL[multGL];
 float gFloat_Other[multOther];
 
 /* Functions for creating covnars */
@@ -64,6 +73,8 @@ void CreatePluginConVars()
 	
 	CreateRedConVars();
 	CreateBulletConVars();
+	CreateSiegeConVars();
+	CreateGLConVars();
 	CreateOtherConVars();
 	
 	cvarNoWarmupBunkerDamage = CreateConVar("sm_warmup_protect_bunker", "1", "Disable bunker damage during the warmup round.");
@@ -143,6 +154,60 @@ void CreateBulletConVars()
 	
 	AutoExecConfig_EC_File();	
 }
+
+void CreateSiegeConVars()
+{
+	AutoExecConfig_SetFile("nd_mult_siege");
+	
+	// Siegers (m95 & x01)
+	char convarName[multSiege][] = {	
+		"sm_mult_bunker_siege",
+		"sm_mult_assembler_siege",
+		"sm_mult_transport_siege",
+		"sm_mult_ft_turret_siege"
+	};
+	char convarDesc[multSiege][] = {
+		"Percentage of normal damage Siegers deal to the bunker",
+		"Percentage of normal damage Siegers deal to assemblers",
+		"Percentage of normal damage Siegers deal to transport gates",
+		"Percentage of normal damage Siegers deal to ft/sonic turrets"		
+	};	
+	char convarDef[multSiege][] = { "110", "105", "110", "105"};	
+
+	for (int convar = 0; convar < view_as<int>(multOther); convar++) {
+		gCvar_Siege[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
+	}
+	
+	AutoExecConfig_EC_File();
+}
+
+void CreateGLConVars()
+{
+	AutoExecConfig_SetFile("nd_mult_gl");
+	
+	// GLs (Grenade Launchers)
+	char convarName[multGL][] = {		
+		"sm_mult_bunker_gl",
+		"sm_mult_assembler_gl",
+		"sm_mult_transport_gl",
+		"sm_mult_ft_turret_gl"
+	};
+	char convarDesc[multGL][] = {		
+		// GLs (Grenade Launchers)
+		"Percentage of normal damage GLs deal to the bunker",
+		"Percentage of normal damage GLs deal to assemblers",
+		"Percentage of normal damage GLs deal to transport gates",
+		"Percentage of normal damage GLs deal to ft/sonic turrets"	
+	};
+	char convarDef[multGL][] = { "120", "110", "125", "110" };
+	
+	for (int convar = 0; convar < view_as<int>(multOther); convar++) {
+		gCvar_GL[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
+	}
+	
+	AutoExecConfig_EC_File();
+}
+
 void CreateOtherConVars()
 {
 	AutoExecConfig_SetFile("nd_mult_other");
@@ -150,47 +215,18 @@ void CreateOtherConVars()
 	char convarName[multOther][] = {	
 		"sm_mult_baseIB1_nx300",
 		"sm_mult_bunker_nx300",
-		"sm_mult_bunker_artillery",
-		
-		// GLs (Grenade Launchers)
-		"sm_mult_bunker_gl",
-		"sm_mult_assembler_gl",
-		"sm_mult_transport_gl",
-		"sm_mult_ft_turret_gl",
-		
-		// Siegers (m95 & x01)
-		"sm_mult_bunker_siege",
-		"sm_mult_assembler_siege",
-		"sm_mult_transport_siege",
-		"sm_mult_ft_turret_siege"
+		"sm_mult_bunker_artillery"
 	};
-	
+	char convarDesc[multOther][] = {
+		"Percentage of normal damage nx300 does after IB1",
+		"Percentage of normal damage nx300 does to bunker",
+		"Percentage of normal damage artillery does to the bunker"	
+	};	
 	char convarDef[multOther][] = { 
 		"103", // nx300 ib1 base damage
 		"85", // nx300 bunker damage
 		"100", // artillery bunker damage
-		// GLs (Grenade Launchers)
-		"120", "110", "125", "115",
-		// Siegers (m95 & x01)
-		"110", "105", "110", "105"};
-	
-	char convarDesc[multOther][] = {
-		"Percentage of normal damage nx300 does after IB1",
-		"Percentage of normal damage nx300 does to bunker",
-		"Percentage of normal damage artillery does to the bunker",
-		
-		// GLs (Grenade Launchers)
-		"Percentage of normal damage GLs deal to the bunker",
-		"Percentage of normal damage GLs deal to assemblers",
-		"Percentage of normal damage GLs deal to transport gates",
-		"Percentage of normal damage GLs deal to ft/sonic turrets",
-		
-		// Siegers (Grenade Launchers)
-		"Percentage of normal damage Siegers deal to the bunker",
-		"Percentage of normal damage Siegers deal to assemblers",
-		"Percentage of normal damage Siegers deal to transport gates",
-		"Percentage of normal damage Siegers deal to ft/sonic turrets"		
-	};
+	};		
 	
 	for (int convar = 0; convar < view_as<int>(multOther); convar++) {
 		gCvar_Other[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
@@ -210,6 +246,14 @@ void UpdateConVarCache()
 		gFloat_Bullet[b] = gCvar_Bullet[b].FloatValue / 100.0;
 	}
 	
+	for (int s = 0; s < view_as<int>(multSiege); s++) {
+		gFloat_Siege[s] = gCvar_Siege[s].FloatValue / 100.0;
+	}
+	
+	for (int g = 0; g < view_as<int>(multGL); g++) {
+		gFloat_GL[g] = gCvar_GL[g].FloatValue / 100.0;
+	}
+	
 	for (int o = 0; o < view_as<int>(multOther); o++) {
 		gFloat_Other[o] = gCvar_Other[o].FloatValue / 100.0;
 	}
@@ -222,6 +266,14 @@ void HookConVarChanges()
 	
 	for (int b = 0; b < view_as<int>(multBullets); b++) {
 		HookConVarChange(gCvar_Bullet[b], OnConfigPercentChange);
+	}
+	
+	for (int s = 0; s < view_as<int>(multSiege); s++) {
+		HookConVarChange(gCvar_Siege[s], OnConfigPercentChange);
+	}
+	
+	for (int g = 0; g < view_as<int>(multGL); g++) {
+		HookConVarChange(gCvar_GL[g], OnConfigPercentChange);
 	}
 	
 	for (int o = 0; o < view_as<int>(multOther); o++) {
