@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <sdkhooks>
+#include <nd_stocks>
 #include <nd_print>
 #include <nd_rounds>
 #include <nd_struct_eng>
