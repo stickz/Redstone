@@ -74,7 +74,7 @@ public void OnStructureReinResearched(int team, int level)
 	
 	// Notify the team of artillery damage decreases at each level
 	float percent = getSRArtilleryMult(level);
-	int speed = RoundFloat((percent - 1.0) * 100.0);
+	int speed = RoundFloat((1.0 - percent) * 100.0);
 	PrintMessageTeamTI1(team, "Artillery Damage Decrease", speed);
 }
 
