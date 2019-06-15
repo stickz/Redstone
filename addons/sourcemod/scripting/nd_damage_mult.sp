@@ -19,6 +19,8 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_damage_mult/nd_damage_mult.txt"
 #include "updater/standard.sp"
 
+int InfantryBoostLevel[2] = { 0, ...};
+
 /* Plugin Includes */
 #include "nd_damage/convars.sp"
 #include "nd_damage/damage_events.sp"
@@ -42,6 +44,8 @@ public void OnPluginStart()
 
 public void OnInfantryBoostResearched(int team, int level) 
 {
+	InfantryBoostLevel[team-2] = level;
+	
 	// Notify team the bbq damage has increased by three percent
 	if (level == 1)
 	{
@@ -96,12 +100,19 @@ public void ND_OnStructureCreated(int entity, const char[] classname)
 
 public void ND_OnRoundStarted()
 {
+	ResetIBLevel();
 	HookEntitiesDamaged();
 	UpdateConVarCache();
 }
 
 public void ND_OnRoundEndedEX() {
 	UnHookEntitiesDamaged();
+	ResetIBLevel();
+}
+
+void ResetIBLevel() {
+	InfantryBoostLevel[0] = 0;
+	InfantryBoostLevel[1] = 0;
 }
 
 void HookEntitiesDamaged(bool lateLoad = false)
