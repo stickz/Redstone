@@ -33,6 +33,16 @@ public Action ND_OnBarrierDamaged(int victim, int &attacker, int &inflictor, flo
 				return Plugin_Changed;
 			}
 		}
+		
+		case WEAPON_EXPLO_DT:
+		{
+			if (InflictorIsArtillery(iClass(inflictor)))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
+		}
 	}
 
 	return Plugin_Continue;
@@ -50,6 +60,16 @@ public Action ND_OnWallDamaged(int victim, int &attacker, int &inflictor, float 
 			{
 				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
+				return Plugin_Changed;
+			}
+		}
+		
+		case WEAPON_EXPLO_DT:
+		{
+			if (InflictorIsArtillery(iClass(inflictor)))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 		}
@@ -71,6 +91,16 @@ public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflicto
 			{
 				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
+				return Plugin_Changed;
+			}
+		}
+		
+		case WEAPON_EXPLO_DT:
+		{
+			if (InflictorIsArtillery(iClass(inflictor)))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
+				damage *= multiplier;
 				return Plugin_Changed;
 			}
 		}
@@ -103,6 +133,16 @@ public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor
 			}
 		}
 		
+		case WEAPON_EXPLO_DT:
+		{
+			if (InflictorIsArtillery(iClass(inflictor)))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
+		}
+		
 		case WEAPON_BULLET_DT:
 		{
 			float multiplier = gFloat_Bullet[bullet_rocket_turret_mult];
@@ -130,6 +170,16 @@ public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, fl
 				return Plugin_Changed;
 			}
 		}
+		
+		case WEAPON_EXPLO_DT:
+		{
+			if (InflictorIsArtillery(iClass(inflictor)))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
+		}
 	
 		case WEAPON_BULLET_DT:
 		{
@@ -151,9 +201,18 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 	{
 		case WEAPON_EXPLO_DT:
 		{		
-			if (InflictorIsRED(iClass(inflictor)))
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
+			
+			if (InflictorIsRED(className))
 			{			
 				float multiplier = gFloat_Red[red_radar_mult];
+				damage *= multiplier;
+				return Plugin_Changed;
+			}			
+			else if (InflictorIsArtillery(className))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -189,9 +248,18 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 	{
 		case WEAPON_EXPLO_DT:
 		{
-			if (InflictorIsRED(iClass(inflictor)))
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
+			
+			if (InflictorIsRED(className))
 			{
 				float multiplier = gFloat_Red[red_armoury_mult];
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflictorIsArtillery(className))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -227,9 +295,18 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 	{
 		case WEAPON_EXPLO_DT:
 		{
-			if (InflictorIsRED(iClass(inflictor)))
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
+			
+			if (InflictorIsRED(className))
 			{
 				float multiplier = gFloat_Red[red_power_plant_mult];
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflictorIsArtillery(className))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -302,6 +379,12 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 				float multiplier = gFloat_Siege[siege_ft_turret_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
+			}			
+			else if (InflictorIsArtillery(className))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
+				damage *= multiplier;
+				return Plugin_Changed;
 			}
 		}
 		
@@ -325,9 +408,18 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 	{
 		case WEAPON_EXPLO_DT:
 		{
-			if (InflictorIsRED(iClass(inflictor)))
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
+			
+			if (InflictorIsRED(className))
 			{
 				float multiplier = gFloat_Red[red_artillery_mult];
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflictorIsArtillery(className))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -401,6 +493,12 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
+			else if (InflictorIsArtillery(className))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
 		}
 		
 		case WEAPON_BULLET_DT: 
@@ -458,6 +556,12 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 			else if (InflcitorIsM95(className))
 			{
 				float multiplier = gFloat_Siege[siege_assembler_mult];
+				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflictorIsArtillery(className))
+			{
+				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -535,7 +639,7 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 			}
 			else if (InflictorIsArtillery(className))
 			{
-				float multiplier = gFloat_Other[artillery_bunker_mult];
+				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -572,7 +676,7 @@ bool InflictorIsNX300(int &inflictor) {
 	return StrEqual(iClass(inflictor), WEAPON_NX300_CNAME, true);
 }
 
-float BBQ_InfantryBoostMult(int &attacker) 
+float BBQ_InfantryBoostMult(int &attacker)
 {
 	float mult = 1.0;	
 	
@@ -590,6 +694,26 @@ int GetAttackerTeamIB(int &attacker)
 {
 	int team = GetClientTeam(attacker);
 	return InfantryBoostLevel[team-2];
+}
+
+float Artillery_StructureReinMult(int &attacker)
+{
+	float mult = 1.0;	
+	
+	switch(GetDefenderTeamSR(attacker))
+	{
+		case 1: mult = 0.95;
+		case 2: mult = 0.9;
+		case 3: mult = 0.85;	
+	}
+	
+	return mult;
+}
+
+int GetDefenderTeamSR(int &attacker) 
+{
+	int oTeam = getOtherTeam(GetClientTeam(attacker));
+	return StructureReinLevel[oTeam-2];
 }
 
 char iClass(int &inflictor)
