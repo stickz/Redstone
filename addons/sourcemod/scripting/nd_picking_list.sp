@@ -24,6 +24,7 @@ public void OnPluginStart()
 {
 	RegConsoleCmd("sm_command", 	 CMD_VolunteerCommander);
 	RegConsoleCmd("sm_PrintComList", CMD_PrintCommanderList);
+	RegConsoleCmd("sm_DumpComSkills", CMD_PrintComSkillList);
 	
 	/* Require steam group officer or root to access */
 	RegConsoleCmd("sm_AddComList", 		CMD_AddCommanderList, 	 "Add a commander to the list");
@@ -145,6 +146,22 @@ public Action CMD_PrintCommanderList(int client, int args)
 	
 	for (int target = 1; target <= MaxClients; target++)
 		if (IsValidClient(target) && WantsToCommand[target])
+			PrintToConsole(client, "%s: %d", GetClientName2(target), ND_GetRoundedCSkill(target));
+
+	return Plugin_Handled;
+}
+
+public Action CMD_PrintComSkillList(int client, int args)
+{
+	PrintToChat(client, "See console for output");
+	
+	PrintSpacer(client); PrintSpacer(client);
+	PrintToConsole(client, "--> List of Player Com Skill <--");
+	PrintToConsole(client, "Format: Name, Commander Skill");
+	PrintSpacer(client);
+	
+	for (int target = 1; target <= MaxClients; target++)
+		if (IsValidClient(target))
 			PrintToConsole(client, "%s: %d", GetClientName2(target), ND_GetRoundedCSkill(target));
 
 	return Plugin_Handled;
