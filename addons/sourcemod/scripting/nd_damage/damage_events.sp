@@ -265,7 +265,7 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 	{
 		case WEAPON_BEAM_DT:
 		{
-			float multiplier = gFloat_Other[siege_ft_turret_mult];
+			float multiplier = gFloat_Siege[siege_ft_turret_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
 		}
@@ -293,13 +293,13 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 			}
 			else if (InflictorIsGL(className))
 			{
-				float multiplier = gFloat_Other[gl_ft_turret_mult];
+				float multiplier = gFloat_GL[gl_ft_turret_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
 			else if (InflcitorIsM95(className))
 			{
-				float multiplier = gFloat_Other[siege_ft_turret_mult];
+				float multiplier = gFloat_Siege[siege_ft_turret_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -363,7 +363,7 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 	{
 		case WEAPON_BEAM_DT:
 		{
-			float multiplier = gFloat_Other[siege_transport_mult];
+			float multiplier = gFloat_Siege[siege_transport_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
 		}
@@ -391,13 +391,13 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 			}
 			else if (InflictorIsGL(className))
 			{
-				float multiplier = gFloat_Other[gl_transport_mult];
+				float multiplier = gFloat_GL[gl_transport_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
 			else if (InflcitorIsM95(className))
 			{
-				float multiplier = gFloat_Other[siege_transport_mult];
+				float multiplier = gFloat_Siege[siege_transport_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -423,7 +423,7 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 	{
 		case WEAPON_BEAM_DT:
 		{
-			float multiplier = gFloat_Other[siege_assembler_mult];
+			float multiplier = gFloat_Siege[siege_assembler_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
 		}
@@ -451,13 +451,13 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 			}
 			else if (InflictorIsGL(className))
 			{				
-				float multiplier = gFloat_Other[gl_assembler_mult];
+				float multiplier = gFloat_GL[gl_assembler_mult];
 				damage *= multiplier; 
 				return Plugin_Changed;
 			}
 			else if (InflcitorIsM95(className))
 			{
-				float multiplier = gFloat_Other[siege_assembler_mult];
+				float multiplier = gFloat_Siege[siege_assembler_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
@@ -490,7 +490,7 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	{
 		case WEAPON_BEAM_DT:
 		{
-			float multiplier = gFloat_Other[siege_bunker_mult];
+			float multiplier = gFloat_Siege[siege_bunker_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
 		}
@@ -524,13 +524,13 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 			}			
 			else if (InflictorIsGL(className))
 			{
-				float multiplier = gFloat_Other[gl_bunker_mult];
+				float multiplier = gFloat_GL[gl_bunker_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
 			else if (InflcitorIsM95(className))
 			{
-				float multiplier = gFloat_Other[siege_bunker_mult];
+				float multiplier = gFloat_Siege[siege_bunker_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
