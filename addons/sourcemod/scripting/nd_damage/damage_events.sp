@@ -26,9 +26,9 @@ public Action ND_OnBarrierDamaged(int victim, int &attacker, int &inflictor, flo
 	{
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -46,9 +46,9 @@ public Action ND_OnWallDamaged(int victim, int &attacker, int &inflictor, float 
 	{
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -67,9 +67,9 @@ public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflicto
 	{
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -95,9 +95,9 @@ public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor
 	{
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -123,9 +123,9 @@ public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, fl
 	{	
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -161,9 +161,9 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -199,9 +199,9 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -237,9 +237,9 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -272,9 +272,9 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -335,9 +335,9 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -370,9 +370,9 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -430,9 +430,9 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 		
 		case WEAPON_FLAME_DT:
 		{
-			if (InflictorIsNX300(inflictor) && GetAttackerTeamIB(attacker) >= 1)
+			if (InflictorIsNX300(inflictor))
 			{
-				float multIB = gFloat_Other[nx300_ib1_base_mult];
+				float multIB = BBQ_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
 			}
@@ -499,12 +499,11 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 		{ 
 			if (InflictorIsNX300(inflictor))
 			{			
-				if (GetAttackerTeamIB(attacker) >= 1)
-				{
-					float multIB = gFloat_Other[nx300_ib1_base_mult];
-					damage *= multIB;
-				}
+				// Apply the infantry boost damage mult
+				float multIB = BBQ_InfantryBoostMult(attacker);
+				damage *= multIB;
 				
+				// Apply the bunker damage reduction mult
 				float multiplier = gFloat_Other[nx300_bunker_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
@@ -573,7 +572,22 @@ bool InflictorIsNX300(int &inflictor) {
 	return StrEqual(iClass(inflictor), WEAPON_NX300_CNAME, true);
 }
 
-int GetAttackerTeamIB(int &attacker) {
+float BBQ_InfantryBoostMult(int &attacker) 
+{
+	float mult = 1.0;	
+	
+	switch(GetAttackerTeamIB(attacker))
+	{
+		case 1: mult = gFloat_Other[nx300_ib1_base_mult];
+		case 2: mult = gFloat_Other[nx300_ib2_base_mult];
+		case 3: mult = gFloat_Other[nx300_ib3_base_mult];	
+	}
+	
+	return mult;
+}
+
+int GetAttackerTeamIB(int &attacker) 
+{
 	int team = GetClientTeam(attacker);
 	return InfantryBoostLevel[team-2];
 }
