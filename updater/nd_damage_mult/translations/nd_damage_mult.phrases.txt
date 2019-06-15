@@ -5,4 +5,10 @@
 		"#format"	"{1:i}"
 		"en"		"BBQ weapon damage increased by {1}%"
 	}
+	
+	"Artillery Damage Decrease"
+	{
+		"#format"	"{1:i}"
+		"en"		"Added {1}% artillery structure protection"
+	}
 }

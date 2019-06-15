@@ -47,8 +47,12 @@ enum multGL
 enum multOther
 {
 	nx300_ib1_base_mult = 0,
+	nx300_ib2_base_mult,
+	nx300_ib3_base_mult,
 	nx300_bunker_mult,
-	artillery_bunker_mult
+	artillery_ib1_base_mult,
+	artillery_ib2_base_mult,
+	artillery_ib3_base_mult
 }
 
 /* ConVar and float arrays for the different types */
@@ -214,18 +218,28 @@ void CreateOtherConVars()
 	
 	char convarName[multOther][] = {	
 		"sm_mult_baseIB1_nx300",
+		"sm_mult_baseIB2_nx300",
+		"sm_mult_baseIB3_nx300",
 		"sm_mult_bunker_nx300",
-		"sm_mult_bunker_artillery"
+		"sm_mult_baseSR1_artillery",
+		"sm_mult_baseSR2_artillery",
+		"sm_mult_baseSR3_artillery"
 	};
 	char convarDesc[multOther][] = {
 		"Percentage of normal damage nx300 does after IB1",
+		"Percentage of normal damage nx300 does after IB2",
+		"Percentage of normal damage nx300 does after IB3",
 		"Percentage of normal damage nx300 does to bunker",
-		"Percentage of normal damage artillery does to the bunker"	
+		"Percentage of normal damage artillery does after SR1",
+		"Percentage of normal damage artillery does after SR2",
+		"Percentage of normal damage artillery does after SR13",
 	};	
 	char convarDef[multOther][] = { 
-		"103", // nx300 ib1 base damage
+		// nx300 ib 1-3 base damage
+		"103", "105", "107", 
 		"85", // nx300 bunker damage
-		"100", // artillery bunker damage
+		// artillery sr 1-3 base damage
+		"95", "90", "85"
 	};		
 	
 	for (int convar = 0; convar < view_as<int>(multOther); convar++) {

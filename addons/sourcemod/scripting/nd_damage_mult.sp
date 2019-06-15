@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <sdkhooks>
+#include <nd_stocks>
 #include <nd_print>
 #include <nd_rounds>
 #include <nd_struct_eng>
@@ -20,6 +21,7 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 int InfantryBoostLevel[2] = { 0, ...};
+int StructureReinLevel[2] = { 0, ...};
 
 /* Plugin Includes */
 #include "nd_damage/convars.sp"
@@ -46,13 +48,48 @@ public void OnInfantryBoostResearched(int team, int level)
 {
 	InfantryBoostLevel[team-2] = level;
 	
-	// Notify team the bbq damage has increased by three percent
-	if (level == 1)
+	// Notify team the bbq damage has increased at each level
+	float percent = getInfantryBoostMult(level);
+	int speed = RoundFloat((percent - 1.0) * 100.0);
+	PrintMessageTeamTI1(team, "BBQ Damage Increase", speed);
+}
+
+float getInfantryBoostMult(int level)
+{
+	float mult = 1.0;
+	
+	switch(level)
 	{
-		float percent = gFloat_Other[nx300_ib1_base_mult];
-		int speed = RoundFloat((percent - 1.0) * 100.0);
-		PrintMessageTeamTI1(team, "BBQ Damage Increase", speed);
+		case 1: mult = gFloat_Other[nx300_ib1_base_mult];
+		case 2: mult = gFloat_Other[nx300_ib2_base_mult];
+		case 3: mult = gFloat_Other[nx300_ib3_base_mult];	
 	}
+	
+	return mult;
+}
+
+public void OnStructureReinResearched(int team, int level) 
+{
+	StructureReinLevel[team-2] = level;
+	
+	// Notify the team of artillery damage decreases at each level
+	float percent = getSRArtilleryMult(level);
+	int speed = RoundFloat((percent - 1.0) * 100.0);
+	PrintMessageTeamTI1(team, "Artillery Damage Decrease", speed);
+}
+
+float getSRArtilleryMult(int level)
+{
+	float mult = 1.0;
+	
+	switch(level)
+	{
+		case 1: mult = gFloat_Other[artillery_ib1_base_mult];
+		case 2: mult = gFloat_Other[artillery_ib2_base_mult];
+		case 3: mult = gFloat_Other[artillery_ib3_base_mult];	
+	}
+	
+	return mult;
 }
 
 public void ND_OnStructureCreated(int entity, const char[] classname)
@@ -100,19 +137,23 @@ public void ND_OnStructureCreated(int entity, const char[] classname)
 
 public void ND_OnRoundStarted()
 {
-	ResetIBLevel();
+	ResetResearchLevels();
 	HookEntitiesDamaged();
 	UpdateConVarCache();
 }
 
 public void ND_OnRoundEndedEX() {
 	UnHookEntitiesDamaged();
-	ResetIBLevel();
+	ResetResearchLevels();
 }
 
-void ResetIBLevel() {
-	InfantryBoostLevel[0] = 0;
-	InfantryBoostLevel[1] = 0;
+void ResetResearchLevels() 
+{
+	for (int i = 0; i < 2; i++)
+	{
+		InfantryBoostLevel[i] = 0;
+		StructureReinLevel[i] = 0;
+	}
 }
 
 void HookEntitiesDamaged(bool lateLoad = false)
