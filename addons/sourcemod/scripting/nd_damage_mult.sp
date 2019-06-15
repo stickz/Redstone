@@ -47,13 +47,24 @@ public void OnInfantryBoostResearched(int team, int level)
 {
 	InfantryBoostLevel[team-2] = level;
 	
-	// Notify team the bbq damage has increased by three percent
-	if (level == 1)
+	// Notify team the bbq damage has increased at each level
+	float percent = getInfantryBoostMult(level);
+	int speed = RoundFloat((percent - 1.0) * 100.0);
+	PrintMessageTeamTI1(team, "BBQ Damage Increase", speed);
+}
+
+float getInfantryBoostMult(int level)
+{
+	float mult = 1.0;
+	
+	switch(level)
 	{
-		float percent = gFloat_Other[nx300_ib1_base_mult];
-		int speed = RoundFloat((percent - 1.0) * 100.0);
-		PrintMessageTeamTI1(team, "BBQ Damage Increase", speed);
+		case 1: mult = gFloat_Other[nx300_ib1_base_mult];
+		case 2: mult = gFloat_Other[nx300_ib2_base_mult];
+		case 3: mult = gFloat_Other[nx300_ib3_base_mult];	
 	}
+	
+	return mult;
 }
 
 public void OnStructureReinResearched(int team, int level) {
