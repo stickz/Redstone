@@ -178,7 +178,7 @@ void CreateSiegeConVars()
 	};	
 	char convarDef[multSiege][] = { "110", "105", "110", "105"};	
 
-	for (int convar = 0; convar < view_as<int>(multOther); convar++) {
+	for (int convar = 0; convar < view_as<int>(multSiege); convar++) {
 		gCvar_Siege[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
 	}
 	
@@ -205,7 +205,7 @@ void CreateGLConVars()
 	};
 	char convarDef[multGL][] = { "120", "110", "125", "110" };
 	
-	for (int convar = 0; convar < view_as<int>(multOther); convar++) {
+	for (int convar = 0; convar < view_as<int>(multGL); convar++) {
 		gCvar_GL[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
 	}
 	
