@@ -1,5 +1,10 @@
 "Phrases"
 {
+	"Weapon Damage Console"
+	{
+		"en"		"See console for weapon damage increases"
+	}
+	
 	"BBQ Damage Increase"
 	{
 		"#format"	"{1:i}"
