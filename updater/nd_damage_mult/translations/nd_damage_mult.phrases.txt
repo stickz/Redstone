@@ -6,6 +6,12 @@
 		"en"		"BBQ weapon damage increased by {1}%"
 	}
 	
+	"GL Damage Increase"
+	{
+		"#format"	"{1:i}"
+		"en"		"Grenadier weapon damage increased by {1}%"
+	}
+	
 	"Artillery Damage Decrease"
 	{
 		"#format"	"{1:i}"
