@@ -48,15 +48,18 @@ public void OnInfantryBoostResearched(int team, int level)
 {
 	InfantryBoostLevel[team-2] = level;
 	
-	// Notify team the bbq damage has increased at each level
+	// Notify team bbq & gl damage value are displayed in console
+	PrintMessageTeam(team, "Weapon Damage Console");
+	
+	// Print team bbq damage increases at each level to console
 	float percentBBQ = getInfantryBoostMultBBQ(level);
 	int increaseBBQ = RoundFloat((percentBBQ - 1.0) * 100.0);
-	PrintMessageTeamTI1(team, "BBQ Damage Increase", increaseBBQ);
-	
-	// Notify team the gl damage has increased at each level
+	PrintConsoleTeamTI1(team, "BBQ Damage Increase", increaseBBQ);
+
+	// Print team gl damage increases at each level to console
 	float percentGL = getInfantryBoostMultGL(level);
 	int increaseGL = RoundFloat((percentGL - 1.0) * 100.0);
-	PrintMessageTeamTI1(team, "GL Damage Increase", increaseGL);
+	PrintConsoleTeamTI1(team, "GL Damage Increase", increaseGL);
 }
 
 float getInfantryBoostMultBBQ(int level)
