@@ -217,7 +217,7 @@ void CreateGLConVars()
 		"Percentage of normal damage GLs deal to after Infantry Boost 2",
 		"Percentage of normal damage GLs deal to after Infantry Boost 3"
 	};
-	char convarDef[multGL][] = { 	"120", "110", "125", "110"
+	char convarDef[multGL][] = { 	"120", "110", "125", "110",
 					"103", "106", "109" };
 	
 	for (int convar = 0; convar < view_as<int>(multGL); convar++) {
