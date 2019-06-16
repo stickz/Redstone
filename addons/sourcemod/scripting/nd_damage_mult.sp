@@ -49,7 +49,7 @@ public void OnInfantryBoostResearched(int team, int level)
 	InfantryBoostLevel[team-2] = level;
 	
 	// Notify team the bbq damage has increased at each level
-	float percentBBQ = getInfantryBoostMult(level);
+	float percentBBQ = getInfantryBoostMultBBQ(level);
 	int increaseBBQ = RoundFloat((percentBBQ - 1.0) * 100.0);
 	PrintMessageTeamTI1(team, "BBQ Damage Increase", increaseBBQ);
 	
