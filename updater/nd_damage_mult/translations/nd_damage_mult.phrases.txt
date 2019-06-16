@@ -1,9 +1,20 @@
 "Phrases"
 {
+	"Weapon Damage Console"
+	{
+		"en"		"See console for weapon damage increases"
+	}
+	
 	"BBQ Damage Increase"
 	{
 		"#format"	"{1:i}"
 		"en"		"BBQ weapon damage increased by {1}%"
+	}
+	
+	"GL Damage Increase"
+	{
+		"#format"	"{1:i}"
+		"en"		"Grenadier weapon damage increased by {1}%"
 	}
 	
 	"Artillery Damage Decrease"

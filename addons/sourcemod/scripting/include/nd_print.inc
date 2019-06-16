@@ -52,6 +52,17 @@ stock void PrintMessageAllEx(const char[] phrase)
 	}
 }
 
+stock void PrintMessageTeam(int team, const char[] phrase) 
+{
+	for (int client = 1; client <= MaxClients; client++) 
+	{
+		if (IsClientInGame(client) && GetClientTeam(client) == team)
+		{	
+			PrintMessage(client, phrase);
+		}
+	}
+}
+
 stock void PrintMessageAllTB(const char[] phrase) 
 {
 	for (int client = 1; client <= MaxClients; client++) 
@@ -114,6 +125,17 @@ stock void PrintMessageTeamTI1(int team, char[] transString, int intArg)
 		if (IsClientInGame(client) && GetClientTeam(client) == team)
 		{
 			PrintToChat(client, "%s %t!", PREFIX, transString, intArg);
+		}
+	}
+}
+
+stock void PrintConsoleTeamTI1(int team, char[] transString, int intArg)
+{
+	for (int client = 1; client <= MaxClients; client++) 
+	{
+		if (IsClientInGame(client) && GetClientTeam(client) == team)
+		{
+			PrintToConsole(client, "%s %t!", PREFIX, transString, intArg);
 		}
 	}
 }

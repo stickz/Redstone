@@ -41,7 +41,10 @@ enum multGL
 	gl_bunker_mult = 0,
 	gl_assembler_mult,
 	gl_transport_mult,
-	gl_ft_turret_mult
+	gl_ft_turret_mult,
+	gl_ib1_base_mult,
+	gl_ib2_base_mult,
+	gl_ib3_base_mult
 }
 
 enum multOther
@@ -191,19 +194,31 @@ void CreateGLConVars()
 	
 	// GLs (Grenade Launchers)
 	char convarName[multGL][] = {		
+		// GL Structure Damage
 		"sm_mult_bunker_gl",
 		"sm_mult_assembler_gl",
 		"sm_mult_transport_gl",
-		"sm_mult_ft_turret_gl"
+		"sm_mult_ft_turret_gl",
+		
+		// GL Base Damage
+		"sm_mult_baseIB1_gl",
+		"sm_mult_baseIB2_gl",
+		"sm_mult_baseIB3_gl"
 	};
 	char convarDesc[multGL][] = {		
-		// GLs (Grenade Launchers)
+		// GL Structure Damage
 		"Percentage of normal damage GLs deal to the bunker",
 		"Percentage of normal damage GLs deal to assemblers",
 		"Percentage of normal damage GLs deal to transport gates",
-		"Percentage of normal damage GLs deal to ft/sonic turrets"	
+		"Percentage of normal damage GLs deal to ft/sonic turrets",
+		
+		// GL Base Damage
+		"Percentage of normal damage GLs deal to after Infantry Boost 1",
+		"Percentage of normal damage GLs deal to after Infantry Boost 2",
+		"Percentage of normal damage GLs deal to after Infantry Boost 3"
 	};
-	char convarDef[multGL][] = { "120", "110", "125", "110" };
+	char convarDef[multGL][] = { 	"120", "110", "125", "110",
+					"103", "106", "109" };
 	
 	for (int convar = 0; convar < view_as<int>(multGL); convar++) {
 		gCvar_GL[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
