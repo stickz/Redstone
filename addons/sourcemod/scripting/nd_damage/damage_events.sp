@@ -36,10 +36,20 @@ public Action ND_OnBarrierDamaged(int victim, int &attacker, int &inflictor, flo
 		
 		case WEAPON_EXPLO_DT:
 		{
-			if (InflictorIsArtillery(iClass(inflictor)))
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
+			
+			if (InflictorIsArtillery(className))
 			{
 				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			
+			else if (InflictorIsGL(className))
+			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
 				return Plugin_Changed;
 			}
 		}
@@ -66,10 +76,19 @@ public Action ND_OnWallDamaged(int victim, int &attacker, int &inflictor, float 
 		
 		case WEAPON_EXPLO_DT:
 		{
-			if (InflictorIsArtillery(iClass(inflictor)))
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
+			
+			if (InflictorIsArtillery(className))
 			{
 				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflictorIsGL(className))
+			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
 				return Plugin_Changed;
 			}
 		}
@@ -97,10 +116,19 @@ public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflicto
 		
 		case WEAPON_EXPLO_DT:
 		{
-			if (InflictorIsArtillery(iClass(inflictor)))
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
+			
+			if (InflictorIsArtillery(className))
 			{
 				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflictorIsGL(className))
+			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
 				return Plugin_Changed;
 			}
 		}
@@ -135,10 +163,19 @@ public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor
 		
 		case WEAPON_EXPLO_DT:
 		{
-			if (InflictorIsArtillery(iClass(inflictor)))
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
+			
+			if (InflictorIsArtillery(className))
 			{
 				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflictorIsGL(className))
+			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
 				return Plugin_Changed;
 			}
 		}
@@ -173,10 +210,19 @@ public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, fl
 		
 		case WEAPON_EXPLO_DT:
 		{
-			if (InflictorIsArtillery(iClass(inflictor)))
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
+			
+			if (InflictorIsArtillery(className))
 			{
 				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflictorIsGL(className))
+			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
 				return Plugin_Changed;
 			}
 		}
@@ -214,6 +260,12 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 			{
 				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflictorIsGL(className))
+			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
 				return Plugin_Changed;
 			}
 		}
@@ -263,6 +315,12 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 				damage *= multiplier;
 				return Plugin_Changed;
 			}
+			else if (InflictorIsGL(className))
+			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
+				return Plugin_Changed;
+			}
 		}
 		
 		case WEAPON_FLAME_DT:
@@ -308,6 +366,12 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 			{
 				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflictorIsGL(className))
+			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
 				return Plugin_Changed;
 			}
 		}
@@ -370,6 +434,9 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 			}
 			else if (InflictorIsGL(className))
 			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
+				
 				float multiplier = gFloat_GL[gl_ft_turret_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
@@ -421,6 +488,12 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 			{
 				float multiplier = Artillery_StructureReinMult(attacker);
 				damage *= multiplier;
+				return Plugin_Changed;
+			}
+			else if (InflictorIsGL(className))
+			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
 				return Plugin_Changed;
 			}
 		}
@@ -483,6 +556,9 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 			}
 			else if (InflictorIsGL(className))
 			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
+				
 				float multiplier = gFloat_GL[gl_transport_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
@@ -549,6 +625,9 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 			}
 			else if (InflictorIsGL(className))
 			{				
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
+				
 				float multiplier = gFloat_GL[gl_assembler_mult];
 				damage *= multiplier; 
 				return Plugin_Changed;
@@ -627,6 +706,9 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 			}			
 			else if (InflictorIsGL(className))
 			{
+				float multIB = GL_InfantryBoostMult(attacker);
+				damage *= multIB;
+				
 				float multiplier = gFloat_GL[gl_bunker_mult];
 				damage *= multiplier;
 				return Plugin_Changed;
@@ -678,13 +760,27 @@ bool InflictorIsNX300(int &inflictor) {
 
 float BBQ_InfantryBoostMult(int &attacker)
 {
-	float mult = 1.0;	
+	float mult = 1.0;
 	
 	switch(GetAttackerTeamIB(attacker))
 	{
 		case 1: mult = gFloat_Other[nx300_ib1_base_mult];
 		case 2: mult = gFloat_Other[nx300_ib2_base_mult];
 		case 3: mult = gFloat_Other[nx300_ib3_base_mult];	
+	}
+	
+	return mult;
+}
+
+float GL_InfantryBoostMult(int &attacker)
+{
+	float mult = 1.0;
+	
+	switch(GetAttackerTeamIB(attacker))
+	{
+		case 1: mult = gFloat_Other[gl_ib1_base_mult];
+		case 2: mult = gFloat_Other[gl_ib2_base_mult];
+		case 3: mult = gFloat_Other[gl_ib3_base_mult];	
 	}
 	
 	return mult;
