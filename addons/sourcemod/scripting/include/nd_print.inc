@@ -118,6 +118,17 @@ stock void PrintMessageTeamTI1(int team, char[] transString, int intArg)
 	}
 }
 
+stock void PrintConsoleTeamTI1(int team, char[] transString, int intArg)
+{
+	for (int client = 1; client <= MaxClients; client++) 
+	{
+		if (IsClientInGame(client) && GetClientTeam(client) == team)
+		{
+			PrintToConsole(client, "%s %t!", PREFIX, transString, intArg);
+		}
+	}
+}
+
 // This function is an alais, to symbolize printing translations instead of strings
 stock void PrintMessageTeamTT1(int team, char[] transString, char[] transArg) {
 	PrintMessageTeamTS1(team, transString, transArg);
