@@ -49,12 +49,17 @@ public void OnInfantryBoostResearched(int team, int level)
 	InfantryBoostLevel[team-2] = level;
 	
 	// Notify team the bbq damage has increased at each level
-	float percent = getInfantryBoostMult(level);
-	int speed = RoundFloat((percent - 1.0) * 100.0);
-	PrintMessageTeamTI1(team, "BBQ Damage Increase", speed);
+	float percentBBQ = getInfantryBoostMult(level);
+	int increaseBBQ = RoundFloat((percentBBQ - 1.0) * 100.0);
+	PrintMessageTeamTI1(team, "BBQ Damage Increase", increaseBBQ);
+	
+	// Notify team the gl damage has increased at each level
+	float percentGL = getInfantryBoostMultGL(level);
+	int increaseGL = RoundFloat((percentGL - 1.0) * 100.0);
+	PrintMessageTeamTI1(team, "GL Damage Increase", increaseGL);
 }
 
-float getInfantryBoostMult(int level)
+float getInfantryBoostMultBBQ(int level)
 {
 	float mult = 1.0;
 	
@@ -62,7 +67,21 @@ float getInfantryBoostMult(int level)
 	{
 		case 1: mult = gFloat_Other[nx300_ib1_base_mult];
 		case 2: mult = gFloat_Other[nx300_ib2_base_mult];
-		case 3: mult = gFloat_Other[nx300_ib3_base_mult];	
+		case 3: mult = gFloat_Other[nx300_ib3_base_mult];
+	}
+	
+	return mult;
+}
+
+float getInfantryBoostMultGL(int level)
+{
+	float mult = 1.0;
+	
+	switch(level)
+	{
+		case 1: mult = gFloat_Other[gl_ib1_base_mult];
+		case 2: mult = gFloat_Other[gl_ib2_base_mult];
+		case 3: mult = gFloat_Other[gl_ib3_base_mult];
 	}
 	
 	return mult;
