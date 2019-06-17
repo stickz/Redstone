@@ -1,5 +1,16 @@
 "Phrases"
 {
+	"Movement Speed Increases"
+	{
+		"en"		"See console for movement speed increases"
+	}
+	
+	"Assault Speed Increase"
+	{
+		"#format"	"{1:i}"
+		"en"		"Assault movement speed increased by {1}%"
+	}
+	
 	"BBQ Speed Increase"
 	{
 		"#format"	"{1:i}"
