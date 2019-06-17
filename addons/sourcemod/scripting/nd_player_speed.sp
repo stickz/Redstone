@@ -34,12 +34,14 @@ enum MovementClasses {
 	StealthAssassin,
 	SupportBBQ,
 	StealthClass,
-	ExoClass
+	ExoClass,
+	AssaultClass
 };
 public int move(MovementClasses mc) {
 	return view_as<int>(mc);
 }
 
+ConVar AssaultIBConVars[IBLEVELS];
 ConVar StealthIBConVars[IBLEVELS];
 ConVar ExoIBConVars[IBLEVELS];
 ConVar BBQIBConVars[IBLEVELS];
@@ -74,6 +76,10 @@ void CreatePluginConVars()
 	
 	AssassinSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_assassin", "1.06", "Sets speed of stealth assassin class");	
 	BBQSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_bbqkit", "1.06", "Sets speed of bbq kit class");
+	
+	AssaultIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.01", "Sets ib1 speed of assault class");
+	AssaultIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.02", "Sets ib1 speed of assault class");
+	AssaultIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.03", "Sets ib1 speed of assault class");
 	
 	StealthIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_stealth", "1.02", "Sets ib1 speed of stealth class");
 	StealthIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_stealth", "1.04", "Sets ib2 speed of stealth class");
@@ -118,16 +124,19 @@ public void OnInfantryBoostResearched(int team, int level)
 {
 	UpdateTeamMoveSpeeds(team);
 	
-	/* Print messages for stealth, exo and bbq speed increases */
+	PrintMessageTeam(team, "Movement Speed Increases");
+	
+	/* Print messages for stealth, exo and bbq speed increases to console */
 	PrintSpeedIncrease(team, "Stealth Speed Increase", StealthIBConVars[level].FloatValue);
 	PrintSpeedIncrease(team, "Exo Speed Increase", ExoIBConVars[level].FloatValue);
 	PrintSpeedIncrease(team, "BBQ Speed Increase", BBQIBConVars[level].FloatValue);
+	PrintSpeedIncrease(team, "Assault Speed Increase", AssaultIBConVars[level].FloatValue);
 }
 
 void PrintSpeedIncrease(int team, char[] phrase, float cValue)
 {
 	int speed = RoundFloat((cValue - 1.0) * 100.0);
-	PrintMessageTeamTI1(team, phrase, speed);
+	PrintConsoleTeamTI1(team, phrase, speed);
 }
 
 void UpdateMovementSpeeds()
@@ -150,6 +159,7 @@ void UpdateTeamMoveSpeeds(int team)
 		MovementSpeedFloat[team][move(StealthClass)] *= StealthIBConVars[ibLevel].FloatValue;
 		MovementSpeedFloat[team][move(ExoClass)] *= ExoIBConVars[ibLevel].FloatValue;
 		MovementSpeedFloat[team][move(SupportBBQ)] *= BBQIBConVars[ibLevel].FloatValue;
+		MovementSpeedFloat[team][move(AssaultClass)] *= AssaultIBConVars[ibLevel].FloatValue;
 	}
 	
 	DisableTeamMoveSpeeds(team);
@@ -215,7 +225,10 @@ bool UpdateMovementSpeed(int client)
 		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(StealthClass)];
 		
 	else if (IsExoClass(mainClass))
-		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(ExoClass)];		
+		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(ExoClass)];	
+	
+	else if (IsAssaultClass(mainClass))
+		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(AssaultClass)];
 	
 	return PlayerMoveSpeed[client] != DEFAULT_SPEED;
 }
