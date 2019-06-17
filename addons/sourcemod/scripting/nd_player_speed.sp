@@ -151,6 +151,7 @@ void UpdateTeamMoveSpeeds(int team)
 	MovementSpeedFloat[team][move(StealthAssassin)] = AssassinSpeedConVar.FloatValue;
 	MovementSpeedFloat[team][move(StealthClass)] = DEFAULT_SPEED;
 	MovementSpeedFloat[team][move(ExoClass)] = DEFAULT_SPEED;
+	MovementSpeedFloat[team][move(AssaultClass)] = DEFAULT_SPEED;
 		
 	int ibLevel = ND_GetItemResearchLevel(team, Infantry_Boost);	
 	if (ibLevel >= 1)
