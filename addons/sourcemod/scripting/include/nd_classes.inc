@@ -72,6 +72,9 @@ stock bool IsStealthClass(int class) {
 stock bool IsExoClass(int class) {
 	return class == MAIN_CLASS_EXO;	
 }
+stock bool IsAssaultClass(int class) {
+	return class == MAIN_CLASS_ASSAULT;	
+}
 stock bool IsExoSeigeKit(int class, int subClass) {
 	return class == MAIN_CLASS_EXO && subClass == EXO_CLASS_SEIGE_KIT;
 }
