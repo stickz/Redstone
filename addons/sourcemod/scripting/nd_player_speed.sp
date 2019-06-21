@@ -33,6 +33,7 @@ public Plugin myinfo =
 enum MovementClasses {
 	StealthAssassin,
 	SupportBBQ,
+	AssaultGrenadier,
 	StealthClass,
 	ExoClass,
 	AssaultClass,
@@ -47,6 +48,7 @@ ConVar ExoIBConVars[IBLEVELS];
 ConVar SupportIBConVars[IBLEVELS];
 ConVar StealthIBConVars[IBLEVELS];
 ConVar BBQIBConVars[IBLEVELS];
+ConVar GrenadierIBConVars[IBLEVELS];
 
 ConVar AssassinSpeedConVar;
 ConVar BBQSpeedConVar;
@@ -75,7 +77,12 @@ void CreatePluginConVars()
 {	
 	AutoExecConfig_Setup("nd_player_speed");
 	
-	AssassinSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_assassin", "1.06", "Sets speed of stealth assassin class");	
+	AssassinSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_assassin", "1.06", "Sets speed of stealth assassin class");
+	
+	/* Infantry boost changes to Grenadier class */
+	GrenadierIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_gren", "1.01", "Sets ib1 speed of grenadier class");
+	GrenadierIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_gren", "1.02", "Sets ib2 speed of grenadier class");
+	GrenadierIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_gren", "1.03", "Sets ib3 speed of grenadier class");
 	
 	/* Base & Infantry boost changes to BBQ class */
 	BBQSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_bbqkit", "1.03", "Sets speed of bbq kit class");		
@@ -133,18 +140,42 @@ public void OnInfantryBoostResearched(int team, int level)
 	
 	PrintMessageTeam(team, "Movement Speed Increases");
 	
-	/* Print messages for infantry and bbq speed increases to console */
-	PrintSpeedIncrease(team, "Assault Speed Increase", AssaultIBConVars[level].FloatValue);
-	PrintSpeedIncrease(team, "Exo Speed Increase", ExoIBConVars[level].FloatValue);
-	PrintSpeedIncrease(team, "Stealth Speed Increase", StealthIBConVars[level].FloatValue);
-	PrintSpeedIncrease(team, "Support Speed Increase", SupportIBConVars[level].FloatValue);
-	PrintSpeedIncrease(team, "BBQ Speed Increase", BBQIBConVars[level].FloatValue);
+	PrintMainClassSpeeds(team, level);	
+	PrintSubClassSpeeds(team, level);
 }
 
-void PrintSpeedIncrease(int team, char[] phrase, float cValue)
+void PrintMainClassSpeeds(int team, int level)
 {
-	int speed = RoundFloat((cValue - 1.0) * 100.0);
-	PrintConsoleTeamTI1(team, phrase, speed);
+	int assault = CalcDisplaySpeed(AssaultIBConVars[level].FloatValue);
+	int exo = CalcDisplaySpeed(ExoIBConVars[level].FloatValue);
+	int stealth = CalcDisplaySpeed(StealthIBConVars[level].FloatValue);
+	int support = CalcDisplaySpeed(SupportIBConVars[level].FloatValue);
+	
+	for (int m = 1; m <= MaxClients; m++)
+	{
+		if (IsClientInGame(m) && GetClientTeam(m) == team)
+		{			
+			PrintToConsole(m, "%t", "Main Speed Increase", assault, exo, stealth, support);
+		}
+	}
+}
+
+void PrintSubClassSpeeds(int team, int level)
+{
+	int bbq = CalcDisplaySpeed(BBQIBConVars[level].FloatValue);
+	int grenadier = CalcDisplaySpeed(GrenadierIBConVars[level].FloatValue);
+	
+	for (int s = 1; s <= MaxClients; s++)
+	{
+		if (IsClientInGame(s) && GetClientTeam(s) == team)
+		{			
+			PrintToConsole(s, "%t", "Sub Speed Increase", bbq, grenadier);
+		}
+	}
+}
+
+int CalcDisplaySpeed(float cValue) {
+	return RoundFloat((cValue - 1.0) * 100.0);
 }
 
 void UpdateMovementSpeeds()
@@ -162,6 +193,7 @@ void UpdateMovementSpeeds()
 
 void UpdateTeamMoveSpeeds(int team)
 {
+	// Calculate any base movement speed increases
 	MovementSpeedFloat[team][move(SupportBBQ)] = BBQSpeedConVar.FloatValue;
 	MovementSpeedFloat[team][move(StealthAssassin)] = AssassinSpeedConVar.FloatValue;
 		
@@ -174,9 +206,13 @@ void UpdateTeamMoveSpeeds(int team)
 		MovementSpeedFloat[team][move(AssaultClass)] *= AssaultIBConVars[ibLevel].FloatValue;
 		MovementSpeedFloat[team][move(SupportClass)] *= SupportIBConVars[ibLevel].FloatValue;
 		
-		// Caculate the new bbq speed. Compound support, base and infantry boost adjustments
+		// Caculate new bbq speed. Compound support, base and infantry boost adjustments
 		MovementSpeedFloat[team][move(SupportBBQ)] *= BBQIBConVars[ibLevel].FloatValue;
-		MovementSpeedFloat[team][move(SupportBBQ)] *= SupportIBConVars[ibLevel].FloatValue;		
+		MovementSpeedFloat[team][move(SupportBBQ)] *= SupportIBConVars[ibLevel].FloatValue;
+		
+		// Caculate new grenadier speed. Compound assault and grenadier infantry boost adjustments
+		MovementSpeedFloat[team][move(AssaultGrenadier)] *= AssaultGrenadier[ibLevel].FloatValue;
+		MovementSpeedFloat[team][move(AssaultGrenadier)] *= AssaultIBConVars[ibLevel].FloatValue;
 	}
 	
 	DisableTeamMoveSpeeds(team);
@@ -232,23 +268,34 @@ bool UpdateMovementSpeed(int client)
 	int subClass = ND_GetSubClass(client);
 	int team = GetClientTeam(client);
 	
-	if (IsStealthAss(mainClass, subClass))
-		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(StealthAssassin)];
-	
-	else if (IsSupportBBQ(mainClass, subClass))
-		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(SupportBBQ)];
-
-	else if (IsStealthClass(mainClass))
-		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(StealthClass)];
+	switch (mainClass)
+	{
+		case MAIN_CLASS_ASSAULT:
+		{
+			if (subClass == ASSAULT_CLASS_GRENADIER)
+				PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(AssaultGrenadier)];
+			else
+				PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(AssaultClass)];		
+		}		
 		
-	else if (IsExoClass(mainClass))
-		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(ExoClass)];	
+		case MAIN_CLASS_EXO: { PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(ExoClass)]; }		
 	
-	else if (IsAssaultClass(mainClass))
-		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(AssaultClass)];
-		
-	else if (IsSupportClass(mainClass))
-		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(SupportClass)];
+		case MAIN_CLASS_STEALTH:
+		{
+			if (subClass == STEALTH_CLASS_ASSASSIN)
+				PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(StealthAssassin)];
+			else
+				PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(SupportClass)];	
+		}
+				
+		case MAIN_CLASS_SUPPORT:
+		{
+			if (subClass == SUPPORT_CLASS_BBQ)
+				PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(SupportBBQ)];
+			else
+				PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(SupportClass)];	
+		}
+	}
 	
 	return PlayerMoveSpeed[client] != DEFAULT_SPEED;
 }
