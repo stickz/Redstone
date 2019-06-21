@@ -85,8 +85,8 @@ void CreatePluginConVars()
 	
 	/* Infantry boost changes to Main Classes */	
 	AssaultIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.02", "Sets ib1 speed of assault class");
-	AssaultIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.04", "Sets ib1 speed of assault class");
-	AssaultIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.06", "Sets ib1 speed of assault class");
+	AssaultIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_assault", "1.04", "Sets ib1 speed of assault class");
+	AssaultIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_assault", "1.06", "Sets ib1 speed of assault class");
 	
 	ExoIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_exo", "1.02", "Sets ib1 speed of exo class");
 	ExoIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_exo", "1.04", "Sets ib2 speed of exo class");
@@ -96,9 +96,9 @@ void CreatePluginConVars()
 	StealthIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_stealth", "1.04", "Sets ib2 speed of stealth class");
 	StealthIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_stealth", "1.06", "Sets ib3 speed of stealth class");
 	
-	SupportIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_stealth", "1.02", "Sets ib1 speed of support class");
-	SupportIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_stealth", "1.04", "Sets ib2 speed of support class");
-	SupportIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_stealth", "1.06", "Sets ib3 speed of support class");	
+	SupportIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_support", "1.02", "Sets ib1 speed of support class");
+	SupportIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_support", "1.04", "Sets ib2 speed of support class");
+	SupportIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_support", "1.06", "Sets ib3 speed of support class");	
 	
 	AutoExecConfig_EC_File();
 }
