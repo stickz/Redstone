@@ -77,7 +77,7 @@ void CreatePluginConVars()
 	
 	AssassinSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_assassin", "1.06", "Sets speed of stealth assassin class");	
 	
-	/ * Base & Infantry boost changes to BBQ class */
+	/* Base & Infantry boost changes to BBQ class */
 	BBQSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_bbqkit", "1.03", "Sets speed of bbq kit class");		
 	BBQIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_bbq", "1.01", "Sets ib1 speed of bbq class");
 	BBQIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_bbq", "1.02", "Sets ib2 speed of bbq class");
