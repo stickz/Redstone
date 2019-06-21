@@ -50,7 +50,6 @@ ConVar AssassinSpeedConVar;
 ConVar BBQSpeedConVar;
 
 float MovementSpeedFloat[TEAM_COUNT][MovementClasses];
-
 bool HookedThink[MAXPLAYERS+1] = {false, ...};
 float PlayerMoveSpeed[MAXPLAYERS+1] = {1.0, ...};
 bool FirstThink[MAXPLAYERS+1] = {false, ...};
@@ -141,17 +140,21 @@ void PrintSpeedIncrease(int team, char[] phrase, float cValue)
 
 void UpdateMovementSpeeds()
 {	
-	for (int team = TEAM_START; team < TEAM_COUNT; team++) {	
+	for (int team = TEAM_START; team < TEAM_COUNT; team++) 
+	{	
+		for (int m = 0; m < view_as<int>(MovementClasses); m++)
+		{
+			MovementSpeedFloat[team][m] = DEFAULT_SPEED;
+		}
+		
 		UpdateTeamMoveSpeeds(team);
 	}
 }
+
 void UpdateTeamMoveSpeeds(int team)
 {
 	MovementSpeedFloat[team][move(SupportBBQ)] = BBQSpeedConVar.FloatValue;
 	MovementSpeedFloat[team][move(StealthAssassin)] = AssassinSpeedConVar.FloatValue;
-	MovementSpeedFloat[team][move(StealthClass)] = DEFAULT_SPEED;
-	MovementSpeedFloat[team][move(ExoClass)] = DEFAULT_SPEED;
-	MovementSpeedFloat[team][move(AssaultClass)] = DEFAULT_SPEED;
 		
 	int ibLevel = ND_GetItemResearchLevel(team, Infantry_Boost);	
 	if (ibLevel >= 1)
