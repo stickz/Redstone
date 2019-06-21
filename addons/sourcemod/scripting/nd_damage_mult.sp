@@ -58,7 +58,7 @@ public void OnInfantryBoostResearched(int team, int level)
 
 	// Print team gl damage increases at each level to console
 	float percentGL = getInfantryBoostMultGL(level);
-	int increaseGL = RoundFloat((1.0 - percentGL) * 100.0);
+	int increaseGL = RoundFloat((percentGL - 1.0) * 100.0);
 	PrintConsoleTeamTI1(team, "GL Damage Increase", increaseGL);
 }
 
