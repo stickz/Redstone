@@ -61,11 +61,6 @@ enum ND_suSubClasses
 }
 
 /* Sub class checker stock functions */
-stock bool IsSniperClass(int class, int subClass) 
-{
-	return 	   (class == MAIN_CLASS_ASSAULT && subClass == ASSAULT_CLASS_SNIPER) 
-	        || (class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SNIPER)
-}
 stock bool IsStealthClass(int class) {
 	return class == MAIN_CLASS_STEALTH;
 }
@@ -74,6 +69,15 @@ stock bool IsExoClass(int class) {
 }
 stock bool IsAssaultClass(int class) {
 	return class == MAIN_CLASS_ASSAULT;	
+}
+stock bool IsSupportClass(int class) {
+	return class == MAIN_CLASS_SUPPORT;
+}
+
+stock bool IsSniperClass(int class, int subClass) 
+{
+	return 	   (class == MAIN_CLASS_ASSAULT && subClass == ASSAULT_CLASS_SNIPER) 
+	        || (class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_SNIPER)
 }
 stock bool IsExoSeigeKit(int class, int subClass) {
 	return class == MAIN_CLASS_EXO && subClass == EXO_CLASS_SEIGE_KIT;

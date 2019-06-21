@@ -29,6 +29,12 @@
 		"en"		"Stealth movement speed increased by {1}%"
 	}
 	
+	"Support Speed Increase"
+	{
+		"#format"	"{1:i}"
+		"en"		"Support movement speed increased by {1}%"
+	}
+	
 	"Recent Assassin Speed"
 	{
 		"#format"	"{1:i}"
