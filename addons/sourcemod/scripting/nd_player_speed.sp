@@ -35,15 +35,17 @@ enum MovementClasses {
 	SupportBBQ,
 	StealthClass,
 	ExoClass,
-	AssaultClass
+	AssaultClass,
+	SupportClass
 };
 public int move(MovementClasses mc) {
 	return view_as<int>(mc);
 }
 
 ConVar AssaultIBConVars[IBLEVELS];
-ConVar StealthIBConVars[IBLEVELS];
 ConVar ExoIBConVars[IBLEVELS];
+ConVar SupportIBConVars[IBLEVELS];
+ConVar StealthIBConVars[IBLEVELS];
 ConVar BBQIBConVars[IBLEVELS];
 
 ConVar AssassinSpeedConVar;
@@ -74,23 +76,29 @@ void CreatePluginConVars()
 	AutoExecConfig_Setup("nd_player_speed");
 	
 	AssassinSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_assassin", "1.06", "Sets speed of stealth assassin class");	
-	BBQSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_bbqkit", "1.06", "Sets speed of bbq kit class");
 	
-	AssaultIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.01", "Sets ib1 speed of assault class");
-	AssaultIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.02", "Sets ib1 speed of assault class");
-	AssaultIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.03", "Sets ib1 speed of assault class");
+	/ * Base & Infantry boost changes to BBQ class */
+	BBQSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_bbqkit", "1.03", "Sets speed of bbq kit class");		
+	BBQIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_bbq", "1.01", "Sets ib1 speed of bbq class");
+	BBQIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_bbq", "1.02", "Sets ib2 speed of bbq class");
+	BBQIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_bbq", "1.03", "Sets ib3 speed of bbq class");
+	
+	/* Infantry boost changes to Main Classes */	
+	AssaultIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.02", "Sets ib1 speed of assault class");
+	AssaultIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.04", "Sets ib1 speed of assault class");
+	AssaultIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.06", "Sets ib1 speed of assault class");
+	
+	ExoIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_exo", "1.02", "Sets ib1 speed of exo class");
+	ExoIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_exo", "1.04", "Sets ib2 speed of exo class");
+	ExoIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_exo", "1.06", "Sets ib3 speed of exo class");
 	
 	StealthIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_stealth", "1.02", "Sets ib1 speed of stealth class");
 	StealthIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_stealth", "1.04", "Sets ib2 speed of stealth class");
 	StealthIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_stealth", "1.06", "Sets ib3 speed of stealth class");
 	
-	ExoIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_exo", "1.01", "Sets ib1 speed of exo class");
-	ExoIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_exo", "1.02", "Sets ib2 speed of exo class");
-	ExoIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_exo", "1.03", "Sets ib3 speed of exo class");
-	
-	BBQIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_bbq", "1.01", "Sets ib1 speed of bbq class");
-	BBQIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_bbq", "1.02", "Sets ib2 speed of bbq class");
-	BBQIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_bbq", "1.03", "Sets ib3 speed of bbq class");
+	SupportIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_stealth", "1.02", "Sets ib1 speed of support class");
+	SupportIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_stealth", "1.04", "Sets ib2 speed of support class");
+	SupportIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_stealth", "1.06", "Sets ib3 speed of support class");	
 	
 	AutoExecConfig_EC_File();
 }
@@ -125,11 +133,12 @@ public void OnInfantryBoostResearched(int team, int level)
 	
 	PrintMessageTeam(team, "Movement Speed Increases");
 	
-	/* Print messages for stealth, exo and bbq speed increases to console */
-	PrintSpeedIncrease(team, "Stealth Speed Increase", StealthIBConVars[level].FloatValue);
-	PrintSpeedIncrease(team, "Exo Speed Increase", ExoIBConVars[level].FloatValue);
-	PrintSpeedIncrease(team, "BBQ Speed Increase", BBQIBConVars[level].FloatValue);
+	/* Print messages for infantry and bbq speed increases to console */
 	PrintSpeedIncrease(team, "Assault Speed Increase", AssaultIBConVars[level].FloatValue);
+	PrintSpeedIncrease(team, "Exo Speed Increase", ExoIBConVars[level].FloatValue);
+	PrintSpeedIncrease(team, "Stealth Speed Increase", StealthIBConVars[level].FloatValue);
+	PrintSpeedIncrease(team, "Support Speed Increase", SupportIBConVars[level].FloatValue);
+	PrintSpeedIncrease(team, "BBQ Speed Increase", BBQIBConVars[level].FloatValue);
 }
 
 void PrintSpeedIncrease(int team, char[] phrase, float cValue)
@@ -162,8 +171,12 @@ void UpdateTeamMoveSpeeds(int team)
 		MovementSpeedFloat[team][move(StealthAssassin)] *= StealthIBConVars[ibLevel].FloatValue;
 		MovementSpeedFloat[team][move(StealthClass)] *= StealthIBConVars[ibLevel].FloatValue;
 		MovementSpeedFloat[team][move(ExoClass)] *= ExoIBConVars[ibLevel].FloatValue;
-		MovementSpeedFloat[team][move(SupportBBQ)] *= BBQIBConVars[ibLevel].FloatValue;
 		MovementSpeedFloat[team][move(AssaultClass)] *= AssaultIBConVars[ibLevel].FloatValue;
+		MovementSpeedFloat[team][move(SupportClass)] *= SupportIBConVars[ibLevel].FloatValue;
+		
+		// Caculate the new bbq speed. Compound support, base and infantry boost adjustments
+		MovementSpeedFloat[team][move(SupportBBQ)] *= BBQIBConVars[ibLevel].FloatValue;
+		MovementSpeedFloat[team][move(SupportBBQ)] *= SupportIBConVars[ibLevel].FloatValue;		
 	}
 	
 	DisableTeamMoveSpeeds(team);
@@ -233,6 +246,9 @@ bool UpdateMovementSpeed(int client)
 	
 	else if (IsAssaultClass(mainClass))
 		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(AssaultClass)];
+		
+	else if (IsSupportClass(mainClass))
+		PlayerMoveSpeed[client] = MovementSpeedFloat[team][move(SupportClass)];
 	
 	return PlayerMoveSpeed[client] != DEFAULT_SPEED;
 }
