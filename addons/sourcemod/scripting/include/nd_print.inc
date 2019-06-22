@@ -63,6 +63,17 @@ stock void PrintMessageTeam(int team, const char[] phrase)
 	}
 }
 
+stock void PrintConsoleTeam(int team, const char[] phrase)
+{
+	for (int client = 1; client <= MaxClients; client++) 
+	{
+		if (IsClientInGame(client) && GetClientTeam(client) == team)
+		{	
+			PrintToConsole(client, "%t", phrase);
+		}
+	}
+}
+
 stock void PrintMessageAllTB(const char[] phrase) 
 {
 	for (int client = 1; client <= MaxClients; client++) 
