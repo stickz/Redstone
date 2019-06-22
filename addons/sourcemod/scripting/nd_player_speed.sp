@@ -187,7 +187,7 @@ void PrintTeamSpacer(int team)
 {
 	for (int client = 1; client <= MaxClients; client++)
 	{
-		if (IsClientInGame(client) && GetClientTeam(s) == team)
+		if (IsClientInGame(client) && GetClientTeam(client) == team)
 		{
 			PrintToConsole(client, "");
 		}
