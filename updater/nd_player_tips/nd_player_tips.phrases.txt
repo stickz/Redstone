@@ -12,7 +12,7 @@
 	
 	"Grenade Spam"
 	{
-		"en"		"Grenades destroy each other! Only throw one at a time. You can cook your grenades to shorten the fuse!"
+		"en"		"Multiple grenades have no increased damage on target, target different areas or wait till the first has exploded."
 	}
 	
 	"Lockdown Capture"
