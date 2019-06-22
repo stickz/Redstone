@@ -138,11 +138,15 @@ public void OnInfantryBoostResearched(int team, int level)
 {
 	UpdateTeamMoveSpeeds(team);
 	
-	PrintMessageTeam(team, "Movement Speed Increases");
-	PrintConsoleTeam(team, "Movement Header Console");
+	// Print a message to chat about movement speed increases
+	PrintMessageTeam(team, "Movement Speed Increases");	
 	
-	PrintMainClassSpeeds(team, level);	
-	PrintSubClassSpeeds(team, level);
+	/* Display console values for movement speed increases */
+	PrintTeamSpacer(team); // Print spacer in console
+	PrintConsoleTeam(team, "Movement Header Console"); // Add movement speed header	
+	PrintMainClassSpeeds(team, level); // Add main class values
+	PrintSubClassSpeeds(team, level); // Add sub class values
+	PrintTeamSpacer(team); // Print spacer in console
 }
 
 void PrintMainClassSpeeds(int team, int level)
@@ -177,6 +181,17 @@ void PrintSubClassSpeeds(int team, int level)
 
 int CalcDisplaySpeed(float cValue) {
 	return RoundFloat((cValue - 1.0) * 100.0);
+}
+
+void PrintTeamSpacer(int team) 
+{
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		if (IsClientInGame(client) && GetClientTeam(s) == team)
+		{
+			PrintToConsole(client, "");
+		}
+	}
 }
 
 void UpdateMovementSpeeds()
