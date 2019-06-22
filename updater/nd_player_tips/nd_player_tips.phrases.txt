@@ -1,1 +1,17 @@
-
+"Phrases"
+{
+	"Cookie Player Tips"
+	{
+		"en"		"Player Tips"
+	}
+	
+	"Example Tip 1"
+	{
+		"en"		"Example description"
+	}
+	
+	"Example Tip 2"
+	{
+		"en"		"Example description"
+	}
+}
