@@ -211,7 +211,7 @@ void UpdateTeamMoveSpeeds(int team)
 		MovementSpeedFloat[team][move(SupportBBQ)] *= SupportIBConVars[ibLevel].FloatValue;
 		
 		// Caculate new grenadier speed. Compound assault and grenadier infantry boost adjustments
-		MovementSpeedFloat[team][move(AssaultGrenadier)] *= AssaultGrenadier[ibLevel].FloatValue;
+		MovementSpeedFloat[team][move(AssaultGrenadier)] *= GrenadierIBConVars[ibLevel].FloatValue;
 		MovementSpeedFloat[team][move(AssaultGrenadier)] *= AssaultIBConVars[ibLevel].FloatValue;
 	}
 	
