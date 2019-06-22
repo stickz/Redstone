@@ -139,6 +139,7 @@ public void OnInfantryBoostResearched(int team, int level)
 	UpdateTeamMoveSpeeds(team);
 	
 	PrintMessageTeam(team, "Movement Speed Increases");
+	PrintConsoleTeam(team, "Movement Header Console");
 	
 	PrintMainClassSpeeds(team, level);	
 	PrintSubClassSpeeds(team, level);
