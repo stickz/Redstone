@@ -7,27 +7,27 @@
 	
 	"Shooting Structure"
 	{
-		"en"		"Standard Weapons Do Very Little Damage to Structures! You Require Siege Equipment."
+		"en"		"Standard weapons do very vittle damage to structures! You require siege equipment."
 	}
 	
 	"Grenade Spam"
 	{
-		"en"		"Grenades Destroy Each Other! Only Throw One at a Time. You can Cook your grenades to shorten the Fuse!"
+		"en"		"Grenades destroy each other! Only throw one at a time. You can cook your grenades to shorten the fuse!"
 	}
 	
 	"Lockdown Capture"
 	{
-		"en"		"You Cannot Capture Resources While in Lockdown Mode."
+		"en"		"You cannot capture resources while in lockdown mode."
 	}
 	
 	"Stealth Capture"
 	{
-		"en"		"You Cannot Capture Resources While Stealthed."
+		"en"		"You cannot capture resources while stealthed."
 	}
 	
 	"Resource Timer Reset"
 	{
-		"en"		"Leaving the Resource or Using Special Abilities Resets the Capture Timer! Stay on the point to help your team."
+		"en"		"Leaving the resource or using special abilities resets the capture timer! Stay on the point to help your team."
 	}
 	
 	
