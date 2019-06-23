@@ -30,9 +30,21 @@
 		"en"		"You cannot capture resources while in stealth mode"
 	}
 	
-	"Resource Timer Reset"
+	"Prime Resource Timer Reset"
 	{
-		// To alert players who interupt the capture timer with the use of special abilities (Exo suit Lockdown, or Stealth) 
-		"en"		"Leaving the resource or using special abilities resets the capture timer! Stay on the point to help your team"
+		// To alert players who interupt the capture timer of the Primary resource with the use of special abilities (Exo suit Lockdown, or Stealth) 
+		"en"		"Leaving the Primary resource or using special abilities resets the capture timer! Stay on the point to help your team"
+	}
+	
+	"Other Resource Timer Reset"
+	{
+		// To alert players who interupt the capture timer of other resources with the use of special abilities (Exo suit Lockdown, or Stealth) 
+		"en"		"Using special abilities stops the timer as long as you stay close! Stay on the point to help your team"
+	}
+	
+	"Leaving Resource Incomplete"
+	{
+		// To alert players who leave the resource with out capturing them 
+		"en"		"Leaving an uncaptured resource before it is fully captured will gradually return it to a neutral state. "
 	}
 }
