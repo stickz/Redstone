@@ -17,7 +17,6 @@ public int Native_GetPickedTeamsThisMap(Handle plugin, int numParms) {
 	return g_bPickedThisMap;
 }
 
-
 public int Native_GetPlayerPickedThisMap(Handle plugin, int numParms) 
 {
 	int client = GetNativeCell(1);
