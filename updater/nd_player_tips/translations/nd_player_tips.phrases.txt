@@ -64,9 +64,17 @@
 		"en"		"The average health of players on your team is {1}%%, consider spawning as Support Medic, to heal them in the field"
 	}
 	
+	"Captured Resource"
+	{
+		// to show infomation on resource point that just got captured 
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"Prime generates {1} res/min. After {2}, it generates {3} res/min."
+	}
+	
 	"name"
 	{
 		// note 
+		"#format"	"{1:i}"
 		"en"		"text "
 	}
 	
