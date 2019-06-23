@@ -22,7 +22,7 @@
 	
 	"Stealth Capture"
 	{
-		"en"		"You cannot capture resources while stealthed"
+		"en"		"You cannot capture resources while in stealth mode"
 	}
 	
 	"Resource Timer Reset"
