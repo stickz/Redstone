@@ -19,6 +19,7 @@ public Plugin myinfo =
 #define EMPIRE_aIDX 1
 
 int team_captain[2];
+ArrayList PlayersPicked;
 
 bool g_bEnabled = false;
 bool g_bPickStarted = false;
@@ -49,6 +50,8 @@ public void OnPluginStart()
 	cvarPickTimeLimit = CreateConVar("sm_tp_time", "20", "Set time allocated for each pick");
 	cvarFirstPickTime = CreateConVar("sm_tp_time_first", "40", "Set time allocated for first pick");	
 	AutoExecConfig(true, "nd_teampick");
+	
+	PlayersPicked = new ArrayList(32);
 	
 	RegisterPickingCommand(); //start_picking.sp: Command for starting team picking
 	RegisterCommands(); //commands.sp: Extra commands, not directly related to picking
@@ -84,6 +87,7 @@ public Action Command_JoinTeam(int client, char[] command, int argc)
 
 void InitiateRoundEnd() {
 	g_bPickedThisMap = false;
+	PlayersPicked.Clear();
 }
 
 bool PlayerIsPickable(int client) {
