@@ -1,0 +1,22 @@
+"Phrases"
+{
+	"Cookie Commander Tips"
+	{
+		"en" 		"Commander Tips"	
+	}
+	
+	"General Commander Tip 1"
+	{
+		"en"		"Insert description here"
+	}
+	
+	"General Commander Tip 2"
+	{
+		"en"		"Insert description here"
+	}
+	
+	"General Commander Tip 3"
+	{
+		"en"		"Insert description here"
+	}
+}
