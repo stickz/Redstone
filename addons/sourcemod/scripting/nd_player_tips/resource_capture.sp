@@ -1,4 +1,5 @@
 #define COND_CLOACKED (1<<1)
+#define COND_LOCKDOWN (1<<2)
 #define NOT_CAPTURING -1
 
 int EntIndexCaping[MAXPLAYERS+1] = { NOT_CAPTURING, ... };
@@ -45,7 +46,11 @@ void CheckCloackStatus(int entity)
 			if (GetEntProp(client, Prop_Send, "m_nPlayerCond") & COND_CLOACKED)
 			{
 				PrintMessage(client, "Stealth Capture");		
-			}		
+			}
+			else if (GetEntProp(client, Prop_Send, "m_nPlayerCond") & COND_LOCKDOWN)
+			{
+				PrintMessage(client, "Lockdown Capture");
+			}
 		}
 	}
 }
