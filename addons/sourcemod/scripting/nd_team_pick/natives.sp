@@ -22,6 +22,6 @@ public int Native_GetPlayerPickedThisMap(Handle plugin, int numParms)
 	int client = GetNativeCell(1);
 	
 	char gAuth[32];
-	GetClientAuthId(commander, AuthId_Steam2, gAuth, sizeof(gAuth));	
+	GetClientAuthId(client, AuthId_Steam2, gAuth, sizeof(gAuth));	
 	return PlayersPicked.FindString(gAuth) != -1;
 }
