@@ -144,6 +144,7 @@ void BeforePicking(int consortTarget, int empireTarget)
 	PutEveryoneInSpectate();	
 	SetCaptainTeams(consortTarget, empireTarget);
 	PrintPickingMessages();
+	PlayersPicked.Clear();
 }
 
 void PrintPickingMessages()
