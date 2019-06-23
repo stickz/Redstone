@@ -5,7 +5,7 @@ public void ND_OnWarmupComplete()
 	if (pauseWarmup)
 	{
 		ServerCommand("sm_cvar sv_alltalk 0"); //Disable AT while picking, but enable FF.
-		ServerCommand("sm_balance 0"); // Disable team balancer plugin
+		//ServerCommand("sm_balance 0"); Disable team balancer plugin
 		ServerCommand("sm_commander_restrictions 0"); // Disable commander restrictions
 		ServerCommand("sm_cvar nd_commander_election_time 15.0");
 		
