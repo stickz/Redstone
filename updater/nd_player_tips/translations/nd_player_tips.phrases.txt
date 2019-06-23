@@ -2,31 +2,43 @@
 {
 	"Cookie Player Tips"
 	{
+		/* not sure, what is this one for ? */
+	
 		"en"		"Player Tips"
 	}
 	
 	"Shooting Structure"
 	{
+		/* To alert players who are trying to shoot at structures with non-siege weapons */
+		
 		"en"		"Standard weapons deal very little damage to structures! You require siege equipment"
 	}
 	
 	"Grenade Spam"
 	{
+		/* To alert players who are throwing multiple grenades in quick succession */
+	
 		"en"		"Multiple grenades have no increased damage on target. Throw in different areas or wait until the first has exploded"
 	}
 	
 	"Lockdown Capture"
 	{
+		/* To alert players who are attempting to capture resources as Exo, whilst in lockdown */
+	
 		"en"		"You cannot capture resources while in lockdown mode"
 	}
 	
 	"Stealth Capture"
 	{
+		/* To alert players who are attempting to capture resources as Stealth, whilst in stealth mode */
+	
 		"en"		"You cannot capture resources while in stealth mode"
 	}
 	
 	"Resource Timer Reset"
 	{
+		/* To alert players who interupt the capture timer with the use of special abilities (Exo suit Lockdown, or Stealth) */
+	
 		"en"		"Leaving the resource or using special abilities resets the capture timer! Stay on the point to help your team"
 	}
 }
