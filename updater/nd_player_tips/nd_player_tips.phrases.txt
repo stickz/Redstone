@@ -1,17 +1,34 @@
 "Phrases"
 {
-	"Cookie Player Tips"
+	"Template Player Tips"
 	{
 		"en"		"Player Tips"
 	}
 	
-	"Example Tip 1"
+	"Shooting Structure"
 	{
-		"en"		"Example description"
+		"en"		"Standard weapons do very vittle damage to structures! You require siege equipment."
 	}
 	
-	"Example Tip 2"
+	"Grenade Spam"
 	{
-		"en"		"Example description"
+		"en"		"Multiple grenades have no increased damage on target, target different areas or wait till the first has exploded."
 	}
+	
+	"Lockdown Capture"
+	{
+		"en"		"You cannot capture resources while in lockdown mode."
+	}
+	
+	"Stealth Capture"
+	{
+		"en"		"You cannot capture resources while stealthed."
+	}
+	
+	"Resource Timer Reset"
+	{
+		"en"		"Leaving the resource or using special abilities resets the capture timer! Stay on the point to help your team."
+	}
+	
+	
 }
