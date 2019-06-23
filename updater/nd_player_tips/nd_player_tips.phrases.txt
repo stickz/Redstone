@@ -1,6 +1,6 @@
 "Phrases"
 {
-	"Template Player Tips"
+	"Cookie Player Tips"
 	{
 		"en"		"Player Tips"
 	}
@@ -12,7 +12,7 @@
 	
 	"Grenade Spam"
 	{
-		"en"		"Multiple grenades have no increased damage on target, target different areas or wait till the first has exploded."
+		"en"		"Multiple grenades have no increased damage on target. Throw in different areas or wait until the first has exploded."
 	}
 	
 	"Lockdown Capture"
@@ -29,6 +29,4 @@
 	{
 		"en"		"Leaving the resource or using special abilities resets the capture timer! Stay on the point to help your team."
 	}
-	
-	
 }
