@@ -46,6 +46,11 @@ public Handle_PickPlayerMenu(Handle:menu, MenuAction:action, param1, param2)
 
 					// Set the player's team to the team captain's team.
 					ChangeClientTeam(client, cur_team_choosing);
+					
+					// Push their steamid to the picked array list
+					char gAuth[32];
+					GetClientAuthId(client, AuthId_Steam2, gAuth, sizeof(gAuth));					
+					PlayersPicked.PushString(gAuth);
 				}
 				
 				// If the picking is not done, continue displaying the menu to pick players.
