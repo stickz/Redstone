@@ -39,26 +39,29 @@
 	"Lost Prime"
 	{
 		// To alert players that they have just lost Prime 
-		"en"		"You have just lost the Primary resource point, this is valuable to your team. Try to re-capture ASAP."
+		"en"		"You have just lost the Primary resource point, this is valuable to your team. Try to re-capture ASAP"
 	}
 	
 	"Bunker Health Warning"
 	{
 		// To alert players when their teams Command Bunkers health reaches x (maybe 75%) and suggest they spawn as Engie ASAP
-		"en"		"Your Comand Bunker is down to xx%% health, consider spawning as Support Engineer next time, to repair your Bunker. "
+		"#format"	"{1:i}"
+		"en"		"Your Comand Bunker is down to {1}%% health, consider spawning as Support Engineer next time, to repair your Bunker"
 	}	
 	
 	"Extreme Bunker Health Warning"
 	{
 		// To alert players when their teams Command Bunkers health reaches x (maybe 50%) and strongly suggest they spawn as Engie ASAP
-		"en"		"Warning Bunker is down to xx%% health, it is stronly recomended you change to Support Engineer to repair your Bunker ASAP. "
+		"#format"	"{1:i}"
+		"en"		"Warning Bunker is down to {1}%% health, it is stronly recomended you change to Support Engineer to repair your Bunker ASAP"
 	}
 	
 	"Average team health low"
 	{
 		// To warn when average health of players on your team is low (not sure about the numbers of this, needs some thinking and this may need some form of running average ...) 
 		// Would need a check about number of Medics already in the field (to suspend notice if there are 1 or 2 already in the team) 
-		"en"		"The average health of players on your team is xx%%, consider spawning as Support Medic, to heal them in the field. "
+		"#format"	"{1:i}"
+		"en"		"The average health of players on your team is {1}%%, consider spawning as Support Medic, to heal them in the field"
 	}
 	
 	"name"
