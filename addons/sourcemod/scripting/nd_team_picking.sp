@@ -87,6 +87,7 @@ public Action Command_JoinTeam(int client, char[] command, int argc)
 
 void InitiateRoundEnd() {
 	g_bPickedThisMap = false;
+	PlayersPicked.Clear();
 }
 
 bool PlayerIsPickable(int client) {
