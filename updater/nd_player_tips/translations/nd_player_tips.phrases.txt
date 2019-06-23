@@ -64,10 +64,32 @@
 		"en"		"The average health of players on your team is {1}%%, consider spawning as Support Medic, to heal them in the field"
 	}
 	
+	"Captured Resource Primary"
+	{
+		// to show infomation on the Primary resource point that just got captured 
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"Captured Primary resource point generates {1} res/min. After {2}, it generates {3} res/min"
+	}
+		
+	"Captured Resource Secondary"
+	{
+		// to show infomation on the Secondary resource point that just got captured 
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"Captured Secondary resource point generates {1} res/min. After {2}, it generates {3} res/min"
+	}
+	
+	"Captured Resource Tertiary"
+	{
+		// to show infomation on the Tertiary resource point that just got captured 
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"Captured Tertiary resource point generates {1} res/min. After {2}, it generates {3} res/min"
+	}
+	
 	"name"
 	{
 		// note 
-		"en"		"text "
+		"#format"	"{1:i}"
+		"en"		"text"
 	}
 	
 }
