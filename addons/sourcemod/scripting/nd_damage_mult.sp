@@ -6,6 +6,7 @@
 #include <nd_rounds>
 #include <nd_struct_eng>
 #include <nd_research_eng>
+#include <nd_entities>
 
 public Plugin myinfo = 
 {
@@ -218,22 +219,4 @@ void UnHookEntitiesDamaged()
 	SDK_UnHookEntityDamaged(STRUCT_SUPPLY, ND_OnSupplyStationDamaged);
 	SDK_UnHookEntityDamaged(STRUCT_WALL, ND_OnWallDamaged);
 	SDK_UnHookEntityDamaged(STRUCT_BARRIER, ND_OnBarrierDamaged);
-}
-
-void SDK_HookEntityDamaged(const char[] classname, SDKHookCB callback)
-{
-        /* Find and hook when entities is damaged. */
-	int loopEntity = INVALID_ENT_REFERENCE;
-	while ((loopEntity = FindEntityByClassname(loopEntity, classname)) != INVALID_ENT_REFERENCE) {
-		SDKHook(loopEntity, SDKHook_OnTakeDamage, callback);		
-	}
-}
-
-void SDK_UnHookEntityDamaged(const char[] classname, SDKHookCB callback)
-{
-	/* Find and unhook when entities are damaged. */
-	int loopEntity = INVALID_ENT_REFERENCE;
-	while ((loopEntity = FindEntityByClassname(loopEntity, classname)) != INVALID_ENT_REFERENCE) {
-		SDKUnhook(loopEntity, SDKHook_OnTakeDamage, callback);		
-	}
 }

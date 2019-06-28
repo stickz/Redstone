@@ -1,3 +1,10 @@
+#if defined _nd_entities_included
+ #endinput
+#endif
+#define _nd_entities_included
+
+#include <sdkhooks>
+
 #define ENTITY_NOT_FOUND -1
 
 native int ND_GetTeamEntity(int team);
@@ -87,4 +94,22 @@ stock int ND_GetAccumulatedResources(int team)
  */ 
 stock int ND_GetBuildingHealth(int entity) {
  	return GetEntProp(entity, Prop_Send, "m_iHealth");
+}
+
+stock void SDK_HookEntityDamaged(const char[] classname, SDKHookCB callback)
+{
+        /* Find and hook when entities is damaged. */
+	int loopEntity = INVALID_ENT_REFERENCE;
+	while ((loopEntity = FindEntityByClassname(loopEntity, classname)) != INVALID_ENT_REFERENCE) {
+		SDKHook(loopEntity, SDKHook_OnTakeDamage, callback);		
+	}
+}
+
+stock void SDK_UnHookEntityDamaged(const char[] classname, SDKHookCB callback)
+{
+	/* Find and unhook when entities are damaged. */
+	int loopEntity = INVALID_ENT_REFERENCE;
+	while ((loopEntity = FindEntityByClassname(loopEntity, classname)) != INVALID_ENT_REFERENCE) {
+		SDKUnhook(loopEntity, SDKHook_OnTakeDamage, callback);		
+	}
 }
