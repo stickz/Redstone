@@ -8,12 +8,14 @@
 #define SERVER_TYPE_STABLE 	1
 #define SERVER_TYPE_BETA	2
 #define SERVER_TYPE_ALPHA	3
+#define SERVER_TYPE_VANILLA	4
 
 enum ND_Server_Types {
 	ND_SType_Disable,
 	ND_SType_Stable,
 	ND_SType_Beta,
-	ND_SType_Alpha  
+	ND_SType_Alpha,
+	ND_SType_Vanilla
 };
 
 // Returns the server type, see defines above

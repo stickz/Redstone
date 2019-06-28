@@ -16,7 +16,7 @@ ConVar cvarServerType;
 
 public void OnPluginStart()
 {
-	cvarServerType = CreateConVar("sm_server_type", "1", "0 = disable, 1 = stable, 2 = beta, 3 = alpha");
+	cvarServerType = CreateConVar("sm_server_type", "1", "0 = disable, 1 = stable, 2 = beta, 3 = alpha, 4 = vanilla");
 	AddUpdaterLibrary(); //auto-updater
 	AutoExecConfig(true, "nd_server_type");
 }

@@ -98,7 +98,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 	float resAdjust = 60 + 2.5 * clientCount;
 	ND_NominateMap(ND_StockMaps[ND_Clocktower], resAdjust);
 	
-	if (serverType >= SERVER_TYPE_BETA)
+	if (serverType >= SERVER_TYPE_BETA && serverType != SERVER_TYPE_VANILLA)
 	{
 		ND_NominateMap(ND_StockMaps[ND_Gate], resAdjust);
 		
@@ -133,12 +133,14 @@ void CreateMapThresholdList(bool debugFunction = false)
 		/* Run through the 'greater than' x players to include maps */
 		if (clientCount >= 14)
 		{
-			ND_NominateMap(ND_CustomMaps[ND_Submarine], 50 + plyAdjust);
+			if (serverType != SERVER_TYPE_VANILLA)
+				ND_NominateMap(ND_CustomMaps[ND_Submarine], 50 + plyAdjust);
+			
 			ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
 			ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
 			ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);		
 
-			if (serverType <= SERVER_TYPE_BETA)
+			if (serverType <= SERVER_TYPE_BETA || serverType == SERVER_TYPE_VANILLA)
 			{
 				ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
 
