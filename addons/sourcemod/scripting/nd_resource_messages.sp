@@ -3,6 +3,7 @@
 #include <clientprefs>
 #include <nd_stocks>
 #include <nd_redstone>
+#include <nd_resources>
 
 //#define DEBUG //Enable plugin debugging mode
 
@@ -137,27 +138,56 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 		direction = GetDirection(pos, team, type);
 		
 		// get basic resource captured key
-		char resKey[64];
+		char resTeamPhrase[32];
+		char resCapPhrase[32];
+		int resEVals[3];
 		switch (type)
 		{
-			case 0: resKey = "Primary Resource Captured";
-			case 1: resKey = "Secondary Resource Captured";
-			case 2: resKey = "Tertiary Resource Captured";
+			case RESOURCE_PRIME: 
+			{
+				resTeamPhrase 	= "Primary Resource Captured";
+				resCapPhrase	= "Captured Resource Primary";
+				resEVals[0] 	= RES_PRIME_EXTRACT;
+				resEVals[1] 	= RES_PRIME_START;
+				resEVals[2] 	= RES_PRIME_TRICKLE;				
+			}			
+			case RESOURCE_SECONDARY:
+			{
+				resTeamPhrase 	= "Secondary Resource Captured";
+				resCapPhrase	= "Captured Resource Secondary";
+				resEVals[0] 	= RES_SECONDARY_EXTRACT;
+				resEVals[1] 	= RES_SECONDARY_START;
+				resEVals[2] 	= RES_SECONDARY_TRICKLE;
+			}
+			case RESOURCE_TERTIARY: 
+			{
+				resTeamPhrase 	= "Tertiary Resource Captured";
+				resCapPhrase	= "Captured Resource Tertiary";
+				resEVals[0] 	= RES_TERTIARY_EXTRACT;
+				resEVals[1] 	= RES_TERTIARY_START;
+				resEVals[2] 	= RES_TERTIARY_TRICKLE;
+			}
 		}		
+		
+		// translate area
+		char areaKey[32];
+		Format(areaKey, sizeof(areaKey), "Map Area %s", direction);
 		
 		RED_LOOP_CLIENTS(client)
 		{
 			if (option_resmsg[client] && GetClientTeam(client) == team)
 			{
 				// translate area
-				char areaKey[32];
-				Format(areaKey, sizeof(areaKey), "Map Area %s", direction);
 				char area[48];
 				Format(area, sizeof(area), "%T", areaKey, client);
 				
 				// translate message
-				char message[512];
-				Format(message, sizeof(message), "\x03%T", resKey, client, nameString, area);
+				char message[512];				
+				if (resCaps[resIndex][client])
+					Format(	message, sizeof(message), "\x03%T", resCapPhrase,
+							client, resEVals[0], resEVals[1], resEVals[2]);
+				else				
+					Format(message, sizeof(message), "\x03%T", resTeamPhrase, client, nameString, area);
 				
 				// show it to the user
 				PrintToChat(client, message);			
