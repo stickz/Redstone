@@ -49,13 +49,6 @@
 		"en"		"Your Comand Bunker is down to {1}%% health, consider spawning as Support Engineer next time, to repair your Bunker"
 	}	
 	
-	"Extreme Bunker Health Warning"
-	{
-		// To alert players when their teams Command Bunkers health reaches x (maybe 50%) and strongly suggest they spawn as Engie ASAP
-		"#format"	"{1:i}"
-		"en"		"Warning Bunker is down to {1}%% health, it is stronly recomended you change to Support Engineer to repair your Bunker ASAP"
-	}
-	
 	"Average team health low"
 	{
 		// To warn when average health of players on your team is low (not sure about the numbers of this, needs some thinking and this may need some form of running average ...) 
