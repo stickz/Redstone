@@ -25,6 +25,11 @@
 #define SUPPORT_CLASS_ENGINEER	1
 #define SUPPORT_CLASS_BBQ		2
 
+#define ASSAULT_HEALTH			200
+#define EXO_HEALTH				600
+#define STEALTH_HEALTH			100
+#define SUPPORT_HEALTH			150		
+
 enum ND_MainClasses
 {
 	mAssault,
@@ -112,4 +117,19 @@ stock void ResetClass(int client, int mainClass, int subClass, int gizmo = -1)
 	
 	if (gizmo != -1)
 		SetEntProp(client, Prop_Send, "m_iDesiredGizmo", gizmo);
+}
+
+stock int ND_GetMaxHealth(int client) 
+{
+	int health = 0;
+	
+	switch (ND_GetMainClass(client))
+	{
+		case MAIN_CLASS_ASSAULT: health = ASSAULT_HEALTH;
+		case MAIN_CLASS_EXO: health = EXO_HEALTH;
+		case MAIN_CLASS_STEALTH: health = STEALTH_HEALTH;
+		case MAIN_CLASS_SUPPORT: health = SUPPORT_HEALTH;				
+	}
+	
+	return health;
 }
