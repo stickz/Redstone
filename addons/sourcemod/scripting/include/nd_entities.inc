@@ -1,3 +1,10 @@
+#if defined _nd_entities_included
+ #endinput
+#endif
+#define _nd_entities_included
+
+#include <sdkhooks>
+
 #define ENTITY_NOT_FOUND -1
 
 native int ND_GetTeamEntity(int team);
