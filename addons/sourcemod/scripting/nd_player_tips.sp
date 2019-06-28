@@ -1,7 +1,12 @@
 #include <sourcemod>
+#include <sdktools>
+#include <sdkhooks>
 #include <clientprefs>
 #include <nd_stocks>
 #include <nd_print>
+#include <nd_rounds>
+#include <nd_entities>
+#include <nd_structures>
 
 public Plugin myinfo =
 {
@@ -18,6 +23,7 @@ public Plugin myinfo =
 
 #include "nd_player_tips/clientprefs.sp"
 #include "nd_player_tips/resource_capture.sp"
+#include "nd_player_tips/bunker_message.sp"
 
 public void OnPluginStart()
 {
@@ -29,3 +35,10 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); // Add updater support
 }
 
+public void ND_OnRoundStarted() {
+	HookBunkerEntity(); // For bunker health warnings	
+}
+
+public void ND_OnRoundEndedEX() {
+	UnHookBunkerEntity(); // For bunker health warnings
+}
