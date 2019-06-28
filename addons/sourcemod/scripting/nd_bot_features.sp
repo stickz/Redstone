@@ -192,12 +192,11 @@ int getBotFillerQuota(int plyDiff, float teamDiffMult)
 	
 	// Set bot count to player count difference ^ x or skill difference ^ x 
 	int physical = teamCount + RoundPowToNearest(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
-	int skill = teamCount + Math_Max(RoundPowToNearest(teamDiffMult, getBotSkillMult()), 3);
 	
 	// Set a ceiling to be returned, leave two connecting slots	
 	// Determine the maximum bot count to use. Skill difference or player difference.
 	// Limit the bot count to the maximum available on the server. (if required)
-	return Math_Max(Math_Max(skill, physical), GetMaxBotCount(specCount));
+	return Math_Max(physical, GetMaxBotCount(specCount));
 }
 
 int getBotEvenQuota(float teamDiffMult)
