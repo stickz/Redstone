@@ -229,8 +229,8 @@ bool GetCookie_resmsg(client)
 	char buffer[10];
 	GetClientCookie(client, cookie_resmsg, buffer, sizeof(buffer));
 	
-	// if not explicitly set to "On" use "Off" by default
-	return StrEqual(buffer, "On");
+	// if not explicitly set to "Off" use "On" by default
+	return !StrEqual(buffer, "Off");
 }
 
 // ======== LOCAL FUNCTIONS ========
