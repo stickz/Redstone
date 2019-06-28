@@ -48,12 +48,11 @@
 		"en"		"Your Bunker health is low, consider spawning as Support Engineer to repair"
 	}	
 	
-	"Average team health low"
+	"Low Team Health"
 	{
-		// To warn when average health of players on your team is low (not sure about the numbers of this, needs some thinking and this may need some form of running average ...) 
-		// Would need a check about number of Medics already in the field (to suspend notice if there are 1 or 2 already in the team) 
-		"#format"	"{1:i}"
-		"en"		"The average health of players on your team is {1}%%, consider spawning as Support Medic, to heal them in the field"
+		// To warn when average health of players on your team is low
+		// Would need a check about number of Medics already in the field (to suspend notice if already 1 or 2) 
+		"en"		"The average health of players on your team is low, consider spawning as Support Medic"
 	}
 	
 	"name"
