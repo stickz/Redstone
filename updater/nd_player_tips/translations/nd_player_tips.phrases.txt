@@ -30,12 +30,6 @@
 		"en"		"You cannot capture resources while in stealth mode"
 	}
 	
-	"Resource Timer Reset"
-	{
-		// To alert players who interupt the capture timer with the use of special abilities (Exo suit Lockdown, or Stealth) 
-		"en"		"Leaving the resource or using special abilities resets the capture timer! Stay on the point to help your team"
-	}
-	
 	"Lost Prime"
 	{
 		// To alert players that they have just lost Prime 
