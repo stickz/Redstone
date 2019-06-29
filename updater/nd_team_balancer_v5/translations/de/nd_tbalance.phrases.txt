@@ -1,0 +1,15 @@
+﻿"Phrases"
+{
+	"Resign Switch"
+	{
+		"de"		"Du musst vom Kommandantenposten zurücktreten, bevor du das Team wechseln kannst"
+	}
+	"Revoke Spectator"
+	{
+		"de"		"Du musst deine Anfrage, ein Zuschauer zu werden, zuerst zurückziehen, bevor du teilnehmen kannst"
+	}
+	"Retry Placement"
+	{
+		"de"		"Du bist jetzt im Zuschauermodus! Versuche die Teamauswahl nochmal"
+	}
+}
