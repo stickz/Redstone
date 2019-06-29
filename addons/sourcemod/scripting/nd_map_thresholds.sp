@@ -116,12 +116,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 			ND_NominateMap(ND_CustomMaps[ND_Corner]);
 
 			if (clientCount < 8)
-			{
 				ND_NominateMap(ND_CustomMaps[ND_Sandbrick], 80.0);
-
-				float marsPer = serverType == SERVER_TYPE_ALPHA ? 60.0 : 40.0;
-				ND_NominateMap(ND_CustomMaps[ND_Mars], marsPer);
-			}
 		}
 	}
 	
