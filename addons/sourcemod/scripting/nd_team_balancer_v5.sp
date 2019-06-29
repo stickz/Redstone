@@ -146,7 +146,7 @@ bool PlaceTeamBySkill(int client)
 	float teamDiff = ND_GetTeamDifference();
 		
 	// Get the team with less skill
-	int leastStackedTeam = teamDiff >= 0 ? TEAM_CONSORT : TEAM_EMPIRE;
+	int leastStackedTeam = getLeastStackedTeam(teamDiff);
 			
 	// Convert the team difference to a positive number before working with it
 	float pTeamDiff = teamDiff < 0 ? teamDiff * -1 : teamDiff;
