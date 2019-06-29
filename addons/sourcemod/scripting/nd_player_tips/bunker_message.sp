@@ -24,7 +24,7 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	
 	int team = getOtherTeam(attacker);
 	
-	if (!DisplayedMessage[team] && ND_GetBuildingHealth(team) <= 9000)
+	if (!DisplayedMessage[team] && ND_GetBuildingHealth(bunkerEnts[team]) <= 9000)
 	{
 		PrintMessageTeam(team, "Bunker Health Warning");
 		DisplayedMessage[team] = true;
