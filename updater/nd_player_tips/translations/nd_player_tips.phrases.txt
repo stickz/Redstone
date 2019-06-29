@@ -39,7 +39,7 @@
 	"Lost Prime"
 	{
 		// To alert players that they have just lost Prime 
-		"en"		"You have just lost the Primary resource point, this is valuable to your team. Try to re-capture ASAP"
+		"en"		"You have just lost the Primary resource point. This is valuable to your team. Try to re-capture ASAP"
 	}
 	
 	"Bunker Health Warning"

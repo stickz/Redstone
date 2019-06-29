@@ -10,6 +10,7 @@
 #include <nd_breakdown>
 #include <nd_classes>
 #include <nd_redstone>
+#include <nd_resources>
 
 public Plugin myinfo =
 {

@@ -3,12 +3,16 @@
 #define NOT_CAPTURING -1
 
 int EntIndexCaping[MAXPLAYERS+1] = { NOT_CAPTURING, ... };
+int DisplayedPrimeCapMsg[TEAM_COUNT] = { false, ... };
 
 void HookResourceEvents() {
 	HookEvent("resource_start_capture", Event_ResourceStartCapture, EventHookMode_Post);
 	HookEvent("resource_end_capture", Event_ResourceEndCapture, EventHookMode_Post);
 	HookEvent("resource_captured", Event_ResourceCaptured, EventHookMode_Post);	
-	HookEvent("resource_break_capture", Event_ResourceBreakCapture, EventHookMode_Post);	
+	HookEvent("resource_break_capture", Event_ResourceBreakCapture, EventHookMode_Post);
+
+	DisplayedPrimeCapMsg[TEAM_EMPIRE] = false;
+	DisplayedPrimeCapMsg[TEAM_CONSORT] = false;
 }
 
 public Action Event_ResourceStartCapture(Event event, const char[] name, bool dontBroadcast)
@@ -27,6 +31,14 @@ public Action Event_ResourceEndCapture(Event event, const char[] name, bool dont
 public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBroadcast)
 {
 	int entindex = event.GetInt("entindex");
+	
+	int type = event.GetInt("type");
+	if (type == RESOURCE_PRIME)
+	{
+		int otherTeam = getOtherTeam(event.GetInt("team"));
+		DisplayPrimeCapMsg(otherTeam);
+	}
+	
 	RemoveCaptureStatus(entindex);
 }
 
@@ -52,6 +64,22 @@ void CheckCloackStatus(int entity)
 				PrintMessage(client, "Lockdown Capture");
 			}
 		}
+	}
+}
+
+void DisplayPrimeCapMsg(int team)
+{
+	if (!DisplayedPrimeCapMsg[team])
+	{
+		DisplayedPrimeCapMsg[team] = true;
+		
+		for (int client = 1; client <= MaxClients; client++)
+		{
+			if (IsValidClient(client) && GetClientTeam(client) == team && option_player_tips[client])
+			{
+				PrintMessage(client, "Lost Prime");
+			}
+		}	
 	}
 }
 
