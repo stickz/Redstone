@@ -22,12 +22,15 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	if (!IsValidEntity(inflictor))
 		return Plugin_Continue;
 	
-	int team = getOtherTeam(attacker);
-	
-	if (!DisplayedMessage[team] && ND_GetBuildingHealth(bunkerEnts[team]) <= 9000)
+	if (IsValidClient(attacker))
 	{
-		PrintMessageTeam(team, "Bunker Health Warning");
-		DisplayedMessage[team] = true;
+		int team = getOtherTeam(GetClientTeam(attacker));
+		
+		if (!DisplayedMessage[team] && ND_GetBuildingHealth(bunkerEnts[team]) <= 9000)
+		{
+			PrintMessageTeam(team, "Bunker Health Warning");
+			DisplayedMessage[team] = true;
+		}
 	}
 	
 	return Plugin_Continue;
