@@ -9,6 +9,7 @@
 #include <nd_rstart>
 #include <nd_rounds>
 #include <nd_com_eng>
+#include <autoexecconfig>
 
 #define TEAMS_EVEN 0
 #define EMPIRE_PLUS_ONE 1
@@ -28,6 +29,7 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 ConVar cvarEnableBalancer;
+ConVar cvarMinPlaceSkillCount;
 ConVar cvarMinPlaceSkillEven;
 ConVar cvarMinPlaceSkillOne;
 ConVar cvarMinPlacementEven;
@@ -39,19 +41,27 @@ public void OnPluginStart()
 {
 	AddCommandListener(PlayerJoinTeam, "jointeam");
 	LoadTranslations("nd_common.phrases");
-	LoadTranslations("nd_tbalance.phrases"); // To Do: Create new phrase file
+	LoadTranslations("nd_tbalance.phrases"); 
 	
-	cvarEnableBalancer 		= 	CreateConVar("sm_balance", "1", "Team Balancer: 0 to disable, 1 to enable");
-	
-	cvarMinPlaceSkillEven 	=	CreateConVar("sm_balance_mskill_one", "60", "Specifies the min skill to place when teams are even");
-	cvarMinPlaceSkillOne 	=	CreateConVar("sm_balance_mskill_one", "90", "Specifies the min skill to place two extra players");
-	
-	cvarMinPlacementEven	=	CreateConVar("sm_balance_one","80", "Specifies min skill to place when teams are even");
-	cvarMinPlacementTwo		=	CreateConVar("sm_balance_two",	"160", "Specifies min skill to place two extra players");
-	
-	AutoExecConfig(true, "nd_tbalance");
-	
+	CreatePluginConVars(); //plugin convars
+
 	AddUpdaterLibrary(); //auto-updater
+}
+
+void CreatePluginConVars()
+{
+	AutoExecConfig_Setup("nd_tbalance");
+	
+	cvarEnableBalancer 		= 	AutoExecConfig_CreateConVar("sm_balance", "1", "Team Balancer: 0 to disable, 1 to enable");
+	
+	cvarMinPlaceSkillCount		=	AutoExecConfig_CreateConVar("sm_balance_mskill_count", "3", "Specifies min amount of players to place by skill");
+	cvarMinPlaceSkillEven 		=	AutoExecConfig_CreateConVar("sm_balance_mskill_even", "60", "Specifies the min skill to place when teams are even");
+	cvarMinPlaceSkillOne 		=	AutoExecConfig_CreateConVar("sm_balance_mskill_one", "90", "Specifies the min skill to place two extra players");
+	
+	cvarMinPlacementEven		=	AutoExecConfig_CreateConVar("sm_balance_one", "80", "Specifies min skill to place when teams are even");
+	cvarMinPlacementTwo		=	AutoExecConfig_CreateConVar("sm_balance_two", "160", "Specifies min skill to place two extra players");
+	
+	AutoExecConfig_EC_File();
 }
 
 public void OnMapStart() {
@@ -138,6 +148,10 @@ public Action TIMER_UnlockTeams(Handle timer)
 
 bool PlaceTeamBySkill(int client)
 {
+	// Require three players on a team, to place by skill
+	if (RED_OnTeamCount() < cvarMinPlaceSkillCount.IntValue)
+		return false;
+	
 	// Get the current player skill
 	float playerSkill = ND_GetPlayerSkill(client);
 	
