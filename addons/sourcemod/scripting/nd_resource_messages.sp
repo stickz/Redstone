@@ -23,7 +23,7 @@ const MAX_RESOURCES = 30;
 int resCount = 0;
 int resEnts[MAX_RESOURCES] = {0, ...};
 bool resCaps[MAX_RESOURCES][MAXPLAYERS + 1];
-bool displayResAmt[3][MAXPLAYERS+1] = {false, ...};
+bool displayResAmt[3][MAXPLAYERS+1];
 
 // reference points and distances
 float refCenter[3];
