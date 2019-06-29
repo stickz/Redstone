@@ -19,6 +19,9 @@ void UnHookBunkerEntity()
 
 public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
 {
+	if (!IsValidEntity(inflictor))
+		return Plugin_Continue;
+	
 	int team = getOtherTeam(attacker);
 	
 	if (!DisplayedMessage[team] && ND_GetBuildingHealth(team) <= 9000)
