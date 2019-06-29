@@ -23,6 +23,7 @@ const MAX_RESOURCES = 30;
 int resCount = 0;
 int resEnts[MAX_RESOURCES] = {0, ...};
 bool resCaps[MAX_RESOURCES][MAXPLAYERS + 1];
+bool displayResAmt[3][MAXPLAYERS+1] = {false, ...};
 
 // reference points and distances
 float refCenter[3];
@@ -76,6 +77,13 @@ public void OnMapStart()
 	{
 		resEnts[resIndex] = 0;
 		ClearCapturers(resIndex);
+	}
+	
+	// Reset displayResAmt to display resource extract amounts
+	for (int client = 1; client <= MaxClients; client++) {
+		for (int type = 0; type < 3; type++) {
+			displayResAmt[type][client] = false;
+		}
 	}
 }
 
@@ -183,9 +191,11 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				
 				// translate message
 				char message[512];				
-				if (resCaps[resIndex][client])
-					Format(	message, sizeof(message), "\x03%T", resCapPhrase,
-							client, resEVals[0], resEVals[1], resEVals[2]);
+				if (resCaps[resIndex][client] && !displayResAmt[type][client])
+				{
+					Format(	message, sizeof(message), "\x03%T", resCapPhrase, client, resEVals[0], resEVals[1], resEVals[2]);
+					displayResAmt[type][client] = false;
+				}
 				else				
 					Format(message, sizeof(message), "\x03%T", resTeamPhrase, client, nameString, area);
 				
