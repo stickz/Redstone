@@ -21,7 +21,7 @@ void ResetDisplayedHealth() {
 public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
-	if (IsValidClient(client) && !DisplayedHealthWarning[client])
+	if (IsValidClient(client) && option_player_tips[client] && !DisplayedHealthWarning[client])
 	{
 		int team = GetClientTeam(client);
 		if (isOnTeam(client) && LowAverageHealth(team) && GetMedicCount(team) < 2 && RED_GetTeamCount(team) >= 6)

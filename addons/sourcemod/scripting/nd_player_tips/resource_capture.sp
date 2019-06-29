@@ -41,7 +41,7 @@ void CheckCloackStatus(int entity)
 {
 	for (int client = 1; client <= MaxClients; client++)
 	{
-		if (IsValidClient(client) && EntIndexCaping[client] == entity)
+		if (IsValidClient(client) && option_player_tips[client] && EntIndexCaping[client] == entity)
 		{
 			if (GetEntProp(client, Prop_Send, "m_nPlayerCond") & COND_CLOACKED)
 			{
