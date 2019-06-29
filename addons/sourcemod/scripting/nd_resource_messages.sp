@@ -194,7 +194,7 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				if (resCaps[resIndex][client] && !displayResAmt[type][client])
 				{
 					Format(	message, sizeof(message), "\x03%T", resCapPhrase, client, resEVals[0], resEVals[1], resEVals[2]);
-					displayResAmt[type][client] = false;
+					displayResAmt[type][client] = true;
 				}
 				else				
 					Format(message, sizeof(message), "\x03%T", resTeamPhrase, client, nameString, area);
