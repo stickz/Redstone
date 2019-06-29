@@ -212,6 +212,16 @@ stock int getPositiveOverBalance()
 	return overBalance;
 }
 
+stock int getLessPlayerTeam(int overBalance)
+{
+	if (overBalance == 0)
+		return -1;
+	
+	// Empire has more players greater than 0
+	return overBalance > 0 ? TEAM_CONSORT : TEAM_EMPIRE;
+}
+
+
 stock int GetNumEvenP1(int num) {
 	return num % 2 == 0 ? num : num + 1;
 }
