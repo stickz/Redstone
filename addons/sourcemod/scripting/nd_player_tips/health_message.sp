@@ -24,7 +24,7 @@ public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadca
 	if (IsValidClient(client) && !DisplayedHealthWarning[client])
 	{
 		int team = GetClientTeam(client);
-		if (isOnTeam(client) && LowAverageHealth(team) && GetMedicCount(team) < 2)
+		if (isOnTeam(client) && LowAverageHealth(team) && GetMedicCount(team) < 2 && RED_GetTeamCount(team) >= 6)
 		{
 			PrintMessage(client, "Low Team Health");		
 			DisplayedHealthWarning[client] = true;

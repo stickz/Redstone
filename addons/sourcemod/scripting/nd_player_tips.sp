@@ -9,13 +9,14 @@
 #include <nd_structures>
 #include <nd_breakdown>
 #include <nd_classes>
+#include <nd_redstone>
 
 public Plugin myinfo =
 {
 	name = "[ND] Player Tips",
 	author = "Stickz, Adam, Gallo",
 	description = "Creates triggered tips for players",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 };
 
