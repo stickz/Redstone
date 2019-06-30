@@ -60,7 +60,7 @@
 	"Building take down"
 	{
 		// 09 - Note
-		"en"		"Sonic and Flamer turrets are good for taking down other buildings, but have a short range"
+		"en"		"Sonic and Flamer turrets are good for taking down buildings, but have a short range"
 	}
 	
 	"Front line Gates"
@@ -90,7 +90,7 @@
 	"Mine the Bunker"
 	{
 		// 14 - To remind them they can spawn as Support Engie and place daisy cutters to protect them in the bunker	
-		"en"		"You can protect yourself by placing Daisy Cutter mines in the bunker entrance."
+		"en"		"You can protect yourself by placing Daisy Cutter mines in the bunker entrance"
 	}
 	
 	"Low ammo"
