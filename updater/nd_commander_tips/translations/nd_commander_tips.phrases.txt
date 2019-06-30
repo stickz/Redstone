@@ -116,7 +116,7 @@
 	"No auto repair bunker"
 	{
 		// 18 - To remind the Commander that the Command Bunker can't be auto repaired like other buildings
-		"en"		"The Command Bunker can't be auto repaired. It requires an Support Engineer to fix"
+		"en"		"The Command Bunker can't be auto repaired. It requires a Support Engineer to fix"
 	}
 	
 	"Commander commands"
@@ -128,7 +128,7 @@
 	"Radar for stealths"
 	{
 		// 20 - Remind Commander that placing a Radar Station near areas plagued with enemy stealths can help
-		"en"		"Place radar stations in critical areas, to assist with the detection of stealth units."
+		"en"		"Place radar stations in critical areas, to assist with the detection of stealth units"
 	}
 	
 	"Commander Damage"
