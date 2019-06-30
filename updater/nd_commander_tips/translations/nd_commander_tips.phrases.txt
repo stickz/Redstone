@@ -97,7 +97,7 @@
 	{
 		// 15 - To remind the commander that Supply Stations are important to keep troops shootin. 
 		// Could this be triggered like the low average health warnings for Medics ? (would need re-phrasing) 
-		"en"		"Place Supply Stations around your front lines, so as to keep your troops shooting and healthy"
+		"en"		"Place a supply station in base beside the spawn, so troops can teleport back and resupply"
 	}
 	
 	"Low health"
@@ -112,14 +112,7 @@
 		// 17 - To remind the commander to repair buildings, just encase they are attacked again
 		"en"		"Don't forget to regularly check your buildings and start repairing those that need it. You never know when or where one may get attacked"
 	}
-	
-	"Command Bunker health"
-	{
-		// 18 - Alert the commander that the bunker is damaged
-		// Could this be linked to the command bunker health alerts ?
- 		"en"		"Alert your bunker is damaged, switch to Support Engineer and repair your bunker, or ask one of your team to do so"
-	}
-	
+		
 	"No auto repair bunker"
 	{
 		// 19 - To remind the Commander that the Command Bunker can't be auto repaired like other buildings
@@ -129,7 +122,7 @@
 	"Commander commands"
 	{
 		// 20 - Remind them bots respond faster to the Attack command than the capture resources command, but they will still capture the resource on Attack
-		"en"		"Bots repond faster to the Attack command, but will still capture resource if set to Attack it"
+		"en"		"Bots respond faster to the Attack command. Place on resource points so they capture."
 	}
 	
 	"Title"
