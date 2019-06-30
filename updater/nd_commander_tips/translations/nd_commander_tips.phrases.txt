@@ -57,7 +57,7 @@
 		"en"		"Avoid placing too many turrets. Focus them around resource points and forward buildings"
 	}
 	
-	"Building take down advice"
+	"Building take down"
 	{
 		// 09 - Note
 		"en"		"Sonic and Flamer turrets are good for taking down other buildings. But have a short range"
@@ -67,6 +67,69 @@
 	{
 		// 10 - To remind that Forward Gates are key to getting your troops to the front line faster
 		"en"		"Placing Gates (Spawns) on the front lines allows your troops to get there faster"
+	}
+	
+	"Limit Classes"
+	{
+		// 11 - To remind the commander that they can limit the classes in their army
+		"en"		"You can use commands like '!maxsnipers 1', in the chat box, to limit the number of concurrent players in each class"
+	}
+	
+	"Slay Bots"
+	{
+		// 12 - To remind the commander that they can reset all the bots with !slaybots
+		"en"		"You can reset all the Bots on your team, by killing them all with the '!slaybots' command, in the chat box"
+	}
+	
+	"Stealth Attacks"
+	{
+		// 13 - To alert them to the potential for stealth attacks
+		"en"		"Keep an eye out for enemy troops, especialy stealths, that attack you in the chair"
+	}
+	
+	"Mine the Bunker"
+	{
+		// 14 - To remind them they can spawn as Support Engie and place daisy cutters to protect them in the bunker	
+		"en"		"You can always place Mines (Daisy Cutters) on the entrance to your bunker, to kill or damage enemies who try and enter"
+	}
+	
+	"Low ammo"
+	{
+		// 15 - To remind the commander that Supply Stations are important to keep troops shootin. 
+		// Could this be triggered like the low average health warnings for Medics ? (would need re-phrasing) 
+		"en"		"Place Supply Stations around your front lines, so as to keep your troops shooting and healthy"
+	}
+	
+	"Low health"
+	{
+		// 16 - To remind the commander that Supply Stations are important to keep the troops health up.
+		// Could this be triggered by the same low average health warning for medics ? 
+		"en"		"Average health on your team is low, build more Supply Stations so they can heal"
+	}
+	
+	"Repair your buildings"
+	{
+		// 17 - To remind the commander to repair buildings, just encase they are attacked again
+		"en"		"Don't forget to regularly check your buildings and start repairing those that need it. You never know when or where one may get attacked"
+	}
+	
+	"Command Bunker health"
+	{
+		// 18 - Alert the commander that the bunker is damaged
+		// Could this be linked to the command bunker health alerts ?
+ 		"en"		"Alert your bunker is damaged, switch to Support Engineer and repair your bunker, or ask one of your team to do so"
+	}
+	
+	"No auto repair bunker"
+	{
+		// 19 - To remind the Commander that the Command Bunker can't be auto repaired like other buildings
+		"en"		"Command Bunker is the only building that can't be auto repaired, it requires an Support Engineer to fix"
+	}
+	
+	"Commander commands"
+	{
+		// 20 - Remind them bots respond faster to the Attack command than the capture resources command, but they will still capture the resource on Attack
+		"en"		"Bots repond faster to the Attack command, but will still capture resource if set to Attack it"
 	}
 	
 	"Title"
