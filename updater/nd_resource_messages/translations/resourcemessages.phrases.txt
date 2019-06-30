@@ -53,6 +53,27 @@
 		"en"		"Captured Tertiary resource point generates {1} res/min. After {2}, it generates {3} res/min"
 	}
 	
+	"Trickled Resource Primary"
+	{
+		// to show infomation on the Primary resource point that just got captured 
+		"#format"	"{1:i}"
+		"en"		"Captured Primary resource generates {1} res/min."
+	}
+		
+	"Trickled Resource Secondary"
+	{
+		// to show infomation on the Secondary resource point that just got captured 
+		"#format"	"{1:i}"
+		"en"		"Captured Secondary resource generates {1} res/min."
+	}
+	
+	"Trickled Resource Tertiary"
+	{
+		// to show infomation on the Tertiary resource point that just got captured 
+		"#format"	"{1:i}"
+		"en"		"Captured Tertiary resource generates {1} res/min."
+	}
+	
 	"Map Area "
 	{
 		"en"			""

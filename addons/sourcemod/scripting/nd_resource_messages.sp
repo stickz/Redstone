@@ -23,7 +23,6 @@ const MAX_RESOURCES = 30;
 int resCount = 0;
 int resEnts[MAX_RESOURCES] = {0, ...};
 bool resCaps[MAX_RESOURCES][MAXPLAYERS + 1];
-bool displayResAmt[3][MAXPLAYERS+1];
 
 // reference points and distances
 float refCenter[3];
@@ -77,13 +76,6 @@ public void OnMapStart()
 	{
 		resEnts[resIndex] = 0;
 		ClearCapturers(resIndex);
-	}
-	
-	// Reset displayResAmt to display resource extract amounts
-	for (int client = 1; client <= MaxClients; client++) {
-		for (int type = 0; type < 3; type++) {
-			displayResAmt[type][client] = false;
-		}
 	}
 }
 
@@ -148,31 +140,35 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 		// get basic resource captured key
 		char resTeamPhrase[32];
 		char resCapPhrase[32];
+		char resTrickPhrase[32];
+		
+		// get resource extract rates and resources left before trickle
 		int resEVals[3];
+		resEVals[1] = GetEntProp(entindex, Prop_Send, "m_iCurrentResources");
 		switch (type)
 		{
 			case RESOURCE_PRIME: 
 			{
 				resTeamPhrase 	= "Primary Resource Captured";
 				resCapPhrase	= "Captured Resource Primary";
+				resTrickPhrase	= "Trickled Resource Primary";
 				resEVals[0] 	= RES_PRIME_EXTRACT;
-				resEVals[1] 	= RES_PRIME_START;
 				resEVals[2] 	= RES_PRIME_TRICKLE;				
 			}			
 			case RESOURCE_SECONDARY:
 			{
 				resTeamPhrase 	= "Secondary Resource Captured";
 				resCapPhrase	= "Captured Resource Secondary";
+				resTrickPhrase	= "Trickled Resource Secondary";
 				resEVals[0] 	= RES_SECONDARY_EXTRACT;
-				resEVals[1] 	= RES_SECONDARY_START;
 				resEVals[2] 	= RES_SECONDARY_TRICKLE;
 			}
 			case RESOURCE_TERTIARY: 
 			{
 				resTeamPhrase 	= "Tertiary Resource Captured";
 				resCapPhrase	= "Captured Resource Tertiary";
+				resTrickPhrase	= "Trickled Resource Tertiary";
 				resEVals[0] 	= RES_TERTIARY_EXTRACT;
-				resEVals[1] 	= RES_TERTIARY_START;
 				resEVals[2] 	= RES_TERTIARY_TRICKLE;
 			}
 		}		
@@ -191,10 +187,12 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				
 				// translate message
 				char message[512];				
-				if (resCaps[resIndex][client] && !displayResAmt[type][client])
+				if (resCaps[resIndex][client])
 				{
-					Format(	message, sizeof(message), "\x03%T", resCapPhrase, client, resEVals[0], resEVals[1], resEVals[2]);
-					displayResAmt[type][client] = true;
+					if (resEVals[1] > 0)					
+						Format(	message, sizeof(message), "\x03%T", resCapPhrase, client, resEVals[0], resEVals[1], resEVals[2]);
+					else
+						Format(	message, sizeof(message), "\x03%T", resTrickPhrase, client, resEVals[2]);	
 				}
 				else				
 					Format(message, sizeof(message), "\x03%T", resTeamPhrase, client, nameString, area);
