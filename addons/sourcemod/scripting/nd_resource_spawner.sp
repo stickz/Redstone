@@ -7,6 +7,7 @@
 #include <nd_stype>
 #include <nd_fskill>
 #include <autoexecconfig>
+#include <nd_resource_eng>
 
 #define TERTIARY_MODEL "models/rts_structures/rts_resource/rts_resource_tertiary.mdl"
 #define VECTOR_SIZE 3
@@ -201,7 +202,7 @@ void CheckStableSpawns()
 	
 	else if (ND_MapEqualsAnyMetro(map_name))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18))
+		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18) || ND_PrimeDepleted())
 		{
 			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
 			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
@@ -221,7 +222,7 @@ void CheckStableSpawns()
 				tertsSpawned[FIRST_TIER] = true;
 			}
 			
-			if (teamCount >= GetSpawnCount(26, 28, 30))
+			if (teamCount >= GetSpawnCount(26, 28, 30) || ND_PrimeDepleted())
 			{
 				SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
 				SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
@@ -232,8 +233,7 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
 	{
-		int teamCount = RED_OnTeamCount();
-		if (teamCount >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue)
+		if (RED_OnTeamCount() >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue || ND_PrimeDepleted())
 		{
 			// Respawn tunnel resources			
 			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
@@ -264,7 +264,7 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Hydro))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 28))
+		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 28) || ND_PrimeDepleted())
 		{
 			SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
 			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
