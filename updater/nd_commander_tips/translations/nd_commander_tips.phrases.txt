@@ -2,21 +2,76 @@
 {
 	"Cookie Commander Tips"
 	{
+		// This is the text for the settings menu in game (!settings)
 		"en" 		"Commander Tips"	
 	}
 	
-	"General Commander Tip 1"
+	"Communication is key"
 	{
-		"en"		"Insert description here"
+		// 01 - To try and encourage commander / team interaction 
+		// Could this be first everytime ? 
+		"en"		"Talk to your team, they are your strongest weapons"
 	}
 	
-	"General Commander Tip 2"
+	"Check b4 replace Node"
 	{
-		"en"		"Insert description here"
+		// 02 - This is encourage Commanders to check the area is clear prior to replacing a damaged Power Relay Node
+		"en"		"When replacing a damaged Power Relay Node, check the area is clear of threats first"
 	}
 	
-	"General Commander Tip 3"
+	"Protect Nodes"
 	{
-		"en"		"Insert description here"
+		// 03 - This is encourage Commanders to protect Power Relay Nodes from attack
+		"en"		"Protect Power Relay Nodes with walls and towers to sheild them from attack"
+	}
+	
+	"Power plant creation"
+	{
+		// 04 - This is encourage Commanders to be frugal in their initial deployment of power plants 
+		// Could this be triggered by 3 < power plants in the first x minuets ? 
+		"en"		"In the initial stages of a match, dont waste resources and build time on excess power plants"
+	}
+	
+	"Multi Assembler warning"
+	{
+		// 05 - This is to discourage the creation of multiple assembler's 
+		// Could this be triggered by 1 < assembler ? 
+		"en"		"Multiple Assembler's are not needed, they are expensive and a big power drain"
+	}
+	
+	"Distributed power grid"
+	{
+		// 06 - This is to encourage the periodic placement of power plants through out the map 
+		"en"		"Place power stations near the front-lines, as you advance, to make your power grid more redundant"
+	}
+	
+	"No need to fotify base"
+	{
+		// 07 - To encourage commanders to not waste resources on building lots of in base towers
+		"en"		"The initial in base MG turret is generally sufficient for base defence early game"
+	}
+	
+	"Turret Spam"
+	{
+		// 08 - To limit the number of resources wasted on turrets
+		"en"		"Avoid placing too many turrets. Focus them around resource points and forward buildings"
+	}
+	
+	"Building take down advice"
+	{
+		// 09 - Note
+		"en"		"Sonic and Flamer turrets are good for taking down other buildings. But have a short range"
+	}
+	
+	"Front line Gates"
+	{
+		// 10 - To remind that Forward Gates are key to getting your troops to the front line faster
+		"en"		"Placing Gates (Spawns) on the front lines allows your troops to get there faster"
+	}
+	
+	"Title"
+	{
+		// Note
+		"en"		"Tip"
 	}
 }
