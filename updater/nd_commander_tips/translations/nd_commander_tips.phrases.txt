@@ -16,27 +16,27 @@
 	"Check b4 replace Node"
 	{
 		// 02 - This is encourage Commanders to check the area is clear prior to replacing a damaged Power Relay Node
-		"en"		"When replacing a damaged Power Relay Node, check the area is clear of threats first"
+		"en"		"When replacing a damaged Power Relay, check the area is clear of threats first"
 	}
 	
 	"Protect Nodes"
 	{
 		// 03 - This is encourage Commanders to protect Power Relay Nodes from attack
-		"en"		"Protect Power Relay Nodes with walls and towers to sheild them from attack"
+		"en"		"Protect important Power Relays with walls, to sheild them from attack"
 	}
 	
 	"Power plant creation"
 	{
 		// 04 - This is encourage Commanders to be frugal in their initial deployment of power plants 
 		// Could this be triggered by 3 < power plants in the first x minuets ? 
-		"en"		"In the initial stages of a match, dont waste resources and build time on excess power plants"
+		"en"		"In the initial stages of a match, avoid building an excessive amount of power plants"
 	}
 	
 	"Multi Assembler warning"
 	{
 		// 05 - This is to discourage the creation of multiple assembler's 
 		// Could this be triggered by 1 < assembler ? 
-		"en"		"Multiple Assembler's are not needed, they are expensive and a big power drain"
+		"en"		"Multiple Assemblers are not required. They are expensive and drain power"
 	}
 	
 	"Distributed power grid"
@@ -48,7 +48,7 @@
 	"No need to fotify base"
 	{
 		// 07 - To encourage commanders to not waste resources on building lots of in base towers
-		"en"		"The initial in base MG turret is generally sufficient for base defence early game"
+		"en"		"The initial MG turret is sufficient for base defence early game"
 	}
 	
 	"Turret Spam"
@@ -60,7 +60,7 @@
 	"Building take down"
 	{
 		// 09 - Note
-		"en"		"Sonic and Flamer turrets are good for taking down other buildings. But have a short range"
+		"en"		"Sonic and Flamer turrets are good for taking down other buildings, but have a short range"
 	}
 	
 	"Front line Gates"
@@ -72,13 +72,13 @@
 	"Limit Classes"
 	{
 		// 11 - To remind the commander that they can limit the classes in their army
-		"en"		"You can use commands like '!maxsnipers 1', in the chat box, to limit the number of concurrent players in each class"
+		"en"		"You can use commands like '!maxsnipers 1', in the chat box, to limit the number of players in each class"
 	}
 	
 	"Slay Bots"
 	{
 		// 12 - To remind the commander that they can reset all the bots with !slaybots
-		"en"		"You can reset all the Bots on your team, by killing them all with the '!slaybots' command, in the chat box"
+		"en"		"You can reset stuck bots by killing them. Type '!SlayBots' in the chat box"
 	}
 	
 	"Stealth Attacks"
@@ -90,7 +90,7 @@
 	"Mine the Bunker"
 	{
 		// 14 - To remind them they can spawn as Support Engie and place daisy cutters to protect them in the bunker	
-		"en"		"You can always place Mines (Daisy Cutters) on the entrance to your bunker, to kill or damage enemies who try and enter"
+		"en"		"You can protect yourself by placing Daisy Cutter mines in the bunker entrance."
 	}
 	
 	"Low ammo"
@@ -104,19 +104,19 @@
 	{
 		// 16 - To remind the commander that Supply Stations are important to keep the troops health up.
 		// Could this be triggered by the same low average health warning for medics ? 
-		"en"		"Average health on your team is low, build more Supply Stations so they can heal"
+		"en"		"Consider building supply stations in the front-lines, if you have extra resources"
 	}
 	
 	"Repair your buildings"
 	{
 		// 17 - To remind the commander to repair buildings, just encase they are attacked again
-		"en"		"Don't forget to regularly check your buildings and start repairing those that need it."
+		"en"		"Check your buildings regularly and use the commander repair feature as required"
 	}
 		
 	"No auto repair bunker"
 	{
 		// 18 - To remind the Commander that the Command Bunker can't be auto repaired like other buildings
-		"en"		"Command Bunker is the only building that can't be auto repaired, it requires an Support Engineer to fix"
+		"en"		"The Command Bunker can't be auto repaired. It requires an Support Engineer to fix"
 	}
 	
 	"Commander commands"
@@ -128,19 +128,19 @@
 	"Radar for stealths"
 	{
 		// 20 - Remind Commander that placing a Radar Station near areas plagued with enemy stealths can help
-		"en"		"Near areas that are being attacked by stealths, Radar Station can help your troops"
+		"en"		"Place radar stations in critical areas, to assist with the detection of stealth units."
 	}
 	
 	"Commander Damage"
 	{
 		//  21 - Remind them that commander damage is expensive (for those who over use) but that it is useful (for those who do not)
-		"en"		"Commander Damage, though expensive is very useful somtimes"
+		"en"		"Commander Damage is expensive, but sometimes very useful"
 	}
 	
 	"Upgrade Commander Damage"
 	{
 		// 22 - Remind them to keep upgrading Commander Damage, (and hopefully the other research) as, as the game goes on it needs to get stronger
-		"en"		"As the game progresses, research Commander Abilities II to unlock Walls and increase Commander Damage strength"
+		"en"		"Consider researching Commander Abilities II to unlock Walls and increase Commander Damage strength"
 	}
 	
 	"Lost Prime"
