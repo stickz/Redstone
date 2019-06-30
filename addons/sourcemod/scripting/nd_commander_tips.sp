@@ -61,7 +61,7 @@ public Action TIMER_DisplayCommanderTip(Handle timer, any:Userid)
 	
 	// Otherwise, send the next tip in the string list	
 	int curTip = teamCounter[clientTeam];
-	PrintToChat(client, "\x03%t", nd_commander_tips[curTip]);
+	PrintToChat(client, "\x05(Commander Tip) \x03%t", nd_commander_tips[curTip]);
 	teamCounter[clientTeam]++; // client team counter for next tip
 	return Plugin_Continue;
 }
