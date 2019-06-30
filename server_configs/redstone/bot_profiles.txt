@@ -1,0 +1,870 @@
+"bots"
+{
+	"defaults"
+	{
+		"skill"				"50"
+		"aggression"			"50"
+		"reaction_time"		"0.3"
+		"attack_delay"		"0"
+		"teamwork"			"75"
+		"difficulty"		"NORMAL"
+	}
+	
+	"skill_templates"
+	{
+		"elite"
+		{
+			"skill"			"100"
+			"aggression"		"100"
+			"reaction_time"	"0.3"
+			"difficulty"	"EXPERT"
+		}
+		
+		"expert"
+		{
+			"skill"			"90"
+			"aggression"		"90"
+			"reaction_time"	"0.3"
+			"difficulty"	"EXPERT"
+		}
+		
+		"very_hard"
+		{
+			"skill"			"80"
+			"aggression"		"80"
+			"reaction_time"	"0.3"
+			"difficulty"	"HARD"
+		}
+		
+		"hard"
+		{
+			"skill"			"75"
+			"aggression"		"75"
+			"reaction_time"	"0.3"
+			"difficulty"	"HARD"
+		}
+		
+		"tough"
+		{
+			"skill"			"60"
+			"aggression"		"60"
+			"reaction_time"	"0.3"
+			"attack_delay"	"0.35"
+			"difficulty"	"NORMAL;HARD"
+		}
+		
+		"normal"
+		{
+			"skill"			"50"
+			"aggression"		"50"
+			"reaction_time"	"0.4"
+			"attack_delay"	"0.7"
+			"difficulty"	"NORMAL"
+		}
+		
+		"fair"
+		{
+			"skill"			"25"
+			"aggression"		"30"
+			"reaction_time"	"0.4"
+			"attack_delay"	"1"
+			"difficulty"	"EASY;NORMAL"
+		}
+		
+		"easy"
+		{
+			"skill"			"0"
+			"aggression"		"20"
+			"reaction_time"	"0.5"
+			"attack_delay"	"1.5"
+			"difficulty"	"EASY"
+		}
+	}
+	
+	"profiles"
+	{
+		// -----------
+		// EXPERT
+		// -----------
+		"Alan"
+		{
+			"skills"		"elite"
+		}
+		"Andrew"
+		{
+			"skills"		"elite"
+		}
+		"Asher"
+		{
+			"skills"		"elite"
+		}
+		"Ben"
+		{
+			"skills"		"elite"
+		}
+		"Brecht"
+		{
+			"skills"		"elite"
+		}
+		"Dan"
+		{
+			"skills"		"elite"
+		}
+		"David"
+		{
+			"skills"		"elite"
+		}
+		"Douglas"
+		{
+			"skills"		"elite"
+		}
+		"Garrett"
+		{
+			"skills"		"elite"
+		}
+		"James"
+		{
+			"skills"		"elite"
+		}
+		"Joe"
+		{
+			"skills"		"elite"
+		}
+		"Jonatan"
+		{
+			"skills"		"elite"
+		}
+		"Josh"
+		{
+			"skills"		"elite"
+		}
+		"Matthias"
+		{
+			"skills"		"elite"
+		}
+		"Michael"
+		{
+			"skills"		"elite"
+		}
+		"Michiel"
+		{
+			"skills"		"elite"
+		}
+		"Nick"
+		{
+			"skills"		"elite"
+		}
+		"Olly"
+		{
+			"skills"		"elite"
+		}
+		"Robbert"
+		{
+			"skills"		"elite"
+		}
+		"Ruben"
+		{
+			"skills"		"elite"
+		}
+		"Russ"
+		{
+			"skills"		"elite"
+		}
+		"Scott"
+		{
+			"skills"		"elite"
+		}
+		"Stuart"
+		{
+			"skills"		"elite"
+		}
+		"Travis"
+		{
+			"skills"		"elite"
+		}
+		
+		"Alex"
+		{
+			"skills"		"expert"
+		}
+		"Arttu"
+		{
+			"skills"		"expert"
+		}
+		"Benjamin"
+		{
+			"skills"		"expert"
+		}
+		"Calvin"
+		{
+			"skills"		"expert"
+		}
+		"Che"
+		{
+			"skills"		"expert"
+		}
+		"Cris"
+		{
+			"skills"		"expert"
+		}
+		"Cyril"
+		{
+			"skills"		"expert"
+		}
+		"Dennis"
+		{
+			"skills"		"expert"
+		}
+		"Igor"
+		{
+			"skills"		"expert"
+		}
+		"Jeffrey"
+		{
+			"skills"		"expert"
+		}
+		"Jeroen"
+		{
+			"skills"		"expert"
+		}
+		"Kevin"
+		{
+			"skills"		"expert"
+		}
+		"Krieger"
+		{
+			"skills"		"expert"
+		}
+		"Lana"
+		{
+			"skills"		"expert"
+		}
+		"Martin"
+		{
+			"skills"		"expert"
+		}
+		"Mike"
+		{
+			"skills"		"expert"
+		}
+		"Olga"
+		{
+			"skills"		"expert"
+		}
+		"Peter"
+		{
+			"skills"		"expert"
+		}
+		"Pam"
+		{
+			"skills"		"expert"
+		}
+		"Spencer"
+		{
+			"skills"		"expert"
+		}
+		"Sterling"
+		{
+			"skills"		"expert"
+		}
+		"Steve"
+		{
+			"skills"		"expert"
+		}
+		"Tom"
+		{
+			"skills"		"expert"
+		}
+		"Victoria"
+		{
+			"skills"		"expert"
+		}
+		
+		// -----------
+		// HARD
+		// -----------
+		"Roland"
+		{
+			"skills"		"very_hard"
+		}
+		"Melvin"
+		{
+			"skills"		"very_hard"
+		}
+		"Jackson"
+		{
+			"skills"		"very_hard"
+		}
+		"Louis"
+		{
+			"skills"		"very_hard"
+		}
+		"Joseph"
+		{
+			"skills"		"very_hard"
+		}
+		"Alvin"
+		{
+			"skills"		"very_hard"
+		}
+		"Hayden"
+		{
+			"skills"		"very_hard"
+		}
+		"Dustin"
+		{
+			"skills"		"very_hard"
+		}
+		"Matthew"
+		{
+			"skills"		"very_hard"
+		}
+		"Harrison"
+		{
+			"skills"		"very_hard"
+		}
+		"Ray"
+		{
+			"skills"		"very_hard"
+		}
+		"Cheryl"
+		{
+			"skills"		"very_hard"
+		}
+		"Mallory"
+		{
+			"skills"		"very_hard"
+		}
+		"Buster"
+		{
+			"skills"		"very_hard"
+		}
+		"Gob"
+		{
+			"skills"		"very_hard"
+		}
+		"George Michael"
+		{
+			"skills"		"very_hard"
+		}
+		"Maebe"
+		{
+			"skills"		"very_hard"
+		}
+		"Lindsey"
+		{
+			"skills"		"very_hard"
+		}
+		"George"
+		{
+			"skills"		"very_hard"
+		}
+		"Lucille"
+		{
+			"skills"		"very_hard"
+		}
+		"Tobias"
+		{
+			"skills"		"very_hard"
+		}
+		"Preston"
+		{
+			"skills"		"very_hard"
+		}
+		"Charlie"
+		{
+			"skills"		"very_hard"
+		}
+		
+		"Eddie"
+		{
+			"skills"		"hard"
+		}
+		"Andon"
+		{
+			"skills"		"hard"
+		}
+		"Allen"
+		{
+			"skills"		"hard"
+		}
+		"Solomon"
+		{
+			"skills"		"hard"
+		}
+		"Connor"
+		{
+			"skills"		"hard"
+		}
+		"Samuel"
+		{
+			"skills"		"hard"
+		}
+		"Jordan"
+		{
+			"skills"		"hard"
+		}
+		"Emerson"
+		{
+			"skills"		"hard"
+		}
+		"Richard"
+		{
+			"skills"		"hard"
+		}
+		"Cole"
+		{
+			"skills"		"hard"
+		}
+		"Mac"
+		{
+			"skills"		"hard"
+		}
+		"Chad"
+		{
+			"skills"		"hard"
+		}
+		"Clark"
+		{
+			"skills"		"hard"
+		}
+		"Lucas"
+		{
+			"skills"		"hard"
+		}
+		"Bradford"
+		{
+			"skills"		"hard"
+		}
+		"Ismael"
+		{
+			"skills"		"hard"
+		}
+		"Juan"
+		{
+			"skills"		"hard"
+		}
+		"Roosevelt"
+		{
+			"skills"		"hard"
+		}
+		"Shawn"
+		{
+			"skills"		"hard"
+		}
+		"Rafael"
+		{
+			"skills"		"hard"
+		}
+		"Brett"
+		{
+			"skills"		"hard"
+		}
+		"Colin"
+		{
+			"skills"		"hard"
+		}
+		"Marcos"
+		{
+			"skills"		"hard"
+		}
+		"Theodore"
+		{
+			"skills"		"hard"
+		}
+		
+		"Bailey"
+		{
+			"skills"		"tough"
+		}
+		"Isaac"
+		{
+			"skills"		"tough"
+		}
+		"Landon"
+		{
+			"skills"		"tough"
+		}
+		"Austin"
+		{
+			"skills"		"tough"
+		}
+		"Edgar"
+		{
+			"skills"		"tough"
+		}
+		"Jesse"
+		{
+			"skills"		"tough"
+		}
+		"Lawrence"
+		{
+			"skills"		"tough"
+		}
+		"Jack"
+		{
+			"skills"		"tough"
+		}
+		"Hugh"
+		{
+			"skills"		"tough"
+		}
+		"Natalie"
+		{
+			"skills"		"tough"
+		}
+		"Seth"
+		{
+			"skills"		"tough"
+		}
+		"Alia"
+		{
+			"skills"		"tough"
+		}
+		"Phil"
+		{
+			"skills"		"tough"
+		}
+		"Jan"
+		{
+			"skills"		"tough"
+		}
+		"Kirk"
+		{
+			"skills"		"tough"
+		}
+		"Troy"
+		{
+			"skills"		"tough"
+		}
+		"Gerald"
+		{
+			"skills"		"tough"
+		}
+		"Frankie"
+		{
+			"skills"		"tough"
+		}
+		"Adrian"
+		{
+			"skills"		"tough"
+		}
+		"Bruce"
+		{
+			"skills"		"tough"
+		}
+		"Armando"
+		{
+			"skills"		"tough"
+		}
+		"Bernard"
+		{
+			"skills"		"tough"
+		}
+		"Greg"
+		{
+			"skills"		"tough"
+		}
+		"Darrel"
+		{
+			"skills"		"tough"
+		}
+		
+		// -----------
+		// NORMAL
+		// -----------
+		"Kelvin"
+		{
+			"skills"		"normal"
+		}
+		"Delia"
+		{
+			"skills"		"normal"
+		}
+		"Miriam"
+		{
+			"skills"		"normal"
+		}
+		"Brandon"
+		{
+			"skills"		"normal"
+		}
+		"Laura"
+		{
+			"skills"		"normal"
+		}
+		"Celine"
+		{
+			"skills"		"normal"
+		}
+		"Sophie"
+		{
+			"skills"		"normal"
+		}
+		"Leah"
+		{
+			"skills"		"normal"
+		}
+		"Ethan"
+		{
+			"skills"		"normal"
+		}
+		"Zane"
+		{
+			"skills"		"normal"
+		}
+		"Alfred"
+		{
+			"skills"		"normal"
+		}
+		"Patrick"
+		{
+			"skills"		"normal"
+		}
+		"Nicholas"
+		{
+			"skills"		"normal"
+		}
+		"Mario"
+		{
+			"skills"		"normal"
+		}
+		"Stewart"
+		{
+			"skills"		"normal"
+		}
+		"Gordon"
+		{
+			"skills"		"normal"
+		}
+		"Clifford"
+		{
+			"skills"		"normal"
+		}
+		"Ralph"
+		{
+			"skills"		"normal"
+		}
+		"Dwayne"
+		{
+			"skills"		"normal"
+		}
+		"Cedric"
+		{
+			"skills"		"normal"
+		}
+		"Randall"
+		{
+			"skills"		"normal"
+		}
+		"Dominick"
+		{
+			"skills"		"normal"
+		}
+		"Jeremy"
+		{
+			"skills"		"normal"
+		}
+		"Percy"
+		{
+			"skills"		"normal"
+		}
+		
+		"Madison"
+		{
+			"skills"		"fair"
+		}
+		"Felicity"
+		{
+			"skills"		"fair"
+		}
+		"Dorian"
+		{
+			"skills"		"fair"
+		}
+		"Annika"
+		{
+			"skills"		"fair"
+		}
+		"Hailey"
+		{
+			"skills"		"fair"
+		}
+		"Teagan"
+		{
+			"skills"		"fair"
+		}
+		"Jackson"
+		{
+			"skills"		"fair"
+		}
+		"Victor"
+		{
+			"skills"		"fair"
+		}
+		"Thalia"
+		{
+			"skills"		"fair"
+		}
+		"Maxwell"
+		{
+			"skills"		"fair"
+		}
+		"Bob"
+		{
+			"skills"		"fair"
+		}
+		"Eric"
+		{
+			"skills"		"fair"
+		}
+		"Amos"
+		{
+			"skills"		"fair"
+		}
+		"Darren"
+		{
+			"skills"		"fair"
+		}
+		"Angel"
+		{
+			"skills"		"fair"
+		}
+		"Mark"
+		{
+			"skills"		"fair"
+		}
+		"Van"
+		{
+			"skills"		"fair"
+		}
+		"Rick"
+		{
+			"skills"		"fair"
+		}
+		"Garry"
+		{
+			"skills"		"fair"
+		}
+		"Jerry"
+		{
+			"skills"		"fair"
+		}
+		"Milton"
+		{
+			"skills"		"fair"
+		}
+		"Nelson"
+		{
+			"skills"		"fair"
+		}
+		"Rudolph"
+		{
+			"skills"		"fair"
+		}
+		"Gabriel"
+		{
+			"skills"		"fair"
+		}
+		
+		// -----------
+		// EASY
+		// -----------
+		"Vivian"
+		{
+			"skills"		"easy"
+		}
+		"Melissa"
+		{
+			"skills"		"easy"
+		}
+		"Carissa"
+		{
+			"skills"		"easy"
+		}
+		"Arnold"
+		{
+			"skills"		"easy"
+		}
+		"Jaylon"
+		{
+			"skills"		"easy"
+		}
+		"Dallas"
+		{
+			"skills"		"easy"
+		}
+		"Avery"
+		{
+			"skills"		"easy"
+		}
+		"Kelly"
+		{
+			"skills"		"easy"
+		}
+		"Daphne"
+		{
+			"skills"		"easy"
+		}
+		"Donald"
+		{
+			"skills"		"easy"
+		}
+		"Phoebe"
+		{
+			"skills"		"easy"
+		}
+		"Lance"
+		{
+			"skills"		"easy"
+		}
+		"Valerie"
+		{
+			"skills"		"easy"
+		}
+		"Demetrius"
+		{
+			"skills"		"easy"
+		}
+		"Graham"
+		{
+			"skills"		"easy"
+		}
+		"Byron"
+		{
+			"skills"		"easy"
+		}
+		"Eve"
+		{
+			"skills"		"easy"
+		}
+		"Tina"
+		{
+			"skills"		"easy"
+		}
+		"Dexter"
+		{
+			"skills"		"easy"
+		}
+		"Kennedy"
+		{
+			"skills"		"easy"
+		}
+		"Raven"
+		{
+			"skills"		"easy"
+		}
+		"Gloria"
+		{
+			"skills"		"easy"
+		}
+		"Stellan"
+		{
+			"skills"		"easy"
+		}
+		"Nathan"
+		{
+			"skills"		"easy"
+		}
+	}
+}
