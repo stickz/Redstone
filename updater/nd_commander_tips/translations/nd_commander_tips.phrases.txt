@@ -115,19 +115,38 @@
 		
 	"No auto repair bunker"
 	{
-		// 19 - To remind the Commander that the Command Bunker can't be auto repaired like other buildings
+		// 18 - To remind the Commander that the Command Bunker can't be auto repaired like other buildings
 		"en"		"Command Bunker is the only building that can't be auto repaired, it requires an Support Engineer to fix"
 	}
 	
 	"Commander commands"
 	{
-		// 20 - Remind them bots respond faster to the Attack command than the capture resources command, but they will still capture the resource on Attack
-		"en"		"Bots respond faster to the Attack command. Place on resource points so they capture."
+		// 19 - Remind them bots respond faster to the Attack command than the capture resources command, but they will still capture the resource on Attack
+		"en"		"Bots respond faster to the Attack command. Place on resource points so they capture"
 	}
 	
-	"Title"
+	"Radar for stealths"
 	{
-		// Note
-		"en"		"Tip"
+		// 20 - Remind Commander that placing a radar near areas plagued with enemy stealths can help
+		"en"		"Near areas that are being attacked by stealths, Radar installations can help your troops"
+	}
+	
+	"Commander Damage"
+	{
+		//  21 - Remind them that commander damage is expensive (for those who over use) but that it is useful (for those who do not)
+		"en"		"Commander Damage, though expensive is very useful somtimes"
+	}
+	
+	"Upgrade Commander Damage"
+	{
+		// 22 - Remind them to keep upgrading Commander Damage, (and hopefully the other research) as, as the game goes on it needs to get stronger
+		"en"		"As the game progresses you need to keep Commander Damage and other research, up to date, so as to keep it an effective tool"
+	}
+	
+	"Lost Prime"
+	{
+		// 23 - Remind commander to tag prime for capture after it is lost
+		// Could this be triggered with the other lost prime alert ? 
+		"en"		"Consider Tagging Prime for re-capture"
 	}
 }
