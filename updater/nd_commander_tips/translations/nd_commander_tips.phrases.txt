@@ -16,7 +16,7 @@
 	"Check b4 replace Node"
 	{
 		// 02 - This is encourage Commanders to check the area is clear prior to replacing a damaged Power Relay Node
-		"en"		"When replacing a damaged Power Relay, check the area is clear of threats first"
+		"en"		"Check if the area is clear of threats, before replacing a damaged Power Relay"
 	}
 	
 	"Protect Nodes"
