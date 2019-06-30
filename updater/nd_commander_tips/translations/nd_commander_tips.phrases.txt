@@ -127,8 +127,8 @@
 	
 	"Radar for stealths"
 	{
-		// 20 - Remind Commander that placing a radar near areas plagued with enemy stealths can help
-		"en"		"Near areas that are being attacked by stealths, Radar installations can help your troops"
+		// 20 - Remind Commander that placing a Radar Station near areas plagued with enemy stealths can help
+		"en"		"Near areas that are being attacked by stealths, Radar Station can help your troops"
 	}
 	
 	"Commander Damage"
@@ -140,13 +140,13 @@
 	"Upgrade Commander Damage"
 	{
 		// 22 - Remind them to keep upgrading Commander Damage, (and hopefully the other research) as, as the game goes on it needs to get stronger
-		"en"		"As the game progresses you need to keep Commander Damage and other research, up to date, so as to keep it an effective tool"
+		"en"		"As the game progresses, research Commander Abilities II to unlock Walls and increase Commander Damage strength"
 	}
 	
 	"Lost Prime"
 	{
 		// 23 - Remind commander to tag prime for capture after it is lost
 		// Could this be triggered with the other lost prime alert ? 
-		"en"		"Consider Tagging Prime for re-capture"
+		"en"		"Consider tagging prime with the capture order, to notify your team"
 	}
 }
