@@ -34,9 +34,12 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 	
 	int type = event.GetInt("type");
 	if (type == RESOURCE_PRIME)
-	{
-		int otherTeam = getOtherTeam(event.GetInt("team"));
-		DisplayPrimeCapMsg(otherTeam);
+	{		
+		int team = event.GetInt("team");
+		int otherTeam = getOtherTeam(team);
+		
+		if (otherTeam == TEAM_EMPIRE || otherTeam == TEAM_CONSORT)
+			DisplayPrimeCapMsg(otherTeam);
 	}
 	
 	RemoveCaptureStatus(entindex);
