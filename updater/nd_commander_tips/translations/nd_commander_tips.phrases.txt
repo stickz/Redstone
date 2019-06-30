@@ -110,7 +110,7 @@
 	"Repair your buildings"
 	{
 		// 17 - To remind the commander to repair buildings, just encase they are attacked again
-		"en"		"Don't forget to regularly check your buildings and start repairing those that need it. You never know when or where one may get attacked"
+		"en"		"Don't forget to regularly check your buildings and start repairing those that need it."
 	}
 		
 	"No auto repair bunker"
