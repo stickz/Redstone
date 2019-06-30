@@ -53,6 +53,16 @@ stock int ND_RetrieveScore(int client) {
 }
 
 /** 
+ * Retreives the current squad of a given client index
+ *
+ * @param client		Client index.
+ * @return			The squad of the client.
+ */ 
+stock int ND_RetreiveSquad(int client) {
+	return GetEntProp(client, Prop_Send, "m_iSquad");
+}
+
+/** 
  * Retreives the current resources of a given team index
  *
  * @param team			team index.
