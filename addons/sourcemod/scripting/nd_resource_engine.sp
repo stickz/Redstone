@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 
 public Plugin myinfo = 
 {
@@ -49,7 +50,7 @@ public Action TIMER_CheckPrimeDepleted(Handle timer)
 	if (curRes <= 0)
 	{				
 		// When depleted... Fire forward, mark boolean and stop timer
-		FirePrimeDepletedForward(entity);
+		FirePrimeDepletedForward();
 		bPrimeDepleted = true;
 		return Plugin_Stop;
 	}	
@@ -57,11 +58,11 @@ public Action TIMER_CheckPrimeDepleted(Handle timer)
 	return Plugin_Continue;
 }
 
-void FirePrimeDepletedForward(int entity)
+void FirePrimeDepletedForward()
 {
 	Action dummy;
 	Call_StartForward(OnPrimeResDepleted);
-	Call_PushCell(entity);
+	Call_PushCell(PrimeEntity);
 	Call_Finish(dummy);
 }
 
