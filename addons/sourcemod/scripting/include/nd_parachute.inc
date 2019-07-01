@@ -5,4 +5,4 @@
 
 native void ND_SetParachuteSpeed(int client, float speed);
 
-native int ND_GetDefaultParaSpeed(int client);
+native int ND_GetDefaultParaSpeed();
