@@ -29,7 +29,7 @@ public void OnPluginStart()
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) 
 {
 	PrimeEntity = FindEntityByClassname(-1, "nd_info_primary_resource_point");
-	CreateTimer(60.0, TIMER_CheckPrimeDepleted, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(30.0, TIMER_CheckPrimeDepleted, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	bPrimeDepleted = false;
 	roundStarted = true;
 }
