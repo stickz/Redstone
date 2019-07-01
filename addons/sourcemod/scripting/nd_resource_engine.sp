@@ -13,41 +13,48 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 Handle OnPrimeResDepleted;
-bool bPrimeDepleted;
+bool bPrimeDepleted = false;
+bool roundStarted = false;
+int PrimeEntity = -1;
 
 public void OnPluginStart()
 {
-	HookEvent("resource_extract", Event_ResourceExtract, EventHookMode_PostNoCopy);
-	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
+	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);	
+	HookEvent("round_win", Event_RoundEnd, EventHookMode_PostNoCopy);
 	
-	OnPrimeResDepleted = CreateGlobalForward("ND_OnPrimeDepleted", ET_Ignore, Param_Cell);
-	
+	OnPrimeResDepleted = CreateGlobalForward("ND_OnPrimeDepleted", ET_Ignore, Param_Cell);	
 	AddUpdaterLibrary(); // Add auto updater feature
 }
 
-public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) 
+{
+	PrimeEntity = FindEntityByClassname(-1, "nd_info_primary_resource_point");
+	CreateTimer(60.0, TIMER_CheckPrimeDepleted, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	bPrimeDepleted = false;
+	roundStarted = true;
 }
 
-public Action Event_ResourceExtract(Event event, const char[] name, bool dontBroadcast)
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
+	roundStarted = false;
+}
+
+public Action TIMER_CheckPrimeDepleted(Handle timer)
 {
-	if (!bPrimeDepleted)
-	{
-		int entity = event.GetInt("entindex");
-		
-		char resName[64];
-		GetEntityClassname(entity, resName, sizeof(resName));
-		
-		if (StrEqual(resName, "nd_info_primary_resource_point", true))
-		{
-			int curRes = GetEntProp(entity, Prop_Send, "m_iCurrentResources");			
-			if (curRes <= 0)
-			{				
-				FirePrimeDepletedForward(entity);
-				bPrimeDepleted = true;
-			}		
-		}
-	}
+	// Stop the timer, if the round is not started
+	if (!roundStarted)
+		return Plugin_Stop;
+	
+	// Get the current resources prime has left
+	int curRes = GetEntProp(PrimeEntity, Prop_Send, "m_iCurrentResources");
+	if (curRes <= 0)
+	{				
+		// When depleted... Fire forward, mark boolean and stop timer
+		FirePrimeDepletedForward(entity);
+		bPrimeDepleted = true;
+		return Plugin_Stop;
+	}	
+	
+	return Plugin_Continue;
 }
 
 void FirePrimeDepletedForward(int entity)
