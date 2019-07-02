@@ -7,6 +7,7 @@
 
 #define ENTITY_NOT_FOUND -1
 
+native int ND_GetPrimeEntity();
 native int ND_GetTeamEntity(int team);
 native int ND_GetPlayerManagerEntity();
 native int ND_GetTeamBunkerEntity(int team);
@@ -104,6 +105,27 @@ stock int ND_GetAccumulatedResources(int team)
  */ 
 stock int ND_GetBuildingHealth(int entity) {
  	return GetEntProp(entity, Prop_Send, "m_iHealth");
+}
+
+/** 
+ * Retreives the resources left on prime before trickling
+ *
+ * @return			The resources left on prime
+ */ 
+stock int ND_GetPrimeResources() {
+	return GetEntProp(ND_GetPrimeEntity(), Prop_Send, "m_iCurrentResources");
+}
+stock bool ND_GetPrimeDepleted() {
+	return ND_GetPrimeResources() <= 0;
+}
+
+/** 
+ * Sets the resources left on prime before trickling
+ *
+ * @param resources		resource amount.
+ */ 
+stock void ND_SetPrimeResources(int resources) {
+	SetEntProp(ND_GetPrimeEntity(), Prop_Send, "m_iCurrentResources", resources);
 }
 
 stock void SDK_HookEntityDamaged(const char[] classname, SDKHookCB callback)
