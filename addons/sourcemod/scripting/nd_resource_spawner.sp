@@ -173,8 +173,6 @@ void CheckStableSpawns()
 	char map_name[64];   
 	GetCurrentMap(map_name, sizeof(map_name));
 	
-	bool primeDepleted = ND_PrimeDepleted();
-
 	// Will throw tag mismatch warning, it's okay
 	if (ND_CustomMapEquals(map_name, ND_Submarine))
 	{
