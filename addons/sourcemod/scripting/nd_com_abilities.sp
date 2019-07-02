@@ -21,7 +21,6 @@ public Plugin myinfo =
 int levelDefault[] = { 630, 720, 810 };
 int reducedValues[] = { 630, 720, 810 };
 
-bool foundCorner = false;
 bool currentState = false;
 
 ConVar cvarNormalCount;
@@ -41,20 +40,16 @@ public void OnPluginStart()
 
 public void ND_OnPreRoundStart()
 {
-	foundCorner = FoundCornerMap();
 	currentState = false;
 	SetReducedValues();
 	
 	// If the map is corner, scale damage; otherwise, set it to default
-	if (foundCorner)
-		RefreshComDamage();
-	else
-		SetCommanderDamage(levelDefault);
+	RefreshComDamage();
 }
 
 public void ND_OnPlayerTeamChanged(int client, bool valid)
 {	
-	if (foundCorner && ND_RoundStarted())
+	if (ND_RoundStarted())
 		RefreshComDamage();
 }
 
@@ -62,13 +57,6 @@ public void OnDamageChanged(ConVar convar, char[] oldValue, char[] newValue)
 {	
 	if (ND_RoundStarted())
 		ND_OnPreRoundStart();
-}
-
-bool FoundCornerMap()
-{
-	char currentMap[64];
-	GetCurrentMap(currentMap, sizeof(currentMap));	
-	return ND_CustomMapEquals(currentMap, ND_Corner);
 }
 
 void RefreshComDamage()
