@@ -366,7 +366,7 @@ public void SpawnResourcePoint( const char[] type, const char[] model, int rt, i
 	
 	// If prime is depleted, also deplete the tertiary resource point
 	if (ND_PrimeDepleted())
-		SetEntProp(rt, Prop_Data "m_iCurrentResources", 0);
+		SetEntProp(rt, Prop_Send, "m_iCurrentResources", 0);
        
 	SetEntProp(trigger, Prop_Send, "m_nSolidType", 2);
  
