@@ -336,7 +336,7 @@ public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
 	int rt = CreateEntityByName("nd_info_tertiary_resource_point");
 	int trigger = CreateEntityByName("nd_trigger_resource_point");
 	
-	bool deplete = RED_ClientCount() >= 12 && ND_PrimeDepleted();
+	bool deplete = ND_GetClientCount() >= 12 && ND_PrimeDepleted();
 	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin, deplete);
 }
 
