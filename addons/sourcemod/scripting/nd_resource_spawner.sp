@@ -173,6 +173,10 @@ void CheckStableSpawns()
 	char map_name[64];   
 	GetCurrentMap(map_name, sizeof(map_name));
 	
+	// Don't deplete some tertaries, if we're depleting prime right away
+	bool primeDepleted = ND_PrimeDepleted();
+	bool deplete = ND_GetClientCount() >= 12 && primeDepleted;
+	
 	// Will throw tag mismatch warning, it's okay
 	if (ND_CustomMapEquals(map_name, ND_Submarine))
 	{
@@ -197,10 +201,10 @@ void CheckStableSpawns()
 	
 	else if (ND_MapEqualsAnyMetro(map_name))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18) || ND_PrimeDepleted())
+		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18) || primeDepleted)
 		{
-			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
-			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
+			SpawnTertiaryPoint({2620.0, 529.0, 5.0}, deplete);
+			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0}, deplete);
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -208,16 +212,16 @@ void CheckStableSpawns()
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
 		int teamCount = RED_OnTeamCount();
-		if (teamCount >= cvarSiloTertiarySpawns.IntValue)
+		if (teamCount >= cvarSiloTertiarySpawns.IntValue || primeDepleted)
 		{
 			if (!tertsSpawned[FIRST_TIER])
 			{
-				SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
-				SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
+				SpawnTertiaryPoint({-3375.0, 1050.0, 2.0}, deplete);
+				SpawnTertiaryPoint({-36.0, -2000.0, 5.0}, deplete);
 				tertsSpawned[FIRST_TIER] = true;
 			}
 			
-			if (teamCount >= GetSpawnCount(26, 28, 30) || ND_PrimeDepleted())
+			if (teamCount >= GetSpawnCount(26, 28, 30))
 			{
 				SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
 				SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
@@ -228,7 +232,7 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
 	{
-		if (RED_OnTeamCount() >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue || ND_PrimeDepleted())
+		if (RED_OnTeamCount() >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue || primeDepleted)
 		{
 			// Respawn tunnel resources			
 			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
@@ -259,10 +263,10 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Hydro))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 28) || ND_PrimeDepleted())
+		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 28) || primeDepleted)
 		{
-			SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
-			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
+			SpawnTertiaryPoint({2132.0, 2559.0, 18.0}, deplete);
+			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0}, deplete);
 			tertsSpawned[SECOND_TIER] = true;	
 		}
 	}
@@ -329,13 +333,13 @@ void AdjustBetaSpawns()
 	}
 }
 
-public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
+public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin, bool deplete = true)
 {
 	int rt = CreateEntityByName("nd_info_tertiary_resource_point");
 	int trigger = CreateEntityByName("nd_trigger_resource_point");
 	
-	bool deplete = ND_GetClientCount() >= 12 && ND_PrimeDepleted();
-	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin, deplete);
+	bool depleteTert = deplete && ND_PrimeDepleted();
+	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin, depleteTert);
 }
 
 public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin, bool deplete)
