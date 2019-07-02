@@ -363,6 +363,10 @@ public void SpawnResourcePoint( const char[] type, const char[] model, int rt, i
 	SetEntPropFloat(trigger, Prop_Data, "m_flCapTime", 5.0);
 	SetEntProp(trigger, Prop_Data, "m_iButtonsToCap", 0);
 	SetEntProp(trigger, Prop_Data, "m_iNumPlayersToCap", 1);
+	
+	// If prime is depleted, also deplete the tertiary resource point
+	if (ND_PrimeDepleted())
+		SetEntProp(rt, Prop_Data "m_iCurrentResources", 0);
        
 	SetEntProp(trigger, Prop_Send, "m_nSolidType", 2);
  
