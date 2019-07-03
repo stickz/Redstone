@@ -150,6 +150,6 @@ void SetUnlimitedTrickleResources()
 
 void PrintTrickleDisabled()
 {
-	PrintToChatAll("\x05[xG] Trickling Disabled! Set 100% resource production!");
-	PrintToChatAll("\x05[xG] After 26m, production will no longer drop 45%!");	
+	PrintToChatAll("\x05[xG] Trickling Disabled! Set 100%% resource production!");
+	PrintToChatAll("\x05[xG] After 26m, production will no longer drop 45%% !");
 }
