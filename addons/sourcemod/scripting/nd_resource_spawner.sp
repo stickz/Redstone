@@ -38,14 +38,13 @@ bool tertsSpawned[2] = { false, ... };
 
 /* Plugin Convars */
 ConVar cvarMarsTertiarySpawns;
-ConVar cvarMetroTertiarySpawns;
 ConVar cvarOasisTertiarySpawns;
 ConVar cvarCoastTertiarySpawns;
 ConVar cvarCornerTertiarySpawns;
 ConVar cvarNuclearTertiarySpawns;
-ConVar cvarDowntownTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
-ConVar cvarSiloTertiarySpawns[2];
+ConVar cvarSiloTertiarySpawns;
+ConVar cvarDowntownTertiarySpawns;
 ConVar cvarGateTertiarySpawns[2];
 ConVar cvarRockTertiarySpawns[2];
 ConVar cvarOilfeildTertiarySpawns[2];
@@ -106,15 +105,13 @@ void CreateMapConvars()
 	
 	// Create convars for resoruce spawning on a per map basis
 	cvarMarsTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_mars", "16", "Sets number of players to spawn extra tertaries on mars.");
-	cvarMetroTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_metro", "18", "Sets number of players to spawn extra tertaries on metro.");	
 	cvarOasisTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_oasis", "18", "Sets number of players to spawn extra tertaries on oasis.");
 	cvarCoastTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_coast", "16", "Sets number of players to spawn extra tertaries on coast.");	
 	cvarCornerTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_corner", "20", "Sets number of players to spawn extra tertaries on corner.");
 	cvarNuclearTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
-	cvarDowntownTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_downtown", "28", "Sets number of players to spawn extra tertaries on downtown and downtown_dyn.");
 	cvarRoadworkTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
-	cvarSiloTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_silo1", "14", "Sets number of players to spawn extra tertaries on silo.");
-	cvarSiloTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_silo2", "26", "Sets number of players to spawn extra tertaries on silo.");	
+	cvarDowntownTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_downtown", "28", "Sets number of players to spawn extra tertaries on downtown and downtown_dyn.");
+	cvarSiloTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_silo1", "14", "Sets number of players to spawn extra tertaries on silo.");
 	cvarGateTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
 	cvarGateTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
 	cvarRockTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_rock1", "8", "Sets number of players to spawn extra tertaries on rock.");
@@ -177,35 +174,39 @@ void CheckStableSpawns()
 {
 	char map_name[64];   
 	GetCurrentMap(map_name, sizeof(map_name));
-
+	
+	// Don't deplete some tertaries, if we're depleting prime right away
+	bool primeDepleted = ND_PrimeDepleted();
+	bool deplete = ND_GetClientCount() >= 12 && primeDepleted;
+	
 	// Will throw tag mismatch warning, it's okay
 	if (ND_CustomMapEquals(map_name, ND_Submarine))
 	{
 		if (!tertsSpawned[FIRST_TIER])
 		{
 			// Center map tertiary resource points
-			SpawnTertiaryPoint({-1475.0, 3475.0, -33.0});
-			SpawnTertiaryPoint({-1000.0, -3820.0, -216.0});
-			SpawnTertiaryPoint({1350.0, -2153.0, 20.0});
-			SpawnTertiaryPoint({2495.0, 5775.0, 150.0});
+			SpawnTertiaryPoint({-1475.0, 3475.0, -33.0}, true);
+			SpawnTertiaryPoint({-1000.0, -3820.0, -216.0}, true);
+			SpawnTertiaryPoint({1350.0, -2153.0, 20.0}, true);
+			SpawnTertiaryPoint({2495.0, 5775.0, 150.0}, true);
 			tertsSpawned[FIRST_TIER] = true;
 		}
 		
 		if (RED_OnTeamCount() >= GetSpawnCount(20, 22, 24))
 		{
 			// Base tertiary resource points
-			SpawnTertiaryPoint({987.0, -7562.0, 23.0});  
-			SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
+			SpawnTertiaryPoint({987.0, -7562.0, 23.0}, true);  
+			SpawnTertiaryPoint({-1483.0, 9135.0, 123.0}, true);
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
 	
 	else if (ND_MapEqualsAnyMetro(map_name))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18) || ND_PrimeDepleted())
+		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18) || primeDepleted)
 		{
-			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
-			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
+			SpawnTertiaryPoint({2620.0, 529.0, 5.0}, deplete);
+			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0}, deplete);
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -213,19 +214,19 @@ void CheckStableSpawns()
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
 		int teamCount = RED_OnTeamCount();
-		if (teamCount >= cvarSiloTertiarySpawns[FIRST_TIER].IntValue)
+		if (teamCount >= cvarSiloTertiarySpawns.IntValue || primeDepleted)
 		{
 			if (!tertsSpawned[FIRST_TIER])
 			{
-				SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
-				SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
+				SpawnTertiaryPoint({-3375.0, 1050.0, 2.0}, deplete);
+				SpawnTertiaryPoint({-36.0, -2000.0, 5.0}, deplete);
 				tertsSpawned[FIRST_TIER] = true;
 			}
 			
-			if (teamCount >= GetSpawnCount(26, 28, 30) || ND_PrimeDepleted())
+			if (teamCount >= GetSpawnCount(26, 28, 30))
 			{
-				SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
-				SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
+				SpawnTertiaryPoint({-5402.0, -3859.0, 74.0}, true);
+				SpawnTertiaryPoint({2340.0, 2558.0, 10.0}, true);
 				tertsSpawned[SECOND_TIER] = true;			
 			}
 		}	
@@ -233,41 +234,41 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
 	{
-		if (RED_OnTeamCount() >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue || ND_PrimeDepleted())
+		if (RED_OnTeamCount() >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue || primeDepleted)
 		{
 			// Respawn tunnel resources			
-			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
-			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
+			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0}, true);
+			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0}, true);
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
 	
-	else if (ND_CustomMapEquals(map_name, ND_Corner))
+	/*else if (ND_CustomMapEquals(map_name, ND_Corner))
 	{
 		if (RED_OnTeamCount() >= cvarCornerTertiarySpawns.IntValue)
 		{
-			SpawnTertiaryPoint({-3485.0, 11688.0, 5.0});
-			SpawnTertiaryPoint({-1947.0, -1942.0, 7.0});
+			SpawnTertiaryPoint({-3485.0, 11688.0, 5.0}, true);
+			SpawnTertiaryPoint({-1947.0, -1942.0, 7.0}, true);
 			tertsSpawned[SECOND_TIER] = true;		
 		}
-	}
+	}*/
 	
 	else if (ND_StockMapEquals(map_name, ND_Downtown))
 	{
 		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 30))
 		{
-			SpawnTertiaryPoint({2385.0, -5582.0, -3190.0});
-			SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0});
+			SpawnTertiaryPoint({2385.0, -5582.0, -3190.0}, true);
+			SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0}, true);
 			tertsSpawned[SECOND_TIER] = true;		
 		}
 	}
 	
 	else if (ND_StockMapEquals(map_name, ND_Hydro))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 28) || ND_PrimeDepleted())
+		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 28) || primeDepleted)
 		{
-			SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
-			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
+			SpawnTertiaryPoint({2132.0, 2559.0, 18.0}, deplete);
+			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0}, deplete);
 			tertsSpawned[SECOND_TIER] = true;	
 		}
 	}
@@ -285,15 +286,15 @@ void CheckBetaSpawns()
 		{
 			if (!tertsSpawned[FIRST_TIER])
 			{
-				SpawnTertiaryPoint({-5824.0, -32.0, 0.0});
-				SpawnTertiaryPoint({3392.0, 0.0, 5.0});
+				SpawnTertiaryPoint({-5824.0, -32.0, 0.0}, true);
+				SpawnTertiaryPoint({3392.0, 0.0, 5.0}, true);
 				tertsSpawned[FIRST_TIER] = true;
 			}
 			
 			if (teamCount >= cvarGateTertiarySpawns[SECOND_TIER].IntValue)
 			{
-				SpawnTertiaryPoint({-3392.0, -2384.0, 0.0});
-				SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
+				SpawnTertiaryPoint({-3392.0, -2384.0, 0.0}, true);
+				SpawnTertiaryPoint({-3456.0, 2112.0, -16.0}, true);
 				tertsSpawned[SECOND_TIER] = true;
 			}
 		}
@@ -313,7 +314,7 @@ void AdjustStableSpawns()
 		
 		// Spawn new tertiary near consort base
 		// So empire + consort have same resource acess
-		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0});
+		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0}, false);
 	}
 }
 
@@ -334,15 +335,16 @@ void AdjustBetaSpawns()
 	}
 }
 
-public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
+public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin, bool deplete)
 {
 	int rt = CreateEntityByName("nd_info_tertiary_resource_point");
 	int trigger = CreateEntityByName("nd_trigger_resource_point");
-       
-	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin);
+	
+	bool depleteTert = deplete && ND_PrimeDepleted();
+	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin, depleteTert);
 }
 
-public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin)
+public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin, bool deplete)
 {	
 	char rt_name[32];
 	char trigger_name[32];
@@ -363,6 +365,9 @@ public void SpawnResourcePoint( const char[] type, const char[] model, int rt, i
 	SetEntPropFloat(trigger, Prop_Data, "m_flCapTime", 5.0);
 	SetEntProp(trigger, Prop_Data, "m_iButtonsToCap", 0);
 	SetEntProp(trigger, Prop_Data, "m_iNumPlayersToCap", 1);
+	
+	if (deplete)
+		SetEntProp(rt, Prop_Send, "m_iCurrentResources", 0);
        
 	SetEntProp(trigger, Prop_Send, "m_nSolidType", 2);
  
