@@ -59,7 +59,7 @@ void AdjustTertiarySpawns()
 		RemoveTertiaryPoint("tertiary_4", "tertiary_area4");
 		
 		RemoveTertiaryPoint("tertiary_tunnel", "tertiary_tunnel_area");		
-		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0});
+		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0}, true);
 	}
 	
 	else if (ND_StockMapEquals(map_name, ND_Oasis))
@@ -74,7 +74,7 @@ void AdjustTertiarySpawns()
 		
 		// Move the sand tertiary over more
 		//RemoveTertiaryPoint("tertiary_sand", "tertiary_area");
-		//SpawnTertiaryPoint({6700.0, 6800.0, 45.0});
+		//SpawnTertiaryPoint({6700.0, 6800.0, 45.0}, true);
 	}
 	
 	else if (ND_CustomMapEquals(map_name, ND_Mars))
@@ -98,8 +98,8 @@ void CheckTertiarySpawns()
 	{
 		if (RED_OnTeamCount() >= cvarDowntownTertiarySpawns.IntValue)
 		{
-			SpawnTertiaryPoint({-2160.0, 6320.0, -3840.0});
-			SpawnTertiaryPoint({753.0, 1468.0, -3764.0});
+			SpawnTertiaryPoint({-2160.0, 6320.0, -3840.0}, true);
+			SpawnTertiaryPoint({753.0, 1468.0, -3764.0}, true);
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -108,8 +108,8 @@ void CheckTertiarySpawns()
 	{
 		if (RED_OnTeamCount() >= cvarDowntownTertiarySpawns.IntValue)
 		{
-			SpawnTertiaryPoint({2224.0, -784.0, -3200.0});
-			SpawnTertiaryPoint({753.0, 1468.0, -3764.0});
+			SpawnTertiaryPoint({2224.0, -784.0, -3200.0}, true);
+			SpawnTertiaryPoint({753.0, 1468.0, -3764.0}, true);
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -118,8 +118,8 @@ void CheckTertiarySpawns()
 	{
 		if (RED_OnTeamCount() >= cvarRoadworkTertiarySpawns.IntValue)
 		{
-			SpawnTertiaryPoint({3456.0, -5760.0, 7.0});
-			SpawnTertiaryPoint({-6912.0, -2648.0, -118.0});
+			SpawnTertiaryPoint({3456.0, -5760.0, 7.0}, true);
+			SpawnTertiaryPoint({-6912.0, -2648.0, -118.0}, true);
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -128,8 +128,8 @@ void CheckTertiarySpawns()
 	{
 		if (RED_OnTeamCount() >= cvarMarsTertiarySpawns.IntValue)
 		{
-			SpawnTertiaryPoint({-556.0, 4408.0, 28.0});
-			SpawnTertiaryPoint({540.0, 3836.0, 28.0});
+			SpawnTertiaryPoint({-556.0, 4408.0, 28.0}, true);
+			SpawnTertiaryPoint({540.0, 3836.0, 28.0}, true);
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -141,15 +141,15 @@ void CheckTertiarySpawns()
 		{
 			if (!tertsSpawned[FIRST_TIER])
 			{
-				SpawnTertiaryPoint({4052.0, 7008.0, -300.0});
-				SpawnTertiaryPoint({-3720.0, -8716.0, -500.0});
+				SpawnTertiaryPoint({4052.0, 7008.0, -300.0}, true);
+				SpawnTertiaryPoint({-3720.0, -8716.0, -500.0}, true);
 				tertsSpawned[FIRST_TIER] = true;
 			}
 			
 			if (teamCount >= cvarRockTertiarySpawns[SECOND_TIER].IntValue)
 			{
-				SpawnTertiaryPoint({5648.0, -3264.0, -496.0});
-				SpawnTertiaryPoint({-3932.0, 2964.0, -496.0});
+				SpawnTertiaryPoint({5648.0, -3264.0, -496.0}, true);
+				SpawnTertiaryPoint({-3932.0, 2964.0, -496.0}, true);
 				tertsSpawned[SECOND_TIER] = true;
 			}
 		}
@@ -162,15 +162,15 @@ void CheckTertiarySpawns()
 		{
 			if (!tertsSpawned[FIRST_TIER])
 			{				
-				SpawnTertiaryPoint({3691.0, 4118.0, -1056.0});
-				SpawnTertiaryPoint({-4221.0, -3844.0, -951.0});
+				SpawnTertiaryPoint({3691.0, 4118.0, -1056.0}, true);
+				SpawnTertiaryPoint({-4221.0, -3844.0, -951.0}, true);
 				tertsSpawned[FIRST_TIER] = true;
 			}
 			
 			if (teamCount >= cvarOilfeildTertiarySpawns[SECOND_TIER].IntValue)
 			{
-				SpawnTertiaryPoint({-6654.0, -4276.0, -904.0});
-				SpawnTertiaryPoint({6642.0, 4530.0, -996.0});
+				SpawnTertiaryPoint({-6654.0, -4276.0, -904.0}, true);
+				SpawnTertiaryPoint({6642.0, 4530.0, -996.0}, true);
 				tertsSpawned[SECOND_TIER] = true;
 			}
 		}
@@ -180,8 +180,8 @@ void CheckTertiarySpawns()
 	{
 		if (RED_OnTeamCount() >= cvarNuclearTertiarySpawns.IntValue)
 		{
-			SpawnTertiaryPoint({7867.0, 3467.0, 21.0});
-			SpawnTertiaryPoint({312.0, 2635.0, -88.0});
+			SpawnTertiaryPoint({7867.0, 3467.0, 21.0}, true);
+			SpawnTertiaryPoint({312.0, 2635.0, -88.0}, true);
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -194,16 +194,16 @@ void CheckTertiarySpawns()
 			if (!tertsSpawned[FIRST_TIER])
 			{
 				// Respawn coutyard and near secondary resources
-				SpawnTertiaryPoint({-5028.0, -2906.0, -1396.0});
-				SpawnTertiaryPoint({-1550.0, 2764.0, -1200.0});
+				SpawnTertiaryPoint({-5028.0, -2906.0, -1396.0}, true);
+				SpawnTertiaryPoint({-1550.0, 2764.0, -1200.0}, true);
 				tertsSpawned[FIRST_TIER] = true;
 			}
 			
 			if (teamCount >= cvarClocktowerTertiarySpawns[SECOND_TIER].IntValue)
 			{
 				// Respawn tunnel resources			
-				SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
-				SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
+				SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0}, true);
+				SpawnTertiaryPoint({-2564.0, 282.0, -1672.0}, true);
 				tertsSpawned[SECOND_TIER] = true;
 			}
 		}		
@@ -214,8 +214,8 @@ void CheckTertiarySpawns()
 		if (RED_OnTeamCount() >= cvarOasisTertiarySpawns.IntValue)
 		{
 			// (Re)spawn tertaries near the secondaries
-			SpawnTertiaryPoint({-4702.0, 1176.0, -224.0});
-			SpawnTertiaryPoint({5600.0, 1500.0, -390.0});
+			SpawnTertiaryPoint({-4702.0, 1176.0, -224.0}, true);
+			SpawnTertiaryPoint({5600.0, 1500.0, -390.0}, true);
 			tertsSpawned[FIRST_TIER] = true;
 		}
 	}
@@ -225,8 +225,8 @@ void CheckTertiarySpawns()
 		if (RED_OnTeamCount() >= cvarCoastTertiarySpawns.IntValue)
 		{
 			// (Re)spawn tertaries near the secondaries			
-			SpawnTertiaryPoint({700.0, 7164.0, 40.0});
-			SpawnTertiaryPoint({2500.0, -528.0, 54.0});
+			SpawnTertiaryPoint({700.0, 7164.0, 40.0}, true);
+			SpawnTertiaryPoint({2500.0, -528.0, 54.0}, true);
 			tertsSpawned[FIRST_TIER] = true;
 		}
 	}
