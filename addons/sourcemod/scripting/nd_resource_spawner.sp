@@ -44,6 +44,7 @@ ConVar cvarCornerTertiarySpawns;
 ConVar cvarNuclearTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
 ConVar cvarSiloTertiarySpawns;
+ConVar cvarDowntownTertiarySpawns;
 ConVar cvarGateTertiarySpawns[2];
 ConVar cvarRockTertiarySpawns[2];
 ConVar cvarOilfeildTertiarySpawns[2];
@@ -109,6 +110,7 @@ void CreateMapConvars()
 	cvarCornerTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_corner", "20", "Sets number of players to spawn extra tertaries on corner.");
 	cvarNuclearTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
 	cvarRoadworkTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
+	cvarDowntownTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_downtown", "28", "Sets number of players to spawn extra tertaries on downtown and downtown_dyn.");
 	cvarSiloTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_silo1", "14", "Sets number of players to spawn extra tertaries on silo.");
 	cvarGateTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
 	cvarGateTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
