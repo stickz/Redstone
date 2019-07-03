@@ -9,13 +9,13 @@ RegAdminSpawnCmds()
 public Action CMD_SpawnSilo(int client, int args)
 {
 	// In middle map
-	SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
-	SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
+	SpawnTertiaryPoint({-3375.0, 1050.0, 2.0}, true);
+	SpawnTertiaryPoint({-36.0, -2000.0, 5.0}, true);
 	tertsSpawned[FIRST_TIER] = true;
 	
 	// Near base
-	SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
-	SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
+	SpawnTertiaryPoint({-5402.0, -3859.0, 74.0}, true);
+	SpawnTertiaryPoint({2340.0, 2558.0, 10.0}, true);
 	tertsSpawned[SECOND_TIER] = true;
 	
 	return Plugin_Handled;
@@ -23,8 +23,8 @@ public Action CMD_SpawnSilo(int client, int args)
 
 public Action CMD_SpawnCorner(int client, int args)
 {
-	SpawnTertiaryPoint({-3485.0, 11688.0, 5.0});
-	SpawnTertiaryPoint({-1947.0, -1942.0, 7.0});
+	SpawnTertiaryPoint({-3485.0, 11688.0, 5.0}, true);
+	SpawnTertiaryPoint({-1947.0, -1942.0, 7.0}, true);
 	tertsSpawned[SECOND_TIER] = true;
 
 	return Plugin_Handled;
@@ -32,8 +32,8 @@ public Action CMD_SpawnCorner(int client, int args)
 
 public Action CMD_SpawnDowntown(int client, int args)
 {
-	SpawnTertiaryPoint({2385.0, -5582.0, -3190.0});
-	SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0});
+	SpawnTertiaryPoint({2385.0, -5582.0, -3190.0}, true);
+	SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0}, true);
 	tertsSpawned[SECOND_TIER] = true;
 
 	return Plugin_Handled;
@@ -41,8 +41,8 @@ public Action CMD_SpawnDowntown(int client, int args)
 
 public Action CMD_SpawnHydro(int client, int args)
 {
-	SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
-	SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
+	SpawnTertiaryPoint({2132.0, 2559.0, 18.0}, true);
+	SpawnTertiaryPoint({-5199.0, -3461.0, 191.0}, true);
 	tertsSpawned[SECOND_TIER] = true;
 
 	return Plugin_Handled;
