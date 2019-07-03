@@ -87,6 +87,7 @@ public void OnClientPutInServer(int client) {
 
 public Action CMD_DisableTrickle(int client, int arg)
 {
+	PrintToChat(client, "debug: command ran");
 	setCorner = true;
 	SetUnlimitedTrickleResources();
 	PrintTrickleDisabled();
@@ -134,11 +135,15 @@ void SetUnlimitedTrickleResources()
 {
 	ND_SetPrimeResources(999999);
 			
-	for (int sec = 0; sec < listSecondaries.Length; sec++) {
+	for (int s = 0; s < listSecondaries.Length; s++) 
+	{
+		int sec = listSecondaries.Get(s);
 		ND_SetCurrentResources(sec, 999999);				
 	}
 			
-	for (int tert = 0; tert < listTertiaries.Length; tert++) {
+	for (int t = 0; t < listTertiaries.Length; t++) 
+	{
+		int tert = listTertiaries.Get(t);
 		ND_SetCurrentResources(tert, 999999);				
 	}	
 }
