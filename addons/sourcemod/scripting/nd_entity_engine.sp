@@ -19,6 +19,7 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 int g_iPlayerManager = -1;
+int g_iPrimeEntity = -1;
 int g_iTeamEntities[2] = {-1, ...};
 int g_iBunkerEntities[2] = {-1, ...};
 
@@ -33,6 +34,7 @@ public void OnMapStart()
 {
 	/* Update team and player manager entities when the map starts */
 	g_iPlayerManager = FindEntityByClassname(CHECK_ALL, "nd_player_manager");
+	g_iPrimeEntity = FindEntityByClassname(CHECK_ALL, "nd_info_primary_resource_point");
 	g_iTeamEntities[TEAM_EMPIRE-2] = FindEntityByClassname(CHECK_ALL, "nd_team_empire");
 	g_iTeamEntities[TEAM_CONSORT-2] = FindEntityByClassname(CHECK_ALL, "nd_team_consortium");
 	
@@ -58,11 +60,16 @@ public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	/* Create natives to retrieve the entity caches */
+	CreateNative("ND_GetPrimeEntity", Native_GetPrimeEntity);
 	CreateNative("ND_GetTeamEntity", Native_GetTeamManager);
 	CreateNative("ND_GetTeamBunkerEntity", Native_GetTeamBunker);
 	CreateNative("ND_GetPlayerManagerEntity", Native_GetPlayerManager);
 
 	return APLRes_Success;
+}
+
+public int Native_GetPrimeEntity(Handle plugin, int numParams) {
+	return _:g_iPrimeEntity;
 }
 
 public int Native_GetPlayerManager(Handle plugin, int numParams) {
