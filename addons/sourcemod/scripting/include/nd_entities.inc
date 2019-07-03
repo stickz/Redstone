@@ -128,6 +128,10 @@ stock void ND_SetPrimeResources(int resources) {
 	SetEntProp(ND_GetPrimeEntity(), Prop_Send, "m_iCurrentResources", resources);
 }
 
+stock void ND_SetCurrentResources(int entity, int resources) {
+	SetEntProp(entity, Prop_Send, "m_iCurrentResources", resources);
+}
+
 stock void SDK_HookEntityDamaged(const char[] classname, SDKHookCB callback)
 {
         /* Find and hook when entities is damaged. */
