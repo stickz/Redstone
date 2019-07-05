@@ -27,7 +27,7 @@ public Plugin myinfo =
 
 #include "nd_player_tips/clientprefs.sp"
 #include "nd_player_tips/resource_capture.sp"
-#include "nd_player_tips/bunker_message.sp"
+//#include "nd_player_tips/bunker_message.sp"
 #include "nd_player_tips/health_message.sp"
 
 public void OnPluginStart()
@@ -41,11 +41,11 @@ public void OnPluginStart()
 }
 
 public void ND_OnRoundStarted() {
-	HookBunkerEntity(); // For bunker health warnings	
+	//HookBunkerEntity(); For bunker health warnings	
 	SetupHealthHooks(); // For player health warnings
 }
 
 public void ND_OnRoundEndedEX() {
-	UnHookBunkerEntity(); // For bunker health warnings
+	//UnHookBunkerEntity(); For bunker health warnings
 	RemoveHealthHooks();// For player health warnings
 }
