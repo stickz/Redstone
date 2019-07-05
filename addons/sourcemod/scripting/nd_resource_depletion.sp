@@ -76,7 +76,7 @@ public void ND_OnRoundStarted()
 	SetCornerTrickleDisable();
 }
 
-public Action TIMER_DepletePrime(int client, int arg) {
+public Action TIMER_DepletePrime(Handle timer) {
 	ND_SetPrimeResources(0);
 }
 
