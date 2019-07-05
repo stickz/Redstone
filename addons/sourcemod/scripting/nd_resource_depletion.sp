@@ -66,13 +66,18 @@ public void ND_OnRoundStarted()
 		// Check if the map is Metro or Hydro
 		if (ND_MapEqualsAnyMetro(map_name) || ND_StockMapEquals(map_name, ND_Hydro))
 		{
-			// Deplete prime of all it's resources
-			ND_SetPrimeResources(0);			
+			// Deplete prime of all the primary resources			
+			CreateTimer(3.0, TIMER_DepletePrime, _, TIMER_FLAG_NO_MAPCHANGE);
+	
 		}
 	}
 	
 	// Check if corner is ready for the trickle disable feature yet
 	SetCornerTrickleDisable();
+}
+
+public Action TIMER_DepletePrime(Handle timer) {
+	ND_SetPrimeResources(0);
 }
 
 public Action CMD_DisableTrickle(int client, int arg)

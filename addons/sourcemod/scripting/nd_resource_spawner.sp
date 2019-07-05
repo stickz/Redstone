@@ -174,11 +174,13 @@ public void ND_OnRoundStarted()
 	}
 }
 
-public void ND_OnPrimeDepleted(int entity) {
-	CheckPrimeDepleteSpawns();
+public void ND_OnPrimeDepleted(int entity)
+{
+	CheckT1PrimeDepleteSpawns();
+	CheckT2PrimeDepleteSpawns();
 }
 
-void CheckPrimeDepleteSpawns()
+void CheckT1PrimeDepleteSpawns()
 {
 	if (!tertsSpawned[FIRST_TIER])
 	{
@@ -194,14 +196,44 @@ void CheckPrimeDepleteSpawns()
 	}
 }
 
+void CheckT2PrimeDepleteSpawns()
+{
+	if (!tertsSpawned[SECOND_TIER])
+	{
+		// Don't deplete some tertaries, if we're depleting prime right away
+		bool deplete = ND_GetClientCount() >= 12;
+		
+		char map_name[64];   
+		GetCurrentMap(map_name, sizeof(map_name));
+		
+		if (ND_StockMapEquals(map_name, ND_Hydro))
+		{
+			SpawnTertiaryPoint({2132.0, 2559.0, 18.0}, deplete);
+			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0}, deplete);
+			tertsSpawned[SECOND_TIER] = true;
+		}
+		
+		else if (ND_MapEqualsAnyMetro(map_name))
+		{
+			SpawnTertiaryPoint({2620.0, 529.0, 5.0}, deplete);
+			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0}, deplete);
+			tertsSpawned[SECOND_TIER] = true;
+		}
+		
+		else if (ND_StockMapEquals(map_name, ND_Clocktower))
+		{
+			// Respawn tunnel resources			
+			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0}, true);
+			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0}, true);
+			tertsSpawned[SECOND_TIER] = true;
+		}
+	}
+}
+
 void CheckStableSpawns()
 {
 	char map_name[64];   
 	GetCurrentMap(map_name, sizeof(map_name));
-	
-	// Don't deplete some tertaries, if we're depleting prime right away
-	bool primeDepleted = ND_PrimeDepleted();
-	bool deplete = ND_GetClientCount() >= 12 && primeDepleted;
 	
 	// Will throw tag mismatch warning, it's okay
 	if (ND_CustomMapEquals(map_name, ND_Submarine))
@@ -227,10 +259,10 @@ void CheckStableSpawns()
 	
 	else if (ND_MapEqualsAnyMetro(map_name))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18) || primeDepleted)
+		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18))
 		{
-			SpawnTertiaryPoint({2620.0, 529.0, 5.0}, deplete);
-			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0}, deplete);
+			SpawnTertiaryPoint({2620.0, 529.0, 5.0}, true);
+			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0}, true);
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -247,7 +279,7 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
 	{
-		if (RED_OnTeamCount() >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue || primeDepleted)
+		if (RED_OnTeamCount() >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue)
 		{
 			// Respawn tunnel resources			
 			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0}, true);
@@ -278,10 +310,10 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Hydro))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 28) || primeDepleted)
+		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 28))
 		{
-			SpawnTertiaryPoint({2132.0, 2559.0, 18.0}, deplete);
-			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0}, deplete);
+			SpawnTertiaryPoint({2132.0, 2559.0, 18.0}, true);
+			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0}, true);
 			tertsSpawned[SECOND_TIER] = true;	
 		}
 	}
