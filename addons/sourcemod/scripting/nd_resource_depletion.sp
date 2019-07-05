@@ -11,7 +11,7 @@ public Plugin myinfo =
 {
 	name 		= "[ND] Resource Depletion",
 	author 		= "Stickz",
-	description = "Depletes the primary resource early on some maps",
+	description 	= "Depletes the primary resource early on some maps",
 	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
@@ -67,10 +67,8 @@ public void ND_OnRoundStarted()
 	// Check the prime depletion feature is enabled. Check if the player count is low enough to use.
 	if (cvarEnableDepletion.BoolValue && ND_GetClientCount() <= cvarDepletePlayerCount.IntValue)
 	{
-		// Check if the map is Metro, Silo or Hydro
-		if (ND_MapEqualsAnyMetro(map_name) || 
-			ND_StockMapEquals(map_name, ND_Silo) || 
-			ND_StockMapEquals(map_name, ND_Hydro))
+		// Check if the map is Metro or Hydro
+		if (ND_MapEqualsAnyMetro(map_name) || ND_StockMapEquals(map_name, ND_Hydro))
 		{
 			// Deplete prime of all it's resources
 			ND_SetPrimeResources(0);			
