@@ -125,20 +125,24 @@ void CreateMapConvars()
 	AutoExecConfig_EC_File()
 }
 
-public void OnClientPutInServer(int client) {
-	if (!tertsSpawned[SECOND_TIER] && ND_RoundStarted())
+public void OnClientPutInServer(int client)
+{	
+	if (ND_RoundStarted())
 	{
-		int serverType = ND_GetServerTypeEx();
-		if (serverType >= SERVER_TYPE_STABLE)
+		if (!tertsSpawned[SECOND_TIER])
 		{
-			CheckStableSpawns();
-			
-			if (serverType >= SERVER_TYPE_BETA)
+			int serverType = ND_GetServerTypeEx();
+			if (serverType >= SERVER_TYPE_STABLE)
 			{
-				CheckBetaSpawns();
-				
-				if (serverType >= SERVER_TYPE_ALPHA)
-					CheckTertiarySpawns();
+				CheckStableSpawns();
+
+				if (serverType >= SERVER_TYPE_BETA)
+				{
+					CheckBetaSpawns();
+
+					if (serverType >= SERVER_TYPE_ALPHA)
+						CheckTertiarySpawns();
+				}
 			}
 		}
 	}
@@ -166,6 +170,26 @@ public void ND_OnRoundStarted()
 				AdjustTertiarySpawns();
 				CheckTertiarySpawns();
 			}
+		}
+	}
+}
+
+public void ND_OnPrimeDepleted(int entity) {
+	CheckPrimeDepleteSpawns();
+}
+
+void CheckPrimeDepleteSpawns()
+{
+	if (!tertsSpawned[FIRST_TIER])
+	{
+		char map_name[64];   
+		GetCurrentMap(map_name, sizeof(map_name));	
+
+		if (ND_StockMapEquals(map_name, ND_Silo))
+		{
+			SpawnTertiaryPoint({-3375.0, 1050.0, 2.0}, true);
+			SpawnTertiaryPoint({-36.0, -2000.0, 5.0}, true);
+			tertsSpawned[FIRST_TIER] = true;
 		}
 	}
 }
@@ -213,23 +237,12 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
-		int teamCount = RED_OnTeamCount();
-		if (teamCount >= cvarSiloTertiarySpawns.IntValue || primeDepleted)
+		if (RED_OnTeamCount() >= cvarSiloTertiarySpawns.IntValue)
 		{
-			if (!tertsSpawned[FIRST_TIER])
-			{
-				SpawnTertiaryPoint({-3375.0, 1050.0, 2.0}, deplete);
-				SpawnTertiaryPoint({-36.0, -2000.0, 5.0}, deplete);
-				tertsSpawned[FIRST_TIER] = true;
-			}
-			
-			if (teamCount >= GetSpawnCount(26, 28, 30))
-			{
-				SpawnTertiaryPoint({-5402.0, -3859.0, 74.0}, true);
-				SpawnTertiaryPoint({2340.0, 2558.0, 10.0}, true);
-				tertsSpawned[SECOND_TIER] = true;			
-			}
-		}	
+			SpawnTertiaryPoint({-5402.0, -3859.0, 74.0}, true);
+			SpawnTertiaryPoint({2340.0, 2558.0, 10.0}, true);
+			tertsSpawned[SECOND_TIER] = true;			
+		}
 	}
 	
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
