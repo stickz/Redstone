@@ -21,9 +21,7 @@ public Plugin myinfo =
 
 ConVar cvarEnableDepletion;
 ConVar cvarDepletePlayerCount;
-ConVar cvarCornerNoTrickleCount;
 
-bool setCorner = false;
 ArrayList listSecondaries;
 ArrayList listTertiaries;
 
@@ -33,7 +31,6 @@ public void OnPluginStart()
 	AutoExecConfig_SetFile("nd_res_deplete");
 	cvarEnableDepletion 		=	AutoExecConfig_CreateConVar("sm_enable_depletion", "1", "Sets wether to enable depletion 0:disabled, 1:enabled");
 	cvarDepletePlayerCount 		= 	AutoExecConfig_CreateConVar("sm_resource_deplete", "12", "Sets number of players to deplete the primary resource");
-	cvarCornerNoTrickleCount	= 	AutoExecConfig_CreateConVar("sm_resource_ntrick_corner", "16", "Sets number of players disable trickles on corner");
 	AutoExecConfig_EC_File();
 	
 	/* Initialize corner varriables */
@@ -49,7 +46,6 @@ public void OnPluginStart()
 public void OnMapStart() 
 {
 	/* Initialize varriables */
-	setCorner = false
 	listSecondaries.Clear();
 	listTertiaries.Clear();
 
@@ -76,17 +72,12 @@ public void ND_OnRoundStarted()
 	}
 	
 	// Check if corner is ready for the trickle disable feature yet
-	CheckCornerTrickleDisable();
-}
-
-public void OnClientPutInServer(int client) {
-	CheckCornerTrickleDisable();	
+	SetCornerTrickleDisable();
 }
 
 public Action CMD_DisableTrickle(int client, int arg)
 {
 	PrintToChat(client, "debug: command ran");
-	setCorner = true;
 	SetUnlimitedTrickleResources();
 	PrintTrickleDisabled();
 	return Plugin_Handled;
@@ -113,21 +104,17 @@ void SetTertariesList()
 	}
 }
 
-void CheckCornerTrickleDisable()
+void SetCornerTrickleDisable()
 {		
-	if (!setCorner && ND_GetClientCount() >= cvarCornerNoTrickleCount.IntValue)
-	{	
-		// Get the current map name
-		char map_name[64];   
-		GetCurrentMap(map_name, sizeof(map_name));
+	// Get the current map name
+	char map_name[64];   
+	GetCurrentMap(map_name, sizeof(map_name));
 		
-		if (ND_CustomMapEquals(map_name, ND_Corner))
-		{
-			SetUnlimitedTrickleResources();			
-			setCorner = true;
-			PrintTrickleDisabled();
-		}	
-	}
+	if (ND_CustomMapEquals(map_name, ND_Corner))
+	{
+		SetUnlimitedTrickleResources();			
+		PrintTrickleDisabled();
+	}	
 }
 void SetUnlimitedTrickleResources()
 {
