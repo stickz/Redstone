@@ -6,6 +6,7 @@
 #include <nd_redstone>
 #include <nd_stype>
 #include <nd_fskill>
+#include <nd_entities>
 #include <autoexecconfig>
 #include <nd_resource_eng>
 
@@ -409,6 +410,10 @@ public void SpawnResourcePoint( const char[] type, const char[] model, int rt, i
 	SetEntProp(trigger, Prop_Data, "m_iNumPlayersToCap", 1);
 	
 	SetEntProp(trigger, Prop_Send, "m_nSolidType", 2);
+	
+	// Deplete tertiary resources if prime is depleted on spawn
+	if (ND_PrimeDepleted())
+		ND_SetCurrentResources(rt, 0);
  
 	SetEntityModel(rt, TERTIARY_MODEL);
 	SetEntityModel(trigger, TERTIARY_MODEL); //will throw warning in game console; required and no model displayed for brush entity
