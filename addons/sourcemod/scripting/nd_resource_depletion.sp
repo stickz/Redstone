@@ -68,16 +68,19 @@ public void ND_OnRoundStarted()
 		{
 			// Deplete prime of all the primary resources			
 			CreateTimer(3.0, TIMER_DepletePrime, _, TIMER_FLAG_NO_MAPCHANGE);
-	
 		}
 	}
 	
 	// Check if corner is ready for the trickle disable feature yet
-	SetCornerTrickleDisable();
+	CreateTimer(1.0, TIMER_CheckCornerTrickle, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action TIMER_DepletePrime(Handle timer) {
 	ND_SetPrimeResources(0);
+}
+
+public Action TIMER_CheckCornerTrickle(Handle timer) {
+	SetCornerTrickleDisable();
 }
 
 public Action CMD_DisableTrickle(int client, int arg)
