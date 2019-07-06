@@ -63,7 +63,9 @@ public void ND_OnRoundStarted()
 	if (cvarEnableDepletion.BoolValue && ND_GetClientCount() <= cvarDepletePlayerCount.IntValue)
 	{
 		// Check if the map is Metro or Hydro
-		if (ND_MapEqualsAnyMetro(map_name) || ND_StockMapEquals(map_name, ND_Hydro))
+		if (	ND_MapEqualsAnyMetro(map_name) || 
+				ND_StockMapEquals(map_name, ND_Hydro) || 
+				ND_StockMapEquals(map_name, ND_Coast))
 		{
 			// Deplete prime of all the primary resources			
 			CreateTimer(5.0, TIMER_DepletePrime, _, TIMER_FLAG_NO_MAPCHANGE);

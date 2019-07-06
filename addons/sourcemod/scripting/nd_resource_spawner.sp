@@ -208,8 +208,8 @@ void CheckT2PrimeDepleteSpawns()
 		
 		if (ND_StockMapEquals(map_name, ND_Hydro))
 		{
-			SpawnTertiaryPoint({2132.0, 2559.0, 18.0}, deplete);
-			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0}, deplete);
+			SpawnTertiaryPoint({2132.0, 2559.0, 18.0}, true);
+			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0}, true);
 			tertsSpawned[SECOND_TIER] = true;
 		}
 		
