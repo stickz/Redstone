@@ -48,10 +48,9 @@ public void OnMapStart()
 	/* Initialize varriables */
 	listSecondaries.Clear();
 	listTertiaries.Clear();
-
+	
 	// Store entity index of all secondaries and tertaries on the map
-	SetSecondariesList();
-	SetTertariesList();	
+	CreateTimer(5.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void ND_OnRoundStarted() 
@@ -67,20 +66,31 @@ public void ND_OnRoundStarted()
 		if (ND_MapEqualsAnyMetro(map_name) || ND_StockMapEquals(map_name, ND_Hydro))
 		{
 			// Deplete prime of all the primary resources			
-			CreateTimer(3.0, TIMER_DepletePrime, _, TIMER_FLAG_NO_MAPCHANGE);
+			CreateTimer(5.0, TIMER_DepletePrime, _, TIMER_FLAG_NO_MAPCHANGE);
 		}
 	}
 	
 	// Check if corner is ready for the trickle disable feature yet
-	CreateTimer(1.0, TIMER_CheckCornerTrickle, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(3.0, TIMER_CheckCornerTrickle, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public Action TIMER_DepletePrime(Handle timer) {
+public Action TIMER_DepletePrime(Handle timer) 
+{
 	ND_SetPrimeResources(0);
+	return Plugin_Continue;
 }
 
-public Action TIMER_CheckCornerTrickle(Handle timer) {
+public Action TIMER_CheckCornerTrickle(Handle timer) 
+{
 	SetCornerTrickleDisable();
+	return Plugin_Continue;
+}
+
+public Action TIMER_SetEntityClasses(Handle timer)
+{
+	SetSecondariesList();
+	SetTertariesList();
+	return Plugin_Continue;
 }
 
 public Action CMD_DisableTrickle(int client, int arg)

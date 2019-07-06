@@ -30,26 +30,26 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapStart()
-{
-	/* Update team and player manager entities when the map starts */
-	g_iPlayerManager = FindEntityByClassname(CHECK_ALL, "nd_player_manager");
-	g_iPrimeEntity = FindEntityByClassname(CHECK_ALL, "nd_info_primary_resource_point");
-	
-	CreateTimer(1.0, TIMER_SetTeamEnts, _, TIMER_FLAG_NO_MAPCHANGE);
-	
-	// Update bunker entity indexs when the map starts
-	SetBunkerEntityIndexs();
+public void OnMapStart() {
+	CreateTimer(5.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnMapEnd() {
 	ExpireRoundCache();
 }
 
-public Action TIMER_SetTeamEnts(Handle timer)
+public Action TIMER_SetEntityClasses(Handle timer)
 {
+	/* Update team and player manager entities when the map starts */
+	g_iPlayerManager = FindEntityByClassname(CHECK_ALL, "nd_player_manager");
+	g_iPrimeEntity = FindEntityByClassname(CHECK_ALL, "nd_info_primary_resource_point");
 	g_iTeamEntities[TEAM_EMPIRE-2] = FindEntityByClassname(CHECK_ALL, "nd_team_empire");
 	g_iTeamEntities[TEAM_CONSORT-2] = FindEntityByClassname(CHECK_ALL, "nd_team_consortium");
+	
+	// Update bunker entity indexs when the map starts
+	SetBunkerEntityIndexs();
+	
+	return Plugin_Continue;
 }
 
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) 
