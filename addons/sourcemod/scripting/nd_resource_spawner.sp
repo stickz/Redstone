@@ -95,7 +95,7 @@ void CreateSkillConvars()
 	cvarSpawnSkill[SKILL_HIGH] = AutoExecConfig_CreateConVar("sm_res_shigh", "110", "Sets the skill for the highest tertiary spawn threshold.");
 	
 	// Execute and clean the configuration file
-	AutoExecConfig_EC_File()
+	AutoExecConfig_EC_File();
 }
 
 void CreateMapConvars()
@@ -122,7 +122,7 @@ void CreateMapConvars()
 	cvarClocktowerTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_clocktower2", "18", "Sets number of players to spawn extra tertaries on clocktower.");
 
 	// Execute and clean the configuration file
-	AutoExecConfig_EC_File()
+	AutoExecConfig_EC_File();
 }
 
 public void OnClientPutInServer(int client)
@@ -189,8 +189,8 @@ void CheckT1PrimeDepleteSpawns()
 
 		if (ND_StockMapEquals(map_name, ND_Silo))
 		{
-			SpawnTertiaryPoint({-3375.0, 1050.0, 2.0}, true);
-			SpawnTertiaryPoint({-36.0, -2000.0, 5.0}, true);
+			SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
+			SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
 			tertsSpawned[FIRST_TIER] = true;
 		}
 	}
@@ -201,30 +201,28 @@ void CheckT2PrimeDepleteSpawns()
 	if (!tertsSpawned[SECOND_TIER])
 	{
 		// Don't deplete some tertaries, if we're depleting prime right away
-		bool deplete = ND_GetClientCount() >= 12;
-		
 		char map_name[64];   
 		GetCurrentMap(map_name, sizeof(map_name));
 		
 		if (ND_StockMapEquals(map_name, ND_Hydro))
 		{
-			SpawnTertiaryPoint({2132.0, 2559.0, 18.0}, true);
-			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0}, true);
+			SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
+			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
 		
 		else if (ND_MapEqualsAnyMetro(map_name))
 		{
-			SpawnTertiaryPoint({2620.0, 529.0, 5.0}, deplete);
-			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0}, deplete);
+			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
+			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
 		
 		else if (ND_StockMapEquals(map_name, ND_Clocktower))
 		{
 			// Respawn tunnel resources			
-			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0}, true);
-			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0}, true);
+			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
+			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -241,18 +239,18 @@ void CheckStableSpawns()
 		if (!tertsSpawned[FIRST_TIER])
 		{
 			// Center map tertiary resource points
-			SpawnTertiaryPoint({-1475.0, 3475.0, -33.0}, true);
-			SpawnTertiaryPoint({-1000.0, -3820.0, -216.0}, true);
-			SpawnTertiaryPoint({1350.0, -2153.0, 20.0}, true);
-			SpawnTertiaryPoint({2495.0, 5775.0, 150.0}, true);
+			SpawnTertiaryPoint({-1475.0, 3475.0, -33.0});
+			SpawnTertiaryPoint({-1000.0, -3820.0, -216.0});
+			SpawnTertiaryPoint({1350.0, -2153.0, 20.0});
+			SpawnTertiaryPoint({2495.0, 5775.0, 150.0});
 			tertsSpawned[FIRST_TIER] = true;
 		}
 		
 		if (RED_OnTeamCount() >= GetSpawnCount(20, 22, 24))
 		{
 			// Base tertiary resource points
-			SpawnTertiaryPoint({987.0, -7562.0, 23.0}, true);  
-			SpawnTertiaryPoint({-1483.0, 9135.0, 123.0}, true);
+			SpawnTertiaryPoint({987.0, -7562.0, 23.0});  
+			SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -261,8 +259,8 @@ void CheckStableSpawns()
 	{
 		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18))
 		{
-			SpawnTertiaryPoint({2620.0, 529.0, 5.0}, true);
-			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0}, true);
+			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
+			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -271,8 +269,8 @@ void CheckStableSpawns()
 	{
 		if (RED_OnTeamCount() >= cvarSiloTertiarySpawns.IntValue)
 		{
-			SpawnTertiaryPoint({-5402.0, -3859.0, 74.0}, true);
-			SpawnTertiaryPoint({2340.0, 2558.0, 10.0}, true);
+			SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
+			SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
 			tertsSpawned[SECOND_TIER] = true;			
 		}
 	}
@@ -282,8 +280,8 @@ void CheckStableSpawns()
 		if (RED_OnTeamCount() >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue)
 		{
 			// Respawn tunnel resources			
-			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0}, true);
-			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0}, true);
+			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
+			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -292,8 +290,8 @@ void CheckStableSpawns()
 	{
 		if (RED_OnTeamCount() >= cvarCornerTertiarySpawns.IntValue)
 		{
-			SpawnTertiaryPoint({-3485.0, 11688.0, 5.0}, true);
-			SpawnTertiaryPoint({-1947.0, -1942.0, 7.0}, true);
+			SpawnTertiaryPoint({-3485.0, 11688.0, 5.0});
+			SpawnTertiaryPoint({-1947.0, -1942.0, 7.0});
 			tertsSpawned[SECOND_TIER] = true;		
 		}
 	}*/
@@ -302,8 +300,8 @@ void CheckStableSpawns()
 	{
 		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 30))
 		{
-			SpawnTertiaryPoint({2385.0, -5582.0, -3190.0}, true);
-			SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0}, true);
+			SpawnTertiaryPoint({2385.0, -5582.0, -3190.0});
+			SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0});
 			tertsSpawned[SECOND_TIER] = true;		
 		}
 	}
@@ -312,8 +310,8 @@ void CheckStableSpawns()
 	{
 		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 28))
 		{
-			SpawnTertiaryPoint({2132.0, 2559.0, 18.0}, true);
-			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0}, true);
+			SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
+			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
 			tertsSpawned[SECOND_TIER] = true;	
 		}
 	}
@@ -331,15 +329,15 @@ void CheckBetaSpawns()
 		{
 			if (!tertsSpawned[FIRST_TIER])
 			{
-				SpawnTertiaryPoint({-5824.0, -32.0, 0.0}, true);
-				SpawnTertiaryPoint({3392.0, 0.0, 5.0}, true);
+				SpawnTertiaryPoint({-5824.0, -32.0, 0.0});
+				SpawnTertiaryPoint({3392.0, 0.0, 5.0});
 				tertsSpawned[FIRST_TIER] = true;
 			}
 			
 			if (teamCount >= cvarGateTertiarySpawns[SECOND_TIER].IntValue)
 			{
-				SpawnTertiaryPoint({-3392.0, -2384.0, 0.0}, true);
-				SpawnTertiaryPoint({-3456.0, 2112.0, -16.0}, true);
+				SpawnTertiaryPoint({-3392.0, -2384.0, 0.0});
+				SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
 				tertsSpawned[SECOND_TIER] = true;
 			}
 		}
@@ -359,7 +357,7 @@ void AdjustStableSpawns()
 		
 		// Spawn new tertiary near consort base
 		// So empire + consort have same resource acess
-		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0}, false);
+		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0});
 	}
 }
 
@@ -380,16 +378,15 @@ void AdjustBetaSpawns()
 	}
 }
 
-public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin, bool deplete)
+public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
 {
 	int rt = CreateEntityByName("nd_info_tertiary_resource_point");
 	int trigger = CreateEntityByName("nd_trigger_resource_point");
 	
-	bool depleteTert = deplete && ND_PrimeDepleted();
-	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin, depleteTert);
+	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin);
 }
 
-public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin, bool deplete)
+public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin)
 {	
 	char rt_name[32];
 	char trigger_name[32];
@@ -411,9 +408,6 @@ public void SpawnResourcePoint( const char[] type, const char[] model, int rt, i
 	SetEntProp(trigger, Prop_Data, "m_iButtonsToCap", 0);
 	SetEntProp(trigger, Prop_Data, "m_iNumPlayersToCap", 1);
 	
-	if (deplete)
-		SetEntProp(rt, Prop_Send, "m_iCurrentResources", 0);
-       
 	SetEntProp(trigger, Prop_Send, "m_nSolidType", 2);
  
 	SetEntityModel(rt, TERTIARY_MODEL);
