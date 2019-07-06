@@ -65,7 +65,8 @@ public void ND_OnRoundStarted()
 		// Check if the map is Metro or Hydro
 		if (	ND_MapEqualsAnyMetro(map_name) || 
 				ND_StockMapEquals(map_name, ND_Hydro) || 
-				ND_StockMapEquals(map_name, ND_Coast))
+				ND_StockMapEquals(map_name, ND_Coast) ||
+				ND_CustomMapEquals(map_name, ND_Sandbrick))
 		{
 			// Deplete prime of all the primary resources			
 			CreateTimer(5.0, TIMER_DepletePrime, _, TIMER_FLAG_NO_MAPCHANGE);
