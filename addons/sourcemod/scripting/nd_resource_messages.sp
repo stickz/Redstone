@@ -189,11 +189,16 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				char message[512];				
 				if (resCaps[resIndex][client])
 				{
-					// If the resource point is trickling, display the trickle phase
+					// If the resource point is trickling, display the trickle phrase
 					if (resEVals[1] > 0 && resEVals[1] < 300000)					
 						Format(	message, sizeof(message), "\x03%T", resCapPhrase, client, resEVals[0], resEVals[1], resEVals[2]);
+
+					// Otherwise display the trickle complete or trickle disabled phrase
 					else
-						Format(	message, sizeof(message), "\x03%T", resTrickPhrase, client, resEVals[2]);	
+					{
+						int res = resEVals[1] > 300000 ? resEVals[0] : resEVals[2];
+						Format(	message, sizeof(message), "\x03%T", resTrickPhrase, client, res);
+					}
 				}
 				else				
 					Format(message, sizeof(message), "\x03%T", resTeamPhrase, client, nameString, area);
