@@ -1,7 +1,6 @@
 #include <autoexecconfig>
 #include <SteamWorks>
 #include <nd_swgm>
-#include <nd_stocks>
 
 #pragma semicolon 1
 
@@ -130,7 +129,7 @@ public Action CMD_List(int iClient, int args)
 {
 	if (!g_bInGroupOfficer[iClient] && !HasRootAccess(iClient))
 	{
-		ReplyToCommand(iClient, "You must be a RedstoneND officer to use this command!");
+		ReplyToCommand(iClient, "You must be a steam group officer to use this command!");
 		return Plugin_Handled;
 	}
 	
@@ -325,4 +324,8 @@ bool CheckClient(int iClient, char[] sError, int iLength)
 	sError[0] = '\0';
 
 	return true;
+}
+
+stock bool HasRootAccess(int client) {
+	return GetAdminFlag(GetUserAdmin(client), Admin_Root, Access_Real);
 }
