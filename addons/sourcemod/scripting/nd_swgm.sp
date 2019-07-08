@@ -1,3 +1,4 @@
+#include <sourcemod>
 #include <autoexecconfig>
 #include <SteamWorks>
 #include <nd_swgm>
