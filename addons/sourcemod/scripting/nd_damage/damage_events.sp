@@ -24,6 +24,13 @@ public Action ND_OnBarrierDamaged(int victim, int &attacker, int &inflictor, flo
 		
 	switch (damagetype)
 	{
+		case WEAPON_BEAM_DT:
+		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_FLAME_DT:
 		{
 			if (InflictorIsNX300(inflictor))
@@ -64,6 +71,13 @@ public Action ND_OnWallDamaged(int victim, int &attacker, int &inflictor, float 
 		
 	switch (damagetype)
 	{
+		case WEAPON_BEAM_DT:
+		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_FLAME_DT:
 		{
 			if (InflictorIsNX300(inflictor))
@@ -104,6 +118,13 @@ public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflicto
 		
 	switch (damagetype)
 	{
+		case WEAPON_BEAM_DT:
+		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_FLAME_DT:
 		{
 			if (InflictorIsNX300(inflictor))
@@ -151,6 +172,13 @@ public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor
 	
 	switch (damagetype)
 	{
+		case WEAPON_BEAM_DT:
+		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_FLAME_DT:
 		{
 			if (InflictorIsNX300(inflictor))
@@ -198,6 +226,13 @@ public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, fl
 	
 	switch (damagetype)
 	{	
+		case WEAPON_BEAM_DT:
+		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_FLAME_DT:
 		{
 			if (InflictorIsNX300(inflictor))
@@ -245,6 +280,13 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 	
 	switch (damagetype)
 	{
+		case WEAPON_BEAM_DT:
+		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_EXPLO_DT:
 		{		
 			char className[64];
@@ -298,6 +340,13 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 	
 	switch (damagetype)
 	{
+		case WEAPON_BEAM_DT:
+		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_EXPLO_DT:
 		{
 			char className[64];
@@ -351,6 +400,13 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 	
 	switch(damagetype)
 	{
+		case WEAPON_BEAM_DT:
+		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_EXPLO_DT:
 		{
 			char className[64];
@@ -406,6 +462,9 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 	{
 		case WEAPON_BEAM_DT:
 		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			
 			float multiplier = gFloat_Siege[siege_ft_turret_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
@@ -473,6 +532,13 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 	
 	switch (damagetype)
 	{
+		case WEAPON_BEAM_DT:
+		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			return Plugin_Changed;
+		}
+		
 		case WEAPON_EXPLO_DT:
 		{
 			char className[64];
@@ -528,6 +594,9 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 	{
 		case WEAPON_BEAM_DT:
 		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			
 			float multiplier = gFloat_Siege[siege_transport_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
@@ -597,6 +666,9 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 	{
 		case WEAPON_BEAM_DT:
 		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			
 			float multiplier = gFloat_Siege[siege_assembler_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
@@ -673,6 +745,9 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	{
 		case WEAPON_BEAM_DT:
 		{
+			// Increase x01 damage by 50% when less than 25
+			damage = SetMinX01DamageByMult(damage);
+			
 			float multiplier = gFloat_Siege[siege_bunker_mult];
 			damage *= multiplier;
 			return Plugin_Changed;
@@ -804,6 +879,10 @@ float Artillery_StructureReinMult(int &attacker)
 	}
 	
 	return mult;
+}
+
+float SetMinX01DamageByMult(float damage) {	
+	return damage > iMinThresholdX01 ? damage : damage * fMinIncreaseX01;
 }
 
 int GetDefenderTeamSR(int &attacker) 
