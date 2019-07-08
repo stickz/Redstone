@@ -14,14 +14,12 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"
 };
 
-#define XG_GROUPID 1858772
-
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_swgm/nd_swgm.txt"
 #include "updater/standard.sp"
 
 Handle g_hForward_OnLeaveCheck, g_hForward_OnJoinCheck, g_hTimer = null;
-bool g_bInGroup[MAXPLAYERS+1], g_bInGroupOfficer[MAXPLAYERS+1], g_bLeave[MAXPLAYERS+1], g_bInXgGroup[MAXPLAYERS+1];
+bool g_bInGroup[MAXPLAYERS+1], g_bInGroupOfficer[MAXPLAYERS+1], g_bLeave[MAXPLAYERS+1];
 int g_iGroupId, g_iAuthID[MAXPLAYERS+1];
 Status g_PlayerStatus[MAXPLAYERS+1];
 
@@ -220,8 +218,6 @@ public int SteamWorks_OnClientGroupStatus(int iAuth, int iGroupID, bool isMember
 				Forward_OnJoinCheck(iClient, isOfficer);
 			}		
 		}
-		else if (iGroupID == XG_GROUPID && !g_bInXgGroup[iClient] && isMember)
-			g_bInXgGroup[iClient] = true;
 	}
 }
 
@@ -247,7 +243,7 @@ public int Native_InGroup(Handle hPlugin, int iNumParams)
 		ThrowNativeError(SP_ERROR_NATIVE, sError);
 	}
 	
-	return g_bInGroup[iClient] || g_bInXgGroup[iClient];
+	return g_bInGroup[iClient];
 }
 
 public int Native_InGroupOfficer(Handle hPlugin, int iNumParams)
