@@ -171,7 +171,6 @@ public Action CMD_List(int iClient, int args)
 public void OnClientDisconnect(int iClient)
 {
 	g_bInGroup[iClient] = false;
-	g_bInXgGroup[iClient] = false;
 	g_bInGroupOfficer[iClient] = false;
 	g_bLeave[iClient] = false;
 	g_iAuthID[iClient] = 0;
