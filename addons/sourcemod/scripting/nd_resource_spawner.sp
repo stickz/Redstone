@@ -205,14 +205,7 @@ void CheckT2PrimeDepleteSpawns()
 		char map_name[64];   
 		GetCurrentMap(map_name, sizeof(map_name));
 		
-		if (ND_StockMapEquals(map_name, ND_Hydro))
-		{
-			SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
-			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
-			tertsSpawned[SECOND_TIER] = true;
-		}
-		
-		else if (ND_MapEqualsAnyMetro(map_name))
+		if (ND_MapEqualsAnyMetro(map_name))
 		{
 			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
 			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
@@ -309,7 +302,11 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Hydro))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 28))
+		int hCount 	= ND_PrimeDepleted() 
+					? GetSpawnCount(12, 14, 16)
+					: GetSpawnCount(26, 28, 28);
+							
+		if (RED_OnTeamCount() >= hCount)
 		{
 			SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
 			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
