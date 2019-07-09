@@ -73,9 +73,12 @@ public Action ND_OnWallDamaged(int victim, int &attacker, int &inflictor, float 
 	{
 		case WEAPON_BEAM_DT:
 		{
-			// Increase x01 damage by 50% when less than 25
-			damage = SetMinX01DamageByMult(damage);
-			return Plugin_Changed;
+			// Set min wall damage to 35 * 4.23 = 148
+			if (damage < fMinWallDamageX01)
+			{
+				damage = fMinWallDamageX01;
+				return Plugin_Changed;
+			}
 		}
 		
 		case WEAPON_FLAME_DT:

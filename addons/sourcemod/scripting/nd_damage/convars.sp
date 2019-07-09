@@ -68,6 +68,7 @@ ConVar cvarNoWarmupBunkerDamage;
 
 ConVar gCvarMinThresholdX01;
 ConVar gCvarMinIncreaseX01;
+ConVar gCvarMinWallDamageX01;
 
 float gFloat_Red[multREDs];
 float gFloat_Bullet[multBullets];
@@ -76,6 +77,7 @@ float gFloat_GL[multGL];
 float gFloat_Other[multOther];
 
 int iMinThresholdX01;
+float fMinWallDamageX01;
 float fMinIncreaseX01;
 
 /* Functions for creating covnars */
@@ -94,6 +96,7 @@ void CreatePluginConVars()
 	cvarNoWarmupBunkerDamage	= AutoExecConfig_CreateConVar("sm_warmup_protect_bunker", "1", "Disable bunker damage during the warmup round.");
 	gCvarMinThresholdX01		= AutoExecConfig_CreateConVar("sm_mult_x01_threshold", "25", "Sets amount to multiply x01 damage by a percentage.");
 	gCvarMinIncreaseX01			= AutoExecConfig_CreateConVar("sm_mult_x01_damage", "150", "Sets percentage to multiply x01 damage by when threshold reached.");
+	gCvarMinWallDamageX01		= AutoExecConfig_CreateConVar("sm_mult_x01_wall", "35", "Sets the min damage the x01 must deal to a wall.");
 	AutoExecConfig_EC_File();
 }
 
@@ -299,6 +302,7 @@ void UpdateConVarCache()
 	
 	iMinThresholdX01 = gCvarMinThresholdX01.IntValue;
 	fMinIncreaseX01 = gCvarMinIncreaseX01.FloatValue / 100.0;
+	fMinWallDamageX01 = gCvarMinWallDamageX01.FloatValue;
 }
 void HookConVarChanges()
 {
@@ -324,6 +328,7 @@ void HookConVarChanges()
 	
 	HookConVarChange(gCvarMinThresholdX01, OnConfigPercentChange);
 	HookConVarChange(gCvarMinIncreaseX01, OnConfigPercentChange);
+	HookConVarChange(gCvarMinWallDamageX01, OnConfigPercentChange);
 }
 public void OnConfigPercentChange(ConVar convar, char[] oldValue, char[] newValue) {	
 	UpdateConVarCache();
