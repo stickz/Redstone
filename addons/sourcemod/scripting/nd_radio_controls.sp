@@ -211,5 +211,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	MarkNativeAsOptional("SourceComms_SetClientMute");
 	MarkNativeAsOptional("SourceComms_SetClientGag");
 	MarkNativeAsOptional("SourceComms_GetClientMuteType");
-	MarkNativeAsOptional("SourceComms_GetClientGagType");	
+	MarkNativeAsOptional("SourceComms_GetClientGagType");
+
+	return APLRes_Success;	
 }
