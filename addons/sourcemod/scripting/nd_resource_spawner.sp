@@ -382,6 +382,9 @@ public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
 	int trigger = CreateEntityByName("nd_trigger_resource_point");
 	
 	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin);
+	
+	// Need to update the entity cache, since we added a new entity to the map
+	ND_UpdateEntityCache();
 }
 
 public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin)

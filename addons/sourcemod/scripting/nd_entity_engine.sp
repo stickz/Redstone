@@ -22,6 +22,8 @@ int g_iPlayerManager = -1;
 int g_iPrimeEntity = -1;
 int g_iBunkerEntities[2] = {-1, ...};
 
+bool UpdatingEntityCache = true;
+
 public void OnPluginStart()
 {
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
@@ -29,7 +31,9 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void OnMapStart() {
+public void OnMapStart() 
+{
+	UpdatingEntityCache = true;
 	CreateTimer(5.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
@@ -46,13 +50,16 @@ public Action TIMER_SetEntityClasses(Handle timer)
 	// Update bunker entity indexs when the map starts
 	SetBunkerEntityIndexs();
 	
+	// Mark the boolean has updated
+	UpdatingEntityCache = false;
+	
 	return Plugin_Continue;
 }
 
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) 
 {	
-	// Update bunker entity indexs when the round starts
-	SetBunkerEntityIndexs();
+	UpdatingEntityCache = true;
+	CreateTimer(1.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
@@ -66,6 +73,8 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("ND_GetPrimeEntity", Native_GetPrimeEntity);
 	CreateNative("ND_GetTeamBunkerEntity", Native_GetTeamBunker);
 	CreateNative("ND_GetPlayerManagerEntity", Native_GetPlayerManager);
+	
+	CreateNative("ND_UpdateEntityCache", Native_UpdateEntityCache);
 
 	return APLRes_Success;
 }
@@ -92,6 +101,15 @@ public int Native_GetTeamBunker(Handle plugin, int numParams)
 
 	// Otherwise, return the bunker entity index
 	return _:g_iBunkerEntities[team-2];
+}
+
+public int Native_UpdateEntityCache(Handle plugin, int numParams) 
+{
+	if (!UpdatingEntityCache)
+	{
+		UpdatingEntityCache = true;
+		CreateTimer(1.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);
+	}
 }
 
 bool IsTeamInvalid(int team) {

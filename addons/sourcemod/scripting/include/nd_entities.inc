@@ -10,6 +10,7 @@
 native int ND_GetPrimeEntity();
 native int ND_GetPlayerManagerEntity();
 native int ND_GetTeamBunkerEntity(int team);
+native void ND_UpdateEntityCache();
 
 /** 
  * Retreives the bunker distance from a given position
