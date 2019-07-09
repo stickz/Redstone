@@ -81,14 +81,18 @@ public void ND_OnRoundStarted()
 	}
 	
 	// Check if corner is ready for the trickle disable feature yet
-	if (ND_GetClientCount() >= cvarCornerTrickleMin.IntValue)
+	if (disableTrickCorner())
 		CreateTimer(3.0, TIMER_CheckCornerTrickle, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnClientPutInServer(int client) {
-	if (ND_RoundStarted()) {
+	if (!setCorner && ND_RoundStarted() && disableTrickCorner()) {
 		SetCornerTrickleDisable();
 	}
+}
+
+bool disableTrickCorner() {
+	return ND_GetClientCount() >= cvarCornerTrickleMin.IntValue;
 }
 
 public Action TIMER_DepletePrime(Handle timer) 
