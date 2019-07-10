@@ -270,10 +270,8 @@ void callMutiny(int client, int team)
 	else if (g_hasBeenDemoted[client] && voteCount[teamIDX] == 0)
 		PrintMessage(client, "Demote First"); //You cannot cast the first demote vote after demotion
 		
-	#if defined _sourcecomms_included
 	else if (IsSourceCommSilenced(client) && voteCount[teamIDX] == 0)
 		PrintMessage(client, "Silence First"); //You cannot cast the first demote vote while silenced
-	#endif
 	
 	else
 		castDemoteVote(team, teamIDX, client, com); //Cast the vote to demote the commander
@@ -285,7 +283,7 @@ void castDemoteVote(int team, int teamIDX, int client, int commander)
 		
 	/* Get the number of votes required for demote, and round to nereast */
 	int minPercent = IncreaseDemotePercent(commander) ? cDemotePercentEx.IntValue : cDemotePercentage.IntValue;			 
-	int demotePercent = RoundToNearest(float(RED_GetTeamCount(team)) * float(minPercent / 100.0));
+	int demotePercent = RoundToNearest(float(RED_GetTeamCount(team)) * (float(minPercent) / 100.0));
 	
 	/* Enforce a minium number of votes required for demote, regardless of percent */
 	int minDemoteCount = cDemoteMinValue.IntValue;
@@ -375,4 +373,14 @@ void displayVotes(int team, int remainder, int client)
 		if (RED_IsValidClient(idx) && GetClientTeam(idx) == team)
 			PrintToChat(idx, "\x05 %t", "Demote Vote", name, remainder);
 	}
+}
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	MarkNativeAsOptional("SourceComms_SetClientMute");
+	MarkNativeAsOptional("SourceComms_SetClientGag");
+	MarkNativeAsOptional("SourceComms_GetClientMuteType");
+	MarkNativeAsOptional("SourceComms_GetClientGagType");
+
+	return APLRes_Success;	
 }
