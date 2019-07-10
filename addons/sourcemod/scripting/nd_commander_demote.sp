@@ -20,9 +20,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <sourcemod>
 #include <sdktools>
-#include <sourcecomms>
 #include <nd_stocks>
 #include <autoexecconfig>
+
+// Set sourcecomms plugin to optional
+#undef REQUIRE_PLUGIN
+#include <sourcecomms>
+#define REQUIRE_PLUGIN
 
 #pragma newdecls required
 
