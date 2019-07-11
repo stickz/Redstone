@@ -50,8 +50,8 @@ public Action TIMER_CheckPrimeDepleted(Handle timer)
 	if (curRes <= 0)
 	{				
 		// When depleted... Fire forward, mark boolean and stop timer
-		FirePrimeDepletedForward();
 		bPrimeDepleted = true;
+		FirePrimeDepletedForward();
 		return Plugin_Stop;
 	}	
 	
