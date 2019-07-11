@@ -71,7 +71,7 @@ public void OnMapStart() {
 // Print a message to admins if a player disconnects during team locks
 public void OnClientDisconnect(int client)
 {
-	if (bTeamsLocked)
+	if (bTeamsLocked && !IsFakeClient(client))
 	{
 		// Get the name of the client
 		char Name[32];
@@ -91,10 +91,6 @@ public Action PlayerJoinTeam(int client, char[] command, int argc)
 	if (!ND_RoundStarted() && IsTeamPickRunning())
 		return Plugin_Continue;
 	
-	// If the player is locked in spec, block team joining
-	if (PlayerIsTeamLocked(client))
-		return Plugin_Handled;
-	
 	// If the team balancer is disabled, allow team joining
 	if (!cvarEnableBalancer.BoolValue)
 		return Plugin_Continue;
@@ -102,8 +98,13 @@ public Action PlayerJoinTeam(int client, char[] command, int argc)
 	// If the client is valid 
 	if (IsValidClient(client))
 	{		
+		int team = GetClientTeam(client);
+		// If the player is locked in spec, block team joining
+		if (PlayerIsTeamLocked(client, team))
+			return Plugin_Handled;
+		
 		// if the client is not currently on a team
-		if (GetClientTeam(client) < 2)
+		if (team < 2)
 		{		
 			// If the player was team picked
 			if (ND_TeamsPickedThisMap() && ND_PlayerPicked(client))
@@ -243,7 +244,7 @@ void SetClientTeam(int client, int team)
 	PrintToAdmins(Message, "b");
 }
 
-bool PlayerIsTeamLocked(int client)
+bool PlayerIsTeamLocked(int client, int team)
 {
 	if (ND_AdminSpecLock(client))
 	{
@@ -263,7 +264,7 @@ bool PlayerIsTeamLocked(int client)
 		return true;
 	}
 	
-	if (bTeamsLocked && getPositiveOverBalance() < 2)
+	if (bTeamsLocked && getPositiveOverBalance() < 2 && team > 1)
 		return true;
 	
 	return false;
