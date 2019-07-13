@@ -6,8 +6,10 @@ void RegBotGroundCheck() {
 
 public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 {
-	int client = GetClientOfUserId(event.GetInt("userid"));
+	if (!ND_RoundStarted())
+		return Plugin_Continue;
 	
+	int client = GetClientOfUserId(event.GetInt("userid"));	
 	if (IsFakeClient(client))
 	{
 		// Get the position of the bot

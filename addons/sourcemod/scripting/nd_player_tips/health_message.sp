@@ -1,17 +1,5 @@
 bool DisplayedHealthWarning[MAXPLAYERS+1] = { false, ... };
 
-void SetupHealthHooks() 
-{
-	HookEvent("player_death", Event_PlayerDeath, EventHookMode_Post);
-	ResetDisplayedHealth();
-}
-
-void RemoveHealthHooks()
-{
-	UnhookEvent("player_death", Event_PlayerDeath, EventHookMode_Post);
-	ResetDisplayedHealth();
-}
-
 void ResetDisplayedHealth() {
 	for (int client = 1; client <= MaxClients; client++) {
 		DisplayedHealthWarning[client] = false;
@@ -20,6 +8,9 @@ void ResetDisplayedHealth() {
 
 public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast)
 {
+	if (!ND_RoundStarted())
+		return Plugin_Continue;		
+		
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	if (IsValidClient(client) && option_player_tips[client] && !DisplayedHealthWarning[client])
 	{
@@ -30,6 +21,7 @@ public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadca
 			DisplayedHealthWarning[client] = true;
 		}
 	}
+	
 	
 	return Plugin_Continue;
 }

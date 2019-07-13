@@ -35,6 +35,7 @@ public void OnPluginStart()
 	LoadTranslations("nd_player_tips.phrases");
 	
 	HookResourceEvents(); // For break capture message
+	HookEvent("player_death", Event_PlayerDeath, EventHookMode_Post);
 	
 	AddClientPrefsSupport(); // Add client prefs support
 	AddUpdaterLibrary(); // Add updater support
@@ -42,10 +43,9 @@ public void OnPluginStart()
 
 public void ND_OnRoundStarted() {
 	//HookBunkerEntity(); For bunker health warnings	
-	SetupHealthHooks(); // For player health warnings
+	ResetDisplayedHealth(); // For player health warnings
 }
 
 public void ND_OnRoundEndedEX() {
 	//UnHookBunkerEntity(); For bunker health warnings
-	RemoveHealthHooks();// For player health warnings
 }

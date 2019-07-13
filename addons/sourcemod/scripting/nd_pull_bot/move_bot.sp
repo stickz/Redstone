@@ -50,7 +50,7 @@ public Action Command_pull(client, args)
 			
 			else
 			{
-				int units = botDistance - maxDistance; 
+				int units = RoundFloat(botDistance - maxDistance); 
 				PrintMessageTI1(client, "Bot Too Far", units);
 			}
 		}
