@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <clientprefs>
 #include <nd_stocks>
 #include <geoip>
 
@@ -15,10 +16,15 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_set_language/nd_set_language.txt"
 #include "updater/standard.sp"
 
+#include "nd_slang/clientprefs.sp"
+
 public void OnPluginStart()
 {
 	RegConsoleCmd("sm_getlangcode", CMD_GetLangCode);
-
+	
+	LoadTranslations("nd_set_language.phrases");
+	AddClientPrefsSupport(); // nd_slang/clientprefs.sp	
+	
 	AddUpdaterLibrary(); // Add updater support
 }
 
@@ -35,7 +41,7 @@ public Action CMD_GetLangCode(int client, int args)
 
 public void OnClientPutInServer(int client)
 {
-	if (IsValidClient(client))
+	if (IsValidClient(client) && option_set_language[client])
 	{
 		char ip[16];
 		GetClientIP(client, ip, sizeof(ip));
