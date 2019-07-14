@@ -13,7 +13,7 @@ public Plugin myinfo =
     name = "[ND] Teleport Bots",
     author = "yed, Stickz",
     description = "Move bots to a better position",
-    version = "dummy",
+    version = "recompile",
     url = "https://github.com/stickz/Redstone"
 };
 

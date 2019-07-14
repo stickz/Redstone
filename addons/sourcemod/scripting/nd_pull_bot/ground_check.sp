@@ -29,6 +29,10 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 
 public Action Timer_CheckBot(Handle timer, any userid) 
 {
+	// If the round is not started, stop the timer
+	if (!ND_RoundStarted())
+		return Plugin_Handled;
+	
 	// Get the bot index, return if invalid
 	int client = GetClientOfUserId(userid);	
 	if (client == INVALID_USERID)
