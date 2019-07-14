@@ -127,8 +127,12 @@ public Action TIMER_EnterChairPromoteDelay(Handle timer, any:userid)
 	if (client == INVALID_USERID)
 		return Plugin_Handled;
 	
-	// Set the promote wait elapsed to true
+	// Get the client team and check if valid
 	int team = GetClientTeam(client);
+	if (team <= 1)
+		return Plugin_Handled;
+	
+	// Set the promote wait elapsed to true
 	ChairWaitPromoteElapsed[team-2] = true;
 	
 	// Show chair lock expire message, if commanders aren't selected in-time
