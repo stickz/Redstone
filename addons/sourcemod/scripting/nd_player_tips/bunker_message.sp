@@ -19,7 +19,7 @@ void UnHookBunkerEntity()
 
 public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
 {
-	if (!IsValidEntity(inflictor))
+	if (!IsValidEntity(inflictor) || !ND_RoundStarted())
 		return Plugin_Continue;
 	
 	if (IsValidClient(attacker))
