@@ -1,19 +1,13 @@
-int bunkerEnts[TEAM_COUNT] = { -1, ... };
 bool DisplayedMessage[TEAM_COUNT] = { false, ... };
 int bunkerWarningHealth[TEAM_COUNT] = { 9000, ... };
 
-void HookBunkerEntity() 
-{
-	bunkerEnts[TEAM_EMPIRE] = ND_GetTeamBunkerEntity(TEAM_EMPIRE);
-	bunkerEnts[TEAM_CONSORT] = ND_GetTeamBunkerEntity(TEAM_CONSORT);	
+void HookBunkerEntity() {
 	SDK_HookEntityDamaged(STRUCT_BUNKER, ND_OnBunkerDamaged);	
 }
 
 void UnHookBunkerEntity() 
 {
 	SDK_UnHookEntityDamaged(STRUCT_BUNKER, ND_OnBunkerDamaged);
-	bunkerEnts[TEAM_EMPIRE] = -1;
-	bunkerEnts[TEAM_CONSORT] = -1;
 	bunkerWarningHealth[TEAM_EMPIRE] = 9000;
 	bunkerWarningHealth[TEAM_CONSORT] = 9000;
 	DisplayedMessage[TEAM_EMPIRE] = false;
@@ -28,8 +22,9 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	if (IsValidClient(attacker))
 	{
 		int team = getOtherTeam(GetClientTeam(attacker));
+		int bunker = ND_GetTeamBunkerEntity(team);
 		
-		if (!DisplayedMessage[team] && ND_GetBuildingHealth(bunkerEnts[team]) <= bunkerWarningHealth[team])
+		if (!DisplayedMessage[team] && ND_GetBuildingHealth(bunker) <= bunkerWarningHealth[team])
 		{
 			PrintMessageTeam(team, "Bunker Health Warning");
 			DisplayedMessage[team] = true;
