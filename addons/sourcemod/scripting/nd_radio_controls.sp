@@ -9,7 +9,7 @@ public Plugin:myinfo =
 	name = "[ND] Radio Control",
 	author = "databomb, stickz",
 	description = "Blocks default sounds and prevents radio spam",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 }
 
@@ -197,6 +197,9 @@ public Action RestrictRadio(int client, const char[] command, int args)
 
 bool isSilencedClientPresent()
 {
+	if (!SOURCECOMMS_LOADED())
+		return false;
+	
 	for (int client = 1; client <= MaxClients; client++)
 	{
 		if (IsValidClient(client) && (IsSourceCommSilenced(client) || g_IsRadioBlocked[client]))

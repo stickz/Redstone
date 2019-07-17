@@ -244,5 +244,10 @@ public Action ND_OnCommanderResigned(int client, int team)
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	MarkNativeAsOptional("ND_PickedTeamsThisMap");
+	
+	MarkNativeAsOptional("SourceComms_SetClientMute");
+	MarkNativeAsOptional("SourceComms_SetClientGag");
+	MarkNativeAsOptional("SourceComms_GetClientMuteType");
+	MarkNativeAsOptional("SourceComms_GetClientGagType");
 	return APLRes_Success;
 }

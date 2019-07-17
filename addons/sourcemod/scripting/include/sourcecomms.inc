@@ -71,11 +71,7 @@ public SharedPlugin:__pl_sourcecomms =
 {
 	name = "sourcecomms",
 	file = "sourcecomms.smx",
-	#if defined REQUIRE_PLUGIN
-		required = 1
-	#else
-		required = 0
-	#endif
+	required = 0
 };
 
 public __pl_sourcecomms_SetNTVOptional()
