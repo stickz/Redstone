@@ -198,7 +198,15 @@ public Action RestrictRadio(int client, const char[] command, int args)
 bool isSilencedClientPresent()
 {
 	if (!SOURCECOMMS_LOADED())
+	{
+		for (int i = 1; i <= MaxClients; i++)
+		{
+			if (IsValidClient(i) && g_IsRadioBlocked[i])
+				return true;
+		}
+		
 		return false;
+	}
 	
 	for (int client = 1; client <= MaxClients; client++)
 	{
