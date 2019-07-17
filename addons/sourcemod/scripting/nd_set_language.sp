@@ -50,11 +50,17 @@ public void OnClientPutInServer(int client)
 		GeoipCode2(ip, ccode);
 		
 		int lang = -1;		
-		if (StrEqual(ccode, "de", false) || StrEqual(ccode, "ru", false))
+		if (StrEqual(ccode, "de", false))
 		{
-			lang = GetLanguageByCode(ccode);		
+			lang = GetLanguageByCode("de");
 			SetClientLanguage(client, lang);
-			PrintToConsole(client, "Your server language was set to Russian or German");
+			PrintToConsole(client, "Your server language was set to German");	
+		}
+		else if (StrEqual(ccode, "ru", false))
+		{
+			lang = GetLanguageByCode("ru");
+			SetClientLanguage(client, lang);
+			PrintToConsole(client, "Your server language was set to Russian");
 		}
 		else if (StrEqual(ccode, "ca", false) || StrEqual(ccode, "us", false))
 		{
