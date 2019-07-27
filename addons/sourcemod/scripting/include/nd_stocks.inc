@@ -100,7 +100,7 @@ stock bool IsValidBounds(int client) {
 
 stock bool IsValidAdmin(int client, const char[] flags) 
 { 
-	new ibFlags = ReadFlagString(flags); 
+	int ibFlags = ReadFlagString(flags); 
 	return ((GetUserFlagBits(client) & ibFlags) == ibFlags || GetUserFlagBits(client) & ADMFLAG_ROOT);
 }
 
