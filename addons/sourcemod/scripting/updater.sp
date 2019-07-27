@@ -163,7 +163,7 @@ public Action:Timer_CheckUpdates(Handle:timer)
 
 public Action:Command_Check(client, args)
 {
-	new Float:fNextUpdate = _fLastUpdate + 3600.0;
+	new Float:fNextUpdate = _fLastUpdate + 300.0;
 	
 	if (fNextUpdate > GetTickedTime())
 	{
