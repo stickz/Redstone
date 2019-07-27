@@ -189,7 +189,7 @@ public void OnClientPutInServer(int iClient)
 	}
 }
 
-public int SteamWorks_OnClientGroupStatus(int iAuth, int iGroupID, bool isMember, bool isOfficer)
+public void SteamWorks_OnClientGroupStatus(int iAuth, int iGroupID, bool isMember, bool isOfficer)
 {
 	static int iClient;
 	if ((iClient = GetUserFromAuthID(iAuth)) > 0)
