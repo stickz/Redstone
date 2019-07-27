@@ -1,7 +1,7 @@
 /**
  * vim: set ts=4 :
  * =============================================================================
- * SourceMod (C)2004-2008 AlliedModders LLC.  All rights reserved.
+ * SourceMod (C)2004-2017 AlliedModders LLC.  All rights reserved.
  * =============================================================================
  *
  * This file is part of the SourceMod/SourcePawn SDK.
@@ -30,37 +30,64 @@
  * Version: $Id$
  */
 
-#if defined _sdktools_engine_included
+#if defined _sdktools_variant_t_included
   #endinput
 #endif
-#define _sdktools_engine_included
-
-#define MAX_LIGHTSTYLES			64
+#define _sdktools_variant_t_included
 
 /**
- * Sets a client's "viewing entity."
+ * Sets a bool value in the global variant object.
  *
- * @param client		Client index.
- * @param entity		Entity index.
- * @error				Invalid client or entity, lack of mod support, or client not in 
- *						game.
+ * @param val		Input value.
  */
-native void SetClientViewEntity(int client, int entity);
+native void SetVariantBool(bool val);
 
 /**
- * Sets a light style.
+ * Sets a string in the global variant object.
  *
- * @param style			Light style (from 0 to MAX_LIGHTSTYLES-1)
- * @param value			Light value string (see world.cpp/light.cpp in dlls)
- * @error				Light style index is out of range.
+ * @param str		Input string.
  */
-native void SetLightStyle(int style, const char[] value);
+native void SetVariantString(const char[] str);
 
 /**
- * Returns the client's eye position.
+ * Sets an integer value in the global variant object.
  *
- * @param client		Player's index.
- * @param pos			Destination vector to store the client's eye position.
- * @error				Invalid client index, client not in game, or no mod support.
+ * @param val		Input value.
  */
-native void GetClientEyePosition(int client, float pos[3]);
+native void SetVariantInt(int val);
+
+/**
+ * Sets a floating point value in the global variant object.
+ *
+ * @param val		Input value.
+ */
+native void SetVariantFloat(float val);
+
+/**
+ * Sets a 3D vector in the global variant object.
+ *
+ * @param vec		Input vector.
+ */
+native void SetVariantVector3D(const float vec[3]);
+
+/**
+ * Sets a 3D position vector in the global variant object.
+ *
+ * @param vec		Input position vector.
+ */
+native void SetVariantPosVector3D(const float vec[3]);
+
+/**
+ * Sets a color in the global variant object.
+ *
+ * @param color		Input color.
+ */
+native void SetVariantColor(const int color[4]);
+
+/**
+ * Sets an entity in the global variant object.
+ *
+ * @param entity	Entity index.
+ * @error		Invalid entity index.
+ */
+native void SetVariantEntity(int entity);

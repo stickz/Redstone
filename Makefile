@@ -10,7 +10,7 @@ build: build-stable
 #   with
 # pass `--out=build` or whatever directory you want to buid into
 build-stable:
-	./build_scripts/build.sh -v --sourcemod=1.7.3-5294 --out=build
+	./build_scripts/build.sh -v --sourcemod=1.9.0-6226 --out=build
 
 build-dev:
 	./build_scripts/build.sh -v --sourcemod=1.9.0-6226 --out=build

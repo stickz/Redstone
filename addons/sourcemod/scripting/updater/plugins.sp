@@ -1,10 +1,10 @@
 
 /* PluginPack Helpers */
 
-static PluginPack_Plugin = 0;
-static PluginPack_Files = 0;
-static PluginPack_Status = 0;
-static PluginPack_URL = 0;
+static DataPackPos PluginPack_Plugin;
+static DataPackPos PluginPack_Files;
+static DataPackPos PluginPack_Status;
+static DataPackPos PluginPack_URL;
 
 GetMaxPlugins()
 {

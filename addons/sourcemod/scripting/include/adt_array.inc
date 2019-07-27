@@ -42,7 +42,7 @@
  * @param size			Number of bytes.
  * @return				Minimum number of cells required to fit the byte count.
  */
-stock ByteCountToCells(size)
+stock int ByteCountToCells(int size)
 {
 	if (!size)
 		return 1;
@@ -62,7 +62,7 @@ methodmap ArrayList < Handle {
 	//                      hold.  For example, 32 cells is equivalent to:
 	//                      new Array[X][32]
 	// @param startsize     Initial size of the array.  Note that data will
-	//                      NOT be auto-intialized.
+	//                      NOT be auto-initialized.
 	// @return              New Handle to the array object.
 	public native ArrayList(int blocksize=1, int startsize=0);
 
@@ -78,7 +78,8 @@ methodmap ArrayList < Handle {
 	public native ArrayList Clone();
 
 	// Resizes an array.  If the size is smaller than the current size, the
-	// array is truncated.
+	// array is truncated.  If the size is larger than the current size,
+	// the data at the additional indexes will not be initialized.
 	//
 	// @param newsize       New size.
 	public native void Resize(int newsize);
@@ -128,7 +129,7 @@ methodmap ArrayList < Handle {
 	// @param maxlength     Maximum size of the buffer.
 	// @return              Number of characters copied.
 	// @error               Invalid index.
-	public native int GetString(int index, char[] buffer, maxlength);
+	public native int GetString(int index, char[] buffer, int maxlength);
 
 	// Retrieves an array of cells from an array.
 	//
@@ -191,14 +192,14 @@ methodmap ArrayList < Handle {
 	// @error               Invalid index.
 	public native void SwapAt(int index1, int index2);
 
-	// Returns the index for the first occurance of the provided string. If
+	// Returns the index for the first occurrence of the provided string. If
 	// the string cannot be located, -1 will be returned.
 	//
 	// @param item          String to search for
 	// @return              Array index, or -1 on failure
 	public native int FindString(const char[] item);
 
-	// Returns the index for the first occurance of the provided value. If the
+	// Returns the index for the first occurrence of the provided value. If the
 	// value cannot be located, -1 will be returned.
 	//
 	// @param item          Value to search for
@@ -209,6 +210,11 @@ methodmap ArrayList < Handle {
 
 	// Retrieve the size of the array.
 	property int Length {
+		public native get();
+	}
+	
+	// Retrieve the blocksize the array was created with.
+	property int BlockSize {
 		public native get();
 	}
 };
@@ -226,7 +232,7 @@ methodmap ArrayList < Handle {
  *						hold.  For example, 32 cells is equivalent to:
  *						new Array[X][32]
  * @param startsize		Initial size of the array.  Note that data will
- *						NOT be auto-intialized.
+ *						NOT be auto-initialized.
  * @return				New Handle to the array object.
  */
 native ArrayList CreateArray(int blocksize=1, int startsize=0);
@@ -252,14 +258,14 @@ native Handle CloneArray(Handle array);
 
 /**
  * Resizes an array.  If the size is smaller than the current size,
- * the array is truncated.
+ * the array is truncated.  If the size is larger than the current size,
+ * the data at the additional indexes will not be initialized.
  *
  * @param array			Array Handle.
  * @param newsize		New size.
- * @noreturn
  * @error				Invalid Handle or out of memory.
  */
-native bool ResizeArray(Handle array, int newsize);
+native void ResizeArray(Handle array, int newsize);
 
 /**
  * Returns the array size.
@@ -332,7 +338,7 @@ native any GetArrayCell(Handle array, int index, int block=0, bool asChar=false)
  * @return				Number of characters copied.
  * @error				Invalid Handle or invalid index.
  */
-native int GetArrayString(Handle array, int index, char[] buffer, maxlength);
+native int GetArrayString(Handle array, int index, char[] buffer, int maxlength);
 
 /**
  * Retrieves an array of cells from an array.
@@ -417,7 +423,7 @@ native void RemoveFromArray(Handle array, int index);
 native void SwapArrayItems(Handle array, int index1, int index2);
 
 /**
- * Returns the index for the first occurance of the provided string. If the string
+ * Returns the index for the first occurrence of the provided string. If the string
  * cannot be located, -1 will be returned.
  *
  * @param array			Array Handle.
@@ -428,7 +434,7 @@ native void SwapArrayItems(Handle array, int index1, int index2);
 native int FindStringInArray(Handle array, const char[] item);
 
 /**
- * Returns the index for the first occurance of the provided value. If the value
+ * Returns the index for the first occurrence of the provided value. If the value
  * cannot be located, -1 will be returned.
  *
  * @param array			Array Handle.
@@ -438,3 +444,12 @@ native int FindStringInArray(Handle array, const char[] item);
  * @error				Invalid Handle or invalid block
  */
 native int FindValueInArray(Handle array, any item, int block=0);
+
+/**
+ * Returns the blocksize the array was created with.
+ *
+ * @param array			Array Handle.
+ * @return 				The blocksize of the array.
+ * @error				Invalid Handle
+ */
+native int GetArrayBlockSize(Handle array);

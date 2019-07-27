@@ -3,10 +3,10 @@
 
 #define MAX_REDIRECTS 5
 
-static DLPack_Header = 0;
-static DLPack_Redirects = 0;
-static DLPack_File = 0;
-static DLPack_Request = 0;
+static DataPackPos DLPack_Header;
+static DataPackPos DLPack_Redirects;
+static DataPackPos DLPack_File;
+static DataPackPos DLPack_Request;
 
 Download_Socket(const String:url[], const String:dest[])
 {

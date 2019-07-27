@@ -1,10 +1,12 @@
 
 /* Download Manager */
 
+#include "updater/download_curl.sp"
 #include "updater/download_socket.sp"
+#include "updater/download_steamtools.sp"
 #include "updater/download_steamworks.sp"
 
-static QueuePack_URL = 0;
+static DataPackPos QueuePack_URL;
 
 FinalizeDownload(index)
 {
@@ -65,7 +67,7 @@ ProcessDownloadQueue(bool:force=false)
 	ReadPackString(hQueuePack, url, sizeof(url));
 	ReadPackString(hQueuePack, dest, sizeof(dest));
 	
-	if (SOCKET_AVAILABLE() && !STEAMWORKS_AVAILABLE())
+	if (!CURL_AVAILABLE() && !SOCKET_AVAILABLE() && !STEAMTOOLS_AVAILABLE() && !STEAMWORKS_AVAILABLE())
 	{
 		SetFailState(EXTENSION_ERROR);
 	}
@@ -88,6 +90,21 @@ ProcessDownloadQueue(bool:force=false)
 		{
 			CreateTimer(10.0, Timer_RetryQueue);
 		}
+	}
+	else if (STEAMTOOLS_AVAILABLE())
+	{
+		if (g_bSteamLoaded)
+		{
+			Download_SteamTools(url, dest);
+		}
+		else
+		{
+			CreateTimer(10.0, Timer_RetryQueue);
+		}
+	}
+	else if (CURL_AVAILABLE())
+	{
+		Download_cURL(url, dest);
 	}
 	else if (SOCKET_AVAILABLE())
 	{

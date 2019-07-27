@@ -3,31 +3,38 @@
 /* SM Includes */
 #include <sourcemod>
 #undef REQUIRE_EXTENSIONS
+#include <cURL>
 #include <socket>
+#include <steamtools>
 #include <SteamWorks>
 #define REQUIRE_EXTENSIONS
 
 /* Plugin Info */
-public Plugin:myinfo =
+#define PLUGIN_NAME 		"Updater"
+#define PLUGIN_VERSION 		"1.2.2"
+
+public Plugin myinfo =
 {
-	name = "Plugin Updater",
+	name = PLUGIN_NAME,
 	author = "GoD-Tony",
 	description = "Automatically updates SourceMod plugins and files",
-	version = "dummy",
+	version = PLUGIN_VERSION,
 	url = "http://forums.alliedmods.net/showthread.php?t=169095"
 };
 
 /* Globals */
 //#define DEBUG		// This will enable verbose logging. Useful for developers testing their updates.
 
+#define CURL_AVAILABLE()		(GetFeatureStatus(FeatureType_Native, "curl_easy_init") == FeatureStatus_Available)
 #define SOCKET_AVAILABLE()		(GetFeatureStatus(FeatureType_Native, "SocketCreate") == FeatureStatus_Available)
+#define STEAMTOOLS_AVAILABLE()	(GetFeatureStatus(FeatureType_Native, "Steam_CreateHTTPRequest") == FeatureStatus_Available)
 #define STEAMWORKS_AVAILABLE()	(GetFeatureStatus(FeatureType_Native, "SteamWorks_WriteHTTPResponseBodyToFile") == FeatureStatus_Available)
 
 #define EXTENSION_ERROR		"This plugin requires one of the cURL, Socket, SteamTools, or SteamWorks extensions to function."
 #define TEMP_FILE_EXT		"temp"		// All files are downloaded with this extension first.
 #define MAX_URL_LENGTH		256
 
-#define UPDATE_URL			"https://github.com/stickz/Redstone/raw/build/updater/updater/updater.txt"
+//#define UPDATE_URL			"http://godtony.mooo.com/updater/updater.txt"
 
 enum UpdateStatus {
 	Status_Idle,		
@@ -90,7 +97,7 @@ public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 
 public OnPluginStart()
 {
-	if (!SOCKET_AVAILABLE() && !STEAMWORKS_AVAILABLE())
+	if (!CURL_AVAILABLE() && !SOCKET_AVAILABLE() && !STEAMTOOLS_AVAILABLE() && !STEAMWORKS_AVAILABLE())
 	{
 		SetFailState(EXTENSION_ERROR);
 	}
@@ -99,8 +106,12 @@ public OnPluginStart()
 	
 	// Convars.
 	new Handle:hCvar = INVALID_HANDLE;
-
-	hCvar = CreateConVar("sm_updater", "2", "Determines update functionality. (1 = Notify, 2 = Download, 3 = Include source code)", FCVAR_PLUGIN, true, 1.0, true, 3.0);
+	
+	hCvar = CreateConVar("sm_updater_version", PLUGIN_VERSION, PLUGIN_NAME, FCVAR_NOTIFY|FCVAR_DONTRECORD);
+	OnVersionChanged(hCvar, "", "");
+	HookConVarChange(hCvar, OnVersionChanged);
+	
+	hCvar = CreateConVar("sm_updater", "2", "Determines update functionality. (1 = Notify, 2 = Download, 3 = Include source code)", FCVAR_NONE, true, 1.0, true, 3.0);
 	OnSettingsChanged(hCvar, "", "");
 	HookConVarChange(hCvar, OnSettingsChanged);
 	
@@ -116,10 +127,10 @@ public OnPluginStart()
 	// Temp path for checking update files.
 	BuildPath(Path_SM, _sDataPath, sizeof(_sDataPath), "data/updater.txt");
 	
-#if !defined DEBUG
+//#if !defined DEBUG
 	// Add this plugin to the autoupdater.
-	Updater_AddPlugin(GetMyHandle(), UPDATE_URL);
-#endif
+	//Updater_AddPlugin(GetMyHandle(), UPDATE_URL);
+//#endif
 
 	// Check for updates every 24 hours.
 	_hUpdateTimer = CreateTimer(86400.0, Timer_CheckUpdates, _, TIMER_REPEAT);
@@ -152,7 +163,7 @@ public Action:Timer_CheckUpdates(Handle:timer)
 
 public Action:Command_Check(client, args)
 {
-	new Float:fNextUpdate = _fLastUpdate + 300.0;
+	new Float:fNextUpdate = _fLastUpdate + 3600.0;
 	
 	if (fNextUpdate > GetTickedTime())
 	{
@@ -191,6 +202,14 @@ public Action:Command_Status(client, args)
 	ReplyToCommand(client, "[Updater] --- Status End ---");
 
 	return Plugin_Handled;
+}
+
+public OnVersionChanged(Handle:convar, const String:oldValue[], const String:newValue[])
+{
+	if (!StrEqual(newValue, PLUGIN_VERSION))
+	{
+		SetConVarString(convar, PLUGIN_VERSION);
+	}
 }
 
 public OnSettingsChanged(Handle:convar, const String:oldValue[], const String:newValue[])
