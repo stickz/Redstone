@@ -271,7 +271,7 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
 	{
-		if (RED_OnTeamCount() >= cvarClocktowerTertiarySpawns[FIRST_TIER].IntValue)
+		if (RED_OnTeamCount() >= GetSpawnCount(20, 22, 24))
 		{
 			// Respawn tunnel resources			
 			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
