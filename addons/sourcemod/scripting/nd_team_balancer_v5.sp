@@ -29,6 +29,7 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 ConVar cvarEnableBalancer;
+ConVar cvarMaxPlysStrictPlace;
 ConVar cvarMinPlaceSkillCount;
 ConVar cvarMinPlaceSkillEven;
 ConVar cvarMinPlaceSkillOne;
@@ -54,7 +55,9 @@ void CreatePluginConVars()
 	
 	cvarEnableBalancer 		= 	AutoExecConfig_CreateConVar("sm_balance", "1", "Team Balancer: 0 to disable, 1 to enable");
 	
+	cvarMaxPlysStrictPlace		=	AutoExecConfig_CreateConVar("sm_balance_strict_count", "10", "Specifies max players for strict placement");
 	cvarMinPlaceSkillCount		=	AutoExecConfig_CreateConVar("sm_balance_mskill_count", "3", "Specifies min amount of players to place by skill");
+		
 	cvarMinPlaceSkillEven 		=	AutoExecConfig_CreateConVar("sm_balance_mskill_even", "60", "Specifies min player skill to place when teams are even");
 	cvarMinPlaceSkillOne 		=	AutoExecConfig_CreateConVar("sm_balance_mskill_one", "90", "Specifies min player skill to place two extra players");
 	
@@ -150,7 +153,8 @@ public Action TIMER_UnlockTeams(Handle timer)
 bool PlaceTeamBySkill(int client)
 {
 	// Require three players on a team, to place by skill
-	if (RED_OnTeamCount() < cvarMinPlaceSkillCount.IntValue)
+	int onTeamCount = RED_OnTeamCount();
+	if (onTeamCount < cvarMinPlaceSkillCount.IntValue)
 		return false;
 	
 	// Get the current player skill
@@ -174,8 +178,7 @@ bool PlaceTeamBySkill(int client)
 		return true;		
 	}
 	
-	// If the player skill is greater than 90 and if the team difference is greater than 160
-	else if (playerSkill >= cvarMinPlaceSkillOne.IntValue && pTeamDiff >= cvarMinPlacementTwo.IntValue)
+	else if (PutTeamLessSkill(playerSkill, pTeamDiff, onTeamCount))
 	{
 		// If empire has one more player and less skill
 		if (overBalance == EMPIRE_PLUS_ONE && leastStackedTeam == TEAM_EMPIRE)
@@ -192,9 +195,24 @@ bool PlaceTeamBySkill(int client)
 			SetTeamLessSkill(client, TEAM_CONSORT);
 			return true;				
 		}			
-	}		
+	}
 
+	return false;
+}
 
+bool PutTeamLessSkill(float pSkill, float pDiff, int tCount)
+{
+	// If the player skill is greater than 90
+	if (playerSkill >= cvarMinPlaceSkillOne.IntValue) 
+	{
+		// If the skill difference is 160 or higher
+		if (pTeamDiff >= cvarMinPlacementTwo.IntValue)
+			return true;		
+		
+		// If less than 10 players are on a team and the skill difference is 80 or higher
+		return onTeamCount < cvarMaxPlysStrictPlace.IntValue && pTeamDiff >= cvarMinPlacementEven.IntValue;
+	}
+	
 	return false;
 }
 
