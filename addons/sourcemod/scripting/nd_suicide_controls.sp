@@ -1,10 +1,12 @@
 #include <sourcemod>
 #include <sdktools>
+#include <autoexecconfig>
 
 #include <nd_print>
 #include <nd_rounds>
 #include <nd_stocks>
 #include <nd_com_eng>
+#include <nd_entities>
 
 #define KILL_COMMANDS_SIZE 6
 
@@ -24,6 +26,8 @@ public Plugin myinfo =
 ConVar cvarSuicideChance;
 ConVar cvarSuicideDelayMin;
 ConVar cvarSuicideDelayMax;
+ConVar cvarSuicideDelayBunker;
+ConVar cvarSuicideBunkerDist;
 
 char nd_kill_commands[KILL_COMMANDS_SIZE][] =
 {
@@ -40,15 +44,26 @@ public void OnPluginStart()
 	RegKillCommands(); // Chat commands to suicide
 	AddCommandListener(Command_InterceptSuicide, "kill"); // Interrupt for console suicide
 	
-	cvarSuicideDelayMin = CreateConVar("sm_suicide_delay_min", "7", "Set min suicide delay");
-	cvarSuicideDelayMax = CreateConVar("sm_suicide_delay_max", "12", "Set max suicide delay");
-	cvarSuicideChance = CreateConVar("sm_suicide_chance", "25", "Set's chance of using min or max value"); 
+	CreatePluginConvars(); // Plugin controls for sucide	
 		
 	AddUpdaterLibrary(); //Auto-Updater
 	
 	/* Translations for print-outs */
 	LoadTranslations("nd_tools.phrases");
 	LoadTranslations("numbers.phrases");
+}
+
+void CreatePluginConvars()
+{
+	AutoExecConfig_Setup("nd_suicide");
+	
+	cvarSuicideChance = AutoExecConfig_CreateConVar("sm_suicide_chance", "25", "Set's chance of using min or max value");
+	cvarSuicideDelayMin = AutoExecConfig_CreateConVar("sm_suicide_delay_min", "7", "Set min suicide delay");
+	cvarSuicideDelayMax = AutoExecConfig_CreateConVar("sm_suicide_delay_max", "12", "Set max suicide delay");
+	cvarSuicideDelayBunker = AutoExecConfig_CreateConVar("sm_suicide_delay_bunker", "5", "Set suicide delay when close to bunker");
+	cvarSuicideBunkerDist = AutoExecConfig_CreateConVar("sm_suicide_bunker_dist", "850", "Sets distance away from bunker for faster suicide");
+	
+	AutoExecConfig_EC_File();
 }
 
 void RegKillCommands()
@@ -100,7 +115,15 @@ void commitSucide(int client)
 {
 	if (IsPlayerAlive(client))
 	{	
-		int delay = getRandomSuicideDelay();
+		int delay = 0;
+		
+		// If the client is close to the bunker, allow a faster sucide
+		if (getBunkerDistance(client) <= cvarSuicideBunkerDist.FloatValue)
+			delay = cvarSuicideDelayBunker.IntValue;
+		
+		// Otherwise set suicide delay to a random value default 7-12s
+		else
+			delay = getRandomSuicideDelay();
 
 		if (delay == 0 || ND_IsCommander(client) || !ND_RoundStarted())
 		{
@@ -111,6 +134,15 @@ void commitSucide(int client)
 		PrintToChat(client, "\x05[xG] %t", "Suicide Request", NumberInEnglish(delay));
 		CreateTimer(float(delay), TIMER_DelayedSucide, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 	}
+}
+
+float getBunkerDistance(int client)
+{
+	float clientDistance[3];
+	GetEntPropVector(client, Prop_Send, "m_vecOrigin", clientDistance);
+	
+	int team = GetClientTeam(client);
+	return ND_GetBunkerDistance(team, clientDistance);	
 }
 
 int getRandomSuicideDelay()
