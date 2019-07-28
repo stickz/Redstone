@@ -55,7 +55,7 @@ void CreatePluginConVars()
 	
 	cvarEnableBalancer 		= 	AutoExecConfig_CreateConVar("sm_balance", "1", "Team Balancer: 0 to disable, 1 to enable");
 	
-	cvarMaxPlysStrictPlace		=	AutoExecConfig_CreateConVar("sm_balance_strict_count", "10", "Specifies max players for strict placement");
+	cvarMaxPlysStrictPlace		=	AutoExecConfig_CreateConVar("sm_balance_strict_count", "8", "Specifies max players for strict placement");
 	cvarMinPlaceSkillCount		=	AutoExecConfig_CreateConVar("sm_balance_mskill_count", "3", "Specifies min amount of players to place by skill");
 		
 	cvarMinPlaceSkillEven 		=	AutoExecConfig_CreateConVar("sm_balance_mskill_even", "60", "Specifies min player skill to place when teams are even");
@@ -209,8 +209,8 @@ bool PutTeamLessSkill(float pSkill, float pDiff, int tCount)
 		if (pDiff >= cvarMinPlacementTwo.IntValue)
 			return true;		
 		
-		// If less than 10 players are on a team and the skill difference is 80 or higher
-		return tCount < cvarMaxPlysStrictPlace.IntValue && pDiff >= cvarMinPlacementEven.IntValue;
+		// If less than 10 players are on a team and the strict skill difference is 80 or higher
+		return tCount <= cvarMaxPlysStrictPlace.IntValue && ND_GetCeilingSD(80.0) >= cvarMinPlacementEven.IntValue;
 	}
 	
 	return false;
