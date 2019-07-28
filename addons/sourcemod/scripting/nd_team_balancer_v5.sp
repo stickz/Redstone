@@ -203,14 +203,14 @@ bool PlaceTeamBySkill(int client)
 bool PutTeamLessSkill(float pSkill, float pDiff, int tCount)
 {
 	// If the player skill is greater than 90
-	if (playerSkill >= cvarMinPlaceSkillOne.IntValue) 
+	if (pSkill >= cvarMinPlaceSkillOne.IntValue) 
 	{
 		// If the skill difference is 160 or higher
-		if (pTeamDiff >= cvarMinPlacementTwo.IntValue)
+		if (pDiff >= cvarMinPlacementTwo.IntValue)
 			return true;		
 		
 		// If less than 10 players are on a team and the skill difference is 80 or higher
-		return onTeamCount < cvarMaxPlysStrictPlace.IntValue && pTeamDiff >= cvarMinPlacementEven.IntValue;
+		return tCount < cvarMaxPlysStrictPlace.IntValue && pDiff >= cvarMinPlacementEven.IntValue;
 	}
 	
 	return false;
