@@ -160,28 +160,34 @@ bool PlaceTeamBySkill(int client)
 	// Get the current player skill
 	float playerSkill = ND_GetPlayerSkill(client);
 	
-	// Get the team with less players and the skill difference
+	// Get the team with less players
 	int overBalance = getOverBalance();
+	
+	// Get the actual & ceiling skill difference
 	float teamDiff = ND_GetTeamDifference();
+	float cTeamDiff = ND_GetCeilingSD(80.0);
 		
 	// Get the team with less skill
-	int leastStackedTeam = getLeastStackedTeam(teamDiff);
+	int actualLSTeam = getLeastStackedTeam(teamDiff);
+	int ceilLSTTeam = getLeastStackedTeam(cTeamDiff);
+	bool equalLST = actualLSTeam == ceilLSTTeam;
 			
 	// Convert the team difference to a positive number before working with it
-	float pTeamDiff = teamDiff < 0 ? teamDiff * -1 : teamDiff;
+	float pTeamDiff = SetPositiveSkill(teamDiff);
+	float cpTeamDiff = SetPositiveSkill(cTeamDiff);
 		
 	// If the player skill is greater than 60, both teams have the same number of players and the team difference is greater than 80
 	if (playerSkill >= cvarMinPlaceSkillEven.IntValue && overBalance == TEAMS_EVEN && pTeamDiff >= cvarMinPlacementEven.IntValue)
 	{
 		// Place the player on the least stacked skill team
-		SetTeamLessSkill(client, leastStackedTeam);
+		SetTeamLessSkill(client, actualLSTeam);
 		return true;		
 	}
 	
-	else if (PutTeamLessSkill(playerSkill, pTeamDiff, onTeamCount))
+	else if (PutTwoExtraLessSkill(playerSkill, pTeamDiff, cpTeamDiff, onTeamCount, equalLST))
 	{
 		// If empire has one more player and less skill
-		if (overBalance == EMPIRE_PLUS_ONE && leastStackedTeam == TEAM_EMPIRE)
+		if (overBalance == EMPIRE_PLUS_ONE && actualLSTeam == TEAM_EMPIRE)
 		{
 			// Place the player on team empire
 			SetTeamLessSkill(client, TEAM_EMPIRE);
@@ -189,7 +195,7 @@ bool PlaceTeamBySkill(int client)
 		}
 			
 		// if consort has one more player and less skill
-		else if (overBalance == CONSORT_PLUS_ONE && leastStackedTeam == TEAM_CONSORT)
+		else if (overBalance == CONSORT_PLUS_ONE && actualLSTeam == TEAM_CONSORT)
 		{
 			// Place the player on team consort
 			SetTeamLessSkill(client, TEAM_CONSORT);
@@ -200,7 +206,7 @@ bool PlaceTeamBySkill(int client)
 	return false;
 }
 
-bool PutTeamLessSkill(float pSkill, float pDiff, int tCount)
+bool PutTwoExtraLessSkill(float pSkill, float pDiff, float cpDiff, int tCount, bool equalLST)
 {
 	// If the player skill is greater than 90
 	if (pSkill >= cvarMinPlaceSkillOne.IntValue) 
@@ -209,11 +215,16 @@ bool PutTeamLessSkill(float pSkill, float pDiff, int tCount)
 		if (pDiff >= cvarMinPlacementTwo.IntValue)
 			return true;		
 		
+		// If the actual & ceil teamdiff both agree on the least stacked team
 		// If less than 10 players are on a team and the strict skill difference is 80 or higher
-		return tCount <= cvarMaxPlysStrictPlace.IntValue && ND_GetCeilingSD(80.0) >= cvarMinPlacementEven.IntValue;
+		return equalLST && tCount <= cvarMaxPlysStrictPlace.IntValue && cpDiff >= cvarMinPlacementEven.IntValue;
 	}
 	
 	return false;
+}
+
+float SetPositiveSkill(float skill) {
+	return skill < 0 ? skill * -1.0 : skill;
 }
 
 bool PlacedTeamLessPlayers(int client)
