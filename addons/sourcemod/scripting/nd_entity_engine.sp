@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name = "[ND] Entity Engine",
 	author = "Stickz",
 	description = "Caches entities indexes",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 };
 

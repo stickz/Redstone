@@ -62,7 +62,7 @@ public Plugin myinfo =
 	name = "[ND] Surrender Features",
 	author = "Stickz",
 	description = "Creates an alternative method for surrendering.",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 };
 

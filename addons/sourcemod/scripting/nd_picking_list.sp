@@ -14,7 +14,7 @@ public Plugin myinfo =
 	name 		= "[ND] Team Pick List",
 	author 		= "stickz",
 	description 	= "Creates a list of players who want to command",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

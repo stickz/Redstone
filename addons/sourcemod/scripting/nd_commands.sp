@@ -6,7 +6,7 @@ public Plugin myinfo =
 	name = "[ND] Server Commands",
 	author = "Stickz",
 	description = "Adds administrative server commands",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone"
 };
 

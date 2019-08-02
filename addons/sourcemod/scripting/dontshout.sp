@@ -35,7 +35,7 @@ public Plugin myinfo =
 	name 		= "Don't Shout",
 	author		= "Brainstorm, stickz",
 	description 	= "Changes chat messages to lowercase when they are (almost) fully in uppercase",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "http://"	
 };
 

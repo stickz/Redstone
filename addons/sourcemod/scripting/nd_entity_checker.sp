@@ -6,7 +6,7 @@ public Plugin myinfo =
 	name = "[ND] Entity Checker",
 	author = "Xander",
 	description = "Displays info on entity in crosshair.",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone"
 };
 

@@ -8,7 +8,7 @@ public Plugin myinfo =
 	name = "[ND] Set Language",
 	author = "Stickz",
 	description = "Set's a client's game language based on their region",
-	version = "recompile",
+	version = "recompile2",
 	url = "https://github.com/stickz/Redstone/"
 };
 

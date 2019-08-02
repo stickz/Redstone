@@ -76,7 +76,7 @@ public Plugin myinfo =
 	name 		= "[ND] Superlogs",
 	author 		= "Peace-Maker, stickz",
 	description 	= "Advanced Nuclear Dawn logging designed for various statistical plugins",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "http://www.hlxcommunity.com"
 };
 

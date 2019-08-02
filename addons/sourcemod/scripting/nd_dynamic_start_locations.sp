@@ -9,7 +9,7 @@ public Plugin myinfo =
 	name = "[ND] Dynamic Starting Locations",
 	author = "Xander",
 	description = "Randomize starting locations based on pre-defined coordinates written to a key-value structure.",
-	version = "dummy",
+	version = "recompile",
    	url = "https://github.com/stickz/Redstone"
 };
 

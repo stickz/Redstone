@@ -24,7 +24,7 @@ public Plugin myinfo =
 	name = "[ND] Commander Actions",
 	author = "Xander, Stickz",
 	description = "A plugin that allows setting and demoting a commander",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 }
 

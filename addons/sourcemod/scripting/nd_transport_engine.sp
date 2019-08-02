@@ -9,7 +9,7 @@ public Plugin myinfo =
 	name 		= "[ND] Transport Engine",
 	author 		= "Stickz",
 	description 	= "Caches and returns transport gate count",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

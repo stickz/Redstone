@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name = "[ND] Commander Deprioritization",
 	author = "Stickz",
 	description = "Deprioritizes commanders in the selection proccess.",
-	version = "recompile",
+	version = "recompile2",
 	url = "https://github.com/stickz/Redstone/"
 }
 

@@ -17,7 +17,7 @@ public Plugin myinfo =
 	name = "[ND] Spawn Colours",
     	author = "Stickz",
     	description = "Colour spawn protected player entities",
-    	version = "dummy",
+    	version = "recompile",
     	url = "https://github.com/stickz/Redstone/"
 };
 

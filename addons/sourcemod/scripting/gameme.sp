@@ -33,7 +33,7 @@
 #include <tf2_stocks>
 #include <socket>
 
-#define GAMEME_PLUGIN_VERSION "4.7.2"
+#define GAMEME_PLUGIN_VERSION "4.7.21"
 
 // plugin information
 public Plugin:myinfo = 

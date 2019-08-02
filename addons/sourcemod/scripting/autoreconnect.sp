@@ -26,7 +26,7 @@ public Plugin myinfo =
 	name = "Auto Reconnect",
 	author = "stickz",
 	description = "Sends client command retry on server restart",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 };
 

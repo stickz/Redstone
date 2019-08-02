@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name = "Steam Works Group Manager",
 	author = "Someone, Stickz",
 	description = "Additional features for plugins",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 };
 

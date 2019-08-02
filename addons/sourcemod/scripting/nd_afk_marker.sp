@@ -14,7 +14,7 @@ public Plugin myinfo =
 	name = "[ND] Afk Marker",
 	author = "Stickz",
 	description = "Allows admins to mark players as afk",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone"
 };
 

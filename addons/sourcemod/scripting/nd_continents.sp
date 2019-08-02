@@ -45,7 +45,7 @@ public Plugin myinfo =
 	name 		= "[ND] Continents",
 	author 		= "Stickz",
 	description 	= "Show a player's continent based on their IP.",
-	version		= "dummy",
+	version		= "recompile",
 	url		= "https://github.com/stickz/Redstone/"
 };
 

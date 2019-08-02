@@ -5,7 +5,7 @@ public Plugin myinfo =
     name = "[ND] Server Type",
     author = "Stickz",
     description = "Server type wrapper for stable and beta servers",
-    version = "dummy",
+    version = "recompile",
     url = "https://github.com/stickz/Redstone"
 };
 

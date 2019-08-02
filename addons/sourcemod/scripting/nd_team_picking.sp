@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name = "[ND] Team Picker",
 	author = "Stickz",
 	description = "Lets two selected commanders pick their team",
-	version = "recompile",
+	version = "recompile2",
 	url = "https://github.com/stickz/Redstone/"
 }
 

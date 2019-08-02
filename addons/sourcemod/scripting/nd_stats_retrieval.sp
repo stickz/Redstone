@@ -40,7 +40,7 @@ public Plugin myinfo =
 	name 		= "[ND] Stats Retrieval",
 	author 		= "stickz",
 	description 	= "Retrieves a player's exp from steam stats",
-	version		= "dummy",
+	version		= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

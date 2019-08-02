@@ -8,7 +8,7 @@ public Plugin myinfo =
 	name 		= "[ND] Turret Counter",
 	author 		= "Stickz",
 	description 	= "Counts the number of turrets on the battlefield",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

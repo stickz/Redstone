@@ -30,7 +30,7 @@ public Plugin myinfo =
 	name 		= "[ND] Player Ping",
 	author 		= "databomb",
 	description	= "Players can use the /ping or bind to sm_ping to send a notification to the commander.",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "vintagejailbreak.org"
 };
 

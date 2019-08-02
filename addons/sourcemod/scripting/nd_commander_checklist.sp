@@ -38,7 +38,7 @@ public Plugin myinfo =
 	name = "[ND] Commander Checklist",
 	author = "jddunlap, Stickz",
 	description = "Shows a commander checklist for new commanders",
-	version = "dummy",
+	version = "recompile",
    	url = "https://github.com/stickz/Redstone/"
 };
 

@@ -27,7 +27,7 @@ public Plugin myinfo =
 	name 			= "[ND] Grenade Loop Fix",
 	author 			= "Stickz",
 	description 		= "Fixes an issue with grenade lopping",
-	version 		= "dummy",
+	version 		= "recompile",
 	url 			= "https://github.com/stickz/Redstone/"
 };	
 

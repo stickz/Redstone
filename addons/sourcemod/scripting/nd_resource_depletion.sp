@@ -12,7 +12,7 @@ public Plugin myinfo =
 	name 		= "[ND] Resource Depletion",
 	author 		= "Stickz",
 	description 	= "Depletes the primary resource early on some maps",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

@@ -14,7 +14,7 @@ public Plugin myinfo =
 	name = "[ND] Warmup Round",
 	author = "Stickz",
 	description = "Creates a warmup round on map change",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 };
 

@@ -15,7 +15,7 @@ public Plugin myinfo =
 	name = "[ND] Bot Slaying",
 	author = "Stickz",
 	description = "Allows killing of bots on a particular team",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 };
 

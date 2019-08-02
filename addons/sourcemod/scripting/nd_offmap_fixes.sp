@@ -36,7 +36,7 @@ public Plugin myinfo =
 	name 		= "[ND] Off Map Buildings Fixes",
 	author 		= "yed_, stickz",
     	description 	= "Prevents building things in glitched locations",
-    	version 	= "dummy",
+    	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 }
 

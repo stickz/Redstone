@@ -30,7 +30,7 @@ public Plugin myinfo =
 	name 		= "[ND] Commander Engine",
 	author		= "stickz",
 	description 	= "Provides additional natives to be used by plugins",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"	
 };
 

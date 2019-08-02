@@ -37,7 +37,7 @@ public Plugin myinfo =
 	name 		= "Vote Gag, Mute, Silence",
 	author 		= "<eVa>Dog, Stickz",
 	description 	= "Allows vote gag, mute and silencing for sourcecomms",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "http://www.theville.org"
 }
 

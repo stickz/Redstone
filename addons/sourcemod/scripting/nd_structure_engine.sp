@@ -9,7 +9,7 @@ public Plugin myinfo =
 	name 		= "[ND] Structure Engine",
 	author 		= "Stickz",
 	description 	= "Creates forwards and natives for structure events",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

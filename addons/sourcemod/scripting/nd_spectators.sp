@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name = "[ND] Spectators",
 	author = "Stickz",
 	description = "Allows a player to lock themselves in spectator",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 };
 

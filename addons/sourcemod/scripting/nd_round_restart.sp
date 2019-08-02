@@ -23,7 +23,7 @@ public Plugin myinfo =
 	name = "[ND] Round Restart ",
 	author = "Stickz",
 	description = "Allows player to vote to restart the round",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone"
 }
 

@@ -10,7 +10,7 @@ public Plugin myinfo =
     name = "[ND] Map Thresholds",
     author = "Stickz",
     description = "Creates a list of map vote options based on current conditions",
-    version = "recompile",
+    version = "recompile2",
     url = "https://github.com/stickz/Redstone"
 };
 

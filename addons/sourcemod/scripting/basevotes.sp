@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name = "Basic Votes",
 	author = "AlliedModders LLC, Stickz",
 	description = "Basic Vote Commands",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 };
 

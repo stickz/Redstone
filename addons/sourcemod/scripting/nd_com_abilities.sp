@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name = "[ND] Commander abilities",
 	author = "Stickz",
 	description = "Rebalances commander abilities",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone"
 };
 

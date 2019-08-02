@@ -18,7 +18,7 @@ public Plugin myinfo =
 	name = "[ND] Player Tips",
 	author = "Stickz, Adam, Gallo",
 	description = "Creates triggered tips for players",
-	version = "recompile",
+	version = "recompile2",
 	url = "https://github.com/stickz/Redstone/"
 };
 

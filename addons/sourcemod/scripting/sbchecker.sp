@@ -42,7 +42,7 @@ public Plugin:myinfo =
 	name = "SourceBans Checker", 
 	author = "psychonic, Ca$h Munny, Sarabveer(VEER™)", 
 	description = "Notifies admins of prior bans from Sourcebans upon player connect.", 
-	version = "dummy", 
+	version = "recompile", 
 	url = "https://sarabveer.github.io/SourceBans-Fork/"
 };
 

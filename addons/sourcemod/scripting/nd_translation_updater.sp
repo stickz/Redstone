@@ -23,7 +23,7 @@ public Plugin myinfo =
 	name 		= "[ND] Translation Updater",
 	author 		= "stickz",
 	description 	= "Update server plugins and translations",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 }
 

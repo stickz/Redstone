@@ -15,7 +15,7 @@ public Plugin myinfo =
 	name = "[ND] Suicide Controls",
 	author = "stickz",
 	description = "Restricts the usage of the kill command",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"	
 };
 

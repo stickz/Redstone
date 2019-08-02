@@ -36,7 +36,7 @@ public Plugin myinfo =
 	name = "[ND] Team Breakdown",
 	author = "databomb, stickz",
 	description = "Provides troop count display",
-    	version = "dummy",
+    	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 }
 

@@ -6,7 +6,7 @@ public Plugin myinfo =
 	name 		= "[ND] Resource Engine",
 	author 		= "Stickz",
 	description = "Creates forwards and natives for resources",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
