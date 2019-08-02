@@ -22,6 +22,7 @@ public Plugin myinfo =
 ConVar cvarEnableDepletion;
 ConVar cvarDepletePlayerCount;
 ConVar cvarCornerTrickleMin;
+ConVar cvarCornerTricklePrime;
 
 ArrayList listSecondaries;
 ArrayList listTertiaries;
@@ -34,7 +35,9 @@ public void OnPluginStart()
 	AutoExecConfig_SetFile("nd_res_deplete");
 	cvarEnableDepletion 		=	AutoExecConfig_CreateConVar("sm_enable_depletion", "1", "Sets wether to enable depletion 0:disabled, 1:enabled");
 	cvarDepletePlayerCount 		= 	AutoExecConfig_CreateConVar("sm_resource_deplete", "12", "Sets number of players to deplete the primary resource");
+	
 	cvarCornerTrickleMin		= 	AutoExecConfig_CreateConVar("sm_resource_trickle_cmin", "8", "Specifies min number of players on corner to disable trickling");
+	cvarCornerTricklePrime		= 	AutoExecConfig_CreateConVar("sm_resource_trickle_cmin", "10", "Specifies min number of players to trickle prime on corner");
 	AutoExecConfig_EC_File();
 	
 	/* Initialize corner varriables */
@@ -95,6 +98,10 @@ bool disableTrickCorner() {
 	return ND_GetClientCount() >= cvarCornerTrickleMin.IntValue;
 }
 
+bool trickleCornerPrime() {
+	return ND_GetClientCount() >= cvarCornerTricklePrime.IntValue;
+}
+
 public Action TIMER_DepletePrime(Handle timer) 
 {
 	ND_SetPrimeResources(0);
@@ -153,7 +160,8 @@ void SetCornerTrickleDisable()
 			
 		if (ND_CustomMapEquals(map_name, ND_Corner))
 		{
-			SetUnlimitedTrickleResources(false);			
+			bool prime = trickleCornerPrime();
+			SetUnlimitedTrickleResources(prime);
 			PrintTrickleDisabled();
 			setCorner = true;
 		}
