@@ -117,7 +117,7 @@ public Action TIMER_SetEntityClasses(Handle timer)
 public Action CMD_DisableTrickle(int client, int arg)
 {
 	PrintToChat(client, "debug: command ran");
-	SetUnlimitedTrickleResources();
+	SetUnlimitedTrickleResources(true);
 	PrintTrickleDisabled();
 	return Plugin_Handled;
 }
@@ -153,15 +153,16 @@ void SetCornerTrickleDisable()
 			
 		if (ND_CustomMapEquals(map_name, ND_Corner))
 		{
-			SetUnlimitedTrickleResources();			
+			SetUnlimitedTrickleResources(false);			
 			PrintTrickleDisabled();
 			setCorner = true;
 		}
 	}
 }
-void SetUnlimitedTrickleResources()
+void SetUnlimitedTrickleResources(bool prime)
 {
-	ND_SetPrimeResources(999999);
+	if (prime)
+		ND_SetPrimeResources(999999);
 			
 	for (int s = 0; s < listSecondaries.Length; s++) 
 	{
@@ -179,5 +180,5 @@ void SetUnlimitedTrickleResources()
 void PrintTrickleDisabled()
 {
 	PrintToChatAll("\x05[xG] Trickling Disabled! Set 100%% resource production!");
-	PrintToChatAll("\x05[xG] After 26m, production will no longer drop 45%% !");
+	PrintToChatAll("\x05[xG] After 26m, production will no longer drop to 45%% !");
 }
