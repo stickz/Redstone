@@ -155,10 +155,12 @@ public Action Command_Apply(int client, const char[] command, int argc)
 
 		int count = RED_OnTeamCount();
 		if (count < g_cvar[disRestrictions].IntValue)
-			return Plugin_Continue;		
+			return Plugin_Continue;
 			
-		int clientLevel = ND_RetreiveLevel(client);
-		
+		if (g_Bool[timeOut])
+			return Plugin_Continue;
+						
+		int clientLevel = ND_RetreiveLevel(client);		
 		switch(clientLevel)
 		{
 			case 0,1:
@@ -196,10 +198,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 				#endif
 			}
 			default:
-			{
-				if (g_Bool[timeOut])
-					return Plugin_Continue;
-					
+			{	
 				if (isDeprioritised)
 				{
 					PrintMessage(client, "Commander Deprioritised");
