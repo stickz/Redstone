@@ -295,7 +295,7 @@ public Action TIMER_CheckAndSwitchFiller(Handle timer)
 	}
 	
 	// Don't switch bots if we're using Modulous Quota
-	if (GetBotCount() > 3)
+	if (!CheckShutOffBots())
 		return Plugin_Handled;
 	
 	int teamLessPlys = getTeamLessPlayers();
@@ -317,7 +317,7 @@ public Action TIMER_CheckAndSwitchEven(Handle timer)
 	}
 	
 	// Don't switch bots if we're using Modulous Quota
-	if (GetBotCount() > 3)
+	if (!CheckShutOffBots())
 		return Plugin_Handled;
 	
 	float teamDiff = ND_GetTeamDifference();
@@ -352,15 +352,4 @@ void SwitchBotsToTeam(int team)
 	
 	// Create a cooldown before bots can be switched again, so they don't end up in spectator
 	CreateTimer(timerDuration, TIMER_CooldownSwitchingBots, _, TIMER_FLAG_NO_MAPCHANGE);
-}
-
-int GetBotCount()
-{
-	int count = 0;
-	for (int client = 1; client <= MaxClients; client++) {
-		if (IsFakeClient(client)) {
-			count++;
-		}
-	}
-	return count;
 }
