@@ -47,6 +47,10 @@ public void OnPluginStart()
 {
 	HAX = new ArrayList(4);	
     	AddUpdaterLibrary(); //auto-updater
+
+	// Add late loading support
+	if (ND_RoundStarted())
+		ND_OnRoundStarted();
 }
 
 public void ND_OnRoundStarted()
