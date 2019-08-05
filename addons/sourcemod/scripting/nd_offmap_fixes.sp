@@ -60,11 +60,11 @@ public void ND_OnRoundStarted()
     
     	HAX.Clear();
 
-    	if (StrEqual(currentMap, ND_StockMaps[ND_Hydro])) 
+    	if (StrEqual(currentMap, ND_StockMaps[ND_Hydro], false)) 
 		HandleHydro();
-	else if (StrEqual(currentMap, ND_StockMaps[ND_Coast]))
+	else if (StrEqual(currentMap, ND_StockMaps[ND_Coast], false))
         	HandleCoast();
-    	else if (StrEqual(currentMap, ND_StockMaps[ND_Gate]))
+    	else if (StrEqual(currentMap, ND_StockMaps[ND_Gate], false))
         	HandleGate();
   	  	
     	validMap = GetArraySize(HAX) > 0;
