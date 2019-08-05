@@ -131,7 +131,7 @@ void HandleCoast()
     +
 
     roof
-    x - 5246.656250 52.499198 1615.631225
+    x - 5246.656250 59.499198 1615.631225
     w - 5247.633300 -726.002502 1615.631225
     v - 4465.646484 49.810642 1615.631225
     
@@ -144,7 +144,7 @@ void HandleCoast()
     hax[0] = 4466.0;    // minX
     hax[1] = 5246.0;    // maxX
     hax[2] = 0.0;       // minY
-    hax[3] = 52.0;      // maxY
+    hax[3] = 62.0;      // maxY
     HAX.PushArray(hax);
 
     /*
@@ -166,6 +166,24 @@ void HandleCoast()
     hax[1] = 5217.0;    // maxX
     hax[2] = 6597.0;    // minY
     hax[3] = 0.0;       // maxY
+    HAX.PushArray(hax);
+	
+	/* 
+	Car showcase 
+	e - -1353.12 2051.90 2.43
+	f - -1353.12 2561.27 2.43
+	g - -2932.30 2051.90 2.43
+	h - -2932.30 2561.27 2.43
+	
+	e --- f
+	|	  |
+	|	  |
+	h --- g
+	*/
+    hax[0] = -2933.0; // minX
+    hax[1] = -1354.0; // maxX
+    hax[2] = 2052.0; // minY
+    hax[3] = 2562.0; // maxY
     HAX.PushArray(hax);
 }
 
