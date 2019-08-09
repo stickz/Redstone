@@ -123,9 +123,9 @@ void HandleHydro()
     HAX.PushArray(hax);
 }
 
-void HandleCoast() 
+void HandleCoast()
 {
-    /*
+	/*
     - y +
     x
     +
@@ -185,6 +185,52 @@ void HandleCoast()
     hax[2] = 2052.0; // minY
     hax[3] = 2562.0; // maxY
     HAX.PushArray(hax);
+	
+	
+	/* 
+	Watch Tower
+	i - 5604.85 6513.77 886.00
+	j - 5312.30 6513.77 886.00
+	k - 5604.85 6870.38 886.00
+	l - 5312.30 6870.38 886.00
+	*/
+    hax[0] = 5313.0; // minX
+    hax[1] = 5605.0; // maxX
+    hax[2] = 6514.0; // minY
+    hax[3] = 6871.0; // maxY
+    HAX.PushArray(hax);
+	
+	/* North-West Tertiary #1
+	m - -3649.70 1654.13 166.66
+	n -  0.0 2000 0.0
+	*/
+    hax[0] = -0.0; // minX
+    hax[1] = -3649.70; // maxX
+    hax[2] = 0.0; // minY
+    hax[3] = 2000.0; // maxY
+    HAX.PushArray(hax);
+	
+	/* North-West Tertiary #2
+	o - 0.0 -1190 0.0
+	p - -550.0 0.0 0.0
+	*/
+    hax[0] = -0.0; // minX
+    hax[1] = -550.00; // maxX
+    hax[2] = 0.0; // minY
+    hax[3] = -1190.0; // maxY
+    HAX.PushArray(hax);
+	
+	/* Prime
+	q - 2006.44 1172.47 689.73
+	r - 4350.16 1172.47 689.73
+	s - 2006.44 915.85 689.73
+	t - 4350.16 915.85 689.73
+	*/	
+    hax[0] = 2007.0; // minX
+    hax[1] = 4351.0; // maxX
+    hax[2] = 916.0; // minY
+    hax[3] = 1173.0; // maxY
+    HAX.PushArray(hax);	
 }
 
 public void ND_OnStructureCreated(int entity, const char[] classname) {
