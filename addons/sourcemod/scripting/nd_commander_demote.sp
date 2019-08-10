@@ -213,7 +213,7 @@ public Action TIMER_CheckChairDemote(Handle timer, any userid)
 	{
 		int team = GetClientTeam(client);
 		if (team > 1 && !ND_HasEnteredCommanderMode(client))
-			demoteCommander(team);	
+			demoteCommander(team, false);	
 	}		
 		
 	return Plugin_Handled;
@@ -229,7 +229,7 @@ public Action TIMER_CheckBuildDemote(Handle timer, any userid)
 	{
 		int team = GetClientTeam(client);
 		if (team > 1 && !ND_TeamPlacedStructure(team, true))
-			demoteCommander(team);	
+			demoteCommander(team, false);	
 	}		
 		
 	return Plugin_Handled;
@@ -297,7 +297,7 @@ void castDemoteVote(int team, int teamIDX, int client, int commander)
 	int Remainder = demoteCount - voteCount[teamIDX];
 		
 	if (Remainder <= 0)
-		demoteCommander(team);
+		demoteCommander(team, true);
 	else
 		displayVotes(team, Remainder, client);
 			
@@ -308,7 +308,7 @@ bool IncreaseDemotePercent(int commander) {
 	return ND_GetCommanderSkill(commander) > cDemoteVetSkill.IntValue && !ND_IsCommanderDeprioritised(commander);
 }
 
-void demoteCommander(int team)
+void demoteCommander(int team, bool store)
 {	
 	int commander = ND_GetTeamCommander(team);
 
@@ -319,7 +319,7 @@ void demoteCommander(int team)
 		FakeClientCommand(commander, "rtsview");
 		
 		/* Store for mutiny restrictions */
-		g_hasBeenDemoted[commander] = true;
+		g_hasBeenDemoted[commander] = store;
 		
 		/* Push SteamID to ArrayList in-case of disconnect */
 		char gAuth[32];
