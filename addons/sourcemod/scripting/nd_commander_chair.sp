@@ -98,8 +98,9 @@ public void ND_OnRoundEnded()
 
 public void ND_OnCommanderPromoted(int client, int team)
 {
-	PromoteDelayTimer[team-2] = CreateTimer(cvarMaxRStart.FloatValue, TIMER_EnterChairPromoteDelay, 
-						GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+	if (!ChairWaitRStartElapsed)
+		PromoteDelayTimer[team-2] = CreateTimer(cvarMaxRStart.FloatValue, TIMER_EnterChairPromoteDelay, 
+							GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void ND_BothCommandersPromoted(int consort, int empire)
