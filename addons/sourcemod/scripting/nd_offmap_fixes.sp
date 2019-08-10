@@ -45,7 +45,7 @@ public Plugin myinfo =
 
 public void OnPluginStart() 
 {
-	HAX = new ArrayList(4);	
+	HAX = new ArrayList(6);	
     	AddUpdaterLibrary(); //auto-updater
 
 	// Add late loading support
@@ -98,7 +98,7 @@ void HandleGate()
        |
        |
     */
-    float hax[4] = {0.0, ...};
+    float hax[6] = {0.0, ...};
     hax[0] = 4000.0; //minX
     HAX.PushArray(hax);
 }
@@ -114,7 +114,7 @@ void HandleHydro()
 
     */
 
-    float hax[4] = {
+    float hax[6] = {
         0.0,
         -7000.0,    //maxX
         0.0,
@@ -140,12 +140,14 @@ void HandleCoast()
     w----x
     */
 
-    float hax[4] = {0.0, ...};
-    hax[0] = 4466.0;    // minX
-    hax[1] = 5246.0;    // maxX
-    hax[2] = 0.0;       // minY
-    hax[3] = 62.0;      // maxY
-    HAX.PushArray(hax);
+	float hax[6] = {0.0, ...};
+	hax[0] = 4466.0;    // minX
+	hax[1] = 5246.0;    // maxX
+	hax[2] = 0.0;       // minY
+	hax[3] = 62.0;      // maxY
+	hax[4] = 0.0;       // minZ
+	hax[5] = 0.0;       // maxZ
+	HAX.PushArray(hax);
 
     /*
     east secondary
@@ -162,11 +164,13 @@ void HandleCoast()
     +
     */
 
-    hax[0] = 3518.0;    // minX
-    hax[1] = 5217.0;    // maxX
-    hax[2] = 6597.0;    // minY
-    hax[3] = 0.0;       // maxY
-    HAX.PushArray(hax);
+	hax[0] = 3518.0;    // minX
+	hax[1] = 5217.0;    // maxX
+	hax[2] = 6597.0;    // minY
+	hax[3] = 0.0;       // maxY
+	hax[4] = 0.0;       // minZ
+	hax[5] = 0.0;       // maxZ
+	HAX.PushArray(hax);
 	
 	/* 
 	Car showcase 
@@ -180,11 +184,13 @@ void HandleCoast()
 	|	  |
 	h --- g
 	*/
-    hax[0] = -2933.0; // minX
-    hax[1] = -1354.0; // maxX
-    hax[2] = 2052.0; // minY
-    hax[3] = 2562.0; // maxY
-    HAX.PushArray(hax);
+	hax[0] = -2933.0;   // minX
+	hax[1] = -1354.0;   // maxX
+	hax[2] = 2052.0;    // minY
+	hax[3] = 2562.0;    // maxY
+	hax[4] = 0.0;       // minZ
+	hax[5] = 0.0;       // maxZ
+	HAX.PushArray(hax);
 	
 	
 	/* 
@@ -194,31 +200,37 @@ void HandleCoast()
 	k - 5604.85 6870.38 886.00
 	l - 5312.30 6870.38 886.00
 	*/
-    hax[0] = 5313.0; // minX
-    hax[1] = 5605.0; // maxX
-    hax[2] = 6514.0; // minY
-    hax[3] = 6871.0; // maxY
-    HAX.PushArray(hax);
+	hax[0] = 5313.0;    // minX
+	hax[1] = 5605.0;    // maxX
+	hax[2] = 6514.0;    // minY
+	hax[3] = 6871.0;    // maxY
+	hax[4] = 0.0;       // minZ
+	hax[5] = 0.0;       // maxZ
+	HAX.PushArray(hax);
 	
 	/* North-West Tertiary #1
 	m - -3649.70 1654.13 166.66
 	n -  0.0 2000 0.0
 	*/
-    hax[0] = -0.0; // minX
-    hax[1] = -3649.70; // maxX
-    hax[2] = 0.0; // minY
-    hax[3] = 2000.0; // maxY
-    HAX.PushArray(hax);
+	hax[0] = -0.0; 	    // minX
+	hax[1] = -3649.70;  // maxX
+	hax[2] = 0.0; 	    // minY
+	hax[3] = 2000.0;    // maxY
+	hax[4] = 0.0;       // minZ
+	hax[5] = 0.0;       // maxZ
+	HAX.PushArray(hax);
 	
 	/* North-West Tertiary #2
 	o - 0.0 -1190 0.0
 	p - -550.0 0.0 0.0
 	*/
-    hax[0] = -0.0; // minX
-    hax[1] = -550.00; // maxX
-    hax[2] = 0.0; // minY
-    hax[3] = -1190.0; // maxY
-    HAX.PushArray(hax);
+	hax[0] = -0.0;      // minX
+	hax[1] = -550.00;   // maxX
+	hax[2] = 0.0; 	    // minY
+	hax[3] = -1190.0; 	// maxY
+	hax[4] = 0.0;       // minZ
+	hax[5] = 0.0;       // maxZ
+	HAX.PushArray(hax);
 	
 	/* Prime
 	q - 2006.44 1172.47 689.73
@@ -226,11 +238,27 @@ void HandleCoast()
 	s - 2006.44 915.85 689.73
 	t - 4350.16 915.85 689.73
 	*/	
-    hax[0] = 2007.0; // minX
-    hax[1] = 4351.0; // maxX
-    hax[2] = 916.0; // minY
-    hax[3] = 1173.0; // maxY
-    HAX.PushArray(hax);	
+	hax[0] = 2007.0;    // minX
+	hax[1] = 4351.0;    // maxX
+	hax[2] = 916.0;     // minY
+	hax[3] = 1173.0;    // maxY
+	hax[4] = 150.0;       // minZ
+	hax[5] = 0.0;     // maxZ
+	HAX.PushArray(hax);	
+	
+	/* Behind bus
+	u - 5490.87 3189.10 -1.0
+	v - 5490.87 2278.26 -1.0
+	w - 5685.81 3189.10 -1.0
+	x - 5685.81 2278.26 -1.0
+	*/
+	hax[0] = 5491.0;   	// minX
+	hax[1] = 5686.0;   	// maxX
+	hax[2] = 2279.0;   	// minY
+	hax[3] = 3190.0;   	// maxY
+	hax[4] = 0.0;      	// minZ
+	hax[5] = 50.0;     	// maxZ
+	HAX.PushArray(hax)
 }
 
 public void ND_OnStructureCreated(int entity, const char[] classname) {
@@ -246,16 +274,16 @@ public Action CheckBorders(Handle timer, any entity)
     float position[3];
     GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
     //PrintToChatAll("placed location %f - %f - %f", position[0], position[1], position[2]);
-    float hax[4];
+    float hax[6];
     
     for (int i = 0; i < GetArraySize(HAX); i++) 
     {
-        tmpAxisCount = 0;
-    	tmpAxisViolated = 0;
+		tmpAxisCount = 0;
+		tmpAxisViolated = 0;
     
     	// minX
-    	HAX.GetArray(i, hax);
-    	if (hax[0] != 0.0) 
+		HAX.GetArray(i, hax);
+		if (hax[0] != 0.0) 
     	{
       	    tmpAxisCount++;
       	    
@@ -264,19 +292,15 @@ public Action CheckBorders(Handle timer, any entity)
         }
     
         // maxX
-    	if (hax[1] != 0.0) 
+		if (hax[1] != 0.0) 
     	{
       	    tmpAxisCount++;
       			
-            #if DEBUG == 1
-      	    PrintToChatAll("checking max X hax %f > pos %f?", hax[1], position[0]);
-            #endif
-      
       	    if (hax[1] > position[0]) 
       	        tmpAxisViolated++;
     	}
     
-    	if (hax[2] != 0.0) 
+		if (hax[2] != 0.0) 
     	{
       	    tmpAxisCount++;
       	    
@@ -284,15 +308,31 @@ public Action CheckBorders(Handle timer, any entity)
       	        tmpAxisViolated++;
     	}
     
-    	if (hax[3] != 0.0) 
-    	{
+		if (hax[3] != 0.0) 
+		{
       	    tmpAxisCount++;
       			
       	    if (hax[3] > position[1])
       	        tmpAxisViolated++;
     	}
+		
+		if (hax[4] != 0.0)
+		{
+			tmpAxisCount++;	
+			
+			if (hax[4] < position[2])
+				tmpAxisViolated++;
+		}
+		
+		if (hax[5] != 0.0)
+		{
+			tmpAxisCount++;	
+			
+			if (hax[5] > position[2])
+				tmpAxisViolated++;
+		}
     
-    	if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated))
-    	    SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
+		if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated))
+			SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
     }
 }
