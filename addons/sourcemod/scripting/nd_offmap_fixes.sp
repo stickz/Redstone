@@ -278,61 +278,61 @@ public Action CheckBorders(Handle timer, any entity)
     
     for (int i = 0; i < GetArraySize(HAX); i++) 
     {
-		tmpAxisCount = 0;
-		tmpAxisViolated = 0;
+	tmpAxisCount = 0;
+	tmpAxisViolated = 0;
     
     	// minX
-		HAX.GetArray(i, hax);
-		if (hax[0] != 0.0) 
+	HAX.GetArray(i, hax);
+	if (hax[0] != 0.0) 
     	{
       	    tmpAxisCount++;
       	    
-      	    if (hax[0] < position[0])
-      	        tmpAxisViolated++;      
+      	    	if (hax[0] < position[0])
+      	        	tmpAxisViolated++;      
         }
     
         // maxX
-		if (hax[1] != 0.0) 
+	if (hax[1] != 0.0) 
     	{
       	    tmpAxisCount++;
       			
-      	    if (hax[1] > position[0]) 
-      	        tmpAxisViolated++;
+      		if (hax[1] > position[0]) 
+      	       		tmpAxisViolated++;
     	}
     
-		if (hax[2] != 0.0) 
+	if (hax[2] != 0.0) 
     	{
       	    tmpAxisCount++;
       	    
-      	    if (hax[2] < position[1])
-      	        tmpAxisViolated++;
+      	    	if (hax[2] < position[1])
+      	    		tmpAxisViolated++;
     	}
     
-		if (hax[3] != 0.0) 
-		{
+	if (hax[3] != 0.0) 
+	{
       	    tmpAxisCount++;
       			
-      	    if (hax[3] > position[1])
-      	        tmpAxisViolated++;
+      		if (hax[3] > position[1])
+      	        	tmpAxisViolated++;
     	}
 		
-		if (hax[4] != 0.0)
-		{
-			tmpAxisCount++;	
+	if (hax[4] != 0.0)
+	{
+		tmpAxisCount++;	
 			
-			if (hax[4] < position[2])
-				tmpAxisViolated++;
-		}
+	    	if (hax[4] < position[2])
+			tmpAxisViolated++;
+	}
 		
-		if (hax[5] != 0.0)
-		{
-			tmpAxisCount++;	
-			
-			if (hax[5] > position[2])
-				tmpAxisViolated++;
-		}
+	if (hax[5] != 0.0)
+	{
+		tmpAxisCount++;	
+		
+		if (hax[5] > position[2])
+			tmpAxisViolated++;
+	}
     
-		if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated))
-			SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
+	if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated))
+		SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
     }
 }
