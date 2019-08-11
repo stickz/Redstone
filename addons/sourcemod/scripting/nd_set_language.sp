@@ -62,7 +62,7 @@ public void OnClientPutInServer(int client)
 			SetClientLanguage(client, lang);
 			PrintToConsole(client, "Your server language was set to Russian");
 		}
-		else if (StrEqual(ccode, "ca", false) || StrEqual(ccode, "us", false))
+		else if (StrEqual(ccode, "ca", false) || StrEqual(ccode, "us", false) || StrEqual(ccode, "gb", false))
 		{
 			lang = GetLanguageByCode("en");
 			SetClientLanguage(client, lang);
