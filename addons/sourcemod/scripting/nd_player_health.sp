@@ -1,7 +1,9 @@
 #include <sourcemod>
 #include <sdktools>
 #include <sdkhooks>
+#include <nd_stocks>
 #include <nd_classes>
+#include <nd_structures>
 #include <autoexecconfig>
 
 //Version is auto-filled by the travis builder
@@ -77,14 +79,47 @@ public Action OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
 }
 public Action OnPlayerTakeDamage(int victim, int &attacker, int &inflictor, float &damage, int &damagetype) 
 {
-	int mainClass = ND_GetMainClass(victim);
+	// If the inflictor entity is invalid, we must stop the checks
+	if (!IsValidEntity(inflictor))
+		return Plugin_Continue;
 	
+	// If the structure is a rocket turret, apply the damage fix
+	bool changed = false;	
+	if (StrEqual(iClass(inflictor), STRUCT_ROCKET_TURRET, false))
+	{
+		float maxRDamage = GetRocketMaxDamage(victim);
+		damage = maxRDamage;
+		changed = true;
+	}	
+	
+	// If the client is an exo, apply the 20% health rescaling
+	int mainClass = ND_GetMainClass(victim);	
 	if (IsExoClass(mainClass))
 	{
 		float multDamage = ExoDamageMult.FloatValue;
-		damage *= multDamage;
-		return Plugin_Changed;		
+		damage *= multDamage;		
+		changed = true;
 	}
 	
-	return Plugin_Continue;
+	return changed ? Plugin_Changed : Plugin_Continue;
+}
+
+stock float GetRocketMaxDamage(int client)
+{
+	int team = GetClientTeam(client);
+	
+	switch (team)
+	{
+		case TEAM_CONSORT: return 90.0;
+		case TEAM_EMPIRE: return 50.0;
+	}
+	
+	return 0.0;
+}
+
+stock char iClass(int &inflictor)
+{
+	char className[64];
+	GetEntityClassname(inflictor, className, sizeof(className));
+	return className;			
 }
