@@ -11,8 +11,8 @@ public Plugin myinfo =
 {
 	name 		= "[ND] Player Health",
 	author 		= "stickz",
-    description	= "Changes damage taken for certain classes",
-    version 	= "recompile",
+	description	= "Changes damage taken for certain classes",
+    	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 }
 
@@ -21,6 +21,7 @@ public Plugin myinfo =
 
 bool HookedDamage[MAXPLAYERS+1] = {false, ...};
 ConVar ExoDamageMult;
+ConVar RocketTurretDamage[2];
 
 public void OnPluginStart() 
 {
@@ -36,6 +37,8 @@ void CreatePluginConVars()
 	AutoExecConfig_Setup("nd_player_health");
 	
 	ExoDamageMult = AutoExecConfig_CreateConVar("sm_health_exo", "0.70", "Amount of damage dealt to exo. Example: 1 = 100%, 0.5 = 50%");
+	RocketTurretDamage[0] = AutoExecConfig_CreateConVar("sm_rocket_consort", "80.0", "Amount of damage consort rocket turret does to players");
+	RocketTurretDamage[1] = AutoExecConfig_CreateConVar("sm_rocket_empire", "60.0", "Amount of damage empire rocket turret does to players");
 	
 	AutoExecConfig_EC_File();
 }
@@ -105,15 +108,11 @@ public Action OnPlayerTakeDamage(int victim, int &attacker, int &inflictor, floa
 }
 
 stock float GetRocketMaxDamage(int client)
-{
-	int team = GetClientTeam(client);
-	
-	switch (team)
-	{
-		case TEAM_CONSORT: return 90.0;
-		case TEAM_EMPIRE: return 50.0;
-	}
-	
+{	
+	int team = GetClientTeam(client);	
+	if (team == TEAM_EMPIRE || team == TEAM_CONSORT)
+		return RocketTurretDamage[team-2].FloatValue;
+		
 	return 0.0;
 }
 
