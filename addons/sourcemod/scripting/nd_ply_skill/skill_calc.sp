@@ -22,6 +22,15 @@ float GetSkillLevel(int client)
 			else if (gameMeSkill < skillFloor)
 				gameMeSkill = float(skillFloor);
 		}
+		
+		/* If the player is a commander & both teams have commanders */
+		if (ND_IsCommander(client) && ND_TeamsHaveCommanders())
+		{
+			/* If the com skill is available and less than gameMeSkill, return it */
+			float comSkill = GetCommanderSkill(client);			
+			if (GameME_CommanderSkill[client] > -1 && comSkill < gameMeSkill)
+				return comSkill;			
+		}
 			
 		return gameMeSkill;			
 	}

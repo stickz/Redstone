@@ -3,6 +3,7 @@
 #endif
 #define _nd_com_eng_included_
 
+#include <nd_stocks>
 #define NO_COMMANDER -1
 
 /**
@@ -59,6 +60,10 @@ stock int ND_GetCommanderOnTeam(int teamIDX) {
 
 stock bool ND_TeamHasCommander(int teamIDX) {
 	return ND_GetCommanderOnTeam(teamIDX) != -1;	
+}
+
+stock bool ND_TeamsHaveCommanders() {
+	return ND_TeamHasCommander(TEAM_CONSORT) && ND_TeamHasCommander(TEAM_EMPIRE);
 }
 
 stock bool ND_IsCommanderOnTeam(int client, int team) {
