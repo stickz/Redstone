@@ -228,7 +228,7 @@ void checkSurrender(int team, bool showVotes = false, int client = -1)
 	// Get the team surrender percentage as a float. Clamp it to a minimum value.
 	float teamFloat = Math_Min(teamCount * getSurrenderPercentage(), cvarMinPlayers.FloatValue);
 
-	int rTeamCount = countTwoComVotes(team, teamCount, teamFloat) ? RoundToCeil(teamFloat) : RoundToFloor(teamFloat);
+	int rTeamCount = countTwoComVotes(team, teamCount, teamFloat) ? RoundToFloor(teamFloat) : RoundToCeil(teamFloat);
 	int Remainder = rTeamCount - voteCount[team -2];
 
 	if (Remainder <= 0)
