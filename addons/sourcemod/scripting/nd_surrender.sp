@@ -255,7 +255,7 @@ bool countTwoComVotes(int team, int teamCount, float voteCount)
 	// Is the team count 4 or less? Or is the surrender vote count 5 or more? If so...
 	// If the commander has voted, double the weight of their vote.
 	if (	teamCount <= cvarMaxComVotePlys.IntValue || voteCount >= cvarMinComVoteVotes.FloatValue)
-		return !g_commanderVoted[team - 2];
+		return g_commanderVoted[team - 2];
 	
 	return false;
 }
