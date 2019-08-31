@@ -89,7 +89,7 @@ void CreatePluginConvars()
 	cvarMaxComVotePlys	=	AutoExecConfig_CreateConVar("sm_surrender_maxp_com", "4", "Specifies max team players to always give commander two votes.");
 	
 	cvarSurrenderPercent 	= 	AutoExecConfig_CreateConVar("sm_surrender_percent", "51", "Set's the regular percentage to surrender.");
-	cvarTPSurrenderPercent 	= 	AutoExecConfig_CreateConVar("sm_surrender_percent", "60", "Set's the teampick percentage to surrender.");
+	cvarTPSurrenderPercent 	= 	AutoExecConfig_CreateConVar("sm_surrender_percent_tp", "60", "Set's the teampick percentage to surrender.");
 	cvarEarlySurrenderPer	= 	AutoExecConfig_CreateConVar("sm_surrender_early", "80", "Set's the percentage for early surrender.");
 	
 	cvarSurrenderTimeout	= 	AutoExecConfig_CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
