@@ -117,6 +117,10 @@ public void ND_OnRoundStarted()
 		g_hasVotedEmpire[client] = false;
 		g_hasVotedConsort[client] = false;
 	}
+	
+	// Set the surrender vote percentage
+	int sValue = ND_TeamsPickedThisMap() ? cvarTPSurrenderPercent.IntValue : cvarSurrenderPercent.IntValue;
+	ServerCommand("sm_cvar nd_commander_surrender_vote_threshold %d", sValue);	
 }
 
 public void ND_OnRoundEnded() 
