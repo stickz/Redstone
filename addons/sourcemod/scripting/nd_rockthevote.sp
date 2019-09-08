@@ -196,12 +196,16 @@ void callRockTheVote(int client)
 
 void checkForPass(bool display = false, int client = -1)
 {	
-	bool InsRTV = InstantRTVMap();		
-	float passPercent = getPassPercentage(InsRTV); // Changes based on timeout and map
+	// Get the client count and modify pass percentage if required
+	int clientCount = ND_GetClientCount();
+	
+	// Get the pass percentage changes based on timeout and map
+	bool InsRTV = InstantRTVMap();
+	float passPercent = getPassPercentage(InsRTV, clientCount <= 8);
 	
 	// Get the client count on the server. Try Redstone native first.
 	// Calculate the number of players for pass, based on player counts
-	float countFloat = ND_GetClientCount() * (passPercent / 100.0);
+	float countFloat = clientCount * (passPercent / 100.0);
 
 	/* Set min votes for rtv or percentage (which ever is greater) */
 	int rCount = RoundToNearest(countFloat);
@@ -219,10 +223,10 @@ void checkForPass(bool display = false, int client = -1)
 		displayVotes(Remainder, client);
 }
 
-float getPassPercentage(bool InsRTV)
+float getPassPercentage(bool InsRTV, bool forceTimeout)
 {
 	// Set percentage required to pass AFTER timeout for popular and unpopular maps
-	if (!g_Bool[enableRTV])
+	if (!g_Bool[enableRTV] || InsRTV && forceTimeout)
 		return InsRTV ? cvarPercentPassAfterEX.FloatValue : cvarPercentPassAfter.FloatValue;
 	
 	// Set percentage required to pass BEFORE timeout for popular and unpopular maps
