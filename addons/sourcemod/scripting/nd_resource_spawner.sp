@@ -355,7 +355,7 @@ void AdjustStableSpawns()
 		
 		// Spawn new tertiary near consort base
 		// So empire + consort have same resource acess
-		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0});
+		SpawnTertiaryPoint({2181.0, 4161.0, -1380.0});
 	}
 }
 
