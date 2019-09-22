@@ -89,7 +89,7 @@ void CreatePluginConvars()
 	cvarMaxComVotePlys	=	AutoExecConfig_CreateConVar("sm_surrender_maxp_com", "4", "Specifies max team players to always give commander two votes.");
 	
 	cvarSurrenderPercent 	= 	AutoExecConfig_CreateConVar("sm_surrender_percent", "51", "Set's the regular percentage to surrender.");
-	cvarTPSurrenderPercent 	= 	AutoExecConfig_CreateConVar("sm_surrender_percent", "60", "Set's the teampick percentage to surrender.");
+	cvarTPSurrenderPercent 	= 	AutoExecConfig_CreateConVar("sm_surrender_percent_tp", "60", "Set's the teampick percentage to surrender.");
 	cvarEarlySurrenderPer	= 	AutoExecConfig_CreateConVar("sm_surrender_early", "80", "Set's the percentage for early surrender.");
 	
 	cvarSurrenderTimeout	= 	AutoExecConfig_CreateConVar("sm_surrender_timeout", "8", "Set's how many minutes after round start before a team can surrender");
@@ -117,6 +117,10 @@ public void ND_OnRoundStarted()
 		g_hasVotedEmpire[client] = false;
 		g_hasVotedConsort[client] = false;
 	}
+	
+	// Set the surrender vote percentage
+	int sValue = ND_TeamsPickedThisMap() ? cvarTPSurrenderPercent.IntValue : cvarSurrenderPercent.IntValue;
+	ServerCommand("sm_cvar nd_commander_surrender_vote_threshold %d", sValue);	
 }
 
 public void ND_OnRoundEnded() 
@@ -228,7 +232,7 @@ void checkSurrender(int team, bool showVotes = false, int client = -1)
 	// Get the team surrender percentage as a float. Clamp it to a minimum value.
 	float teamFloat = Math_Min(teamCount * getSurrenderPercentage(), cvarMinPlayers.FloatValue);
 
-	int rTeamCount = countTwoComVotes(team, teamCount, teamFloat) ? RoundToCeil(teamFloat) : RoundToFloor(teamFloat);
+	int rTeamCount = countTwoComVotes(team, teamCount, teamFloat) ? RoundToFloor(teamFloat) : RoundToCeil(teamFloat);
 	int Remainder = rTeamCount - voteCount[team -2];
 
 	if (Remainder <= 0)
@@ -255,7 +259,7 @@ bool countTwoComVotes(int team, int teamCount, float voteCount)
 	// Is the team count 4 or less? Or is the surrender vote count 5 or more? If so...
 	// If the commander has voted, double the weight of their vote.
 	if (	teamCount <= cvarMaxComVotePlys.IntValue || voteCount >= cvarMinComVoteVotes.FloatValue)
-		return !g_commanderVoted[team - 2];
+		return g_commanderVoted[team - 2];
 	
 	return false;
 }

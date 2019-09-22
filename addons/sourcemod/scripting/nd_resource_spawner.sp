@@ -355,7 +355,7 @@ void AdjustStableSpawns()
 		
 		// Spawn new tertiary near consort base
 		// So empire + consort have same resource acess
-		SpawnTertiaryPoint({1690.0, 4970.0, -1390.0});
+		SpawnTertiaryPoint({2181.0, 4161.0, -1380.0});
 	}
 }
 
@@ -456,11 +456,19 @@ public int LookupEntity(const char[] classname, const char[] lookup_name, int st
 
 int GetSpawnCount(int min, int med, int max)
 {
+	// If the average skill function is not availible, return the middle threshold
 	if (!ND_GEA_AVAILBLE())
-		return med;	
-		
+		return med;
+
+	// Get the average skill on the server
 	float avSkill = ND_GetEnhancedAverage();
-	return 	avSkill >= cvarSpawnSkill[SKILL_HIGH] ? min :
-		avSkill >= cvarSpawnSkill[SKILL_LOW]  ? med :
-							max ;
+	
+	// Check if average skill is greater than the min or med thresholds
+	if (avSkill >= cvarSpawnSkill[SKILL_HIGH])
+		return min;	
+	else if (avSkill >= cvarSpawnSkill[SKILL_LOW])
+		return med;
+
+	// If not, return the maximum number of players to spawn extra tertaries
+	return max;
 }
