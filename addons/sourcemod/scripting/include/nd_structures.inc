@@ -3,6 +3,8 @@
 #endif
 #define _nd_structures_included
 
+#include <nd_stocks>
+
 enum ND_Structures {
 	Command_Bunker,
 	MG_Turret,
@@ -34,5 +36,24 @@ enum ND_Structures {
 #define STRUCT_MG_TURRET "struct_machinegun_turret"
 #define STRUCT_ROCKET_TURRET "struct_rocket_turret"
 #define STRUCT_SUPPLY "struct_support_station"
-#define STRUCT_BARRIER "struct_barrier"
+#define STRUCT_RELAY "struct_power_relay"
+#define STRUCT_REPEATER "struct_fusion_reactor"
 #define STRUCT_WALL "struct_wall"
+#define STRUCT_BARRIER "struct_barrier"
+
+stock bool ND_IsStructRelay(const char[] classname) {
+	return StrEqual(classname, STRUCT_RELAY, true) || StrEqual(classname, STRUCT_REPEATER, true);
+}
+
+stock char GetRelayTowerName(int team)
+{
+	char name[32];
+	
+	switch (team)
+	{
+		case TEAM_CONSORT: Format(name, sizeof(name), STRUCT_REPEATER);
+		case TEAM_EMPIRE: Format(name, sizeof(name), STRUCT_RELAY);
+	}
+	
+	return name;
+}
