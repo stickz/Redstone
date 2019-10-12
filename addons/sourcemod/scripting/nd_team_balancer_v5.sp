@@ -110,7 +110,7 @@ public Action PlayerJoinTeam(int client, char[] command, int argc)
 		if (team < 2)
 		{		
 			// If the player was team picked
-			if (ND_TeamsPickedThisMap() && getTeamLessPlayers() == ND_GetPickedTeam(client))
+			if (ND_TeamsPickedThisMap() && (getTeamLessPlayers() == ND_GetPickedTeam(client) || getOverBalance() == TEAMS_EVEN))
 			{
 				// If teams are not even by player count. If not placed, allow team choice
 				return PlacedTeamLessPlayers(client) ? Plugin_Handled : Plugin_Continue;
