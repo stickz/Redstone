@@ -88,7 +88,7 @@ public Action CMD_MarkAfterPlayer(int client, int args)
 	// Get the player cmd arg and try to target them
 	char player[64]
 	GetCmdArg(1, player, sizeof(player));	
-	int target = FindTarget(client, player, false, false);
+	int target = FindTarget(0, player);
 	
 	// If the player we're trying to target is invalid
 	if (target == INVALID_TARGET)
