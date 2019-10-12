@@ -19,7 +19,8 @@ public Plugin myinfo =
 #define EMPIRE_aIDX 1
 
 int team_captain[2];
-ArrayList PlayersPicked;
+ArrayList PickedConsort;
+ArrayList PickedEmpire;
 
 bool g_bEnabled = false;
 bool g_bPickStarted = false;
@@ -51,7 +52,8 @@ public void OnPluginStart()
 	cvarFirstPickTime = CreateConVar("sm_tp_time_first", "40", "Set time allocated for first pick");	
 	AutoExecConfig(true, "nd_teampick");
 	
-	PlayersPicked = new ArrayList(32);
+	PickedConsort = new ArrayList(32);
+	PickedEmpire = new ArrayList(32);
 	
 	RegisterPickingCommand(); //start_picking.sp: Command for starting team picking
 	RegisterCommands(); //commands.sp: Extra commands, not directly related to picking
@@ -85,9 +87,11 @@ public Action Command_JoinTeam(int client, char[] command, int argc)
 	return Plugin_Continue;
 }
 
-void InitiateRoundEnd() {
+void InitiateRoundEnd() 
+{
 	g_bPickedThisMap = false;
-	PlayersPicked.Clear();
+	PickedConsort.Clear();
+	PickedEmpire.Clear();
 }
 
 bool PlayerIsPickable(int client) {
@@ -98,4 +102,16 @@ bool PlayerIsPickable(int client) {
 
 int GetPickingTimeLimit() {
 	return checkPlacement ? cvarFirstPickTime.IntValue : cvarPickTimeLimit.IntValue;
+}
+
+void MarkPlayerPicked(int client, int team)
+{
+	char gAuth[32];
+	GetClientAuthId(client, AuthId_Steam2, gAuth, sizeof(gAuth));
+					
+	switch (team)
+	{
+		case TEAM_EMPIRE: 	PickedEmpire.PushString(gAuth);
+		case TEAM_CONSORT:  PickedConsort.PushString(gAuth);
+	}
 }

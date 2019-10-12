@@ -144,7 +144,8 @@ void BeforePicking(int consortTarget, int empireTarget)
 	PutEveryoneInSpectate();	
 	SetCaptainTeams(consortTarget, empireTarget);
 	PrintPickingMessages();
-	PlayersPicked.Clear();
+	PickedConsort.Clear();
+	PickedEmpire.Clear();
 }
 
 void PrintPickingMessages()
@@ -183,4 +184,8 @@ void SetCaptainTeams(int consortCaptain, int empireCaptain)
 	// Change team captains to their teams	
 	ChangeClientTeam(consortCaptain, TEAM_CONSORT);
 	ChangeClientTeam(empireCaptain, TEAM_EMPIRE);
+	
+	// Push their steamid to the picked array list
+	MarkPlayerPicked(consortCaptain, TEAM_CONSORT);
+	MarkPlayerPicked(empireCaptain, TEAM_EMPIRE);
 }

@@ -29,3 +29,10 @@ native bool ND_GetPlayerPicked(int client);
 stock bool ND_PlayerPicked(int client) {
 	return NDTP_GPP_AVAILABLE() && ND_GetPlayerPicked(client);
 }
+
+native int ND_GetTPTeam(int client);
+#define NDTP_GTPT_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_GetTPTeam") == FeatureStatus_Available)
+
+stock int ND_GetPickedTeam(int client) {
+	return NDTP_GTPT_AVAILABLE() ? TEAM_SPEC : ND_GetTPTeam(client);
+}
