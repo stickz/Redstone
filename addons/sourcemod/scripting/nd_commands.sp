@@ -42,7 +42,7 @@ public Action Command_Swap(int client, int args)
 	char targetArg[50];
 	GetCmdArg(1, targetArg, sizeof(targetArg));
 	
-	int target = FindTarget(client, targetArg);
+	int target = FindTarget(0, targetArg);
 	if (target != -1)
 	{
 		if (GetClientTeam(target) > 1)
@@ -84,7 +84,7 @@ public Action Command_Spec(int client, int args)
 	char targetArg[50];
 	GetCmdArg(1, targetArg, sizeof(targetArg));
 
-	int target = FindTarget(client, targetArg);
+	int target = FindTarget(0, targetArg);
 	if (target != -1)
 	{
 		if (GetClientTeam(target) > TEAM_SPEC)
@@ -116,7 +116,7 @@ public Action Command_SetTeam(int client, int args)
 	char playerArg[50];
 	GetCmdArg(1, playerArg, sizeof(playerArg));
 	
-	int target = FindTarget(client, playerArg);
+	int target = FindTarget(0, playerArg);
 	
 	if (target == -1)
 	{
@@ -218,24 +218,6 @@ void RegisterCommands()
 	RegConsoleCmd("sm_forcespec", Command_Spec, "Swaps the targeted player to spectator team.");
 	RegConsoleCmd("sm_SetTeam", Command_SetTeam, "Sets the team of a target player");
 }
-
-bool HasSetTeamAccess(int client)
-{
-	if (!SWMG_OfficerOrRoot(client))
-	{
-		PrintToChat(client, "You must be a RedstoneND officer to use this command!");
-		return false;
-	}
-	
-	if (!ND_HasTPRunAccess(client))
-	{
-		PrintToChat(client, "You only have team-pick access to this command!");
-		return false;
-	}
-	
-	return true;
-}
-
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
