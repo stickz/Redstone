@@ -30,6 +30,7 @@ public Plugin myinfo =
 
 ConVar cvarEnableBalancer;
 ConVar cvarMaxPlysStrictPlace;
+ConVar cvarMaxTeamPickReplace;
 ConVar cvarMinPlaceSkillCount;
 ConVar cvarMinPlaceSkillEven;
 ConVar cvarMinPlaceSkillOne;
@@ -54,6 +55,8 @@ void CreatePluginConVars()
 	AutoExecConfig_Setup("nd_tbalance");
 	
 	cvarEnableBalancer 		= 	AutoExecConfig_CreateConVar("sm_balance", "1", "Team Balancer: 0 to disable, 1 to enable");
+	
+	cvarMaxTeamPickReplace		=	AutoExecConfig_CreateConVar("sm_balance_tp_replace", "40", "Maxium skill difference to put player back on picked team");
 	
 	cvarMaxPlysStrictPlace		=	AutoExecConfig_CreateConVar("sm_balance_strict_count", "8", "Specifies max players for strict placement");
 	cvarMinPlaceSkillCount		=	AutoExecConfig_CreateConVar("sm_balance_mskill_count", "3", "Specifies min amount of players to place by skill");
@@ -109,13 +112,10 @@ public Action PlayerJoinTeam(int client, char[] command, int argc)
 		// if the client is not currently on a team
 		if (team < 2)
 		{		
-			// If the player was team picked
-			if (ND_TeamsPickedThisMap() && (getTeamLessPlayers() == ND_GetPickedTeam(client) || getOverBalance() == TEAMS_EVEN))
-			{
-				// If teams are not even by player count. If not placed, allow team choice
-				return PlacedTeamLessPlayers(client) ? Plugin_Handled : Plugin_Continue;
-			}
-			
+			// If the player was placed by team pick, block team joining
+			if (PlaceByTeamPick(client))
+				return Plugin_Handled;			
+
 			// If the player was placed by skill, block team joining
 			if (PlaceTeamBySkill(client))
 				return Plugin_Handled;
@@ -237,6 +237,44 @@ bool PlacedTeamLessPlayers(int client)
 		int lessPlayers = getLessPlayerTeam(overBalance);
 		SetTeamLessPlayers(client, lessPlayers);
 		return true;
+	}
+	
+	return false;
+}
+
+bool PlaceByTeamPick(int client)
+{
+	// If we haven't picked teams this map or the player hasn't been picked
+	if (!ND_TeamsPickedThisMap() || !ND_PlayerPicked(client))
+		return false; // Exit the function and move on
+	
+	// Get the overbalance and the client's picked team
+	int overBalance = getOverBalance();
+	int pickedTeam = ND_GetPickedTeam(client);
+					
+	// If the picked team currently has less players
+	if (getLessPlayerTeam(overBalance) == pickedTeam)
+	{
+		// Put the client back on the picked team
+		SetTeamLessPlayers(client, pickedTeam);
+		return true;
+	}
+	
+	// If the team count is even
+	else if (overBalance == TEAMS_EVEN)
+	{
+		// Get the team difference varriables
+		float teamDiff = ND_GetTeamDifference();
+		int actualLSTeam = getLeastStackedTeam(teamDiff);
+		float pTeamDiff = SetPositiveSkill(teamDiff);
+		
+		// If the picked team is the least stacked or the team difference is 40 skill or less
+		if (actualLSTeam == pickedTeam || pTeamDiff <= cvarMaxTeamPickReplace.FloatValue)
+		{
+			// Put the client back on the picked team
+			SetTeamLessSkill(client, pickedTeam);
+			return true;
+		}		
 	}
 	
 	return false;
