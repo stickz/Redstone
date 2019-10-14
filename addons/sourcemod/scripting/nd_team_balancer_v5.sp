@@ -256,7 +256,7 @@ bool PlaceByTeamPick(int client)
 	if (getLessPlayerTeam(overBalance) == pickedTeam)
 	{
 		// Put the client back on the picked team
-		SetTeamLessPlayers(client, pickedTeam);
+		SetPickedTeam(client, pickedTeam);
 		return true;
 	}
 	
@@ -272,12 +272,18 @@ bool PlaceByTeamPick(int client)
 		if (actualLSTeam == pickedTeam || pTeamDiff <= cvarMaxTeamPickReplace.FloatValue)
 		{
 			// Put the client back on the picked team
-			SetTeamLessSkill(client, pickedTeam);
+			SetPickedTeam(client, pickedTeam);
 			return true;
 		}		
 	}
 	
 	return false;
+}
+
+void SetPickedTeam(int client, int team)
+{
+	SetClientTeam(client, team);
+	PrintMessage(client, "Placed Picked Team"); // Placed back on orginal team
 }
 
 void SetTeamLessPlayers(int client, int team)
