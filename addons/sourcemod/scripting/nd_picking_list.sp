@@ -186,6 +186,10 @@ public Action CMD_DumpPickList(int client, int args)
 	PrintToConsole(client, "Team Empire");
 	dumpClientsPickedByTeam(client, TEAM_EMPIRE);
 	PrintSpacer(client);	
+	
+	PrintToConsole(client, "Not Picked");
+	dumpClientsPickedByTeam(client, TEAM_SPEC);
+	PrintSpacer(client);
 
 	return Plugin_Handled;
 }
