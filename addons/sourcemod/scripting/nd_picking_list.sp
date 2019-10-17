@@ -4,6 +4,7 @@
 #include <nd_print>
 #include <nd_rounds>
 #include <nd_swgm>
+#include <nd_teampick>
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_picking_list/nd_picking_list.txt"
@@ -25,6 +26,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_command", 	 CMD_VolunteerCommander);
 	RegConsoleCmd("sm_PrintComList", CMD_PrintCommanderList);
 	RegConsoleCmd("sm_DumpComSkills", CMD_PrintComSkillList);
+	RegConsoleCmd("sm_DumpPickList", CMD_DumpPickList);
 	
 	/* Require steam group officer or root to access */
 	RegConsoleCmd("sm_AddComList", 		CMD_AddCommanderList, 	 "Add a commander to the list");
@@ -165,6 +167,43 @@ public Action CMD_PrintComSkillList(int client, int args)
 			PrintToConsole(client, "%s: %d", GetClientName2(target), ND_GetRoundedCSkill(target));
 
 	return Plugin_Handled;
+}
+
+public Action CMD_DumpPickList(int client, int args)
+{
+	PrintToChat(client, "See console for output");
+	
+	PrintSpacer(client); PrintSpacer(client);
+	
+	PrintToConsole(client, "--> List of Players picked by team <--");
+	PrintToConsole(client, "Format: Name, Steamid");
+	PrintSpacer(client);	
+	
+	PrintToConsole(client, "Team Consort");
+	dumpClientsPickedByTeam(client, TEAM_CONSORT);
+	PrintSpacer(client);
+	
+	PrintToConsole(client, "Team Empire");
+	dumpClientsPickedByTeam(client, TEAM_EMPIRE);
+	PrintSpacer(client);	
+
+	return Plugin_Handled;
+}
+
+void dumpClientsPickedByTeam(int player, int team)
+{
+	char clientName[64];
+	char gAuth[32];
+	
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		if (IsValidClient(client) && ND_GetPickedTeam(client) == team)
+		{
+			GetClientName(client, clientName, sizeof(clientName));
+			GetClientAuthId(client, AuthId_Steam2, gAuth, sizeof(gAuth));
+			PrintToConsole(player, "Name: %s, Steamid: %s", clientName, gAuth);
+		}
+	}	
 }
 
 void PrintSpacer(int player) {
