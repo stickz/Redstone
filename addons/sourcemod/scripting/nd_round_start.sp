@@ -5,6 +5,7 @@
 #include <nd_shuffle>
 #include <nd_teampick>
 #include <nd_swgm>
+#include <nd_redstone>
  
 public Plugin myinfo =
 {
@@ -57,6 +58,18 @@ public void OnMapEnd()
 	ClearCountDownHandle(); // for countdown.sp
 	
 	InitiateRoundEnd();
+}
+
+// Failsafe if user forgets to shut-off nextpick
+public void OnClientDisconnect(int client)
+{
+	if (pauseWarmup && ND_WarmupCompleted() && ND_GetClientCount() <= 3)
+	{
+		pauseWarmup = false;
+		
+		if (!ND_RoundStarted())
+			StartRound(false);
+	}
 }
 
 public void ND_OnRoundEnded() {
