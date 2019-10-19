@@ -211,6 +211,10 @@ void checkForPass(bool display = false, int client = -1)
 	int rCount = RoundToNearest(countFloat);
 	int mCount = cvarMinPlayers.IntValue;
 	
+	// Allow rtv to pass with 100% of the client count bellow min players
+	if (mCount < clientCount)
+		mCount = clientCount;
+	
 	// Are we are instant rtv map? If so, don't enforce min count
 	int reqVotes = (rCount > mCount || InsRTV) ? rCount : mCount;
 	
