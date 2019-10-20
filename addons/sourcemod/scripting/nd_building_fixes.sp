@@ -97,6 +97,7 @@ void CheckRelayInsideWall(int entity)
 			{
 				PrintToChatAll("\x05[xG] Wall built inside relay destoryed!");
 				SDKHooks_TakeDamage(wallEntity, 0, 0, 10000.0);
+				break; // Exit the loop becuase we just destoryed the wall
 			}
 		}
 	}	
