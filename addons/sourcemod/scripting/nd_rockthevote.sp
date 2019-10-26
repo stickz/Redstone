@@ -212,7 +212,7 @@ void checkForPass(bool display = false, int client = -1)
 	int mCount = cvarMinPlayers.IntValue;
 	
 	// Allow rtv to pass with 100% of the client count bellow min players
-	if (mCount < clientCount)
+	if (mCount > clientCount)
 		mCount = clientCount;
 	
 	// Are we are instant rtv map? If so, don't enforce min count
