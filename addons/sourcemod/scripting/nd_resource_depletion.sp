@@ -86,6 +86,9 @@ public void ND_OnRoundStarted()
 	// Check if corner is ready for the trickle disable feature yet
 	if (disableTrickCorner())
 		CreateTimer(3.0, TIMER_CheckCornerTrickle, _, TIMER_FLAG_NO_MAPCHANGE);
+	
+	// Check every 15s to see if prime and both secondaries are owned by the same team
+	CreateTimer(15.0, TIMER_CheckMainResourcesOwned, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnClientPutInServer(int client) {
@@ -119,6 +122,70 @@ public Action TIMER_SetEntityClasses(Handle timer)
 	SetSecondariesList();
 	SetTertariesList();
 	return Plugin_Continue;
+}
+
+public Action TIMER_CheckMainResourcesOwned(Handle timer)
+{
+	// Check if the main resource points are owned by the same team
+	// Also check if the resource points are not all owned by nobody
+	int mainPoints = MainPointsOwnedByTeam();	
+	if (mainPoints != TEAM_EMPIRE && mainPoints != TEAM_CONSORT)
+		return Plugin_Continue;
+	
+	// Get the tertiary closest to the bunker for the other team
+	int otherTeam = getOtherTeam(mainPoints);
+	int closestTert = GetTertiaryClosestToBunker(otherTeam);
+	
+	// Get the amount of resources to add to the tertiary closest to the bunker
+	int curRes = GetEntProp(closestTert, Prop_Send, "m_iCurrentResources");	
+	int amount = curRes <= 0 ? 125 : curRes + 125;
+	
+	// Update the resoruces of the tertiary closest to the bunker and continue
+	ND_SetCurrentResources(closestTert, amount);
+	return Plugin_Continue;
+}
+
+int MainPointsOwnedByTeam()
+{
+	int primeOwner = ND_GetPrimeOwner();	
+	
+	for (int s = 0; s < listSecondaries.Length; s++)
+	{
+		int sec = listSecondaries.Get(s);
+		
+		if (ND_GetResourceOwner(sec) != primeOwner)
+			return TEAM_NONE;
+	}			
+
+	return primeOwner;
+}
+
+int GetTertiaryClosestToBunker(int team)
+{
+	// Get the first tertiary and it's position from the bunker
+	int tertiary = listTertiaries.Get(0);
+	float bunkerDist = ND_GetEntityBunkerDistance(team, tertiary);
+	
+	// Loop through all the remaining tertaries in the ArrayList
+	for (int t = 1; t < listTertiaries.Length; t++) 
+	{
+		// Get the tert entity and see if it belongs to the team
+		int tert = listTertiaries.Get(t);
+		if (ND_GetResourceOwner(tert) == team)
+		{
+			// Get the bunker distance from the tert entity
+			float distance = ND_GetEntityBunkerDistance(team, tert);
+			
+			// If the distance is less than the previous one, update the tertiary
+			if (distance < bunkerDist)
+			{
+				tertiary = tert;
+				bunkerDist = distance;
+			}			
+		}
+	}
+	
+	return tertiary;	
 }
 
 public Action CMD_DisableTrickle(int client, int arg)

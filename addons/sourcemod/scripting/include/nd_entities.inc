@@ -32,6 +32,23 @@ stock float ND_GetBunkerDistance(int team, float pos[3])
 	return GetVectorDistance(pos, bunkerPos);	
 }
 
+stock float ND_GetEntityBunkerDistance(int team, int entity)
+{
+	// Get the bunker entity based on the team
+	int bunker = ND_GetTeamBunkerEntity(team);
+	
+	// Get the position of the bunker
+	float bunkerPos[3];
+	GetEntPropVector(bunker, Prop_Send, "m_vecOrigin", bunkerPos);
+	
+	// Get the position of the entity
+	float entityPos[3]; 
+	GetEntPropVector(entity, Prop_Send, "m_vecOrigin", entityPos);
+
+	// Return distance between entity and bunker position
+	return GetVectorDistance(entityPos, bunkerPos);
+}
+
 /** 
  * Retreives the level of a given client index
  *
@@ -82,6 +99,19 @@ stock int ND_GetPrimeResources() {
 }
 stock bool ND_GetPrimeDepleted() {
 	return ND_GetPrimeResources() <= 0;
+}
+
+
+/** 
+ * Retreives the owner of a resource point
+ *
+ * @return			return owner team or -1
+ */ 
+stock int ND_GetPrimeOwner() {
+	return GetEntProp(ND_GetPrimeEntity(), Prop_Send, "m_iTeamNum"); 
+}
+stock int ND_GetResourceOwner(int entity) {
+	return GetEntProp(entity, Prop_Send, "m_iTeamNum");
 }
 
 /** 
