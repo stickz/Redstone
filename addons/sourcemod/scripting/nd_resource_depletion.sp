@@ -7,6 +7,8 @@
 #include <nd_redstone>
 #include <autoexecconfig>
 
+#define EXTRA_RESOURCES 150
+
 public Plugin myinfo = 
 {
 	name 		= "[ND] Resource Depletion",
@@ -138,7 +140,7 @@ public Action TIMER_CheckMainResourcesOwned(Handle timer)
 	
 	// Get the amount of resources to add to the tertiary closest to the bunker
 	int curRes = GetEntProp(closestTert, Prop_Send, "m_iCurrentResources");	
-	int amount = curRes <= 0 ? 125 : curRes + 125;
+	int amount = curRes <= 0 ? EXTRA_RESOURCES : curRes + EXTRA_RESOURCES;
 	
 	// Update the resoruces of the tertiary closest to the bunker and continue
 	ND_SetCurrentResources(closestTert, amount);
