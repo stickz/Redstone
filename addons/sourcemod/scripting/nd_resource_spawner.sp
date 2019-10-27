@@ -52,6 +52,7 @@ ConVar cvarOilfeildTertiarySpawns[2];
 ConVar cvarClocktowerTertiarySpawns[2];
 
 ConVar cvarSpawnSkill[2];
+Handle g_OnTertiarySpawnedForward;
 
 // Store alpha spawns in seperate file to reduce clutter
 #include "nd_res_spawn/alpha.sp"
@@ -68,6 +69,8 @@ public void OnPluginStart()
 	AutoExecConfig(true, "nd_res_spawner");
 	
 	AddUpdaterLibrary(); //auto-updater
+	
+	g_OnTertiarySpawnedForward = CreateGlobalForward("ND_OnTertairySpawned", ET_Ignore, Param_Cell, Param_Cell);
 }
 
 public void OnConfigsExecuted()
@@ -428,6 +431,13 @@ public void SpawnResourcePoint( const char[] type, const char[] model, int rt, i
 	SetEntPropVector(trigger, Prop_Send, "m_vecMaxs", max_bounds);
 	
 	resSpawnCount++;
+	
+	// Fire the resource spawn forward
+	Action dummy;
+	Call_StartForward(g_OnTertiarySpawnedForward);
+	Call_PushCell(rt);
+	Call_PushCell(trigger);
+	Call_Finish(dummy);	
 }
 
 public void RemoveTertiaryPoint(const char[] rtName, const char[] trigName)
