@@ -55,7 +55,6 @@ public Plugin:myinfo =
 #define MOD_INSMOD 7
 #define MOD_FF 8
 #define MOD_CSP 9
-#define MOD_ZPS 10
 #define MOD_CSGO 11
 
 new String: team_list[16][32];
@@ -342,20 +341,6 @@ enum hl2mp_player {
 }
 
 new hl2mp_players[MAXPLAYERS + 1][hl2mp_player];
-
-
-/**
- *  Zombie Panic! Source
- */
-
-#define MAX_ZPS_WEAPON_COUNT 11
-new const String: zps_weapon_list[][] = { "870", "revolver", "ak47", "usp", "glock18c", "glock", "mp5", "m4", "supershorty", "winchester", "ppk"};
-
-enum zps_player {
-	next_hitgroup
-}
-
-new zps_players[MAXPLAYERS + 1][zps_player];
 
 
 /**
@@ -930,11 +915,6 @@ public OnAllPluginsLoaded()
 						SDKHook(i, SDKHook_TraceAttackPost,  OnHL2MPTraceAttack);
 						SDKHook(i, SDKHook_OnTakeDamagePost, OnHL2MPTakeDamage);
 					}
-					case MOD_ZPS: {
-						SDKHook(i, SDKHook_FireBulletsPost,  OnZPSFireBullets);
-						SDKHook(i, SDKHook_TraceAttackPost,  OnZPSTraceAttack);
-						SDKHook(i, SDKHook_OnTakeDamagePost, OnZPSTakeDamage);
-					}
 					case MOD_TF2: {
 						SDKHook(i, SDKHook_OnTakeDamagePost, OnTF2TakeDamage_Post);
 						SDKHook(i, SDKHook_OnTakeDamage, 	 OnTF2TakeDamage);
@@ -1064,10 +1044,6 @@ get_server_mod()
 			strcopy(gameme_plugin[game_mod], 32, "CSP");
 			gameme_plugin[mod_id] = MOD_CSP;
 		}
-		if (StrContains(game_description, "ZPS", false) != -1) {
-			strcopy(gameme_plugin[game_mod], 32, "ZPS");
-			gameme_plugin[mod_id] = MOD_ZPS;
-		}
 		
 		// game mod could not detected, try further
 		if (strcmp(gameme_plugin[game_mod], "") == 0) {
@@ -1113,10 +1089,6 @@ get_server_mod()
 			if (StrContains(game_folder, "cspromod", false) != -1) {
 				strcopy(gameme_plugin[game_mod], 32, "CSP");
 				gameme_plugin[mod_id] = MOD_CSP;
-			}
-			if (StrContains(game_folder, "zps", false) != -1) {
-				strcopy(gameme_plugin[game_mod], 32, "ZPS");
-				gameme_plugin[mod_id] = MOD_ZPS;
 			}
 			if (strcmp(gameme_plugin[game_mod], "") == 0) {
 				LogToGame("gameME Game Detection: Failed (%s, %s)", game_description, game_folder);
@@ -1251,11 +1223,6 @@ get_server_mod()
 				HookEvent("player_spawn",            Event_HL2MPPlayerSpawn);
 				HookEvent("round_end",               Event_HL2MPRoundEnd, EventHookMode_PostNoCopy);
 			}
-			case MOD_ZPS: {
-				HookEvent("player_death",            Event_ZPSPlayerDeath);
-				HookEvent("player_spawn",            Event_ZPSPlayerSpawn);
-				HookEvent("round_end",               Event_ZPSRoundEnd, EventHookMode_PostNoCopy);
-			}
 			case MOD_CSP: {
 				HookEvent("round_start",   			 Event_CSPRoundStart);
 				HookEvent("round_end",    			 Event_CSPRoundEnd);
@@ -1299,11 +1266,6 @@ public OnClientPutInServer(client)
 					SDKHook(client, SDKHook_FireBulletsPost,  OnHL2MPFireBullets);
 					SDKHook(client, SDKHook_TraceAttackPost,  OnHL2MPTraceAttack);
 					SDKHook(client, SDKHook_OnTakeDamagePost, OnHL2MPTakeDamage);
-				}
-				case MOD_ZPS: {
-					SDKHook(client, SDKHook_FireBulletsPost,  OnZPSFireBullets);
-					SDKHook(client, SDKHook_TraceAttackPost,  OnZPSTraceAttack);
-					SDKHook(client, SDKHook_OnTakeDamagePost, OnZPSTakeDamage);
 				}
 				case MOD_TF2: {
 					SDKHook(client, SDKHook_OnTakeDamagePost, OnTF2TakeDamage_Post);
@@ -1559,12 +1521,6 @@ dump_player_data(player_index)
 						LogToGame("\"%L\" triggered \"weaponstats\" (weapon \"%s\") (shots \"%d\") (hits \"%d\") (kills \"%d\") (headshots \"%d\") (tks \"%d\") (damage \"%d\") (deaths \"%d\")", player_index, hl2mp_weapon_list[i], player_weapons[player_index][i][wshots], player_weapons[player_index][i][whits], player_weapons[player_index][i][wkills], player_weapons[player_index][i][wheadshots], player_weapons[player_index][i][wteamkills], player_weapons[player_index][i][wdamage], player_weapons[player_index][i][wdeaths]); 
 						if (player_weapons[player_index][i][whits] > 0) {
 							LogToGame("\"%L\" triggered \"weaponstats2\" (weapon \"%s\") (head \"%d\") (chest \"%d\") (stomach \"%d\") (leftarm \"%d\") (rightarm \"%d\") (leftleg \"%d\") (rightleg \"%d\")", player_index, hl2mp_weapon_list[i], player_weapons[player_index][i][whead], player_weapons[player_index][i][wchest], player_weapons[player_index][i][wstomach], player_weapons[player_index][i][wleftarm], player_weapons[player_index][i][wrightarm], player_weapons[player_index][i][wleftleg], player_weapons[player_index][i][wrightleg]); 
-						}
-					}
-					case MOD_ZPS: {								
-						LogToGame("\"%L\" triggered \"weaponstats\" (weapon \"%s\") (shots \"%d\") (hits \"%d\") (kills \"%d\") (headshots \"%d\") (tks \"%d\") (damage \"%d\") (deaths \"%d\")", player_index, zps_weapon_list[i], player_weapons[player_index][i][wshots], player_weapons[player_index][i][whits], player_weapons[player_index][i][wkills], player_weapons[player_index][i][wheadshots], player_weapons[player_index][i][wteamkills], player_weapons[player_index][i][wdamage], player_weapons[player_index][i][wdeaths]); 
-						if (player_weapons[player_index][i][whits] > 0) {
-							LogToGame("\"%L\" triggered \"weaponstats2\" (weapon \"%s\") (head \"%d\") (chest \"%d\") (stomach \"%d\") (leftarm \"%d\") (rightarm \"%d\") (leftleg \"%d\") (rightleg \"%d\")", player_index, zps_weapon_list[i], player_weapons[player_index][i][whead], player_weapons[player_index][i][wchest], player_weapons[player_index][i][wstomach], player_weapons[player_index][i][wleftarm], player_weapons[player_index][i][wrightarm], player_weapons[player_index][i][wleftleg], player_weapons[player_index][i][wrightleg]); 
 						}
 					}
 					case MOD_TF2: {								
@@ -2713,34 +2669,6 @@ public Event_HL2MPPlayerDeath(Handle: event, const String: name[], bool:dontBroa
 }
 
 
-public Event_ZPSPlayerDeath(Handle: event, const String: name[], bool:dontBroadcast)
-{
-	// this extents the original player_death by a new fields
-	// "userid"        "short"         // user ID who died                             
-	// "attacker"      "short"         // user ID who killed
-	// "weapon"        "string"        // weapon name killer used 
-	
-	new victim   = GetClientOfUserId(GetEventInt(event, "userid"));
-	new attacker = GetClientOfUserId(GetEventInt(event, "attacker"));
-	
-	if ((victim > 0) && (attacker > 0)) {
-		if (attacker != victim) {
-			decl String: weapon_str[32];
-			GetEventString(event, "weapon", weapon_str, 32);
-			new weapon_index = get_weapon_index(zps_weapon_list, MAX_ZPS_WEAPON_COUNT, weapon_str);
-			if (weapon_index > -1) {
-				player_weapons[attacker][weapon_index][wkills]++;		
-				player_weapons[victim][weapon_index][wdeaths]++;
-				if (GetClientTeam(attacker) == GetClientTeam(victim)) {
-					player_weapons[attacker][weapon_index][wteamkills]++;
-				}
-			}
-		}
-		dump_player_data(victim);
-	}
-}
-
-
 public Event_CSGOPlayerSpawn(Handle: event, const String: name[], bool:dontBroadcast)
 {
 	new userid = GetClientOfUserId(GetEventInt(event, "userid"));
@@ -2868,15 +2796,6 @@ public Event_HL2MPPlayerSpawn(Handle: event, const String: name[], bool:dontBroa
 }
 
 
-public Event_ZPSPlayerSpawn(Handle: event, const String: name[], bool:dontBroadcast)
-{
-	new userid = GetClientOfUserId(GetEventInt(event, "userid"));
-	if (userid > 0) {
-		reset_player_data(userid);
-	}
-}
-
-
 public Action: Event_CSPRoundStart(Handle: event, const String: name[], bool:dontBroadcast)
 {
 	LogToGame("World triggered \"Round_Start\"");
@@ -2984,14 +2903,6 @@ public Event_L4DRoundEnd(Handle: event, const String: name[], bool:dontBroadcast
 
 
 public Event_HL2MPRoundEnd(Handle: event, const String: name[], bool:dontBroadcast)
-{
-	for (new i = 1; (i <= MaxClients); i++) {
-		dump_player_data(i);
-	}
-}
-
-
-public Event_ZPSRoundEnd(Handle: event, const String: name[], bool:dontBroadcast)
 {
 	for (new i = 1; (i <= MaxClients); i++) {
 		dump_player_data(i);
@@ -3661,7 +3572,7 @@ color_gameme_entities(String: message[])
 public OnClientDisconnect(client)
 {
 	if (client > 0) {
-		if ((gameme_plugin[mod_id] == MOD_CSGO) || (gameme_plugin[mod_id] == MOD_CSS) || (gameme_plugin[mod_id] == MOD_DODS) || (gameme_plugin[mod_id] == MOD_L4D) || (gameme_plugin[mod_id] == MOD_L4DII) || (gameme_plugin[mod_id] == MOD_INSMOD) || (gameme_plugin[mod_id] == MOD_HL2MP) || (gameme_plugin[mod_id] == MOD_TF2) || (gameme_plugin[mod_id] == MOD_ZPS)) {
+		if ((gameme_plugin[mod_id] == MOD_CSGO) || (gameme_plugin[mod_id] == MOD_CSS) || (gameme_plugin[mod_id] == MOD_DODS) || (gameme_plugin[mod_id] == MOD_L4D) || (gameme_plugin[mod_id] == MOD_L4DII) || (gameme_plugin[mod_id] == MOD_INSMOD) || (gameme_plugin[mod_id] == MOD_HL2MP) || (gameme_plugin[mod_id] == MOD_TF2)) {
 			dump_player_data(client);
 			reset_player_data(client);
 		}
@@ -4943,12 +4854,6 @@ public Action: gameME_Event_PlyDeath(Handle: event, const String: name[], bool:d
 					log_player_event(attacker, "triggered", "headshot");
 				}		
 			}
-		}
-
-		if (gameme_plugin[mod_id] == MOD_ZPS) {
-			if (zps_players[victim][next_hitgroup] == HITGROUP_HEAD) {
-				log_player_event(attacker, "triggered", "headshot");
-			}		
 		}
 
 		if (gameme_plugin[mod_id] == MOD_TF2) {
@@ -6248,52 +6153,6 @@ public OnHL2MPTakeDamage(victim, attacker, inflictor, Float:damage, damagetype)
 			hl2mp_players[victim][next_hitgroup] = 0;
 		}
 		
-	}
-}
-
-
-public OnZPSFireBullets(attacker, shots, String: weapon[])
-{
-	if ((attacker > 0) && (attacker <= MaxClients)) {
-		decl String: weapon_name[32];
-		GetClientWeapon(attacker, weapon_name, 32);
-		new weapon_index = get_weapon_index(zps_weapon_list, MAX_ZPS_WEAPON_COUNT, weapon_name);
-		if (weapon_index > -1) {
-			player_weapons[attacker][weapon_index][wshots]++;
-		}
-	}
-}
-
-
-public OnZPSTraceAttack(victim, attacker, inflictor, Float:damage, damagetype, ammotype, hitbox, hitgroup)
-{
-	if ((hitgroup > 0) && (attacker > 0) && (attacker <= MaxClients) && (victim > 0) && (victim <= MaxClients)) {
-		zps_players[victim][next_hitgroup] = hitgroup;
-	}
-}
-
-
-public OnZPSTakeDamage(victim, attacker, inflictor, Float:damage, damagetype)
-{	
-	if ((attacker > 0) && (attacker <= MaxClients) && (victim > 0) && (victim <= MaxClients)) {
-		new hitgroup = zps_players[victim][next_hitgroup];
-		if (hitgroup < 8) {
-			hitgroup += LOG_HIT_OFFSET;
-		}
-		new bool: headshot = ((GetClientHealth(victim) <= 0) && (hitgroup == HITGROUP_HEAD));
-		
-		decl String: weapon_str[32];
-		GetClientWeapon(attacker, weapon_str, 32);
-		new weapon_index = get_weapon_index(zps_weapon_list, MAX_ZPS_WEAPON_COUNT, weapon_str);
-
-		if (weapon_index > -1) {
-			player_weapons[attacker][weapon_index][whits]++;
-			player_weapons[attacker][weapon_index][wdamage] += RoundToNearest(damage);
-			if (headshot) {
-				player_weapons[attacker][weapon_index][wheadshots]++;
-			}
-		}
-		zps_players[victim][next_hitgroup] = 0;
 	}
 }
 
