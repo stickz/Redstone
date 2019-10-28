@@ -125,6 +125,10 @@ public Action TIMER_CheckCornerTrickle(Handle timer)
 
 public Action TIMER_CheckMainResourcesOwned(Handle timer)
 {
+	// Stop the timer if the round isn't started, because the entites become invalid
+	if (!ND_RoundStarted())
+		return Plugin_Stop;
+	
 	// Check if the main resource points are owned by the same team
 	// Also check if the resource points are not all owned by nobody
 	int mainPoints = MainPointsOwnedByTeam();	
