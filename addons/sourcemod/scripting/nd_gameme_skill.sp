@@ -69,7 +69,7 @@ public void OnClientDisconnect(int client) {
 }
 
 /* Natives */
-functag NativeCall public(Handle:plugin, numParams);
+//functag NativeCall public(Handle:plugin, numParams);
 public APLRes:AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("GameME_GetFinalSkill", Native_GameME_GetFinalSkill);
