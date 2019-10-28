@@ -39,13 +39,13 @@
 #define RAW_MESSAGE_CALLBACK_NEXT		103
 
 
-forward onGameMEStatsRank(command, client, String: message_prefix[], &Handle: datapack);
-forward onGameMEStatsPublicCommand(command, client, String: message_prefix[], &Handle: datapack);
-forward onGameMEStatsTop10(command, client, String: message_prefix[], &Handle: datapack);
-forward onGameMEStatsNext(command, client, String: message_prefix[], &Handle: datapack);
+forward void onGameMEStatsRank(int command, int client, char[] message_prefix, Handle &datapack);
+forward void onGameMEStatsPublicCommand(int command, int client, char[] message_prefix, Handle &datapack);
+forward void onGameMEStatsTop10(int command, int client, char[] message_prefix, Handle &datapack);
+forward void onGameMEStatsNext(int command, int client, char[] message_prefix, Handle &datapack);
 
 
-functag gameMEStatsCallback public(command, payload, client, &Handle: datapack);
+typedef gameMEStatsCallback = function void (int command, int payload, int client, Handle &datapack);
 /**
  * Query gameME Stats data from a client
  * 
@@ -55,10 +55,10 @@ functag gameMEStatsCallback public(command, payload, client, &Handle: datapack);
  * @param payload		Payload to distinct queries.
  * @noreturn
  */
-native QueryGameMEStats(String: request[], client, gameMEStatsCallback: callback, payload = 0);
+native void QueryGameMEStats(char[] request, int client, gameMEStatsCallback callback, int payload = 0);
 
 
-functag gameMEStatsTop10Callback public(command, payload, &Handle: datapack);
+typedef gameMEStatsTop10Callback = function void (int command, int payload, Handle &datapack);
 
 /**
  * Query Top10 players from gameME Stats
@@ -69,10 +69,10 @@ functag gameMEStatsTop10Callback public(command, payload, &Handle: datapack);
  * @param payload		Payload to distinct queries.
  * @noreturn
  */
-native QueryGameMEStatsTop10(String: request[], client, gameMEStatsTop10Callback: callback, payload = 0);
+native void QueryGameMEStatsTop10(char[] request, int client, gameMEStatsTop10Callback callback, int payload = 0);
 
 
-functag gameMEStatsNextCallback public(command, payload, client, &Handle: datapack);
+typedef gameMEStatsNextCallback = function void (int command, int payload, int client, Handle &datapack);
 
 /**
  * Query next players from gameME Stats for s specified client
@@ -83,10 +83,10 @@ functag gameMEStatsNextCallback public(command, payload, client, &Handle: datapa
  * @param payload		Payload to distinct queries.
  * @noreturn
  */
-native QueryGameMEStatsNext(String: request[], client, gameMEStatsNextCallback: callback, payload = 0);
+native void QueryGameMEStatsNext(char[] request, int client, gameMEStatsNextCallback callback, int payload = 0);
 
 
-functag gameMEStatsIntCallback public(command, payload, caller[MAXPLAYERS + 1], target[MAXPLAYERS + 1], const String: message_prefix[], const String: message[]);
+typedef gameMEStatsIntCallback = function void (int command, int payload, int caller[MAXPLAYERS + 1], int target[MAXPLAYERS + 1], const char[] message_prefix, const char[] message);
 
 /**
  * Query internal (preformatted) gameME Stats data
@@ -97,7 +97,7 @@ functag gameMEStatsIntCallback public(command, payload, caller[MAXPLAYERS + 1], 
  * @param payload		Payload to distinct queries.
  * @noreturn
  */
-native QueryIntGameMEStats(String: request[], client, gameMEStatsIntCallback: callback, payload = 0, limit = 0);
+native void QueryIntGameMEStats(char[] request, int client, gameMEStatsIntCallback callback, int payload = 0, int limit = 0);
 
 
 /**
@@ -109,7 +109,7 @@ native QueryIntGameMEStats(String: request[], client, gameMEStatsIntCallback: ca
  * @param need_handler  Define, if a menu handler is needed.
  * @noreturn
  */
-native DisplayGameMEStatsMenu(client, time, String: message[], need_handler); 
+native void DisplayGameMEStatsMenu(int client, int time, char[] message, int need_handler); 
 
 
 /**
@@ -117,10 +117,10 @@ native DisplayGameMEStatsMenu(client, time, String: message[], need_handler);
  *
  * @param message	String.
  */
-native gameMEStatsColorEntities(String: message[]); 
+native void gameMEStatsColorEntities(char[] message); 
 
 
-public SharedPlugin:__pl_gameme = 
+public SharedPlugin __pl_gameme = 
 {
 	name = "gameme",
 	file = "gameme.smx",
@@ -132,7 +132,7 @@ public SharedPlugin:__pl_gameme =
 }
 
 #if !defined REQUIRE_PLUGIN
-public __pl_gameme_SetNTVOptional()
+public void __pl_gameme_SetNTVOptional()
 {
 	MarkNativeAsOptional("QueryGameMEStats");
 	MarkNativeAsOptional("QueryGameMEStatsTop10");
