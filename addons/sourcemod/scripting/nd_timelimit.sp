@@ -52,7 +52,7 @@ enum Bools
 	hasExtended,
 	justExtended,
 	roundHasEnded,
-	reducedResumeTime,
+	reducedResumeTime2,
 	canChangeTimeLimit
 };
 
@@ -159,7 +159,7 @@ public void OnClientPutInServer(int client)
 float GetTimeLimit()
 {
 	// Decide wether to set the reduced time limit or the regular time limit
-	float time = g_Bool[reducedResumeTime] ? g_Cvar[reducedTimeLimit].FloatValue : g_Cvar[regularTimeLimit].FloatValue;
+	float time = g_Bool[reducedResumeTime2] ? g_Cvar[reducedTimeLimit].FloatValue : g_Cvar[regularTimeLimit].FloatValue;
 	
 	if (ND_InitialCommandersReady(false) && IncComSkillTimeLimit())
 		time += g_Cvar[comIncTime].FloatValue;
@@ -227,7 +227,7 @@ void setVarriableDefaults()
 	g_Bool[hasExtended] = false;
 	g_Bool[justExtended] = false;
 	g_Bool[enableExtend] = false;
-	g_Bool[reducedResumeTime] = false;
+	g_Bool[reducedResumeTime2] = false;
 	g_Bool[canChangeTimeLimit] = false;
 }
 
@@ -304,7 +304,7 @@ void SetTimeLimit(const char[] currentMap)
 
 /* Timers */
 public Action TIMER_ChangeResumeTime(Handle timer) {
-	g_Bool[reducedResumeTime] = true;
+	g_Bool[reducedResumeTime2] = true;
 }
 
 public Action TIMER_CanChangeTimeLimit(Handle timer) {
