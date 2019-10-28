@@ -5,6 +5,7 @@
 #include <nd_rounds>
 #include <nd_maps>
 #include <nd_redstone>
+#include <nd_resource_eng>
 #include <autoexecconfig>
 
 #define EXTRA_RESOURCES 150
@@ -57,9 +58,12 @@ public void OnMapStart()
 	/* Initialize varriables */
 	listSecondaries.Clear();
 	listTertiaries.Clear();
-	
-	// Store entity index of all secondaries and tertaries on the map
-	CreateTimer(5.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public void ND_OnResPointsCached()
+{
+	listSecondaries = ND_GetSecondaryList();
+	listTertiaries = ND_GetTertiaryList();	
 }
 
 public void ND_OnRoundStarted() 
@@ -116,13 +120,6 @@ public Action TIMER_DepletePrime(Handle timer)
 public Action TIMER_CheckCornerTrickle(Handle timer) 
 {
 	SetCornerTrickleDisable();
-	return Plugin_Continue;
-}
-
-public Action TIMER_SetEntityClasses(Handle timer)
-{
-	SetSecondariesList();
-	SetTertariesList();
 	return Plugin_Continue;
 }
 
@@ -196,27 +193,6 @@ public Action CMD_DisableTrickle(int client, int arg)
 	SetUnlimitedTrickleResources(true);
 	PrintTrickleDisabled();
 	return Plugin_Handled;
-}
-
-void SetSecondariesList()
-{
-	// Loop through all entities finding the secondaries
-	int loopEntity = INVALID_ENT_REFERENCE;
-	while ((loopEntity = FindEntityByClassname(loopEntity, "nd_info_secondary_resource_point")) != INVALID_ENT_REFERENCE)
-	{
-		// Cache the secondary entity index when found
-		listSecondaries.Push(loopEntity);
-	}
-}
-void SetTertariesList()
-{
-	// Loop through all entities finding the tertaries
-	int loopEntity = INVALID_ENT_REFERENCE;
-	while ((loopEntity = FindEntityByClassname(loopEntity, "nd_info_tertiary_resource_point")) != INVALID_ENT_REFERENCE)
-	{
-		// Cache the tertary entity index when found
-		listTertiaries.Push(loopEntity);
-	}
 }
 
 void SetCornerTrickleDisable()
