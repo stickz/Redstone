@@ -20,7 +20,7 @@ public Plugin myinfo =
 	name = "[ND] Player Speed",
 	author = "Stickz",
 	description = "Adjusts player movement speeds",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 };
 

@@ -32,7 +32,7 @@ public Plugin myinfo =
 	name = "[ND] Commander Chair",
 	author = "Stickz",
 	description = "Blocks entering chair until both team gets a commander",
-	version = "recompile2",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 }
 

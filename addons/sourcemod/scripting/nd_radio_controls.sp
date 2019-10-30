@@ -9,7 +9,7 @@ public Plugin:myinfo =
 	name = "[ND] Radio Control",
 	author = "databomb, stickz",
 	description = "Blocks default sounds and prevents radio spam",
-	version = "recompile2",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 }
 

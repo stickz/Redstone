@@ -36,7 +36,7 @@ public Plugin myinfo =
 	name = "[ND] Resource Messages",
 	author = "Vaskrist, Stickz",
 	description = "Messages about resource capturing",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 }
 

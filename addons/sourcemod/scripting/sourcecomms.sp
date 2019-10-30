@@ -170,7 +170,7 @@ public Plugin myinfo =
 	name = "SourceComms", 
 	author = "Alex, Sarabveer(VEER™)", 
 	description = "Advanced punishments management for the Source engine in SourceBans style", 
-	version = "recompile", 
+	version = "dummy", 
 	url = "https://sarabveer.github.io/SourceBans-Fork/"
 };
 

@@ -25,7 +25,7 @@ public Plugin myinfo =
 	name 		= "[ND] Welcome Features",
 	author 		= "Stickz",
 	description 	= "Display a welcome message",
-	version 	= "recompile",
+	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

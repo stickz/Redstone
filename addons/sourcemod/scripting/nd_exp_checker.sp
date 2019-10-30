@@ -8,7 +8,7 @@ public Plugin myinfo =
 	name = "[ND] Expereince Checker",
 	author = "Stickz",
 	description = "Creates commands players can use to view client expereince.",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone"
 };
 

@@ -15,7 +15,7 @@ public Plugin myinfo =
 	name = "[ND] TimeLimit Features",
 	author = "Stickz",
 	description = "Provides time limit features.",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 };
 

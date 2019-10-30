@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name 		= "[ND] Team Engine",
 	author 		= "Stickz",
 	description = "Creates and wraps team join events",
-	version 	= "recompile",
+	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

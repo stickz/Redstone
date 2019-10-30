@@ -43,7 +43,7 @@ public Plugin myinfo =
 	name = "[ND] Commander Restrictions",
 	author = "Stickz",
 	description = "Sets conditions for players to apply for commander",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 }
 

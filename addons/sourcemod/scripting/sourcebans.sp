@@ -127,7 +127,7 @@ public Plugin myinfo =
 	name = "SourceBans++", 
 	author = "SourceBans Development Team, Sarabveer(VEER™)", 
 	description = "Advanced ban management for the Source engine", 
-	version = "recompile", 
+	version = "dummy", 
 	url = "https://sarabveer.github.io/SourceBans-Fork/"
 };
 

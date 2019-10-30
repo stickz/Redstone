@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name 		= "[ND] Buildings Fixes",
 	author 		= "stickz",
     description	= "Prevent building walls inside relays/repeaters",
-    version 	= "recompile",
+    version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 }
 

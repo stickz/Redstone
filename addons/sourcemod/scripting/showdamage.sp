@@ -22,7 +22,7 @@ public Plugin myinfo =
 	name 		= "Show Damage",
 	author 		= "exvel, stickz",
 	description 	= "Shows damage in the center of the screen.",
-	version 	= "recompile",
+	version 	= "dummy",
 	url 		= "www.sourcemod.net"
 }
 

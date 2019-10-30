@@ -27,7 +27,7 @@ public Plugin:myinfo =
 	name 		= "[ND] InitSpeeds Fix",
 	author 		= "Stickz",
 	description 	= "Fixes a server crash exploit",
-	version 	= "recompile",
+	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

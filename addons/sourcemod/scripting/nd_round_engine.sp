@@ -19,7 +19,7 @@ public Plugin myinfo =
 	name 		= "[ND] Round Engine",
 	author 		= "Stickz",
 	description 	= "LL and Proceduralization Support",
-	version 	= "recompile",
+	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

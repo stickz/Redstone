@@ -32,7 +32,7 @@ public Plugin myinfo =
 	name 		= "[ND] Disconnect Messages",
 	author 		= "stickz",
 	description 	= "Displays a message when a client loses connection",
-	version 	= "recompile",
+	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

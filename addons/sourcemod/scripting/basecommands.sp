@@ -43,7 +43,7 @@ public Plugin:myinfo =
 	name = "Basic Commands",
 	author = "AlliedModders LLC",
 	description = "Basic Admin Commands",
-	version = "recompile",
+	version = "dummy",
 	url = "http://www.sourcemod.net/"
 };
 

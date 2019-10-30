@@ -9,7 +9,7 @@ public Plugin myinfo =
 	name = "[ND] Useful Tools",
 	author = "stickz",
 	description = "Provides useful tools for nuclear dawn",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"	
 };
 

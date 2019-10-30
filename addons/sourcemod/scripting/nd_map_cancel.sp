@@ -13,7 +13,7 @@ public Plugin myinfo =
     name = "[ND] Map Cancel",
     author = "Stickz",
     description = "Cancels cycling to maps based on certain conditions",
-    version = "recompile",
+    version = "dummy",
     url = "https://github.com/stickz/Redstone"
 };
 

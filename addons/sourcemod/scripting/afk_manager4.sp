@@ -124,7 +124,7 @@ public Plugin myinfo =
 	name	    = "[ND] AFK Manager",
 	author	    = "Rothgar, Stickz",
     	description = "Takes action on AFK players",
-    	version     = "recompile",
+    	version     = "dummy",
     	url 	    = "https://github.com/stickz/Redstone/"
 };
 

@@ -45,7 +45,7 @@ public Plugin myinfo =
 	name = "[ND] Commander Demote",
 	author = "Stickz",
 	description = "Allows demoting a commander through chat",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 }
 

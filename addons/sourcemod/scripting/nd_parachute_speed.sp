@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name = "[ND] Parachute Speed",
 	author = "Stickz",
 	description = "Modifies parachute fall speed based on infantry boosts",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 };
 

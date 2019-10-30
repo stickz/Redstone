@@ -16,7 +16,7 @@ public Plugin myinfo =
 	name        = "Ban disconnected players",
 	author      = "mad_hamster, stickz",
 	description = "Lets you ban players that recently disconnected",
-	version     = "recompile",
+	version     = "dummy",
 	url         = "http://pro-css.co.il"
 };
 

@@ -31,7 +31,7 @@ public Plugin myinfo =
 	name 		= "Player Warnings",
 	author		= "Stickz",
 	description 	= "Allows moderators to warn players in different languages.",
-	version 	= "recompile",
+	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 

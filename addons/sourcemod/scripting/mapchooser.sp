@@ -14,7 +14,7 @@ public Plugin myinfo =
 	name = "MapChooser",
 	author = "AlliedModders LLC, Stickz",
 	description = "Automated Map Voting",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 };
 
