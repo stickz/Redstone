@@ -251,7 +251,7 @@ void InitCommandersPromotion(int team)
 }
 
 /* Natives */
-typedef NativeCall = function int (Handle plugin, int numParams);
+//typedef NativeCall = function int (Handle plugin, int numParams);
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
