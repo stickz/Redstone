@@ -176,5 +176,13 @@ public Action Event_ResourceExtract(Event event, const char[] name, bool dontBro
 	int amount = event.GetInt("amount");	
 	Tertiary_UpdateResources(arrIndex, amount);
 	
+	// Get the tertiary structure from the ArrayList
+	Tertiary tert;
+	structTertaries.GetArray(arrIndex, tert);
+	
+	// Keep updating resources, in case we run out of team resources
+	int teamRes = Tertiary_GetResources(tert);
+	ND_SetCurrentResources(tert.entIndex, teamRes);
+	
 	return Plugin_Continue;
 }
