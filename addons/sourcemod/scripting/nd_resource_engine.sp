@@ -40,10 +40,7 @@ public void OnMapStart()
 {
 	/* Initialize varriables */
 	listSecondaries.Clear();
-	listTertiaries.Clear();
-	
-	// Store entity index of all secondaries and tertaries on the map
-	CreateTimer(5.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);	
+	listTertiaries.Clear();	
 }
 
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) 
@@ -51,6 +48,9 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 	CreateTimer(30.0, TIMER_CheckPrimeDepleted, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	bPrimeDepleted = false;
 	roundStarted = true;
+	
+	// Store entity index of all secondaries and tertaries on the map
+	CreateTimer(5.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);	
 }
 
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
