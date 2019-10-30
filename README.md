@@ -1,9 +1,9 @@
 # Redstone Nuclear Dawn Server Project
 Get Started Using Github Here: https://guides.github.com/activities/hello-world/
 
-The current stable build environment for this github is sourcemod 1.9 build 6226.
+The current stable build environment for this github is sourcemod 1.10 build 6453.
 
-Compile checks are run with sourcemod 1.10 build 6431 to point out future issues.
+Compile checks are run with sourcemod 1.10 build 6453 to point out future issues.
 
 Bugs/Issues with sourcemod can be fixed here https://github.com/alliedmodders/sourcemod
 
