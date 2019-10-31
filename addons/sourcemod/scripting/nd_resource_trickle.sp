@@ -46,19 +46,17 @@ int Tertiary_FindArrayIndex(int entity) {
 int Tertiary_GetResources(const Tertiary t)
 {
 	// Return initial resources if greater than 0
-	int initRes = t.initialRes;	
-	if (initRes > 0)
-		return initRes;
+	int resources = t.initialRes;	
 	
 	// Otherwise, return the owner team's resources
 	switch (t.owner)
 	{
-		case TEAM_EMPIRE: return t.empireRes;
-		case TEAM_CONSORT: return t.consortRes;
+		case TEAM_EMPIRE: resources += t.empireRes;
+		case TEAM_CONSORT: resources += t.consortRes;
 	}
 	
 	// If no owner is present, return the initial resources
-	return initRes;	
+	return resources;	
 }
 
 void Tertiary_UpdateResources(int index, int amount)
@@ -115,7 +113,7 @@ public Action TIMER_SetTertiaryResources(Handle timer)
 	for (int t = 0; t < listTertiaries.Length; t++) 
 	{
 		int tert = listTertiaries.Get(t);
-		ND_SetCurrentResources(tert, TRICKLE_SET);
+		ND_SetCurrentResources(tert, TRICKLE_SET + TEAM_TRICKLE);
 	}
 	
 	initTertairyStructs();
@@ -176,16 +174,7 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 
 public Action TIMER_ResourceExtract(Handle timer, int arrIndex)
 {
-	// Get the tertiary structure from the ArrayList
-	Tertiary tert;
-	structTertaries.GetArray(arrIndex, tert);
-	
 	// Every five seconds a tertiary extracts 50 resources update that
-	Tertiary_UpdateResources(tert.arrayIndex, 50);
-	
-	// Keep setting resources, in case we run out of team resources
-	int teamRes = Tertiary_GetResources(tert);
-	ND_SetCurrentResources(tert.entIndex, teamRes);
-	
+	Tertiary_UpdateResources(arrIndex, 50);	
 	return Plugin_Continue;
 }
