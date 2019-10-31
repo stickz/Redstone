@@ -6,6 +6,7 @@
 #include <nd_maps>
 #include <nd_redstone>
 #include <nd_resource_eng>
+#include <nd_res_trickle>
 #include <autoexecconfig>
 
 #define EXTRA_RESOURCES 150
@@ -139,12 +140,8 @@ public Action TIMER_CheckMainResourcesOwned(Handle timer)
 	int otherTeam = getOtherTeam(mainPoints);
 	int closestTert = GetTertiaryClosestToBunker(otherTeam);
 	
-	// Get the amount of resources to add to the tertiary closest to the bunker
-	int curRes = GetEntProp(closestTert, Prop_Send, "m_iCurrentResources");	
-	int amount = curRes <= 0 ? EXTRA_RESOURCES : curRes + EXTRA_RESOURCES;
-	
 	// Update the resoruces of the tertiary closest to the bunker and continue
-	ND_SetCurrentResources(closestTert, amount);
+	ND_AddTertiaryResources(closestTert, otherTeam, EXTRA_RESOURCES);
 	return Plugin_Continue;
 }
 
@@ -230,7 +227,10 @@ void SetUnlimitedTrickleResources(bool prime)
 	for (int t = 0; t < listTertiaries.Length; t++) 
 	{
 		int tert = listTertiaries.Get(t);
-		ND_SetCurrentResources(tert, 999999);				
+		
+		// Try to set the resource gracefully first, if that doesn't work set it manually
+		bool set = ND_SetTertiaryResources(tert, TEAM_NONE, 999999);
+		if (!set) {	ND_SetCurrentResources(tert, 999999); }
 	}	
 }
 
