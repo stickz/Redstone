@@ -24,6 +24,7 @@ public Plugin myinfo =
 
 ArrayList listTertiaries;
 ArrayList structTertaries;
+Handle tertiaryTimer[18] = { INVALID_HANDLE, ... };
 
 /* Tertiary struct and functions */
 enum struct Tertiary 
@@ -90,7 +91,6 @@ public void OnPluginStart()
 	structTertaries = new ArrayList(sizeof(Tertiary));
 	
 	HookEvent("resource_captured", Event_ResourceCaptured, EventHookMode_Post);
-	HookEvent("resource_extract", Event_ResourceExtract, EventHookMode_Post);
 	
 	AddUpdaterLibrary(); // Add auto updater feature
 }
@@ -107,7 +107,7 @@ public void ND_OnResPointsCached()
 	listTertiaries = ND_GetTertiaryList();	
 	
 	// Set the current trickle amount to 7000 resources for all the tertaries
-	CreateTimer(5.0, TIMER_SetTertiaryResources, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(3.0, TIMER_SetTertiaryResources, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action TIMER_SetTertiaryResources(Handle timer) 
@@ -149,38 +149,41 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 		int arrIndex = Tertiary_FindArrayIndex(event.GetInt("entindex"));
 		int team = event.GetInt("team");
 		
-		// Get the tertiary structure from the ArrayList by array index
+		// Get the tertiary structure from the ArrayList
 		Tertiary tert;
 		structTertaries.GetArray(arrIndex, tert);
 		
-		// Change the owner to the team that captured the tertiary
+		// Change the owner to the team and update the tertiary list
 		tert.owner = team;
+		structTertaries.SetArray(arrIndex, tert);
 		
 		// Set the current resources of the tertiary to team resources when captured
 		int resources = Tertiary_GetResources(tert);
 		ND_SetCurrentResources(tert.entIndex, resources);
+		
+		// Kill the timer before creating the next one
+		if (tertiaryTimer[arrIndex] != INVALID_HANDLE)
+		{
+			KillTimer(tertiaryTimer[arrIndex]);
+			tertiaryTimer[arrIndex] = INVALID_HANDLE;
+		}
+		
+		// Since the resource extract event doesn't work, we must use a repeating timer to simulate resource extracts
+		if (tert.owner == TEAM_EMPIRE || tert.owner == TEAM_CONSORT)
+			tertiaryTimer[arrIndex] = CreateTimer(5.0, TIMER_ResourceExtract, arrIndex, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	}
 }
 
-public Action Event_ResourceExtract(Event event, const char[] name, bool dontBroadcast)
+public Action TIMER_ResourceExtract(Handle timer, int arrIndex)
 {
-	// Get the array index and entity index 
-	int entIndex = event.GetInt("entindex");
-	int arrIndex = Tertiary_FindArrayIndex(entIndex);
-	
-	// If the resource is not a tertiary, exit the function
-	if (arrIndex == RESOURCE_NOT_TERTIARY)
-		return Plugin_Continue;
-	
-	// Otherwise, get the amount of resource extracted and update the running total
-	int amount = event.GetInt("amount");	
-	Tertiary_UpdateResources(arrIndex, amount);
-	
 	// Get the tertiary structure from the ArrayList
 	Tertiary tert;
 	structTertaries.GetArray(arrIndex, tert);
 	
-	// Keep updating resources, in case we run out of team resources
+	// Every five seconds a tertiary extracts 50 resources update that
+	Tertiary_UpdateResources(tert.arrayIndex, 50);
+	
+	// Keep setting resources, in case we run out of team resources
 	int teamRes = Tertiary_GetResources(tert);
 	ND_SetCurrentResources(tert.entIndex, teamRes);
 	
