@@ -17,6 +17,7 @@ Handle OnPrimeResDepleted;
 Handle OnResPointsCached;
 bool bPrimeDepleted = false;
 bool roundStarted = false;
+bool resPointsCached = false;
 int PrimeEntity = -1;
 
 ArrayList listSecondaries;
@@ -47,6 +48,7 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 {
 	CreateTimer(30.0, TIMER_CheckPrimeDepleted, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	bPrimeDepleted = false;
+	resPointsCached = false;
 	roundStarted = true;
 	
 	// Store entity index of all secondaries and tertaries on the map
@@ -67,7 +69,8 @@ public Action TIMER_SetEntityClasses(Handle timer)
 	// Fire the cache complete forward to signal the info is ready for access
 	Action dummy;
 	Call_StartForward(OnResPointsCached);
-	Call_Finish(dummy);	
+	Call_Finish(dummy);
+	resPointsCached = true;	
 	
 	return Plugin_Continue;
 }
@@ -124,6 +127,7 @@ void SetTertariesList()
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_IsPrimeDepleted", Native_PrimeDepleted);	
+	CreateNative("ND_ResPointsCached", Native_ResPointsCached);
 	CreateNative("ND_GetPrimaryPoint", Native_GetPrimePoint);
 	CreateNative("ND_GetSecondaryList", Native_GetSecList);
 	CreateNative("ND_GetTertiaryList", Native_GetTertList);
@@ -132,6 +136,10 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public int Native_PrimeDepleted(Handle plugin, int numParams) {
 	return _:bPrimeDepleted;
+}
+
+public int Native_ResPointsCached(Handle plugin, int numParams) {
+	return _:resPointsCached;
 }
 
 public int Native_GetPrimePoint(Handle plugin, int numParms) {

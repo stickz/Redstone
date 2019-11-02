@@ -43,6 +43,10 @@ public void OnPluginStart()
 	HookEvent("resource_captured", Event_ResourceCaptured, EventHookMode_Post);
 	
 	AddUpdaterLibrary(); // Add auto updater feature
+	
+	// Add late loading support to resource trickle
+	if (ND_RoundStarted() && ND_ResPointsCached())
+		ND_OnResPointsCached();
 }
 
 public void ND_OnRoundStarted()
