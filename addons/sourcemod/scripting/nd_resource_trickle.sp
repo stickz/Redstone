@@ -45,10 +45,11 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); // Add auto updater feature
 }
 
-public void OnMapStart() 
+public void ND_OnRoundStarted()
 {
 	/* Initialize varriables */
 	listTertiaries.Clear();
+	structTertaries.Clear();
 }
 
 public void ND_OnResPointsCached()
