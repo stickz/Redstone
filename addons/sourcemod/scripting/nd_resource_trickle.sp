@@ -114,7 +114,7 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 	ND_SetCurrentResources(tert.entIndex, tert.GetRes());
 		
 	// Kill the timer before creating the next one
-	if (tertiaryTimer[arrIndex] != INVALID_HANDLE)
+	if (tertiaryTimer[arrIndex] != INVALID_HANDLE && IsValidHandle(tertiaryTimer[arrIndex]))
 	{
 		KillTimer(tertiaryTimer[arrIndex]);
 		tertiaryTimer[arrIndex] = INVALID_HANDLE;
