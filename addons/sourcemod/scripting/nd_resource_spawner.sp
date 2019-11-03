@@ -10,12 +10,6 @@
 #include <autoexecconfig>
 #include <nd_resource_eng>
 
-#define TERTIARY_MODEL "models/rts_structures/rts_resource/rts_resource_tertiary.mdl"
-#define VECTOR_SIZE 3
-
-#define CAPTURE_RADIUS 200.0
-#define nCAPTURE_RADIUS -200.0
- 
 public Plugin myinfo =
 {
     name = "[ND] Resource Spawner",
@@ -34,7 +28,6 @@ public Plugin myinfo =
 #define SKILL_LOW 	0
 #define SKILL_HIGH 	1
 
-int resSpawnCount = 0;
 bool tertsSpawned[2] = { false, ... };
 
 /* Plugin Convars */
@@ -52,7 +45,6 @@ ConVar cvarOilfeildTertiarySpawns[2];
 ConVar cvarClocktowerTertiarySpawns[2];
 
 ConVar cvarSpawnSkill[2];
-Handle g_OnTertiarySpawnedForward;
 
 // Store alpha spawns in seperate file to reduce clutter
 #include "nd_res_spawn/alpha.sp"
@@ -69,8 +61,6 @@ public void OnPluginStart()
 	AutoExecConfig(true, "nd_res_spawner");
 	
 	AddUpdaterLibrary(); //auto-updater
-	
-	g_OnTertiarySpawnedForward = CreateGlobalForward("ND_OnTertairySpawned", ET_Ignore, Param_Cell, Param_Cell);
 }
 
 public void OnConfigsExecuted()
@@ -154,7 +144,6 @@ public void OnClientPutInServer(int client)
 
 public void ND_OnRoundStarted()
 {
-	resSpawnCount = 0;
 	tertsSpawned[FIRST_TIER] = false;
 	tertsSpawned[SECOND_TIER] = false;
 	
@@ -193,8 +182,8 @@ void CheckT1PrimeDepleteSpawns()
 
 		if (ND_StockMapEquals(map_name, ND_Silo))
 		{
-			SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
-			SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
+			ND_SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
+			ND_SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
 			tertsSpawned[FIRST_TIER] = true;
 		}
 	}
@@ -210,16 +199,16 @@ void CheckT2PrimeDepleteSpawns()
 		
 		if (ND_MapEqualsAnyMetro(map_name))
 		{
-			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
-			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
+			ND_SpawnTertiaryPoint({2620.0, 529.0, 5.0});
+			ND_SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
 		
 		else if (ND_StockMapEquals(map_name, ND_Clocktower))
 		{
 			// Respawn tunnel resources			
-			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
-			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
+			ND_SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
+			ND_SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -236,18 +225,18 @@ void CheckStableSpawns()
 		if (!tertsSpawned[FIRST_TIER])
 		{
 			// Center map tertiary resource points
-			SpawnTertiaryPoint({-1475.0, 3475.0, -33.0});
-			SpawnTertiaryPoint({-1000.0, -3820.0, -216.0});
-			SpawnTertiaryPoint({1350.0, -2153.0, 20.0});
-			SpawnTertiaryPoint({2495.0, 5775.0, 150.0});
+			ND_SpawnTertiaryPoint({-1475.0, 3475.0, -33.0});
+			ND_SpawnTertiaryPoint({-1000.0, -3820.0, -216.0});
+			ND_SpawnTertiaryPoint({1350.0, -2153.0, 20.0});
+			ND_SpawnTertiaryPoint({2495.0, 5775.0, 150.0});
 			tertsSpawned[FIRST_TIER] = true;
 		}
 		
 		if (RED_OnTeamCount() >= GetSpawnCount(20, 22, 24))
 		{
 			// Base tertiary resource points
-			SpawnTertiaryPoint({987.0, -7562.0, 23.0});  
-			SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
+			ND_SpawnTertiaryPoint({987.0, -7562.0, 23.0});  
+			ND_SpawnTertiaryPoint({-1483.0, 9135.0, 123.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -256,8 +245,8 @@ void CheckStableSpawns()
 	{
 		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18))
 		{
-			SpawnTertiaryPoint({2620.0, 529.0, 5.0});
-			SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
+			ND_SpawnTertiaryPoint({2620.0, 529.0, 5.0});
+			ND_SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -266,8 +255,8 @@ void CheckStableSpawns()
 	{
 		if (RED_OnTeamCount() >= cvarSiloTertiarySpawns.IntValue)
 		{
-			SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
-			SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
+			ND_SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
+			ND_SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
 			tertsSpawned[SECOND_TIER] = true;			
 		}
 	}
@@ -277,8 +266,8 @@ void CheckStableSpawns()
 		if (RED_OnTeamCount() >= GetSpawnCount(20, 22, 24))
 		{
 			// Respawn tunnel resources			
-			SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
-			SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
+			ND_SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
+			ND_SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
 			tertsSpawned[SECOND_TIER] = true;
 		}
 	}
@@ -287,8 +276,8 @@ void CheckStableSpawns()
 	{
 		if (RED_OnTeamCount() >= cvarCornerTertiarySpawns.IntValue)
 		{
-			SpawnTertiaryPoint({-3485.0, 11688.0, 5.0});
-			SpawnTertiaryPoint({-1947.0, -1942.0, 7.0});
+			ND_SpawnTertiaryPoint({-3485.0, 11688.0, 5.0});
+			ND_SpawnTertiaryPoint({-1947.0, -1942.0, 7.0});
 			tertsSpawned[SECOND_TIER] = true;		
 		}
 	}*/
@@ -297,8 +286,8 @@ void CheckStableSpawns()
 	{
 		if (RED_OnTeamCount() >= GetSpawnCount(26, 28, 30))
 		{
-			SpawnTertiaryPoint({2385.0, -5582.0, -3190.0});
-			SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0});
+			ND_SpawnTertiaryPoint({2385.0, -5582.0, -3190.0});
+			ND_SpawnTertiaryPoint({-2668.0, -3169.0, -2829.0});
 			tertsSpawned[SECOND_TIER] = true;		
 		}
 	}
@@ -311,8 +300,8 @@ void CheckStableSpawns()
 							
 		if (RED_OnTeamCount() >= hCount)
 		{
-			SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
-			SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
+			ND_SpawnTertiaryPoint({2132.0, 2559.0, 18.0});
+			ND_SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
 			tertsSpawned[SECOND_TIER] = true;	
 		}
 	}
@@ -330,15 +319,15 @@ void CheckBetaSpawns()
 		{
 			if (!tertsSpawned[FIRST_TIER])
 			{
-				SpawnTertiaryPoint({-5824.0, -32.0, 0.0});
-				SpawnTertiaryPoint({3392.0, 0.0, 5.0});
+				ND_SpawnTertiaryPoint({-5824.0, -32.0, 0.0});
+				ND_SpawnTertiaryPoint({3392.0, 0.0, 5.0});
 				tertsSpawned[FIRST_TIER] = true;
 			}
 			
 			if (teamCount >= cvarGateTertiarySpawns[SECOND_TIER].IntValue)
 			{
-				SpawnTertiaryPoint({-3392.0, -2384.0, 0.0});
-				SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
+				ND_SpawnTertiaryPoint({-3392.0, -2384.0, 0.0});
+				ND_SpawnTertiaryPoint({-3456.0, 2112.0, -16.0});
 				tertsSpawned[SECOND_TIER] = true;
 			}
 		}
@@ -353,12 +342,12 @@ void AdjustStableSpawns()
 	if (ND_StockMapEquals(map_name, ND_Clocktower))
 	{
 		// Remove tunnel resources
-		RemoveTertiaryPoint("tertiary_1", "tertiary_area1");	
-		RemoveTertiaryPoint("tertiary_tunnel", "tertiary_tunnel_area");
+		ND_RemoveTertiaryPoint("tertiary_1", "tertiary_area1");	
+		ND_RemoveTertiaryPoint("tertiary_tunnel", "tertiary_tunnel_area");
 		
 		// Spawn new tertiary near consort base
 		// So empire + consort have same resource acess
-		SpawnTertiaryPoint({2181.0, 4161.0, -1380.0});
+		ND_SpawnTertiaryPoint({2181.0, 4161.0, -1380.0});
 	}
 }
 
@@ -370,98 +359,13 @@ void AdjustBetaSpawns()
 	if (ND_StockMapEquals(map_name, ND_Gate))
 	{
 		// Tertaries by the secondaries
-		RemoveTertiaryPoint("tertiary01", "tertiary_area01");
-		RemoveTertiaryPoint("tertiary04", "tertiary_area04");
+		ND_RemoveTertiaryPoint("tertiary01", "tertiary_area01");
+		ND_RemoveTertiaryPoint("tertiary04", "tertiary_area04");
 		
 		// Tertaries by the secondary and prime
-		RemoveTertiaryPoint("tertiary013", "tertiary_area013");
-		RemoveTertiaryPoint("tertiary07", "tertiary_area07");
+		ND_RemoveTertiaryPoint("tertiary013", "tertiary_area013");
+		ND_RemoveTertiaryPoint("tertiary07", "tertiary_area07");
 	}
-}
-
-public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
-{
-	int rt = CreateEntityByName("nd_info_tertiary_resource_point");
-	int trigger = CreateEntityByName("nd_trigger_resource_point");
-	
-	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin);
-	
-	// Need to update the entity cache, since we added a new entity to the map
-	ND_UpdateEntityCache();
-}
-
-public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin)
-{	
-	char rt_name[32];
-	char trigger_name[32];
-
-	Format(rt_name, sizeof(rt_name), "%s-%i", type, resSpawnCount);
-	Format(trigger_name, sizeof(trigger_name), "%s-%i-area", type, resSpawnCount);
-		
-	DispatchSpawn(rt);
-	DispatchSpawn(trigger);
-       
-	ActivateEntity(rt);
-	ActivateEntity(trigger);
-       
-	SetEntPropString(rt, Prop_Data, "m_iName", rt_name);
-	SetEntPropString(trigger, Prop_Data, "m_iName", trigger_name);
-       
-	SetEntPropString(trigger, Prop_Data, "m_iszResourcePointName", rt_name);
-	SetEntPropFloat(trigger, Prop_Data, "m_flCapTime", 5.0);
-	SetEntProp(trigger, Prop_Data, "m_iButtonsToCap", 0);
-	SetEntProp(trigger, Prop_Data, "m_iNumPlayersToCap", 1);
-	
-	SetEntProp(trigger, Prop_Send, "m_nSolidType", 2);
-	
-	// Deplete tertiary resources if prime is depleted on spawn
-	if (ND_PrimeDepleted())
-		ND_SetCurrentResources(rt, 0);
- 
-	SetEntityModel(rt, TERTIARY_MODEL);
-	SetEntityModel(trigger, TERTIARY_MODEL); //will throw warning in game console; required and no model displayed for brush entity
-       
-	TeleportEntity(rt, origin, NULL_VECTOR, NULL_VECTOR);
-	TeleportEntity(trigger, origin, NULL_VECTOR, NULL_VECTOR);
-       
-	float min_bounds[VECTOR_SIZE] = {nCAPTURE_RADIUS, nCAPTURE_RADIUS, nCAPTURE_RADIUS};
-	float max_bounds[VECTOR_SIZE] = {CAPTURE_RADIUS, CAPTURE_RADIUS, CAPTURE_RADIUS};
-	
-	SetEntPropVector(trigger, Prop_Send, "m_vecMins", min_bounds);
-	SetEntPropVector(trigger, Prop_Send, "m_vecMaxs", max_bounds);
-	
-	resSpawnCount++;
-	
-	// Fire the resource spawn forward
-	Action dummy;
-	Call_StartForward(g_OnTertiarySpawnedForward);
-	Call_PushCell(rt);
-	Call_PushCell(trigger);
-	Call_Finish(dummy);	
-}
-
-public void RemoveTertiaryPoint(const char[] rtName, const char[] trigName)
-{
-	int entity = LookupEntity("nd_info_tertiary_resource_point", rtName, -1);	
-	if (entity > -1) AcceptEntityInput(entity, "Kill");	
-	
-	entity = LookupEntity("nd_trigger_resource_point", trigName, -1);
-	if (entity > -1) AcceptEntityInput(entity, "Kill");
-}
-
-//Recursivly lookup entities by classname until we find the matching name
-public int LookupEntity(const char[] classname, const char[] lookup_name, int start_point)
-{
-	int entity = FindEntityByClassname(start_point, classname);
-	
-	if (entity > -1)
-	{
-		char entity_name[32];
-		GetEntPropString(entity, Prop_Data, "m_iName", entity_name, sizeof(entity_name));
-		return StrEqual(entity_name, lookup_name) ? entity : LookupEntity(classname, lookup_name, entity);
-	}
-	
-	return -1;
 }
 
 int GetSpawnCount(int min, int med, int max)

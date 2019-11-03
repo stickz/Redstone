@@ -13,12 +13,22 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_resource_engine/nd_resource_engine.txt"
 #include "updater/standard.sp"
 
+#define TERTIARY_MODEL "models/rts_structures/rts_resource/rts_resource_tertiary.mdl"
+#define VECTOR_SIZE 3
+
+#define CAPTURE_RADIUS 200.0
+#define nCAPTURE_RADIUS -200.0
+
 Handle OnPrimeResDepleted;
 Handle OnResPointsCached;
+Handle OnTertiarySpawned;
+
 bool bPrimeDepleted = false;
 bool roundStarted = false;
 bool resPointsCached = false;
+
 int PrimeEntity = -1;
+int resSpawnCount = 0;
 
 ArrayList listSecondaries;
 ArrayList listTertiaries;
@@ -34,6 +44,8 @@ public void OnPluginStart()
 	
 	OnPrimeResDepleted = CreateGlobalForward("ND_OnPrimeDepleted", ET_Ignore, Param_Cell);
 	OnResPointsCached = CreateGlobalForward("ND_OnResPointsCached", ET_Ignore);
+	OnTertiarySpawned = CreateGlobalForward("ND_OnTertairySpawned", ET_Ignore, Param_Cell, Param_Cell);
+	
 	AddUpdaterLibrary(); // Add auto updater feature
 }
 
@@ -50,6 +62,7 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 	bPrimeDepleted = false;
 	resPointsCached = false;
 	roundStarted = true;
+	resSpawnCount = 0;
 	
 	// Store entity index of all secondaries and tertaries on the map
 	CreateTimer(5.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);	
@@ -61,6 +74,10 @@ public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
 
 public Action TIMER_SetEntityClasses(Handle timer)
 {
+	/* Initialize varriables */
+	listSecondaries.Clear();
+	listTertiaries.Clear();	
+	
 	// Cache the prime entity and all the secondaries and tertaries
 	PrimeEntity = FindEntityByClassname(-1, "nd_info_primary_resource_point");
 	SetSecondariesList();
@@ -123,14 +140,104 @@ void SetTertariesList()
 	}
 }
 
+public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
+{
+	int rt = CreateEntityByName("nd_info_tertiary_resource_point");
+	int trigger = CreateEntityByName("nd_trigger_resource_point");
+	
+	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin);
+	
+	// Need to update the entity cache, since we added a new entity to the map
+	CreateTimer(3.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin)
+{	
+	char rt_name[32];
+	char trigger_name[32];
+
+	Format(rt_name, sizeof(rt_name), "%s-%i", type, resSpawnCount);
+	Format(trigger_name, sizeof(trigger_name), "%s-%i-area", type, resSpawnCount);
+		
+	DispatchSpawn(rt);
+	DispatchSpawn(trigger);
+       
+	ActivateEntity(rt);
+	ActivateEntity(trigger);
+       
+	SetEntPropString(rt, Prop_Data, "m_iName", rt_name);
+	SetEntPropString(trigger, Prop_Data, "m_iName", trigger_name);
+       
+	SetEntPropString(trigger, Prop_Data, "m_iszResourcePointName", rt_name);
+	SetEntPropFloat(trigger, Prop_Data, "m_flCapTime", 5.0);
+	SetEntProp(trigger, Prop_Data, "m_iButtonsToCap", 0);
+	SetEntProp(trigger, Prop_Data, "m_iNumPlayersToCap", 1);
+	
+	SetEntProp(trigger, Prop_Send, "m_nSolidType", 2);
+	
+	// Deplete tertiary resources if prime is depleted on spawn
+	if (bPrimeDepleted)
+		SetEntProp(rt, Prop_Send, "m_iCurrentResources", 0);
+ 
+	SetEntityModel(rt, TERTIARY_MODEL);
+	SetEntityModel(trigger, TERTIARY_MODEL); //will throw warning in game console; required and no model displayed for brush entity
+       
+	TeleportEntity(rt, origin, NULL_VECTOR, NULL_VECTOR);
+	TeleportEntity(trigger, origin, NULL_VECTOR, NULL_VECTOR);
+       
+	float min_bounds[VECTOR_SIZE] = {nCAPTURE_RADIUS, nCAPTURE_RADIUS, nCAPTURE_RADIUS};
+	float max_bounds[VECTOR_SIZE] = {CAPTURE_RADIUS, CAPTURE_RADIUS, CAPTURE_RADIUS};
+	
+	SetEntPropVector(trigger, Prop_Send, "m_vecMins", min_bounds);
+	SetEntPropVector(trigger, Prop_Send, "m_vecMaxs", max_bounds);
+	
+	resSpawnCount++;
+	
+	// Fire the resource spawn forward
+	Action dummy;
+	Call_StartForward(OnTertiarySpawned);
+	Call_PushCell(rt);
+	Call_PushCell(trigger);
+	Call_Finish(dummy);
+}
+
+public void RemoveTertiaryPoint(const char[] rtName, const char[] trigName)
+{
+	int entity = LookupEntity("nd_info_tertiary_resource_point", rtName, -1);	
+	if (entity > -1) AcceptEntityInput(entity, "Kill");	
+	
+	entity = LookupEntity("nd_trigger_resource_point", trigName, -1);
+	if (entity > -1) AcceptEntityInput(entity, "Kill");
+}
+
+//Recursivly lookup entities by classname until we find the matching name
+public int LookupEntity(const char[] classname, const char[] lookup_name, int start_point)
+{
+	int entity = FindEntityByClassname(start_point, classname);
+	
+	if (entity > -1)
+	{
+		char entity_name[32];
+		GetEntPropString(entity, Prop_Data, "m_iName", entity_name, sizeof(entity_name));
+		return StrEqual(entity_name, lookup_name) ? entity : LookupEntity(classname, lookup_name, entity);
+	}
+	
+	return -1;
+}
+
 /* Natives */
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_IsPrimeDepleted", Native_PrimeDepleted);	
 	CreateNative("ND_ResPointsCached", Native_ResPointsCached);
+	
 	CreateNative("ND_GetPrimaryPoint", Native_GetPrimePoint);
 	CreateNative("ND_GetSecondaryList", Native_GetSecList);
 	CreateNative("ND_GetTertiaryList", Native_GetTertList);
+	
+	CreateNative("ND_SpawnTertiaryPoint", Native_SpawnTertiaryPoint);
+	CreateNative("ND_RemoveTertiaryPoint", Native_RemoveTertiaryPoint);
+	
 	return APLRes_Success;
 }
 
@@ -152,4 +259,28 @@ public int Native_GetSecList(Handle plugin, int numParams) {
 
 public int Native_GetTertList(Handle plugin, int numParams) {
 	return view_as<int>(CloneHandle(listTertiaries, plugin));
+}
+
+public int Native_SpawnTertiaryPoint(Handle plugin, int numParams) 
+{
+	// Get the location to spawn the tertiary
+	float origin[VECTOR_SIZE];
+	GetNativeArray(1, origin, VECTOR_SIZE);
+	
+	// Spawn the tertiary resource point
+	SpawnTertiaryPoint(origin);	
+}
+
+public int Native_RemoveTertiaryPoint(Handle plugin, int numParams)
+{
+	// Get the tertiary name to remove
+	char rtName[32];
+	GetNativeString(1, rtName, sizeof(rtName));
+	
+	// Get the trigger name to remove
+	char trigName[32];
+	GetNativeString(2, trigName, sizeof(trigName));
+	
+	// Remove the tertiary resource point
+	RemoveTertiaryPoint(rtName, trigName);
 }
