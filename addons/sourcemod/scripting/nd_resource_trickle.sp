@@ -4,6 +4,7 @@
 #include <nd_entities>
 #include <nd_resources>
 #include <nd_resource_eng>
+#include <smlib/math>
 
 public Plugin myinfo = 
 {

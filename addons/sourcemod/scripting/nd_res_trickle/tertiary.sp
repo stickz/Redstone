@@ -66,15 +66,27 @@ enum struct Tertiary
 	{
 		// If the initial resources is greater than 0, update it
 		if (this.initialRes > 0)
-			this.initialRes -= amount;
+		{
+			this.initialRes -= amount; // Clamp initial resources at 0
+			this.initialRes = Math_Min(this.initialRes, 0);
+		}
 	
 		else // Otherwise, update the team resources
 		{
 			switch (this.owner)
 			{
-				case TEAM_EMPIRE: this.empireRes -= amount;
-				case TEAM_CONSORT: this.consortRes -= amount;
-			}	
-		}	
+				case TEAM_EMPIRE: 
+				{
+					this.empireRes -= amount; // Clamp empire resources at 0
+					this.empireRes = Math_Min(this.empireRes, 0);					
+				}
+				
+				case TEAM_CONSORT: 
+				{
+					this.consortRes -= amount; // Clamp consort resources at 0
+					this.consortRes = Math_Min(this.consortRes, 0);
+				}
+			}
+		}
 	}
 }
