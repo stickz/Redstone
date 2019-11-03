@@ -17,8 +17,9 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_resource_trickle/nd_resource_trickle.txt"
 #include "updater/standard.sp"
 
-#define TEAM_TRICKLE 8000
-#define TRICKLE_SET 8000
+#define TEAM_TRICKLE 8000 // Reserved pool of resources for each team
+#define TRICKLE_SET 8000 // Initial pool of resources, first come, first serve
+#define TRICKLE_REGEN 2400 // Threshold to regenerate opposite team's pool
 
 #define RESOURCE_NOT_TERTIARY 	-1
 #define TERTIARY_NOT_FOUND		-1
@@ -140,6 +141,12 @@ public Action TIMER_ResourceExtract(Handle timer, int arrIndex)
 	
 	// Every five seconds a tertiary extracts 50 resources subtract that
 	tert.SubtractRes(50);
+	
+	// Every five seconds, regenerate 10 resources
+	// If the opposite team's reserved pool is less than 2400
+	int otherTeam = getOtherTeam(tert.owner);
+	if (tert.GetResTeam(otherTeam) <= TRICKLE_REGEN)
+		tert.AddRes(otherTeam, 10); 
 
 	// Update ther tertiary structures in the ArrayList
 	structTertaries.SetArray(arrIndex, tert);
