@@ -67,6 +67,16 @@ public void ND_OnResPointsCached()
 	CreateTimer(3.0, TIMER_SetTertiaryResources, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
+public void ND_OnTertairySpawned(int entity, int trigger)
+{
+	// Add to the list of tertaries
+	listTertiaries.Push(entity);
+	
+	// Create a new tertiary struct for trickling
+	int index = listTertiaries.Length - 1;
+	initNewTertiary(index, entity, !ND_IsPrimeDepleted());
+}
+
 public Action TIMER_SetTertiaryResources(Handle timer) 
 {	
 	for (int t = 0; t < listTertiaries.Length; t++) 
@@ -83,19 +93,34 @@ public Action TIMER_SetTertiaryResources(Handle timer)
 void initTertairyStructs()
 {
 	for (int t = 0; t < listTertiaries.Length; t++)
+		initNewTertiary(t, listTertiaries.Get(t), true);
+}
+
+void initNewTertiary(int arrIndex, int entIndex, bool resources)
+{
+	// Create and initialize new tertiary object
+	Tertiary tert;
+	tert.arrayIndex = arrIndex;
+	tert.entIndex = entIndex;	
+
+	// Should we init the teritary with trickle resources?
+	if (resources)
 	{
-		// Create and initialize new tertiary object
-		Tertiary tert;
-		tert.arrayIndex = t;
-		tert.entIndex = listTertiaries.Get(t);		
 		tert.initialRes = TRICKLE_SET;
 		tert.empireRes = TEAM_TRICKLE;
 		tert.consortRes = TEAM_TRICKLE;
-		tert.owner = TEAM_SPEC;
-		
-		// Push the teritary object into the struct list
-		structTertaries.PushArray(tert);
+	}
+	else
+	{
+		tert.initialRes = 0;
+		tert.empireRes = 0;
+		tert.consortRes = 0;
 	}	
+	
+	tert.owner = TEAM_SPEC;
+		
+	// Push the teritary object into the struct list
+	structTertaries.PushArray(tert);	
 }
 
 public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBroadcast)
