@@ -74,7 +74,7 @@ public void ND_OnTertairySpawned(int entity, int trigger)
 	
 	// Create a new tertiary struct for trickling
 	int index = listTertiaries.Length - 1;
-	initNewTertiary(index, entity, !ND_IsPrimeDepleted());
+	initNewTertiary(index, entity, false);
 }
 
 public Action TIMER_SetTertiaryResources(Handle timer) 
@@ -96,15 +96,16 @@ void initTertairyStructs()
 		initNewTertiary(t, listTertiaries.Get(t), true);
 }
 
-void initNewTertiary(int arrIndex, int entIndex, bool resources)
+void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
 {
 	// Create and initialize new tertiary object
 	Tertiary tert;
 	tert.arrayIndex = arrIndex;
-	tert.entIndex = entIndex;	
+	tert.entIndex = entIndex;
+	tert.owner = TEAM_SPEC;	
 
-	// Should we init the teritary with trickle resources?
-	if (resources)
+	// Should we init the teritary with full resources?
+	if (fullRes)
 	{
 		tert.initialRes = TRICKLE_SET;
 		tert.empireRes = TEAM_TRICKLE;
@@ -112,15 +113,33 @@ void initNewTertiary(int arrIndex, int entIndex, bool resources)
 	}
 	else
 	{
-		tert.initialRes = 0;
-		tert.empireRes = 0;
-		tert.consortRes = 0;
+		int average = GetAverageSpawnRes();
+		tert.initialRes = average;
+		tert.empireRes = average;
+		tert.consortRes = average;
 	}	
 	
-	tert.owner = TEAM_SPEC;
-		
 	// Push the teritary object into the struct list
 	structTertaries.PushArray(tert);	
+}
+
+int GetAverageSpawnRes()
+{
+	// Calculate the total amount of initial resoruces in all the tertaries
+	int totalRes = 0;
+	for (int i = 0; i < structTertaries.Length; i++)
+	{
+		// Get the tertiary structure
+		Tertiary tert;
+		structTertaries.GetArray(i, tert);
+		
+		// Add the intial resources to the total resources
+		totalRes += tert.initialRes;
+	}
+	
+	// Calculate the average initial resources and return it as an integer
+	float average = float(totalRes) / float(structTertaries.Length);
+	return RoundFloat(average);	
 }
 
 public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBroadcast)
