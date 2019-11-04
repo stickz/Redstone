@@ -1,12 +1,10 @@
 #include <sourcemod>
-#include <sdktools>
 #include <nd_stocks>
 #include <nd_rounds>
 #include <nd_maps>
 #include <nd_redstone>
 #include <nd_stype>
 #include <nd_fskill>
-#include <nd_entities>
 #include <autoexecconfig>
 #include <nd_resource_eng>
 
@@ -34,7 +32,7 @@ bool tertsSpawned[2] = { false, ... };
 ConVar cvarMarsTertiarySpawns;
 ConVar cvarOasisTertiarySpawns;
 ConVar cvarCoastTertiarySpawns;
-ConVar cvarCornerTertiarySpawns;
+//ConVar cvarCornerTertiarySpawns;
 ConVar cvarNuclearTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
 ConVar cvarSiloTertiarySpawns;
@@ -101,7 +99,7 @@ void CreateMapConvars()
 	cvarMarsTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_mars", "16", "Sets number of players to spawn extra tertaries on mars.");
 	cvarOasisTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_oasis", "18", "Sets number of players to spawn extra tertaries on oasis.");
 	cvarCoastTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_coast", "16", "Sets number of players to spawn extra tertaries on coast.");	
-	cvarCornerTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_corner", "20", "Sets number of players to spawn extra tertaries on corner.");
+	//cvarCornerTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_corner", "20", "Sets number of players to spawn extra tertaries on corner.");
 	cvarNuclearTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
 	cvarRoadworkTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
 	cvarDowntownTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_downtown", "28", "Sets number of players to spawn extra tertaries on downtown and downtown_dyn.");
