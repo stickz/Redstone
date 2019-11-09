@@ -8,6 +8,7 @@
 #include <autoexecconfig>
 #include <nd_resource_eng>
 
+// Note: To caculate z vector, crouch and subtract 40
 public Plugin myinfo =
 {
     name = "[ND] Resource Spawner",
@@ -302,6 +303,15 @@ void CheckStableSpawns()
 			ND_SpawnTertiaryPoint({-5199.0, -3461.0, 191.0});
 			tertsSpawned[SECOND_TIER] = true;	
 		}
+	}
+	
+	else if (ND_CustomMapEquals(map_name, ND_Roadwork))
+	{
+		if (!tertsSpawned[FIRST_TIER])
+		{
+			ND_SpawnTertiaryPoint({2335.0, -3557.0, -375.0});
+			tertsSpawned[FIRST_TIER] = true;
+		}		
 	}
 }
 
