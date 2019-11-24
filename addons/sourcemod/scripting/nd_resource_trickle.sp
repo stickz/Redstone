@@ -27,7 +27,7 @@ public Plugin myinfo =
 
 ArrayList listTertiaries;
 ArrayList structTertaries;
-Handle tertiaryTimer[18] = { INVALID_HANDLE, ... };
+Handle tertiaryTimer[19] = { INVALID_HANDLE, ... };
 
 // Include the teritary structure and natives
 #include "nd_res_trickle/tertiary.sp"
