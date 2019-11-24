@@ -59,10 +59,14 @@ public void OnMapStart()
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) 
 {
 	CreateTimer(30.0, TIMER_CheckPrimeDepleted, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+	
+	/* Initialize varriables */
 	bPrimeDepleted = false;
 	resPointsCached = false;
 	roundStarted = true;
 	resSpawnCount = 0;
+	listSecondaries.Clear();
+	listTertiaries.Clear();	
 	
 	// Store entity index of all secondaries and tertaries on the map
 	CreateTimer(5.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);	
