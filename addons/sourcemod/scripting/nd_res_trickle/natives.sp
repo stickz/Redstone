@@ -20,7 +20,7 @@ public int Native_AddTertRes(Handle plugin, int numParams)
 		return false;
 	
 	// Get the tertiary struct
-	Tertiary tert;
+	ResPoint tert;
 	structTertaries.GetArray(arrIndex, tert);
 	
 	// Add the resources to the tertiary and update the running total
@@ -45,7 +45,7 @@ public int Native_SetTertRes(Handle plugin, int numParams)
 		return false;
 	
 	// Get the tertiary struct
-	Tertiary tert;
+	ResPoint tert;
 	structTertaries.GetArray(arrIndex, tert);
 	
 	// Set the current resources and update the running total
@@ -69,7 +69,7 @@ public int Native_GetTertRes(Handle plugin, int numParams)
 		return -1;
 	
 	// Get the tertiary struct and return resources
-	Tertiary tert;
+	ResPoint tert;
 	structTertaries.GetArray(arrIndex, tert);	
 	return tert.GetResTeam(team);
 }

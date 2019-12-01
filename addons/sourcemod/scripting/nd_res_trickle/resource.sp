@@ -1,10 +1,11 @@
-/* Tertiary struct and functions */
-enum struct Tertiary 
+/* ResPoint struct and functions */
+enum struct ResPoint 
 {
 	int arrayIndex;
 	int entIndex;
 	
 	int owner;
+	int type;
 	
 	int initialRes;
 	int empireRes;
