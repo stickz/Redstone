@@ -31,9 +31,10 @@ public Plugin myinfo =
 
 ArrayList listTertiaries;
 ArrayList structTertaries;
+
 ArrayList structPrimary;
 
-Handle tertiaryTimer[18] = { INVALID_HANDLE, ... };
+Handle tertiaryTimer[19] = { INVALID_HANDLE, ... };
 Handle primaryTimer = INVALID_HANDLE;
 int PrimeEntity = -1;
 
