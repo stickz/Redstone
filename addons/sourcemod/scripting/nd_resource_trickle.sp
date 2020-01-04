@@ -109,18 +109,15 @@ public Action TIMER_SetResPointStructs(Handle timer)
 	}	
 	initTertairyStructs();
 	
-	// Initalize the secondary structures for trickle regen
-	initSecondaryStructs();
-	
-	/* Set primary resources and initilize primary structure */
-	
-	// If the current map is not corner, don't change the primary resource point
-	if (!ND_CurrentMapIsCorner())
-		return Plugin_Continue;
-	
-	// Set current resources of prime and create a new primary resource point structure
-	ND_SetCurrentResources(PrimeEntity, PRIMARY_TRICKLE_SET + PRIMARY_TEAM_TRICKLE);
-	initNewPrimary(PrimeEntity);	
+	// If the map is corner, set prime trickling
+	if (ND_CurrentMapIsCorner())
+	{
+		/* Set primary resources and initilize primary structure */
+		ND_SetCurrentResources(PrimeEntity, PRIMARY_TRICKLE_SET + PRIMARY_TEAM_TRICKLE);
+		initNewPrimary(PrimeEntity);		
+	}
+	else // Otherwise, initalize the secondary structures for trickle regen
+		initSecondaryStructs();
 
 	return Plugin_Continue;
 }
@@ -272,6 +269,10 @@ void Primary_Captured(int team)
 
 void Secondary_Captured(int entity, int team)
 {
+	// If the current map is corner, don't change the secondary resource point
+	if (ND_CurrentMapIsCorner())
+		return;
+	
 	// Get the array index of Secondary, exit if not found
 	int arrIndex = Secondary_FindArrayIndex(entity);
 	if (arrIndex == RESPOINT_NOT_FOUND)
