@@ -122,13 +122,6 @@ public Action TIMER_SetResPointStructs(Handle timer)
 	return Plugin_Continue;
 }
 
-bool ND_CurrentMapIsCorner()
-{
-	char currentMap[32];
-	GetCurrentMap(currentMap, sizeof(currentMap));
-	return ND_CustomMapEquals(currentMap, ND_Corner);
-}
-
 void initTertairyStructs()
 {
 	for (int t = 0; t < listTertiaries.Length; t++)

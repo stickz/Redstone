@@ -102,3 +102,10 @@ stock bool ND_MapEqualsAnyMetro(const char[] currentMap)
 	return 	StrEqual(currentMap, ND_StockMaps[sm(ND_Metro)], false) ||
 		StrEqual(currentMap, ND_CustomMaps[cm(ND_MetroImp)], false);
 }
+
+stock bool ND_CurrentMapIsCorner()
+{
+	char currentMap[32];
+	GetCurrentMap(currentMap, sizeof(currentMap));
+	return ND_CustomMapEquals(currentMap, ND_Corner);
+}

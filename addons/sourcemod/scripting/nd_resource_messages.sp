@@ -5,6 +5,7 @@
 #include <nd_redstone>
 #include <nd_resources>
 #include <nd_res_trickle>
+#include <nd_maps>
 
 //#define DEBUG //Enable plugin debugging mode
 
@@ -163,6 +164,14 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				resTrickPhrase	= "Trickled Resource Secondary";
 				resEVals[0] 	= RES_SECONDARY_EXTRACT;
 				resEVals[2] 	= RES_SECONDARY_TRICKLE;
+				
+				// If the current map is not corner, get team resources of secondary if availible
+				if (!ND_CurrentMapIsCorner())
+				{
+					int trickleResSec = ND_GetSecondaryResources(entindex, team);
+					if (trickleResSec != -1)
+						resEVals[1] = trickleResSec;
+				}
 			}
 			case RESOURCE_TERTIARY: 
 			{
@@ -173,9 +182,9 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				resEVals[2] 	= RES_TERTIARY_TRICKLE;
 				
 				// Try to get the team resources of the tertiary if availible
-				int trickleRes = ND_GetTertiaryResources(entindex, team);
-				if (trickleRes != -1)
-					resEVals[1] = trickleRes;
+				int trickleResTert = ND_GetTertiaryResources(entindex, team);
+				if (trickleResTert != -1)
+					resEVals[1] = trickleResTert;
 			}
 		}		
 		
