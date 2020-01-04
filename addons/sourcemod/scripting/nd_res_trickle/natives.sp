@@ -16,7 +16,7 @@ public int Native_AddTertRes(Handle plugin, int numParams)
 	
 	// Get the array index of the tertiary, if not found return false
 	int arrIndex = Tertiary_FindArrayIndex(entity);	
-	if (arrIndex == TERTIARY_NOT_FOUND)
+	if (arrIndex == RESPOINT_NOT_FOUND)
 		return false;
 	
 	// Get the tertiary struct
@@ -41,7 +41,7 @@ public int Native_SetTertRes(Handle plugin, int numParams)
 	
 	// Get the array index of the tertiary, if not found return false
 	int arrIndex = Tertiary_FindArrayIndex(entity);	
-	if (arrIndex == TERTIARY_NOT_FOUND)
+	if (arrIndex == RESPOINT_NOT_FOUND)
 		return false;
 	
 	// Get the tertiary struct
@@ -65,7 +65,7 @@ public int Native_GetTertRes(Handle plugin, int numParams)
 	
 	// Get the array index of the tertiary, if not found return -1
 	int arrIndex = Tertiary_FindArrayIndex(entity);	
-	if (arrIndex == TERTIARY_NOT_FOUND)
+	if (arrIndex == RESPOINT_NOT_FOUND)
 		return -1;
 	
 	// Get the tertiary struct and return resources

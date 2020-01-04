@@ -26,15 +26,21 @@ public Plugin myinfo =
 #define TERTIARY_TRICKLE_SET 8000 // Initial pool of resources, first come, first serve
 #define TERTIARY_TRICKLE_REGEN 2400 // Threshold to regenerate opposite team's pool
 
+#define SECONDARY_TRICKLE_REGEN 4800
+
 #define RESOURCE_NOT_TERTIARY 	-1
-#define TERTIARY_NOT_FOUND		-1
+#define RESPOINT_NOT_FOUND		-1
 
 ArrayList listTertiaries;
 ArrayList structTertaries;
 
+ArrayList listSecondaries;
+ArrayList structSecondaries;
+
 ArrayList structPrimary;
 
 Handle tertiaryTimer[19] = { INVALID_HANDLE, ... };
+Handle secondaryTimer[4] = { INVALID_HANDLE, ... };
 Handle primaryTimer = INVALID_HANDLE;
 int PrimeEntity = -1;
 
@@ -44,6 +50,10 @@ int PrimeEntity = -1;
 
 int Tertiary_FindArrayIndex(int entity) {
 	return structTertaries.FindValue(entity, ResPoint::entIndex);	
+}
+
+int Secondary_FindArrayIndex(int entity) {
+	return structSecondaries.FindValue(entity, ResPoint::entIndex);
 }
 
 public void OnPluginStart()
@@ -71,7 +81,8 @@ public void ND_OnRoundStarted()
 public void ND_OnResPointsCached()
 {
 	// Get the list of tertaries from the resource engine
-	listTertiaries = ND_GetTertiaryList();	
+	listTertiaries = ND_GetTertiaryList();
+	listSecondaries = ND_GetSecondaryList();
 	PrimeEntity = ND_GetPrimaryPoint();
 	
 	// Set the current trickle amount to 7000 resources for all the tertaries
@@ -98,6 +109,9 @@ public Action TIMER_SetResPointStructs(Handle timer)
 	}	
 	initTertairyStructs();
 	
+	// Initalize the secondary structures for trickle regen
+	initSecondaryStructs();
+	
 	/* Set primary resources and initilize primary structure */
 	
 	// If the current map is not corner, don't change the primary resource point
@@ -122,6 +136,12 @@ void initTertairyStructs()
 {
 	for (int t = 0; t < listTertiaries.Length; t++)
 		initNewTertiary(t, listTertiaries.Get(t), true);
+}
+
+void initSecondaryStructs()
+{
+	for (int s = 0; s < listSecondaries.Length; s++)
+		initNewSecondary(s, listSecondaries.Get(s));	
 }
 
 void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
@@ -150,6 +170,23 @@ void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
 	
 	// Push the teritary object into the struct list
 	structTertaries.PushArray(tert);	
+}
+
+void initNewSecondary(int arrIndex, int entIndex)
+{
+	// Create and initalize new secondary object
+	ResPoint sec;
+	sec.arrayIndex = arrIndex;
+	sec.entIndex = entIndex;
+	sec.owner = TEAM_SPEC;
+	sec.type = RESOURCE_SECONDARY;
+	
+	// Don't enable team resource feature for secondaries
+	sec.initialRes = RES_SECONDARY_START;
+	sec.empireRes = 0;
+	sec.consortRes = 0;
+	
+	structSecondaries.PushArray(sec);	
 }
 
 void initNewPrimary(int entIndex)
@@ -191,20 +228,14 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 	// Get the resource point type and team
 	int type = event.GetInt("type");
 	int team = event.GetInt("team");
+	int entity = event.GetInt("entindex")
 	
 	// Switch the resource point type and fire the events
 	switch (type)
 	{
-		case RESOURCE_TERTIARY: 
-		{
-			int entity = event.GetInt("entindex");
-			Tertiary_Captured(entity, team);
-		}
-		
-		case RESOURCE_PRIME:
-		{
-			Primary_Captured(team);
-		}
+		case RESOURCE_TERTIARY: Tertiary_Captured(entity, team);
+		case RESOURCE_SECONDARY: Secondary_Captured(entity, team);		
+		case RESOURCE_PRIME: Primary_Captured(team);
 	}
 	
 	return Plugin_Continue;
@@ -239,11 +270,40 @@ void Primary_Captured(int team)
 		primaryTimer = CreateTimer(15.0, TIMER_PrimaryExtract, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 }
 
+void Secondary_Captured(int entity, int team)
+{
+	// Get the array index of Secondary, exit if not found
+	int arrIndex = Secondary_FindArrayIndex(entity);
+	if (arrIndex == RESPOINT_NOT_FOUND)
+		return;
+	
+	// Get the secondary structure from the ArrayList
+	ResPoint sec;
+	structSecondaries.GetArray(arrIndex, sec);
+	
+	// Change the owner to the team and update the secondary list
+	sec.owner = team;
+	structSecondaries.SetArray(arrIndex, sec);
+	
+	// Set the current resources of the secondary to team resources when captured
+	ND_SetCurrentResources(sec.entIndex, sec.GetRes());
+	
+	// Kill the timer before creating the next one
+	if (secondaryTimer[arrIndex] != INVALID_HANDLE && IsValidHandle(secondaryTimer[arrIndex]))
+	{
+		KillTimer(secondaryTimer[arrIndex]);
+		secondaryTimer[arrIndex] = INVALID_HANDLE;
+	}
+	
+	// Since the resource extract event doesn't work, we must use a repeating timer to simulate resource extracts
+	secondaryTimer[arrIndex] = CreateTimer(10.0, TIMER_SecondaryExtract, arrIndex, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+}
+
 void Tertiary_Captured(int entity, int team)
 {
-	// Get the array index and Tertiary if it's not found, exit
+	// Get the array index of Tertiary, exit if not found
 	int arrIndex = Tertiary_FindArrayIndex(entity);		
-	if (arrIndex == TERTIARY_NOT_FOUND)
+	if (arrIndex == RESPOINT_NOT_FOUND)
 		return;	
 	
 	// Get the tertiary structure from the ArrayList
@@ -287,6 +347,27 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 	// Update the tertiary structure in the ArrayList
 	structTertaries.SetArray(arrIndex, tert);
 	return Plugin_Continue;
+}
+
+public Action TIMER_SecondaryExtract(Handle timer, int arrIndex)
+{
+	// Get the secodnary structure from the ArrayList
+	ResPoint sec;
+	structSecondaries.GetArray(arrIndex, sec);
+	
+	// Every ten seconds a secondary extracts 275 resources subtract that
+	sec.SubtractRes(275);
+	
+	// Every ten seconds, regenerate 55 resources
+	// If the opposite teams reserved pool is less than 4800
+	// And if the initial resources of the secondary is depleted
+	int otherTeam = getOtherTeam(sec.owner)
+	if (sec.initialRes <= 0 && sec.GetResTeam(otherTeam) <= SECONDARY_TRICKLE_REGEN )
+		sec.AddRes(otherTeam, 55);
+	
+	// Update the secondary structure in the ArrayList
+	structSecondaries.SetArray(arrIndex, sec);
+	return Plugin_Continue;	
 }
 
 public Action TIMER_PrimaryExtract(Handle timer)
