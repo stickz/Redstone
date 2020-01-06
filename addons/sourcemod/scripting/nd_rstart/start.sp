@@ -1,6 +1,6 @@
 bool currentlyPicking = false;
 
-public void ND_OnWarmupComplete() 
+void WarmupCompleteStartActions()
 {
 	if (pauseWarmup)
 	{
@@ -23,7 +23,7 @@ public void ND_OnWarmupComplete()
 	else
 		StartRound();
 	
-	RestoreServerConvars();
+	RestoreServerConvars();	
 }
 
 void RestoreServerConvars()

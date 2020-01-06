@@ -62,8 +62,10 @@ public void OnMapEnd()
 	InitiateRoundEnd();
 }
 
-public void ND_OnWarmupComplete() {
-	mapChanging = false;	
+public void ND_OnWarmupComplete() 
+{
+	mapChanging = false;
+	WarmupCompleteStartActions();
 }
 
 // Failsafe if user forgets to shut-off nextpick
