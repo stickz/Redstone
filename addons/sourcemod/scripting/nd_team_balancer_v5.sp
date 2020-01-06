@@ -20,7 +20,7 @@ public Plugin myinfo =
 	name = "[ND] Team Balancer R5",
 	author = "Stickz",
 	description = "Provides many team balance benefits to ND.",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone"
 };
 
