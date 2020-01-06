@@ -260,8 +260,8 @@ bool PlaceByTeamPick(int client)
 		return true;
 	}
 	
-	// If the team count is even
-	else if (overBalance == TEAMS_EVEN)
+	// If the team count is even and the player was picked on a team
+	else if (overBalance == TEAMS_EVEN && pickedTeam != TEAM_SPEC)
 	{
 		// Get the team difference varriables
 		float teamDiff = ND_GetTeamDifference();
