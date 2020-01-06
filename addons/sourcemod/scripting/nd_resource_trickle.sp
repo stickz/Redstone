@@ -24,9 +24,11 @@ public Plugin myinfo =
 
 #define TERTIARY_TEAM_TRICKLE 8000 // Reserved pool of resources for each team
 #define TERTIARY_TRICKLE_SET 8000 // Initial pool of resources, first come, first serve
-#define TERTIARY_TRICKLE_REGEN 2400 // Threshold to regenerate opposite team's pool
+#define TERTIARY_TRICKLE_REGEN_AMOUNT 1800 // Maximum amount to regen on opposite team's pool
+#define TERTIARY_TRICKLE_REGEN_INTERVAL 15 // Amount to regen every five seconds
 
-#define SECONDARY_TRICKLE_REGEN 4800
+#define SECONDARY_TRICKLE_REGEN_AMOUNT 4140 // Maximum amount to regen on opposite team's pool
+#define SECONDARY_TRICKLE_REGEN_INTERVAL 69 // Amount to regen every ten seconds
 
 #define RESOURCE_NOT_TERTIARY 	-1
 #define RESPOINT_NOT_FOUND		-1
@@ -332,11 +334,11 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 	// Every five seconds a tertiary extracts 50 resources subtract that
 	tert.SubtractRes(50);
 	
-	// Every five seconds, regenerate 10 resources
-	// If the opposite team's reserved pool is less than 2400
+	// Every five seconds, regenerate 15 resources (30% of full production)
+	// If the opposite team's reserved pool is less than 1800 (10 minutes of regen)
 	int otherTeam = getOtherTeam(tert.owner);
-	if (tert.GetResTeam(otherTeam) <= TERTIARY_TRICKLE_REGEN)
-		tert.AddRes(otherTeam, 10); 
+	if (tert.GetResTeam(otherTeam) <= TERTIARY_TRICKLE_REGEN_AMOUNT)
+		tert.AddRes(otherTeam, TERTIARY_TRICKLE_REGEN_INTERVAL);
 
 	// Update the tertiary structure in the ArrayList
 	structTertaries.SetArray(arrIndex, tert);
@@ -352,12 +354,12 @@ public Action TIMER_SecondaryExtract(Handle timer, int arrIndex)
 	// Every ten seconds a secondary extracts 275 resources subtract that
 	sec.SubtractRes(275);
 	
-	// Every ten seconds, regenerate 55 resources
-	// If the opposite teams reserved pool is less than 4800
+	// Every ten seconds, regenerate 69 resources (25% of full production)
+	// If the opposite teams reserved pool is less than 4140 (10 minutes of regen)
 	// And if the initial resources of the secondary is depleted
 	int otherTeam = getOtherTeam(sec.owner)
-	if (sec.initialRes <= 0 && sec.GetResTeam(otherTeam) <= SECONDARY_TRICKLE_REGEN )
-		sec.AddRes(otherTeam, 55);
+	if (sec.initialRes <= 0 && sec.GetResTeam(otherTeam) <= SECONDARY_TRICKLE_REGEN_AMOUNT)
+		sec.AddRes(otherTeam, SECONDARY_TRICKLE_REGEN_INTERVAL);
 	
 	// Update the secondary structure in the ArrayList
 	structSecondaries.SetArray(arrIndex, sec);
