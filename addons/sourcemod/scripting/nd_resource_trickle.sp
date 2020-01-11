@@ -105,11 +105,9 @@ public void ND_OnResPointsCached()
 
 public void ND_OnTertairySpawned(int entity, int trigger)
 {
-	// Add to the list of tertaries
-	listTertiaries.Push(entity);
-	
+	// Add tertiary to the list of tertaries
 	// Create a new tertiary struct for trickling
-	int index = Tertiary_FindArrayIndex(entity);
+	int index = listTertiaries.Push(entity);
 	initNewTertiary(index, entity, false);
 }
 
