@@ -33,6 +33,8 @@ float refBase[TEAM_COUNT][3];
 #define CENTRAL_DISTANCE 2000.0 // TODO: set according to map size - for metro cca 2000 so that the west secondary is not considered central but cca 3000 for maps like downtown
 #define BASE_DISTANCE 2500.0
 
+bool cornerMap = false;
+
 public Plugin myinfo = 
 {
 	name = "[ND] Resource Messages",
@@ -79,6 +81,9 @@ public void OnMapStart()
 		resEnts[resIndex] = 0;
 		ClearCapturers(resIndex);
 	}
+	
+	// Check if the current map is corner
+	cornerMap = ND_CurrentMapIsCorner();
 }
 
 // ======== EVENT HANDLING ========
@@ -156,6 +161,14 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				resTrickPhrase	= "Trickled Resource Primary";
 				resEVals[0] 	= RES_PRIME_EXTRACT;
 				resEVals[2] 	= RES_PRIME_TRICKLE;				
+				
+				// If the current map is corner, get team resources of primary if availible
+				if (cornerMap)
+				{
+					int trickleResPrime = ND_GetPrimaryResources(team);
+					if (trickleResPrime != -1)
+						resEVals[1] = trickleResPrime;
+				}
 			}			
 			case RESOURCE_SECONDARY:
 			{
@@ -166,7 +179,7 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				resEVals[2] 	= RES_SECONDARY_TRICKLE;
 				
 				// If the current map is not corner, get team resources of secondary if availible
-				if (!ND_CurrentMapIsCorner())
+				if (!cornerMap)
 				{
 					int trickleResSec = ND_GetSecondaryResources(entindex, team);
 					if (trickleResSec != -1)

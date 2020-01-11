@@ -8,6 +8,10 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("ND_AddSecondaryResources", Native_AddSecRes);
 	CreateNative("ND_SetSecondaryResources", Native_SetSecRes);
 	CreateNative("ND_GetSecondaryResources", Native_GetSecRes);
+	
+	CreateNative("ND_AddPrimaryResources", Native_AddPrimeRes);
+	CreateNative("ND_SetPrimaryResources", Native_SetPrimeRes);
+	CreateNative("ND_GetPrimaryResources", Native_GetPrimeRes);
 	return APLRes_Success;	
 }
 
@@ -143,4 +147,55 @@ public int Native_GetSecRes(Handle plugin, int numParams)
 	ResPoint sec;
 	structSecondaries.GetArray(arrIndex, sec);	
 	return sec.GetResTeam(team);
+}
+
+public int Native_AddPrimeRes(Handle plugin, int numParams) 
+{
+	// Get the team and amount to add
+	int team = GetNativeCell(1);
+	int amount = GetNativeCell(2);
+	
+	// Get the prime struct
+	ResPoint prime;
+	structPrimary.GetArray(0, prime);
+	
+	// Add the resources to prime and update the running total
+	prime.AddRes(team, amount);
+	ND_SetCurrentResources(prime.entIndex, prime.GetRes());
+	
+	// Update the prime ArrayList
+	structPrimary.SetArray(0, prime);
+	return true; // Return true for success
+}
+
+public int Native_SetPrimeRes(Handle plugin, int numParams) 
+{
+	// Get the entity, team and amount to add
+	int team = GetNativeCell(1);
+	int amount = GetNativeCell(2);
+	
+	// Get the prime struct
+	ResPoint prime;
+	structPrimary.GetArray(0, prime);
+	
+	// Set the current resources and update the running total
+	prime.SetRes(team, amount);
+	ND_SetCurrentResources(prime.entIndex, prime.GetRes());
+	
+	// Update the prime ArrayList
+	structPrimary.SetArray(0, prime);
+	return true; // Return true for success
+}
+
+public int Native_GetPrimeRes(Handle plugin, int numParams) 
+{
+	// Get the team for prime
+	int team = GetNativeCell(1);
+	
+	// Get the prime struct
+	ResPoint prime;
+	structPrimary.GetArray(0, prime);
+
+	// Return resources left for team on prime
+	return prime.GetResTeam(team);
 }

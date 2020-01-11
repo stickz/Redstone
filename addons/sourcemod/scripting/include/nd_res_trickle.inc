@@ -26,3 +26,15 @@ native bool ND_SetSecondaryResources(int entity, int team, int amount);
 // Gets trickle resources to a secondary
 // Returns resources on success, -1 on failure
 native int ND_GetSecondaryResources(int entity, int team);
+
+// Add trickle resources to primary
+// Returns true on success, false on failure
+native bool ND_AddPrimaryResources(int team, int amount);
+
+// Sets trickle resources to primary
+// Returns true on success, false on failure
+native bool ND_SetPrimaryResources(int team, int amount);
+
+// Gets trickle resources to primary
+// Returns resources on success, -1 on failure
+native int ND_GetPrimaryResources(int team);

@@ -12,7 +12,7 @@ public Plugin myinfo =
 	name 		= "[ND] Resource Trickle",
 	author 		= "Stickz",
 	description 	= "Adjusts tertaries to have team trickle amounts",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
