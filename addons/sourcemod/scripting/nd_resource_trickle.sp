@@ -24,8 +24,10 @@ public Plugin myinfo =
 
 #define TERTIARY_TEAM_TRICKLE 8000 // Reserved pool of resources for each team
 #define TERTIARY_TRICKLE_SET 8000 // Initial pool of resources, first come, first serve
+#define TERTIARY_TRICKLE_REGEN_INTERVAL 15 // Amount to regenerate every five seconds
 #define TERTIARY_TRICKLE_REGEN_AMOUNT 1800 // Maximum amount to regen on opposite team's pool
-#define TERTIARY_TRICKLE_REGEN_INTERVAL 15 // Amount to regen every five seconds
+#define TERTIARY_TRICKLE_DEGEN_INTERVAL 25 // Amount to degenerate every five seconds
+#define TERTIARY_TRICKLE_DEGEN_MINUTES 9 // Minutes to degenerate if team hasn't owned tertiary
 
 #define SECONDARY_TRICKLE_REGEN_AMOUNT 4140 // Maximum amount to regen on opposite team's pool
 #define SECONDARY_TRICKLE_REGEN_INTERVAL 69 // Amount to regen every ten seconds
@@ -154,6 +156,7 @@ void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
 	tert.entIndex = entIndex;
 	tert.owner = TEAM_SPEC;
 	tert.type = RESOURCE_TERTIARY;
+	tert.timeOwned = 0;
 
 	// Should we init the teritary with full resources?
 	if (fullRes)
@@ -182,6 +185,7 @@ void initNewSecondary(int arrIndex, int entIndex)
 	sec.entIndex = entIndex;
 	sec.owner = TEAM_SPEC;
 	sec.type = RESOURCE_SECONDARY;
+	sec.timeOwned = 0;
 	
 	// Don't enable team resource feature for secondaries
 	sec.initialRes = RES_SECONDARY_START;
@@ -201,6 +205,7 @@ void initNewPrimary(int entIndex)
 	prime.initialRes = PRIMARY_TRICKLE_SET;
 	prime.empireRes = PRIMARY_TEAM_TRICKLE;
 	prime.consortRes = PRIMARY_TEAM_TRICKLE;
+	prime.timeOwned = 0;
 	
 	// Push the primary object into the struct list
 	structPrimary.PushArray(prime);
@@ -322,6 +327,7 @@ void Tertiary_Captured(int entity, int team)
 		
 	// Change the owner to the team and update the tertiary list
 	tert.owner = team;
+	tert.timeOwned = 0;
 	structTertaries.SetArray(arrIndex, tert);
 		
 	// Set the current resources of the tertiary to team resources when captured
@@ -346,13 +352,24 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 	structTertaries.GetArray(arrIndex, tert);
 	
 	// Every five seconds a tertiary extracts 50 resources subtract that
+	// Also update the amount of time the resource point was owned for
 	tert.SubtractRes(50);
+	tert.timeOwned += 5;
+	
+	// Get the opposing team, which doesn't own the tertiary resource point
+	int otherTeam = getOtherTeam(tert.owner);
 	
 	// Every five seconds, regenerate 15 resources (30% of full production)
 	// If the opposite team's reserved pool is less than 1800 (10 minutes of regen)
-	int otherTeam = getOtherTeam(tert.owner);
 	if (tert.GetResTeam(otherTeam) <= TERTIARY_TRICKLE_REGEN_AMOUNT)
 		tert.AddRes(otherTeam, TERTIARY_TRICKLE_REGEN_INTERVAL);
+	
+	// Every five seconds, degenerate 25 resources (50% of full production)
+	// If the opposite team has not owned the resource point for 9 minutes
+	// If the opposite team's reserved pool is greater than 1800 (10 minutes of regen)
+	if (tert.timeOwned > TERTIARY_TRICKLE_DEGEN_MINUTES * 60 &&
+		tert.GetResTeamOnly(otherTeam) < TERTIARY_TRICKLE_REGEN_AMOUNT)
+		tert.SubtractResTeam(otherTeam, TERTIARY_TRICKLE_DEGEN_INTERVAL);
 
 	// Update the tertiary structure in the ArrayList
 	structTertaries.SetArray(arrIndex, tert);

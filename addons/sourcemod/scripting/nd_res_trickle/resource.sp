@@ -1,11 +1,13 @@
 /* ResPoint struct and functions */
 enum struct ResPoint 
 {
+	int type;
+	
 	int arrayIndex;
 	int entIndex;
 	
 	int owner;
-	int type;
+	int timeOwned;
 	
 	int initialRes;
 	int empireRes;
@@ -40,6 +42,19 @@ enum struct ResPoint
 		}
 		
 		// Return the initial resources plus the team resources
+		return resources;
+	}
+	
+	int GetResTeamOnly(int team)
+	{
+		int resources = 0;
+		
+		switch (team)
+		{
+			case TEAM_EMPIRE: resources += this.empireRes;
+			case TEAM_CONSORT: resources += this.consortRes;			
+		}
+		
 		return resources;
 	}
 	
@@ -89,5 +104,23 @@ enum struct ResPoint
 				}
 			}
 		}
+	}
+	
+	int SubtractResTeam(int team, int amount)
+	{
+		switch (team)
+		{
+			case TEAM_EMPIRE: 
+			{
+				this.empireRes -= amount; // Clamp empire resources at 0
+				this.empireRes = Math_Min(this.empireRes, 0);					
+			}
+				
+			case TEAM_CONSORT: 
+			{
+				this.consortRes -= amount; // Clamp consort resources at 0
+				this.consortRes = Math_Min(this.consortRes, 0);
+			}
+		}		
 	}
 }
