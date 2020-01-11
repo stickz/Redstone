@@ -46,6 +46,8 @@ Handle secondaryTimer[4] = { INVALID_HANDLE, ... };
 Handle primaryTimer = INVALID_HANDLE;
 int PrimeEntity = -1;
 
+bool cornerMap = false;
+
 // Include the teritary structure and natives
 #include "nd_res_trickle/resource.sp"
 #include "nd_res_trickle/natives.sp"
@@ -75,6 +77,10 @@ public void OnPluginStart()
 	// Add late loading support to resource trickle
 	if (ND_RoundStarted() && ND_ResPointsCached())
 		ND_OnResPointsCached();
+}
+
+public void OnMapStart() {
+	cornerMap = ND_CurrentMapIsCorner();
 }
 
 public void ND_OnRoundStarted()
@@ -118,7 +124,7 @@ public Action TIMER_SetResPointStructs(Handle timer)
 	initTertairyStructs();
 	
 	// If the map is corner, set prime trickling
-	if (ND_CurrentMapIsCorner())
+	if (cornerMap)
 	{
 		/* Set primary resources and initilize primary structure */
 		ND_SetCurrentResources(PrimeEntity, PRIMARY_TRICKLE_SET + PRIMARY_TEAM_TRICKLE);
@@ -242,7 +248,7 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 void Primary_Captured(int team)
 {
 	// If the current map is not corner, don't change the primary resource point
-	if (!ND_CurrentMapIsCorner())
+	if (!cornerMap)
 		return;
 	
 	// Get the primary structure from the ArrayList
@@ -271,7 +277,7 @@ void Primary_Captured(int team)
 void Secondary_Captured(int entity, int team)
 {
 	// If the current map is corner, don't change the secondary resource point
-	if (ND_CurrentMapIsCorner())
+	if (cornerMap)
 		return;
 	
 	// Get the array index of Secondary, exit if not found
