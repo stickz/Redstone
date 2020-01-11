@@ -366,9 +366,7 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 	
 	// Every five seconds, degenerate 25 resources (50% of full production)
 	// If the opposite team has not owned the resource point for 9 minutes
-	// If the opposite team's reserved pool is greater than 1800 (10 minutes of regen)
-	if (tert.timeOwned > TERTIARY_TRICKLE_DEGEN_MINUTES * 60 &&
-		tert.GetResTeamOnly(otherTeam) < TERTIARY_TRICKLE_REGEN_AMOUNT)
+	if (tert.timeOwned > TERTIARY_TRICKLE_DEGEN_MINUTES * 60)
 		tert.SubtractResTeam(otherTeam, TERTIARY_TRICKLE_DEGEN_INTERVAL);
 
 	// Update the tertiary structure in the ArrayList
