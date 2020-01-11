@@ -109,7 +109,7 @@ public void ND_OnTertairySpawned(int entity, int trigger)
 	listTertiaries.Push(entity);
 	
 	// Create a new tertiary struct for trickling
-	int index = listTertiaries.Length - 1;
+	int index = Tertiary_FindArrayIndex(entity);
 	initNewTertiary(index, entity, false);
 }
 
