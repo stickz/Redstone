@@ -22,12 +22,15 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	if (IsValidClient(attacker))
 	{
 		int team = getOtherTeam(GetClientTeam(attacker));
-		int bunker = ND_GetTeamBunkerEntity(team);
-		
-		if (!DisplayedMessage[team] && ND_GetBuildingHealth(bunker) <= bunkerWarningHealth[team])
+		if (team == TEAM_EMPIRE || team == TEAM_CONSORT)
 		{
-			PrintMessageTeam(team, "Bunker Health Warning");
-			DisplayedMessage[team] = true;
+			int bunker = ND_GetTeamBunkerEntity(team);
+			
+			if (!DisplayedMessage[team] && ND_GetBuildingHealth(bunker) <= bunkerWarningHealth[team])
+			{
+				PrintMessageTeam(team, "Bunker Health Warning");
+				DisplayedMessage[team] = true;
+			}
 		}
 	}
 	
