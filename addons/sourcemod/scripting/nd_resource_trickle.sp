@@ -82,6 +82,8 @@ public void ND_OnRoundStarted()
 	/* Initialize varriables */
 	listTertiaries.Clear();
 	structTertaries.Clear();
+	listSecondaries.Clear();
+	structSecondaries.Clear();
 }
 
 public void ND_OnResPointsCached()
