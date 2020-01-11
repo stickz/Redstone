@@ -151,8 +151,6 @@ public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
 	
 	SpawnResourcePoint("tertiary", TERTIARY_MODEL, rt, trigger, origin);
 	
-	// Need to update the entity cache, since we added a new entity to the map
-	CreateTimer(3.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin)
@@ -196,6 +194,9 @@ public void SpawnResourcePoint( const char[] type, const char[] model, int rt, i
 	SetEntPropVector(trigger, Prop_Send, "m_vecMaxs", max_bounds);
 	
 	resSpawnCount++;
+	
+	// Update the tertiary list with the new tertiary spawned
+	listTertiaries.Push(rt);
 	
 	// Fire the resource spawn forward
 	Action dummy;
