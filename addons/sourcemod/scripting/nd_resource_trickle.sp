@@ -229,6 +229,10 @@ int GetAverageSpawnRes()
 
 public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBroadcast)
 {
+	// Don't fire the resource captured event unless the round is started
+	if (!ND_RoundStarted())
+		return Plugin_Continue;
+	
 	// Get the resource point type and team
 	int type = event.GetInt("type");
 	int team = event.GetInt("team");
