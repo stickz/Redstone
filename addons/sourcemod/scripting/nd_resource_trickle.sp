@@ -25,9 +25,9 @@ public Plugin myinfo =
 #define TERTIARY_TEAM_TRICKLE 8000 // Reserved pool of resources for each team
 #define TERTIARY_TRICKLE_SET 8000 // Initial pool of resources, first come, first serve
 #define TERTIARY_TRICKLE_REGEN_INTERVAL 15 // Amount to regenerate every five seconds
-#define TERTIARY_TRICKLE_REGEN_AMOUNT 1800 // Maximum amount to regen on opposite team's pool
+#define TERTIARY_TRICKLE_REGEN_AMOUNT 2160 // Maximum amount to regen on opposite team's pool
 #define TERTIARY_TRICKLE_DEGEN_INTERVAL 25 // Amount to degenerate every five seconds
-#define TERTIARY_TRICKLE_DEGEN_MINUTES 9 // Minutes to degenerate if team hasn't owned tertiary
+#define TERTIARY_TRICKLE_DEGEN_MINUTES 8 // Minutes to degenerate if team hasn't owned tertiary
 
 #define SECONDARY_TRICKLE_REGEN_AMOUNT 4140 // Maximum amount to regen on opposite team's pool
 #define SECONDARY_TRICKLE_REGEN_INTERVAL 69 // Amount to regen every ten seconds
