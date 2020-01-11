@@ -62,6 +62,10 @@ public void OnPluginStart()
 {
 	listTertiaries = new ArrayList(18);
 	structTertaries = new ArrayList(sizeof(ResPoint));
+	
+	listSecondaries = new ArrayList(6);
+	structSecondaries = new ArrayList(sizeof(ResPoint));
+	
 	structPrimary = new ArrayList(sizeof(ResPoint));
 	
 	HookEvent("resource_captured", Event_ResourceCaptured, EventHookMode_Post);
