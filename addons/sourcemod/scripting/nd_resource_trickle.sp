@@ -29,6 +29,11 @@ public Plugin myinfo =
 #define TERTIARY_TRICKLE_DEGEN_INTERVAL 25 // Amount to degenerate every five seconds
 #define TERTIARY_TRICKLE_DEGEN_MINUTES 8 // Minutes to degenerate if team hasn't owned tertiary
 
+#define TERTIARY_FRACKING_AMOUNT 100 // Amount of resources to grant per frack
+#define TERTIARY_FRACKING_SECONDS 20 // Number of seconds inbetween fracks
+#define TERTIARY_FRACKING_LEFT 300 // Amount of resources left before fracking is enabled
+#define TERTIARY_FRACKING_DELAY 16 // Number of minutes a team most own a teritary to start fracking
+
 #define SECONDARY_TRICKLE_REGEN_AMOUNT 4140 // Maximum amount to regen on opposite team's pool
 #define SECONDARY_TRICKLE_REGEN_INTERVAL 69 // Amount to regen every ten seconds
 
@@ -370,6 +375,15 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 	// If the opposite team has not owned the resource point for 9 minutes
 	if (tert.timeOwned > TERTIARY_TRICKLE_DEGEN_MINUTES * 60)
 		tert.SubtractResTeam(otherTeam, TERTIARY_TRICKLE_DEGEN_INTERVAL);
+	
+	// Every five seconds, check if the tertiary qualfies for fracking.
+	// Owned for 16 minutes by consort or empire with less than 300 team resources
+	// Frack a total of 100 (50 actually) resources every 20 seconds (or 150 res/min)
+	if (tert.timeOwned > TERTIARY_FRACKING_DELAY * 60 &&
+		tert.GetResTeam(tert.owner) <= TERTIARY_FRACKING_LEFT &&
+		tert.owner == TEAM_EMPIRE || tert.owner == TEAM_CONSORT &&
+		tert.timeOwned % TERTIARY_FRACKING_SECONDS == 0)
+			tert.AddRes(tert.owner, TERTIARY_FRACKING_AMOUNT);
 
 	// Update the tertiary structure in the ArrayList
 	structTertaries.SetArray(arrIndex, tert);
