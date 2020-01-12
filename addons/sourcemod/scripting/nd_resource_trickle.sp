@@ -383,7 +383,11 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 		tert.GetResTeam(tert.owner) <= TERTIARY_FRACKING_LEFT &&
 		tert.owner == TEAM_EMPIRE || tert.owner == TEAM_CONSORT &&
 		tert.timeOwned % TERTIARY_FRACKING_SECONDS == 0)
+		{
+			// Add the resources to the tertiary and update the current resources
 			tert.AddRes(tert.owner, TERTIARY_FRACKING_AMOUNT);
+			ND_SetCurrentResources(tert.entIndex, tert.GetRes());
+		}
 
 	// Update the tertiary structure in the ArrayList
 	structTertaries.SetArray(arrIndex, tert);
