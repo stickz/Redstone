@@ -168,9 +168,11 @@ void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
 	else
 	{
 		int average = GetAverageSpawnRes();
-		tert.initialRes = average;
-		tert.empireRes = average;
-		tert.consortRes = average;
+		int split = average / 3;
+		
+		tert.initialRes = split;
+		tert.empireRes = split;
+		tert.consortRes = split;
 	}	
 	
 	// Push the teritary object into the struct list
