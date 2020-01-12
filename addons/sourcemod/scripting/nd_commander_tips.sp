@@ -21,7 +21,7 @@ public Plugin myinfo =
 #include "nd_com_tips/clientprefs.sp"
 #include "nd_com_tips/commander_tips.sp"
 
-#define TIP_DURATION 90.0
+#define TIP_DURATION 75.0
 
 public void OnPluginStart()
 {
