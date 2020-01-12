@@ -271,7 +271,7 @@ void Primary_Captured(int team)
 	
 	// Change the owner to the team and update the primary structure
 	prime.owner = team;
-	structTertaries.SetArray(0, prime);
+	structPrimary.SetArray(0, prime);
 	
 	// Set the current resources of the primary structure to team resources when captured
 	ND_SetCurrentResources(prime.entIndex, prime.GetRes());
@@ -421,6 +421,6 @@ public Action TIMER_PrimaryExtract(Handle timer)
 	prime.SubtractRes(750);
 	
 	// Update the primary structure in the ArrayList
-	structTertaries.SetArray(0, prime);	
+	structPrimary.SetArray(0, prime);	
 	return Plugin_Continue;
 }
