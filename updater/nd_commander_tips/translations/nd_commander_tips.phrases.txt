@@ -6,14 +6,9 @@
 		"en" 		"Commander Tips"	
 	}
 	
-	"Resource Fracking Rates"
+	"Resource Fracking"
 	{
-		"en"		"Every 16m tertaries frack to raise produce an extra 150 res/min"
-	}
-	
-	"Resource Fracking Captured"
-	{
-		"en"		"If a tertiary is captured, it takes anther 16m to restart fracking"
+		"en"		"Every 16m tertaries frack to produce an extra 150 res/min. If captured, it takes 16m to restart fracking"
 	}
 	
 	"Communication is key"

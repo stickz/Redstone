@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name = "[ND] Commander Tips",
 	author = "Stickz, Adam, Amir",
 	description = "Creates triggered tips for players",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 };
 
