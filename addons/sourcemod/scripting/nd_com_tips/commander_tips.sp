@@ -1,11 +1,10 @@
-#define COMMANDER_TIPS_COUNT 25
+#define COMMANDER_TIPS_COUNT 24
 
 int teamCounter[TEAM_COUNT] = { 0, ... };
 
 char nd_commander_tips[COMMANDER_TIPS_COUNT][] =
 {
-	"Resource Fracking Rates",
-	"Resource Fracking Captured",
+	"Resource Fracking",
 	"Communication is key",
 	"Check b4 replace Node",
 	"Protect Nodes",
