@@ -381,7 +381,7 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 	// Frack a total of 100 (50 actually) resources every 20 seconds (or 150 res/min)
 	if (tert.timeOwned > TERTIARY_FRACKING_DELAY * 60 &&
 		tert.GetResTeam(tert.owner) <= TERTIARY_FRACKING_LEFT &&
-		tert.owner == TEAM_EMPIRE || tert.owner == TEAM_CONSORT &&
+		(tert.owner == TEAM_EMPIRE || tert.owner == TEAM_CONSORT) &&
 		tert.timeOwned % TERTIARY_FRACKING_SECONDS == 0)
 		{
 			// Add the resources to the tertiary and update the current resources
