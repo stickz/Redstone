@@ -29,12 +29,22 @@ public Plugin myinfo =
 #define PRIMARY_TRICKLE_REGEN_AMOUNT 3000 // Amount to get every fifteen seconds
 #define PRIMARY_TRICKLE_REGEN_INTERVAL 75 // Maximum amount to regen on opposite team's pool
 
+#define PRIMARY_FRACKING_AMOUNT 750 // Amount of resources to grant per frack
+#define PRIMARY_FRACKING_SECONDS 45 // Number of seconds inbetween fracks
+#define PRIMARY_FRACKING_LEFT 1500 // Amount of resources left before fracking is enabled
+#define PRIMARY_FRACKING_DELAY 26  // Number of minutes a team most own a prime to start fracking
+
 #define SECONDARY_TEAM_TRICKLE 3300 // Reserved pool of resources for each team
 #define SECONDARY_TRICKLE_SET 40700 // Initial pool of resources, first come, first serve
 #define SECONDARY_TRICKLE_SET_LRG 20350 // Initial pool of resources on large maps
 
 #define SECONDARY_TRICKLE_REGEN_AMOUNT 3300 // Maximum amount to regen on opposite team's pool
 #define SECONDARY_TRICKLE_REGEN_INTERVAL 55 // Amount to regen every ten seconds
+
+#define SECONDARY_FRACKING_AMOUNT 275 // Amount of resources to grant per frack
+#define SECONDARY_FRACKING_SECONDS 30 // Number of seconds inbetween fracks
+#define SECONDARY_FRACKING_LEFT 825 // Amount of resources left before fracking is enabled
+#define SECONDARY_FRACKING_DELAY 19.5  // Number of minutes a team most own a secondary to start fracking
 
 #define TERTIARY_TEAM_TRICKLE 8000 // Reserved pool of resources for each team
 #define TERTIARY_TEAM_TRICKLE_LRG 4000 // Reserved pool of resources for large maps
@@ -437,8 +447,8 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 		tert.SubtractResTeam(otherTeam, TERTIARY_TRICKLE_DEGEN_INTERVAL);
 	
 	// Every five seconds, check if the tertiary qualfies for fracking.
-	// Owned for 16 minutes by consort or empire with less than 300 team resources
-	// Frack a total of 100 (50 actually) resources every 20 seconds (or 150 res/min)
+	// Owned for 13 minutes by consort or empire with less than 300 team resources
+	// Frack a total of 100 (55 actually) resources every 20 seconds (or 120 res/min)
 	if (tert.timeOwned > TERTIARY_FRACKING_DELAY * 60 &&
 		tert.GetResTeam(tert.owner) <= TERTIARY_FRACKING_LEFT &&
 		(tert.owner == TEAM_EMPIRE || tert.owner == TEAM_CONSORT) &&
@@ -471,6 +481,18 @@ public Action TIMER_SecondaryExtract(Handle timer, int arrIndex)
 	if (!cornerMap && sec.initialRes <= 0 && sec.GetResTeam(otherTeam) <= SECONDARY_TRICKLE_REGEN_AMOUNT)
 		sec.AddRes(otherTeam, SECONDARY_TRICKLE_REGEN_INTERVAL);
 	
+	// Every ten seconds, check if secondary qualfies for fracking.
+	// Owned for 19.5 minutes by consort or empire with less than 825 team resources
+	// Frack a total of 275 (151 actually) resources every 30 seconds (or 302.5 res/min)	
+	if (sec.timeOwned > SECONDARY_FRACKING_DELAY * 60 &&
+		sec.GetResTeam(sec.owner) <= SECONDARY_FRACKING_LEFT &&
+		(sec.owner == TEAM_CONSORT || sec.owner == TEAM_EMPIRE) &&
+		sec.timeOwned % SECONDARY_FRACKING_SECONDS == 0)
+		{
+			sec.AddRes(sec.owner, SECONDARY_FRACKING_AMOUNT);
+			ND_SetCurrentResources(sec.entIndex, sec.GetRes());			
+		}
+	
 	// Update the secondary structure in the ArrayList
 	structSecondaries.SetArray(arrIndex, sec);
 	return Plugin_Continue;	
@@ -491,6 +513,18 @@ public Action TIMER_PrimaryExtract(Handle timer)
 	int otherTeam = getOtherTeam(prime.owner);
 	if (!cornerMap && prime.initialRes <= 0 && prime.GetResTeam(otherTeam) <= PRIMARY_TRICKLE_REGEN_AMOUNT)
 		prime.AddRes(otherTeam, PRIMARY_TRICKLE_REGEN_INTERVAL);
+	
+	// Every 15 seconds, check if the prime qualfies for fracking.
+	// Owned for 26 minutes by consort or empire with less than 1500 team resources
+	// Frack a total of 750 (412 actually) resources every 45 seconds (or 550 res/min)
+	if (prime.timeOwned > PRIMARY_FRACKING_DELAY * 60 &&
+		prime.GetResTeam(prime.owner) <= PRIMARY_FRACKING_LEFT &&
+		(prime.owner == TEAM_CONSORT || prime.owner == TEAM_EMPIRE) &&
+		prime.timeOwned % PRIMARY_FRACKING_SECONDS == 0)
+		{
+			prime.AddRes(prime.owner, PRIMARY_FRACKING_AMOUNT);
+			ND_SetCurrentResources(prime.entIndex, prime.GetRes());
+		}
 	
 	// Update the primary structure in the ArrayList
 	structPrimary.SetArray(0, prime);	
