@@ -96,7 +96,7 @@ public void OnPluginStart()
 public void OnMapStart() 
 {
 	cornerMap = ND_CurrentMapIsCorner();
-	largeMap = ND_IsLargeMap();
+	largeMap = ND_IsLargeResMap();
 }
 
 public void ND_OnRoundStarted()

@@ -110,7 +110,7 @@ stock bool ND_CurrentMapIsCorner()
 	return ND_CustomMapEquals(currentMap, ND_Corner);
 }
 
-stock bool ND_IsLargeMap()
+stock bool ND_IsLargeResMap()
 {
 	char currentMap[32];
 	GetCurrentMap(currentMap, sizeof(currentMap));
