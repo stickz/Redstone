@@ -20,14 +20,26 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_resource_trickle/nd_resource_trickle.txt"
 #include "updater/standard.sp"
 
-#define PRIMARY_TEAM_TRICKLE 40000 // Reserved pool of resources for each team
-#define PRIMARY_TRICKLE_SET 40000 // Initial pool of resources, first come, first serve
+#define PRIMARY_TEAM_TRICKLE 3000 // Reserved pool of resources for each team
+#define PRIMARY_TEAM_TRICKLE_CORNER 40000 // Reserved pool of resources on corner
+#define PRIMARY_TRICKLE_SET 76500 // Initial pool of resources, first come, first serve
+#define PRIMARY_TRICKLE_SET_LRG 38250 // Initial pool of resources on large maps
+#define PRIMARY_TRICKLE_SET_CORNER 40000 // Initial pool of resources on corner
+
+#define PRIMARY_TRICKLE_REGEN_AMOUNT 3000 // Amount to get every fifteen seconds
+#define PRIMARY_TRICKLE_REGEN_INTERVAL 75 // Maximum amount to regen on opposite team's pool
+
+#define SECONDARY_TEAM_TRICKLE 3300 // Reserved pool of resources for each team
+#define SECONDARY_TRICKLE_SET 40700 // Initial pool of resources, first come, first serve
+#define SECONDARY_TRICKLE_SET_LRG 20350 // Initial pool of resources on large maps
+
+#define SECONDARY_TRICKLE_REGEN_AMOUNT 3300 // Maximum amount to regen on opposite team's pool
+#define SECONDARY_TRICKLE_REGEN_INTERVAL 55 // Amount to regen every ten seconds
 
 #define TERTIARY_TEAM_TRICKLE 8000 // Reserved pool of resources for each team
 #define TERTIARY_TEAM_TRICKLE_LRG 4000 // Reserved pool of resources for large maps
 #define TERTIARY_TRICKLE_SET 8000 // Initial pool of resources, first come, first serve
-#define TERTIARY_TRICKLE_SET_LRG 4000 // Initial pool of resources, for large maps
-#define TERTIARY_TRICKLE_REDUCE_COUNT 16 // Number of players to reduce trickle resources for large maps
+#define TERTIARY_TRICKLE_SET_LRG 2000 // Initial pool of resources, for large maps
 
 #define TERTIARY_TRICKLE_REGEN_INTERVAL 15 // Amount to regenerate every five seconds
 #define TERTIARY_TRICKLE_REGEN_AMOUNT 2160 // Maximum amount to regen on opposite team's pool
@@ -39,9 +51,7 @@ public Plugin myinfo =
 #define TERTIARY_FRACKING_LEFT 300 // Amount of resources left before fracking is enabled
 #define TERTIARY_FRACKING_DELAY 13 // Number of minutes a team most own a teritary to start fracking
 
-#define SECONDARY_TRICKLE_REGEN_AMOUNT 4140 // Maximum amount to regen on opposite team's pool
-#define SECONDARY_TRICKLE_REGEN_INTERVAL 69 // Amount to regen every ten seconds
-
+#define TRICKLE_REDUCE_COUNT 16 // Number of players to reduce trickle resources for large maps
 #define RESOURCE_NOT_TERTIARY 	-1
 #define RESPOINT_NOT_FOUND		-1
 
@@ -137,17 +147,19 @@ public Action TIMER_SetResPointStructs(Handle timer)
 		int tert = listTertiaries.Get(t);
 		ND_SetCurrentResources(tert, TERTIARY_TRICKLE_SET + TERTIARY_TEAM_TRICKLE);
 	}	
-	initTertairyStructs();
+	initTertairyStructs();		
 	
-	// If the map is corner, set prime trickling
-	if (cornerMap)
+	/* Set secondary resources and initilize secondary structure */
+	for (int s = 0; s < listSecondaries.Length; s++)
 	{
-		/* Set primary resources and initilize primary structure */
-		ND_SetCurrentResources(PrimeEntity, PRIMARY_TRICKLE_SET + PRIMARY_TEAM_TRICKLE);
-		initNewPrimary(PrimeEntity);		
-	}
-	else // Otherwise, initalize the secondary structures for trickle regen
-		initSecondaryStructs();
+		int sec = listSecondaries.Get(s);
+		ND_SetCurrentResources(sec, SECONDARY_TRICKLE_SET + SECONDARY_TEAM_TRICKLE);		
+	}	
+	initSecondaryStructs();
+	
+	/* Set primary resources and initilize primary structure */
+	ND_SetCurrentResources(PrimeEntity, PRIMARY_TRICKLE_SET + PRIMARY_TEAM_TRICKLE);
+	initNewPrimary(PrimeEntity);
 
 	return Plugin_Continue;
 }
@@ -177,7 +189,7 @@ void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
 	// Should we init the teritary with full resources?
 	if (fullRes)
 	{
-		if (largeMap && initPlyCount < TERTIARY_TRICKLE_REDUCE_COUNT)
+		if (largeMap && initPlyCount < TRICKLE_REDUCE_COUNT)
 		{
 			tert.initialRes = TERTIARY_TRICKLE_SET_LRG;
 			tert.empireRes = TERTIARY_TEAM_TRICKLE_LRG;
@@ -214,10 +226,27 @@ void initNewSecondary(int arrIndex, int entIndex)
 	sec.type = RESOURCE_SECONDARY;
 	sec.timeOwned = 0;
 	
-	// Don't enable team resource feature for secondaries
-	sec.initialRes = RES_SECONDARY_START;
-	sec.empireRes = 0;
-	sec.consortRes = 0;
+	// Don't enable team resource feature or trickle regen for secondaries on corner
+	if (cornerMap)
+	{	
+		sec.initialRes = RES_SECONDARY_START;
+		sec.empireRes = 0;
+		sec.consortRes = 0;
+	}
+	// If large map with little players, give secondary 20350 inital and 3300 reserved
+	else if (largeMap && initPlyCount <= TRICKLE_REDUCE_COUNT)
+	{
+		sec.initialRes = SECONDARY_TRICKLE_SET_LRG;
+		sec.empireRes = SECONDARY_TEAM_TRICKLE;
+		sec.consortRes = SECONDARY_TEAM_TRICKLE;		
+	}
+	// Otherwise, give secondary 40700 inital and 3300 reserved
+	else
+	{
+		sec.initialRes = SECONDARY_TRICKLE_SET;
+		sec.empireRes = SECONDARY_TEAM_TRICKLE;
+		sec.consortRes = SECONDARY_TEAM_TRICKLE;		
+	}
 	
 	structSecondaries.PushArray(sec);	
 }
@@ -229,9 +258,28 @@ void initNewPrimary(int entIndex)
 	prime.entIndex = entIndex;
 	prime.owner = TEAM_SPEC;
 	prime.type = RESOURCE_PRIME;	
-	prime.initialRes = PRIMARY_TRICKLE_SET;
-	prime.empireRes = PRIMARY_TEAM_TRICKLE;
-	prime.consortRes = PRIMARY_TEAM_TRICKLE;
+	
+	/* Decide based on the map and player count how many resources to prime prime */
+	if (cornerMap) // If corner give prime 40k inital and 40k reserved
+	{	
+		prime.initialRes = PRIMARY_TRICKLE_SET_CORNER;
+		prime.empireRes = PRIMARY_TEAM_TRICKLE_CORNER;
+		prime.consortRes = PRIMARY_TEAM_TRICKLE_CORNER;
+	}
+	// If large map with little players, give prime 37.5k inital and 5.25k reserved
+	else if (largeMap && initPlyCount < TRICKLE_REDUCE_COUNT)
+	{
+		prime.initialRes = PRIMARY_TRICKLE_SET_LRG;
+		prime.empireRes = PRIMARY_TEAM_TRICKLE;
+		prime.consortRes = PRIMARY_TEAM_TRICKLE;
+	}
+	else // Otherwise give prime 75k initial and 5.25k reserved
+	{
+		prime.initialRes = PRIMARY_TRICKLE_SET;
+		prime.empireRes = PRIMARY_TEAM_TRICKLE;
+		prime.consortRes = PRIMARY_TEAM_TRICKLE;
+	}	
+	
 	prime.timeOwned = 0;
 	
 	// Push the primary object into the struct list
@@ -281,10 +329,6 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 
 void Primary_Captured(int team)
 {
-	// If the current map is not corner, don't change the primary resource point
-	if (!cornerMap)
-		return;
-	
 	// Get the primary structure from the ArrayList
 	ResPoint prime;
 	structPrimary.GetArray(0, prime);
@@ -310,10 +354,6 @@ void Primary_Captured(int team)
 
 void Secondary_Captured(int entity, int team)
 {
-	// If the current map is corner, don't change the secondary resource point
-	if (cornerMap)
-		return;
-	
 	// Get the array index of Secondary, exit if not found
 	int arrIndex = Secondary_FindArrayIndex(entity);
 	if (arrIndex == RESPOINT_NOT_FOUND)
@@ -423,11 +463,12 @@ public Action TIMER_SecondaryExtract(Handle timer, int arrIndex)
 	// Every ten seconds a secondary extracts 275 resources subtract that
 	sec.SubtractRes(275);
 	
-	// Every ten seconds, regenerate 69 resources (25% of full production)
-	// If the opposite teams reserved pool is less than 4140 (10 minutes of regen)
+	// Every ten seconds, regenerate 55 resources (20% of full production)
+	// If the opposite teams reserved pool is less than 3300 (10 minutes of regen)
 	// And if the initial resources of the secondary is depleted
+	// And if the map is not corner
 	int otherTeam = getOtherTeam(sec.owner)
-	if (sec.initialRes <= 0 && sec.GetResTeam(otherTeam) <= SECONDARY_TRICKLE_REGEN_AMOUNT)
+	if (!cornerMap && sec.initialRes <= 0 && sec.GetResTeam(otherTeam) <= SECONDARY_TRICKLE_REGEN_AMOUNT)
 		sec.AddRes(otherTeam, SECONDARY_TRICKLE_REGEN_INTERVAL);
 	
 	// Update the secondary structure in the ArrayList
@@ -443,6 +484,13 @@ public Action TIMER_PrimaryExtract(Handle timer)
 	
 	// Every fifteen seconds, primary generates 750 resources subtract that
 	prime.SubtractRes(750);
+	
+	// Every fifteen seconds, regenerate 75 resources (10% of full production)
+	// If the opposite teams reserved pool is less than 3000 (10 minutes of regen)
+	// And if the initial resources of the prime is depleted
+	int otherTeam = getOtherTeam(prime.owner);
+	if (!cornerMap && prime.initialRes <= 0 && prime.GetResTeam(otherTeam) <= PRIMARY_TRICKLE_REGEN_AMOUNT)
+		prime.AddRes(otherTeam, PRIMARY_TRICKLE_REGEN_INTERVAL);
 	
 	// Update the primary structure in the ArrayList
 	structPrimary.SetArray(0, prime);	

@@ -40,8 +40,8 @@ public void OnPluginStart()
 	cvarEnableDepletion 		=	AutoExecConfig_CreateConVar("sm_enable_depletion", "1", "Sets wether to enable depletion 0:disabled, 1:enabled");
 	cvarDepletePlayerCount 		= 	AutoExecConfig_CreateConVar("sm_resource_deplete", "12", "Sets number of players to deplete the primary resource");
 	
-	cvarCornerTrickleMin		= 	AutoExecConfig_CreateConVar("sm_resource_trickle_cmin", "8", "Specifies min number of players on corner to disable trickling");
-	cvarCornerTricklePrime		= 	AutoExecConfig_CreateConVar("sm_resource_trickle_cmin", "10", "Specifies min number of players to trickle prime on corner");
+	cvarCornerTrickleMin		= 	AutoExecConfig_CreateConVar("sm_resource_trickle_cmin", "36", "Specifies min number of players on corner to disable trickling");
+	cvarCornerTricklePrime		= 	AutoExecConfig_CreateConVar("sm_resource_trickle_pmin", "36", "Specifies min number of players to trickle prime on corner");
 	AutoExecConfig_EC_File();
 	
 	/* Initialize corner varriables */
@@ -83,10 +83,11 @@ public void ND_OnRoundStarted()
 		if (	ND_MapEqualsAnyMetro(map_name) || 
 				ND_StockMapEquals(map_name, ND_Hydro) || 
 				ND_StockMapEquals(map_name, ND_Coast) ||
-				ND_CustomMapEquals(map_name, ND_Sandbrick))
+				ND_CustomMapEquals(map_name, ND_Sandbrick) ||
+				ND_CustomMapEquals(map_name, ND_Roadwork))
 		{
 			// Deplete prime of all the primary resources			
-			CreateTimer(5.0, TIMER_DepletePrime, _, TIMER_FLAG_NO_MAPCHANGE);
+			CreateTimer(8.0, TIMER_DepletePrime, _, TIMER_FLAG_NO_MAPCHANGE);
 		}
 	}
 	
