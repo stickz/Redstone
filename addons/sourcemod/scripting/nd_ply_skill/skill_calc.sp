@@ -1,3 +1,5 @@
+#define NO_SKILL_WEIGHT -1
+
 float GetSkillLevel(int client)
 {
 	// Get the client level for later use
@@ -13,14 +15,14 @@ float GetSkillLevel(int client)
 			gameMeSkill = lastAverage;
 		else
 		{
-			/* Enforce of min skill of clientLevel * 0.8 */
 			float minSkill = clientLevel * 0.8;
-			if (gameMeSkill < minSkill)
-				gameMeSkill = minSkill;
-			
-			/* Or Enforce a min skill of the set floor */
-			else if (gameMeSkill < skillFloor)
+			/* Enforce a skill adjust of the player */
+			if (gameMeSkill != NO_SKILL_WEIGHT)
 				gameMeSkill = float(skillFloor);
+			
+			/* Enforce of min skill of clientLevel * 0.8 */
+			else if (gameMeSkill < minSkill)
+				gameMeSkill = minSkill;
 		}
 		
 		/* If the player is a commander & both teams have commanders */

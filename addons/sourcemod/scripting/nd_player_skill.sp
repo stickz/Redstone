@@ -52,7 +52,7 @@ public Plugin myinfo =
 	name = "[ND] Player Skill Management",
 	author = "Stickz",
 	description = "Finalizes a player's skill level",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone"
 };
 
