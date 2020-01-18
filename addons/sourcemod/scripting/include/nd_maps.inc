@@ -109,3 +109,20 @@ stock bool ND_CurrentMapIsCorner()
 	GetCurrentMap(currentMap, sizeof(currentMap));
 	return ND_CustomMapEquals(currentMap, ND_Corner);
 }
+
+stock bool ND_IsLargeMap()
+{
+	char currentMap[32];
+	GetCurrentMap(currentMap, sizeof(currentMap));
+	
+	if (ND_StockMapEquals(currentMap, ND_Downtown))
+		return true;
+	else if (ND_StockMapEquals(currentMap, ND_Gate))
+		return true;
+	else if (ND_StockMapEquals(currentMap, ND_Oilfield))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Roadwork))
+		return true;
+	
+	return false;
+}

@@ -87,7 +87,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 	
 	/* Cast a few varriables we're going to need */
 	int clientCount = ND_GetClientCount();
-	int serverType = ND_GetServerTypeEx();
+	//int serverType = ND_GetServerTypeEx();
 	
 	// Always allow cycling of metro and silo
 	ND_NominateMap(ND_StockMaps[ND_Metro]);
@@ -97,6 +97,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 	// But restrict decrease cycling with less players
 	float resAdjust = 60 + 2.5 * clientCount;
 	ND_NominateMap(ND_StockMaps[ND_Clocktower], resAdjust);
+	ND_NominateMap(ND_CustomMaps[ND_Roadwork], resAdjust)
 	
 	/* Run through the 'less than' x players to include maps */		
 	if (clientCount <= cvarStockMapCount.IntValue)
@@ -112,24 +113,19 @@ void CreateMapThresholdList(bool debugFunction = false)
 		}
 	}
 	
-	if (clientCount >= 6)
+	/* Run through the 'greater than' x players to include maps */
+	if (clientCount >= 14)
 	{
-		float plyAdjust = 1.5 * (clientCount - 14);		
-		ND_NominateMap(ND_CustomMaps[ND_Roadwork], 60 + plyAdjust);
-
-		/* Run through the 'greater than' x players to include maps */
-		if (clientCount >= 14)
+		float plyAdjust = 1.5 * (clientCount - 14);
+		ND_NominateMap(ND_CustomMaps[ND_Submarine], 50 + plyAdjust);			
+		ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
+		
+		if (clientCount >= 18)
 		{
-			ND_NominateMap(ND_CustomMaps[ND_Submarine], 50 + plyAdjust);			
-			ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
-			
-			if (clientCount >= 18)
-			{
-				ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
-				ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);		
-				ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
-				ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);			
-			}
+			ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
+			ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);		
+			ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
+			ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);			
 		}
 	}
 	

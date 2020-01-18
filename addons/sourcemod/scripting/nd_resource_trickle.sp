@@ -4,6 +4,7 @@
 #include <nd_entities>
 #include <nd_resources>
 #include <nd_resource_eng>
+#include <nd_redstone>
 #include <smlib/math>
 #include <nd_maps>
 
@@ -23,7 +24,11 @@ public Plugin myinfo =
 #define PRIMARY_TRICKLE_SET 40000 // Initial pool of resources, first come, first serve
 
 #define TERTIARY_TEAM_TRICKLE 8000 // Reserved pool of resources for each team
+#define TERTIARY_TEAM_TRICKLE_LRG 4000 // Reserved pool of resources for large maps
 #define TERTIARY_TRICKLE_SET 8000 // Initial pool of resources, first come, first serve
+#define TERTIARY_TRICKLE_SET_LRG 4000 // Initial pool of resources, for large maps
+#define TERTIARY_TRICKLE_REDUCE_COUNT 16 // Number of players to reduce trickle resources for large maps
+
 #define TERTIARY_TRICKLE_REGEN_INTERVAL 15 // Amount to regenerate every five seconds
 #define TERTIARY_TRICKLE_REGEN_AMOUNT 2160 // Maximum amount to regen on opposite team's pool
 #define TERTIARY_TRICKLE_DEGEN_INTERVAL 25 // Amount to degenerate every five seconds
@@ -54,6 +59,8 @@ Handle primaryTimer = INVALID_HANDLE;
 int PrimeEntity = -1;
 
 bool cornerMap = false;
+bool largeMap = false;
+int initPlyCount = 0;
 
 // Include the teritary structure and natives
 #include "nd_res_trickle/resource.sp"
@@ -86,8 +93,10 @@ public void OnPluginStart()
 		ND_OnResPointsCached();
 }
 
-public void OnMapStart() {
+public void OnMapStart() 
+{
 	cornerMap = ND_CurrentMapIsCorner();
+	largeMap = ND_IsLargeMap();
 }
 
 public void ND_OnRoundStarted()
@@ -97,6 +106,8 @@ public void ND_OnRoundStarted()
 	structTertaries.Clear();
 	listSecondaries.Clear();
 	structSecondaries.Clear();
+	
+	initPlyCount = ND_GetClientCount();
 }
 
 public void ND_OnResPointsCached()
@@ -166,9 +177,18 @@ void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
 	// Should we init the teritary with full resources?
 	if (fullRes)
 	{
-		tert.initialRes = TERTIARY_TRICKLE_SET;
-		tert.empireRes = TERTIARY_TEAM_TRICKLE;
-		tert.consortRes = TERTIARY_TEAM_TRICKLE;
+		if (largeMap && initPlyCount < TERTIARY_TRICKLE_REDUCE_COUNT)
+		{
+			tert.initialRes = TERTIARY_TRICKLE_SET_LRG;
+			tert.empireRes = TERTIARY_TEAM_TRICKLE_LRG;
+			tert.consortRes = TERTIARY_TEAM_TRICKLE_LRG;			
+		}
+		else
+		{		
+			tert.initialRes = TERTIARY_TRICKLE_SET;
+			tert.empireRes = TERTIARY_TEAM_TRICKLE;
+			tert.consortRes = TERTIARY_TEAM_TRICKLE;
+		}
 	}
 	else
 	{
