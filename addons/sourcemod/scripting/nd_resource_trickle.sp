@@ -29,10 +29,10 @@ public Plugin myinfo =
 #define TERTIARY_TRICKLE_DEGEN_INTERVAL 25 // Amount to degenerate every five seconds
 #define TERTIARY_TRICKLE_DEGEN_MINUTES 8 // Minutes to degenerate if team hasn't owned tertiary
 
-#define TERTIARY_FRACKING_AMOUNT 100 // Amount of resources to grant per frack
-#define TERTIARY_FRACKING_SECONDS 20 // Number of seconds inbetween fracks
+#define TERTIARY_FRACKING_AMOUNT 50 // Amount of resources to grant per frack
+#define TERTIARY_FRACKING_SECONDS 15 // Number of seconds inbetween fracks
 #define TERTIARY_FRACKING_LEFT 300 // Amount of resources left before fracking is enabled
-#define TERTIARY_FRACKING_DELAY 16 // Number of minutes a team most own a teritary to start fracking
+#define TERTIARY_FRACKING_DELAY 13 // Number of minutes a team most own a teritary to start fracking
 
 #define SECONDARY_TRICKLE_REGEN_AMOUNT 4140 // Maximum amount to regen on opposite team's pool
 #define SECONDARY_TRICKLE_REGEN_INTERVAL 69 // Amount to regen every ten seconds
