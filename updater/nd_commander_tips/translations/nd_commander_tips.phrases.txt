@@ -8,7 +8,7 @@
 	
 	"Resource Fracking"
 	{
-		"en"		"Every 16m tertaries frack to produce an extra 150 res/min. If captured, it takes 16m to restart fracking"
+		"en"		"Every 13m tertaries frack to produce an extra 150 res/min. If captured, it takes 13m to restart fracking"
 	}
 	
 	"Communication is key"
