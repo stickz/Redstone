@@ -83,6 +83,7 @@ public void ND_OnRoundStarted()
 		if (	ND_MapEqualsAnyMetro(map_name) || 
 				ND_StockMapEquals(map_name, ND_Hydro) || 
 				ND_StockMapEquals(map_name, ND_Coast) ||
+				ND_StockMapEquals(map_name, ND_Oasis) ||
 				ND_CustomMapEquals(map_name, ND_Sandbrick) ||
 				ND_CustomMapEquals(map_name, ND_Roadwork))
 		{
