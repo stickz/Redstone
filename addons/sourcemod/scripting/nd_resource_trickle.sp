@@ -324,20 +324,20 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 	// Get the resource point type and team
 	int type = event.GetInt("type");
 	int team = event.GetInt("team");
-	int entity = event.GetInt("entindex")
+	int entity = event.GetInt("entindex");
 	
 	// Switch the resource point type and fire the events
 	switch (type)
 	{
 		case RESOURCE_TERTIARY: Tertiary_Captured(entity, team);
 		case RESOURCE_SECONDARY: Secondary_Captured(entity, team);		
-		case RESOURCE_PRIME: Primary_Captured(team);
+		case RESOURCE_PRIME: Primary_Captured(entity, team);
 	}
 	
 	return Plugin_Continue;
 }
 
-void Primary_Captured(int team)
+void Primary_Captured(int entity, int team)
 {
 	// Get the primary structure from the ArrayList
 	ResPoint prime;
@@ -345,6 +345,7 @@ void Primary_Captured(int team)
 	
 	// Change the owner to the team and update the primary structure
 	prime.owner = team;
+	prime.entIndex = entity;
 	structPrimary.SetArray(0, prime);
 	
 	// Set the current resources of the primary structure to team resources when captured
