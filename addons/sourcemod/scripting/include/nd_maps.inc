@@ -126,3 +126,16 @@ stock bool ND_IsLargeResMap()
 	
 	return false;
 }
+
+stock bool ND_IsPopularMap()
+{
+	char currentMap[32];
+	GetCurrentMap(currentMap, sizeof(currentMap));
+	
+	if (ND_StockMapEquals(currentMap, ND_Hydro))
+		return true;
+	else if (ND_StockMapEquals(currentMap, ND_Metro))
+		return true;
+		
+	return false;
+}
