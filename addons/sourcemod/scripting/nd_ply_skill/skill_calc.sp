@@ -17,7 +17,7 @@ float GetSkillLevel(int client)
 		{
 			float minSkill = clientLevel * 0.8;
 			/* Enforce a skill adjust of the player */
-			if (gameMeSkill != NO_SKILL_WEIGHT)
+			if (skillFloor != NO_SKILL_WEIGHT)
 				gameMeSkill = float(skillFloor);
 			
 			/* Enforce of min skill of clientLevel * 0.8 */
