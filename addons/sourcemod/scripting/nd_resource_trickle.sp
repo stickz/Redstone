@@ -21,9 +21,10 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 #define PRIMARY_TEAM_TRICKLE 3000 // Reserved pool of resources for each team
+#define PRIMARY_TEAM_TRICKLE_LRG 6000 // Reserved pool of resources on large maps
 #define PRIMARY_TEAM_TRICKLE_CORNER 40000 // Reserved pool of resources on corner
 #define PRIMARY_TRICKLE_SET 76500 // Initial pool of resources, first come, first serve
-#define PRIMARY_TRICKLE_SET_LRG 38250 // Initial pool of resources on large maps
+#define PRIMARY_TRICKLE_SET_LRG 35250 // Initial pool of resources on large maps
 #define PRIMARY_TRICKLE_SET_CORNER 40000 // Initial pool of resources on corner
 
 #define PRIMARY_TRICKLE_REGEN_AMOUNT 3000 // Amount to get every fifteen seconds
@@ -35,8 +36,9 @@ public Plugin myinfo =
 #define PRIMARY_FRACKING_DELAY 26  // Number of minutes a team most own a prime to start fracking
 
 #define SECONDARY_TEAM_TRICKLE 3300 // Reserved pool of resources for each team
+#define SECONDARY_TEAM_TRICKLE_LRG 6600 // Reserved pool of resources on large maps
 #define SECONDARY_TRICKLE_SET 40700 // Initial pool of resources, first come, first serve
-#define SECONDARY_TRICKLE_SET_LRG 20350 // Initial pool of resources on large maps
+#define SECONDARY_TRICKLE_SET_LRG 17050 // Initial pool of resources on large maps
 
 #define SECONDARY_TRICKLE_REGEN_AMOUNT 3300 // Maximum amount to regen on opposite team's pool
 #define SECONDARY_TRICKLE_REGEN_INTERVAL 55 // Amount to regen every ten seconds
@@ -61,7 +63,9 @@ public Plugin myinfo =
 #define TERTIARY_FRACKING_LEFT 300 // Amount of resources left before fracking is enabled
 #define TERTIARY_FRACKING_DELAY 13 // Number of minutes a team most own a teritary to start fracking
 
-#define TRICKLE_REDUCE_COUNT 16 // Number of players to reduce trickle resources for large maps
+#define TRICKLE_REDUCE_COUNT_MED 12 // Number of players to reduce trickle resources for medium maps
+#define TRICKLE_REDUCE_COUNT_LRG 16 // Number of players to reduce trickle resources for large maps
+
 #define RESOURCE_NOT_TERTIARY 	-1
 #define RESPOINT_NOT_FOUND		-1
 
@@ -80,6 +84,7 @@ int PrimeEntity = -1;
 
 bool cornerMap = false;
 bool largeMap = false;
+bool mediumMap = false;
 int initPlyCount = 0;
 
 // Include the teritary structure and natives
@@ -117,6 +122,7 @@ public void OnMapStart()
 {
 	cornerMap = ND_CurrentMapIsCorner();
 	largeMap = ND_IsLargeResMap();
+	mediumMap = ND_IsMediumResMap();
 }
 
 public void ND_OnRoundStarted()
@@ -199,7 +205,8 @@ void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
 	// Should we init the teritary with full resources?
 	if (fullRes)
 	{
-		if (largeMap && initPlyCount < TRICKLE_REDUCE_COUNT)
+		// If large/medium map with little players, give tertiary 2000 inital and 4000 reserved
+		if (ReduceTrickleRes())
 		{
 			tert.initialRes = TERTIARY_TRICKLE_SET_LRG;
 			tert.empireRes = TERTIARY_TEAM_TRICKLE_LRG;
@@ -243,12 +250,12 @@ void initNewSecondary(int arrIndex, int entIndex)
 		sec.empireRes = 0;
 		sec.consortRes = 0;
 	}
-	// If large map with little players, give secondary 20350 inital and 3300 reserved
-	else if (largeMap && initPlyCount <= TRICKLE_REDUCE_COUNT)
+	// If large/medium map with little players, give secondary 20350 inital and 3300 reserved
+	else if (ReduceTrickleRes())
 	{
 		sec.initialRes = SECONDARY_TRICKLE_SET_LRG;
-		sec.empireRes = SECONDARY_TEAM_TRICKLE;
-		sec.consortRes = SECONDARY_TEAM_TRICKLE;		
+		sec.empireRes = SECONDARY_TEAM_TRICKLE_LRG;
+		sec.consortRes = SECONDARY_TEAM_TRICKLE_LRG;	
 	}
 	// Otherwise, give secondary 40700 inital and 3300 reserved
 	else
@@ -276,12 +283,12 @@ void initNewPrimary(int entIndex)
 		prime.empireRes = PRIMARY_TEAM_TRICKLE_CORNER;
 		prime.consortRes = PRIMARY_TEAM_TRICKLE_CORNER;
 	}
-	// If large map with little players, give prime 37.5k inital and 5.25k reserved
-	else if (largeMap && initPlyCount < TRICKLE_REDUCE_COUNT)
+	// If large/medium map with little players, give prime 37.5k inital and 5.25k reserved
+	else if (ReduceTrickleRes())
 	{
 		prime.initialRes = PRIMARY_TRICKLE_SET_LRG;
-		prime.empireRes = PRIMARY_TEAM_TRICKLE;
-		prime.consortRes = PRIMARY_TEAM_TRICKLE;
+		prime.empireRes = PRIMARY_TEAM_TRICKLE_LRG;
+		prime.consortRes = PRIMARY_TEAM_TRICKLE_LRG;
 	}
 	else // Otherwise give prime 75k initial and 5.25k reserved
 	{
@@ -313,6 +320,16 @@ int GetAverageSpawnRes()
 	// Calculate the average initial resources and return it as an integer
 	float average = float(totalRes) / float(structTertaries.Length);
 	return RoundFloat(average);	
+}
+
+bool ReduceTrickleRes()
+{
+	if (largeMap && initPlyCount < TRICKLE_REDUCE_COUNT_LRG)
+		return true;
+	else if (mediumMap && initPlyCount < TRICKLE_REDUCE_COUNT_MED)
+		return true;
+	
+	return false;
 }
 
 public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBroadcast)

@@ -121,9 +121,18 @@ stock bool ND_IsLargeResMap()
 		return true;
 	else if (ND_StockMapEquals(currentMap, ND_Oilfield))
 		return true;
-	else if (ND_CustomMapEquals(currentMap, ND_Roadwork))
-		return true;
 	
+	return false;
+}
+
+stock bool ND_IsMediumResMap()
+{
+	char currentMap[32];
+	GetCurrentMap(currentMap, sizeof(currentMap));
+	
+	if (ND_CustomMapEquals(currentMap, ND_Roadwork))
+		return true;
+		
 	return false;
 }
 
