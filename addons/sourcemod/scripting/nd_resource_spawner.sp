@@ -166,53 +166,6 @@ public void ND_OnRoundStarted()
 	}
 }
 
-public void ND_OnPrimeDepleted(int entity)
-{
-	CheckT1PrimeDepleteSpawns();
-	CheckT2PrimeDepleteSpawns();
-}
-
-void CheckT1PrimeDepleteSpawns()
-{
-	if (!tertsSpawned[FIRST_TIER])
-	{
-		char map_name[64];   
-		GetCurrentMap(map_name, sizeof(map_name));	
-
-		if (ND_StockMapEquals(map_name, ND_Silo))
-		{
-			ND_SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
-			ND_SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
-			tertsSpawned[FIRST_TIER] = true;
-		}
-	}
-}
-
-void CheckT2PrimeDepleteSpawns()
-{
-	if (!tertsSpawned[SECOND_TIER])
-	{
-		// Don't deplete some tertaries, if we're depleting prime right away
-		char map_name[64];   
-		GetCurrentMap(map_name, sizeof(map_name));
-		
-		if (ND_MapEqualsAnyMetro(map_name))
-		{
-			ND_SpawnTertiaryPoint({2620.0, 529.0, 5.0});
-			ND_SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
-			tertsSpawned[SECOND_TIER] = true;
-		}
-		
-		else if (ND_StockMapEquals(map_name, ND_Clocktower))
-		{
-			// Respawn tunnel resources			
-			ND_SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
-			ND_SpawnTertiaryPoint({-2564.0, 282.0, -1672.0});
-			tertsSpawned[SECOND_TIER] = true;
-		}
-	}
-}
-
 void CheckStableSpawns()
 {
 	char map_name[64];   
@@ -242,7 +195,11 @@ void CheckStableSpawns()
 	
 	else if (ND_MapEqualsAnyMetro(map_name))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(14, 16, 18))
+		int hCount 	= ND_PrimeDepleted() 
+					? GetSpawnCount(6, 6, 8)
+					: GetSpawnCount(14, 16, 18);
+		
+		if (RED_OnTeamCount() >= hCount)
 		{
 			ND_SpawnTertiaryPoint({2620.0, 529.0, 5.0});
 			ND_SpawnTertiaryPoint({-2235.0, -3249.0, -85.0});
@@ -252,7 +209,11 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
-		if (RED_OnTeamCount() >= cvarSiloTertiarySpawns.IntValue)
+		int hCount 	= ND_PrimeDepleted() 
+					? GetSpawnCount(6, 6, 8)
+					: GetSpawnCount(14, 16, 18);
+		
+		if (RED_OnTeamCount() >= hCount)
 		{
 			ND_SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
 			ND_SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
@@ -262,7 +223,11 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Clocktower))
 	{
-		if (RED_OnTeamCount() >= GetSpawnCount(20, 22, 24))
+		int hCount 	= ND_PrimeDepleted() 
+					? GetSpawnCount(10, 10, 12)
+					: GetSpawnCount(20, 22, 24);
+		
+		if (RED_OnTeamCount() >= hCount)
 		{
 			// Respawn tunnel resources			
 			ND_SpawnTertiaryPoint({-1674.0, 1201.0, -1848.0});
