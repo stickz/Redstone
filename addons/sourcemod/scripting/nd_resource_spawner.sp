@@ -36,7 +36,6 @@ ConVar cvarCoastTertiarySpawns;
 //ConVar cvarCornerTertiarySpawns;
 ConVar cvarNuclearTertiarySpawns;
 ConVar cvarRoadworkTertiarySpawns;
-ConVar cvarSiloTertiarySpawns;
 ConVar cvarDowntownTertiarySpawns;
 ConVar cvarGateTertiarySpawns[2];
 ConVar cvarRockTertiarySpawns[2];
@@ -104,14 +103,13 @@ void CreateMapConvars()
 	cvarNuclearTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_nuclear", "14", "Sets number of players to spawn extra tertaries on nuclear.");
 	cvarRoadworkTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_roadwork", "16", "Sets number of players to spawn extra tertaries on roadwork.");
 	cvarDowntownTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_downtown", "28", "Sets number of players to spawn extra tertaries on downtown and downtown_dyn.");
-	cvarSiloTertiarySpawns = AutoExecConfig_CreateConVar("sm_tertiary_silo1", "14", "Sets number of players to spawn extra tertaries on silo.");
 	cvarGateTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_gate1", "16", "Sets number of players to spawn extra tertaries on gate.");
 	cvarGateTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_gate2", "22", "Sets number of players to spawn extra tertaries on gate.");
 	cvarRockTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_rock1", "8", "Sets number of players to spawn extra tertaries on rock.");
 	cvarRockTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_rock2", "16", "Sets number of players to spawn extra tertaries on rock.");
 	cvarOilfeildTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_oilfeild1", "12", "Sets number of players to spawn extra tertaries on oilfield.");
 	cvarOilfeildTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_oilfeild2", "20", "Sets number of players to spawn extra tertaries on oilfield.");
-	cvarClocktowerTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_clocktower1", "20", "Sets number of players to spawn extra tertaries on clocktower.");
+	cvarClocktowerTertiarySpawns[FIRST_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_clocktower1", "24", "Sets number of players to spawn extra tertaries on clocktower.");
 	cvarClocktowerTertiarySpawns[SECOND_TIER] = AutoExecConfig_CreateConVar("sm_tertiary_clocktower2", "18", "Sets number of players to spawn extra tertaries on clocktower.");
 
 	// Execute and clean the configuration file
