@@ -148,3 +148,31 @@ stock bool ND_IsPopularMap()
 		
 	return false;
 }
+
+stock bool ND_ExtendedTimeLimitMap(const char[] currentMap)
+{
+	if (ND_CustomMapEquals(currentMap, ND_Roadwork))
+		return true;
+	else if ( ND_CustomMapEquals(currentMap, ND_Corner))
+		return true;
+	else if (ND_StockMapEquals(currentMap, ND_Silo))
+		return true;
+	
+	return false;
+}
+
+stock bool ND_IsAutoCycleMap(const char[] currentMap)
+{
+	if (ND_CustomMapEquals(currentMap, ND_Sandbrick))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Submarine))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Nuclear))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Mars))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Rock))
+		return true;
+	
+	return false;
+}

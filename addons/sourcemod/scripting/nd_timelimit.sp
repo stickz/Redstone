@@ -28,16 +28,6 @@ char nd_timelimit_commands[TIMELIMIT_COMMANDS_SIZE][] =
 	"time",
 	"timeleft"};
 	
-#define AC_MAPS_SIZE 5
-char nd_autocycle[AC_MAPS_SIZE][32];
-void createAutoCycleMaps() {
-	nd_autocycle[0] = ND_CustomMaps[ND_Sandbrick];
-	nd_autocycle[1] = ND_CustomMaps[ND_Submarine];
-	nd_autocycle[2] = ND_CustomMaps[ND_Nuclear];
-	nd_autocycle[3] = ND_CustomMaps[ND_Mars];
-	nd_autocycle[4] = ND_CustomMaps[ND_Rock];
-}
-
 enum Integers
 {
 	totalTimeLeft,
@@ -99,8 +89,6 @@ public void OnPluginStart()
 	
 	createConVars(); //plugin controls
 	
-	createAutoCycleMaps(); //thanks sourcemod, you suck!
-	
 	AddUpdaterLibrary(); //auto-updater
 	
 	LoadTranslations("nd_common.phrases");
@@ -130,12 +118,12 @@ public void ND_BothCommandersPromoted(int consort, int empire)
 {
 	if (g_Bool[canChangeTimeLimit])
 	{
-		// Get the current map name
+		// Get the name of the current map
 		char currentMap[32];
 		GetCurrentMap(currentMap, sizeof(currentMap));
 		
 		// Recheck the time limit, if thresholds are ment
-		if (ND_GetClientCount() > 10 || IsAutoCycleMap(currentMap))
+		if (ND_GetClientCount() > 10 || ND_IsAutoCycleMap(currentMap))
 			SetTimeLimit(currentMap);
 		
 		// Reset the varriable, so we can't change it again
@@ -207,15 +195,6 @@ public Action PlayerJoinTeam(client, char[] command, int argc)
 	return Plugin_Continue;
 }
 
-bool IsAutoCycleMap(const char[] currentMap)
-{
-	for (int idx = 0; idx < AC_MAPS_SIZE; idx++)
-		if (StrEqual(currentMap, nd_autocycle[idx], false))
-			return true;	
-
-	return false;
-}
-
 void setVarriableDefaults()
 {
 	g_Integer[totalTimeLeft] = 60;
@@ -258,12 +237,12 @@ public void ND_OnRoundStarted()
 {
 	setVarriableDefaults();
 	
-	// Get the current map name
+	// Get the name of the current map
 	char currentMap[32];
 	GetCurrentMap(currentMap, sizeof(currentMap));
 	
 	// Ether set the time limit now, or wait and set it later
-	if (ND_GetClientCount() > 10 || IsAutoCycleMap(currentMap))
+	if (ND_GetClientCount() > 10 || ND_IsAutoCycleMap(currentMap))
 		SetTimeLimit(currentMap);
 	
 	else
@@ -272,7 +251,7 @@ public void ND_OnRoundStarted()
 		CreateTimer(g_Cvar[reducedResumeTime].FloatValue, TIMER_ChangeResumeTime, _, TIMER_FLAG_NO_MAPCHANGE);
 	}
 	
-	// Allow the time limit to be changed in the first three minutes for rookie commanders
+	// Allow the time limit to be changed in the first five minutes for rookie commanders
 	g_Bool[canChangeTimeLimit] = true;
 	CreateTimer(float(60 * 5), TIMER_CanChangeTimeLimit, _, TIMER_FLAG_NO_MAPCHANGE);	
 }
@@ -281,14 +260,8 @@ public void ND_OnRoundStarted()
 void SetTimeLimit(const char[] currentMap)
 {
 	// Calculate the base time limit, based on the current map
-	int timeLimit = 60;
-	if (	StrEqual(currentMap, ND_CustomMaps[ND_Corner], false) || 
-		StrEqual(currentMap, ND_StockMaps[ND_Silo], false)) 
-	{
-		timeLimit = g_Cvar[extendedTimeLimit].IntValue;
-	}	
-	else
-		timeLimit = g_Cvar[regularTimeLimit].IntValue;
+	int timeLimit = ND_ExtendedTimeLimitMap(currentMap) ? g_Cvar[extendedTimeLimit].IntValue 
+														: g_Cvar[regularTimeLimit].IntValue;
 		
 	// Increase the time limit, if there are rookie commanders
 	if (ND_InitialCommandersReady(false) && IncComSkillTimeLimit())
@@ -372,7 +345,7 @@ public Action TIMER_CheckAutoCycleMap(Handle timer)
 	char nextMap[64];
 	GetNextMap(nextMap, sizeof(nextMap));
 	
-	if (IsAutoCycleMap(nextMap))
+	if (ND_IsAutoCycleMap(nextMap))
 		ServerCommand("mp_roundtime %d", g_Cvar[regularTimeLimit].IntValue);
 	
 	return Plugin_Handled;	

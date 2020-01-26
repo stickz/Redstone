@@ -130,23 +130,12 @@ void displayVotes(int team, float empireRemainder, float consortRemainder, int c
 	char name[64];
 	GetClientName(client, name, sizeof(name));
 	
-	if (empireRemainder >= 1 && consortRemainder >= 1)
-	{
+	if (empireRemainder >= 1 && consortRemainder >= 1) // Vertex typed extend: 5 con & 5 Emp required
 		PrintToChatAll("\x05%t", "Extend Both", name, RoundToCeil(consortRemainder), RoundToCeil(empireRemainder));
-		//PrintToChatAll("\x05%s typed extend: %d Con & %d Emp required.", name, RoundToCeil(consortRemainder), RoundToCeil(empireRemainder));
-		return;
-	}
 	
-	switch (team) //get the casters team
-	{
-		case TEAM_EMPIRE:
-			if (consortRemainder <= 0)
-				PrintToChatAll("\x05%t", "Extend Empire", name, RoundToCeil(empireRemainder));	
-				//PrintToChatAll("\x05%s typed extend: %d empire required", name, RoundToCeil(empireRemainder));			
-			
-		case TEAM_CONSORT:
-			if (empireRemainder <= 0)
-				PrintToChatAll("\x05%t", "Extend Consort", name, RoundToCeil(consortRemainder));
-				//PrintToChatAll("\x05%s typed extend: %d consort required", name, RoundToCeil(consortRemainder));			
-	}
+	else if (team == TEAM_EMPIRE && empireRemainder >= 1) // Vertex typed extend: 5 empire required
+		PrintToChatAll("\x05%t", "Extend Empire", name, RoundToCeil(empireRemainder));
+	
+	else if (team == TEAM_CONSORT && consortRemainder >= 1) // Vertex typed extend: 5 consort required
+		PrintToChatAll("\x05%t", "Extend Consort", name, RoundToCeil(consortRemainder));
 }
