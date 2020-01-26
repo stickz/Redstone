@@ -14,7 +14,7 @@
 //Handle hudSync;
 
 //ConVar g_enabled;
-ConVar g_maxskill;
+//ConVar g_maxskill;
 ConVar g_hidedone;
 ConVar g_updaterate;
 ConVar g_afterdisplay;
@@ -50,7 +50,7 @@ public void OnPluginStart()
 {	
 	//Convars (show it for everyone for now to get some feedback)
 	//g_enabled = CreateConVar("sm_comm_checklist_enabled","1");
-	g_maxskill 	= CreateConVar("sm_comm_checklist_maxlevel", "80");
+	//g_maxskill 	= CreateConVar("sm_comm_checklist_maxlevel", "80");
 	g_hidedone 	= CreateConVar("sm_comm_checklist_hide_done", "1");
 	g_updaterate 	= CreateConVar("sm_comm_checklist_updaterate", "1.5");
 	g_afterdisplay	= CreateConVar("sm_comm_checklist_afterdisplay", "5");
@@ -73,6 +73,10 @@ public void OnPluginStart()
 }
 
 public void OnMapStart() {
+	ResetVarriables();
+}
+
+public void ND_OnRoundStarted() {
 	ResetVarriables();
 }
 
@@ -143,12 +147,9 @@ public void OnBuildStarted_SupplyStation(int team) {
 public void OnAdvancedManufacturingResearched(int team) {
 	teamChecklists[1][team][3] = true;
 }
-public void OnStructureReinResearched(int team, int level)
-{
-	if (level == 1)
-		teamChecklists[1][team][4] = true;
-	else if (level == 2)
-		teamChecklists[2][team][4] = true;
+public void OnStructureReinResearched(int team, int level) {
+	if (level == 1 || level == 2)
+		teamChecklists[level][team][4] = true;
 }
 public void OnPowerModResearched(int team) {
 	teamChecklists[2][team][0] = true;
@@ -250,7 +251,7 @@ public void ND_OnCommanderPromoted(int client, int team) {
 
 void StartTaskTimer(int client)
 {
-	if (!DisableCheckListBySkill(client) && !checkListCompleted[client])
+	if (!checkListCompleted[client])
 		CreateTimer(g_updaterate.FloatValue, DisplayChecklistCommander, GetClientUserId(client), TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);	
 }
 
@@ -275,10 +276,6 @@ public Action DisplayChecklistCommander(Handle timer, any:Userid)
 	}	
 
 	return Plugin_Continue;
-}
-
-bool DisableCheckListBySkill(int client) {
-	return ND_RetreiveLevel(client) > g_maxskill.IntValue;	
 }
 
 //Updates the commander hud for the specified team.
@@ -416,5 +413,5 @@ public int Native_GetCheckListDisabled(Handle plugin, int numParams)
 		return _:false;
 	
 	// Otherwise, return if the checklist is disabled	
-	return _:(!option_com_checklist[client] || DisableCheckListBySkill(client));
+	return _:(!option_com_checklist[client]);
 }
