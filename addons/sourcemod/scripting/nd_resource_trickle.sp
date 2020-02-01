@@ -362,7 +362,6 @@ void Primary_Captured(int entity, int team)
 	
 	// Change the owner to the team and update the primary structure
 	prime.owner = team;
-	prime.entIndex = entity;
 	structPrimary.SetArray(0, prime);
 	
 	// Set the current resources of the primary structure to team resources when captured
