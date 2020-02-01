@@ -62,10 +62,7 @@ void BalanceTeams()
 	
 	int counter = MAX_SKILL;
 	int team = getRandomTeam();
-	
-	bool doublePlace = true;
-	bool firstPlace = true;
-	bool checkPlacement = true;	
+	int index = 0;
 	
 	while (counter > -1)
 	{
@@ -76,27 +73,17 @@ void BalanceTeams()
 			
 		else
 		{
+			/* Decide which team is next, using this algorithum */
+			/* Best player on team x, next two team y, next two team x etc. */
+			if ((index + 1) % 2 == 0)
+				team = getOtherTeam(team);
+			
+			/* Post-Increment the index for the team varriable */
+			index++;
+			
 			/* Set player team and mark balanced */
 			SetClientTeam(client, team);
 			MarkBalanced(client);
-			
-			/* Decide which team is next, using this messy algorithum */
-			/* Best player on team x, next two team y, then every other on opposite teams */
-			if (checkPlacement)
-			{		
-				if (firstPlace)
-				{
-					firstPlace = false;
-					team = getOtherTeam(team);
-				}
-				else if (doublePlace)
-				{
-					doublePlace = false;
-					checkPlacement = false;
-				}
-			}
-			else			
-				team = getOtherTeam(team);
 			
 			/* Whipe the player from the arraylist */			
 			players.Set(client, -1);			
