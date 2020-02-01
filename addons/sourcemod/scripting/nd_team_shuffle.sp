@@ -1,6 +1,6 @@
 #include <sourcemod>
 #include <sdktools>
-#include <nd_gskill>
+#include <nd_fskill>
 #include <nd_stats>
 #include <nd_rounds>
 #include <nd_stocks>
@@ -146,19 +146,13 @@ int GetSkillLevel(int client)
 	
 	/* Load all skill floored clients before they spawn */
 	if (sFloor >= 80)
-		level = sFloor;
+		level = 80;
 	
 	/* Load all level 80 clients before they spawn */
 	else if (ND_EXPAvailible(client) && ND_GetClientEXP(client) >= gcLevelEighty.IntValue)
 		level = 80;
 	
-	if (GM_GFS_LOADED())
-	{
-		float pSkill = GameME_GetFinalSkill(client);		
-		return level > pSkill ? level : RoundFloat(pSkill);
-	}
-	
-	return level;
+	return ND_GPS_AVAILBLE() ? ND_GetRoundedPSkill(client) : level;
 }
 
 int GetFinalSkill(int client, bool roundStarted) 
