@@ -26,6 +26,7 @@
 #include <menus>
 #include <sdktools>
 #include <gameme>
+#include <nd_weapons>
 #undef REQUIRE_EXTENSIONS
 #include <cstrike>
 #include <clientprefs>
@@ -4802,8 +4803,16 @@ public Action: gameME_Event_PlyDeath(Handle: event, const String: name[], bool:d
 	new victim   = GetClientOfUserId(GetEventInt(event, "userid"));
 
 	if (attacker > 0) {
-		new headshot = 0;
-		headshot = GetEventBool(event, "headshot");
+		new headshot = GetEventBool(event, "headshot");
+		
+		decl String: weapon[32];
+		GetEventString(event, "weapon", weapon, 32);
+
+		// If the weapon is a sniper on Nuclear Dawn,
+		// If the player has succesfully scored a headshot
+		// Reduce the chance of recording a headshot by 50%
+		if (ND_WeaponIsSniper(weapon) && headshot == 1)
+			headshot = GetRandomInt(0, 1);
 
 		if (((gameme_plugin[mod_id] == MOD_CSGO) || (gameme_plugin[mod_id] == MOD_CSS) || (gameme_plugin[mod_id] == MOD_CSP)) && (victim > 0)) {
 			if (headshot == 1) {
@@ -4827,8 +4836,6 @@ public Action: gameME_Event_PlyDeath(Handle: event, const String: name[], bool:d
 				log_player_event(attacker, "triggered", "headshot");
 			}
 			if (gameme_plugin[mod_id] == MOD_L4DII) {
-				decl String: weapon[32];
-				GetEventString(event, "weapon", weapon, 32);
 				if (strncmp(weapon, "melee", 5) == 0) {
 					new new_weapon_index = GetEntDataEnt2(attacker, l4dii_data[active_weapon_offset]);
 					if (IsValidEdict(new_weapon_index)) {
@@ -4843,8 +4850,6 @@ public Action: gameME_Event_PlyDeath(Handle: event, const String: name[], bool:d
 		}
 		
 		if (gameme_plugin[mod_id] == MOD_HL2MP) {
-			decl String: weapon[32];
-			GetEventString(event, "weapon", weapon, 32);
 			if (strcmp(weapon, "crossbow_bolt") == 0) {
 				if (hl2mp_players[victim][nextbow_hitgroup] == HITGROUP_HEAD) {
 					log_player_event(attacker, "triggered", "headshot");
@@ -4858,7 +4863,7 @@ public Action: gameME_Event_PlyDeath(Handle: event, const String: name[], bool:d
 
 		if (gameme_plugin[mod_id] == MOD_TF2) {
 			new customkill = GetEventInt(event, "customkill");
-			new weapon = GetEventInt(event, "weaponid");
+			new wepid = GetEventInt(event, "weaponid");
 			switch (customkill) {
 				case TF_CUSTOM_BURNING_ARROW, TF_CUSTOM_FLYINGBURN: {
 					decl String: log_weapon[64];
@@ -4868,7 +4873,7 @@ public Action: gameME_Event_PlyDeath(Handle: event, const String: name[], bool:d
 					}
 				}
 				case TF_CUSTOM_TAUNT_UBERSLICE: {
-					if (weapon == TF_WEAPON_BONESAW) {
+					if (wepid == TF_WEAPON_BONESAW) {
 						SetEventString(event, "weapon_logclassname", "taunt_medic");
 						SetEventString(event, "weapon", "taunt_medic");
 					}
