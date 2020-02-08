@@ -5,14 +5,6 @@
 
 #define BLOCK_DAMAGE 0
 
-/* Check name constants after damage type */
-#define WEAPON_M95_CNAME "weapon_m95"
-#define WEAPON_X01_CNAME "weapon_x01"
-#define WEAPON_NX300_CNAME "weapon_nx300"
-#define WEAPON_GL_CNAME "grenade_launcher_proj"
-#define WEAPON_RED_CNAME "sticky_grenade_ent"
-#define WEAPON_ART_CNAME "struct_artillery_explosion"
-
 // Notice: gFloat arrays must be assigned to a varriable first, other it will crash the server.
 // See Here: https://github.com/alliedmodders/sourcemod/issues/800
 
@@ -816,26 +808,6 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	return Plugin_Continue;
 }
 
-bool InflictorIsRED(const char[] className) {
-	return StrEqual(className, WEAPON_RED_CNAME, true);
-}
-
-bool InflictorIsGL(const char[] className) {
-	return StrEqual(className, WEAPON_GL_CNAME, true);
-}
-
-bool InflcitorIsM95(const char[] className) {
-	return StrEqual(className, WEAPON_M95_CNAME, true);
-}
-
-bool InflictorIsArtillery(const char[] className) {
-	return StrEqual(className, WEAPON_ART_CNAME, true);
-}
-
-bool InflictorIsNX300(int &inflictor) {
-	return StrEqual(iClass(inflictor), WEAPON_NX300_CNAME, true);
-}
-
 float BBQ_InfantryBoostMult(int &attacker)
 {
 	float mult = 1.0;
@@ -892,11 +864,4 @@ int GetDefenderTeamSR(int &attacker)
 {
 	int oTeam = getOtherTeam(GetClientTeam(attacker));
 	return StructureReinLevel[oTeam-2];
-}
-
-char iClass(int &inflictor)
-{
-	char className[64];
-	GetEntityClassname(inflictor, className, sizeof(className));
-	return className;			
 }

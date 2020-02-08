@@ -7,6 +7,7 @@
 #include <nd_struct_eng>
 #include <nd_research_eng>
 #include <nd_entities>
+#include <nd_weapons>
 
 public Plugin myinfo = 
 {
