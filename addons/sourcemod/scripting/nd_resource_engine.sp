@@ -13,6 +13,8 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_resource_engine/nd_resource_engine.txt"
 #include "updater/standard.sp"
 
+#include "nd_res_trickle/constants.sp"
+
 #define TERTIARY_MODEL "models/rts_structures/rts_resource/rts_resource_tertiary.mdl"
 #define VECTOR_SIZE 3
 
@@ -104,7 +106,7 @@ public Action TIMER_CheckPrimeDepleted(Handle timer)
 	
 	// Get the current resources prime has left
 	int curRes = GetEntProp(PrimeEntity, Prop_Send, "m_iCurrentResources");
-	if (curRes <= 0)
+	if (curRes <= PRIMARY_FRACKING_LEFT)
 	{				
 		// When depleted... Fire forward, mark boolean and stop timer
 		bPrimeDepleted = true;
