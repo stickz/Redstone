@@ -17,6 +17,12 @@
 		"en"		"Grenadier weapon damage increased by {1}%"
 	}
 	
+	"Siege Damage Increase"
+	{
+		"#format"	"{1:i}"
+		"en"		"Siege weapon damage increased by {1}%"
+	}
+	
 	"Artillery Damage Decrease"
 	{
 		"#format"	"{1:i}"
