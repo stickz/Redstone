@@ -207,11 +207,20 @@ void CheckStableSpawns()
 	
 	else if (ND_StockMapEquals(map_name, ND_Silo))
 	{
-		int hCount 	= ND_PrimeDepleted() 
-					? GetSpawnCount(6, 6, 8)
-					: GetSpawnCount(14, 16, 18);
+		int teamCount = RED_OnTeamCount();
+		bool primeDepleted = ND_PrimeDepleted();
 		
-		if (RED_OnTeamCount() >= hCount)
+		if (!tertsSpawned[FIRST_TIER])
+		{
+			if (primeDepleted && teamCount >= GetSpawnCount(8, 8, 10))
+			{
+				ND_SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
+				ND_SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
+				tertsSpawned[FIRST_TIER] = true;
+			}
+		}
+		
+		if (primeDepleted && teamCount >= GetSpawnCount(16, 16, 18))
 		{
 			ND_SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
 			ND_SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
