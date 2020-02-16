@@ -33,7 +33,11 @@ enum multSiege
 	siege_bunker_mult = 0,
 	siege_assembler_mult,
 	siege_transport_mult,
-	siege_ft_turret_mult
+	siege_ft_turret_mult,
+	siege_ib0_base_mult,
+	siege_ib1_base_mult,
+	siege_ib2_base_mult,
+	siege_ib3_base_mult
 }
 
 enum multGL
@@ -181,18 +185,37 @@ void CreateSiegeConVars()
 	
 	// Siegers (m95 & x01)
 	char convarName[multSiege][] = {	
+		// Siege Structure Damage
 		"sm_mult_bunker_siege",
 		"sm_mult_assembler_siege",
 		"sm_mult_transport_siege",
-		"sm_mult_ft_turret_siege"
+		"sm_mult_ft_turret_siege",
+		
+		// Siege Base Damage
+		"sm_mult_baseIB0_siege",
+		"sm_mult_baseIB1_siege",
+		"sm_mult_baseIB2_siege",
+		"sm_mult_baseIB3_siege"
 	};
 	char convarDesc[multSiege][] = {
+		// Siege Structure Damage
 		"Percentage of normal damage Siegers deal to the bunker",
 		"Percentage of normal damage Siegers deal to assemblers",
 		"Percentage of normal damage Siegers deal to transport gates",
-		"Percentage of normal damage Siegers deal to ft/sonic turrets"		
+		"Percentage of normal damage Siegers deal to ft/sonic turrets",
+
+		// Siege Base Damage
+		"Percentage of normal damage Siegers deal at Infantry Boost 0",
+		"Percentage of normal damage Siegers deal after Infantry Boost 1",
+		"Percentage of normal damage Siegers deal after Infantry Boost 2",
+		"Percentage of normal damage Siegers deal after Infantry Boost 3"
 	};	
-	char convarDef[multSiege][] = { "110", "105", "110", "105"};	
+	char convarDef[multSiege][] = { 
+		// Siege Structure Damage
+		"110", "105", "110", "105",
+		// Siege Base Damage
+		"95", "100", "103", "106"
+	};	
 
 	for (int convar = 0; convar < view_as<int>(multSiege); convar++) {
 		gCvar_Siege[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	

@@ -21,7 +21,7 @@ public Action ND_OnBarrierDamaged(int victim, int &attacker, int &inflictor, flo
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -58,7 +58,7 @@ public Action ND_OnBarrierDamaged(int victim, int &attacker, int &inflictor, flo
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
@@ -84,7 +84,7 @@ public Action ND_OnWallDamaged(int victim, int &attacker, int &inflictor, float 
 				return Plugin_Changed;
 			}
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -120,7 +120,7 @@ public Action ND_OnWallDamaged(int victim, int &attacker, int &inflictor, float 
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
@@ -143,7 +143,7 @@ public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflicto
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -179,7 +179,7 @@ public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflicto
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
@@ -209,7 +209,7 @@ public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -245,7 +245,7 @@ public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
@@ -275,7 +275,7 @@ public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, fl
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -311,7 +311,7 @@ public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, fl
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
@@ -341,7 +341,7 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -373,7 +373,7 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
@@ -413,7 +413,7 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -445,7 +445,7 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
@@ -485,7 +485,7 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -517,7 +517,7 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
@@ -557,7 +557,7 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -598,7 +598,7 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				
@@ -637,7 +637,7 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -669,7 +669,7 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				return Plugin_Changed;
@@ -709,7 +709,7 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -750,7 +750,7 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				
@@ -789,7 +789,7 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -830,7 +830,7 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				
@@ -876,7 +876,7 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 			// Increase x01 damage by 50% when less than 25
 			damage = SetMinX01DamageByMult(damage);
 			
-			// Decrease x01 damage by 5% until infantry boost 1 is researched
+			// Apply infantry boost x01 damage mult
 			float multIB = Siege_InfantryBoostMult(attacker);
 			damage *= multIB;
 			
@@ -922,7 +922,7 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 			}
 			else if (InflcitorIsM95(className))
 			{
-				// Decrease m95 damage by 5% until infantry boost 1 is researched
+				// Apply infantry boost m95 damage mult
 				float multIB = Siege_InfantryBoostMult(attacker);
 				damage *= multIB;
 				
@@ -979,8 +979,17 @@ float GL_InfantryBoostMult(int &attacker)
 
 float Siege_InfantryBoostMult(int &attacker)
 {
-	int ibLevel = GetAttackerTeamIB(attacker);
-	return ibLevel == 0 ? 0.95 : 1.0;
+	float mult = 1.0;
+	
+	switch (GetAttackerTeamIB(attacker))
+	{
+		case 0: mult = gFloat_Siege[siege_ib0_base_mult];
+		case 1: mult = gFloat_Siege[siege_ib1_base_mult];
+		case 2: mult = gFloat_Siege[siege_ib2_base_mult];
+		case 3:	mult = gFloat_Siege[siege_ib3_base_mult];		
+	}
+	
+	return mult;
 }
 
 int GetAttackerTeamIB(int &attacker) 

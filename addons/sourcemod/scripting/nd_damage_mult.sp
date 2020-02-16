@@ -63,11 +63,24 @@ public void OnInfantryBoostResearched(int team, int level)
 	int increaseGL = RoundFloat((percentGL - 1.0) * 100.0);
 	PrintConsoleTeamTI1(team, "GL Damage Increase", increaseGL);
 	
-	if (level == 1)
+	// Print team x01/m95 damage increase at each level to console
+	float percentSiege = getInfantryBoostMultSiege(level);
+	int increaseSiege = RoundFloat((percentSiege - 1.0) * 100.0);	
+	PrintConsoleTeamTI1(team, "Siege Damage Increase", increaseSiege);
+}
+
+float getInfantryBoostMultSiege(int level)
+{
+	float mult = 1.0;
+	
+	switch (level)
 	{
-		// Print team x01/m95 damage increase at the first at IB1
-		PrintConsoleTeamTI1(team, "Siege Damage Increase", 5);
+		case 1: mult = gFloat_Siege[siege_ib1_base_mult];
+		case 2: mult = gFloat_Siege[siege_ib2_base_mult];
+		case 3:	mult = gFloat_Siege[siege_ib3_base_mult];
 	}
+	
+	return mult;	
 }
 
 float getInfantryBoostMultBBQ(int level)
