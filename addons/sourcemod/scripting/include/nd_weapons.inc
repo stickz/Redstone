@@ -9,33 +9,33 @@
 
 stock char iClass(int &inflictor)
 {
-	char className[64];
-	GetEntityClassname(inflictor, className, sizeof(className));
-	return className;
+	char wepClassName[64];
+	GetEntityClassname(inflictor, wepClassName, sizeof(wepClassName));
+	return wepClassName;
 }
 
-stock bool InflictorIsRED(const char[] className) {
-	return StrEqual(className, WEAPON_RED_CNAME, true);
+stock bool InflictorIsRED(const char[] wepClassName) {
+	return StrEqual(wepClassName, WEAPON_RED_CNAME, true);
 }
 
-stock bool InflictorIsGL(const char[] className) {
-	return StrEqual(className, WEAPON_GL_CNAME, true);
+stock bool InflictorIsGL(const char[] wepClassName) {
+	return StrEqual(wepClassName, WEAPON_GL_CNAME, true);
 }
 
-stock bool InflcitorIsM95(const char[] className) {
-	return StrEqual(className, WEAPON_M95_CNAME, true);
+stock bool InflcitorIsM95(const char[] wepClassName) {
+	return StrEqual(wepClassName, WEAPON_M95_CNAME, true);
 }
 
-stock bool InflictorIsArtillery(const char[] className) {
-	return StrEqual(className, WEAPON_ART_CNAME, true);
+stock bool InflictorIsArtillery(const char[] wepClassName) {
+	return StrEqual(wepClassName, WEAPON_ART_CNAME, true);
 }
 
 stock bool InflictorIsNX300(int &inflictor) {
 	return StrEqual(iClass(inflictor), WEAPON_NX300_CNAME, true);
 }
 
-stock bool ND_WeaponIsSniper(const char[] className)
+stock bool ND_WeaponIsSniper(const char[] wepClassName)
 {
-	return 	StrEqual(className, WEAPON_PSG_CNAME, true) ||
-			StrEqual(className, WEAPON_PALADIN_CNAME, true);			
+	return 	StrEqual(wepClassName, WEAPON_PSG_CNAME, true) ||
+			StrEqual(wepClassName, WEAPON_PALADIN_CNAME, true);			
 }

@@ -9,7 +9,7 @@
 #include <nd_entities>
 #include <nd_weapons>
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
 	name 		= "[ND] Damage Multiplers",
 	author 		= "Stickz",
@@ -27,6 +27,7 @@ int StructureReinLevel[2] = { 0, ...};
 
 /* Plugin Includes */
 #include "nd_damage/convars.sp"
+#include "nd_damage/damage_methods.sp"
 #include "nd_damage/damage_events.sp"
 
 public void OnPluginStart()
@@ -54,61 +55,19 @@ public void OnInfantryBoostResearched(int team, int level)
 	PrintMessageTeam(team, "Weapon Damage Console");
 	
 	// Print team bbq damage increases at each level to console
-	float percentBBQ = getInfantryBoostMultBBQ(level);
+	float percentBBQ = BaseHelper.BBQ_InfantryBoostMult(level);
 	int increaseBBQ = RoundFloat((percentBBQ - 1.0) * 100.0);
 	PrintConsoleTeamTI1(team, "BBQ Damage Increase", increaseBBQ);
 
 	// Print team gl damage increases at each level to console
-	float percentGL = getInfantryBoostMultGL(level);
+	float percentGL = BaseHelper.GL_InfantryBoostMult(level);
 	int increaseGL = RoundFloat((percentGL - 1.0) * 100.0);
 	PrintConsoleTeamTI1(team, "GL Damage Increase", increaseGL);
 	
 	// Print team x01/m95 damage increase at each level to console
-	float percentSiege = getInfantryBoostMultSiege(level);
+	float percentSiege = BaseHelper.Siege_InfantryBoostMult(level);
 	int increaseSiege = RoundFloat((percentSiege - 1.0) * 100.0);	
 	PrintConsoleTeamTI1(team, "Siege Damage Increase", increaseSiege);
-}
-
-float getInfantryBoostMultSiege(int level)
-{
-	float mult = 1.0;
-	
-	switch (level)
-	{
-		case 1: mult = gFloat_Siege[siege_ib1_base_mult];
-		case 2: mult = gFloat_Siege[siege_ib2_base_mult];
-		case 3:	mult = gFloat_Siege[siege_ib3_base_mult];
-	}
-	
-	return mult;	
-}
-
-float getInfantryBoostMultBBQ(int level)
-{
-	float mult = 1.0;
-	
-	switch(level)
-	{
-		case 1: mult = gFloat_Other[nx300_ib1_base_mult];
-		case 2: mult = gFloat_Other[nx300_ib2_base_mult];
-		case 3: mult = gFloat_Other[nx300_ib3_base_mult];
-	}
-	
-	return mult;
-}
-
-float getInfantryBoostMultGL(int level)
-{
-	float mult = 1.0;
-	
-	switch(level)
-	{
-		case 1: mult = gFloat_GL[gl_ib1_base_mult];
-		case 2: mult = gFloat_GL[gl_ib2_base_mult];
-		case 3: mult = gFloat_GL[gl_ib3_base_mult];
-	}
-	
-	return mult;
 }
 
 public void OnStructureReinResearched(int team, int level) 
@@ -116,23 +75,9 @@ public void OnStructureReinResearched(int team, int level)
 	StructureReinLevel[team-2] = level;
 	
 	// Notify the team of artillery damage decreases at each level
-	float percent = getSRArtilleryMult(level);
+	float percent = BaseHelper.Artillery_StructureReinMult(level);
 	int speed = RoundFloat((1.0 - percent) * 100.0);
 	PrintMessageTeamTI1(team, "Artillery Damage Decrease", speed);
-}
-
-float getSRArtilleryMult(int level)
-{
-	float mult = 1.0;
-	
-	switch(level)
-	{
-		case 1: mult = gFloat_Other[artillery_ib1_base_mult];
-		case 2: mult = gFloat_Other[artillery_ib2_base_mult];
-		case 3: mult = gFloat_Other[artillery_ib3_base_mult];	
-	}
-	
-	return mult;
 }
 
 public void ND_OnStructureCreated(int entity, const char[] classname)

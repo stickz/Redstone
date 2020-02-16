@@ -6,22 +6,22 @@
 #include <nd_stocks>
 
 enum ND_Structures {
-	Command_Bunker,
-	MG_Turret,
-	Transport_Gate,
-	Power_Plant,
-	Wireless_Repeater,
-	Relay_Tower,
-	Supply_Station,
-	Assembler,
-	Armory,
-	Artillery,
-	Radar_Station,
-	FT_Turret,
-	Sonic_Turret,
-	Rocket_Turret,
-	Wall,
-	Barrier
+	ND_Command_Bunker,
+	ND_MG_Turret,
+	ND_Transport_Gate,
+	ND_Power_Plant,
+	ND_Wireless_Repeater,
+	ND_Relay_Tower,
+	ND_Supply_Station,
+	ND_Assembler,
+	ND_Armory,
+	ND_Artillery,
+	ND_Radar_Station,
+	ND_FT_Turret,
+	ND_Sonic_Turret,
+	ND_Rocket_Turret,
+	ND_Wall,
+	ND_Barrier
 }
 
 #define STRUCT_BUNKER "struct_command_bunker"
