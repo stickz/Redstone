@@ -214,7 +214,7 @@ void CreateSiegeConVars()
 		// Siege Structure Damage
 		"110", "105", "110", "105",
 		// Siege Base Damage
-		"95", "100", "103", "106"
+		"95", "100", "102", "105"
 	};	
 
 	for (int convar = 0; convar < view_as<int>(multSiege); convar++) {
