@@ -212,7 +212,11 @@ void CheckStableSpawns()
 		
 		if (!tertsSpawned[FIRST_TIER])
 		{
-			if (primeDepleted && teamCount >= GetSpawnCount(8, 8, 10))
+			int fCount 	= primeDepleted 
+						? GetSpawnCount(8, 8, 10)
+						: GetSpawnCount(24, 26, 28);
+			
+			if (teamCount >= fCount)
 			{
 				ND_SpawnTertiaryPoint({-3375.0, 1050.0, 2.0});
 				ND_SpawnTertiaryPoint({-36.0, -2000.0, 5.0});
@@ -220,7 +224,11 @@ void CheckStableSpawns()
 			}
 		}
 		
-		if (primeDepleted && teamCount >= GetSpawnCount(16, 16, 18))
+		int sCount 	= primeDepleted
+					? GetSpawnCount(16, 16, 18)
+					: GetSpawnCount(24, 26, 28);
+		
+		if (teamCount >= sCount)
 		{
 			ND_SpawnTertiaryPoint({-5402.0, -3859.0, 74.0});
 			ND_SpawnTertiaryPoint({2340.0, 2558.0, 10.0});
