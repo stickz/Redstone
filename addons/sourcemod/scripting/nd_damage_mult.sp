@@ -63,8 +63,11 @@ public void OnInfantryBoostResearched(int team, int level)
 	int increaseGL = RoundFloat((percentGL - 1.0) * 100.0);
 	PrintConsoleTeamTI1(team, "GL Damage Increase", increaseGL);
 	
-	// Print team x01/m95 damage increase at the first at IB1
-	PrintConsoleTeamTI1(team, "Siege Damage Increase", 5);
+	if (level == 1)
+	{
+		// Print team x01/m95 damage increase at the first at IB1
+		PrintConsoleTeamTI1(team, "Siege Damage Increase", 5);
+	}
 }
 
 float getInfantryBoostMultBBQ(int level)
