@@ -47,12 +47,12 @@ public void OnPluginStart()
 }
 
 public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast) {
-	if (event.GetInt("type") == view_as<int>(Transport_Gate)) {
+	if (event.GetInt("type") == view_as<int>(ND_Transport_Gate)) {
 		gateCount[event.GetInt("team")]--;
 	}
 }
 public Action Event_BuildingSold(Event event, const char[] name, bool dontBroadcast) {
-	if (event.GetInt("type") == view_as<int>(Transport_Gate)) {
+	if (event.GetInt("type") == view_as<int>(ND_Transport_Gate)) {
 		gateCount[event.GetInt("ownerteam")]--;
 	}
 }

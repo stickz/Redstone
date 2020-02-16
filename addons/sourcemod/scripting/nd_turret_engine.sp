@@ -46,10 +46,10 @@ void DoStructureRemoved(Event ev, const char[] teamName)
 {
 	switch (ev.GetInt("type"))
 	{
-		case view_as<int>(MG_Turret):		deincrement(ev, teamName);
-		case view_as<int>(FT_Turret):		deincrement(ev, teamName);
-		case view_as<int>(Sonic_Turret):	deincrement(ev, teamName);
-		case view_as<int>(Rocket_Turret):	deincrement(ev, teamName);
+		case view_as<int>(ND_MG_Turret):		deincrement(ev, teamName);
+		case view_as<int>(ND_FT_Turret):		deincrement(ev, teamName);
+		case view_as<int>(ND_Sonic_Turret):		deincrement(ev, teamName);
+		case view_as<int>(ND_Rocket_Turret):	deincrement(ev, teamName);
 	}
 }
 
