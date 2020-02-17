@@ -145,6 +145,8 @@ stock bool ND_IsPopularMap()
 		return true;
 	else if (ND_StockMapEquals(currentMap, ND_Metro))
 		return true;
+	else if (ND_StockMapEquals(currentMap, ND_Silo))
+		return true;
 		
 	return false;
 }

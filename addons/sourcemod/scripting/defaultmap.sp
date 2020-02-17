@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name = "Default Map Changer",
 	author = "TigerOx, stickz",
 	description = "Changes the map to default if the server is empty.",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"
 };
 
