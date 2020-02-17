@@ -207,31 +207,23 @@ void SetPickingTeam()
 {
 	/* Switch Algorithum! 
 	 * One team gets to pick the first player.
-	 * The next team gets to pick the two in a row.
-	 * Afterwards, take turns picking one player at a time.
-	 */
-	if (checkPlacement)
-	{
-		if (firstPlace)
-		{
-			firstPlace = false;				
-			SwitchPickingTeam();
-
-			int otherTeam = getOtherTeam(cur_team_choosing);
-			PrintPickOrderMessage("Got First Pick", cur_team_choosing);
-			PrintPickOrderMessage("Got Next Picks", otherTeam);
-		}
-
-		else if (doublePlace)
-		{
-			doublePlace = false;
-			checkPlacement = false;
-
-			SetConstantPickingTeam();
-		}
-	}
-	else
+	 * Afterwards, rotate between teams picking players 2 at a time
+	 */	
+	if ((picking_index + 1) % 2 == 0)
 		SwitchPickingTeam();
+	else
+		SetConstantPickingTeam();
+	
+	// If we're on the first pick, print a message to chat
+	if (picking_index == 0)
+	{
+		int otherTeam = getOtherTeam(cur_team_choosing);
+		PrintPickOrderMessage("Got First Pick", cur_team_choosing);
+		PrintPickOrderMessage("Got Next Picks", otherTeam);		
+	}
+	
+	// Increment the picking index by 1 each time
+	picking_index++;
 }
 
 void PrintPickOrderMessage(char[] phrase, int team)

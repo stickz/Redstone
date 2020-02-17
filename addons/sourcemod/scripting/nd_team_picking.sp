@@ -19,15 +19,14 @@ public Plugin myinfo =
 #define EMPIRE_aIDX 1
 
 int team_captain[2];
+int picking_index = 0;
+
 ArrayList PickedConsort;
 ArrayList PickedEmpire;
 
 bool g_bEnabled = false;
 bool g_bPickStarted = false;
 bool g_bPickedThisMap = false;
-bool doublePlace = true;
-bool firstPlace = true;
-bool checkPlacement = true;
 bool DebugTeamPicking = false;
 
 ConVar cvarPickTimeLimit;
@@ -101,7 +100,7 @@ bool PlayerIsPickable(int client) {
 }
 
 int GetPickingTimeLimit() {
-	return checkPlacement ? cvarFirstPickTime.IntValue : cvarPickTimeLimit.IntValue;
+	return picking_index <= 1 ? cvarFirstPickTime.IntValue : cvarPickTimeLimit.IntValue;
 }
 
 void MarkPlayerPicked(int client, int team)
