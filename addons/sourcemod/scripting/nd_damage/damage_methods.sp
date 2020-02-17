@@ -25,9 +25,9 @@ methodmap BaseHelper
 		
 		switch(ibLevel)
 		{
-			case 1: mult = gFloat_Other[gl_ib1_base_mult];
-			case 2: mult = gFloat_Other[gl_ib2_base_mult];
-			case 3: mult = gFloat_Other[gl_ib3_base_mult];	
+			case 1: mult = gFloat_GL[gl_ib1_base_mult];
+			case 2: mult = gFloat_GL[gl_ib2_base_mult];
+			case 3: mult = gFloat_GL[gl_ib3_base_mult];	
 		}
 		
 		return mult;
