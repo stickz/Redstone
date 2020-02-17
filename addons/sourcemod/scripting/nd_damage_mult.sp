@@ -51,7 +51,7 @@ public void OnInfantryBoostResearched(int team, int level)
 {
 	InfantryBoostLevel[team-2] = level;
 	
-	// Notify team bbq & gl damage value are displayed in console
+	// Notify team of weapon damage values by displaying in console
 	PrintMessageTeam(team, "Weapon Damage Console");
 	
 	// Print team bbq damage increases at each level to console
@@ -68,6 +68,11 @@ public void OnInfantryBoostResearched(int team, int level)
 	float percentSiege = BaseHelper.Siege_InfantryBoostMult(level);
 	int increaseSiege = RoundFloat((percentSiege - 1.0) * 100.0);	
 	PrintConsoleTeamTI1(team, "Siege Damage Increase", increaseSiege);
+	
+	// Print team red damage increase at each level to console
+	float percentRed = BaseHelper.RED_InfantryBoostMult(level);
+	int increaseRed = RoundFloat((percentRed - 1.0) * 100.0);
+	PrintConsoleTeamTI1(team, "RED Damage Increase", increaseRed);
 }
 
 public void OnStructureReinResearched(int team, int level) 

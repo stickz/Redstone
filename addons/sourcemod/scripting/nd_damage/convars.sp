@@ -9,9 +9,11 @@ enum multREDs
 	red_transport_mult,
 	red_artillery_mult,
 	red_ft_turret_mult,
-	red_power_plant_mult,
-	red_armoury_mult,
-	red_radar_mult
+	red_wall_mult,
+	red_barrier_mult,
+	red_ib1_base_mult,
+	red_ib2_base_mult,
+	red_ib3_base_mult
 }
 enum multBullets
 {
@@ -109,28 +111,44 @@ void CreateRedConVars()
 	AutoExecConfig_SetFile("nd_mult_reds");
 	
 	char convarName[multREDs][] = {
+		// RED Structure Damage
 		"sm_mult_bunker_red",
 		"sm_mult_assembler_red",
 		"sm_mult_transport_red",
 		"sm_mult_artillery_red",
 		"sm_mult_ft_turret_red",
-		"sm_mult_power_plant_red",
-		"sm_mult_armoury_red",
-		"sm_mult_radar_red"		
+		"sm_mult_wall_red",
+		"sm_mult_barrier_red",
+		
+		// RED Base Damage		
+		"sm_mult_baseIB1_red",
+		"sm_mult_baseIB2_red",
+		"sm_mult_baseIB3_red"	
 	};
 	
-	char convarDef[multREDs][] = { "120", "105", "150", "110", "140", "105", "105", "105"};
-	
 	char convarDesc[multREDs][] = {
+		// RED Structure Damage
 		"Percentage of normal damage REDs deal to the bunker",
 		"Percentage of normal damage REDs deal to assemblers",
 		"Percentage of normal damage REDs deal to transport gates",
 		"Percentage of normal damage REDs deal to artillery",
 		"Percentage of normal damage REDs deal to ft/sonic turrets",
-		"Percentage of normal damage REDs deal to power plants",
-		"Percentage of normal damage REDs deal to armouries",
-		"Percentage of normal damage REDs deal to radars"
-	};	
+		"Percentage of normal damage REDs deal to walls",
+		"Percentage of normal damage REDs deal to barriers",
+		
+		// RED Base Damage
+		"Percentage of normal damage REDs deal after Infantry Boost 1",
+		"Percentage of normal damage REDs deal after Infantry Boost 2",
+		"Percentage of normal damage REDs deal after Infantry Boost 3"
+	};
+	
+	char convarDef[multREDs][] = { 
+		// RED Structure Damage
+		"130", "110", "130", "110", "125", "130", "115",
+		
+		// RED Base Damage
+		"103", "108", "115"	
+	};
 	
 	for (int convar = 0; convar < view_as<int>(multREDs); convar++) {
 		gCvar_Red[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	

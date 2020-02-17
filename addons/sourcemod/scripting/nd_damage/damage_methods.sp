@@ -48,6 +48,20 @@ methodmap BaseHelper
 		return mult;
 	}
 	
+	public static float RED_InfantryBoostMult(int ibLevel)
+	{
+		float mult = 1.0;
+		
+		switch (ibLevel)
+		{
+			case 1: mult = gFloat_Red[red_ib1_base_mult];
+			case 2: mult = gFloat_Red[red_ib2_base_mult];
+			case 3:	mult = gFloat_Red[red_ib3_base_mult];
+		}
+		
+		return mult;		
+	}
+	
 	public static float Artillery_StructureReinMult(int srLevel)
 	{
 		float mult = 1.0;	
@@ -112,6 +126,10 @@ methodmap BaseStructure
 			// Apply infantry boost m95 damage mult
 			else if (InflcitorIsM95(className))
 				mult = BaseHelper.Siege_InfantryBoostMult(attackerIB);		
+
+			// Apply infantry boost red base damage mult
+			else if (InflictorIsRED(className))
+				mult = BaseHelper.RED_InfantryBoostMult(attackerIB);
 		}
 		
 		return mult;
@@ -122,7 +140,13 @@ methodmap Barrier
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		return BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		
+		// Apply red base damage mult
+		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
+			mult = gFloat_Red[red_barrier_mult];
+		
+		return mult;
 	}
 }
 
@@ -130,7 +154,13 @@ methodmap Wall
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		return BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		
+		// Apply red base damage mult
+		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
+			mult = gFloat_Red[red_wall_mult];
+		
+		return mult;
 	}	
 }
 
@@ -186,10 +216,6 @@ methodmap Radar
 		if (damagetype == WEAPON_BULLET_DT)
 			mult = gFloat_Bullet[bullet_radar_mult];
 		
-		// Apply red base damage mult
-		else if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult = gFloat_Red[red_radar_mult];
-			
 		return mult;
 	}	
 }
@@ -204,10 +230,6 @@ methodmap Armoury
 		if (damagetype == WEAPON_BULLET_DT)
 			mult = gFloat_Bullet[bullet_armoury_mult];
 		
-		// Apply red base damage mult
-		else if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult = gFloat_Red[red_armoury_mult];
-		
 		return mult;
 	}	
 }
@@ -221,10 +243,6 @@ methodmap PowerPlant
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
 			mult = gFloat_Bullet[bullet_power_plant_mult];
-		
-		// Apply red base damage mult
-		else if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult = gFloat_Red[red_power_plant_mult];
 		
 		return mult;
 	}
