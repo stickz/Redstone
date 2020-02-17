@@ -66,8 +66,10 @@ public void OnInfantryBoostResearched(int team, int level)
 	
 	// Print team x01/m95 damage increase at each level to console
 	float percentSiege = BaseHelper.Siege_InfantryBoostMult(level);
+	float percentSiege0 = BaseHelper.Siege_InfantryBoostMult(0);
+	int siegeOffset = RoundFloat((1.0 - percentSiege0) * 100.0);
 	int increaseSiege = RoundFloat((percentSiege - 1.0) * 100.0);	
-	PrintConsoleTeamTI1(team, "Siege Damage Increase", increaseSiege);
+	PrintConsoleTeamTI1(team, "Siege Damage Increase", siegeOffset + increaseSiege);
 	
 	// Print team red damage increase at each level to console
 	float percentRed = BaseHelper.RED_InfantryBoostMult(level);
