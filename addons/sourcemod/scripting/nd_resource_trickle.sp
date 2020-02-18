@@ -495,7 +495,7 @@ public Action TIMER_PrimaryExtract(Handle timer)
 		prime.timeOwned % PRIMARY_FRACKING_SECONDS == 0)
 		{
 			prime.AddRes(prime.owner, PRIMARY_FRACKING_AMOUNT);
-			ND_SetCurrentResources(prime.entIndex, prime.GetRes());
+			ND_SetPrimeResources(prime.GetRes());
 		}
 	
 	// Update the primary structure in the ArrayList

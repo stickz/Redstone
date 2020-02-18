@@ -5,6 +5,7 @@
 
 #define CHECK_ALL -1
 #define NATIVE_ERROR -1
+#define PRIME_ENTITY "nd_info_primary_resource_point"
 
 public Plugin myinfo =
 {
@@ -45,7 +46,7 @@ public Action TIMER_SetEntityClasses(Handle timer)
 {
 	/* Update team and player manager entities when the map starts */
 	g_iPlayerManager = FindEntityByClassname(CHECK_ALL, "nd_player_manager");
-	g_iPrimeEntity = FindEntityByClassname(CHECK_ALL, "nd_info_primary_resource_point");
+	g_iPrimeEntity = FindEntityByClassname(CHECK_ALL, PRIME_ENTITY);
 	
 	// Update bunker entity indexs when the map starts
 	SetBunkerEntityIndexs();
@@ -79,7 +80,16 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	return APLRes_Success;
 }
 
-public int Native_GetPrimeEntity(Handle plugin, int numParams) {
+public int Native_GetPrimeEntity(Handle plugin, int numParams) 
+{
+	// Get the current name of the prime entity index
+	char entityName[32];
+	GetEntityClassname(g_iPrimeEntity, entityName, sizeof(entityName)); 
+	
+	// If it's not equal the prime entity, refresh it
+	if (!StrEqual(entityName, PRIME_ENTITY, true))
+		g_iPrimeEntity = FindEntityByClassname(CHECK_ALL, PRIME_ENTITY);	
+	
 	return _:g_iPrimeEntity;
 }
 
