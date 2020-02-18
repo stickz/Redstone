@@ -144,7 +144,7 @@ methodmap Barrier
 		
 		// Apply red base damage mult
 		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult = gFloat_Red[red_barrier_mult];
+			mult *= gFloat_Red[red_barrier_mult];
 		
 		return mult;
 	}
@@ -158,7 +158,7 @@ methodmap Wall
 		
 		// Apply red base damage mult
 		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult = gFloat_Red[red_wall_mult];
+			mult *= gFloat_Red[red_wall_mult];
 		
 		return mult;
 	}	
@@ -274,7 +274,7 @@ methodmap FlamerTurret
 				
 				// Apply red base damage mult
 				else if (InflictorIsRED(className))
-					mult = gFloat_Red[red_ft_turret_mult];
+					mult *= gFloat_Red[red_ft_turret_mult];
 			}
 			
 			// Apply bullet base damage mult
@@ -297,7 +297,7 @@ methodmap Artillery
 
 		// Apply red base damage mult
 		else if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult = gFloat_Red[red_artillery_mult];
+			mult *= gFloat_Red[red_artillery_mult];
 		
 		return mult;
 	}
@@ -329,7 +329,7 @@ methodmap TransportGate
 				
 				// Apply red base damage mult
 				else if (InflictorIsRED(className))
-					mult = gFloat_Red[red_transport_mult];
+					mult *= gFloat_Red[red_transport_mult];
 			}
 			
 			// Apply bullet base damage mult
@@ -366,7 +366,7 @@ methodmap Assembler
 				
 				// Apply red base damage mult
 				else if (InflictorIsRED(className))
-					mult = gFloat_Red[red_assembler_mult];
+					mult *= gFloat_Red[red_assembler_mult];
 			}
 			
 			// Apply bullet base damage mult
@@ -403,7 +403,7 @@ methodmap Bunker
 				
 			// Apply red base damage mult
 			else if (InflictorIsRED(className))
-				mult = gFloat_Red[red_bunker_mult];			
+				mult *= gFloat_Red[red_bunker_mult];			
 		}
 		
 		// Apply the bunker damage reduction mult
