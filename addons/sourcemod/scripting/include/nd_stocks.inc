@@ -95,7 +95,7 @@ stock bool IsValidClient(int client, bool nobots = true)
 } 
 
 stock bool IsValidBounds(int client) {
-	return client > 0 && client <= MaxClients;
+	return 1 <= client <= MaxClients;
 } 
 
 stock bool IsValidAdmin(int client, const char[] flags) 
