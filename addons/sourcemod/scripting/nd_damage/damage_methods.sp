@@ -140,11 +140,11 @@ methodmap Barrier
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		// Apply red base damage mult
 		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult *= gFloat_Red[red_barrier_mult];
+			mult = gFloat_Red[red_barrier_mult];
 		
 		return mult;
 	}
@@ -154,11 +154,11 @@ methodmap Wall
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		// Apply red base damage mult
 		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult *= gFloat_Red[red_wall_mult];
+			mult = gFloat_Red[red_wall_mult];
 		
 		return mult;
 	}	
@@ -168,7 +168,7 @@ methodmap SupplyStation
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
@@ -182,7 +182,7 @@ methodmap RocketTurret
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
@@ -196,7 +196,7 @@ methodmap MGTurrent
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
@@ -210,7 +210,7 @@ methodmap Radar
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
@@ -224,7 +224,7 @@ methodmap Armoury
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
@@ -238,7 +238,7 @@ methodmap PowerPlant
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 				
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
@@ -252,12 +252,12 @@ methodmap FlamerTurret
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		switch (damagetype)
 		{
 			// Apply base x01 damage mult
-			case WEAPON_BEAM_DT: mult *= gFloat_Siege[siege_ft_turret_mult];			
+			case WEAPON_BEAM_DT: mult = gFloat_Siege[siege_ft_turret_mult];			
 			
 			case WEAPON_EXPLO_DT:
 			{
@@ -266,15 +266,15 @@ methodmap FlamerTurret
 				
 				// Apply base gl damage mult
 				if (InflictorIsGL(className))
-					mult *= gFloat_GL[gl_ft_turret_mult];
+					mult = gFloat_GL[gl_ft_turret_mult];
 				
 				// Apply base m95 damage mult
 				else if (InflcitorIsM95(className))
-					mult *= gFloat_Siege[siege_ft_turret_mult];
+					mult = gFloat_Siege[siege_ft_turret_mult];
 				
 				// Apply red base damage mult
 				else if (InflictorIsRED(className))
-					mult *= gFloat_Red[red_ft_turret_mult];
+					mult = gFloat_Red[red_ft_turret_mult];
 			}
 			
 			// Apply bullet base damage mult
@@ -289,7 +289,7 @@ methodmap Artillery
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
@@ -297,7 +297,7 @@ methodmap Artillery
 
 		// Apply red base damage mult
 		else if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult *= gFloat_Red[red_artillery_mult];
+			mult = gFloat_Red[red_artillery_mult];
 		
 		return mult;
 	}
@@ -307,12 +307,12 @@ methodmap TransportGate
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		switch (damagetype)
 		{
 			// Apply x01 base damage mult
-			case WEAPON_BEAM_DT: mult *= gFloat_Siege[siege_transport_mult];
+			case WEAPON_BEAM_DT: mult = gFloat_Siege[siege_transport_mult];
 			
 			case WEAPON_EXPLO_DT:
 			{
@@ -321,15 +321,15 @@ methodmap TransportGate
 				
 				// Apply base gl damage mult
 				if (InflictorIsGL(className))
-					mult *= gFloat_GL[gl_transport_mult];
+					mult = gFloat_GL[gl_transport_mult];
 				
 				// Apply base m95 damage mult
 				else if (InflcitorIsM95(className))
-					mult *= gFloat_Siege[siege_transport_mult];
+					mult = gFloat_Siege[siege_transport_mult];
 				
 				// Apply red base damage mult
 				else if (InflictorIsRED(className))
-					mult *= gFloat_Red[red_transport_mult];
+					mult = gFloat_Red[red_transport_mult];
 			}
 			
 			// Apply bullet base damage mult
@@ -344,12 +344,12 @@ methodmap Assembler
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		switch (damagetype)
 		{
 			// Apply base x01 damage mult
-			case WEAPON_BEAM_DT: mult *= gFloat_Siege[siege_assembler_mult];
+			case WEAPON_BEAM_DT: mult = gFloat_Siege[siege_assembler_mult];
 			
 			case WEAPON_EXPLO_DT:	 
 			{ 
@@ -358,15 +358,15 @@ methodmap Assembler
 				
 				// Apply base gl damage mult
 				if (InflictorIsGL(className))
-					mult *= gFloat_GL[gl_assembler_mult];
+					mult = gFloat_GL[gl_assembler_mult];
 				
 				// Apply base m95 damage mult
 				else if (InflcitorIsM95(className))
-					mult *= gFloat_Siege[siege_assembler_mult];			
+					mult = gFloat_Siege[siege_assembler_mult];			
 				
 				// Apply red base damage mult
 				else if (InflictorIsRED(className))
-					mult *= gFloat_Red[red_assembler_mult];
+					mult = gFloat_Red[red_assembler_mult];
 			}
 			
 			// Apply bullet base damage mult
@@ -381,11 +381,11 @@ methodmap Bunker
 {
 	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
 	{
-		float mult = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+		float mult = 1.0;
 		
 		// Apply base x01 damage mult
 		if (damagetype == WEAPON_BEAM_DT)
-			mult *= gFloat_Siege[siege_bunker_mult];
+			mult = gFloat_Siege[siege_bunker_mult];
 		
 		// Check if damage type is explosive to eliminate iterations
 		else if (damagetype == WEAPON_EXPLO_DT)
@@ -395,20 +395,20 @@ methodmap Bunker
 				
 			// Apply base gl damage mult
 			if (InflictorIsGL(className))
-				mult *= gFloat_GL[gl_bunker_mult];					
+				mult = gFloat_GL[gl_bunker_mult];					
 				
 			// Apply base m95 damage mult
 			else if (InflcitorIsM95(className))
-				mult *= gFloat_Siege[siege_bunker_mult];
+				mult = gFloat_Siege[siege_bunker_mult];
 				
 			// Apply red base damage mult
 			else if (InflictorIsRED(className))
-				mult *= gFloat_Red[red_bunker_mult];			
+				mult = gFloat_Red[red_bunker_mult];			
 		}
 		
 		// Apply the bunker damage reduction mult
 		else if (InflictorIsNX300(inflictor))
-			mult *= gFloat_Other[nx300_bunker_mult];
+			mult = gFloat_Other[nx300_bunker_mult];
 		
 		return mult;
 	}

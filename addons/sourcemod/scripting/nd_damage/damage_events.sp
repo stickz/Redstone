@@ -1,6 +1,8 @@
 #define BLOCK_DAMAGE 0.0
 
 // Notice: gFloat arrays must be assigned to a varriable first, otherwise it will crash the server.
+// Notice2: Floats cannot be multipled by each other before the damage assignment.
+// They must be multiplied seperately, otherwise it will crash the server crash.
 // See Here: https://github.com/alliedmodders/sourcemod/issues/800
 
 // To Do: Do something with these structures later
@@ -14,7 +16,11 @@ public Action ND_OnBarrierDamaged(int victim, int &attacker, int &inflictor, flo
 	if (damagetype == WEAPON_BEAM_DT)
 		damage = SetMinX01DamageByMult(damage);
 	
-	// Get the damage multipler from the barrier enum structure
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
+	
+	// Get the damage multipler from the barrier methodmap
 	float multipler = Barrier.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multipler;
 	
@@ -30,8 +36,12 @@ public Action ND_OnWallDamaged(int victim, int &attacker, int &inflictor, float 
 	// Set min wall damage to 35 * 4.23 = 148
 	if (damagetype == WEAPON_BEAM_DT && damage < fMinWallDamageX01)
 		damage = fMinWallDamageX01;
+	
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
 		
-	// Get the damage multipler from the wall enum structure
+	// Get the damage multipler from the wall methodmap
 	float multipler = Wall.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multipler;
 
@@ -47,9 +57,13 @@ public Action ND_OnSupplyStationDamaged(int victim, int &attacker, int &inflicto
 		
 	// Increase x01 damage by 50% when less than 25
 	if (damagetype == WEAPON_BEAM_DT)
-		damage = SetMinX01DamageByMult(damage);	
+		damage = SetMinX01DamageByMult(damage);
+
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;	
 		
-	// Get the damage multipler from the supply station enum structure
+	// Get the damage multipler from the supply station methodmap
 	float multipler = SupplyStation.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multipler;
 	
@@ -67,7 +81,11 @@ public Action ND_OnRocketTurretDamaged(int victim, int &attacker, int &inflictor
 	if (damagetype == WEAPON_BEAM_DT)
 		damage = SetMinX01DamageByMult(damage);
 	
-	// Get the damage multipler from the rocket turret enum structure
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
+	
+	// Get the damage multipler from the rocket turret methodmap
 	float multipler = RocketTurret.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multipler;
 
@@ -85,7 +103,11 @@ public Action ND_OnMGTurretDamaged(int victim, int &attacker, int &inflictor, fl
 	if (damagetype == WEAPON_BEAM_DT)
 		damage = SetMinX01DamageByMult(damage);
 	
-	// Get the damage multipler from the mg turret enum structure
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
+	
+	// Get the damage multipler from the mg turret methodmap
 	float multiplier = MGTurrent.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multiplier;
 	
@@ -103,7 +125,11 @@ public Action ND_OnRadarDamaged(int victim, int &attacker, int &inflictor, float
 	if (damagetype == WEAPON_BEAM_DT)
 		damage = SetMinX01DamageByMult(damage);
 	
-	// Get the damage multipler from the radar enum structure
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
+	
+	// Get the damage multipler from the radar methodmap
 	float multiplier = Radar.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multiplier;
 	
@@ -121,7 +147,11 @@ public Action ND_OnArmouryDamaged(int victim, int &attacker, int &inflictor, flo
 	if (damagetype == WEAPON_BEAM_DT)
 		damage = SetMinX01DamageByMult(damage);
 	
-	// Get the damage multipler from the armoury enum structure
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
+	
+	// Get the damage multipler from the armoury methodmap
 	float multiplier = Armoury.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multiplier;
 	
@@ -139,7 +169,11 @@ public Action ND_OnPowerPlantDamaged(int victim, int &attacker, int &inflictor, 
 	if (damagetype == WEAPON_BEAM_DT)
 		damage = SetMinX01DamageByMult(damage);
 	
-	// Get the damage multipler from the armoury enum structure
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
+	
+	// Get the damage multipler from the armoury methodmap
 	float multiplier = PowerPlant.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multiplier;
 	
@@ -157,7 +191,11 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 	if (damagetype == WEAPON_BEAM_DT)
 		damage = SetMinX01DamageByMult(damage);
 	
-	// Get the damage multipler from the flamer turret enum structure
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
+	
+	// Get the damage multipler from the flamer turret methodmap
 	float multiplier = FlamerTurret.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multiplier;
 	
@@ -175,7 +213,11 @@ public Action ND_OnArtilleryDamaged(int victim, int &attacker, int &inflictor, f
 	if (damagetype == WEAPON_BEAM_DT)
 		damage = SetMinX01DamageByMult(damage);
 	
-	// Get the damage multipler from the artillery enum structure
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
+	
+	// Get the damage multipler from the artillery methodmap
 	float multiplier = Artillery.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multiplier;
 	
@@ -193,7 +235,11 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 	if (damagetype == WEAPON_BEAM_DT)
 		damage = SetMinX01DamageByMult(damage);
 	
-	// Get the damage multipler from the transport gate enum structure
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
+	
+	// Get the damage multipler from the transport gate methodmap
 	float multiplier = TransportGate.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multiplier;
 	
@@ -211,7 +257,11 @@ public Action ND_OnAssemblerDamaged(int victim, int &attacker, int &inflictor, f
 	if (damagetype == WEAPON_BEAM_DT)
 		damage = SetMinX01DamageByMult(damage);
 	
-	// Get the damage multipler from the assembler enum structure
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
+	
+	// Get the damage multipler from the assembler methodmap
 	float multiplier = Assembler.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multiplier;
 	
@@ -235,8 +285,12 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	// Increase x01 damage by 50% when less than 25
 	if (damagetype == WEAPON_BEAM_DT)
 		damage = SetMinX01DamageByMult(damage);
+	
+	// Get the damage multipler from the base structure methodmap
+	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
+	damage *= multIB;
 
-	// Get the damage multipler from the assembler enum structure
+	// Get the damage multipler from the assembler methodmap
 	float multiplier = Bunker.GetDamageMult(attacker, inflictor, damagetype);
 	damage *= multiplier;
 	
