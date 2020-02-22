@@ -320,7 +320,7 @@ void Primary_Captured(int team)
 	structPrimary.SetArray(0, prime);
 	
 	// Set the current resources of the primary structure to team resources when captured
-	ND_SetCurrentResources(prime.entIndex, prime.GetRes());
+	ND_SetPrimeResources(prime.GetRes());
 	
 	// Kill the timer before the next one
 	if (primaryTimer != INVALID_HANDLE && IsValidHandle(primaryTimer))
