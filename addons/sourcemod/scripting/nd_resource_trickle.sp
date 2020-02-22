@@ -443,7 +443,9 @@ public Action TIMER_SecondaryExtract(Handle timer, int arrIndex)
 	structSecondaries.GetArray(arrIndex, sec);
 	
 	// Every ten seconds a secondary extracts 275 resources subtract that
+	// Also update the amount of time the resource point was owned for
 	sec.SubtractRes(275);
+	sec.timeOwned += 10;
 	
 	// Every ten seconds, regenerate 55 resources (20% of full production)
 	// If the opposite teams reserved pool is less than 3300 (10 minutes of regen)
@@ -477,7 +479,9 @@ public Action TIMER_PrimaryExtract(Handle timer)
 	structPrimary.GetArray(0, prime);
 	
 	// Every fifteen seconds, primary generates 750 resources subtract that
+	// Also update the amount of time the resource point was owned for
 	prime.SubtractRes(750);
+	prime.timeOwned += 15;
 	
 	// Get the opposing team, which doesn't own the primary resource point
 	int otherTeam = getOtherTeam(prime.owner);
