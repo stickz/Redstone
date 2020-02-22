@@ -18,14 +18,23 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 ArrayList g_MapThresholdList;
+
 ConVar cvarStockMapCount;
 ConVar cvarCornerMapCount;
+ConVar cvarMediumMapCount;
+ConVar cvarLargeMapCount;
 
 public void OnPluginStart() 
 {
 	g_MapThresholdList 	= 	new ArrayList(ND_MAX_MAP_SIZE);
-	cvarStockMapCount	=	CreateConVar("sm_voter_scount", "23", "Sets the maximum number of players for stock maps");
+	
+	cvarStockMapCount	=	CreateConVar("sm_voter_scount", "26", "Sets the maximum number of players for stock maps");
 	cvarCornerMapCount	=	CreateConVar("sm_voter_ccount", "20", "Sets the maximum number of players for corner");
+	cvarMediumMapCount	=	CreateConVar("sm_voter_mcount", "14", "Sets the minimum number of players for medium maps");
+	cvarLargeMapCount	=	CreateConVar("sm_voter_lcount", "18", "Sets the minimum number of players for large maps");
+	
+	AutoExecConfig(true, "nd_mvote_thresholds");
+	
 	RegAdminCmd("sm_DebugMapVote", CMD_DebugMapVote, ADMFLAG_KICK, "Debugs the map vote list");
 	
 	AddUpdaterLibrary(); //auto-updater
@@ -114,18 +123,18 @@ void CreateMapThresholdList(bool debugFunction = false)
 	}
 	
 	/* Run through the 'greater than' x players to include maps */
-	if (clientCount >= 14)
+	if (clientCount >= cvarMediumMapCount.IntValue)
 	{
 		float plyAdjust = 1.5 * (clientCount - 14);
-		ND_NominateMap(ND_CustomMaps[ND_Submarine], 50 + plyAdjust);			
+		ND_NominateMap(ND_CustomMaps[ND_Submarine], 60 + plyAdjust);
 		ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
+		ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
 		
-		if (clientCount >= 18)
+		if (clientCount >= cvarLargeMapCount.IntValue)
 		{
 			ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
-			ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);		
-			ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
-			ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);			
+			ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);	
+			ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);	
 		}
 	}
 	
