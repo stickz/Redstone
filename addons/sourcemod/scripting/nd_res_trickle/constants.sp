@@ -7,6 +7,8 @@
 
 #define PRIMARY_TRICKLE_REGEN_AMOUNT 3000 // Amount to get every fifteen seconds
 #define PRIMARY_TRICKLE_REGEN_INTERVAL 75 // Maximum amount to regen on opposite team's pool
+#define PRIMARY_TRICKLE_DEGEN_INTERVAL 375 // Amount to degenerate every fifteen seconds
+#define PRIMARY_TRICKLE_DEGEN_MINUTES 12 // Minutes to degenerate if team hasn't owned tertiary
 
 #define PRIMARY_FRACKING_AMOUNT 750 // Amount of resources to grant per frack
 #define PRIMARY_FRACKING_SECONDS 45 // Number of seconds inbetween fracks

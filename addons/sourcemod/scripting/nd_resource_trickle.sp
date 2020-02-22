@@ -479,12 +479,19 @@ public Action TIMER_PrimaryExtract(Handle timer)
 	// Every fifteen seconds, primary generates 750 resources subtract that
 	prime.SubtractRes(750);
 	
+	// Get the opposing team, which doesn't own the primary resource point
+	int otherTeam = getOtherTeam(prime.owner);
+	
 	// Every fifteen seconds, regenerate 75 resources (10% of full production)
 	// If the opposite teams reserved pool is less than 3000 (10 minutes of regen)
 	// And if the initial resources of the prime is depleted
-	int otherTeam = getOtherTeam(prime.owner);
 	if (!cornerMap && prime.initialRes <= 0 && prime.GetResTeam(otherTeam) <= PRIMARY_TRICKLE_REGEN_AMOUNT)
 		prime.AddRes(otherTeam, PRIMARY_TRICKLE_REGEN_INTERVAL);
+	
+	// Every fifteen seconds, degenerate 375 resources (50% of full production)
+	// If the opposite team has not owned the resource point for 12 minutes
+	else if (cornerMap && prime.timeOwned > PRIMARY_TRICKLE_DEGEN_MINUTES * 60)
+		prime.SubtractResTeam(otherTeam, PRIMARY_TRICKLE_DEGEN_INTERVAL);
 	
 	// Every 15 seconds, check if the prime qualfies for fracking.
 	// Owned for 26 minutes by consort or empire with less than 1500 team resources
