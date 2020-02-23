@@ -260,9 +260,6 @@ methodmap FlamerTurret
 		
 		switch (damagetype)
 		{
-			// Apply base x01 damage mult
-			case WEAPON_BEAM_DT: mult = gFloat_Siege[siege_ft_turret_mult];			
-			
 			case WEAPON_EXPLO_DT:
 			{
 				char className[64];
@@ -271,10 +268,6 @@ methodmap FlamerTurret
 				// Apply base gl damage mult
 				if (InflictorIsGL(className))
 					mult = gFloat_GL[gl_ft_turret_mult];
-				
-				// Apply base m95 damage mult
-				else if (InflcitorIsM95(className))
-					mult = gFloat_Siege[siege_ft_turret_mult];
 				
 				// Apply red base damage mult
 				else if (InflictorIsRED(className))
@@ -352,9 +345,6 @@ methodmap Assembler
 		
 		switch (damagetype)
 		{
-			// Apply base x01 damage mult
-			case WEAPON_BEAM_DT: mult = gFloat_Siege[siege_assembler_mult];
-			
 			case WEAPON_EXPLO_DT:	 
 			{ 
 				char className[64];
@@ -363,10 +353,6 @@ methodmap Assembler
 				// Apply base gl damage mult
 				if (InflictorIsGL(className))
 					mult = gFloat_GL[gl_assembler_mult];
-				
-				// Apply base m95 damage mult
-				else if (InflcitorIsM95(className))
-					mult = gFloat_Siege[siege_assembler_mult];			
 				
 				// Apply red base damage mult
 				else if (InflictorIsRED(className))
