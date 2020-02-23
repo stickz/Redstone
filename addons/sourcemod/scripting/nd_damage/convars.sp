@@ -11,6 +11,7 @@ enum multREDs
 	red_ft_turret_mult,
 	red_wall_mult,
 	red_barrier_mult,
+	red_supply_mult,
 	red_ib1_base_mult,
 	red_ib2_base_mult,
 	red_ib3_base_mult
@@ -119,6 +120,7 @@ void CreateRedConVars()
 		"sm_mult_ft_turret_red",
 		"sm_mult_wall_red",
 		"sm_mult_barrier_red",
+		"sm_mult_supply_red",
 		
 		// RED Base Damage		
 		"sm_mult_baseIB1_red",
@@ -135,6 +137,7 @@ void CreateRedConVars()
 		"Percentage of normal damage REDs deal to ft/sonic turrets",
 		"Percentage of normal damage REDs deal to walls",
 		"Percentage of normal damage REDs deal to barriers",
+		"Percentage of normal damage REDs deal to supply stations",
 		
 		// RED Base Damage
 		"Percentage of normal damage REDs deal after Infantry Boost 1",
@@ -144,7 +147,7 @@ void CreateRedConVars()
 	
 	char convarDef[multREDs][] = { 
 		// RED Structure Damage
-		"130", "110", "130", "110", "125", "130", "115",
+		"130", "110", "130", "110", "125", "130", "115", "105",
 		
 		// RED Base Damage
 		"103", "108", "115"	

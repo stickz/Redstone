@@ -174,6 +174,10 @@ methodmap SupplyStation
 		if (damagetype == WEAPON_BULLET_DT)
 			mult = gFloat_Bullet[bullet_supply_station_mult];
 		
+		// Apply red base damage mult
+		else if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
+			mult = gFloat_Red[red_supply_mult];
+		
 		return mult;
 	}	
 }
