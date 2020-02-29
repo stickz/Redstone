@@ -87,6 +87,8 @@ public void ND_OnRoundStarted()
 	structTertaries.Clear();
 	listSecondaries.Clear();
 	structSecondaries.Clear();
+	PrimeEntity = -1;	
+	structPrimary.Clear();
 	
 	initPlyCount = ND_GetClientCount();
 }
