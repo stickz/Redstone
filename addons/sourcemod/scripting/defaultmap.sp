@@ -23,7 +23,7 @@ Handle g_hPlyrData;
 
 char g_DefaultMap[MAX_MAPNANE_LENGTH];
 
-bool isPopularMap = false;
+bool isHostMap = false;
 
 public OnPluginStart()
 {
@@ -72,7 +72,7 @@ public Action EventPlayerDisconnect(Event event, const char[] name, bool dontBro
 
 public void OnMapStart()
 {
-	isPopularMap = ND_IsPopularMap();
+	isHostMap = ND_IsServerHostMap();
 	
 	if(!g_PlyrCount)
 		SetDefaultMap();
@@ -80,7 +80,7 @@ public void OnMapStart()
 
 void SetDefaultMap()
 {
-	if(!isPopularMap)
+	if(!isHostMap)
 	{
 		ForceChangeLevel(g_DefaultMap, "Server empty. Going to default map...");
 	}

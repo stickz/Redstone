@@ -136,7 +136,7 @@ stock bool ND_IsMediumResMap()
 	return false;
 }
 
-stock bool ND_IsPopularMap()
+stock bool ND_IsServerHostMap()
 {
 	char currentMap[32];
 	GetCurrentMap(currentMap, sizeof(currentMap));
