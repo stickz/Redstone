@@ -162,13 +162,10 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				resEVals[0] 	= RES_PRIME_EXTRACT;
 				resEVals[2] 	= RES_PRIME_TRICKLE;				
 				
-				// If the current map is corner, get team resources of primary if availible
-				if (cornerMap)
-				{
-					int trickleResPrime = ND_GetPrimaryResources(team);
-					if (trickleResPrime != -1)
-						resEVals[1] = trickleResPrime;
-				}
+				// Get team resources of primary if availible
+				int trickleResPrime = ND_GetPrimaryResources(team);
+				if (trickleResPrime != -1)
+					resEVals[1] = trickleResPrime;
 			}			
 			case RESOURCE_SECONDARY:
 			{
@@ -178,13 +175,10 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				resEVals[0] 	= RES_SECONDARY_EXTRACT;
 				resEVals[2] 	= RES_SECONDARY_TRICKLE;
 				
-				// If the current map is not corner, get team resources of secondary if availible
-				if (!cornerMap)
-				{
-					int trickleResSec = ND_GetSecondaryResources(entindex, team);
-					if (trickleResSec != -1)
-						resEVals[1] = trickleResSec;
-				}
+				// Get team resources of secondary if availible
+				int trickleResSec = ND_GetSecondaryResources(entindex, team);
+				if (trickleResSec != -1)
+					resEVals[1] = trickleResSec;
 			}
 			case RESOURCE_TERTIARY: 
 			{
@@ -194,7 +188,7 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				resEVals[0] 	= RES_TERTIARY_EXTRACT;
 				resEVals[2] 	= RES_TERTIARY_TRICKLE;
 				
-				// Try to get the team resources of the tertiary if availible
+				// Get the team resources of the tertiary if availible
 				int trickleResTert = ND_GetTertiaryResources(entindex, team);
 				if (trickleResTert != -1)
 					resEVals[1] = trickleResTert;
