@@ -108,29 +108,25 @@ void CreateMapThresholdList(bool debugFunction = false)
 	ND_NominateMap(ND_StockMaps[ND_Clocktower], resAdjust);
 	ND_NominateMap(ND_CustomMaps[ND_Roadwork], resAdjust)
 	
-	/* Run through the 'less than' x players to include maps */		
 	if (clientCount <= cvarStockMapCount.IntValue)
-	{
 		ND_NominatePopularMaps();
-		
-		if (clientCount <= cvarCornerMapCount.IntValue)
-			ND_NominateMap(ND_CustomMaps[ND_Corner]);
-	}
+
+	if (clientCount <= cvarCornerMapCount.IntValue)
+		ND_NominateMap(ND_CustomMaps[ND_Corner]);
 	
-	/* Run through the 'greater than' x players to include maps */
+	float plyAdjust = 1.5 * (clientCount - 14);
 	if (clientCount >= cvarMediumMapCount.IntValue)
 	{
-		float plyAdjust = 1.5 * (clientCount - 14);
 		ND_NominateMap(ND_CustomMaps[ND_Submarine], 60 + plyAdjust);
 		ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
 		ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
-		
-		if (clientCount >= cvarLargeMapCount.IntValue)
-		{
-			ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
-			ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);	
-			ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);	
-		}
+	}
+	
+	if (clientCount >= cvarLargeMapCount.IntValue)
+	{
+		ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
+		ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);	
+		ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);	
 	}
 	
 	if (debugFunction)
