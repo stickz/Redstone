@@ -114,12 +114,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 		ND_NominatePopularMaps();
 		
 		if (clientCount <= cvarCornerMapCount.IntValue)
-		{		
 			ND_NominateMap(ND_CustomMaps[ND_Corner]);
-
-			if (clientCount < 8)
-				ND_NominateMap(ND_CustomMaps[ND_Sandbrick], 80.0);
-		}
 	}
 	
 	/* Run through the 'greater than' x players to include maps */
