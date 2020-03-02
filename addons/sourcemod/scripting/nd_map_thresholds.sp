@@ -21,6 +21,7 @@ ArrayList g_MapThresholdList;
 
 ConVar cvarStockMapCount;
 ConVar cvarCornerMapCount;
+ConVar cvarSandbrickCount;
 ConVar cvarMediumMapCount;
 ConVar cvarLargeMapCount;
 
@@ -30,6 +31,7 @@ public void OnPluginStart()
 	
 	cvarStockMapCount	=	CreateConVar("sm_voter_scount", "26", "Sets the maximum number of players for stock maps");
 	cvarCornerMapCount	=	CreateConVar("sm_voter_ccount", "20", "Sets the maximum number of players for corner");
+	cvarSandbrickCount	=	CreateConVar("sm_voter_sbcount", "8", "Sets the maximum number of players for sandbrick");
 	cvarMediumMapCount	=	CreateConVar("sm_voter_mcount", "14", "Sets the minimum number of players for medium maps");
 	cvarLargeMapCount	=	CreateConVar("sm_voter_lcount", "18", "Sets the minimum number of players for large maps");
 	
@@ -113,6 +115,9 @@ void CreateMapThresholdList(bool debugFunction = false)
 
 	if (clientCount <= cvarCornerMapCount.IntValue)
 		ND_NominateMap(ND_CustomMaps[ND_Corner]);
+		
+	if (clientCount <= cvarSandbrickCount.IntValue)
+		ND_NominateMap(ND_CustomMaps[ND_Sandbrick], 80.0);
 	
 	float plyAdjust = 1.5 * (clientCount - 14);
 	if (clientCount >= cvarMediumMapCount.IntValue)
