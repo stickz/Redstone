@@ -1,6 +1,5 @@
 #define NO_SKILL_WEIGHT -1
 #define NO_SKILL_ADJUST -1.0
-#define AVERAGE_SKILL_FACTOR 1.5
 
 float GetSkillLevel(int client)
 {
@@ -13,7 +12,7 @@ float GetSkillLevel(int client)
 	if (gameMeSkill > -1)
 	{
 		/* If the player is under-performing, lower their skill */
-		if (g_isWeakVeteran[client] && gameMeSkill > (lastAverage / AVERAGE_SKILL_FACTOR) && newPlayerSkill[client] != NO_SKILL_ADJUST)
+		if (g_isWeakVeteran[client] && gameMeSkill > (lastAverage / ROOKIE_SKILL_ADJUSTMENT) && newPlayerSkill[client] != NO_SKILL_ADJUST)
 			gameMeSkill = newPlayerSkill[client];
 		else
 		{

@@ -16,8 +16,6 @@
 #define CONSORT_aIDX 0
 #define EMPIRE_aIDX 1
 
-#define ROOKIE_SKILL_ADJUSTMENT 1.25
-
 float GameME_PlayerSkill[MAXPLAYERS+1] = {-1.0,...};
 float GameME_CommanderSkill[MAXPLAYERS+1] = {-1.0,...};
 
@@ -52,7 +50,7 @@ public Plugin myinfo =
 	name = "[ND] Player Skill Management",
 	author = "Stickz",
 	description = "Finalizes a player's skill level",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone"
 };
 

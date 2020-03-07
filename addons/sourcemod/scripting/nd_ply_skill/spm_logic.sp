@@ -5,6 +5,7 @@
 #define ROOKIE_ADJUST_AT_MINUTE 15
 #define BOMBER_ADJUST_AT_MINUTE 6
 #define VETERAN_IS_BOMBING 1.5
+#define ROOKIE_SKILL_ADJUSTMENT 1.25
 
 int	connectionTime[MAXPLAYERS+1] = {-1, ...};
 int	scorePerMinute[MAXPLAYERS+1] = {-1, ...};
