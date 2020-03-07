@@ -39,8 +39,8 @@ bool g_Bool[Bools];
 #include "nd_ply_skill/convars.sp"
 #include "nd_ply_skill/ply_level.sp"
 #include "nd_ply_skill/prediction.sp"
-#include "nd_ply_skill/skill_calc.sp"
 #include "nd_ply_skill/spm_logic.sp"
+#include "nd_ply_skill/skill_calc.sp"
 #include "nd_ply_skill/extras.sp"
 #include "nd_ply_skill/natives.sp"
 
@@ -102,6 +102,7 @@ void resetVarriables(int client)
 	scorePerMinute[client] = -1;
 	previousTeam[client] = -1;
 	GameME_PlayerSkill[client] = -1.0;
+	newPlayerSkill[client] = -1.0;
 }
 
 void ReloadGameMeSkill()

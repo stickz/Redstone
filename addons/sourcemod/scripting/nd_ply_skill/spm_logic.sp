@@ -1,6 +1,6 @@
 #define SCORE_BASED_MULTIPLIER 100.0
 #define MIN_ADJUSTMENT_CLIENT_COUNT 6
-#define LOW_SPM_ADJUST_REGARDLESS 1000
+#define LOW_SPM_ADJUST_REGARDLESS 1250
 #define REQUIRED_MINS_FOR_ADJUSTMENT 5
 #define ROOKIE_ADJUST_AT_MINUTE 15
 #define BOMBER_ADJUST_AT_MINUTE 6
@@ -9,6 +9,7 @@
 int	connectionTime[MAXPLAYERS+1] = {-1, ...};
 int	scorePerMinute[MAXPLAYERS+1] = {-1, ...};
 int	previousTeam[MAXPLAYERS+1] = {-1, ...};
+float newPlayerSkill[MAXPLAYERS+1] = {-1.0, ...};
 
 /*Update Score per Minute Data */
 public Action TIMER_updateSPM(Handle timer)
@@ -82,12 +83,18 @@ void UpdateSPM()
 					
 					if (connectionTime[client] >= ROOKIE_ADJUST_AT_MINUTE && (useAdjustment[cTeamM2] || scorePerMinute[client] < LOW_SPM_ADJUST_REGARDLESS)){
 						if (scorePerMinute[client] <= spmAverage[cTeamM2] / VETERAN_IS_BOMBING)
+						{
 							MakeVetSkillAdjust(client);
+							newPlayerSkill[client] = lastAverage;
+						}
 					}
 
 					else if (connectionTime[client] >= BOMBER_ADJUST_AT_MINUTE && scorePerMinute[client] < LOW_SPM_ADJUST_REGARDLESS){
 						if (cSkill > lastAverage * ROOKIE_SKILL_ADJUSTMENT)
+						{
 							MakeVetSkillAdjust(client);
+							newPlayerSkill[client] = lastAverage * (scorePerMinute[client] / spmAverage[cTeamM2]);
+						}
 					}
 				}
 			}
