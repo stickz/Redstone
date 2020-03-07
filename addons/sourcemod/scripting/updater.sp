@@ -250,12 +250,14 @@ public Updater_OnPluginUpdated()
 
 Updater_Check(index)
 {
-	if (Fwd_OnPluginChecking(IndexToPlugin(index)) == Plugin_Continue)
+	Handle hPlugin = IndexToPlugin(index);
+	if (hPlugin != null && Fwd_OnPluginChecking(hPlugin) == Plugin_Continue)
 	{
 		decl String:url[MAX_URL_LENGTH];
 		Updater_GetURL(index, url, sizeof(url));
 		Updater_SetStatus(index, Status_Checking);
 		AddToDownloadQueue(index, url, _sDataPath);
+		CloseHandle(hPlugin);
 	}
 }
 
