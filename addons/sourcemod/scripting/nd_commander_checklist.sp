@@ -181,7 +181,16 @@ public Action OnForwardSpawnCreated(Event event, const char[] name, bool dontBro
 
 public Action TransportGateTimerCB(Handle timer, any:entIdx)
 {
-	if (!ND_IsValidEntity(entIdx, "m_iTeamNum"))
+	// Exit if the entity index isn't valid
+	if (!IsValidEntity(entIdx))
+		return Plugin_Stop;
+	
+	// Exit if the entity doesn't have a team number
+	if (!HasEntProp(entIdx, Prop_Send, "m_iTeamNum"))
+		return Plugin_Stop;
+	
+	// Exit if the entity doesn't have a vector origin
+	if (!HasEntProp(entIdx, Prop_Send, "m_vecOrigin"))
 		return Plugin_Stop;
 	
 	int teamId = GetEntProp(entIdx, Prop_Send, "m_iTeamNum");
