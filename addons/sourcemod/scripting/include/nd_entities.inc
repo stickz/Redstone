@@ -13,6 +13,23 @@ native int ND_GetTeamBunkerEntity(int team);
 native void ND_UpdateEntityCache();
 
 /** 
+ * Retreives if an entity is valid by calling IsValidEntity()
+ * Also checks if the entity has a property before using it.
+ *
+ * @param entity		entity index.
+ * @param propName		name of property
+ *
+ * @return if the entity index is valid and the entity has a property
+ */
+stock bool ND_IsValidEntity(int entIndex, const char[] propName)
+{
+	if (!IsValidEntity(entIndex))
+		return false;
+		
+	return HasEntProp(entIndex, Prop_Send, propName);
+}
+
+/** 
  * Retreives the bunker distance from a given position
  *
  * @param team		Team index of Bunker.
