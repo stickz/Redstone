@@ -25,6 +25,17 @@ public Plugin myinfo =
 int InfantryBoostLevel[2] = { 0, ...};
 int StructureReinLevel[2] = { 0, ...};
 
+enum ibMults
+{
+	ibMultBBQ = 0,
+	ibMultGL,
+	ibMultSIEGE,
+	ibMultRED
+}
+
+float InfantryBoostMults[2][ibMults];
+float ArtillerySRMult[2];
+
 /* Plugin Includes */
 #include "nd_damage/convars.sp"
 #include "nd_damage/damage_methods.sp"
@@ -75,6 +86,12 @@ public void OnInfantryBoostResearched(int team, int level)
 	float percentRed = BaseHelper.RED_InfantryBoostMult(level);
 	int increaseRed = RoundFloat((percentRed - 1.0) * 100.0);
 	PrintConsoleTeamTI1(team, "RED Damage Increase", increaseRed);
+	
+	// Update IB multipliers for fast lookup purposes
+	InfantryBoostMults[team-2][ibMultBBQ] = percentBBQ;
+	InfantryBoostMults[team-2][ibMultGL] = percentGL;
+	InfantryBoostMults[team-2][ibMultSIEGE] = percentSiege;
+	InfantryBoostMults[team-2][ibMultRED] = percentRed;
 }
 
 public void OnStructureReinResearched(int team, int level) 
@@ -85,6 +102,9 @@ public void OnStructureReinResearched(int team, int level)
 	float percent = BaseHelper.Artillery_StructureReinMult(level);
 	int speed = RoundFloat((1.0 - percent) * 100.0);
 	PrintMessageTeamTI1(team, "Artillery Damage Decrease", speed);
+	
+	// Update Artillery SR multiplier for fast lookup purposes
+	ArtillerySRMult[team-2] = percent;
 }
 
 public void ND_OnStructureCreated(int entity, const char[] classname)
@@ -148,6 +168,13 @@ void ResetResearchLevels()
 	{
 		InfantryBoostLevel[i] = 0;
 		StructureReinLevel[i] = 0;
+		
+		InfantryBoostMults[i][ibMultBBQ] = 1.0;
+		InfantryBoostMults[i][ibMultGL] = 1.0;
+		InfantryBoostMults[i][ibMultSIEGE] = 1.0;
+		InfantryBoostMults[i][ibMultRED] = 1.0;
+		
+		ArtillerySRMult[i] = 1.0;
 	}
 }
 

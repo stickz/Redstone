@@ -76,16 +76,16 @@ methodmap BaseHelper
 		return mult;
 	}
 
-	public static int GetAttackerTeamIB(int &attacker) 
+	public static float FastLookUpIBMult(int &attacker, ibMults mult)
 	{
 		int team = GetClientTeam(attacker);
-		return InfantryBoostLevel[team-2];
+		return InfantryBoostMults[team-2][mult];
 	}
 
-	public static int GetDefenderTeamSR(int &attacker) 
+	public static float FastLookupArtilleryMult(int &attacker)
 	{
 		int oTeam = getOtherTeam(GetClientTeam(attacker));
-		return StructureReinLevel[oTeam-2];
+		return ArtillerySRMult[oTeam-2];
 	}	
 }
 
@@ -95,16 +95,13 @@ methodmap BaseStructure
 	{
 		float mult = 1.0;
 		
-		// Get the infantry boost level of the attacker team
-		int attackerIB = BaseHelper.GetAttackerTeamIB(attacker);
-		
 		// Apply infantry boost x01 damage mult
 		if (damagetype == WEAPON_BEAM_DT)
-			mult = BaseHelper.Siege_InfantryBoostMult(attackerIB);
+			mult = BaseHelper.FastLookUpIBMult(attacker, ibMultSIEGE);
 		
 		// Apply infantry boost nx300 damage mult
 		else if (InflictorIsNX300(inflictor))
-			mult = BaseHelper.BBQ_InfantryBoostMult(attackerIB);
+			mult = BaseHelper.FastLookUpIBMult(attacker, ibMultBBQ);
 		
 		// Check if damage type is explosive to eliminate iterations		
 		else if (damagetype == WEAPON_EXPLO_DT)
@@ -114,22 +111,19 @@ methodmap BaseStructure
 			
 			// Apply structure reinforcement artillery protection
 			if (InflictorIsArtillery(className))
-			{
-				int defenderSR = BaseHelper.GetDefenderTeamSR(attacker);
-				mult = BaseHelper.Artillery_StructureReinMult(defenderSR);
-			}
+				mult = BaseHelper.FastLookupArtilleryMult(attacker);
 				
 			// Apply infantry boost gl damage mult
 			else if (InflictorIsGL(className))
-				mult = BaseHelper.GL_InfantryBoostMult(attackerIB);
+				mult = BaseHelper.FastLookUpIBMult(attacker, ibMultGL);
 				
 			// Apply infantry boost m95 damage mult
 			else if (InflcitorIsM95(className))
-				mult = BaseHelper.Siege_InfantryBoostMult(attackerIB);		
+				mult = BaseHelper.FastLookUpIBMult(attacker, ibMultSIEGE);
 
 			// Apply infantry boost red base damage mult
 			else if (InflictorIsRED(className))
-				mult = BaseHelper.RED_InfantryBoostMult(attackerIB);
+				mult = BaseHelper.FastLookUpIBMult(attacker, ibMultRED);
 		}
 		
 		return mult;
