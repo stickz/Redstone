@@ -29,8 +29,10 @@ ConVar cvarReducedDamage;
 public void OnPluginStart()
 {
 	cvarNormalCount 	= 	CreateConVar("sm_ability_normal", "10", "Specifies the player count on a team to deal normal commander damage");
-	cvarReducedDamage	=	CreateConVar("sm_ability_damage", "85", "Specifies the percent of normal damage, bellow the player threshold");	
+	cvarReducedDamage	=	CreateConVar("sm_ability_damage", "80", "Specifies the percent of normal damage, bellow the player threshold");	
 	HookConVarChange(cvarReducedDamage, OnDamageChanged);
+	
+	AutoExecConfig(true, "nd_commander_abilities");
 	
 	AddUpdaterLibrary(); // Auto-Updater support
 	
