@@ -7,6 +7,7 @@
 #include <nd_maps>
 #include <nd_stype>
 #include <nd_mlist>
+#include <autoexecconfig>
 
 public Plugin myinfo =
 {
@@ -23,14 +24,34 @@ public Plugin myinfo =
 ConVar cvarUsePlayerThresolds;
 //ConVar cvarStockMapCount;
 
+ConVar gCvarLargeMapCount;
+ConVar gCvarMediumMapCount;
+ConVar gCvarSandbrickCount;
+ConVar gCvarCornerCount;
+ConVar gCvarMarsCount;
+
 public void OnPluginStart()
 {
-	cvarUsePlayerThresolds	= CreateConVar("sm_mcancel_thresholds", "1", "Specifies wehter or not to cancel map cycling by player count");
-	//cvarStockMapCount	= CreateConVar("sm_mcancel_stock", "23", "Sets the maximum number of players for stock maps");
+	CreateConvars();
 	
 	LoadTranslations("nd_map_management.phrases"); //load the plugin's translations	
-	AutoExecConfig(true, "nd_mcancel");
 	AddUpdaterLibrary(); //auto-updater
+}
+
+void CreateConvars()
+{
+	AutoExecConfig_Setup("nd_mvote_cancel");
+	
+	cvarUsePlayerThresolds	= AutoExecConfig_CreateConVar("sm_mcancel_thresholds", "1", "Specifies wehter or not to cancel map cycling by player count");
+	//cvarStockMapCount	= AutoExecConfig_CreateConVar("sm_mcancel_stock", "23", "Sets the maximum number of players for stock maps");
+	
+	gCvarLargeMapCount		= AutoExecConfig_CreateConVar("sm_mcancel_largemaps", "14", "Sets minimum number of players to cancel large maps");
+	gCvarMediumMapCount		= AutoExecConfig_CreateConVar("sm_mcancel_medmaps", "10", "Sets minimum number of players to cancel medium maps");
+	gCvarSandbrickCount		= AutoExecConfig_CreateConVar("sm_mcancel_sandbrick", "10", "Sets maximum number of players to cancel sandbrick");
+	gCvarCornerCount		= AutoExecConfig_CreateConVar("sm_mcancel_corner", "18", "Sets maximum number of players to cancel corner");
+	gCvarMarsCount			= AutoExecConfig_CreateConVar("sm_mcancel_mars", "16", "Sets maximum number of players to cancel mars");
+	
+	AutoExecConfig_EC_File();	
 }
 
 public void OnClientPutInServer(int client)
@@ -81,58 +102,61 @@ void checkMapExcludes()
 	
 	int clientCount = ND_GetClientCount();
 	
-	if (clientCount < 12)
+	if (clientCount <= gCvarLargeMapCount.IntValue)
 	{
-		if (	ND_GetServerTypeEx() != SERVER_TYPE_BETA &&
-			StrEqual(nextMap, ND_StockMaps[ND_Gate], false))
+		if (StrEqual(nextMap, ND_StockMaps[ND_Gate], false) 	||
+			StrEqual(nextMap, ND_StockMaps[ND_Downtown], false) ||
+			StrEqual(nextMap, ND_StockMaps[ND_Oilfield], false)	)
 		{
 			TriggerMapVote(nextMap);
 			return;
 		}		
-		
-		else if (StrEqual(nextMap, ND_StockMaps[ND_Downtown], false) ||
-			StrEqual(nextMap, ND_StockMaps[ND_Oilfield], false) ||
-			StrEqual(nextMap, ND_CustomMaps[ND_Nuclear], false))
+	}
+	
+	if (clientCount <= gCvarMediumMapCount.IntValue)
+	{
+		if (StrEqual(nextMap, ND_CustomMaps[ND_Nuclear], false) ||
+			StrEqual(nextMap, ND_CustomMaps[ND_Rock], false) ||
+			StrEqual(nextMap, ND_CustomMaps[ND_Submarine], false))
 		{
 			TriggerMapVote(nextMap);
 			return;	
 		}		
-			
-		if (clientCount < 8)
-		{
-			if (StrEqual(nextMap, ND_CustomMaps[ND_Rock], false))
-			{
-				TriggerMapVote(nextMap);
-				return;					
-			}				
-		}
 	}
 	
-	else if (clientCount >= 10)
+	if (clientCount >= gCvarSandbrickCount.IntValue)
 	{
 		if (StrEqual(nextMap, ND_CustomMaps[ND_Sandbrick], false))
 		{
 			TriggerMapVote(nextMap);
 			return;
 		}
-		
-		if (clientCount >= 18)
-		{		
-			if (	StrEqual(nextMap, ND_CustomMaps[ND_Mars], false) || 
-				StrEqual(nextMap, ND_CustomMaps[ND_Corner], false))
-			{
-				TriggerMapVote(nextMap);
-				return;
-			}
-			
-			/*if (clientCount > cvarStockMapCount.IntValue && 
-			     (StrEqual_PopularMap(nextMap) || StrEqual(nextMap, ND_StockMaps[ND_Silo], false)))
-			{
-				TriggerMapVote(nextMap);
-				return;
-			}*/
-		}
 	}
+	
+	if (clientCount >= gCvarCornerCount.IntValue)
+	{
+		if (StrEqual(nextMap, ND_CustomMaps[ND_Corner], false))
+		{
+			TriggerMapVote(nextMap);
+			return;			
+		}		
+	}
+	
+	if (clientCount >= gCvarMarsCount.IntValue)
+	{
+		if (StrEqual(nextMap, ND_CustomMaps[ND_Mars], false))
+		{
+			TriggerMapVote(nextMap);
+			return;			
+		}		
+	}		
+			
+	/*if (clientCount > cvarStockMapCount.IntValue && 
+	     (StrEqual_PopularMap(nextMap) || StrEqual(nextMap, ND_StockMaps[ND_Silo], false)))
+	{
+		TriggerMapVote(nextMap);
+		return;
+	}*/	
 }
 
 /*int ndsPopular[SP_MAP_SIZE] = {
