@@ -1,0 +1,7 @@
+﻿"Phrases"
+{
+	"Shuffle Threshold Not Reached"
+	{
+		"en"	"Team Shuffle not run, due to adequate team difference"
+	}
+}

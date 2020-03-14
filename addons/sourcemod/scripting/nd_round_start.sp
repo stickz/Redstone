@@ -121,7 +121,7 @@ void StartRound(bool balance = false)
 	else if (balance && RunWarmupBalancer())
 	{
 		RestoreServerConvars();
-		WB2_BalanceTeams();
+		WB2_BalanceTeams(true);
 		return;	
 	}
 	

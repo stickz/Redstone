@@ -65,3 +65,22 @@ stock float ND_GetCeilingSD(float ceiling)
 	
 	return skill;
 }
+
+stock int ND_GetSkillDiffPercent()
+{
+	// Get the team difference and the enhanced average
+	float teamDiff = ND_GetTeamDifference();
+	float average = ND_GetEnhancedAverage();
+	
+	// If the team difference is negative, make it possible
+	if (teamDiff < 0)
+		teamDiff *= -1;
+	
+	// If there is 1 player, set average to teamdiff
+	if (average < 0)
+		average = teamDiff;
+	
+	// Calculate the difference percent and return it
+	float totalFloat = teamDiff / average * 100.0
+	return RoundFloat(totalFloat);
+}

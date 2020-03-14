@@ -7,6 +7,8 @@
 #include <nd_redstone>
 #include <nd_aweight>
 #include <nd_entities>
+#include <nd_print>
+#include <autoexecconfig>
 
 /* Notice to plugin contributors: please create a new native and void,
  * When modifying the sorting or placement algorithum to allow for proper testing.
@@ -31,16 +33,40 @@ ArrayList balancedPlayers;
 Handle g_OnTeamsShuffled_Forward;
 
 ConVar gcLevelEighty;
+ConVar gShuffleThreshold;
 
 public void OnPluginStart() 
 {
 	balancedPlayers = new ArrayList(MaxClients+1);
+	
 	g_OnTeamsShuffled_Forward = CreateGlobalForward("ND_OnTeamsShuffled", ET_Ignore);
 	
-	gcLevelEighty = CreateConVar("sm_ts_eightyExp", "450000", "Specifies the amount of exp to be considered level 80");	
-	AutoExecConfig(true, "nd_team_shuffle");
+	LoadTranslations("nd_team_shuffle.phrases");
+	
+	CreateConVars();
 	
 	AddUpdaterLibrary(); //auto-updater
+}
+
+void CreateConVars()
+{
+	AutoExecConfig_Setup("nd_team_shuffle");
+	
+	gcLevelEighty 		= AutoExecConfig_CreateConVar("sm_ts_eightyExp", "450000", "Specifies the amount of exp to be considered level 80");	
+	gShuffleThreshold 	= AutoExecConfig_CreateConVar("sm_ts_threshold", "60", "Specifies the skill difference precent to shuffle teams");
+	
+	AutoExecConfig_EC_File();	
+}
+
+bool RunTeamShuffle(bool force)
+{
+	if (!force && ND_GetSkillDiffPercent() < gShuffleThreshold.IntValue)
+	{
+		PrintMessageAllTB("Shuffle Threshold Not Reached");
+		return false;
+	}	
+	
+	return true;
 }
 
 void BalanceTeams()
@@ -163,7 +189,11 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public Native_WarmupTeamBalance(Handle plugin, int numParms)
 {
-	BalanceTeams();
+	bool force = GetNativeCell(1);
+	
+	if (RunTeamShuffle(force))	
+		BalanceTeams();
+	
 	return;
 }
 

@@ -17,7 +17,7 @@ void WarmupCompleteStartActions()
 			
 	/* Start Round using team balancer if applicable */		
 	else if (RunWarmupBalancer())
-		WB2_BalanceTeams();
+		WB2_BalanceTeams(false);
 			
 	/* Otherwise, Start the Round normally */			
 	else

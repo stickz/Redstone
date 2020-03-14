@@ -3,7 +3,7 @@
  
 forward void ND_OnTeamsShuffled();
 
-native WB2_BalanceTeams();
+native WB2_BalanceTeams(bool force);
 #define BT2_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "WB2_BalanceTeams") == FeatureStatus_Available)
 
 native Handle WB2_GetBalanceData();
