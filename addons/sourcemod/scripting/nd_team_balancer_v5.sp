@@ -10,6 +10,7 @@
 #include <nd_rounds>
 #include <nd_com_eng>
 #include <autoexecconfig>
+#include <smlib/math>
 
 #define TEAMS_EVEN 0
 #define EMPIRE_PLUS_ONE 1
@@ -36,6 +37,8 @@ ConVar cvarMinPlaceSkillEven;
 ConVar cvarMinPlaceSkillOne;
 ConVar cvarMinPlacementEven;
 ConVar cvarMinPlacementTwo;
+ConVar cvarMinCommanderOffset;
+ConVar cvarPercentCommanderOffset;
 
 bool bTeamsLocked = false;
 
@@ -54,7 +57,7 @@ void CreatePluginConVars()
 {
 	AutoExecConfig_Setup("nd_tbalance");
 	
-	cvarEnableBalancer 		= 	AutoExecConfig_CreateConVar("sm_balance", "1", "Team Balancer: 0 to disable, 1 to enable");
+	cvarEnableBalancer 			= 	AutoExecConfig_CreateConVar("sm_balance", "1", "Team Balancer: 0 to disable, 1 to enable");
 	
 	cvarMaxTeamPickReplace		=	AutoExecConfig_CreateConVar("sm_balance_tp_replace", "40", "Maxium skill difference to put player back on picked team");
 	
@@ -65,7 +68,10 @@ void CreatePluginConVars()
 	cvarMinPlaceSkillOne 		=	AutoExecConfig_CreateConVar("sm_balance_mskill_one", "90", "Specifies min player skill to place two extra players");
 	
 	cvarMinPlacementEven		=	AutoExecConfig_CreateConVar("sm_balance_one", "80", "Specifies team difference to place when teams are even");
-	cvarMinPlacementTwo		=	AutoExecConfig_CreateConVar("sm_balance_two", "160", "Specifies team difference to place two extra players");
+	cvarMinPlacementTwo			=	AutoExecConfig_CreateConVar("sm_balance_two", "160", "Specifies team difference to place two extra players");
+	
+	cvarMinCommanderOffset 		=	AutoExecConfig_CreateConVar("sm_balance_offset_cmin", "60", "Specifies the minimum commander skill difference to enable offsets");
+	cvarPercentCommanderOffset	=	AutoExecConfig_CreateConVar("sm_balance_offset_percent", "50", "Specifies the percentage of the skill difference to use as the offset");
 	
 	AutoExecConfig_EC_File();
 }
@@ -166,25 +172,34 @@ bool PlaceTeamBySkill(int client)
 	// Get the actual & ceiling skill difference
 	float teamDiff = ND_GetTeamDifference();
 	float cTeamDiff = ND_GetCeilingSD(80.0);
+	
+	// Get the commander offset skill difference
+	float oTeamDiff = GetCommanderOffsetSD(teamDiff);
 		
-	// Get the team with less skill
+	// Get the team with less skill according to the actual, ceiling and commander offset team difference
 	int actualLSTeam = getLeastStackedTeam(teamDiff);
 	int ceilLSTTeam = getLeastStackedTeam(cTeamDiff);
-	bool equalLST = actualLSTeam == ceilLSTTeam;
+	int offsetLSTTeam = getLeastStackedTeam(oTeamDiff);
+	
+	// Check if team difference methods agree on the team with less skill
+	bool equalCeilLST = actualLSTeam == ceilLSTTeam; // actual and ceiling team difference
+	bool equalOffsetLST = actualLSTeam == offsetLSTTeam; // actual and offset team difference
 			
 	// Convert the team difference to a positive number before working with it
 	float pTeamDiff = SetPositiveSkill(teamDiff);
 	float cpTeamDiff = SetPositiveSkill(cTeamDiff);
+	float opTeamDiff = SetPositiveSkill(oTeamDiff);
 		
-	// If the player skill is greater than 60, both teams have the same number of players and the team difference is greater than 80
-	if (playerSkill >= cvarMinPlaceSkillEven.IntValue && overBalance == TEAMS_EVEN && pTeamDiff >= cvarMinPlacementEven.IntValue)
+	// If both teams have the same number of players and the conditions for team placement are meant
+	if (overBalance == TEAMS_EVEN && PutSamePlysLessSkill(playerSkill, pTeamDiff, opTeamDiff, equalOffsetLST))
 	{
 		// Place the player on the least stacked skill team
 		SetTeamLessSkill(client, actualLSTeam);
 		return true;		
 	}
 	
-	else if (PutTwoExtraLessSkill(playerSkill, pTeamDiff, cpTeamDiff, onTeamCount, equalLST))
+	// If one team has an extra player and the conditions for team placement are meant
+	else if (PutTwoExtraLessSkill(playerSkill, pTeamDiff, cpTeamDiff, onTeamCount, equalCeilLST))
 	{
 		// If empire has one more player and less skill
 		if (overBalance == EMPIRE_PLUS_ONE && actualLSTeam == TEAM_EMPIRE)
@@ -206,7 +221,26 @@ bool PlaceTeamBySkill(int client)
 	return false;
 }
 
-bool PutTwoExtraLessSkill(float pSkill, float pDiff, float cpDiff, int tCount, bool equalLST)
+bool PutSamePlysLessSkill(float pSkill, float pDiff, float opDiff, bool equalOffsetLST)
+{
+	// If the actual and offset team difference don't agree on the least stacked team
+	if (!equalOffsetLST)
+		return false;
+	
+	// If the player skill is less than the threshold to place them on a team
+	if (pSkill < cvarMinPlaceSkillEven.IntValue)
+		return false;
+	
+	// If the actual & commander offset teamdiff is within the placement threshold
+	int placementThreshold = cvarMinPlacementEven.IntValue;
+	if (pDiff >= placementThreshold && opDiff >= placementThreshold)
+		return true;
+	
+	// Otherwise don't place the player on a team
+	return false;	
+}
+
+bool PutTwoExtraLessSkill(float pSkill, float pDiff, float cpDiff, int tCount, bool equalCeilLST)
 {
 	// If the player skill is greater than 90
 	if (pSkill >= cvarMinPlaceSkillOne.IntValue) 
@@ -217,10 +251,41 @@ bool PutTwoExtraLessSkill(float pSkill, float pDiff, float cpDiff, int tCount, b
 		
 		// If the actual & ceil teamdiff both agree on the least stacked team
 		// If less than 10 players are on a team and the strict skill difference is 80 or higher
-		return equalLST && tCount <= cvarMaxPlysStrictPlace.IntValue && cpDiff >= cvarMinPlacementEven.IntValue;
+		return equalCeilLST && tCount <= cvarMaxPlysStrictPlace.IntValue && cpDiff >= cvarMinPlacementEven.IntValue;
 	}
 	
 	return false;
+}
+
+float GetCommanderOffsetSD(float teamDiff)
+{
+	// If both teams don't have a commander, return the regular teamdiff
+	if (!ND_TeamsHaveCommanders())
+		return teamDiff;
+	
+	// Get the consort and empire commander - client indexs
+	int consortCom = ND_GetCommanderOnTeam(TEAM_CONSORT);
+	int empireCom = ND_GetCommanderOnTeam(TEAM_EMPIRE)
+	
+	// Get the consort and empire commander skill levels
+	float consortSkill = ND_GetPlayerSkill(consortCom);
+	float empireSkill = ND_GetPlayerSkill(empireCom);
+		
+	// Calculate the skill difference between the consort commander and empire commander
+	float skillDiff = consortSkill - empireSkill;
+	
+	// If the positive value of the skill difference is within the threshold, enable commander offsets
+	if (Math_Abs(skillDiff) >= cvarMinCommanderOffset.FloatValue)
+	{
+		// Calculate the offset by multiplying the skill difference by the offset percent convar
+		float offset = skillDiff * (cvarPercentCommanderOffset.FloatValue / 100.0);
+		
+		// Add the offset to the team difference and return it
+		return teamDiff + offset;
+	}
+	
+	// Return the regular team difference if not within the offset threshold 
+	return teamDiff;
 }
 
 float SetPositiveSkill(float skill) {
