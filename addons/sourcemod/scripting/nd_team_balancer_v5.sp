@@ -231,9 +231,9 @@ bool PutSamePlysLessSkill(float pSkill, float pDiff, float opDiff, bool equalOff
 	if (pSkill < cvarMinPlaceSkillEven.IntValue)
 		return false;
 	
-	// If the actual & commander offset teamdiff is within the placement threshold
+	// If the actual or commander offset teamdiff is within the placement threshold
 	int placementThreshold = cvarMinPlacementEven.IntValue;
-	if (pDiff >= placementThreshold && opDiff >= placementThreshold)
+	if (pDiff >= placementThreshold || opDiff >= placementThreshold)
 		return true;
 	
 	// Otherwise don't place the player on a team
