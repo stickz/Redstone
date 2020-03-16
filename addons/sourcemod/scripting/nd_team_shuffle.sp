@@ -63,6 +63,7 @@ bool RunTeamShuffle(bool force)
 	if (!force && ND_GetSkillDiffPercent() < gShuffleThreshold.IntValue)
 	{
 		PrintMessageAllTB("Shuffle Threshold Not Reached");
+		StartRound(); // Start round if teams are not shuffled		
 		return false;
 	}	
 	
@@ -140,6 +141,11 @@ void FireTeamsShuffledForward()
 	Call_Finish(dummy);
 	
 	/* Start round after call is finished */
+	StartRound();
+}
+
+void StartRound()
+{
 	if (!ND_RoundStarted())
 		ServerCommand("mp_minplayers 1");
 }
