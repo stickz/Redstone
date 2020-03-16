@@ -6,6 +6,7 @@
 #define BOMBER_ADJUST_AT_MINUTE 6
 #define VETERAN_IS_BOMBING 1.5
 #define ROOKIE_SKILL_ADJUSTMENT 1.25
+#define VETERAN_BOMB_FACTOR 2.0
 
 int	connectionTime[MAXPLAYERS+1] = {-1, ...};
 int	scorePerMinute[MAXPLAYERS+1] = {-1, ...};
@@ -90,15 +91,10 @@ void UpdateSPM()
 						}
 					}
 
-					else if (connectionTime[client] >= BOMBER_ADJUST_AT_MINUTE && scorePerMinute[client] < LOW_SPM_ADJUST_REGARDLESS){
-						if (cSkill > lastAverage * ROOKIE_SKILL_ADJUSTMENT)
-						{
-							MakeVetSkillAdjust(client);
-							
-							// Calulate the average score multiplier, if it's negative make it positive
-							float avgScore = float(scorePerMinute[client]) / float(spmAverage[cTeamM2]);
-							newPlayerSkill[client] = lastAverage * Math_Abs(avgScore);
-						}
+					else if (connectionTime[client] >= BOMBER_ADJUST_AT_MINUTE && scorePerMinute[client] < LOW_SPM_ADJUST_REGARDLESS)
+					{
+						MakeVetSkillAdjust(client);
+						newPlayerSkill[client] = lastAverage / VETERAN_BOMB_FACTOR;
 					}
 				}
 			}
