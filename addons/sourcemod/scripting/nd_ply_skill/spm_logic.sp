@@ -94,7 +94,7 @@ void UpdateSPM()
 						if (cSkill > lastAverage * ROOKIE_SKILL_ADJUSTMENT)
 						{
 							MakeVetSkillAdjust(client);
-							newPlayerSkill[client] = lastAverage * (scorePerMinute[client] / spmAverage[cTeamM2]);
+							newPlayerSkill[client] = lastAverage * (float(scorePerMinute[client]) / float(spmAverage[cTeamM2]));
 						}
 					}
 				}
