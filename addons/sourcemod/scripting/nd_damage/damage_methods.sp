@@ -300,33 +300,24 @@ methodmap TransportGate
 	{
 		float mult = 1.0;
 		
-		switch (damagetype)
+		if (damagetype == WEAPON_EXPLO_DT)
 		{
-			// Apply x01 base damage mult
-			case WEAPON_BEAM_DT: mult = gFloat_Siege[siege_transport_mult];
-			
-			case WEAPON_EXPLO_DT:
-			{
-				char className[64];
-				GetEntityClassname(inflictor, className, sizeof(className));				
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
 				
-				// Apply base gl damage mult
-				if (InflictorIsGL(className))
-					mult = gFloat_GL[gl_transport_mult];
+			// Apply base gl damage mult
+			if (InflictorIsGL(className))
+				mult = gFloat_GL[gl_transport_mult];
 				
-				// Apply base m95 damage mult
-				else if (InflcitorIsM95(className))
-					mult = gFloat_Siege[siege_transport_mult];
-				
-				// Apply red base damage mult
-				else if (InflictorIsRED(className))
-					mult = gFloat_Red[red_transport_mult];
-			}
-			
-			// Apply bullet base damage mult
-			case WEAPON_BULLET_DT: mult = gFloat_Bullet[bullet_transport_mult];
+			// Apply red base damage mult
+			else if (InflictorIsRED(className))
+				mult = gFloat_Red[red_transport_mult];			
 		}
 		
+		// Apply bullet base damage mult
+		else if (damagetype == WEAPON_BULLET_DT)
+			mult = gFloat_Bullet[bullet_transport_mult];		
+
 		return mult;	
 	}	
 }
@@ -337,25 +328,23 @@ methodmap Assembler
 	{
 		float mult = 1.0;
 		
-		switch (damagetype)
+		if (damagetype == WEAPON_EXPLO_DT)
 		{
-			case WEAPON_EXPLO_DT:	 
-			{ 
-				char className[64];
-				GetEntityClassname(inflictor, className, sizeof(className));
+			char className[64];
+			GetEntityClassname(inflictor, className, sizeof(className));
 				
-				// Apply base gl damage mult
-				if (InflictorIsGL(className))
-					mult = gFloat_GL[gl_assembler_mult];
+			// Apply base gl damage mult
+			if (InflictorIsGL(className))
+				mult = gFloat_GL[gl_assembler_mult];
 				
-				// Apply red base damage mult
-				else if (InflictorIsRED(className))
-					mult = gFloat_Red[red_assembler_mult];
-			}
-			
-			// Apply bullet base damage mult
-			case WEAPON_BULLET_DT: mult = gFloat_Bullet[bullet_assembler_mult];
+			// Apply red base damage mult
+			else if (InflictorIsRED(className))
+				mult = gFloat_Red[red_assembler_mult];			
 		}
+		
+		// Apply bullet base damage mult
+		else if (damagetype == WEAPON_BULLET_DT)
+			mult = gFloat_Bullet[bullet_assembler_mult];	
 		
 		return mult;
 	}	
@@ -367,24 +356,16 @@ methodmap Bunker
 	{
 		float mult = 1.0;
 		
-		// Apply base x01 damage mult
-		if (damagetype == WEAPON_BEAM_DT)
-			mult = gFloat_Siege[siege_bunker_mult];
-		
 		// Check if damage type is explosive to eliminate iterations
-		else if (damagetype == WEAPON_EXPLO_DT)
+		if (damagetype == WEAPON_EXPLO_DT)
 		{
 			char className[64];
 			GetEntityClassname(inflictor, className, sizeof(className));
 				
 			// Apply base gl damage mult
 			if (InflictorIsGL(className))
-				mult = gFloat_GL[gl_bunker_mult];					
-				
-			// Apply base m95 damage mult
-			else if (InflcitorIsM95(className))
-				mult = gFloat_Siege[siege_bunker_mult];
-				
+				mult = gFloat_GL[gl_bunker_mult];				
+
 			// Apply red base damage mult
 			else if (InflictorIsRED(className))
 				mult = gFloat_Red[red_bunker_mult];			

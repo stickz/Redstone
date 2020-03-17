@@ -33,9 +33,7 @@ enum multBullets
 enum multSiege
 {
 	// Siegers (m95 & x01)
-	siege_bunker_mult = 0,
-	siege_transport_mult,
-	siege_ib0_base_mult,
+	siege_ib0_base_mult = 0,
 	siege_ib1_base_mult,
 	siege_ib2_base_mult,
 	siege_ib3_base_mult
@@ -204,10 +202,6 @@ void CreateSiegeConVars()
 	
 	// Siegers (m95 & x01)
 	char convarName[multSiege][] = {	
-		// Siege Structure Damage
-		"sm_mult_bunker_siege",
-		"sm_mult_transport_siege",
-		
 		// Siege Base Damage
 		"sm_mult_baseIB0_siege",
 		"sm_mult_baseIB1_siege",
@@ -215,10 +209,6 @@ void CreateSiegeConVars()
 		"sm_mult_baseIB3_siege"
 	};
 	char convarDesc[multSiege][] = {
-		// Siege Structure Damage
-		"Percentage of normal damage Siegers deal to the bunker",
-		"Percentage of normal damage Siegers deal to transport gates",
-
 		// Siege Base Damage
 		"Percentage of normal damage Siegers deal at Infantry Boost 0",
 		"Percentage of normal damage Siegers deal after Infantry Boost 1",
@@ -226,8 +216,6 @@ void CreateSiegeConVars()
 		"Percentage of normal damage Siegers deal after Infantry Boost 3"
 	};	
 	char convarDef[multSiege][] = { 
-		// Siege Structure Damage
-		"110", "105",
 		// Siege Base Damage
 		"95", "100", "105", "110"
 	};	
