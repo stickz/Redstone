@@ -15,6 +15,10 @@
 #define PRIMARY_FRACKING_LEFT 1500 // Amount of resources left before fracking is enabled
 #define PRIMARY_FRACKING_DELAY 26  // Number of minutes a team most own a prime to start fracking
 
+#define PRIMARY_FRACKING_AMOUNT_CORNER 3000 // Amount of resources to grant per frack on corner map
+#define PRIMARY_FRACKING_SECONDS_CORNER 60 // Number of seconds inbetween fracks on corner map
+#define PRIMARY_FRACKING_DELAY_CORNER 18  // Number of minutes a team most own a prime to start fracking on corner map
+
 #define SECONDARY_TEAM_TRICKLE 3300 // Reserved pool of resources for each team
 #define SECONDARY_TEAM_TRICKLE_LRG 6600 // Reserved pool of resources on large maps
 #define SECONDARY_TRICKLE_SET 40700 // Initial pool of resources, first come, first serve

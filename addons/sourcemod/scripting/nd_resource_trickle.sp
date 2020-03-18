@@ -46,10 +46,15 @@ int initPlyCount = 0;
 #include "nd_res_trickle/resource.sp"
 #include "nd_res_trickle/natives.sp"
 
+// Resource constants. Determine on map start.
+int primaryFrackingAmount = PRIMARY_FRACKING_AMOUNT;
+int primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS;
+int primaryFrackingDelay = PRIMARY_FRACKING_DELAY;
+
+// Resource entity lookup functions for tertaries and secondaries
 int Tertiary_FindArrayIndex(int entity) {
 	return structTertaries.FindValue(entity, ResPoint::entIndex);	
 }
-
 int Secondary_FindArrayIndex(int entity) {
 	return structSecondaries.FindValue(entity, ResPoint::entIndex);
 }
@@ -78,6 +83,8 @@ public void OnMapStart()
 	cornerMap = ND_CurrentMapIsCorner();
 	largeMap = ND_IsLargeResMap();
 	mediumMap = ND_IsMediumResMap();
+	
+	SetPrimaryFrackingIntervals();
 }
 
 public void ND_OnRoundStarted()
@@ -258,6 +265,23 @@ void initNewPrimary(int entIndex)
 	
 	// Push the primary object into the struct list
 	structPrimary.PushArray(prime);
+}
+
+void SetPrimaryFrackingIntervals()
+{
+	if (cornerMap)
+	{
+		primaryFrackingAmount = PRIMARY_FRACKING_AMOUNT_CORNER;
+		primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS_CORNER;
+		primaryFrackingDelay = PRIMARY_FRACKING_DELAY_CORNER;		
+	}
+	
+	else
+	{
+		primaryFrackingAmount = PRIMARY_FRACKING_AMOUNT;
+		primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS;
+		primaryFrackingDelay = PRIMARY_FRACKING_DELAY;		
+	}	
 }
 
 int GetAverageSpawnRes()
@@ -502,12 +526,13 @@ public Action TIMER_PrimaryExtract(Handle timer)
 	// Every 15 seconds, check if the prime qualfies for fracking.
 	// Owned for 26 minutes by consort or empire with less than 1500 team resources
 	// Frack a total of 750 (412 actually) resources every 45 seconds (or 550 res/min)
-	if (prime.timeOwned > PRIMARY_FRACKING_DELAY * 60 &&
+	// On corner map frack 3000 every 60 seconds, if owned for 18 minutes. (100% production)
+	if (prime.timeOwned > primaryFrackingDelay * 60 &&
 		prime.GetResTeam(prime.owner) <= PRIMARY_FRACKING_LEFT &&
 		(prime.owner == TEAM_CONSORT || prime.owner == TEAM_EMPIRE) &&
-		prime.timeOwned % PRIMARY_FRACKING_SECONDS == 0)
+		prime.timeOwned % primaryFrackingSeconds == 0)
 		{
-			prime.AddRes(prime.owner, PRIMARY_FRACKING_AMOUNT);
+			prime.AddRes(prime.owner, primaryFrackingAmount);
 			ND_SetPrimeResources(prime.GetRes());
 		}
 	
