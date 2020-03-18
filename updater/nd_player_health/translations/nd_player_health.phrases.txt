@@ -1,0 +1,18 @@
+"Phrases"
+{
+	"Armor Increases"
+	{
+		"en"		"See console for armor increases"
+	}
+	
+	"Armor Header Console"
+	{
+		"en"		"--> Armor Increases <--"
+	}
+	
+	"Armor Increase"
+	{
+		"#format"	"{1:i}"
+		"en"		"Exo: +{1}%%"
+	}
+}
