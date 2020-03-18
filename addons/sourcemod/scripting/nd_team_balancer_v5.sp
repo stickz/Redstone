@@ -259,7 +259,8 @@ bool PutTwoExtraLessSkill(float pSkill, float pDiff, float cpDiff, float opDiff,
 	// If less than 10 players are on a team and the strict skill difference is 80 or higher
 	if (equalCeilLST && tCount <= cvarMaxPlysStrictPlace.IntValue && cpDiff >= cvarMinPlacementEven.IntValue)
 		return true;
-		
+	
+	// Otherwise don't place the player on a team	
 	return false;
 }
 
