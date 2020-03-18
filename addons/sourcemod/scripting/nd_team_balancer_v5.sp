@@ -199,7 +199,7 @@ bool PlaceTeamBySkill(int client)
 	}
 	
 	// If one team has an extra player and the conditions for team placement are meant
-	else if (PutTwoExtraLessSkill(playerSkill, pTeamDiff, cpTeamDiff, onTeamCount, equalCeilLST))
+	else if (PutTwoExtraLessSkill(playerSkill, pTeamDiff, cpTeamDiff, opTeamDiff, onTeamCount, equalCeilLST, equalOffsetLST))
 	{
 		// If empire has one more player and less skill
 		if (overBalance == EMPIRE_PLUS_ONE && actualLSTeam == TEAM_EMPIRE)
@@ -240,20 +240,26 @@ bool PutSamePlysLessSkill(float pSkill, float pDiff, float opDiff, bool equalOff
 	return false;	
 }
 
-bool PutTwoExtraLessSkill(float pSkill, float pDiff, float cpDiff, int tCount, bool equalCeilLST)
+bool PutTwoExtraLessSkill(float pSkill, float pDiff, float cpDiff, float opDiff, int tCount, bool equalCeilLST, bool equalOffsetLST)
 {
-	// If the player skill is greater than 90
-	if (pSkill >= cvarMinPlaceSkillOne.IntValue) 
-	{
-		// If the skill difference is 160 or higher
-		if (pDiff >= cvarMinPlacementTwo.IntValue)
-			return true;		
-		
-		// If the actual & ceil teamdiff both agree on the least stacked team
-		// If less than 10 players are on a team and the strict skill difference is 80 or higher
-		return equalCeilLST && tCount <= cvarMaxPlysStrictPlace.IntValue && cpDiff >= cvarMinPlacementEven.IntValue;
-	}
+	// If the actual and offset team difference don't agree on the least stacked team
+	if (!equalOffsetLST)
+		return false;
 	
+	// If the player skill is less than the threshold to place them on a team
+	if (pSkill < cvarMinPlaceSkillOne.IntValue)
+		return false;
+
+	// If the actual or commander offset teamdiff is within the placement threshold
+	int placementThreshold = cvarMinPlacementTwo.IntValue;
+	if (pDiff >= placementThreshold || opDiff >= placementThreshold)
+		return true;
+	
+	// If the actual & ceil teamdiff both agree on the least stacked team
+	// If less than 10 players are on a team and the strict skill difference is 80 or higher
+	if (equalCeilLST && tCount <= cvarMaxPlysStrictPlace.IntValue && cpDiff >= cvarMinPlacementEven.IntValue)
+		return true;
+		
 	return false;
 }
 
