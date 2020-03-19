@@ -22,7 +22,7 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 #define IBLEVELS 4
-#define DEFAULT_EXO_DAMAGE_MULT 0.7
+#define DEFAULT_EXO_DAMAGE_MULT 0.8
 #define DEFAULT_DAMAGE_MULT 1.0
 
 bool HookedDamage[MAXPLAYERS+1] = {false, ...};
@@ -91,10 +91,10 @@ public void ND_OnRoundStart()
 	
 	for (int team = 2; team < TEAM_COUNT; team++)
 	{
-		ExoDamageMult[team] = DEFAULT_EXO_DAMAGE_MULT;
-		AssaultDamageMult[team] = DEFAULT_DAMAGE_MULT;
-		StealthDamageMult[team] = DEFAULT_DAMAGE_MULT;
-		SupportDamageMult[team] = DEFAULT_DAMAGE_MULT;
+		ExoDamageMult[team] = cvarExoDamageMult[0].FloatValue;
+		AssaultDamageMult[team] = cvarAssaultDamageMult[0].FloatValue;
+		StealthDamageMult[team] = cvarStealthDamageMult[0].FloatValue;
+		SupportDamageMult[team] = cvarSupportDamageMult[0].FloatValue;
 	}
 }
 void ResetVariables(int client) {
@@ -152,7 +152,7 @@ void PrintArmorIncreases(int team, int level)
 int CalcDisplayArmorExo(float cValue) 
 {
 	float defValue = 1.0 - DEFAULT_EXO_DAMAGE_MULT;	
-	return RoundFloat((1.0 - cValue + defValue) * 100.0);
+	return RoundFloat((1.0 - cValue - defValue) * 100.0);
 }
 int CalcDisplayArmor(float cValue) {
 	return RoundFloat((1.0 - cValue) * 100);
