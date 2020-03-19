@@ -51,7 +51,6 @@ ConVar BBQIBConVars[IBLEVELS];
 ConVar GrenadierIBConVars[IBLEVELS];
 
 ConVar AssassinSpeedConVar;
-ConVar BBQSpeedConVar;
 
 float MovementSpeedFloat[TEAM_COUNT][MovementClasses];
 bool HookedThink[MAXPLAYERS+1] = {false, ...};
@@ -85,10 +84,9 @@ void CreatePluginConVars()
 	GrenadierIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_gren", "1.03", "Sets ib3 speed of grenadier class");
 	
 	/* Base & Infantry boost changes to BBQ class */
-	BBQSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_bbqkit", "1.03", "Sets speed of bbq kit class");		
-	BBQIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_bbq", "1.01", "Sets ib1 speed of bbq class");
-	BBQIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_bbq", "1.02", "Sets ib2 speed of bbq class");
-	BBQIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_bbq", "1.03", "Sets ib3 speed of bbq class");
+	BBQIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_bbq", "1.02", "Sets ib1 speed of bbq class");
+	BBQIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_bbq", "1.04", "Sets ib2 speed of bbq class");
+	BBQIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_bbq", "1.06", "Sets ib3 speed of bbq class");
 	
 	/* Infantry boost changes to Main Classes */	
 	AssaultIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_assault", "1.02", "Sets ib1 speed of assault class");
@@ -210,7 +208,6 @@ void UpdateMovementSpeeds()
 void UpdateTeamMoveSpeeds(int team)
 {
 	// Calculate any base movement speed increases
-	MovementSpeedFloat[team][move(SupportBBQ)] = BBQSpeedConVar.FloatValue;
 	MovementSpeedFloat[team][move(StealthAssassin)] = AssassinSpeedConVar.FloatValue;
 		
 	int ibLevel = ND_GetItemResearchLevel(team, Infantry_Boost);	
@@ -325,13 +322,6 @@ void NotifyMoveIncrease(int client)
 		int aSpeed = RoundFloat((1.0 - AssassinSpeedConVar.FloatValue) * 100.0);
 		PrintMessageTI1(client, "Recent Assassin Speed", aSpeed);
 		FirstAssassinSpawn[client] = true;
-	}
-	
-	else if (!FirstBBQSpawn[client] && IsSupportBBQ(mainClass, subClass))
-	{
-		int bSpeed = RoundFloat((1.0 - BBQSpeedConVar.FloatValue) * 100.0);
-		PrintMessageTI1(client, "Recent BBQ Speed", bSpeed);
-		FirstBBQSpawn[client] = true;
 	}
 }
 
