@@ -1,7 +1,8 @@
 #define STEAMID_SIZE 32
 
-#define TEXT_FILE_COUNT 5
+#define TEXT_FILE_COUNT 6
 char nd_text_file[TEXT_FILE_COUNT][] = {
+	"data/skill/w60.txt",
 	"data/skill/w80.txt",
 	"data/skill/w100.txt",
 	"data/skill/w120.txt",
@@ -51,7 +52,7 @@ void ReadTextFiles()
 			TrimString(steamid);
 			
 			/* Move the steamid to an adt array */
-			int skillValue = 80 + (idx * 20);
+			int skillValue = MIN_SKILL_VALUE + (idx * 20);
 			g_SteamIDList.PushString(steamid);	
 			g_PlayerSkillFloors.Push(skillValue);
 		}

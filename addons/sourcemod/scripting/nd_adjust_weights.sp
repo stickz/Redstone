@@ -19,6 +19,7 @@ public Plugin myinfo =
 };
 
 #define STRING_NOT_FOUND -1
+#define MIN_SKILL_VALUE 60
 
 ArrayList g_PlayerSkillFloors;
 ArrayList g_SteamIDList;
@@ -52,7 +53,7 @@ void AddClientWeighting(int client, int fileIDX)
 	GetClientAuthId(client, AuthId_Steam2, steamid, sizeof(steamid));
 	
 	/* Add the steamid to the arraylist */
-	int skillValue = 80 + (fileIDX * 20);	
+	int skillValue = MIN_SKILL_VALUE + (fileIDX * 20);	
 	g_SteamIDList.PushString(steamid);	
 	g_PlayerSkillFloors.Push(skillValue);
 	
@@ -73,7 +74,7 @@ void RemoveClientWeighting(int client)
 	}
 	
 	/* Get the weight before erasing things */
-	int weight = g_PlayerSkillFloors.Get(found) - 80;
+	int weight = g_PlayerSkillFloors.Get(found) - MIN_SKILL_VALUE;
 	
 	/* Erase skill values from array list */	
 	g_SteamIDList.Erase(found);
