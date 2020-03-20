@@ -45,6 +45,10 @@ stock bool ND_IsStructRelay(const char[] classname) {
 	return StrEqual(classname, STRUCT_RELAY, true) || StrEqual(classname, STRUCT_REPEATER, true);
 }
 
+stock bool ND_IsStructFlameTurret(const char[] classname) {
+	return StrEqual(classname, STRUCT_SONIC_TURRET, true) || StrEqual(classname, STRUCT_FT_TURRET, true);
+}
+
 stock char GetRelayTowerName(int team)
 {
 	char name[32];
