@@ -192,10 +192,14 @@ public Action OnPlayerTakeDamage(int victim, int &attacker, int &inflictor, floa
 	// Get the team of the victim
 	int team = GetClientTeam(victim);
 	
+	// Get the inflictor weapon class
+	char className[64];
+	GetEntityClassname(inflictor, className, sizeof(className));
+	
 	// If the structure is a rocket turret, apply the damage fix
-	if (StrEqual(iClass(inflictor), STRUCT_ROCKET_TURRET, false))
+	if (StrEqual(className, STRUCT_ROCKET_TURRET, false))
 	{
-		float maxRDamage = GetRocketMaxDamage(victim, team);
+		float maxRDamage = GetRocketMaxDamage(team);
 		damage = maxRDamage;
 	}	
 	
@@ -206,6 +210,13 @@ public Action OnPlayerTakeDamage(int victim, int &attacker, int &inflictor, floa
 	// Also apply 5% armor (damage resistance) per infantry boost level
 	if (IsExoClass(mainClass))
 	{
+		// Do not apply armor to exos for machine gun turrets
+		if (StrEqual(className, STRUCT_MG_TURRET, false))
+		{
+			damage *= DEFAULT_EXO_DAMAGE_MULT;
+			return Plugin_Changed;
+		}		
+		
 		float multExo = ExoDamageMult[team];
 		damage *= multExo;		
 		return Plugin_Changed
@@ -238,17 +249,10 @@ public Action OnPlayerTakeDamage(int victim, int &attacker, int &inflictor, floa
 	return Plugin_Continue;
 }
 
-stock float GetRocketMaxDamage(int client, int team)
+float GetRocketMaxDamage(int team)
 {	
 	if (team == TEAM_EMPIRE || team == TEAM_CONSORT)
 		return RocketTurretDamage[team-2].FloatValue;
 		
 	return 0.0;
-}
-
-stock char iClass(int &inflictor)
-{
-	char className[64];
-	GetEntityClassname(inflictor, className, sizeof(className));
-	return className;			
 }
