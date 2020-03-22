@@ -1,3 +1,5 @@
+#define FRACKING_MIN_PLYS 8 // Specifies the minimum player count to enable fracking
+
 #define PRIMARY_TEAM_TRICKLE 3000 // Reserved pool of resources for each team
 #define PRIMARY_TEAM_TRICKLE_LRG 6000 // Reserved pool of resources on large maps
 #define PRIMARY_TEAM_TRICKLE_CORNER 40000 // Reserved pool of resources on corner
@@ -13,11 +15,11 @@
 #define PRIMARY_FRACKING_AMOUNT 750 // Amount of resources to grant per frack
 #define PRIMARY_FRACKING_SECONDS 45 // Number of seconds inbetween fracks
 #define PRIMARY_FRACKING_LEFT 1500 // Amount of resources left before fracking is enabled
-#define PRIMARY_FRACKING_DELAY 26  // Number of minutes a team most own a prime to start fracking
+#define PRIMARY_FRACKING_DELAY 26.0  // Number of minutes a team most own a prime to start fracking
 
-#define PRIMARY_FRACKING_AMOUNT_CORNER 3000 // Amount of resources to grant per frack on corner map
-#define PRIMARY_FRACKING_SECONDS_CORNER 60 // Number of seconds inbetween fracks on corner map
-#define PRIMARY_FRACKING_DELAY_CORNER 18  // Number of minutes a team most own a prime to start fracking on corner map
+#define PRIMARY_FRACKING_AMOUNT_FASTER 3000 // Amount of resources to grant per frack at faster rates
+#define PRIMARY_FRACKING_SECONDS_FASTER 60 // Number of seconds inbetween fracks at faster rates
+#define PRIMARY_FRACKING_DELAY_FASTER 18.0  // Number of minutes a team most own a prime to start fracking at faster rates
 
 #define SECONDARY_TEAM_TRICKLE 3300 // Reserved pool of resources for each team
 #define SECONDARY_TEAM_TRICKLE_LRG 6600 // Reserved pool of resources on large maps
@@ -45,7 +47,7 @@
 #define TERTIARY_FRACKING_AMOUNT 50 // Amount of resources to grant per frack
 #define TERTIARY_FRACKING_SECONDS 15 // Number of seconds inbetween fracks
 #define TERTIARY_FRACKING_LEFT 300 // Amount of resources left before fracking is enabled
-#define TERTIARY_FRACKING_DELAY 13 // Number of minutes a team most own a teritary to start fracking
+#define TERTIARY_FRACKING_DELAY 13.0 // Number of minutes a team most own a teritary to start fracking
 
 #define TRICKLE_REDUCE_COUNT_MED 12 // Number of players to reduce trickle resources for medium maps
 #define TRICKLE_REDUCE_COUNT_LRG 16 // Number of players to reduce trickle resources for large maps

@@ -37,9 +37,12 @@ Handle primaryTimer = INVALID_HANDLE;
 int PrimeEntity = -1;
 
 bool cornerMap = false;
+bool coastMap = false;
 bool largeMap = false;
 bool mediumMap = false;
+
 int initPlyCount = 0;
+int curPlyCount = 0;
 
 // Include the teritary structure and natives
 #include "nd_res_trickle/constants.sp"
@@ -49,7 +52,7 @@ int initPlyCount = 0;
 // Resource constants. Determine on map start.
 int primaryFrackingAmount = PRIMARY_FRACKING_AMOUNT;
 int primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS;
-int primaryFrackingDelay = PRIMARY_FRACKING_DELAY;
+float primaryFrackingDelay = PRIMARY_FRACKING_DELAY;
 
 // Resource entity lookup functions for tertaries and secondaries
 int Tertiary_FindArrayIndex(int entity) {
@@ -80,11 +83,26 @@ public void OnPluginStart()
 
 public void OnMapStart() 
 {
-	cornerMap = ND_CurrentMapIsCorner();
+	// Get the current map
+	char currentMap[32];
+	GetCurrentMap(currentMap, sizeof(currentMap));
+	
+	// Check if the current map is coast or corner
+	cornerMap = ND_CustomMapEquals(currentMap, ND_Corner);
+	coastMap = ND_StockMapEquals(currentMap, ND_Coast);
+	
+	// Check if the current map is a medium or large map
 	largeMap = ND_IsLargeResMap();
 	mediumMap = ND_IsMediumResMap();
 	
+	// If corner or coast, change the primary fracking intervals
 	SetPrimaryFrackingIntervals();
+}
+
+public void OnClientPutInServer(int client)
+{	
+	if (ND_RoundStarted())
+		curPlyCount = ND_GetClientCount();	
 }
 
 public void ND_OnRoundStarted()
@@ -97,7 +115,9 @@ public void ND_OnRoundStarted()
 	PrimeEntity = -1;	
 	structPrimary.Clear();
 	
-	initPlyCount = ND_GetClientCount();
+	int clientCount = ND_GetClientCount();	
+	initPlyCount = clientCount;
+	curPlyCount = clientCount;
 }
 
 public void ND_OnResPointsCached()
@@ -269,11 +289,11 @@ void initNewPrimary(int entIndex)
 
 void SetPrimaryFrackingIntervals()
 {
-	if (cornerMap)
+	if (cornerMap || coastMap)
 	{
-		primaryFrackingAmount = PRIMARY_FRACKING_AMOUNT_CORNER;
-		primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS_CORNER;
-		primaryFrackingDelay = PRIMARY_FRACKING_DELAY_CORNER;		
+		primaryFrackingAmount = PRIMARY_FRACKING_AMOUNT_FASTER;
+		primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS_FASTER;
+		primaryFrackingDelay = PRIMARY_FRACKING_DELAY_FASTER;	
 	}
 	
 	else
@@ -447,16 +467,12 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 	// Every five seconds, check if the tertiary qualfies for fracking.
 	// Owned for 13 minutes by consort or empire with less than 300 team resources
 	// Frack a total of 100 (55 actually) resources every 20 seconds (or 120 res/min)
-	if (tert.timeOwned > TERTIARY_FRACKING_DELAY * 60 &&
-		tert.GetResTeam(tert.owner) <= TERTIARY_FRACKING_LEFT &&
-		(tert.owner == TEAM_EMPIRE || tert.owner == TEAM_CONSORT) &&
-		tert.timeOwned % TERTIARY_FRACKING_SECONDS == 0)
-		{
-			// Add the resources to the tertiary and update the current resources
-			tert.AddRes(tert.owner, TERTIARY_FRACKING_AMOUNT);
-			ND_SetCurrentResources(tert.entIndex, tert.GetRes());
-		}
-
+	if (ResPointReadyForFrack(tert, TERTIARY_FRACKING_DELAY, TERTIARY_FRACKING_LEFT, TERTIARY_FRACKING_SECONDS))
+	{
+		tert.AddRes(tert.owner, TERTIARY_FRACKING_AMOUNT);
+		ND_SetCurrentResources(tert.entIndex, tert.GetRes());		
+	}
+	
 	// Update the tertiary structure in the ArrayList
 	structTertaries.SetArray(arrIndex, tert);
 	return Plugin_Continue;
@@ -483,15 +499,12 @@ public Action TIMER_SecondaryExtract(Handle timer, int arrIndex)
 	
 	// Every ten seconds, check if secondary qualfies for fracking.
 	// Owned for 19.5 minutes by consort or empire with less than 825 team resources
-	// Frack a total of 275 (151 actually) resources every 30 seconds (or 302.5 res/min)	
-	if (sec.timeOwned > SECONDARY_FRACKING_DELAY * 60 &&
-		sec.GetResTeam(sec.owner) <= SECONDARY_FRACKING_LEFT &&
-		(sec.owner == TEAM_CONSORT || sec.owner == TEAM_EMPIRE) &&
-		sec.timeOwned % SECONDARY_FRACKING_SECONDS == 0)
-		{
-			sec.AddRes(sec.owner, SECONDARY_FRACKING_AMOUNT);
-			ND_SetCurrentResources(sec.entIndex, sec.GetRes());			
-		}
+	// Frack a total of 275 (151 actually) resources every 30 seconds (or 302.5 res/min)
+	if (ResPointReadyForFrack(sec, SECONDARY_FRACKING_DELAY, SECONDARY_FRACKING_LEFT, SECONDARY_FRACKING_SECONDS))
+	{
+		sec.AddRes(sec.owner, SECONDARY_FRACKING_AMOUNT);
+		ND_SetCurrentResources(sec.entIndex, sec.GetRes());		
+	}
 	
 	// Update the secondary structure in the ArrayList
 	structSecondaries.SetArray(arrIndex, sec);
@@ -527,16 +540,23 @@ public Action TIMER_PrimaryExtract(Handle timer)
 	// Owned for 26 minutes by consort or empire with less than 1500 team resources
 	// Frack a total of 750 (412 actually) resources every 45 seconds (or 550 res/min)
 	// On corner map frack 3000 every 60 seconds, if owned for 18 minutes. (100% production)
-	if (prime.timeOwned > primaryFrackingDelay * 60 &&
-		prime.GetResTeam(prime.owner) <= PRIMARY_FRACKING_LEFT &&
-		(prime.owner == TEAM_CONSORT || prime.owner == TEAM_EMPIRE) &&
-		prime.timeOwned % primaryFrackingSeconds == 0)
-		{
-			prime.AddRes(prime.owner, primaryFrackingAmount);
-			ND_SetPrimeResources(prime.GetRes());
-		}
+	if (ResPointReadyForFrack(prime, primaryFrackingDelay, PRIMARY_FRACKING_LEFT, primaryFrackingSeconds))
+	{
+		prime.AddRes(prime.owner, primaryFrackingAmount);
+		ND_SetPrimeResources(prime.GetRes());		
+	}
 	
 	// Update the primary structure in the ArrayList
 	structPrimary.SetArray(0, prime);	
 	return Plugin_Continue;
+}
+
+bool ResPointReadyForFrack(ResPoint point, float frackDelay, int resLeft, int interval)
+{
+	if (point.timeOwned > frackDelay * 60 && point.GetResTeam(point.owner) <= resLeft &&
+	    (point.owner == TEAM_CONSORT || point.owner == TEAM_EMPIRE) && 
+		 point.timeOwned % interval == 0 && curPlyCount >= FRACKING_MIN_PLYS)
+			return true;			
+			
+	return false;
 }
