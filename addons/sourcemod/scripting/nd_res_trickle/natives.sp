@@ -1,3 +1,22 @@
+/* Forwards */
+Handle OnResFrackStarted;
+
+void InitForwards()
+{
+	OnResFrackStarted = CreateGlobalForward("ND_OnResFrackStarted", ET_Ignore, Param_Cell, Param_Float, Param_Cell, Param_Cell);	
+}
+
+void FireOnResFrackStartedForward(int resType, float delay, int interval, int amount)
+{
+	Action dummy;
+	Call_StartForward(OnResFrackStarted);
+	Call_PushCell(resType);
+	Call_PushFloat(delay);
+	Call_PushCell(interval);
+	Call_PushCell(amount);
+	Call_Finish(dummy);	
+}
+
 /* Natives */
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {

@@ -22,6 +22,8 @@ public Plugin myinfo =
 
 #define RESOURCE_NOT_TERTIARY 	-1
 #define RESPOINT_NOT_FOUND		-1
+#define RESPOINT_FRACK_FALSE 	0
+#define RESPOINT_FRACK_TRUE 	1
 
 ArrayList listTertiaries;
 ArrayList structTertaries;
@@ -75,6 +77,8 @@ public void OnPluginStart()
 	HookEvent("resource_captured", Event_ResourceCaptured, EventHookMode_Post);
 	
 	AddUpdaterLibrary(); // Add auto updater feature
+	
+	InitForwards(); // Creates plugin forwards
 	
 	// Add late loading support to resource trickle
 	if (ND_RoundStarted() && ND_ResPointsCached())
@@ -185,6 +189,7 @@ void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
 	tert.owner = TEAM_SPEC;
 	tert.type = RESOURCE_TERTIARY;
 	tert.timeOwned = 0;
+	tert.firstFrack = RESPOINT_FRACK_TRUE;
 
 	// Should we init the teritary with full resources?
 	if (fullRes)
@@ -226,6 +231,7 @@ void initNewSecondary(int arrIndex, int entIndex)
 	sec.owner = TEAM_SPEC;
 	sec.type = RESOURCE_SECONDARY;
 	sec.timeOwned = 0;
+	sec.firstFrack = RESPOINT_FRACK_TRUE;
 	
 	// Don't enable team resource feature or trickle regen for secondaries on corner
 	if (cornerMap)
@@ -258,7 +264,8 @@ void initNewPrimary(int entIndex)
 	prime.arrayIndex = 0;
 	prime.entIndex = entIndex;
 	prime.owner = TEAM_SPEC;
-	prime.type = RESOURCE_PRIME;	
+	prime.type = RESOURCE_PRIME;
+	prime.firstFrack = RESPOINT_FRACK_TRUE;
 	
 	/* Decide based on the map and player count how many resources to prime prime */
 	if (cornerMap) // If corner give prime 40k inital and 40k reserved
@@ -361,8 +368,10 @@ void Primary_Captured(int team)
 	ResPoint prime;
 	structPrimary.GetArray(0, prime);
 	
-	// Change the owner to the team and update the primary structure
+	// Update capture varriables and push them to the primary structure
 	prime.owner = team;
+	prime.timeOwned = 0;
+	prime.firstFrack = RESPOINT_FRACK_TRUE;
 	structPrimary.SetArray(0, prime);
 	
 	// Set the current resources of the primary structure to team resources when captured
@@ -391,8 +400,10 @@ void Secondary_Captured(int entity, int team)
 	ResPoint sec;
 	structSecondaries.GetArray(arrIndex, sec);
 	
-	// Change the owner to the team and update the secondary list
+	// Update capture varriables and push them to the secondary array list
 	sec.owner = team;
+	sec.timeOwned = 0;
+	sec.firstFrack = RESPOINT_FRACK_TRUE;
 	structSecondaries.SetArray(arrIndex, sec);
 	
 	// Set the current resources of the secondary to team resources when captured
@@ -420,9 +431,10 @@ void Tertiary_Captured(int entity, int team)
 	ResPoint tert;
 	structTertaries.GetArray(arrIndex, tert);
 		
-	// Change the owner to the team and update the tertiary list
+	// Update capture varriables and push them to the teritary array list
 	tert.owner = team;
 	tert.timeOwned = 0;
+	tert.firstFrack = RESPOINT_FRACK_TRUE;
 	structTertaries.SetArray(arrIndex, tert);
 		
 	// Set the current resources of the tertiary to team resources when captured
@@ -469,8 +481,16 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 	// Frack a total of 100 (55 actually) resources every 20 seconds (or 120 res/min)
 	if (ResPointReadyForFrack(tert, TERTIARY_FRACKING_DELAY, TERTIARY_FRACKING_LEFT, TERTIARY_FRACKING_SECONDS))
 	{
+		// If this is the first frack, fire the forward
+		if (tert.firstFrack == RESPOINT_FRACK_TRUE)
+		{
+			FireOnResFrackStartedForward(tert.type, TERTIARY_FRACKING_DELAY, TERTIARY_FRACKING_SECONDS, TERTIARY_FRACKING_AMOUNT);
+			tert.firstFrack = RESPOINT_FRACK_FALSE;
+		}
+		
+		// Add the resources to the teritary struct and update the tertiary entity resources
 		tert.AddRes(tert.owner, TERTIARY_FRACKING_AMOUNT);
-		ND_SetCurrentResources(tert.entIndex, tert.GetRes());		
+		ND_SetCurrentResources(tert.entIndex, tert.GetRes());
 	}
 	
 	// Update the tertiary structure in the ArrayList
@@ -502,8 +522,16 @@ public Action TIMER_SecondaryExtract(Handle timer, int arrIndex)
 	// Frack a total of 275 (151 actually) resources every 30 seconds (or 302.5 res/min)
 	if (ResPointReadyForFrack(sec, SECONDARY_FRACKING_DELAY, SECONDARY_FRACKING_LEFT, SECONDARY_FRACKING_SECONDS))
 	{
+		// If this is the first frack, fire the forward
+		if (sec.firstFrack == RESPOINT_FRACK_TRUE)
+		{
+			FireOnResFrackStartedForward(sec.type, SECONDARY_FRACKING_DELAY, SECONDARY_FRACKING_SECONDS, SECONDARY_FRACKING_AMOUNT);
+			sec.firstFrack = RESPOINT_FRACK_FALSE;
+		}
+		
+		// Add the resources to the secondary struct and update the secondary entity resources
 		sec.AddRes(sec.owner, SECONDARY_FRACKING_AMOUNT);
-		ND_SetCurrentResources(sec.entIndex, sec.GetRes());		
+		ND_SetCurrentResources(sec.entIndex, sec.GetRes());
 	}
 	
 	// Update the secondary structure in the ArrayList
@@ -542,6 +570,14 @@ public Action TIMER_PrimaryExtract(Handle timer)
 	// On corner map frack 3000 every 60 seconds, if owned for 18 minutes. (100% production)
 	if (ResPointReadyForFrack(prime, primaryFrackingDelay, PRIMARY_FRACKING_LEFT, primaryFrackingSeconds))
 	{
+		// If this is the first frack, fire the forward
+		if (prime.firstFrack == RESPOINT_FRACK_TRUE)
+		{
+			FireOnResFrackStartedForward(prime.type, primaryFrackingDelay, primaryFrackingSeconds, primaryFrackingAmount);
+			prime.firstFrack = RESPOINT_FRACK_FALSE;
+		}
+		
+		// Add the resources to the primary struct and update the prime entity resources		
 		prime.AddRes(prime.owner, primaryFrackingAmount);
 		ND_SetPrimeResources(prime.GetRes());		
 	}

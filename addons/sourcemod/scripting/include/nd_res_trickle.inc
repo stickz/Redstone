@@ -3,6 +3,10 @@
 #endif
 #define _nd_res_trickle_included
 
+// Fires when a resource point first starts fracking
+// 
+forward void ND_OnResFrackStarted(int resType, float delay, int interval, int amount);
+
 // Add trickle resources to a tertiary
 // Returns true on success, false on failure
 native bool ND_AddTertiaryResources(int entity, int team, int amount);

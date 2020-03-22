@@ -9,6 +9,8 @@ enum struct ResPoint
 	int owner;
 	int timeOwned;
 	
+	int firstFrack;
+	
 	int initialRes;
 	int empireRes;
 	int consortRes;	
