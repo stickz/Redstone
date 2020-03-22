@@ -49,6 +49,7 @@ ConVar SupportIBConVars[IBLEVELS];
 ConVar StealthIBConVars[IBLEVELS];
 ConVar BBQIBConVars[IBLEVELS];
 ConVar GrenadierIBConVars[IBLEVELS];
+ConVar AssassinIBConVars[IBLEVELS];
 
 ConVar AssassinSpeedConVar;
 
@@ -76,7 +77,12 @@ void CreatePluginConVars()
 {	
 	AutoExecConfig_Setup("nd_player_speed");
 	
-	AssassinSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_assassin", "1.06", "Sets speed of stealth assassin class");
+	AssassinSpeedConVar = AutoExecConfig_CreateConVar("sm_speed_assassin", "1.03", "Sets speed of stealth assassin class");
+	
+	/* Infantry boost changes to Assassin class */
+	AssassinIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_assassin", "1.01", "Sets ib1 speed of assassin class");
+	AssassinIBConVars[2] = AutoExecConfig_CreateConVar("sm_speed_ib2_assassin", "1.02", "Sets ib2 speed of assassin class");
+	AssassinIBConVars[3] = AutoExecConfig_CreateConVar("sm_speed_ib3_assassin", "1.03", "Sets ib3 speed of assassin class");
 	
 	/* Infantry boost changes to Grenadier class */
 	GrenadierIBConVars[1] = AutoExecConfig_CreateConVar("sm_speed_ib1_gren", "1.01", "Sets ib1 speed of grenadier class");
@@ -165,6 +171,7 @@ void PrintMainClassSpeeds(int team, int level)
 
 void PrintSubClassSpeeds(int team, int level)
 {
+	int assassin = CalcDisplaySpeed(AssassinIBConVars[level].FloatValue);
 	int bbq = CalcDisplaySpeed(BBQIBConVars[level].FloatValue);
 	int grenadier = CalcDisplaySpeed(GrenadierIBConVars[level].FloatValue);
 	
@@ -172,7 +179,7 @@ void PrintSubClassSpeeds(int team, int level)
 	{
 		if (IsClientInGame(s) && GetClientTeam(s) == team)
 		{			
-			PrintToConsole(s, "%t", "Sub Speed Increase", bbq, grenadier);
+			PrintToConsole(s, "%t", "Sub Speed Increase", assassin, bbq, grenadier);
 		}
 	}
 }
@@ -207,17 +214,15 @@ void UpdateMovementSpeeds()
 
 void UpdateTeamMoveSpeeds(int team)
 {
-	// Calculate any base movement speed increases
+	// Calculate base movement speed increase for stealth assassin
 	MovementSpeedFloat[team][move(StealthAssassin)] = AssassinSpeedConVar.FloatValue;
 		
 	int ibLevel = ND_GetItemResearchLevel(team, Infantry_Boost);	
 	if (ibLevel >= 1)
-	{
+	{		
+		// Calculate new speed for assassin. Compound stealth, base and infantry boost adjustments
+		MovementSpeedFloat[team][move(StealthAssassin)] *= AssassinIBConVars[ibLevel].FloatValue;
 		MovementSpeedFloat[team][move(StealthAssassin)] *= StealthIBConVars[ibLevel].FloatValue;
-		MovementSpeedFloat[team][move(StealthClass)] *= StealthIBConVars[ibLevel].FloatValue;
-		MovementSpeedFloat[team][move(ExoClass)] *= ExoIBConVars[ibLevel].FloatValue;
-		MovementSpeedFloat[team][move(AssaultClass)] *= AssaultIBConVars[ibLevel].FloatValue;
-		MovementSpeedFloat[team][move(SupportClass)] *= SupportIBConVars[ibLevel].FloatValue;
 		
 		// Caculate new bbq speed. Compound support, base and infantry boost adjustments
 		MovementSpeedFloat[team][move(SupportBBQ)] *= BBQIBConVars[ibLevel].FloatValue;
@@ -226,6 +231,12 @@ void UpdateTeamMoveSpeeds(int team)
 		// Caculate new grenadier speed. Compound assault and grenadier infantry boost adjustments
 		MovementSpeedFloat[team][move(AssaultGrenadier)] *= GrenadierIBConVars[ibLevel].FloatValue;
 		MovementSpeedFloat[team][move(AssaultGrenadier)] *= AssaultIBConVars[ibLevel].FloatValue;
+		
+		// Calculate the new base speed for all classes, which don't have invidual adjustments
+		MovementSpeedFloat[team][move(StealthClass)] *= StealthIBConVars[ibLevel].FloatValue;
+		MovementSpeedFloat[team][move(ExoClass)] *= ExoIBConVars[ibLevel].FloatValue;
+		MovementSpeedFloat[team][move(AssaultClass)] *= AssaultIBConVars[ibLevel].FloatValue;
+		MovementSpeedFloat[team][move(SupportClass)] *= SupportIBConVars[ibLevel].FloatValue;
 	}
 	
 	DisableTeamMoveSpeeds(team);

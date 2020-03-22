@@ -18,8 +18,8 @@
 	
 	"Sub Speed Increase"
 	{
-		"#format"	"{1:i},{2:i}"
-		"en"		"Additional Increases -> BBQ: +{1}%%, Grenadier: +{2}%"
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"Additional Increases -> Assassin: +{1}%%, BBQ: +{2}%%, Grenadier: +{3}%"
 	}
 	
 	"Recent Assassin Speed"
