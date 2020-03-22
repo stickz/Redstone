@@ -1,0 +1,8 @@
+"Phrases"
+{
+	"Prime Resource Fracking"
+	{
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"Prime has started fracking {1} res/min. Neutralize to reset to {2} res/min for {3}m"
+	}
+}
