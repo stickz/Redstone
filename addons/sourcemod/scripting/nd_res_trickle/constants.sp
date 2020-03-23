@@ -13,13 +13,13 @@
 #define PRIMARY_TRICKLE_DEGEN_MINUTES 12 // Minutes to degenerate if team hasn't owned tertiary
 
 #define PRIMARY_FRACKING_AMOUNT 750 // Amount of resources to grant per frack
-#define PRIMARY_FRACKING_SECONDS 45 // Number of seconds inbetween fracks
+#define PRIMARY_FRACKING_SECONDS 30 // Number of seconds inbetween fracks
 #define PRIMARY_FRACKING_LEFT 1500 // Amount of resources left before fracking is enabled
-#define PRIMARY_FRACKING_DELAY 26.0  // Number of minutes a team most own a prime to start fracking
+#define PRIMARY_FRACKING_DELAY 20.0  // Number of minutes a team most own a prime to start fracking
 
 #define PRIMARY_FRACKING_AMOUNT_FASTER 3000 // Amount of resources to grant per frack at faster rates
 #define PRIMARY_FRACKING_SECONDS_FASTER 60 // Number of seconds inbetween fracks at faster rates
-#define PRIMARY_FRACKING_DELAY_FASTER 18.0  // Number of minutes a team most own a prime to start fracking at faster rates
+#define PRIMARY_FRACKING_DELAY_FASTER 15.0  // Number of minutes a team most own a prime to start fracking at faster rates
 
 #define SECONDARY_TEAM_TRICKLE 3300 // Reserved pool of resources for each team
 #define SECONDARY_TEAM_TRICKLE_LRG 6600 // Reserved pool of resources on large maps
@@ -30,9 +30,9 @@
 #define SECONDARY_TRICKLE_REGEN_INTERVAL 55 // Amount to regen every ten seconds
 
 #define SECONDARY_FRACKING_AMOUNT 275 // Amount of resources to grant per frack
-#define SECONDARY_FRACKING_SECONDS 30 // Number of seconds inbetween fracks
+#define SECONDARY_FRACKING_SECONDS 20 // Number of seconds inbetween fracks
 #define SECONDARY_FRACKING_LEFT 825 // Amount of resources left before fracking is enabled
-#define SECONDARY_FRACKING_DELAY 19.5  // Number of minutes a team most own a secondary to start fracking
+#define SECONDARY_FRACKING_DELAY 15.0  // Number of minutes a team most own a secondary to start fracking
 
 #define TERTIARY_TEAM_TRICKLE 8000 // Reserved pool of resources for each team
 #define TERTIARY_TEAM_TRICKLE_LRG 4000 // Reserved pool of resources for large maps

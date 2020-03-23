@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name 		= "[ND] Resource Trickle",
 	author 		= "Stickz",
 	description 	= "Adjusts tertaries to have team trickle amounts",
-	version 	= "recompile",
+	version 	= "dummy",
 	url 		= "https://github.com/stickz/Redstone/"
 };
 
@@ -477,8 +477,8 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 		tert.SubtractResTeam(otherTeam, TERTIARY_TRICKLE_DEGEN_INTERVAL);
 	
 	// Every five seconds, check if the tertiary qualfies for fracking.
-	// Owned for 13 minutes by consort or empire with less than 300 team resources
-	// Frack a total of 100 (55 actually) resources every 20 seconds (or 120 res/min)
+	// Owned for 8 minutes by consort or empire with less than 300 team resources
+	// Frack a total of 100 resources every 25 seconds (or 150 res/min)
 	if (ResPointReadyForFrack(tert, TERTIARY_FRACKING_DELAY, TERTIARY_FRACKING_LEFT, TERTIARY_FRACKING_SECONDS))
 	{
 		// If this is the first frack, fire the forward
@@ -518,8 +518,8 @@ public Action TIMER_SecondaryExtract(Handle timer, int arrIndex)
 		sec.AddRes(otherTeam, SECONDARY_TRICKLE_REGEN_INTERVAL);
 	
 	// Every ten seconds, check if secondary qualfies for fracking.
-	// Owned for 19.5 minutes by consort or empire with less than 825 team resources
-	// Frack a total of 275 (151 actually) resources every 30 seconds (or 302.5 res/min)
+	// Owned for 15 minutes by consort or empire with less than 825 team resources
+	// Frack a total of 275 resources every 20 seconds (or 453.5 res/min)
 	if (ResPointReadyForFrack(sec, SECONDARY_FRACKING_DELAY, SECONDARY_FRACKING_LEFT, SECONDARY_FRACKING_SECONDS))
 	{
 		// If this is the first frack, fire the forward
@@ -565,9 +565,9 @@ public Action TIMER_PrimaryExtract(Handle timer)
 		prime.SubtractResTeam(otherTeam, PRIMARY_TRICKLE_DEGEN_INTERVAL);
 	
 	// Every 15 seconds, check if the prime qualfies for fracking.
-	// Owned for 26 minutes by consort or empire with less than 1500 team resources
-	// Frack a total of 750 (412 actually) resources every 45 seconds (or 550 res/min)
-	// On corner map frack 3000 every 60 seconds, if owned for 18 minutes. (100% production)
+	// Owned for 20 minutes by consort or empire with less than 1500 team resources
+	// Frack a total of 750 resources every 30 seconds (or 825 res/min)
+	// On corner or coast map frack 3000 every 60 seconds, if owned for 15 minutes. (100% production)
 	if (ResPointReadyForFrack(prime, primaryFrackingDelay, PRIMARY_FRACKING_LEFT, primaryFrackingSeconds))
 	{
 		// If this is the first frack, fire the forward
@@ -589,7 +589,7 @@ public Action TIMER_PrimaryExtract(Handle timer)
 
 bool ResPointReadyForFrack(ResPoint point, float frackDelay, int resLeft, int interval)
 {
-	if (point.timeOwned > frackDelay * 60 && point.GetResTeam(point.owner) <= resLeft &&
+	if (point.timeOwned > frackDelay * 60.0 && point.GetResTeam(point.owner) <= resLeft &&
 	    (point.owner == TEAM_CONSORT || point.owner == TEAM_EMPIRE) && 
 		 point.timeOwned % interval == 0 && curPlyCount >= FRACKING_MIN_PLYS)
 			return true;			
