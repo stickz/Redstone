@@ -34,7 +34,7 @@ public void ND_OnResFrackStarted(int resType, float delay, int interval, int amo
 		
 		else if (amount == PRIMARY_FRACKING_AMOUNT && interval == PRIMARY_FRACKING_SECONDS)
 		{
-			int primeExtractRate = RES_PRIME_TRICKLE + 550;
+			int primeExtractRate = RES_PRIME_TRICKLE + 825;
 			PrintToChatAll("\x03%t.", "Prime Resource Fracking", primeExtractRate, RES_PRIME_TRICKLE, RoundFloat(delay));
 		}
 	}
