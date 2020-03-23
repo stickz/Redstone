@@ -132,6 +132,8 @@ stock bool ND_IsMediumResMap()
 	
 	if (ND_CustomMapEquals(currentMap, ND_Roadwork))
 		return true;
+	else if (ND_StockMapEquals(currentMap, ND_Clocktower))
+		return true;
 		
 	return false;
 }

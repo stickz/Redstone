@@ -45,6 +45,7 @@ bool mediumMap = false;
 
 int initPlyCount = 0;
 int curPlyCount = 0;
+int frackPlyCount = 0;
 
 // Include the teritary structure and natives
 #include "nd_res_trickle/constants.sp"
@@ -101,6 +102,9 @@ public void OnMapStart()
 	
 	// If corner or coast, change the primary fracking intervals
 	SetPrimaryFrackingIntervals();
+	
+	// Require more players to frack on larger maps, to prevent resource domination
+	SetFrackingMinPlyCount();
 }
 
 public void OnClientPutInServer(int client)
@@ -309,6 +313,16 @@ void SetPrimaryFrackingIntervals()
 		primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS;
 		primaryFrackingDelay = PRIMARY_FRACKING_DELAY;		
 	}	
+}
+
+void SetFrackingMinPlyCount()
+{
+	if (largeMap)
+		frackPlyCount = FRACKING_MIN_PLYS_LRG;
+	else if (mediumMap)
+		frackPlyCount = FRACKING_MIN_PLYS_MED;
+	else
+		frackPlyCount = FRACKING_MIN_PLYS;
 }
 
 int GetAverageSpawnRes()
@@ -591,7 +605,7 @@ bool ResPointReadyForFrack(ResPoint point, float frackDelay, int resLeft, int in
 {
 	if (point.timeOwned > frackDelay * 60.0 && point.GetResTeam(point.owner) <= resLeft &&
 	    (point.owner == TEAM_CONSORT || point.owner == TEAM_EMPIRE) && 
-		 point.timeOwned % interval == 0 && curPlyCount >= FRACKING_MIN_PLYS)
+		 point.timeOwned % interval == 0 && curPlyCount >= frackPlyCount)
 			return true;			
 			
 	return false;

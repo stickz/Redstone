@@ -1,5 +1,3 @@
-#define FRACKING_MIN_PLYS 8 // Specifies the minimum player count to enable fracking
-
 #define PRIMARY_TEAM_TRICKLE 3000 // Reserved pool of resources for each team
 #define PRIMARY_TEAM_TRICKLE_LRG 6000 // Reserved pool of resources on large maps
 #define PRIMARY_TEAM_TRICKLE_CORNER 40000 // Reserved pool of resources on corner
@@ -51,3 +49,7 @@
 
 #define TRICKLE_REDUCE_COUNT_MED 12 // Number of players to reduce trickle resources for medium maps
 #define TRICKLE_REDUCE_COUNT_LRG 16 // Number of players to reduce trickle resources for large maps
+
+#define FRACKING_MIN_PLYS 8 // Specifies the minimum player count to enable fracking
+#define FRACKING_MIN_PLYS_MED 12 // Specifies the minimum player count to enable fracking
+#define FRACKING_MIN_PLYS_LRG 16 // Specifies the minimum player count to enable fracking
