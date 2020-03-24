@@ -55,9 +55,7 @@ int insCusMaps[C_INS_SIZE] = {
 	view_as<int>(ND_Sandbrick),
 	view_as<int>(ND_Nuclear),
 	view_as<int>(ND_Submarine),
-	view_as<int>(ND_Rock),
-	view_as<int>(ND_Roadwork),
-	view_as<int>(ND_Corner)
+	view_as<int>(ND_Rock)
 };
 
 #define S_INS_SIZE 3
