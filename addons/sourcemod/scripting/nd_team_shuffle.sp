@@ -15,6 +15,7 @@
  */
 
 #define MAX_SKILL 225
+#define DEBUG 1
 
 public Plugin myinfo =
 {
@@ -94,7 +95,16 @@ void BalanceTeams()
 	int index = 0;
 	
 	// If the skill difference <= the threshold, shuffle every other player, instead of groups of two
-	bool shuffleEveryOther = GetTopTwoSkillDiff(roundStarted) <= gcShuffleEveryOther.IntValue;
+	int top2SkillDiff = GetTopTwoSkillDiff(roundStarted);
+	bool shuffleEveryOther = top2SkillDiff <= gcShuffleEveryOther.IntValue;
+	
+	#if DEBUG == 1
+	// Format the message top 2 player skill diff and shuffle every other value	
+	char Message[64];
+	Format(	Message, sizeof(Message), "\x05[TB] Top 2 Diff: %d, Threshold %d, Every Other: %s!", 
+			top2SkillDiff, gcShuffleEveryOther.IntValue, shuffleEveryOther ? "true" : "false");
+	PrintToAdmins(Message, "b");
+	#endif
 	
 	while (counter > -1)
 	{
