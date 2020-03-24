@@ -49,7 +49,7 @@ char nd_rtv_commands[RTV_COMMANDS_SIZE][] =
 };
 
 // Specify the maps for no min player requirements to RTV
-#define C_INS_SIZE 7
+#define C_INS_SIZE 5
 int insCusMaps[C_INS_SIZE] = {
 	view_as<int>(ND_Mars),
 	view_as<int>(ND_Sandbrick),
