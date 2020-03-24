@@ -48,28 +48,12 @@ char nd_rtv_commands[RTV_COMMANDS_SIZE][] =
 	"changemap"
 };
 
-// Specify the maps for no min player requirements to RTV
-#define C_INS_SIZE 7
-int insCusMaps[C_INS_SIZE] = {
-	view_as<int>(ND_Mars),
-	view_as<int>(ND_Sandbrick),
-	view_as<int>(ND_Nuclear),
-	view_as<int>(ND_Submarine),
-	view_as<int>(ND_Rock),
-	view_as<int>(ND_Roadwork),
-	view_as<int>(ND_Corner)
-};
-
-#define S_INS_SIZE 3
-int insStockMaps[S_INS_SIZE] = {
-	view_as<int>(ND_Oilfield),
-	view_as<int>(ND_Clocktower),
-	view_as<int>(ND_Gate)
-};
-
 int voteCount;	
+
 bool g_Bool[Bools];
 bool g_hasVoted[MAXPLAYERS+1] = {false, ... };
+bool isInsRTVMap = false;
+bool isUnpopularRTVMap = false;
 
 ConVar cvarMinPlayers;
 ConVar cvarTimeWindow;
@@ -140,6 +124,16 @@ public void OnMapStart()
 	for (int client = 1; client <= MaxClients; client++) {
 		g_hasVoted[client] = false;	
 	}
+	
+	// Get the name of the current map
+	char currentMap[32];
+	GetCurrentMap(currentMap, sizeof(currentMap));
+	
+	// Check if the current map can be rtv'd with a min of 1 vote
+	isInsRTVMap = ND_IsInstantRTVMap(currentMap);
+	
+	// Check if the current map is unpopular and can be rtv'd with a lower percentage
+	isUnpopularRTVMap = ND_IsUnpopularRTVMap(currentMap);
 }
 
 public Action CMD_RockTheVote(int client, int args)
@@ -199,9 +193,8 @@ void checkForPass(bool display = false, int client = -1)
 	// Get the client count and modify pass percentage if required
 	int clientCount = ND_GetClientCount();
 	
-	// Get the pass percentage changes based on timeout and map
-	bool InsRTV = InstantRTVMap();
-	float passPercent = getPassPercentage(InsRTV, clientCount <= 8);
+	// Get the pass percentage. Force higher timeout percent if clientCount <= 8.
+	float passPercent = getPassPercentage(clientCount <= 8);
 	
 	// Get the client count on the server. Try Redstone native first.
 	// Calculate the number of players for pass, based on player counts
@@ -216,7 +209,7 @@ void checkForPass(bool display = false, int client = -1)
 		mCount = clientCount;
 	
 	// Are we are instant rtv map? If so, don't enforce min count
-	int reqVotes = (rCount > mCount || InsRTV) ? rCount : mCount;
+	int reqVotes = (rCount > mCount || isInsRTVMap) ? rCount : mCount;
 	
 	int Remainder = reqVotes - voteCount;
 		
@@ -227,14 +220,14 @@ void checkForPass(bool display = false, int client = -1)
 		displayVotes(Remainder, client);
 }
 
-float getPassPercentage(bool InsRTV, bool forceTimeout)
+float getPassPercentage(bool forceTimeout)
 {
 	// Set percentage required to pass AFTER timeout for popular and unpopular maps
-	if (!g_Bool[enableRTV] || InsRTV && forceTimeout)
-		return InsRTV ? cvarPercentPassAfterEX.FloatValue : cvarPercentPassAfter.FloatValue;
+	if (!g_Bool[enableRTV] || isUnpopularRTVMap && forceTimeout)
+		return isUnpopularRTVMap ? cvarPercentPassAfterEX.FloatValue : cvarPercentPassAfter.FloatValue;
 	
 	// Set percentage required to pass BEFORE timeout for popular and unpopular maps
-	return InsRTV ? cvarPercentPassEX.FloatValue : cvarPercentPass.FloatValue;
+	return isUnpopularRTVMap ? cvarPercentPassEX.FloatValue : cvarPercentPass.FloatValue;
 }
 
 void resetValues(int client)
@@ -316,32 +309,12 @@ void CreatePluginConvars()
 {
 	cvarMinPlayers	= CreateConVar("sm_rtv_minp", "4", "Set's the min players to pass rtv regardless of player count.");
 	cvarTimeWindow	= CreateConVar("sm_rtv_time", "8", "Set's how many minutes after round start players have to rtv");
-	cvarPercentPass	= CreateConVar("sm_rtv_percent", "40", "Set's normal percent to change the map");
-	cvarPercentPassEX = CreateConVar("sm_rtv_percent_ex", "51", "Set's adnormal percent to change the map"); 
+	cvarPercentPass	= CreateConVar("sm_rtv_percent", "51", "Set's normal percent to change the map");
+	cvarPercentPassEX = CreateConVar("sm_rtv_percent_ex", "40", "Set's adnormal percent to change the map");
 	cvarPercentPassAfter = CreateConVar("sm_rtv_per_after", "60", "Set's normal percent to change the map after timeout");
 	cvarPercentPassAfterEX = CreateConVar("sm_rtv_per_after_ex", "51", "Set's adnormal percent to change the map after timeout");
 	
 	AutoExecConfig(true, "nd_rockthevote");
-}
-
-bool InstantRTVMap()
-{
-	char curMap[32];
-	GetCurrentMap(curMap, sizeof(curMap));
-	
-	for (int i = 0; i < C_INS_SIZE; i++)
-	{
-		if (StrEqual(curMap, ND_CustomMaps[insCusMaps[i]], false))
-			return true;
-	}
-	
-	for (int ix = 0; ix < S_INS_SIZE; ix++)
-	{
-		if (StrEqual(curMap, ND_StockMaps[insStockMaps[ix]], false))
-			return true;	
-	}
-
-	return false;
 }
 
 /* Natives */

@@ -180,3 +180,55 @@ stock bool ND_IsAutoCycleMap(const char[] currentMap)
 	
 	return false;
 }
+
+stock bool ND_IsInstantRTVMap(const char[] currentMap)
+{
+	if (ND_CustomMapEquals(currentMap, ND_Mars))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Sandbrick))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Nuclear))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Submarine))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Rock))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Roadwork))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Corner))
+		return true;
+		
+	else if (ND_StockMapEquals(currentMap, ND_Oilfield))
+		return true;
+	else if (ND_StockMapEquals(currentMap, ND_Gate))
+		return true;
+	else if (ND_StockMapEquals(currentMap, ND_Downtown))
+		return true;
+	else if (ND_StockMapEquals(currentMap, ND_Clocktower))
+		return true;
+		
+	return false;
+}
+
+stock bool ND_IsUnpopularRTVMap(const char[] currentMap)
+{
+	if (ND_CustomMapEquals(currentMap, ND_Mars))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Sandbrick))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Nuclear))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Submarine))
+		return true;
+	else if (ND_CustomMapEquals(currentMap, ND_Rock))
+		return true;
+		
+	else if (ND_StockMapEquals(currentMap, ND_Oilfield))
+		return true;
+	else if (ND_StockMapEquals(currentMap, ND_Gate))
+		return true;
+	else if (ND_StockMapEquals(currentMap, ND_Downtown))
+		return true;
+		
+	return false;
+}
