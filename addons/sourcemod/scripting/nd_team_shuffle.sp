@@ -33,7 +33,8 @@ ArrayList balancedPlayers;
 Handle g_OnTeamsShuffled_Forward;
 
 ConVar gcLevelEighty;
-ConVar gShuffleThreshold;
+ConVar gcShuffleThreshold;
+ConVar gcShuffleEveryOther;
 
 public void OnPluginStart() 
 {
@@ -52,15 +53,16 @@ void CreateConVars()
 {
 	AutoExecConfig_Setup("nd_team_shuffle");
 	
-	gcLevelEighty 		= AutoExecConfig_CreateConVar("sm_ts_eightyExp", "450000", "Specifies the amount of exp to be considered level 80");	
-	gShuffleThreshold 	= AutoExecConfig_CreateConVar("sm_ts_threshold", "60", "Specifies the skill difference precent to shuffle teams");
+	gcLevelEighty 		= 	AutoExecConfig_CreateConVar("sm_ts_eightyExp", "450000", "Specifies the amount of exp to be considered level 80");	
+	gcShuffleThreshold 	= 	AutoExecConfig_CreateConVar("sm_ts_threshold", "60", "Specifies the skill difference precent to shuffle teams");
+	gcShuffleEveryOther	= 	AutoExecConfig_CreateConVar("sm_ts_every_other", "20", "Specifies the skill difference to shuffle every other player");
 	
 	AutoExecConfig_EC_File();	
 }
 
 bool RunTeamShuffle(bool force)
 {
-	if (!force && ND_GetSkillDiffPercent() < gShuffleThreshold.IntValue)
+	if (!force && ND_GetSkillDiffPercent() < gcShuffleThreshold.IntValue)
 	{
 		PrintMessageAllTB("Shuffle Threshold Not Reached");
 		StartRound(); // Start round if teams are not shuffled		
@@ -81,15 +83,18 @@ void BalanceTeams()
 	int client = 1;
 	players.Set(0, -1);
 	
-	int skill = 0;
-	for (; client <= MaxClients; client++) { 
-		skill = GetFinalSkill(client, roundStarted);
+	for (; client <= MaxClients; client++) 
+	{ 
+		int skill = GetFinalSkill(client, roundStarted);
 		players.Set(client, skill);
 	}
 	
 	int counter = MAX_SKILL;
 	int team = getRandomTeam();
 	int index = 0;
+	
+	// If the skill difference <= the threshold, shuffle every other player, instead of groups of two
+	bool shuffleEveryOther = GetTopTwoSkillDiff(roundStarted) <= gcShuffleEveryOther.IntValue;
 	
 	while (counter > -1)
 	{
@@ -100,9 +105,10 @@ void BalanceTeams()
 			
 		else
 		{
-			/* Decide which team is next, using this algorithum */
-			/* Best player on team x, next two team y, next two team x etc. */
-			if ((index + 1) % 2 == 0)
+			/* Decide which team is next, using one of the two algorithums */
+			/* 1) Shuffle Every Other: Best player team x, next team y, next team x etc. */
+			/* 2) Shuffle Groups of Two: Best player on team x, next two team y, next two team x etc. */
+			if (shuffleEveryOther || (index + 1) % 2 == 0)
 				team = getOtherTeam(team);
 			
 			/* Post-Increment the index for the team varriable */
@@ -119,6 +125,30 @@ void BalanceTeams()
 	
 	delete players;
 	FireTeamsShuffledForward();
+}
+
+int GetTopTwoSkillDiff(bool roundStarted)
+{
+	int first = 0;
+	int second = 0;
+	
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		int skill = GetFinalSkill(client, roundStarted);
+		
+		if (skill > first)
+		{
+			second = first;
+			first = skill;
+		}
+		
+		else if (skill > second)
+		{
+			second = skill;
+		}		
+	}
+	
+	return first - second;
 }
 
 void SetClientTeam(int client, int team)
