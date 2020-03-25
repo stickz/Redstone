@@ -118,7 +118,8 @@ void CreatePluginConVars()
 public void OnClientDisconnect(int client) {
 	ResetVariables(client);
 }
-public void ND_OnRoundStart() {
+public void ND_OnRoundStart() 
+{
 	for (int client = 0; client <= MAXPLAYERS; client++) 
 		ResetVariables(client);
 }
@@ -130,17 +131,17 @@ void ResetVariables(int client)
 
 /* Functions that update team movement speeds */
 public void OnConfigsExecuted() {
-	UpdateMovementSpeeds();
+	UpdateAllMovementSpeeds();
 }
 /*public void OnConvarChanged(ConVar convar, char[] oldValue, char[] newValue) {
-	UpdateMovementSpeeds();	
+	UpdateAllMovementSpeeds();
 }*/
 public void OnPluginEnd() {
-	UpdateMovementSpeeds();
+	UpdateAllMovementSpeeds();
 }
 public void OnInfantryBoostResearched(int team, int level) 
 {
-	UpdateTeamMoveSpeeds(team);
+	UpdateMovementSpeedsTeam(team);
 	
 	// Print a message to chat about movement speed increases
 	PrintMessageTeam(team, "Movement Speed Increases");	
@@ -199,20 +200,25 @@ void PrintTeamSpacer(int team)
 	}
 }
 
-void UpdateMovementSpeeds()
+void UpdateAllMovementSpeeds()
 {	
 	for (int team = TEAM_START; team < TEAM_COUNT; team++) 
 	{	
-		for (int m = 0; m < view_as<int>(MovementClasses); m++)
-		{
-			MovementSpeedFloat[team][m] = DEFAULT_SPEED;
-		}
-		
-		UpdateTeamMoveSpeeds(team);
+		UpdateTeamMovementSpeeds(team);
 	}
 }
 
-void UpdateTeamMoveSpeeds(int team)
+void UpdateTeamMovementSpeeds(int team)
+{
+	for (int m = 0; m < view_as<int>(MovementClasses); m++)
+	{
+		MovementSpeedFloat[team][m] = DEFAULT_SPEED;
+	}
+	
+	ApplyTeamMoveSpeeds(team);
+}
+
+void ApplyTeamMoveSpeeds(int team)
 {
 	// Calculate base movement speed increase for stealth assassin
 	MovementSpeedFloat[team][move(StealthAssassin)] = AssassinSpeedConVar.FloatValue;
@@ -241,6 +247,7 @@ void UpdateTeamMoveSpeeds(int team)
 	
 	DisableTeamMoveSpeeds(team);
 }
+
 void DisableTeamMoveSpeeds(int team)
 {
 	for (int client = 1; client <= MaxClients; client++)
