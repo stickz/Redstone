@@ -141,7 +141,7 @@ public void OnPluginEnd() {
 }
 public void OnInfantryBoostResearched(int team, int level) 
 {
-	UpdateMovementSpeedsTeam(team);
+	UpdateTeamMovementSpeeds(team);
 	
 	// Print a message to chat about movement speed increases
 	PrintMessageTeam(team, "Movement Speed Increases");	
