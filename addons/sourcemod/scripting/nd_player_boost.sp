@@ -83,15 +83,15 @@ void SetPlayerBoost(bool normal)
 {
 	if (normal)
 	{
-		ServerCommand("sm_cvar nd_playerboost_health_bonus %f", 0.05);
-		ServerCommand("sm_cvar nd_playerboost_health_bonus2 %f", 0.1);
-		ServerCommand("sm_cvar nd_playerboost_health_bonus3 %f", 0.15);
+		ServerCommand("sm_cvar nd_playerboost_health_bonus %.2f", 0.05);
+		ServerCommand("sm_cvar nd_playerboost_health_bonus2 %.2f", 0.1);
+		ServerCommand("sm_cvar nd_playerboost_health_bonus3 %.2f", 0.15);
 	}
 	
 	else
 	{
-		ServerCommand("sm_cvar nd_playerboost_health_bonus %f", 0.1);
-		ServerCommand("sm_cvar nd_playerboost_health_bonus2 %f", 0.15);
-		ServerCommand("sm_cvar nd_playerboost_health_bonus3 %f", 0.2);
+		ServerCommand("sm_cvar nd_playerboost_health_bonus %.2f", 0.1);
+		ServerCommand("sm_cvar nd_playerboost_health_bonus2 %.2f", 0.15);
+		ServerCommand("sm_cvar nd_playerboost_health_bonus3 %.2f", 0.2);
 	}
 }
