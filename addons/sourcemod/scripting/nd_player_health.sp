@@ -190,7 +190,7 @@ void PrintArmorIncreases(int team, int level)
 int CalcDisplayProtectRT(int level)
 {
 	float defValue = 1.0 - DEFAULT_EXO_DAMAGE_MULT
-	float exoValue = defValue - cvarExoDamageMult[level].FloatValue;
+	float exoValue = DEFAULT_EXO_DAMAGE_MULT - cvarExoDamageMult[level].FloatValue;
 	float rtValue = cvarExoRocketDamageMult[level].FloatValue;
 	return RoundFloat((1.0 - rtValue - defValue - exoValue) * 100.0);
 }
