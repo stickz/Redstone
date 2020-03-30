@@ -30,16 +30,22 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 ConVar cvarEnableBalancer;
-ConVar cvarMaxPlysStrictPlace;
 ConVar cvarMaxTeamPickReplace;
+
+ConVar cvarMaxPlysStrictPlace;
 ConVar cvarMinPlaceSkillCount;
+
 ConVar cvarMinPlaceSkillEven;
 ConVar cvarMinPlaceSkillOne;
+
 ConVar cvarMinPlacementEven;
 ConVar cvarMinPlacementTwo;
 ConVar cvarMinPlacementTwoStrict;
-ConVar cvarMinCommanderOffset;
-ConVar cvarPercentCommanderOffset;
+
+ConVar cvarMinCommanderOffsetLow;
+ConVar cvarMinCommanderOffsetHigh
+ConVar cvarPercentCommanderOffsetLow;
+ConVar cvarPercentCommanderOffsetHigh;
 
 bool bTeamsLocked = false;
 
@@ -58,22 +64,24 @@ void CreatePluginConVars()
 {
 	AutoExecConfig_Setup("nd_tbalance");
 	
-	cvarEnableBalancer 			= 	AutoExecConfig_CreateConVar("sm_balance", "1", "Team Balancer: 0 to disable, 1 to enable");
+	cvarEnableBalancer 				= 	AutoExecConfig_CreateConVar("sm_balance", "1", "Team Balancer: 0 to disable, 1 to enable");
 	
-	cvarMaxTeamPickReplace		=	AutoExecConfig_CreateConVar("sm_balance_tp_replace", "40", "Maxium skill difference to put player back on picked team");
+	cvarMaxTeamPickReplace			=	AutoExecConfig_CreateConVar("sm_balance_tp_replace", "40", "Maxium skill difference to put player back on picked team");
 	
-	cvarMaxPlysStrictPlace		=	AutoExecConfig_CreateConVar("sm_balance_strict_count", "8", "Specifies max players for strict placement");
-	cvarMinPlaceSkillCount		=	AutoExecConfig_CreateConVar("sm_balance_mskill_count", "3", "Specifies min amount of players to place by skill");
+	cvarMaxPlysStrictPlace			=	AutoExecConfig_CreateConVar("sm_balance_strict_count", "8", "Specifies max players for strict placement");
+	cvarMinPlaceSkillCount			=	AutoExecConfig_CreateConVar("sm_balance_mskill_count", "3", "Specifies min amount of players to place by skill");
 		
-	cvarMinPlaceSkillEven 		=	AutoExecConfig_CreateConVar("sm_balance_mskill_even", "60", "Specifies min player skill to place when teams are even");
-	cvarMinPlaceSkillOne 		=	AutoExecConfig_CreateConVar("sm_balance_mskill_one", "90", "Specifies min player skill to place two extra players");
+	cvarMinPlaceSkillEven 			=	AutoExecConfig_CreateConVar("sm_balance_mskill_even", "60", "Specifies min player skill to place when teams are even");
+	cvarMinPlaceSkillOne 			=	AutoExecConfig_CreateConVar("sm_balance_mskill_one", "90", "Specifies min player skill to place two extra players");
 	
-	cvarMinPlacementEven		=	AutoExecConfig_CreateConVar("sm_balance_one", "80", "Specifies team difference to place when teams are even");
-	cvarMinPlacementTwo			=	AutoExecConfig_CreateConVar("sm_balance_two", "160", "Specifies team difference to place two extra players");
-	cvarMinPlacementTwoStrict 	=	AutoExecConfig_CreateConVar("sm_balance_two_strict", "120", "Specifies team difference to place two extra players strictly");
+	cvarMinPlacementEven			=	AutoExecConfig_CreateConVar("sm_balance_one", "80", "Specifies team difference to place when teams are even");
+	cvarMinPlacementTwo				=	AutoExecConfig_CreateConVar("sm_balance_two", "160", "Specifies team difference to place two extra players");
+	cvarMinPlacementTwoStrict 		=	AutoExecConfig_CreateConVar("sm_balance_two_strict", "120", "Specifies team difference to place two extra players strictly");
 	
-	cvarMinCommanderOffset 		=	AutoExecConfig_CreateConVar("sm_balance_offset_cmin", "60", "Specifies the minimum commander skill difference to enable offsets");
-	cvarPercentCommanderOffset	=	AutoExecConfig_CreateConVar("sm_balance_offset_percent", "50", "Specifies the percentage of the skill difference to use as the offset");
+	cvarMinCommanderOffsetLow		=	AutoExecConfig_CreateConVar("sm_balance_offset_low_min", "60", "Specifies the minimum commander skill difference to enable low offsets");
+	cvarMinCommanderOffsetHigh		=	AutoExecConfig_CreateConVar("sm_balance_offset_high_min", "100", "Specifies the minimum commander skill difference to enable high offsets");
+	cvarPercentCommanderOffsetLow	=	AutoExecConfig_CreateConVar("sm_balance_offset_low_percent", "50", "Specifies the percentage of the skill difference to use as the low offset");
+	cvarPercentCommanderOffsetHigh	=	AutoExecConfig_CreateConVar("sm_balance_offset_high_percent", "75", "Specifies the percentage of the skill difference to use as the high offset");
 	
 	AutoExecConfig_EC_File();
 }
@@ -284,13 +292,26 @@ float GetCommanderOffsetSD(float teamDiff)
 	float skillDiff = consortSkill - empireSkill;
 	
 	// If the positive value of the skill difference is within the threshold, enable commander offsets
-	if (Math_Abs(skillDiff) >= cvarMinCommanderOffset.FloatValue)
+	float pSkillDiff = Math_Abs(skillDiff);
+	
+	// Use the higher commander offsets if within the high threshold
+	if (pSkillDiff >= cvarMinCommanderOffsetHigh.FloatValue)
 	{
 		// Calculate the offset by multiplying the skill difference by the offset percent convar
-		float offset = skillDiff * (cvarPercentCommanderOffset.FloatValue / 100.0);
+		float highOffset = skillDiff * (cvarPercentCommanderOffsetHigh.FloatValue / 100.0);
 		
 		// Add the offset to the team difference and return it
-		return teamDiff + offset;
+		return teamDiff + highOffset;		
+	}
+	
+	// Use the lower commander offsets if within the low threshold
+	else if (pSkillDiff >= cvarMinCommanderOffsetLow.FloatValue)
+	{
+		// Calculate the offset by multiplying the skill difference by the offset percent convar
+		float lowOffset = skillDiff * (cvarPercentCommanderOffsetLow.FloatValue / 100.0);
+		
+		// Add the offset to the team difference and return it
+		return teamDiff + lowOffset;
 	}
 	
 	// Return the regular team difference if not within the offset threshold 
