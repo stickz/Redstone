@@ -17,12 +17,12 @@
 	
 	"Bellow Ten"
 	{
-		"en"		"Players bellow level 10 can only command <10 players or level <25 averages"	
+		"en"		"Level 15+ commanders are given first pick with 10+ players"
 	}
 	
 	"Fifty Five Required"
 	{
-		"en"		"Level 40+ commanders are given first pick with 24+ players"
+		"en"		"Level 45+ commanders are given first pick with 16+ players"
 	}
 	
 	"Total Level"

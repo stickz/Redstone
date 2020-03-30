@@ -22,12 +22,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <sdktools>
 #include <sourcecomms>
-#pragma newdecls required
-
 #include <nd_stocks>
 #include <nd_fskill>
 #include <nd_redstone>
-#include <nd_gameme>
 #include <nd_com_eng>
 #include <nd_rounds>
 #include <nd_print>
@@ -35,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_com_ban>
 #include <nd_entities>
 #include <nd_teampick>
+#include <autoexecconfig>
 
 #define INVALID_CLIENT 0
 
@@ -56,13 +54,15 @@ enum Bools
 enum convars
 {
 	ConVar:eRestrictions,
-	ConVar:cRestrictMinLevel,
-	ConVar:cHighPlayerRestrict,
-	ConVar:cHighPlayerLevel,
 	ConVar:aRestrictDisable,
-	ConVar:cRestrictSkillL,
-	ConVar:cRestrictSkillH,
-	ConVar:disRestrictions
+	
+	ConVar:cRestrictMinSkill,
+	ConVar:cRestrictMaxSkill,
+	
+	ConVar:cLowRestrictTeam,
+	ConVar:cLowRestrictTotal,
+	ConVar:cHighRestrictTeam,
+	ConVar:cHighRestrictTotal
 };
 
 ConVar g_cvar[convars];
@@ -70,14 +70,7 @@ bool g_Bool[Bools];
 
 public void OnPluginStart()
 {
-	g_cvar[eRestrictions] 		= 	CreateConVar("sm_commander_restrictions", "1", "0 to disable the restrictions, 1 to enable restrictions.");
-	g_cvar[cRestrictMinLevel] 	= 	CreateConVar("sm_commander_level", "10", "Sets the minimum level threshold required to command");
-	g_cvar[cHighPlayerRestrict]	=	CreateConVar("sm_restrict_highply", "18", "Sets the amount of players for high command requirements");
-	g_cvar[cHighPlayerLevel]	=	CreateConVar("sm_restrict_highlvl", "40", "Sets the maximum threshold required to command");
-	g_cvar[aRestrictDisable] 	= 	CreateConVar("sm_restrict_disable", "35", "Sets the skill average to disable all restrictions");
-	g_cvar[cRestrictSkillL]		=	CreateConVar("sm_commander_lskill", "5000", "Sets the minimum skill threshold required to command");
-	g_cvar[cRestrictSkillH]		=	CreateConVar("sm_commander_hskill", "15000", "Sets the maximum skill threshold required to command");
-	g_cvar[disRestrictions]		= 	CreateConVar("sm_restrict_enable", "8", "Sets number of players on team to enable commadner restrictions");
+	CreatePluginConvars(); // Create plugin convars
 	
 	AddCommandListener(view_as<CommandListener>(Command_Apply), "applyforcommander");
 	
@@ -89,7 +82,26 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public void ND_OnRoundStarted() {
+void CreatePluginConvars()
+{
+	AutoExecConfig_Setup("nd_commander_restrictions");
+	
+	g_cvar[eRestrictions] 			= 	AutoExecConfig_CreateConVar("sm_restrict_enable", "1", "0 to disable the restrictions, 1 to enable restrictions.");
+	g_cvar[aRestrictDisable] 		= 	AutoExecConfig_CreateConVar("sm_restrict_disable", "45", "Sets the skill average to disable all restrictions");
+	
+	g_cvar[cRestrictMinSkill] 		= 	AutoExecConfig_CreateConVar("sm_restrict_skill_low", "15", "Sets the minimum skill threshold required to command");
+	g_cvar[cRestrictMaxSkill]		=	AutoExecConfig_CreateConVar("sm_restrict_skill_high", "45", "Sets the maximum skill threshold required to command");
+	
+	g_cvar[cLowRestrictTeam]		= 	AutoExecConfig_CreateConVar("sm_restrict_low_team", "6", "Sets number of players on team to enable commander restrictions");
+	g_cvar[cLowRestrictTotal]		=	AutoExecConfig_CreateConVar("sm_restrict_low_total", "10", "Sets number of players on server to enable commander restrictions");
+	g_cvar[cHighRestrictTeam]		=	AutoExecConfig_CreateConVar("sm_restrict_high_team", "12", "Sets number of players on team to enable high command requirements");
+	g_cvar[cHighRestrictTotal]		=	AutoExecConfig_CreateConVar("sm_restrict_high_total", "16", "Sets number of players on server to enable high command requirements");	
+	
+	AutoExecConfig_EC_File();	
+}
+
+public void ND_OnRoundStarted() 
+{
 	CreateTimer(105.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
 	CreateTimer(90.0, TIMER_DisplayComWarning, _, TIMER_FLAG_NO_MAPCHANGE);
 }
@@ -107,14 +119,14 @@ public Action TIMER_DisableRestrictions(Handle timer)
 		g_Bool[timeOut] = true;
 		g_Bool[relaxedRestrictions] = true;
 		//ServerCommand("nd_commander_mutiny_vote_threshold 65.0");
-		if (RED_OnTeamCount() >= g_cvar[disRestrictions].IntValue)
+		if (RED_OnTeamCount() >= g_cvar[cLowRestrictTeam].IntValue)
 			PrintToChatAll("%s %t!", PREFIX, "Restrictions Relaxed"); //Commander restrictions relaxed
 			//PrintToChatAll("\x05[xG] Commander restrictions lifted! Mutiny threshold set to 70%! (no commander)");
 	}
 }
 
 public Action TIMER_DisplayComWarning(Handle timer) {
-	if (g_cvar[eRestrictions].BoolValue && ND_GetCommanderCount() != 2 && RED_OnTeamCount() >= g_cvar[disRestrictions].IntValue)
+	if (g_cvar[eRestrictions].BoolValue && ND_GetCommanderCount() != 2 && RED_OnTeamCount() >= g_cvar[cLowRestrictTeam].IntValue)
 		PrintToChatAll("%s %t!", PREFIX, "Last Chance Apply");
 }
 
@@ -141,90 +153,63 @@ public Action Command_Apply(int client, const char[] command, int argc)
 	
 	if (g_cvar[eRestrictions].BoolValue)
 	{	
+		// If the commander is not depriotized and the average skill on the server is too low for restricts, disable them.
 		bool isDeprioritised = ND_IsCommanderDeprioritised(client)
-		if (!isDeprioritised)
-		{
-			#if defined _nd_gameme_included
-			if (GM_RC_LOADED() && GameME_RankedClient(client))
-				return Plugin_Continue;
-			#endif
-
-			if (ND_RoundStarted() && DisableRestrictionsBySkill())
-				return Plugin_Continue;
-		}
-
-		int count = RED_OnTeamCount();
-		if (count < g_cvar[disRestrictions].IntValue)
+		if (!isDeprioritised && ND_RoundStarted() && DisableRestrictionsBySkill())
+			return Plugin_Continue;
+		
+		// Get the client count both on a team and on the server
+		int onTeamCount = RED_OnTeamCount();
+		int onServerCount = ND_GetClientCount();
+		
+		// If both the onTeamCount and onServerCount is less than the threshold, disable commander restrictions
+		if (onTeamCount < g_cvar[cLowRestrictTeam].IntValue && onServerCount < g_cvar[cLowRestrictTotal].IntValue)
 			return Plugin_Continue;
 			
+		// If commander restrictions relax because nobody else applys, allow all applications
 		if (g_Bool[timeOut])
 			return Plugin_Continue;
-						
-		int clientLevel = ND_RetreiveLevel(client);		
-		switch(clientLevel)
+		
+		// If the client is depriotized don't allow commander applications yet
+		if (isDeprioritised)
 		{
-			case 0,1:
+			PrintMessage(client, "Commander Deprioritised");
+			return Plugin_Handled;
+		}
+		
+		// Get the client of the client
+		int clientLevel = ND_RetreiveLevel(client);	
+		int clientSkill = ND_GetRoundedPSkill(client);
+		
+		// If the client has no skill and the level is not loaded yet
+		// Tell the client they need to spawn before applying
+		if (clientSkill <= 1 && clientLevel <= 1)
+		{
+			PrintToChat(client, "%s %t.", PREFIX, "Spawn Before Apply");
+			return Plugin_Handled;			
+		}
+
+		// If we're using higher skill commander restrictions, check the player and skill thresholds
+		if (onTeamCount >= g_cvar[cHighRestrictTeam].IntValue || onServerCount >= g_cvar[cHighRestrictTotal].IntValue)
+		{
+			if (clientSkill <= g_cvar[cRestrictMaxSkill].IntValue && clientLevel <= g_cvar[cRestrictMaxSkill].IntValue)
 			{
-				#if defined _nd_gameme_included
-				if (GameME_SkillAvailible(client) && GameME_GetClientSkill(client) > g_cvar[cRestrictSkillL].IntValue)
-					return Plugin_Continue;
-					
-				else
-				{
-					PrintMessage(client, "Spawn Before Apply");
-					return Plugin_Handled;					
-				}
-				
-				#else
-				PrintToChat(client, "%s %t.", PREFIX, "Spawn Before Apply");
+				PrintMessage(client, "Fifty Five Required");
 				return Plugin_Handled;				
-				#endif				
-			}
-			case 2,3,4,5,6,7,8,9:
+			}			
+		}
+		
+		// If we're using lower skill commander restrictions, check the player and skill thresholds
+		else if (onTeamCount >= g_cvar[cLowRestrictTeam].IntValue || onServerCount >= g_cvar[cLowRestrictTotal].IntValue)
+		{
+			if (clientSkill <= g_cvar[cRestrictMinSkill].IntValue && clientLevel <= g_cvar[cRestrictMinSkill].IntValue)
 			{
-				if (count > g_cvar[cRestrictMinLevel].IntValue)
-				{
-					PrintMessage(client, "Bellow Ten");
-					return Plugin_Handled;	
-				}
-				
-				#if defined _nd_gameme_included
-				int lowSkill = g_cvar[cRestrictSkillL].IntValue;			
-				if (GameME_SkillAvailible(client) && GameME_GetClientSkill(client) < lowSkill)
-				{
-					PrintToChat(client, "%s %t!", PREFIX, "Skill Required", lowSkill);
-					return Plugin_Handled;		
-				}
-				#endif
-			}
-			default:
-			{	
-				if (isDeprioritised)
-				{
-					PrintMessage(client, "Commander Deprioritised");
-					return Plugin_Handled;
-				}
-				
-				else if (count > g_cvar[cHighPlayerRestrict].IntValue)
-				{
-					if (clientLevel < g_cvar[cHighPlayerLevel].IntValue)
-					{
-						PrintMessage(client, "Fifty Five Required");
-						return Plugin_Handled;
-					}
-					
-					#if defined _nd_gameme_included
-					int highSkill = g_cvar[cRestrictSkillH].IntValue;					
-					if (GameME_SkillAvailible(client) && GameME_GetClientSkill(client) < highSkill)
-					{
-						PrintToChat(client, "%s %t!", PREFIX, "Skill Required", highSkill);
-						return Plugin_Handled;	
-					}
-					#endif
-				}				
-			}		
+				PrintMessage(client, "Bellow Ten");
+				return Plugin_Handled;				
+			}			
 		}
 	}
+	
 	return Plugin_Continue;
 }
 
