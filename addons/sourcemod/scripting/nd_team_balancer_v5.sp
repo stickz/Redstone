@@ -37,6 +37,7 @@ ConVar cvarMinPlaceSkillEven;
 ConVar cvarMinPlaceSkillOne;
 ConVar cvarMinPlacementEven;
 ConVar cvarMinPlacementTwo;
+ConVar cvarMinPlacementTwoStrict;
 ConVar cvarMinCommanderOffset;
 ConVar cvarPercentCommanderOffset;
 
@@ -69,6 +70,7 @@ void CreatePluginConVars()
 	
 	cvarMinPlacementEven		=	AutoExecConfig_CreateConVar("sm_balance_one", "80", "Specifies team difference to place when teams are even");
 	cvarMinPlacementTwo			=	AutoExecConfig_CreateConVar("sm_balance_two", "160", "Specifies team difference to place two extra players");
+	cvarMinPlacementTwoStrict 	=	AutoExecConfig_CreateConVar("sm_balance_two_strict", "120", "Specifies team difference to place two extra players strictly");
 	
 	cvarMinCommanderOffset 		=	AutoExecConfig_CreateConVar("sm_balance_offset_cmin", "60", "Specifies the minimum commander skill difference to enable offsets");
 	cvarPercentCommanderOffset	=	AutoExecConfig_CreateConVar("sm_balance_offset_percent", "50", "Specifies the percentage of the skill difference to use as the offset");
@@ -257,7 +259,7 @@ bool PutTwoExtraLessSkill(float pSkill, float pDiff, float cpDiff, float opDiff,
 	
 	// If the actual & ceil teamdiff both agree on the least stacked team
 	// If less than 10 players are on a team and the strict skill difference is 80 or higher
-	if (equalCeilLST && tCount <= cvarMaxPlysStrictPlace.IntValue && cpDiff >= cvarMinPlacementEven.IntValue)
+	if (equalCeilLST && tCount <= cvarMaxPlysStrictPlace.IntValue && cpDiff >= cvarMinPlacementTwoStrict.IntValue)
 		return true;
 	
 	// Otherwise don't place the player on a team	
