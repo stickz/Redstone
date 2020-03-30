@@ -45,7 +45,7 @@ void CreateConVars()
 	cvarStockMapCount	=	AutoExecConfig_CreateConVar("sm_voter_scount", "26", "Sets the maximum number of players for stock maps");
 	cvarCornerMapCount	=	AutoExecConfig_CreateConVar("sm_voter_ccount", "20", "Sets the maximum number of players for corner");
 	cvarSandbrickCount	=	AutoExecConfig_CreateConVar("sm_voter_sbcount", "8", "Sets the maximum number of players for sandbrick");
-	cvarRoadworkCount	=	AutoExecConfig_CreateConVar("sm_voter_rcount", "10", "Sets the minimum number of players for roadwork);	
+	cvarRoadworkCount	=	AutoExecConfig_CreateConVar("sm_voter_rcount", "10", "Sets the minimum number of players for roadwork");	
 	cvarMediumMapCount	=	AutoExecConfig_CreateConVar("sm_voter_mcount", "14", "Sets the minimum number of players for medium maps");
 	cvarLargeMapCount	=	AutoExecConfig_CreateConVar("sm_voter_lcount", "18", "Sets the minimum number of players for large maps");
 	
