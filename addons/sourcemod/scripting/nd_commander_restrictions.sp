@@ -55,6 +55,8 @@ enum convars
 {
 	ConVar:eRestrictions,
 	ConVar:aRestrictDisable,
+	ConVar:tRestrictDisableDelay,
+	ConVar:tRestrictWarningDelay,
 	
 	ConVar:cRestrictMinSkill,
 	ConVar:cRestrictMaxSkill,
@@ -87,7 +89,9 @@ void CreatePluginConvars()
 	AutoExecConfig_Setup("nd_commander_restrictions");
 	
 	g_cvar[eRestrictions] 			= 	AutoExecConfig_CreateConVar("sm_restrict_enable", "1", "0 to disable the restrictions, 1 to enable restrictions.");
-	g_cvar[aRestrictDisable] 		= 	AutoExecConfig_CreateConVar("sm_restrict_disable", "45", "Sets the skill average to disable all restrictions");
+	g_cvar[aRestrictDisable] 		= 	AutoExecConfig_CreateConVar("sm_restrict_disable", "45", "Sets the skill average to disable all restrictions");	
+	g_cvar[tRestrictDisableDelay] 	=	AutoExecConfig_CreateConVar("sm_restrict_disable_delay", "120", "Sets the delay to disable commander restricts if nobody applies");
+	g_cvar[tRestrictWarningDelay] 	=	AutoExecConfig_CreateConVar("sm_restrict_warn_delay", "105", "Sets the delay to display the warning about restricts disabling soon");
 	
 	g_cvar[cRestrictMinSkill] 		= 	AutoExecConfig_CreateConVar("sm_restrict_skill_low", "15", "Sets the minimum skill threshold required to command");
 	g_cvar[cRestrictMaxSkill]		=	AutoExecConfig_CreateConVar("sm_restrict_skill_high", "45", "Sets the maximum skill threshold required to command");
@@ -102,11 +106,12 @@ void CreatePluginConvars()
 
 public void ND_OnRoundStarted() 
 {
-	CreateTimer(105.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
-	CreateTimer(90.0, TIMER_DisplayComWarning, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(g_cvar[tRestrictDisableDelay].FloatValue, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(g_cvar[tRestrictWarningDelay].FloatValue, TIMER_DisplayComWarning, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public void OnMapStart() {
+public void OnMapStart() 
+{
 	g_Bool[timeOut] = false;
 	g_Bool[relaxedRestrictions] = false;
 }
