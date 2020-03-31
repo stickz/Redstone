@@ -144,18 +144,22 @@ int GetTopTwoSkillDiff(bool roundStarted)
 	
 	for (int client = 1; client <= MaxClients; client++)
 	{
-		int skill = GetFinalSkill(client, roundStarted);
-		
-		if (skill > first)
-		{
-			second = first;
-			first = skill;
+		// If the client is valid AND (The round is not started OR the client is on a team)
+		if (RED_IsValidClient(client) && (!roundStarted || IsReadyForBalance(client, roundStarted)))
+		{		
+			int skill = GetSkillLevel(client);
+			
+			if (skill > first)
+			{
+				second = first;
+				first = skill;
+			}
+			
+			else if (skill > second)
+			{
+				second = skill;
+			}	
 		}
-		
-		else if (skill > second)
-		{
-			second = skill;
-		}		
 	}
 	
 	return first - second;
