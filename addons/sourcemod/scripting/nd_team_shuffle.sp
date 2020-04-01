@@ -94,15 +94,13 @@ void BalanceTeams()
 	int team = getRandomTeam();
 	int index = 0;
 	
-	// If the skill difference <= the threshold, shuffle every other player, instead of groups of two
-	int top2SkillDiff = GetTopTwoSkillDiff(roundStarted);
-	bool shuffleEveryOther = top2SkillDiff <= gcShuffleEveryOther.IntValue;
+	// Get whether to shuffle every other or in groups of two
+	bool shuffleEveryOther = DoShuffleEveryOther(roundStarted);
 	
 	#if DEBUG == 1
 	// Format the message top 2 player skill diff and shuffle every other value	
 	char Message[64];
-	Format(	Message, sizeof(Message), "\x05[TB] Top 2 Diff: %d, Threshold %d, Every Other: %s!", 
-			top2SkillDiff, gcShuffleEveryOther.IntValue, shuffleEveryOther ? "true" : "false");
+	Format(	Message, sizeof(Message), "\x05[TB] Shuffle Every Other: %s!", shuffleEveryOther ? "true" : "false");
 	PrintToAdmins(Message, "b");
 	#endif
 	
@@ -163,6 +161,24 @@ int GetTopTwoSkillDiff(bool roundStarted)
 	}
 	
 	return first - second;
+}
+
+bool DoShuffleEveryOther(bool roundStarted)
+{
+	int threshold = gcShuffleEveryOther.IntValue;
+	
+	if (!roundStarted)
+	{
+		// Get top 2 skill difference with and without unassigned players
+		int top2SkillDiff = GetTopTwoSkillDiff(true);
+		int top2SkillDiffEx = GetTopTwoSkillDiff(false);
+		
+		// If etheir of the skill difference is within the threshold, shuffle every other
+		return top2SkillDiff <= threshold || top2SkillDiffEx <= threshold;
+	}
+	
+	// Otherwise if the round is started, get the skill difference without unassigned players
+	return GetTopTwoSkillDiff(roundStarted) <= threshold;
 }
 
 void SetClientTeam(int client, int team)
