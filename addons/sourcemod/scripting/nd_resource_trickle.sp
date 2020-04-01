@@ -7,6 +7,7 @@
 #include <nd_redstone>
 #include <smlib/math>
 #include <nd_maps>
+#include <nd_team_eng>
 
 public Plugin myinfo = 
 {
@@ -107,10 +108,10 @@ public void OnMapStart()
 	SetFrackingMinPlyCount();
 }
 
-public void OnClientPutInServer(int client)
+public void ND_OnPlayerTeamChanged(int client, bool valid)
 {	
 	if (ND_RoundStarted())
-		curPlyCount = ND_GetClientCount();	
+		curPlyCount = RED_OnTeamCount();
 }
 
 public void ND_OnRoundStarted()
