@@ -21,4 +21,10 @@
 		"#format"	"{1:i}"
 		"en"		"Additional Increases -> +{1}%% exo protection against rocket turrets."
 	}
+	
+	"Artillery Exo Protect"
+	{
+		"#format"	"{1:i}"
+		"en"		"Additional Increases -> +{1}%% exo protection against artillery."
+	}
 }

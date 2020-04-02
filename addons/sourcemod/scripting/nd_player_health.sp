@@ -7,7 +7,6 @@
 #include <nd_classes>
 #include <nd_structures>
 #include <nd_research_eng>
-#include <autoexecconfig>
 
 //Version is auto-filled by the travis builder
 public Plugin myinfo = 
@@ -26,21 +25,15 @@ public Plugin myinfo =
 #define DEFAULT_EXO_DAMAGE_MULT 0.8
 #define DEFAULT_DAMAGE_MULT 1.0
 
+#include "nd_health/convars.sp"
+
 bool HookedDamage[MAXPLAYERS+1] = {false, ...};
 
 bool cornerMap = false;
 
-ConVar RocketTurretDamage[2];
-
-ConVar cvarExoDamageMult[IBLEVELS];
-ConVar cvarExoRocketDamageMult[IBLEVELS];
-
-ConVar cvarAssaultDamageMult[IBLEVELS];
-ConVar cvarStealthDamageMult[IBLEVELS];
-ConVar cvarSupportDamageMult[IBLEVELS];
-
 float ExoDamageMult[TEAM_COUNT] = { DEFAULT_EXO_DAMAGE_MULT, ... };
 float ExoRocketDamageMult[TEAM_COUNT] = { DEFAULT_DAMAGE_MULT, ... };
+float ExoArtilleryDamageMult[TEAM_COUNT] = { DEFAULT_DAMAGE_MULT, ... };
 
 float AssaultDamageMult[TEAM_COUNT] = { DEFAULT_DAMAGE_MULT, ... };
 float StealthDamageMult[TEAM_COUNT] = { DEFAULT_DAMAGE_MULT, ... };
@@ -53,7 +46,7 @@ public void OnPluginStart()
 	
 	LoadTranslations("nd_player_health.phrases");
 	
-	CreatePluginConVars();
+	CreatePluginConVars(); // convars.sp
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -61,41 +54,6 @@ public void OnMapStart()
 {
 	// Check if the corner map is corner to enable rocket turret protection
 	cornerMap = ND_CurrentMapIsCorner();
-}
-
-void CreatePluginConVars()
-{	
-	AutoExecConfig_Setup("nd_player_health");
-	
-	RocketTurretDamage[0] = AutoExecConfig_CreateConVar("sm_rocket_consort", "90.0", "Amount of damage consort rocket turret does to players");
-	RocketTurretDamage[1] = AutoExecConfig_CreateConVar("sm_rocket_empire", "75.0", "Amount of damage empire rocket turret does to players");
-	
-	cvarExoDamageMult[0] = AutoExecConfig_CreateConVar("sm_health_exo_ib0", "0.80", "Amount of damage dealt to exo at Infantry Boost 0.");
-	cvarExoDamageMult[1] = AutoExecConfig_CreateConVar("sm_health_exo_ib1", "0.75", "Amount of damage dealt to exo at Infantry Boost 1.");
-	cvarExoDamageMult[2] = AutoExecConfig_CreateConVar("sm_health_exo_ib2", "0.70", "Amount of damage dealt to exo at Infantry Boost 2.");
-	cvarExoDamageMult[3] = AutoExecConfig_CreateConVar("sm_health_exo_ib3", "0.60", "Amount of damage dealt to exo at Infantry Boost 3.");
-	
-	cvarExoRocketDamageMult[0] = AutoExecConfig_CreateConVar("sm_rocket_exo_ib0", "0.80", "Amount of damage dealt to exo by rocket turrets at Infantry Boost 0.");
-	cvarExoRocketDamageMult[1] = AutoExecConfig_CreateConVar("sm_rocket_exo_ib1", "0.70", "Amount of damage dealt to exo by rocket turrets at Infantry Boost 1.");
-	cvarExoRocketDamageMult[2] = AutoExecConfig_CreateConVar("sm_rocket_exo_ib2", "0.60", "Amount of damage dealt to exo by rocket turrets at Infantry Boost 2.");
-	cvarExoRocketDamageMult[3] = AutoExecConfig_CreateConVar("sm_rocket_exo_ib3", "0.40", "Amount of damage dealt to exo by rocket turrets at Infantry Boost 3.");
-	
-	cvarAssaultDamageMult[0] = AutoExecConfig_CreateConVar("sm_health_assault_ib0", "1.00", "Amount of damage dealt to assault at Infantry Boost 0.");
-	cvarAssaultDamageMult[1] = AutoExecConfig_CreateConVar("sm_health_assault_ib1", "0.98", "Amount of damage dealt to assault at Infantry Boost 1.");
-	cvarAssaultDamageMult[2] = AutoExecConfig_CreateConVar("sm_health_assault_ib2", "0.96", "Amount of damage dealt to assault at Infantry Boost 2.");
-	cvarAssaultDamageMult[3] = AutoExecConfig_CreateConVar("sm_health_assault_ib3", "0.92", "Amount of damage dealt to assault at Infantry Boost 3.");
-	
-	cvarStealthDamageMult[0] = AutoExecConfig_CreateConVar("sm_health_stealth_ib0", "1.00", "Amount of damage dealt to stealth at Infantry Boost 0.");
-	cvarStealthDamageMult[1] = AutoExecConfig_CreateConVar("sm_health_stealth_ib1", "0.98", "Amount of damage dealt to stealth at Infantry Boost 1.");
-	cvarStealthDamageMult[2] = AutoExecConfig_CreateConVar("sm_health_stealth_ib2", "0.96", "Amount of damage dealt to stealth at Infantry Boost 2.");
-	cvarStealthDamageMult[3] = AutoExecConfig_CreateConVar("sm_health_stealth_ib3", "0.92", "Amount of damage dealt to stealth at Infantry Boost 3.");
-	
-	cvarSupportDamageMult[0] = AutoExecConfig_CreateConVar("sm_health_support_ib0", "1.00", "Amount of damage dealt to support at Infantry Boost 0.");
-	cvarSupportDamageMult[1] = AutoExecConfig_CreateConVar("sm_health_support_ib1", "0.98", "Amount of damage dealt to support at Infantry Boost 1.");
-	cvarSupportDamageMult[2] = AutoExecConfig_CreateConVar("sm_health_support_ib2", "0.96", "Amount of damage dealt to support at Infantry Boost 2.");
-	cvarSupportDamageMult[3] = AutoExecConfig_CreateConVar("sm_health_support_ib3", "0.92", "Amount of damage dealt to support at Infantry Boost 3.");
-	
-	AutoExecConfig_EC_File();
 }
 
 /* Functions that restore varriables to default */
@@ -108,10 +66,12 @@ public void ND_OnRoundStart()
 		ResetVariables(client);
 	
 	
+	float defaultExoMult = cvarExoDamageMult[0].FloatValue;
 	for (int team = 2; team < TEAM_COUNT; team++)
 	{
-		ExoDamageMult[team] = cvarExoDamageMult[0].FloatValue;
-		ExoRocketDamageMult[team] = cvarExoDamageMult[0].FloatValue;
+		ExoDamageMult[team] = defaultExoMult;
+		ExoRocketDamageMult[team] = defaultExoMult;
+		ExoArtilleryDamageMult[team] = defaultExoMult;
 		AssaultDamageMult[team] = cvarAssaultDamageMult[0].FloatValue;
 		StealthDamageMult[team] = cvarStealthDamageMult[0].FloatValue;
 		SupportDamageMult[team] = cvarSupportDamageMult[0].FloatValue;		
@@ -143,8 +103,18 @@ void UpdateDamageMultipliers(int team, int level)
 	StealthDamageMult[team] = cvarStealthDamageMult[level].FloatValue;
 	SupportDamageMult[team] = cvarSupportDamageMult[level].FloatValue;	
 	
-	// If the current map is corner, change the rocket turret damage multiplier for exos; otherwise leave it alone
-	ExoRocketDamageMult[team] = cornerMap ? cvarExoRocketDamageMult[level].FloatValue : ExoDamageMult[team];
+	// If the current map is corner, change the rocket turret and artillery damage mults for exos
+	if (cornerMap)
+	{
+		ExoRocketDamageMult[team] = cvarExoRocketDamageMult[level].FloatValue;
+		ExoArtilleryDamageMult[team] = cvarExoArtilleryDamageMult[level].FloatValue;		
+	}
+	// Otherwise, set these values to the base exo damage multiplier, so they stay the same
+	else
+	{
+		ExoRocketDamageMult[team] = ExoDamageMult[team];
+		ExoArtilleryDamageMult[team] = ExoDamageMult[team];		
+	}
 }
 
 void PrintTeamSpacer(int team)
@@ -175,24 +145,25 @@ void PrintArmorIncreases(int team, int level)
 	// If the map is corner, display the rocket turret exo protection values
 	if (cornerMap)
 	{
-		int amount = CalcDisplayProtectRT(level);
+		int rocketTurret = CalcDisplayProtectExo(level, cvarExoRocketDamageMult[level].FloatValue);
+		int artilery = CalcDisplayProtectExo(level, cvarExoArtilleryDamageMult[level].FloatValue);
 		
 		for (int c = 1; c <= MaxClients; c++)
 		{
 			if (IsClientInGame(c) && GetClientTeam(c) == team)
 			{
-				PrintToConsole(c, "%t", "RT Exo Protection", amount);				
+				PrintToConsole(c, "%t", "RT Exo Protection", rocketTurret);
+				PrintToConsole(c, "%t", "Artillery Exo Protect", artilery);	
 			}	
 		}
 	}	
 }
 
-int CalcDisplayProtectRT(int level)
+int CalcDisplayProtectExo(int level, float pValue)
 {
 	float defValue = 1.0 - DEFAULT_EXO_DAMAGE_MULT
 	float exoValue = DEFAULT_EXO_DAMAGE_MULT - cvarExoDamageMult[level].FloatValue;
-	float rtValue = cvarExoRocketDamageMult[level].FloatValue;
-	return RoundFloat((1.0 - rtValue - defValue - exoValue) * 100.0);
+	return RoundFloat((1.0 - pValue - defValue - exoValue) * 100.0);
 }
 
 int CalcDisplayArmorExo(float cValue) 
@@ -262,7 +233,7 @@ public Action OnPlayerTakeDamage(int victim, int &attacker, int &inflictor, floa
 			damage *= multExoRT;
 			return Plugin_Changed;			
 		}		
-	}	
+	}
 	
 	// If the client is an exo, apply the 20% health rescaling
 	// Also apply 5% armor (damage resistance) per infantry boost level
@@ -273,11 +244,21 @@ public Action OnPlayerTakeDamage(int victim, int &attacker, int &inflictor, floa
 		{
 			damage *= DEFAULT_EXO_DAMAGE_MULT;
 			return Plugin_Changed;
-		}		
+		}	
 		
+		// If the client is exo apply the artillery damage protection
+		// Currently only applies to corner map, otherwise damage will match exo mult
+		else if (StrEqual(className, STRUCT_ARTILLERY, false))
+		{
+			float multExoArtillery = ExoArtilleryDamageMult[team];
+			damage *= multExoArtillery;
+			return Plugin_Changed;
+		}
+		
+		// Otherwise, apply the base exo damage protection for all other damage sources
 		float multExo = ExoDamageMult[team];
 		damage *= multExo;		
-		return Plugin_Changed
+		return Plugin_Changed;
 	}	
 	
 	// If the client is assault apply 1% 3% 5% infantry boost armor
