@@ -494,7 +494,7 @@ public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
 	// Every five seconds, check if the tertiary qualfies for fracking.
 	// Owned for 8 minutes by consort or empire with less than 300 team resources
 	// Frack a total of 100 resources every 25 seconds (or 150 res/min)
-	if (ResPointReadyForFrack(tert, TERTIARY_FRACKING_DELAY, TERTIARY_FRACKING_LEFT, TERTIARY_FRACKING_SECONDS))
+	if (!cornerMap && ResPointReadyForFrack(tert, TERTIARY_FRACKING_DELAY, TERTIARY_FRACKING_LEFT, TERTIARY_FRACKING_SECONDS))
 	{
 		// If this is the first frack, fire the forward
 		if (tert.firstFrack == RESPOINT_FRACK_TRUE)
@@ -535,7 +535,7 @@ public Action TIMER_SecondaryExtract(Handle timer, int arrIndex)
 	// Every ten seconds, check if secondary qualfies for fracking.
 	// Owned for 15 minutes by consort or empire with less than 825 team resources
 	// Frack a total of 275 resources every 20 seconds (or 453.5 res/min)
-	if (ResPointReadyForFrack(sec, SECONDARY_FRACKING_DELAY, SECONDARY_FRACKING_LEFT, SECONDARY_FRACKING_SECONDS))
+	if (!cornerMap && ResPointReadyForFrack(sec, SECONDARY_FRACKING_DELAY, SECONDARY_FRACKING_LEFT, SECONDARY_FRACKING_SECONDS))
 	{
 		// If this is the first frack, fire the forward
 		if (sec.firstFrack == RESPOINT_FRACK_TRUE)
