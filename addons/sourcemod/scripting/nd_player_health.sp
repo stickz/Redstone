@@ -14,7 +14,7 @@ public Plugin myinfo =
 	name 		= "[ND] Player Health",
 	author 		= "stickz",
 	description	= "Changes damage taken for certain classes",
-    version 	= "dummy",
+    version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 }
 
