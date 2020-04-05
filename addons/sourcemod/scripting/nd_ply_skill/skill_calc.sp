@@ -29,8 +29,21 @@ float GetSkillLevel(int client)
 		/* If the player is a commander & both teams have commanders */
 		if (ND_IsCommander(client) && ND_TeamsHaveCommanders())
 		{
-			/* If the com skill is available and less than gameMeSkill, return it */
-			float comSkill = GetCommanderSkill(client);			
+			// Get the player's commander skill
+			float comSkill = GetCommanderSkill(client);
+			
+			// Get the max commander skill ceiling
+			float maxSkill = g_Cvar[MaxCommanderSkill].FloatValue;	
+			
+			// Clamp the commander skill at the skill ceiling
+			if (comSkill > maxSkill)
+				comSkill = maxSkill;
+			
+			// Clamp the gameme skill at the skill ceiling
+			if (gameMeSkill > maxSkill)
+				gameMeSkill = maxSkill;
+
+			// If the com skill is available and less than gameMeSkill, return it
 			if (GameME_CommanderSkill[client] > -1 && comSkill < gameMeSkill)
 				return comSkill;			
 		}

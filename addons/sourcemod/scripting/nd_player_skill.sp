@@ -64,7 +64,6 @@ public void OnPluginStart()
 	RegisterCommands();
 	
 	AddUpdaterLibrary(); //auto-updater
-	AutoExecConfig(true, "nd_final_skill");
 	
 	if (ND_MapStarted())
 		ReloadGameMeSkill();
