@@ -94,6 +94,10 @@ Updater_AddPlugin(Handle:plugin, const String:url[])
 		WritePackString(hPluginPack, url);
 		
 		PushArrayCell(g_hPluginPacks, hPluginPack);
+		
+		// Close handles when done with them
+		CloseHandle(hPluginPack);
+		CloseHandle(hFiles);
 	}
 }
 
