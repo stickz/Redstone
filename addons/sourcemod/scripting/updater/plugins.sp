@@ -78,10 +78,11 @@ Updater_AddPlugin(Handle:plugin, const String:url[])
 	}
 	else
 	{
-		static Handle hPluginPack = CreateDataPack();
-		static Handle hFiles = CreateArray(PLATFORM_MAX_PATH);
+		static Handle hPluginPack;
+		static Handle hFiles;
 		
-		ResetPack(hPluginPack, true);
+		hPluginPack = CreateDataPack();
+		hFiles = CreateArray(PLATFORM_MAX_PATH);
 		
 		PluginPack_Plugin = GetPackPosition(hPluginPack);
 		WritePackCell(hPluginPack, _:plugin);
