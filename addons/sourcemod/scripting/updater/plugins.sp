@@ -78,7 +78,7 @@ Updater_AddPlugin(Handle:plugin, const String:url[])
 	}
 	else
 	{
-		new Handle hPluginPack = CreateDataPack();
+		Handle hPluginPack = CreateDataPack();
 		
 		PluginPack_Plugin = GetPackPosition(hPluginPack);
 		WritePackCell(hPluginPack, _:plugin);
