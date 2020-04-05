@@ -46,6 +46,7 @@ ConVar cvarMinCommanderOffsetLow;
 ConVar cvarMinCommanderOffsetHigh
 ConVar cvarPercentCommanderOffsetLow;
 ConVar cvarPercentCommanderOffsetHigh;
+ConVar cvarMaxSkillCommanderOffset;
 
 bool bTeamsLocked = false;
 
@@ -82,6 +83,7 @@ void CreatePluginConVars()
 	cvarMinCommanderOffsetHigh		=	AutoExecConfig_CreateConVar("sm_balance_offset_high_min", "100", "Specifies the minimum commander skill difference to enable high offsets");
 	cvarPercentCommanderOffsetLow	=	AutoExecConfig_CreateConVar("sm_balance_offset_low_percent", "50", "Specifies the percentage of the skill difference to use as the low offset");
 	cvarPercentCommanderOffsetHigh	=	AutoExecConfig_CreateConVar("sm_balance_offset_high_percent", "75", "Specifies the percentage of the skill difference to use as the high offset");
+	cvarMaxSkillCommanderOffset		=	AutoExecConfig_CreateConVar("sm_balance_offset_max_skill", "90", "Specifies the maximum commander skill to enable commander offsets");
 	
 	AutoExecConfig_EC_File();
 }
@@ -287,6 +289,11 @@ float GetCommanderOffsetSD(float teamDiff)
 	// Get the consort and empire commander skill levels
 	float consortSkill = ND_GetPlayerSkill(consortCom);
 	float empireSkill = ND_GetPlayerSkill(empireCom);
+	
+	// If both commanders are above the skill threshold to enable offsets, disable them
+	float maxOffsetSkillValue = cvarMaxSkillCommanderOffset.FloatValue;
+	if (consortSkill > maxOffsetSkillValue && empireSkill > maxOffsetSkillValue)
+		return teamDiff;
 		
 	// Calculate the skill difference between the consort commander and empire commander
 	float skillDiff = consortSkill - empireSkill;
