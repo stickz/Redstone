@@ -78,8 +78,10 @@ Updater_AddPlugin(Handle:plugin, const String:url[])
 	}
 	else
 	{
-		new Handle:hPluginPack = CreateDataPack();
-		new Handle:hFiles = CreateArray(PLATFORM_MAX_PATH);
+		static Handle hPluginPack = CreateDataPack();
+		static Handle hFiles = CreateArray(PLATFORM_MAX_PATH);
+		
+		ResetPack(hPluginPack, true);
 		
 		PluginPack_Plugin = GetPackPosition(hPluginPack);
 		WritePackCell(hPluginPack, _:plugin);
@@ -94,10 +96,6 @@ Updater_AddPlugin(Handle:plugin, const String:url[])
 		WritePackString(hPluginPack, url);
 		
 		PushArrayCell(g_hPluginPacks, hPluginPack);
-		
-		// Close handles when done with them
-		CloseHandle(hPluginPack);
-		CloseHandle(hFiles);
 	}
 }
 

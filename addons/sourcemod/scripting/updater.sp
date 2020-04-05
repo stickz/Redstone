@@ -11,7 +11,7 @@
 
 /* Plugin Info */
 #define PLUGIN_NAME 		"Updater"
-#define PLUGIN_VERSION 		"1.2.23"
+#define PLUGIN_VERSION 		"1.2.24"
 
 public Plugin myinfo =
 {
