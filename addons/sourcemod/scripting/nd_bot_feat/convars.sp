@@ -2,8 +2,10 @@
 
 enum convars
 {
-	 ConVar:BotCount,
+	 ConVar:EnableFillerQuota,
 	 ConVar:BoostBots,
+	 
+	 ConVar:BotCount,
 	 ConVar:BotReduction,
 	 ConVar:BotReductionDec,
 	 ConVar:BoosterQuota,
@@ -36,7 +38,9 @@ void CreatePluginConvars()
 {
 	AutoExecConfig_Setup("nd_bot_features");
 	
+	g_cvar[EnableFillerQuota] = AutoExecConfig_CreateConVar("sm_bot_enable_filler", "0", "Bot filler quota: 0 to disable, 1 to enable");	
 	g_cvar[BoostBots] = AutoExecConfig_CreateConVar("sm_boost_bots", "1", "0 to disable, 1 to enable (server count - 2 bots)");
+	
 	g_cvar[BotCount] = AutoExecConfig_CreateConVar("sm_botcount", "20", "sets the regular bot count.");
 	g_cvar[BotReduction] = AutoExecConfig_CreateConVar("sm_bot_quota_reduct", "8", "How many bots to take off max for small maps");
 	g_cvar[BotReductionDec] = AutoExecConfig_CreateConVar("sm_bot_quota_reduct_dec", "12", "How many bots to take off max for small maps");

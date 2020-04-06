@@ -100,7 +100,7 @@ void checkCount()
 			quota += boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
 		
 		// The plugin to get the server slot is available
-		else if (GDSC_AVAILABLE())
+		else if (GDSC_AVAILABLE() && g_cvar[EnableFillerQuota].BoolValue)
 		{	
 			// Get team count difference and team skill difference multiplier
 			int posOverBalance = getPositiveOverBalance();
