@@ -63,7 +63,13 @@ void CreateConVars()
 
 bool RunTeamShuffle(bool force)
 {
-	if (!force && ND_GetSkillDiffPercent() < gcShuffleThreshold.IntValue)
+	// Get the skill difference & ceiling 80 skill difference percent between teams
+	// If they both are less than the shuffle threshold, start without shuffling
+	int skillDiffPer = ND_GetSkillDiffPercent();
+	int skillDiffPerEx = ND_GetSkillDiffPercentEx(80.0);
+	int shuffleThreshold = gcShuffleThreshold.IntValue;
+	
+	if (!force && skillDiffPer < shuffleThreshold && skillDiffPerEx < shuffleThreshold)
 	{
 		PrintMessageAllTB("Shuffle Threshold Not Reached");
 		StartRound(); // Start round if teams are not shuffled		
