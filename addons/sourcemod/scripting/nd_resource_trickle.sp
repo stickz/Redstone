@@ -301,11 +301,18 @@ void initNewPrimary(int entIndex)
 
 void SetPrimaryFrackingIntervals()
 {
-	if (cornerMap || coastMap)
+	if (cornerMap)
 	{
 		primaryFrackingAmount = PRIMARY_FRACKING_AMOUNT_FASTER;
 		primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS_FASTER;
 		primaryFrackingDelay = PRIMARY_FRACKING_DELAY_FASTER;	
+	}
+	
+	else if (coastMap)
+	{
+		primaryFrackingAmount = PRIMARY_FRACKING_AMOUNT_FASTER;
+		primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS_FASTER;
+		primaryFrackingDelay = PRIMARY_FRACKING_DELAY;
 	}
 	
 	else
