@@ -105,7 +105,6 @@ void checkMapExcludes()
 	if (clientCount <= gCvarLargeMapCount.IntValue)
 	{
 		if (StrEqual(nextMap, ND_StockMaps[ND_Gate], false) 	||
-			StrEqual(nextMap, ND_StockMaps[ND_Downtown], false) ||
 			StrEqual(nextMap, ND_StockMaps[ND_Oilfield], false)	)
 		{
 			TriggerMapVote(nextMap);
@@ -117,7 +116,8 @@ void checkMapExcludes()
 	{
 		if (StrEqual(nextMap, ND_CustomMaps[ND_Nuclear], false) ||
 			StrEqual(nextMap, ND_CustomMaps[ND_Rock], false) ||
-			StrEqual(nextMap, ND_CustomMaps[ND_Submarine], false))
+			StrEqual(nextMap, ND_CustomMaps[ND_Submarine], false) ||
+			StrEqual(nextMap, ND_StockMaps[ND_Downtown], false))
 		{
 			TriggerMapVote(nextMap);
 			return;	

@@ -137,13 +137,13 @@ void CreateMapThresholdList(bool debugFunction = false)
 		ND_NominateMap(ND_CustomMaps[ND_Submarine], 60 + plyAdjust);
 		ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
 		ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
+		ND_NominateMap(ND_StockMaps[ND_Downtown], 75 + plyAdjust);
 	}
 	
 	if (clientCount >= cvarLargeMapCount.IntValue)
 	{
-		ND_NominateMap(ND_StockMaps[ND_Oilfield], 50 + plyAdjust);
-		ND_NominateMap(ND_StockMaps[ND_Downtown], 88 + plyAdjust);	
-		ND_NominateMap(ND_StockMaps[ND_Gate], 70 + plyAdjust);	
+		ND_NominateMap(ND_StockMaps[ND_Oilfield], 75 + plyAdjust);
+		ND_NominateMap(ND_StockMaps[ND_Gate], 75 + plyAdjust);	
 	}
 	
 	if (debugFunction)
