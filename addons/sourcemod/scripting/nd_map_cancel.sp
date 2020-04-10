@@ -25,6 +25,7 @@ ConVar cvarUsePlayerThresolds;
 //ConVar cvarStockMapCount;
 
 ConVar gCvarLargeMapCount;
+ConVar gCvarDowntownCount;
 ConVar gCvarMediumMapCount;
 ConVar gCvarSandbrickCount;
 ConVar gCvarCornerCount;
@@ -45,11 +46,12 @@ void CreateConvars()
 	cvarUsePlayerThresolds	= AutoExecConfig_CreateConVar("sm_mcancel_thresholds", "1", "Specifies wehter or not to cancel map cycling by player count");
 	//cvarStockMapCount	= AutoExecConfig_CreateConVar("sm_mcancel_stock", "23", "Sets the maximum number of players for stock maps");
 	
-	gCvarLargeMapCount		= AutoExecConfig_CreateConVar("sm_mcancel_largemaps", "14", "Sets minimum number of players to cancel large maps");
-	gCvarMediumMapCount		= AutoExecConfig_CreateConVar("sm_mcancel_medmaps", "10", "Sets minimum number of players to cancel medium maps");
-	gCvarSandbrickCount		= AutoExecConfig_CreateConVar("sm_mcancel_sandbrick", "10", "Sets maximum number of players to cancel sandbrick");
-	gCvarCornerCount		= AutoExecConfig_CreateConVar("sm_mcancel_corner", "18", "Sets maximum number of players to cancel corner");
-	gCvarMarsCount			= AutoExecConfig_CreateConVar("sm_mcancel_mars", "16", "Sets maximum number of players to cancel mars");
+	gCvarLargeMapCount		= 	AutoExecConfig_CreateConVar("sm_mcancel_largemaps", "18", "Sets minimum number of players to cancel large maps");
+	gCvarDowntownCount		=	AutoExecConfig_CreateConVar("sm_mcancel_downtown", "14", "Sets minimum number of players to cancel downtown");
+	gCvarMediumMapCount		= 	AutoExecConfig_CreateConVar("sm_mcancel_medmaps", "10", "Sets minimum number of players to cancel medium maps");
+	gCvarSandbrickCount		= 	AutoExecConfig_CreateConVar("sm_mcancel_sandbrick", "10", "Sets maximum number of players to cancel sandbrick");
+	gCvarCornerCount		= 	AutoExecConfig_CreateConVar("sm_mcancel_corner", "18", "Sets maximum number of players to cancel corner");
+	gCvarMarsCount			= 	AutoExecConfig_CreateConVar("sm_mcancel_mars", "16", "Sets maximum number of players to cancel mars");
 	
 	AutoExecConfig_EC_File();	
 }
@@ -116,8 +118,16 @@ void checkMapExcludes()
 	{
 		if (StrEqual(nextMap, ND_CustomMaps[ND_Nuclear], false) ||
 			StrEqual(nextMap, ND_CustomMaps[ND_Rock], false) ||
-			StrEqual(nextMap, ND_CustomMaps[ND_Submarine], false) ||
-			StrEqual(nextMap, ND_StockMaps[ND_Downtown], false))
+			StrEqual(nextMap, ND_CustomMaps[ND_Submarine], false))
+		{
+			TriggerMapVote(nextMap);
+			return;	
+		}		
+	}
+	
+	if (clientCount <= gCvarDowntownCount.IntValue)
+	{
+		if (StrEqual(nextMap, ND_StockMaps[ND_Downtown], false))
 		{
 			TriggerMapVote(nextMap);
 			return;	

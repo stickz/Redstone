@@ -26,6 +26,7 @@ ConVar cvarSandbrickCount;
 ConVar cvarRoadworkCount;
 ConVar cvarMediumMapCount;
 ConVar cvarLargeMapCount;
+ConVar cvarDowntownMapCount;
 
 public void OnPluginStart() 
 {
@@ -42,12 +43,13 @@ void CreateConVars()
 {
 	AutoExecConfig_Setup("nd_mvote_thresholds");
 	
-	cvarStockMapCount	=	AutoExecConfig_CreateConVar("sm_voter_scount", "26", "Sets the maximum number of players for stock maps");
-	cvarCornerMapCount	=	AutoExecConfig_CreateConVar("sm_voter_ccount", "20", "Sets the maximum number of players for corner");
-	cvarSandbrickCount	=	AutoExecConfig_CreateConVar("sm_voter_sbcount", "8", "Sets the maximum number of players for sandbrick");
-	cvarRoadworkCount	=	AutoExecConfig_CreateConVar("sm_voter_rcount", "10", "Sets the minimum number of players for roadwork");	
-	cvarMediumMapCount	=	AutoExecConfig_CreateConVar("sm_voter_mcount", "14", "Sets the minimum number of players for medium maps");
-	cvarLargeMapCount	=	AutoExecConfig_CreateConVar("sm_voter_lcount", "18", "Sets the minimum number of players for large maps");
+	cvarStockMapCount		=	AutoExecConfig_CreateConVar("sm_voter_scount", "26", "Sets the maximum number of players for stock maps");
+	cvarCornerMapCount		=	AutoExecConfig_CreateConVar("sm_voter_ccount", "20", "Sets the maximum number of players for corner");
+	cvarSandbrickCount		=	AutoExecConfig_CreateConVar("sm_voter_sbcount", "8", "Sets the maximum number of players for sandbrick");
+	cvarRoadworkCount		=	AutoExecConfig_CreateConVar("sm_voter_rcount", "10", "Sets the minimum number of players for roadwork");	
+	cvarMediumMapCount		=	AutoExecConfig_CreateConVar("sm_voter_mcount", "14", "Sets the minimum number of players for medium maps");
+	cvarLargeMapCount		=	AutoExecConfig_CreateConVar("sm_voter_lcount", "22", "Sets the minimum number of players for large maps");
+	cvarDowntownMapCount	= 	AutoExecConfig_CreateConVar("sm_voter_dcount", "18", "Sets the minimum number of players for downtown");
 	
 	AutoExecConfig_EC_File();	
 }
@@ -137,13 +139,15 @@ void CreateMapThresholdList(bool debugFunction = false)
 		ND_NominateMap(ND_CustomMaps[ND_Submarine], 60 + plyAdjust);
 		ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
 		ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
-		ND_NominateMap(ND_StockMaps[ND_Downtown], 75 + plyAdjust);
 	}
+	
+	if (clientCount >= cvarDowntownMapCount.IntValue)
+		ND_NominateMap(ND_StockMaps[ND_Downtown], 75 + plyAdjust);
 	
 	if (clientCount >= cvarLargeMapCount.IntValue)
 	{
 		ND_NominateMap(ND_StockMaps[ND_Oilfield], 75 + plyAdjust);
-		ND_NominateMap(ND_StockMaps[ND_Gate], 75 + plyAdjust);	
+		ND_NominateMap(ND_StockMaps[ND_Gate], 75 + plyAdjust);
 	}
 	
 	if (debugFunction)
