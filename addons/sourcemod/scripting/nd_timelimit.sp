@@ -138,19 +138,34 @@ public void OnClientPutInServer(int client)
 	{
 		PrintMessageAll("Limit Effect");
 			
-		CreateTimer(GetTimeLimit(), TIMER_TotalTimeLeft, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
+		g_Integer[totalTimeLeft] = GetTimeLimit();
+		
+		CreateTimer(60.0, TIMER_TotalTimeLeft, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 		
 		g_Bool[startedCountdown] = true;
 	}
 }
 
-float GetTimeLimit()
+int GetTimeLimit()
 {
 	// Decide wether to set the reduced time limit or the regular time limit
-	float time = g_Bool[reducedResumeTime2] ? g_Cvar[reducedTimeLimit].FloatValue : g_Cvar[regularTimeLimit].FloatValue;
+	int time = g_Cvar[reducedTimeLimit].IntValue;
+	
+	// If we've played for less than the threshold (20 minutes by default)
+	if (!g_Bool[reducedResumeTime2])
+	{
+		// Get the current map
+		char currentMap[32];
+		GetCurrentMap(currentMap, sizeof(currentMap));
+		
+		if (ND_ExtendedTimeLimitMap(currentMap))
+			time = g_Cvar[extendedTimeLimit].IntValue;
+		else
+			time = g_Cvar[regularTimeLimit].IntValue;
+	}
 	
 	if (ND_InitialCommandersReady(false) && IncComSkillTimeLimit())
-		time += g_Cvar[comIncTime].FloatValue;
+		time += g_Cvar[comIncTime].IntValue;
 		
 	return time;
 }
