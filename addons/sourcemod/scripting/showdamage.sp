@@ -16,6 +16,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <clientprefs>
 
+#define COND_THERMAL (1<<3)
+
 //Version is auto-filled by the travis builder
 public Plugin myinfo = 
 {
@@ -108,7 +110,17 @@ public Action ShowDamage(Handle timer, int client)
 	
 	switch (gcvar_text_area.IntValue)
 	{
-		case 1:	PrintCenterText(client, "%t", "CenterText Damage Text", player_damage[client]);
+		case 1:	if (GetEntProp(client, Prop_Send, "m_nPlayerCond") & COND_THERMAL)
+		        {
+					Handle HudText = CreateHudSynchronizer();
+					SetHudTextParams(-1.0, 0.25, 0.1, 255, 255, 255, 255);
+					ShowSyncHudText(client, HudText, "%t", "CenterText Damage Text", player_damage[client]);
+					CloseHandle(HudText);
+				}
+				else
+				{
+					PrintCenterText(client, "%t", "CenterText Damage Text", player_damage[client]);
+				}
 		case 2:	PrintHintText(client, "%t", "HintText Damage Text", player_damage[client]);
 		case 3:	PrintToChat(client, "%t", "Chat Damage Text", player_damage[client]);
 	}
