@@ -13,6 +13,8 @@ int	scorePerMinute[MAXPLAYERS+1] = {-1, ...};
 int	previousTeam[MAXPLAYERS+1] = {-1, ...};
 float newPlayerSkill[MAXPLAYERS+1] = {-1.0, ...};
 
+Handle hTimerSPM = INVALID_HANDLE;
+
 /*Update Score per Minute Data */
 public Action TIMER_updateSPM(Handle timer)
 {
@@ -28,7 +30,7 @@ public Action TIMER_updateSPM(Handle timer)
 }
 
 void startSPMTimer() {
-	CreateTimer(60.0, TIMER_updateSPM, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);	
+	hTimerSPM = CreateTimer(60.0, TIMER_updateSPM, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);	
 }
 
 void UpdateSPM()

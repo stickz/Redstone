@@ -81,6 +81,20 @@ public void ND_OnRoundStarted() {
 	startSPMTimer();	
 }
 
+public void ND_OnRoundEndedEX() 
+{
+	// If the round ended & started this map, reset the client varriables
+	for (int client = 1; client <= MaxClients; client++)
+		resetVarriables(client, false);
+	
+	// If the round ended & started this map, stop the SPM logic timer
+	if (hTimerSPM != INVALID_HANDLE && IsValidHandle(hTimerSPM))
+	{
+		KillTimer(hTimerSPM);
+		hTimerSPM = INVALID_HANDLE;
+	}
+}
+
 public bool OnClientConnect(int client, char[] rejectmsg, int maxlen) {
 	resetVarriables(client);
 	return true;
@@ -90,16 +104,21 @@ public void OnClientDisconnect(int client) {
 	resetVarriables(client);
 }
 
-void resetVarriables(int client)
+void resetVarriables(int client, bool skill = true)
 {
 	g_isSkilledRookie[client] = false;
 	g_isWeakVeteran[client] = false;
-	LevelCacheArray[client] = -1;
 	connectionTime[client] = -1;
 	scorePerMinute[client] = -1;
 	previousTeam[client] = -1;
-	GameME_PlayerSkill[client] = -1.0;
 	newPlayerSkill[client] = -1.0;
+	
+	if (skill)
+	{
+		LevelCacheArray[client] = -1;
+		GameME_PlayerSkill[client] = -1.0;
+		GameME_CommanderSkill[client] = -1.0;
+	}
 }
 
 void ReloadGameMeSkill()
