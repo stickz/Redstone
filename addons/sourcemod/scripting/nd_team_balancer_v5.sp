@@ -42,6 +42,7 @@ ConVar cvarStrictSkillCeiling;
 ConVar cvarLessStrictSkillCeiling;
 
 ConVar cvarMinPlacementEven;
+ConVar cvarMinPlacementEvenStrict;
 ConVar cvarMinPlacementTwo;
 ConVar cvarMinPlacementTwoStrict;
 
@@ -82,6 +83,7 @@ void CreatePluginConVars()
 	cvarLessStrictSkillCeiling		=	AutoExecConfig_CreateConVar("sm_balance_ceiling_less_strict", "100", "Specifies the skill ceiling to caluclate the less strict team diff");
 	
 	cvarMinPlacementEven			=	AutoExecConfig_CreateConVar("sm_balance_one", "80", "Specifies team difference to place when teams are even");
+	cvarMinPlacementEvenStrict		=	AutoExecConfig_CreateConVar("sm_balance_one_strict", "40", "Specifies team difference to place one extra player strictly");	
 	cvarMinPlacementTwo				=	AutoExecConfig_CreateConVar("sm_balance_two", "140", "Specifies team difference to place two extra players");
 	cvarMinPlacementTwoStrict 		=	AutoExecConfig_CreateConVar("sm_balance_two_strict", "60", "Specifies team difference to place two extra players strictly");
 	
@@ -190,18 +192,22 @@ bool PlaceTeamBySkill(int client)
 	// Get the actual and commander offset skill difference
 	float teamDiff = ND_GetTeamDifference();
 	float oTeamDiff = GetCommanderOffsetSD(teamDiff);
+	float cTeamDiffLow = ND_GetCeilingSD(cvarStrictSkillCeiling.FloatValue);
 		
 	// Get the team with less skill according to the actual and commander offset team difference
-	// Check if team difference methods agree on the team with less skill
 	int actualLSTeam = getLeastStackedTeam(teamDiff);
+	
+	// Check if team difference methods agree on the team with less skill
 	bool equalOffsetLST = actualLSTeam == getLeastStackedTeam(oTeamDiff); // actual and offset team difference
+	bool equalCeilLowLST = actualLSTeam == getLeastStackedTeam(cTeamDiffLow);
 			
 	// Convert the team difference to a positive number before working with it
 	float pTeamDiff = SetPositiveSkill(teamDiff);
 	float opTeamDiff = SetPositiveSkill(oTeamDiff);
+	float cpTeamDiffLow = SetPositiveSkill(cTeamDiffLow);
 		
 	// If both teams have the same number of players and the conditions for team placement are meant
-	if (overBalance == TEAMS_EVEN && PutSamePlysLessSkill(playerSkill, pTeamDiff, opTeamDiff, equalOffsetLST))
+	if (overBalance == TEAMS_EVEN && PutSamePlysLessSkill(playerSkill, pTeamDiff, opTeamDiff, cpTeamDiffLow, onTeamCount, equalOffsetLST, equalCeilLowLST))
 	{
 		// Place the player on the least stacked skill team
 		SetTeamLessSkill(client, actualLSTeam);
@@ -209,7 +215,7 @@ bool PlaceTeamBySkill(int client)
 	}
 	
 	// If one team has an extra player and the conditions for team placement are meant
-	else if (PutTwoExtraLessSkill(playerSkill, pTeamDiff, opTeamDiff, onTeamCount, actualLSTeam, equalOffsetLST))
+	else if (PutTwoExtraLessSkill(playerSkill, pTeamDiff, opTeamDiff, cpTeamDiffLow, onTeamCount, actualLSTeam, equalOffsetLST, equalCeilLowLST))
 	{
 		// If empire has one more player and less skill
 		if (overBalance == EMPIRE_PLUS_ONE && actualLSTeam == TEAM_EMPIRE)
@@ -224,14 +230,14 @@ bool PlaceTeamBySkill(int client)
 		{
 			// Place the player on team consort
 			SetTeamLessSkill(client, TEAM_CONSORT);
-			return true;				
+			return true;
 		}			
 	}
 
 	return false;
 }
 
-bool PutSamePlysLessSkill(float pSkill, float pDiff, float opDiff, bool equalOffsetLST)
+bool PutSamePlysLessSkill(float pSkill, float pDiff, float opDiff, float cpTeamDiffLow, int tCount, bool equalOffsetLST, bool equalCeilLowLST)
 {
 	// If the actual and offset team difference don't agree on the least stacked team
 	if (!equalOffsetLST)
@@ -246,11 +252,16 @@ bool PutSamePlysLessSkill(float pSkill, float pDiff, float opDiff, bool equalOff
 	if (pDiff >= placementThreshold || opDiff >= placementThreshold)
 		return true;
 	
+	// If the actual & ceil teamdiff both agree on the least stacked team
+	// If less than 10 players are on a team and the strict skill difference is 40 or higher
+	if (equalCeilLowLST && tCount <= cvarMaxPlysStrictPlace.IntValue && cpTeamDiffLow >= cvarMinPlacementEvenStrict.IntValue)
+		return true;	
+	
 	// Otherwise don't place the player on a team
 	return false;	
 }
 
-bool PutTwoExtraLessSkill(float pSkill, float pDiff, float opDiff, int tCount, int actualLSTeam, bool equalOffsetLST)
+bool PutTwoExtraLessSkill(float pSkill, float pDiff, float opDiff, float cpTeamDiffLow, int tCount, int actualLSTeam, bool equalOffsetLST, bool equalCeilLowLST)
 {
 	// If the actual and offset team difference don't agree on the least stacked team
 	if (!equalOffsetLST)
@@ -260,21 +271,16 @@ bool PutTwoExtraLessSkill(float pSkill, float pDiff, float opDiff, int tCount, i
 	if (pSkill < cvarMinPlaceSkillOne.IntValue)
 		return false;
 	
-	// Get the strict ceiling team difference (80 for strict)
-	float cTeamDiffLow = ND_GetCeilingSD(cvarStrictSkillCeiling.FloatValue);
-	
 	// Get the less strict ceiling team difference for actual & commander offset (120 for strict)	
 	float cTeamDiffHigh = ND_GetCeilingSD(cvarLessStrictSkillCeiling.FloatValue);
 	float cTeamDiffHighOffset = GetCommanderOffsetSD(cTeamDiffHigh);
 	
 	// Get the team with less skill according to the ceiling team difference
 	// Check if team difference actual and ceiling methods agree on the team with less skill
-	bool equalCeilLowLST = actualLSTeam == getLeastStackedTeam(cTeamDiffLow);
 	bool equalCeilHighLST = actualLSTeam == getLeastStackedTeam(cTeamDiffHigh);
 	bool equalCeilHighOffsetLST = actualLSTeam == getLeastStackedTeam(cTeamDiffHighOffset);
 	
 	// Convert the team difference to a positive number before working with it
-	float cpTeamDiffLow = SetPositiveSkill(cTeamDiffLow);
 	float cpTeamDiffHigh = SetPositiveSkill(cTeamDiffHigh);
 	float cpTeamDiffHighOffset = SetPositiveSkill(cTeamDiffHighOffset);
 
