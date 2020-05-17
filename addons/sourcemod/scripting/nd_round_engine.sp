@@ -51,7 +51,7 @@ public void OnPluginStart()
 	g_OnRoundStartEXForward = CreateGlobalForward("ND_OnPreRoundStart", ET_Ignore);
 	g_OnRoundEndedForward = CreateGlobalForward("ND_OnRoundEnded", ET_Ignore);
 	g_OnRoundEndedEXForward = CreateGlobalForward("ND_OnRoundEndedEX", ET_Ignore);
-	g_OnRoundRestartedForward = CreateGlobalForward("ND_OnRoundRestartedWarmup", ET_Ignore);
+	g_OnRoundRestartedWarmupForward = CreateGlobalForward("ND_OnRoundRestartedWarmup", ET_Ignore);
 	
 	AddUpdaterLibrary(); //auto-updater
 }
