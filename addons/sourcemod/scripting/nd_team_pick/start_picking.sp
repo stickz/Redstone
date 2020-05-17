@@ -192,7 +192,7 @@ void SetVarriableDefaults()
 	team_captain[EMPIRE_aIDX] = -1;
 	
 	/* Switch Algorithum */
-	picking_index = 0;
+	picking_index = 1;
 	
 	g_bEnabled=true;
 	g_bPickStarted=true;
