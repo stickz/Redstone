@@ -23,8 +23,6 @@ enum Convars
 };
 ConVar g_Cvar[Convars];
 
-bool mapChanging = false;
-
 /* Include different modules of plug-in */
 #include "nd_rstart/countdown.sp"
 #include "nd_rstart/nextpick.sp"
@@ -62,22 +60,8 @@ public void OnMapEnd()
 	InitiateRoundEnd();
 }
 
-public void ND_OnWarmupComplete() 
-{
-	mapChanging = false;
+public void ND_OnWarmupComplete() {
 	WarmupCompleteStartActions();
-}
-
-// Failsafe if user forgets to shut-off nextpick
-public void OnClientDisconnect(int client)
-{
-	if (!mapChanging && pauseWarmup && ND_WarmupCompleted() && ND_GetClientCount() <= 3)
-	{
-		pauseWarmup = false;
-		
-		if (!ND_RoundStarted())
-			StartRound(false);
-	}
 }
 
 public void ND_OnRoundEnded() {
@@ -86,7 +70,6 @@ public void ND_OnRoundEnded() {
 
 void InitiateRoundEnd()
 {
-	mapChanging = true;
 	ServerCommand("mp_minplayers 32");
 	//ServerCommand("sm_cvar sv_alltalk 1");
 }
