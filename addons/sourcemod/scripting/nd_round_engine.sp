@@ -232,7 +232,7 @@ public Action TIMER_EngageRoundRestart(Handle timer, any toWarmup)
 	else
 	{
 		PrintToChatAll("\x05The match will pause shortly!");	
-		CreateTimer(10.0, TIMER_DoRoundRestarted, _, TIMER_FLAG_NO_MAPCHANGE);
+		CreateTimer(12.0, TIMER_DoRoundRestarted, _, TIMER_FLAG_NO_MAPCHANGE);
 	}
 
 	return Plugin_Handled;
