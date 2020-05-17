@@ -1,5 +1,8 @@
 #define INVALID_TARGET -1
 
+bool TeamPickPending = false;
+int targetCaptain1, targetCaptain2, teamCaptain;
+
 void RegisterPickingCommand()
 {
 	RegConsoleCmd("PlayerPicking", StartPicking, "Start the team picker");
@@ -22,18 +25,18 @@ public Action StartPicking(int client, int args)
 
 	char con_name[64]; // Get the player target in the first argument
 	GetCmdArg(1, con_name, sizeof(con_name));		
-	int target1 = FindTarget(client, con_name, false, false);
+	targetCaptain1 = FindTarget(client, con_name, false, false);
 	
 	char emp_name[64]; // Get the player target in the second argument
 	GetCmdArg(2, emp_name, sizeof(emp_name));
-	int target2 = FindTarget(client, emp_name, false, false);
+	targetCaptain2 = FindTarget(client, emp_name, false, false);
 
 	// If etheir of the players are invalid, we can't continue. 
-	if (TargetingIsInvalid(target1, con_name, target2, emp_name))
+	if (TargetingIsInvalid(targetCaptain1, con_name, targetCaptain2, emp_name))
 		return Plugin_Handled;
 	
 	// Set the default starting team to consort
-	int teamCaptain = target1;
+	teamCaptain = targetCaptain1;
 	
 	// If an optional third argument is inputed for the starting team
 	if (args == 3)
@@ -43,10 +46,10 @@ public Action StartPicking(int client, int args)
 		
 		// Set the starting team to etheir Consort or Empire
 		if (StrContains(startTeam, "con", false) > -1)
-			teamCaptain = target1;
+			teamCaptain = targetCaptain1;
 
 		else if (StrContains(startTeam, "emp", false) > -1)
-			teamCaptain = target2;
+			teamCaptain = targetCaptain2;
 		
 		// If the starting team is invalid, don't countinue and have the command run again
 		else
@@ -72,14 +75,22 @@ public Action StartPicking(int client, int args)
 	}
 	
 	// Allow running the team picker for bots after round start if debugging
-	if (ND_RoundStarted() && !DebugTeamPicking)
+	if (ND_RoundStarted())
 	{
-		PrintMessageAll("Next Pick On");
+		if (!ND_RoundRestartable())
+		{
+			PrintMessageAll("Round Not Restartable");
+			return Plugin_Handled;
+		}
+		
+		PrintMessageAll("Round Restarting");
+		TeamPickPending = true;
+		ND_RestartRound(true);
 		return Plugin_Handled;
 	}
 	
 	// Run before picking starts
-	BeforePicking(target1, target2);
+	BeforePicking(targetCaptain1, targetCaptain2);
 	
 	// Display the first picking menu
 	Menu_PlayerPick(teamCaptain);
@@ -136,6 +147,26 @@ bool TargetingIsInvalid(int target1, char[] con_name, int target2, char[] emp_na
 	}
 	
 	return false;
+}
+
+public void ND_OnRoundRestartedWarmup()
+{
+	if (TeamPickPending)
+	{
+		TeamPickPending = false;
+		
+		if (!IsValidClient(targetCaptain1) || !IsValidClient(targetCaptain2))
+		{
+			PrintMessageAll("Invalid Client Restart");
+			return;
+		}
+		
+		// Run before picking starts
+		BeforePicking(targetCaptain1, targetCaptain2);
+		
+		// Display the first picking menu
+		Menu_PlayerPick(teamCaptain);		
+	}	
 }
 
 /* Functions for running a routine before team picking is started */

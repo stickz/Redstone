@@ -40,6 +40,7 @@ Handle g_OnRoundStartedForward;
 Handle g_OnRoundStartEXForward;
 Handle g_OnRoundEndedForward;
 Handle g_OnRoundEndedEXForward;
+Handle g_OnRoundRestartedWarmupForward;
 
 public void OnPluginStart()
 {
@@ -50,6 +51,7 @@ public void OnPluginStart()
 	g_OnRoundStartEXForward = CreateGlobalForward("ND_OnPreRoundStart", ET_Ignore);
 	g_OnRoundEndedForward = CreateGlobalForward("ND_OnRoundEnded", ET_Ignore);
 	g_OnRoundEndedEXForward = CreateGlobalForward("ND_OnRoundEndedEX", ET_Ignore);
+	g_OnRoundRestartedForward = CreateGlobalForward("ND_OnRoundRestartedWarmup", ET_Ignore);
 	
 	AddUpdaterLibrary(); //auto-updater
 }
@@ -228,7 +230,19 @@ public Action TIMER_EngageRoundRestart(Handle timer, any toWarmup)
 		PrintToChatAll("\x05The round will restart shortly!");
 	}
 	else
+	{
 		PrintToChatAll("\x05The match will pause shortly!");	
+		CreateTimer(10.0, TIMER_DoRoundRestarted, _, TIMER_FLAG_NO_MAPCHANGE);
+	}
 
+	return Plugin_Handled;
+}
+
+public Action TIMER_DoRoundRestarted(Handle timer)
+{
+	Action dummy;
+	Call_StartForward(g_OnRoundRestartedWarmupForward);
+	Call_Finish(dummy);
+	
 	return Plugin_Handled;
 }
