@@ -12,7 +12,7 @@ int getClientLevel(int client)
 			return LevelCacheArray[client];			
 		}
 		
-		int clientLevel = ND_RetreiveLevel(client);		
+		int clientLevel = ND_RetreiveLevelEx(client);		
 		if (clientLevel > 1)
 		{
 			LevelCacheArray[client] = clientLevel;

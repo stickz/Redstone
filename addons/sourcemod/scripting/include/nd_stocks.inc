@@ -272,3 +272,23 @@ stock int getTeamLessPlayers()
 	
 	return consortCount < empireCount ? TEAM_CONSORT : TEAM_EMPIRE;
 }
+
+/** 
+ * Retreives the level of a given client index
+ *
+ * @param client		Client index.
+ * @return			The level of the client or some value less than 2 (if not loaded)
+ */ 
+stock int ND_RetreiveLevelEx(int client) {
+	return GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iPlayerRank", 1, client);
+}
+
+/** 
+ * Retreives the current score of a given client index
+ *
+ * @param client		Client index.
+ * @return			The score of the client.
+ */ 
+stock int ND_RetrieveScoreEx(int client) {
+	return GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iScore", 1, client);
+}

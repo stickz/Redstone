@@ -56,7 +56,7 @@ void UpdateSPM()
 			if (connectionTime[client] >= 1)
 			{
 				/* Update client's score per minute each minute */
-				clientScore = ND_RetrieveScore(client);
+				clientScore = ND_RetrieveScoreEx(client);
 				SPM = (float(clientScore) / float(connectionTime[client])) * SCORE_BASED_MULTIPLIER;
 				scorePerMinute[client] = RoundFloat(SPM);
 				cSkill = GetSkillLevel(client);
