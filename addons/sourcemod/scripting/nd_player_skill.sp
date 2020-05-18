@@ -9,7 +9,6 @@
 #include <nd_aweight>
 //#include <nd_entities>
 #include <smlib/math>
-#include <nd_com_eng>
 
 #define _DEBUG 0
 
@@ -95,9 +94,8 @@ public void ND_OnRoundEndedEX()
 	}
 }
 
-public bool OnClientConnect(int client, char[] rejectmsg, int maxlen) {
+public void OnClientConnected(int client) {
 	resetVarriables(client);
-	return true;
 }
 
 public void OnClientDisconnect(int client) {
