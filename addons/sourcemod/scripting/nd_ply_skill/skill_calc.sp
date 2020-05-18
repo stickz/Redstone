@@ -5,7 +5,7 @@ float GetSkillLevel(int client)
 {
 	// Get the client level for later use
 	int clientLevel = getClientLevel(client);
-	int skillFloor = ND_GetSkillFloor(client);
+	int skillFloor = ND_GetSkillFloorEx(client);
 	
 	/* Try to use the gameme skill value first */
 	float gameMeSkill = GameME_PlayerSkill[client];
@@ -73,7 +73,7 @@ float GetCommanderSkill(int client)
 {
 	// Get the client level for later use
 	int clientLevel = getClientLevel(client);
-	int skillFloor = ND_GetSkillFloor(client);
+	int skillFloor = ND_GetSkillFloorEx(client);
 	
 	/* Try to use the gameme skill value first */
 	float gameMeComSkill = GameME_CommanderSkill[client];
