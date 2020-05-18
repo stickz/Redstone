@@ -89,11 +89,15 @@ public Action StartPicking(int client, int args)
 		return Plugin_Handled;
 	}
 	
-	// Run before picking starts
-	BeforePicking(targetCaptain1, targetCaptain2);
+	if (ND_WarmupCompleted())
+	{
+		// Run before picking starts
+		BeforePicking(targetCaptain1, targetCaptain2);
+		
+		// Display the first picking menu
+		Menu_PlayerPick(teamCaptain);
+	}
 	
-	// Display the first picking menu
-	Menu_PlayerPick(teamCaptain);
 	return Plugin_Handled;
 }
 bool CatchCommonFailure(int args)

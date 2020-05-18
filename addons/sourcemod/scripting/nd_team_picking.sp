@@ -5,6 +5,7 @@
 #include <nd_print>
 #include <nd_afk>
 #include <nd_swgm>
+#include <nd_warmup>
 
 public Plugin myinfo = 
 {
