@@ -96,19 +96,19 @@
 		"en"		"!PlayerPicking Failure: Use '!Nexpick on' then Reload the map"	
 	}
 	
-	"Round Not Restartable"
+	"Wait Round Restart"
 	{
-		"en"		"!PlayerPicking Failure: Please try again in 60s, as the round needs restart."		
+		"en"		"!PlayerPicking: Please wait... A round restart has been queued"
 	}
 	
 	"Round Restarting"
 	{
-		"en"		"!PlayerPicking Failure: Please wait while the round resarts."	
+		"en"		"!PlayerPicking: Please wait... While the round resarts"
 	}
 	
 	"Invalid Client Restart"
 	{
-		"en"		"!PlayerPicking Failure: Please trigger the command again."	
+		"en"		"!PlayerPicking Failure: Please trigger the command again"	
 	}
 
 	"Name Segment Invalid"

@@ -1,6 +1,7 @@
 #define INVALID_TARGET -1
 
 bool TeamPickPending = false;
+bool TeamPickRestartPending = false;
 int targetCaptain1, targetCaptain2, teamCaptain;
 
 void RegisterPickingCommand()
@@ -79,13 +80,12 @@ public Action StartPicking(int client, int args)
 	{
 		if (!ND_RoundRestartable())
 		{
-			PrintMessageAll("Round Not Restartable");
+			PrintMessageAll("Wait Round Restart");
+			TeamPickRestartPending = true;
 			return Plugin_Handled;
 		}
 		
-		PrintMessageAll("Round Restarting");
-		TeamPickPending = true;
-		ND_RestartRound(true);
+		DoRoundRestart();
 		return Plugin_Handled;
 	}
 	
@@ -98,7 +98,7 @@ public Action StartPicking(int client, int args)
 }
 bool CatchCommonFailure(int args)
 {
-	if (g_bPickStarted) 
+	if (g_bPickStarted || TeamPickRestartPending || TeamPickPending)
 	{
 		PrintMessageAll("Already Running");
 		return true;
@@ -149,6 +149,15 @@ bool TargetingIsInvalid(int target1, char[] con_name, int target2, char[] emp_na
 	return false;
 }
 
+public void ND_OnRoundRestartReady()
+{
+	if (TeamPickRestartPending)
+	{
+		TeamPickRestartPending = false;
+		DoRoundRestart();
+	}
+}
+
 public void ND_OnRoundRestartedWarmup()
 {
 	if (TeamPickPending)
@@ -167,6 +176,13 @@ public void ND_OnRoundRestartedWarmup()
 		// Display the first picking menu
 		Menu_PlayerPick(teamCaptain);		
 	}	
+}
+
+void DoRoundRestart()
+{
+	PrintMessageAll("Round Restarting");
+	TeamPickPending = true;
+	ND_RestartRound(true);	
 }
 
 /* Functions for running a routine before team picking is started */

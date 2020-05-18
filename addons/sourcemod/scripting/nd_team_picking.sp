@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name = "[ND] Team Picker",
 	author = "Stickz",
 	description = "Lets two selected commanders pick their team",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 }
 
@@ -89,6 +89,8 @@ public Action Command_JoinTeam(int client, char[] command, int argc)
 void InitiateRoundEnd() 
 {
 	g_bPickedThisMap = false;
+	TeamPickPending = false;
+	TeamPickRestartPending = false;
 	PickedConsort.Clear();
 	PickedEmpire.Clear();
 }

@@ -41,6 +41,7 @@ Handle g_OnRoundStartEXForward;
 Handle g_OnRoundEndedForward;
 Handle g_OnRoundEndedEXForward;
 Handle g_OnRoundRestartedWarmupForward;
+Handle g_OnRoundRestartReadyForward;
 
 public void OnPluginStart()
 {
@@ -52,6 +53,7 @@ public void OnPluginStart()
 	g_OnRoundEndedForward = CreateGlobalForward("ND_OnRoundEnded", ET_Ignore);
 	g_OnRoundEndedEXForward = CreateGlobalForward("ND_OnRoundEndedEX", ET_Ignore);
 	g_OnRoundRestartedWarmupForward = CreateGlobalForward("ND_OnRoundRestartedWarmup", ET_Ignore);
+	g_OnRoundRestartReadyForward = CreateGlobalForward("ND_OnRoundRestartReady", ET_Ignore);
 	
 	AddUpdaterLibrary(); //auto-updater
 }
@@ -82,6 +84,11 @@ void DelayRoundRestart()
 public Action TIMER_RoundRestartAvailible(Handle timer)
 {
 	roundCanBeRestarted = true;
+	
+	Action dummy;
+	Call_StartForward(g_OnRoundRestartReadyForward);
+	Call_Finish(dummy);
+	
 	return Plugin_Handled;
 }
 

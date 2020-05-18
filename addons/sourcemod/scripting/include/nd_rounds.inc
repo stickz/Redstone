@@ -85,6 +85,7 @@ forward void ND_OnPreRoundStart();
 forward void ND_OnRoundStarted();
 forward void ND_OnRoundEnded();
 forward void ND_OnRoundRestartedWarmup();
+forward void ND_OnRoundRestartReady();
 
 // Only fires if the round has started this map
 forward void ND_OnRoundEndedEX();
