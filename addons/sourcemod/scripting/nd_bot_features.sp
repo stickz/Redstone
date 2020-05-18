@@ -180,7 +180,7 @@ void toggleBooster(bool state)
 void SignalMapChange()
 {
 	toggleBooster(false);
-	ServerCommand("bot_quota 0");
+	//ServerCommand("bot_quota 0");
 	ServerCommand("mp_limitteams 1");
 }
 
