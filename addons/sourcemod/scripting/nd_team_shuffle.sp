@@ -92,8 +92,11 @@ void BalanceTeams()
 	
 	for (; client <= MaxClients; client++) 
 	{ 
-		int skill = GetFinalSkill(client, roundStarted);
-		players.Set(client, skill);
+		if (IsValidClient(client))
+		{		
+			int skill = GetFinalSkill(client, roundStarted);
+			players.Set(client, skill);
+		}
 	}
 	
 	int counter = MAX_SKILL;

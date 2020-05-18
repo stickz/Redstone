@@ -86,7 +86,7 @@ public Action TIMER_WarmupRound(Handle timer)
 				return Plugin_Stop;
 		}		
 		
-		case 4: ServerCommand("bot_quota 0");		
+		//case 4: ServerCommand("bot_quota 0");		
 		case 3: g_Integer[warmupTextType] = 1;
 		
 		case 1: 

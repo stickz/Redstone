@@ -50,7 +50,7 @@ public void OnMapStart()
 {
 	SetVarDefaults();
 	
-	ServerCommand("bot_quota 0"); //Make sure bots are disabled
+	//ServerCommand("bot_quota 0");
 }
 
 public void OnMapEnd()
