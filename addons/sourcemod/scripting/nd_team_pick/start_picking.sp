@@ -89,19 +89,22 @@ public Action StartPicking(int client, int args)
 		return Plugin_Handled;
 	}
 	
-	if (ND_WarmupCompleted())
-	{
-		// Run before picking starts
-		BeforePicking(targetCaptain1, targetCaptain2);
+	// Run before picking starts
+	BeforePicking(targetCaptain1, targetCaptain2);
 		
-		// Display the first picking menu
-		Menu_PlayerPick(teamCaptain);
-	}
+	// Display the first picking menu
+	Menu_PlayerPick(teamCaptain);
 	
 	return Plugin_Handled;
 }
 bool CatchCommonFailure(int args)
 {
+	if (!ND_WarmupCompleted())
+	{
+		PrintMessageAll("No Warmup Run");
+		return true;		
+	}
+	
 	if (g_bPickStarted || TeamPickRestartPending || TeamPickPending)
 	{
 		PrintMessageAll("Already Running");
