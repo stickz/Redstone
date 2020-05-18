@@ -123,7 +123,7 @@ void resetVarriables(int client, bool skill = true)
 
 void ReloadGameMeSkill()
 {
-	if (!GM_GFS_LOADED())
+	if (!GM_GFS_LOADED() || !GM_GSB_LOADED())
 		return;
 	
 	RED_LOOP_CLIENTS(client) {

@@ -11,8 +11,12 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("ND_GetEnhancedAverage", Native_GetEnhancedAverage);
 	
 	MarkNativeAsOptional("ND_GetClientEXP");
+	
 	MarkNativeAsOptional("ND_GetSkillFloor");
-	//MarkNativeAsOptional("GameME_GetFinalSkill");
+	
+	MarkNativeAsOptional("GameME_GetFinalSkill");	
+	MarkNativeAsOptional("GameME_GetSkillBase");
+	
 	return APLRes_Success;
 }
 
