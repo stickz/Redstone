@@ -250,14 +250,8 @@ int getBotModulusQuota()
 {	
 	// Get max quota and the current spectator & team count
 	int maxQuota = g_cvar[BoosterQuota].IntValue;
-	int specCount = ValidTeamCount(TEAM_SPEC);
-	
-	// Caculate number of bots for the map. Adjust bot value to offset the spectators
-	int reduce = Math_Min(botReductionValue - specCount, 0);
-	
-	// If the bot value is greater than max, we must use the max instead
-	int totalCount = maxQuota - specCount - ValidTeamCount(TEAM_UNASSIGNED);
-	int botAmount = Math_Max(maxQuota - reduce + specCount, totalCount);
+	int specCount = ValidTeamCount(TEAM_SPEC);	
+	int botAmount = maxQuota - specCount - ValidTeamCount(TEAM_UNASSIGNED);
 		
 	// If required, modulate the bot count so the number is even on the scoreboard
 	return botAmount % 2 != specCount % 2 ? botAmount - 1 : botAmount;
