@@ -62,7 +62,7 @@ void displayTeamDiffUpdate()
 	/* Get which team is has more skill, ensure teamdiff is a positve number */
 	char stackedTeam[12];
 	if (teamDiff > 0)
-		Format(stackedTeam, sizeof(stackedTeam), "Consortium"); 
+		Format(stackedTeam, sizeof(stackedTeam), "Consort"); 
 	else
 	{
 		Format(stackedTeam, sizeof(stackedTeam), "Empire");
@@ -73,6 +73,10 @@ void displayTeamDiffUpdate()
 	float totalFloat = teamDiff / average * 100.0;	
 	int diffPercent = RoundFloat(totalFloat);
 	
+	/* Build the difference string ex. Empire +78% or Consort +21% */
+	char hudText[24];	
+	Format(hudText, sizeof(hudText), "%s +%s%", stackedTeam, diffPercent);
+	
 	for (int idx = 1; idx <= MaxClients; idx++)
 	{
 		if (option_team_diff_hints[idx] && RED_IsValidClient(idx) && isOnTeam(idx))
@@ -82,14 +86,6 @@ void displayTeamDiffUpdate()
 				PrintHintText(idx, "");
 				continue;
 			}
-			
-			/* Receive team name translations */
-			char stackTrans[24];
-			Format(stackTrans, sizeof(stackTrans), "%T", stackedTeam, idx); 	
-			
-			/* Build the difference string ex. Empire +78% or Consort +21% */
-			char hudText[24];	
-			Format(hudText, sizeof(hudText), "%s +%d%", stackTrans, diffPercent); 
 		
 			PrintHintText(idx, "%s", hudText);
 		}
