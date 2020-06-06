@@ -70,7 +70,10 @@ bool RunTeamShuffle(bool force)
 	int skillDiffPerEx = ND_GetSkillDiffPercentEx(80.0);
 	int shuffleThreshold = gcShuffleThreshold.IntValue;
 	
-	if (!force && skillDiffPer < shuffleThreshold && skillDiffPerEx < shuffleThreshold)
+	// Check if the server type in vanilla if so, don't use Redstone team diff percent
+	bool vanilla = ND_GetServerTypeEx(ND_SType_Vanilla) == SERVER_TYPE_VANILLA;
+
+	if (!force && (vanilla || skillDiffPer < shuffleThreshold) && skillDiffPerEx < shuffleThreshold)
 	{
 		PrintMessageAllTB("Shuffle Threshold Not Reached");
 		StartRound(); // Start round if teams are not shuffled		
