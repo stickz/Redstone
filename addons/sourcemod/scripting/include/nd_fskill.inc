@@ -14,6 +14,29 @@ stock float ND_GetPrecisePSkill(int client) {
 	return !ND_GPS_AVAILBLE() ? 0.0 : ND_GetPlayerSkill(client);
 }
 
+stock float ND_GetPlayerSkillEx(int client, float ceiling)
+{
+	// Limit the player skill to the ceiling
+	float pSkill = ND_GetPlayerSkill(client);
+	
+	if (pSkill > ceiling)
+		pSkill = ceiling;
+	
+	return pSkill;
+}
+
+stock int ND_GetRoundedPSkillEx(int client, float ceiling)
+{
+	// Limit the player skill to the ceiling
+	float pSkill = ND_GetPlayerSkill(client);
+	
+	// Limit the player skill to the ceiling
+	if (pSkill > ceiling)
+		pSkill = ceiling;
+	
+	return RoundFloat(pSkill);
+}
+
 native float ND_GetCommanderSkill(int client);
 #define ND_GCS_AVAILBLE() (GetFeatureStatus(FeatureType_Native, "ND_GetCommanderSkill") == FeatureStatus_Available)
 
@@ -37,17 +60,6 @@ native float ND_GetEnhancedAverage(float avr = 0.7, float med = 0.3);
 
 #define ND_GED_AVAILBLE() (GetFeatureStatus(FeatureType_Native, "ND_GetTeamDifference") == FeatureStatus_Available)
 native float ND_GetTeamDifference();
-
-stock float ND_GetPlayerSkillEx(int client, float ceiling)
-{
-	// Limit the player skill to the ceiling
-	float pSkill = ND_GetPlayerSkill(client);
-	
-	if (pSkill > ceiling)
-		pSkill = ceiling;
-	
-	return pSkill;
-}
 
 stock float ND_GetCeilingSD(float ceiling)
 {

@@ -9,6 +9,7 @@
 #include <nd_entities>
 #include <nd_print>
 #include <autoexecconfig>
+#include <nd_stype>
 
 /* Notice to plugin contributors: please create a new native and void,
  * When modifying the sorting or placement algorithum to allow for proper testing.
@@ -90,11 +91,13 @@ void BalanceTeams()
 	int client = 1;
 	players.Set(0, -1);
 	
+	bool vanilla = ND_GetServerTypeEx(ND_SType_Vanilla) == SERVER_TYPE_VANILLA;
+	
 	for (; client <= MaxClients; client++) 
 	{ 
 		if (IsValidClient(client))
 		{		
-			int skill = GetFinalSkill(client, roundStarted);
+			int skill = GetFinalSkill(client, roundStarted, vanilla);
 			players.Set(client, skill);
 		}
 	}
@@ -104,7 +107,7 @@ void BalanceTeams()
 	int index = 0;
 	
 	// Get whether to shuffle every other or in groups of two
-	bool shuffleEveryOther = DoShuffleEveryOther(roundStarted);
+	bool shuffleEveryOther = DoShuffleEveryOther(roundStarted, vanilla);
 	
 	#if DEBUG == 1
 	// Format the message top 2 player skill diff and shuffle every other value	
@@ -144,7 +147,7 @@ void BalanceTeams()
 	FireTeamsShuffledForward();
 }
 
-int GetTopTwoSkillDiff(bool roundStarted)
+int GetTopTwoSkillDiff(bool roundStarted, bool vanilla)
 {
 	int first = 0;
 	int second = 0;
@@ -154,7 +157,7 @@ int GetTopTwoSkillDiff(bool roundStarted)
 		// If the client is valid AND (The round is not started OR the client is on a team)
 		if (RED_IsValidClient(client) && (!roundStarted || IsReadyForBalance(client, roundStarted)))
 		{		
-			int skill = GetSkillLevel(client);
+			int skill = GetSkillLevel(client, vanilla);
 			
 			if (skill > first)
 			{
@@ -172,22 +175,22 @@ int GetTopTwoSkillDiff(bool roundStarted)
 	return first - second;
 }
 
-bool DoShuffleEveryOther(bool roundStarted)
+bool DoShuffleEveryOther(bool roundStarted, bool vanilla)
 {
 	int threshold = gcShuffleEveryOther.IntValue;
 	
 	if (!roundStarted)
 	{
 		// Get top 2 skill difference with and without unassigned players
-		int top2SkillDiff = GetTopTwoSkillDiff(true);
-		int top2SkillDiffEx = GetTopTwoSkillDiff(false);
+		int top2SkillDiff = GetTopTwoSkillDiff(true, vanilla);
+		int top2SkillDiffEx = GetTopTwoSkillDiff(false, vanilla);
 		
 		// If etheir of the skill difference is within the threshold, shuffle every other
 		return top2SkillDiff <= threshold || top2SkillDiffEx <= threshold;
 	}
 	
 	// Otherwise if the round is started, get the skill difference without unassigned players
-	return GetTopTwoSkillDiff(roundStarted) <= threshold;
+	return GetTopTwoSkillDiff(roundStarted, vanilla) <= threshold;
 }
 
 void SetClientTeam(int client, int team)
@@ -227,7 +230,7 @@ bool IsReadyForBalance(int client, bool roundStarted)
 	return !roundStarted ? team != TEAM_UNASSIGNED : team > TEAM_SPEC;	
 }
 
-int GetSkillLevel(int client)
+int GetSkillLevel(int client, bool vanilla)
 {
 	int level = ND_RetreiveLevel(client);
 	int sFloor = ND_GetSkillFloor(client);
@@ -240,15 +243,16 @@ int GetSkillLevel(int client)
 	else if (ND_EXPAvailible(client) && ND_GetClientEXP(client) >= gcLevelEighty.IntValue)
 		level = 80;
 	
-	return ND_GPS_AVAILBLE() ? ND_GetRoundedPSkill(client) : level;
+	int skill = !vanilla ? ND_GetRoundedPSkill(client) : ND_GetRoundedPSkillEx(client, 80.0);
+	return ND_GPS_AVAILBLE() ? skill : level;
 }
 
-int GetFinalSkill(int client, bool roundStarted) 
+int GetFinalSkill(int client, bool roundStarted, bool vanilla) 
 {
 	if (!RED_IsValidClient(client) || !IsReadyForBalance(client, roundStarted))
 		return -1;
 	
-	return GetSkillLevel(client);	
+	return GetSkillLevel(client, vanilla);	
 }
 
 /* Natives */
