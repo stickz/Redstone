@@ -75,7 +75,7 @@ void displayTeamDiffUpdate()
 	
 	/* Build the difference string ex. Empire +78% or Consort +21% */
 	char hudText[24];	
-	Format(hudText, sizeof(hudText), "%s +%s%", stackedTeam, diffPercent);
+	Format(hudText, sizeof(hudText), "%s +%d%", stackedTeam, diffPercent);
 	
 	for (int idx = 1; idx <= MaxClients; idx++)
 	{
