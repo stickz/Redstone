@@ -21,7 +21,7 @@ public Plugin myinfo =
 // Include client prefs support
 #include "nd_res_frack/clientprefs.sp"
 
-int primeFrackAmount = RES_PRIME_FRACKING;
+int primeFrackAmount = RES_MOD_PRIME_FRACKING;
 
 public void OnPluginStart()
 {
@@ -41,19 +41,19 @@ public void OnMapStart()
 	bool coastMap = ND_StockMapEquals(currentMap, ND_Coast);
 	
 	// Set the primary resource fracking amount to 100% on these maps or partial on other maps
-	primeFrackAmount = (cornerMap || coastMap) ? RES_PRIME_EXTRACT : RES_PRIME_FRACKING;
+	primeFrackAmount = (cornerMap || coastMap) ? RES_MOD_PRIME_EXTRACT : RES_MOD_PRIME_FRACKING;
 }
 
 public void ND_OnResFrackStarted(int resType, float delay, int interval, int amount)
 {
 	if (resType == RESOURCE_PRIME)
-		DisplayResFrackMessage("Prime Resource Fracking", primeFrackAmount, RES_PRIME_TRICKLE, RoundFloat(delay));
+		DisplayResFrackMessage("Prime Resource Fracking", primeFrackAmount, RES_MOD_PRIME_TRICKLE, RoundFloat(delay));
 	
 	else if (resType == RESOURCE_SECONDARY)
-		DisplayResFrackMessage("Secondary Resource Fracking", RES_SECONDARY_FRACKING, RES_SECONDARY_TRICKLE, RoundFloat(delay));
+		DisplayResFrackMessage("Secondary Resource Fracking", RES_MOD_SECONDARY_FRACKING, RES_MOD_SECONDARY_TRICKLE, RoundFloat(delay));
 	
 	else if (resType == RESOURCE_TERTIARY)
-		DisplayResFrackMessage("Tertiary Resource Fracking", RES_TERTIARY_FRACKING, RES_TERTIARY_TRICKLE, RoundFloat(delay));
+		DisplayResFrackMessage("Tertiary Resource Fracking", RES_MOD_TERTIARY_FRACKING, RES_MOD_TERTIARY_TRICKLE, RoundFloat(delay));
 }
 
 void DisplayResFrackMessage(const char[] phrase, int amount, int trickle, int delay)
