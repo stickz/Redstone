@@ -76,7 +76,7 @@ void ResetResearchTech()
 
 void HookEvents()
 {
-	HookEvent("research_complete", Event_ResearchCompleted, EventHookMode_PostNoCopy);
+	HookEvent("research_complete", Event_ResearchCompleted, EventHookMode_Post);
 	HookEvent("round_win", Event_RoundEnd, EventHookMode_PostNoCopy);	
 }
 
