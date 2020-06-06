@@ -5,7 +5,7 @@
 #include <nd_redstone>
 #include <nd_resources>
 #include <nd_res_trickle>
-#include <nd_maps>
+#include <nd_stype>
 
 //#define DEBUG //Enable plugin debugging mode
 
@@ -25,6 +25,7 @@ const MAX_RESOURCES = 30;
 int resCount = 0;
 int resEnts[MAX_RESOURCES] = {0, ...};
 bool resCaps[MAX_RESOURCES][MAXPLAYERS + 1];
+int resVals[RESOURCE_COUNT][2];
 
 // reference points and distances
 float refCenter[3];
@@ -33,7 +34,8 @@ float refBase[TEAM_COUNT][3];
 #define CENTRAL_DISTANCE 2000.0 // TODO: set according to map size - for metro cca 2000 so that the west secondary is not considered central but cca 3000 for maps like downtown
 #define BASE_DISTANCE 2500.0
 
-bool cornerMap = false;
+#define RES_VAL_EXTARCT 		0
+#define RES_VAL_TRICKLE			1
 
 public Plugin myinfo = 
 {
@@ -81,9 +83,34 @@ public void OnMapStart()
 		resEnts[resIndex] = 0;
 		ClearCapturers(resIndex);
 	}
+}
+
+public void OnConfigsExecuted()
+{
+	int serverType = ND_GetServerTypeEx(ND_SType_Vanilla);
+	if (serverType == SERVER_TYPE_VANILLA)
+	{
+		resVals[RESOURCE_PRIME][RES_VAL_EXTARCT] = RES_PRIME_EXTRACT;
+		resVals[RESOURCE_PRIME][RES_VAL_TRICKLE] = RES_PRIME_TRICKLE;
+		
+		resVals[RESOURCE_SECONDARY][RES_VAL_EXTARCT] = RES_SECONDARY_EXTRACT;
+		resVals[RESOURCE_SECONDARY][RES_VAL_TRICKLE] = RES_SECONDARY_TRICKLE;
+		
+		resVals[RESOURCE_TERTIARY][RES_VAL_EXTARCT] = RES_TERTIARY_EXTRACT;
+		resVals[RESOURCE_TERTIARY][RES_VAL_TRICKLE] = RES_TERTIARY_TRICKLE;
+	}
 	
-	// Check if the current map is corner
-	cornerMap = ND_CurrentMapIsCorner();
+	else
+	{
+		resVals[RESOURCE_PRIME][RES_VAL_EXTARCT] = RES_MOD_PRIME_EXTRACT;
+		resVals[RESOURCE_PRIME][RES_VAL_TRICKLE] = RES_MOD_PRIME_TRICKLE;
+		
+		resVals[RESOURCE_SECONDARY][RES_VAL_EXTARCT] = RES_MOD_SECONDARY_EXTRACT;
+		resVals[RESOURCE_SECONDARY][RES_VAL_TRICKLE] = RES_MOD_SECONDARY_TRICKLE;
+		
+		resVals[RESOURCE_TERTIARY][RES_VAL_EXTARCT] = RES_MOD_TERTIARY_EXTRACT;
+		resVals[RESOURCE_TERTIARY][RES_VAL_TRICKLE] = RES_MOD_TERTIARY_TRICKLE;		
+	}	
 }
 
 // ======== EVENT HANDLING ========
@@ -152,6 +179,8 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 		// get resource extract rates and resources left before trickle
 		int resEVals[3];
 		resEVals[1] = GetEntProp(entindex, Prop_Send, "m_iCurrentResources");
+		resEVals[0] = resVals[type][RES_VAL_EXTARCT];
+		resEVals[2] = resVals[type][RES_VAL_TRICKLE];
 		switch (type)
 		{
 			case RESOURCE_PRIME: 
@@ -159,39 +188,42 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 				resTeamPhrase 	= "Primary Resource Captured";
 				resCapPhrase	= "Captured Resource Primary";
 				resTrickPhrase	= "Trickled Resource Primary";
-				resEVals[0] 	= RES_PRIME_EXTRACT;
-				resEVals[2] 	= RES_PRIME_TRICKLE;				
 				
 				// Get team resources of primary if availible
-				int trickleResPrime = ND_GetPrimaryResources(team);
-				if (trickleResPrime != -1)
-					resEVals[1] = trickleResPrime;
+				if (ND_RES_PGET_AVAILABLE())
+				{
+					int trickleResPrime = ND_GetPrimaryResources(team);
+					if (trickleResPrime != -1)
+						resEVals[1] = trickleResPrime;
+				}
 			}			
 			case RESOURCE_SECONDARY:
 			{
 				resTeamPhrase 	= "Secondary Resource Captured";
 				resCapPhrase	= "Captured Resource Secondary";
 				resTrickPhrase	= "Trickled Resource Secondary";
-				resEVals[0] 	= RES_SECONDARY_EXTRACT;
-				resEVals[2] 	= RES_SECONDARY_TRICKLE;
 				
 				// Get team resources of secondary if availible
-				int trickleResSec = ND_GetSecondaryResources(entindex, team);
-				if (trickleResSec != -1)
-					resEVals[1] = trickleResSec;
+				if (ND_RES_SGET_AVAILABLE())
+				{
+					int trickleResSec = ND_GetSecondaryResources(entindex, team);
+					if (trickleResSec != -1)
+						resEVals[1] = trickleResSec;
+				}
 			}
 			case RESOURCE_TERTIARY: 
 			{
 				resTeamPhrase 	= "Tertiary Resource Captured";
 				resCapPhrase	= "Captured Resource Tertiary";
 				resTrickPhrase	= "Trickled Resource Tertiary";
-				resEVals[0] 	= RES_TERTIARY_EXTRACT;
-				resEVals[2] 	= RES_TERTIARY_TRICKLE;
 				
 				// Get the team resources of the tertiary if availible
-				int trickleResTert = ND_GetTertiaryResources(entindex, team);
-				if (trickleResTert != -1)
-					resEVals[1] = trickleResTert;
+				if (ND_RES_TGET_AVAILABLE())
+				{				
+					int trickleResTert = ND_GetTertiaryResources(entindex, team);
+					if (trickleResTert != -1)
+						resEVals[1] = trickleResTert;
+				}
 			}
 		}		
 		
@@ -416,3 +448,20 @@ void ShoutEntityLoc(int entindex)
 	PrintToServer("Entity [%s] found at [X,Y,Z]=[%f,%f,%f] angle: %f, distance: %f", clsname, rel[0], rel[1], rel[2], angle, dist);
 }
 #endif
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	MarkNativeAsOptional("ND_AddTertiaryResources");
+	MarkNativeAsOptional("ND_SetTertiaryResources");
+	MarkNativeAsOptional("ND_GetTertiaryResources");
+	
+	MarkNativeAsOptional("ND_AddSecondaryResources");
+	MarkNativeAsOptional("ND_SetSecondaryResources");
+	MarkNativeAsOptional("ND_GetSecondaryResources");
+	
+	MarkNativeAsOptional("ND_AddPrimaryResources");
+	MarkNativeAsOptional("ND_SetPrimaryResources");
+	MarkNativeAsOptional("ND_GetPrimaryResources");
+	
+	return APLRes_Success;	
+}

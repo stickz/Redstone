@@ -42,3 +42,7 @@ native bool ND_SetPrimaryResources(int team, int amount);
 // Gets trickle resources to primary
 // Returns resources on success, -1 on failure
 native int ND_GetPrimaryResources(int team);
+
+#define ND_RES_TGET_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_GetTertiaryResources") == FeatureStatus_Available)
+#define ND_RES_SGET_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_GetSecondaryResources") == FeatureStatus_Available)
+#define ND_RES_PGET_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_GetPrimaryResources") == FeatureStatus_Available)
