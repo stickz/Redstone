@@ -38,6 +38,17 @@ native float ND_GetEnhancedAverage(float avr = 0.7, float med = 0.3);
 #define ND_GED_AVAILBLE() (GetFeatureStatus(FeatureType_Native, "ND_GetTeamDifference") == FeatureStatus_Available)
 native float ND_GetTeamDifference();
 
+stock float ND_GetPlayerSkillEx(int client, float ceiling)
+{
+	// Limit the player skill to the ceiling
+	float pSkill = ND_GetPlayerSkill(client);
+	
+	if (pSkill > ceiling)
+		pSkill = ceiling;
+	
+	return pSkill;
+}
+
 stock float ND_GetCeilingSD(float ceiling)
 {
 	if (!ND_GPS_AVAILBLE())
@@ -49,10 +60,8 @@ stock float ND_GetCeilingSD(float ceiling)
 	{
 		if (IsValidClient(client))
 		{
-			// Limit the player skill to the ceiling;
-			float pSkill = ND_GetPlayerSkill(client);
-			if (pSkill > ceiling)
-				pSkill = ceiling;
+			// Limit the player skill to the ceiling
+			float pSkill = ND_GetPlayerSkillEx(client, ceiling);
 			
 			// Add or subtract the skill from the total
 			switch (GetClientTeam(client))
