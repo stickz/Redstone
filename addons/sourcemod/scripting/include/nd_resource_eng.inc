@@ -27,3 +27,9 @@ native ArrayList ND_GetTertiaryList();
 
 native void ND_SpawnTertiaryPoint(float[] origin);
 native void ND_RemoveTertiaryPoint(char[] rtName, char[] trigName);
+
+// Returns how many secondaries are on the map
+native int ND_GetSecondaryCount();
+
+// Returns a secondary entity at a given array index between 0 and sec count - 1
+native int ND_GetSecondaryEnt(int entity);
