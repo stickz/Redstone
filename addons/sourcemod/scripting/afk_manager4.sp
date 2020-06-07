@@ -494,6 +494,11 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 #endif
 	MarkNativeAsOptional("GetEngineVersion");
 	MarkNativeAsOptional("ND_GetTeamTGCache");
+	
+	MarkNativeAsOptional("RED_Donator");
+	MarkNativeAsOptional("RED_ValidClient");
+	MarkNativeAsOptional("RED_ValidCIndex");
+	
 	return APLRes_Success;
 }
 
