@@ -171,7 +171,7 @@ void toggleBooster(bool state)
 		
 	else
 	{
-		PrintToChatAll("\x05[xG] ToggleDynamicSlots() is broken. Please notify a server admin.");
+		LogError("ToggleDynamicSlots() not available. Setting visible max 32");
 		ServerCommand("sv_visiblemaxplayers 32");
 	}
 }
@@ -346,4 +346,11 @@ void SwitchBotsToTeam(int team)
 	
 	// Create a cooldown before bots can be switched again, so they don't end up in spectator
 	CreateTimer(timerDuration, TIMER_CooldownSwitchingBots, _, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	MarkNativeAsOptional("ToggleDynamicSlots");
+	MarkNativeAsOptional("GetDynamicSlotStatus");
+	return APLRes_Success;
 }
