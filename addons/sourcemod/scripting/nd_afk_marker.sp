@@ -121,6 +121,10 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	CreateNative("ND_IsPlayerMarkedAFK", Native_IsPlayerMarkedAfk);
 	RegPluginLibrary("afkmanager");
+	
+	MarkNativeAsOptional("ND_TeamPickMode");
+	MarkNativeAsOptional("ND_PauseWarmup");
+	
 	return APLRes_Success;
 }
 
