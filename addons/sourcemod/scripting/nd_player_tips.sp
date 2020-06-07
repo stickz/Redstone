@@ -50,3 +50,12 @@ public void ND_OnRoundStarted() {
 public void ND_OnRoundEndedEX() {
 	UnHookBunkerEntity(); // For bunker health warnings
 }
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	// Mark the nd_team_breakdown natives as optional
+	MarkNativeAsOptional("NDB_GetUnitCount");
+	MarkNativeAsOptional("NDB_GetAntiStructureCount");
+	
+	return APLRes_Success;
+}

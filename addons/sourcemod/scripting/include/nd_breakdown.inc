@@ -32,3 +32,7 @@ native int NDB_GetUnitCount(int teamIDX, int unitType);
  * @param includeSabs		Do we include saboteurs in the count?
  * @return        		The number of class unit clients. */
 native int NDB_GetAntiStructureCount(int teamIDX, bool includeSabs);
+
+
+#define ND_NDB_GUC_AVAILBLE() (GetFeatureStatus(FeatureType_Native, "NDB_GetUnitCount") == FeatureStatus_Available)
+#define ND_NDB_GASC_AVAILBLE() (GetFeatureStatus(FeatureType_Native, "NDB_GetAntiStructureCount") == FeatureStatus_Available)

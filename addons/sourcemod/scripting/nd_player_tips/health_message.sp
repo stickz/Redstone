@@ -8,8 +8,9 @@ void ResetDisplayedHealth() {
 
 public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast)
 {
-	if (!ND_RoundStarted())
-		return Plugin_Continue;		
+	// If the round is not started, or we can't get the medic count, exit the event
+	if (!ND_RoundStarted() || !ND_NDB_GUC_AVAILBLE())
+		return Plugin_Continue;
 		
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	if (IsValidClient(client) && option_player_tips[client] && !DisplayedHealthWarning[client])
