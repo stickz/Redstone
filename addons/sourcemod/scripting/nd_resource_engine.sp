@@ -245,9 +245,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("ND_SpawnTertiaryPoint", Native_SpawnTertiaryPoint);
 	CreateNative("ND_RemoveTertiaryPoint", Native_RemoveTertiaryPoint);
 	
-	CreateNative("ND_GetSecondaryCount", Native_GetSecCount);
-	CreateNative("ND_GetSecondaryEnt", Native_GetSecEnt);
-	
 	return APLRes_Success;
 }
 
@@ -293,14 +290,4 @@ public int Native_RemoveTertiaryPoint(Handle plugin, int numParams)
 	
 	// Remove the tertiary resource point
 	RemoveTertiaryPoint(rtName, trigName);
-}
-
-public int Native_GetSecCount(Handle plugin, int numParams) {
-	return listSecondaries.Length;	
-}
-
-public int Native_GetSecEnt(Handle plugin, int numParams) 
-{
-	int entity = GetNativeCell(1);	
-	return listSecondaries.Get(entity);	
 }

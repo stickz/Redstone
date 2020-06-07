@@ -26,9 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_redstone>
 #include <nd_rounds>
 #include <nd_print>
-#include <nd_resources>
-#include <nd_resource_eng>
-#include <nd_entities>
 
 public Plugin myinfo =
 {
@@ -46,7 +43,6 @@ ConVar cvarMaxRStart;
 ConVar cvarMaxPromote;
 ConVar cvarSelectMin;
 ConVar cvarSelectMax;
-ConVar cvarSecCount;
 
 bool ChairWaitRStartElapsed = false;
 bool ChairWaitPromoteElapsed[2] = { false, ...};
@@ -62,8 +58,6 @@ public void OnPluginStart()
 	LoadTranslations("nd_commander_chair.phrases");
 	
 	AddUpdaterLibrary(); //auto-updater
-	
-	HookEvent("resource_captured", Event_ResourceCaptured, EventHookMode_Post);
 	
 	// If the plugin loads late, disable the chair waiting
 	bool rStart = ND_RoundStarted();	
@@ -115,66 +109,6 @@ public void ND_BothCommandersPromoted(int consort, int empire)
 		NotifyCommandersOfChairUnlock("Chair Unlocked");
 }
 
-public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBroadcast)
-{
-	// Check if the team that captured the point is valid
-	int team = event.GetInt("team");
-	if (team != TEAM_EMPIRE && team != TEAM_CONSORT) 
-		return Plugin_Continue;
-	
-	// Check if the other team's promote delay has elapsed yet or if both teams had a commander
-	int otherTeam = getOtherTeam(team);
-	if (ChairWaitPromoteElapsed[otherTeam-2] || BothTeamsHadCommander())
-		return Plugin_Continue;	
-	
-	// Check if the round is started the resource points are availible
-	if (!ND_RoundStarted() || !ND_ResPointsCached())
-		return Plugin_Continue;
-	
-	int type = event.GetInt("type");
-	
-	if (type == RESOURCE_PRIME)
-	{		
-		if (TeamOwnsEnoughSecondaries(team))
-		{			
-			DoTeamChairUnlock(otherTeam);
-		}
-	}
-	
-	else if (type == RESOURCE_SECONDARY)
-	{
-		if (TeamOwnsEnoughSecondaries(team) && ND_GetPrimeOwner() == team)
-		{
-			DoTeamChairUnlock(otherTeam);
-		}
-	}
-	
-	return Plugin_Continue;
-}
-
-void DoTeamChairUnlock(int otherTeam)
-{
-	ChairWaitPromoteElapsed[otherTeam-2] = true;
-	NotifyCommandersOfChairUnlock("May Enter Chair");
-}
-
-bool TeamOwnsEnoughSecondaries(int team)
-{
-	int count = 0;
-	
-	int secCount = ND_GetSecondaryCount();
-	for (int sec = 0; sec < secCount; secCount++)
-	{
-		int entity = ND_GetSecondaryEnt(sec);
-		int owner = ND_GetResourceOwner(entity);
-		
-		if (owner == team)
-			count++;
-	}	
-	
-	return count >= cvarSecCount.IntValue;
-}
-
 public Action TIMER_EnterChairRStartDelay(Handle timer)
 {
 	ChairWaitRStartElapsed = true;
@@ -196,10 +130,6 @@ public Action TIMER_EnterChairPromoteDelay(Handle timer, any:userid)
 	// Get the client team and check if valid
 	int team = GetClientTeam(client);
 	if (team <= 1)
-		return Plugin_Handled;
-	
-	// If the chair wait has already elapsed, exit
-	if (ChairWaitPromoteElapsed[team-2])
 		return Plugin_Handled;
 	
 	// Set the promote wait elapsed to true
@@ -277,7 +207,6 @@ void CreatePluginConvars()
 	cvarMaxPromote		= 	AutoExecConfig_CreateConVar("sm_chair_max_promote", "60", "How long to block chair after promotion if nobody applies for commander?");	
 	cvarSelectMin		=	AutoExecConfig_CreateConVar("sm_chair_select_min", "15", "Duration to wait to select commanders, with chair blocking");
 	cvarSelectMax		=	AutoExecConfig_CreateConVar("sm_chair_select_max", "30", "Duration to wait to select commanders, without chair blocks");
-	cvarSecCount		=	AutoExecConfig_CreateConVar("sm_chair_sec_unlock", "2", "How many secondaries a team must own to unlock the chair");
 	
 	AutoExecConfig_EC_File();
 }
