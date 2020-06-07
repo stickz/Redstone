@@ -305,7 +305,7 @@ void castDemoteVote(int team, int teamIDX, int client, int commander)
 }
 
 bool IncreaseDemotePercent(int commander) {
-	return ND_GetCommanderSkill(commander) > cDemoteVetSkill.IntValue && !ND_IsCommanderDeprioritised(commander);
+	return ND_GCS_AVAILBLE() && ND_GetCommanderSkill(commander) > cDemoteVetSkill.IntValue && !ND_IsComDeprioritised(commander);
 }
 
 void demoteCommander(int team, bool store)
@@ -381,10 +381,24 @@ void displayVotes(int team, int remainder, int client)
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+	// Make source comms optional
 	MarkNativeAsOptional("SourceComms_SetClientMute");
 	MarkNativeAsOptional("SourceComms_SetClientGag");
 	MarkNativeAsOptional("SourceComms_GetClientMuteType");
 	MarkNativeAsOptional("SourceComms_GetClientGagType");
+	
+	// Make nd_fskill optional
+	MarkNativeAsOptional("ND_GetTeamDifference");
+	MarkNativeAsOptional("ND_GetPlayerSkill");
+	MarkNativeAsOptional("ND_GetEnhancedAverage");
+	MarkNativeAsOptional("ND_GetCommanderSkill");
+	MarkNativeAsOptional("ND_GetPlayerLevel");
+	MarkNativeAsOptional("ND_GetSkillMedian");
+	MarkNativeAsOptional("ND_GetSkillAverage");
+	MarkNativeAsOptional("ND_GetTeamSkillAverage");
+	
+	// Make commander deprioritization optional
+	MarkNativeAsOptional("ND_IsCommanderDeprioritised");
 
 	return APLRes_Success;	
 }
