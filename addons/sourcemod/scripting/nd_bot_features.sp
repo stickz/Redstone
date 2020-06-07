@@ -37,7 +37,7 @@ public Plugin myinfo =
 	name = "[ND] Bot Features",
 	author = "Stickz",
 	description = "Give more control over the bots on the server",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 };
 
@@ -171,7 +171,7 @@ void toggleBooster(bool state)
 		
 	else
 	{
-		LogError("ToggleDynamicSlots() not available. Setting visible max 32");
+		LogError("ToggleDynamicSlots() not available. Setting sv_visiblemaxplayers 32.");
 		ServerCommand("sv_visiblemaxplayers 32");
 	}
 }
