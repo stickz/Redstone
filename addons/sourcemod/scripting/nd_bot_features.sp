@@ -352,5 +352,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	MarkNativeAsOptional("ToggleDynamicSlots");
 	MarkNativeAsOptional("GetDynamicSlotStatus");
+	MarkNativeAsOptional("GetDynamicSlotCount");
 	return APLRes_Success;
 }
