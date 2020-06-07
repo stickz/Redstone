@@ -238,5 +238,16 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	MarkNativeAsOptional("SourceComms_SetClientGag");
 	MarkNativeAsOptional("SourceComms_GetClientMuteType");
 	MarkNativeAsOptional("SourceComms_GetClientGagType");
+	
+	// Make nd_fskill optional
+	MarkNativeAsOptional("ND_GetTeamDifference");
+	MarkNativeAsOptional("ND_GetPlayerSkill");
+	MarkNativeAsOptional("ND_GetEnhancedAverage");
+	MarkNativeAsOptional("ND_GetCommanderSkill");
+	MarkNativeAsOptional("ND_GetPlayerLevel");
+	MarkNativeAsOptional("ND_GetSkillMedian");
+	MarkNativeAsOptional("ND_GetSkillAverage");
+	MarkNativeAsOptional("ND_GetTeamSkillAverage");
+	
 	return APLRes_Success;
 }
