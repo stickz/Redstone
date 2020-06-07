@@ -451,6 +451,7 @@ void ShoutEntityLoc(int entindex)
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+	/* Mark resource trickle natives as optional */
 	MarkNativeAsOptional("ND_AddTertiaryResources");
 	MarkNativeAsOptional("ND_SetTertiaryResources");
 	MarkNativeAsOptional("ND_GetTertiaryResources");
@@ -462,6 +463,9 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	MarkNativeAsOptional("ND_AddPrimaryResources");
 	MarkNativeAsOptional("ND_SetPrimaryResources");
 	MarkNativeAsOptional("ND_GetPrimaryResources");
+	
+	// Mark server type native as optional
+	MarkNativeAsOptional("ND_GetServerType");
 	
 	return APLRes_Success;	
 }
