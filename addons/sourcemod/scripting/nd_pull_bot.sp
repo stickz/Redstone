@@ -38,7 +38,7 @@ public void OnPluginStart()
 	RegPullBotCommand(); // for move_bot.sp
 	
 	// Only enable ground checks on the alpha server for now
-	if (ND_GetServerTypeEx(ND_SType_Stable) >= SERVER_TYPE_STABLE)
+	if (ND_GetServerTypeEx(ND_SType_Stable) == SERVER_TYPE_ALPHA)
 		RegBotGroundCheck(); // for ground_check.sp
 	
 	LoadTranslations("nd_pull_bot.phrases"); // Translated messages	
@@ -68,4 +68,12 @@ void CreatePluginConvars()
 	mBot_RetryDelay		= AutoExecConfig_CreateConVar("sm_mbot_pdelay", "8", "Delay player must wait before performing pulls");
 	
 	AutoExecConfig_EC_File();
+}
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	// Mark server type native as optional
+	MarkNativeAsOptional("ND_GetServerType");
+	
+	return APLRes_Success;	
 }
