@@ -177,7 +177,7 @@ void callRockTheVote(int client)
 	else if (ND_RoundEnded())
 		PrintMessage(client, "Round End Usage");
 		
-	else if (!ND_WarmupCompleted() && !ND_RoundStarted())
+	else if (!ND_WarmupComplete() && !ND_RoundStarted())
 		PrintMessage(client, "Round Start Usage");
 
 	else
@@ -324,6 +324,10 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	CreateNative("ND_GetRtvStatus", Native_GetRtvStatus);
 	CreateNative("ND_ToogleRtvStatus", Native_ToogleRtvStatus);
+	
+	// Make nd_warmup native optional
+	MarkNativeAsOptional("ND_WarmupCompleted");
+	
 	return APLRes_Success;
 }
 
