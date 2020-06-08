@@ -131,7 +131,7 @@ void resetValues(int client)
 
 void callRestartTheRound(int client)
 {
-	if (!ND_WarmupCompleted() && !ND_RoundStarted())
+	if (!ND_WarmupComplete() || !ND_RoundStarted())
 		PrintMessage(client, "Round Start Usage");
 	
 	else if (ND_RoundEnded())
@@ -219,6 +219,10 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	CreateNative("ND_GetRestartStatus", Native_GetRtvStatus);
 	CreateNative("ND_ToogleRestartStatus", Native_ToogleRtvStatus);
+	
+	// Make nd_warmup native optional
+	MarkNativeAsOptional("ND_WarmupCompleted");
+	
 	return APLRes_Success;
 }
 
