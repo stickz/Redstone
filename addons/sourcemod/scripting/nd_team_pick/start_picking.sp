@@ -99,7 +99,7 @@ public Action StartPicking(int client, int args)
 }
 bool CatchCommonFailure(int args)
 {
-	if (!ND_WarmupCompleted())
+	if (!ND_WarmupComplete())
 	{
 		PrintMessageAll("No Warmup Run");
 		return true;		

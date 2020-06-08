@@ -4,7 +4,13 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("ND_GetTeamCaptain", Native_GetTeamCaptainThisMap);
 	CreateNative("ND_GetPlayerPicked", Native_GetPlayerPickedThisMap);
 	CreateNative("ND_GetTPTeam", Native_GetPlayerPickedTeamThisMap);
+	
+	// Make the afk marker plugin optional
 	MarkNativeAsOptional("ND_IsPlayerMarkedAFK");
+	
+	// Make the warmup plugin optional
+	MarkNativeAsOptional("ND_WarmupCompleted");
+	
 	return APLRes_Success;
 }
 
