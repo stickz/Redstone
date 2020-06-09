@@ -36,3 +36,11 @@ native int ND_GetTPTeam(int client);
 stock int ND_GetPickedTeam(int client) {
 	return !NDTP_GTPT_AVAILABLE() ? TEAM_SPEC : ND_GetTPTeam(client);
 }
+
+native int ND_CurrentPicking();
+#define NDTP_CP_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "ND_CurrentPicking") == FeatureStatus_Available)
+
+stock int ND_GetTeamPicking()
+{
+	return NDTP_CP_AVAILABLE() && ND_CurrentPicking();
+}

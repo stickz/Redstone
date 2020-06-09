@@ -92,7 +92,7 @@ public Action TIMER_UnlockTeams(Handle timer)
 public Action PlayerJoinTeam(int client, char[] command, int argc) 
 {
 	// Block this feature if team mode is running during the warmup
-	if (!ND_RoundStarted() && IsTeamPickRunning())
+	if (!ND_RoundStarted() && (IsTeamPickRunning() || ND_GetTeamPicking()))
 		return Plugin_Continue;
 	
 	// If the team balancer is disabled, allow team joining

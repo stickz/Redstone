@@ -4,6 +4,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("ND_GetTeamCaptain", Native_GetTeamCaptainThisMap);
 	CreateNative("ND_GetPlayerPicked", Native_GetPlayerPickedThisMap);
 	CreateNative("ND_GetTPTeam", Native_GetPlayerPickedTeamThisMap);
+	CreateNative("ND_CurrentPicking", Native_GetCurrentlyPicking);
 	
 	// Make the afk marker plugin optional
 	MarkNativeAsOptional("ND_IsPlayerMarkedAFK");
@@ -21,7 +22,7 @@ public int Native_GetTeamCaptainThisMap(Handle plugin, int numParms)
 }
 
 public int Native_GetPickedTeamsThisMap(Handle plugin, int numParms) {
-	return g_bPickedThisMap;
+	return _:g_bPickedThisMap;
 }
 
 public int Native_GetPlayerPickedThisMap(Handle plugin, int numParms) 
@@ -47,4 +48,8 @@ public int Native_GetPlayerPickedTeamThisMap(Handle plugin, int numParms)
 		return TEAM_EMPIRE;
 	
 	return TEAM_SPEC;	
+}
+
+public int Native_GetCurrentlyPicking(Handle plugin, int numParms) {
+	return _:g_bEnabled;
 }
