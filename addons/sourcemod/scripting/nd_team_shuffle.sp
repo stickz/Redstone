@@ -105,7 +105,7 @@ void BalanceTeams()
 		}
 	}
 	
-	int counter = MAX_SKILL;
+	int counter = vanilla ? 80 : MAX_SKILL;
 	int team = getRandomTeam();
 	int index = 0;
 	
@@ -126,7 +126,7 @@ void BalanceTeams()
 		if (client == -1)
 			counter--;
 			
-		else
+		else if (IsValidClient(client))
 		{
 			/* Decide which team is next, using one of the two algorithums */
 			/* 1) Shuffle Every Other: Best player team x, next team y, next team x etc. */
