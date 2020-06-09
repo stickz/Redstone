@@ -94,7 +94,7 @@ bool GetCookieStructureKillings(int client)
 	GetClientCookie(client, cookie_structure_killings, buffer, sizeof(buffer));
 	
 	return !StrEqual(buffer, "Off");
-} 
+}
 
 ClearKills() {
 	for (int idx = 0; idx < MAX_TEAMS; idx++)

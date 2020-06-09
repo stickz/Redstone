@@ -92,7 +92,16 @@ stock bool IsValidClient(int client, bool nobots = true)
         return false;
 
     return IsClientInGame(client); 
-} 
+}
+
+// Same as IsValidClient, skips checking the client index and assumes no bots (faster)
+stock bool IsValidClientEx(int client)
+{
+	if (!IsClientConnected(client) || IsFakeClient(client))
+        return false;
+		
+	return IsClientInGame(client); 
+}
 
 stock bool IsValidBounds(int client) {
 	return 1 <= client <= MaxClients;
