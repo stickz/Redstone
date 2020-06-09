@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 public Plugin myinfo = 
 {
 	name 		= "Show Damage",
-	author 		= "exvel, stickz",
+	author 		= "exvel, stickz, malt",
 	description 	= "Shows damage in the center of the screen.",
 	version 	= "dummy",
 	url 		= "www.sourcemod.net"
@@ -32,8 +32,8 @@ int player_damage[MAXPLAYERS + 1];
 bool block_timer[MAXPLAYERS + 1] = {false,...};
 char DamageEventName[16];
 int MaxDamage = 10000000;
-bool option_show_damage[MAXPLAYERS + 1] = {true,...};
-Handle cookie_show_damage = INVALID_HANDLE;
+
+#include "nd_show_damage/clientprefs.sp"
 
 //CVars' handles
 ConVar gcvar_enabled;
@@ -59,36 +59,6 @@ public void OnPluginStart()
 	SetupEvents(); //add needed event hooks and damage things
 }
 
-public int CookieMenuHandler_ShowDamage(int client, CookieMenuAction:action, any:info, char[] buffer, int maxlen)
-{
-	if (action == CookieMenuAction_DisplayOption)
-	{
-		char status[10];
-		Format(status, sizeof(status), "%T", option_show_damage[client] ? "On" : "Off", client);
-		Format(buffer, maxlen, "%T: %s", "Cookie Show Damage", client, status);
-	}
-	// CookieMenuAction_SelectOption
-	else
-	{
-		option_show_damage[client] = !option_show_damage[client];
-		SetClientCookie(client, cookie_show_damage, option_show_damage[client] ? "On" : "Off");
-		ShowCookieMenu(client);
-	}
-}
-
-public void OnClientCookiesCached(int client)
-{
-	option_show_damage[client] = GetCookieShowDamage(client);
-}
-
-bool GetCookieShowDamage(int client)
-{
-	char buffer[10];
-	GetClientCookie(client, cookie_show_damage, buffer, sizeof(buffer));
-	
-	return !StrEqual(buffer, "Off");
-}
-
 public void OnClientConnected(int client)
 {
 	block_timer[client] = false;
@@ -110,17 +80,20 @@ public Action ShowDamage(Handle timer, int client)
 	
 	switch (gcvar_text_area.IntValue)
 	{
-		case 1:	if (GetEntProp(client, Prop_Send, "m_nPlayerCond") & COND_THERMAL)
-		        {
-					Handle HudText = CreateHudSynchronizer();
-					SetHudTextParams(-1.0, 0.25, 0.1, 255, 255, 255, 255);
-					ShowSyncHudText(client, HudText, "%t", "CenterText Damage Text", player_damage[client]);
-					CloseHandle(HudText);
-				}
-				else
-				{
-					PrintCenterText(client, "%t", "CenterText Damage Text", player_damage[client]);
-				}
+		case 1:	
+		{
+			if (option_show_thermal[client] && GetEntProp(client, Prop_Send, "m_nPlayerCond") & COND_THERMAL)
+			{
+				Handle HudText = CreateHudSynchronizer();
+				SetHudTextParams(-1.0, 0.25, 0.1, 255, 255, 255, 255);
+				ShowSyncHudText(client, HudText, "%t", "CenterText Damage Text", player_damage[client]);
+				CloseHandle(HudText);
+			}
+			else if (option_show_damage[client])
+			{
+				PrintCenterText(client, "%t", "CenterText Damage Text", player_damage[client]);
+			}
+		}
 		case 2:	PrintHintText(client, "%t", "HintText Damage Text", player_damage[client]);
 		case 3:	PrintToChat(client, "%t", "Chat Damage Text", player_damage[client]);
 	}
@@ -149,8 +122,7 @@ public Action Event_InfectedHurt(Event event, const char[] name, bool dontBroadc
 
 void CalcDamage(int client, int attacker, int damage)
 {
-	if (!gcvar_enabled.BoolValue || !option_show_damage[attacker] || attacker == 0 
-	|| IsFakeClient(attacker) || !IsClientInGame(attacker) || damage > MaxDamage)
+	if (!gcvar_enabled.BoolValue || attacker == 0 || IsFakeClient(attacker) || !IsClientInGame(attacker) || damage > MaxDamage)
 		return;
 	
 	//If client == 0 than skip this verifying. It can be an infected or something else without client index.
@@ -170,15 +142,6 @@ void CalcDamage(int client, int attacker, int damage)
 	
 	CreateTimer(0.01, ShowDamage, attacker);
 	block_timer[attacker] = true;
-}
-
-void AddClientPrefs()
-{
-	LoadTranslations("common.phrases");
-	
-	cookie_show_damage = RegClientCookie("Show Damage On/Off", "", CookieAccess_Protected);
-	int info;
-	SetCookieMenuItem(CookieMenuHandler_ShowDamage, info, "Show Damage");
 }
 
 void CreateConvars()

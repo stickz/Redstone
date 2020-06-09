@@ -22,4 +22,9 @@
 	{
 		"en"			"Show Damage"
 	}
+	
+	"Cookie Thermal Damage"
+	{
+		"en"			"Thermal Damage"
+	}
 }
