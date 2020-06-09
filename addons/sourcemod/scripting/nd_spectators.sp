@@ -66,11 +66,15 @@ public void OnMapEnd() {
 	RemoveSpecLocks();
 }
 
-void RemoveSpecLocks() {
-	for (int client = 1; client <= MaxClients; client++) {
+void RemoveSpecLocks() 
+{
+	for (int client = 1; client <= MaxClients; client++) 
+	{
 		g_isLockedToSpec[client] = false;
 		g_IsLockedSpecAdmin[client] = false;
-	}	
+	}
+	
+	g_LockedSteamIdList.Clear();
 }
 
 public Action CMD_LockPlayerSpec(int client, int args)
