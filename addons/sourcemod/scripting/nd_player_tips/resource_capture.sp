@@ -1,6 +1,7 @@
-#define COND_CLOACKED (1<<1)
-#define COND_LOCKDOWN (1<<2)
-#define NOT_CAPTURING -1
+#define COND_CLOACKED 	(1<<1)
+#define COND_LOCKDOWN 	(1<<2)
+#define COND_HYPOSPRAY 	(1<<10)
+#define NOT_CAPTURING 	-1
 
 int EntIndexCaping[MAXPLAYERS+1] = { NOT_CAPTURING, ... };
 int DisplayedPrimeCapMsg[TEAM_COUNT] = { false, ... };
@@ -59,15 +60,30 @@ void CheckCloackStatus(int entity)
 		if (IsValidClient(client) && option_player_tips[client] && EntIndexCaping[client] == entity)
 		{
 			if (GetEntProp(client, Prop_Send, "m_nPlayerCond") & COND_CLOACKED)
-			{
 				PrintMessage(client, "Stealth Capture");		
-			}
+
 			else if (GetEntProp(client, Prop_Send, "m_nPlayerCond") & COND_LOCKDOWN)
-			{
 				PrintMessage(client, "Lockdown Capture");
-			}
+			
+			else if (GetEntProp(client, Prop_Send, "m_nPlayerCond") & COND_HYPOSPRAY)
+				DisplayMedicHypoMessage(entity);
 		}
 	}
+}
+
+void DisplayMedicHypoMessage(int entity)
+{
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		if (IsValidClient(client) && option_player_tips[client] && EntIndexCaping[client] == entity)
+		{
+			int mainClass = ND_GetMainClass(client);
+			int subClass = ND_GetSubClass(client);
+			
+			if (IsSupportMedic(mainClass, subClass))
+				PrintMessage(client, "Hypospray Capture");
+		}
+	}	
 }
 
 void DisplayPrimeCapMsg(int team)

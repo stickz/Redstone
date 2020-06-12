@@ -96,6 +96,9 @@ stock bool IsStealthSab(int class, int subClass) {
 stock bool IsStealthAss(int class, int subClass) {
 	return class == MAIN_CLASS_STEALTH && subClass == STEALTH_CLASS_ASSASSIN;
 }
+stock bool IsSupportMedic(int class, int subClass) {
+	return class == MAIN_CLASS_SUPPORT && subClass == SUPPORT_CLASS_MEDIC;
+}
 
 /* Various other class functions */
 

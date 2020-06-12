@@ -30,6 +30,12 @@
 		"en"		"You cannot capture resources while in stealth mode"
 	}
 	
+	"Hypospray Capture"
+	{
+		// To alert the medic who is attempting to hypospray a teamate, whilst capturing resources
+		"en"		"Your teamates cannot capture resources if you hypospray them"
+	}
+	
 	"Lost Prime"
 	{
 		// To alert players that they have just lost Prime 
