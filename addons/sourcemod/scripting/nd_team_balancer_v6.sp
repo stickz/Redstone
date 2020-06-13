@@ -36,8 +36,11 @@ ConVar cvarMinPlaceSkillCount;
 ConVar cvarMinPlaceSkillEven;
 ConVar cvarMinPlaceSkillOne;
 
-ConVar cvarMinPlacementEven;
-ConVar cvarMinPlacementTwo;
+ConVar cvarMinPlacementEvenLevel;
+ConVar cvarMinPlacementTwoLevel;
+
+ConVar cvarMinPlacementEvenSkill;
+ConVar cvarMinPlacementTwoSkill;
 
 bool bTeamsLocked = false;
 
@@ -65,8 +68,11 @@ void CreatePluginConVars()
 	cvarMinPlaceSkillEven 			=	AutoExecConfig_CreateConVar("sm_balance_mskill_even", "60", "Specifies min player skill to place when teams are even");
 	cvarMinPlaceSkillOne 			=	AutoExecConfig_CreateConVar("sm_balance_mskill_one", "80", "Specifies min player skill to place two extra players");
 	
-	cvarMinPlacementEven			=	AutoExecConfig_CreateConVar("sm_balance_one", "40", "Specifies team difference to place when teams are even");
-	cvarMinPlacementTwo				=	AutoExecConfig_CreateConVar("sm_balance_two", "80", "Specifies team difference to place two extra players");
+	cvarMinPlacementEvenLevel		=	AutoExecConfig_CreateConVar("sm_balance_one_level", "40", "Specifies level difference to place when teams are even");
+	cvarMinPlacementTwoLevel		=	AutoExecConfig_CreateConVar("sm_balance_two_level", "80", "Specifies level difference to place two extra players");
+	
+	cvarMinPlacementEvenSkill		=	AutoExecConfig_CreateConVar("sm_balance_one_skill", "80", "Specifies skill difference to place when teams are even");
+	cvarMinPlacementTwoSkill		=	AutoExecConfig_CreateConVar("sm_balance_two_skill", "160", "Specifies skill difference to place two extra players");	
 	
 	AutoExecConfig_EC_File();
 }
@@ -203,24 +209,34 @@ bool PlaceTeamBySkill(int client)
 	int overBalance = getOverBalance();
 	
 	// Get the team difference, clamp skill values to 80 for now
-	float teamDiff = ND_GetCeilingSD(80.0);
-	float pTeamDiff = SetPositiveSkill(teamDiff);
+	float teamDiffLevel = ND_GetCeilingSD(80.0);
+	float pTeamDiffLevel = SetPositiveSkill(teamDiffLevel);
+	
+	// Get the actual team difference without a clamp
+	float teamDiffSkill = ND_GetTeamDifference();
+	float pTeamDiffSkill = SetPositiveSkill(teamDiffSkill);
 	
 	// Get the team with less skill according the team difference
-	int actualLSTeam = getLeastStackedTeam(teamDiff);
+	int actualLSTeamLevel = getLeastStackedTeam(teamDiffLevel);
+	int actualLSTeamSkill = getLeastStackedTeam(teamDiffSkill);
 	
-	if (overBalance == TEAMS_EVEN && PutSamePlysLessSkill(playerSkill, pTeamDiff))
+	// Get if the level and skill team difference agrees, if not exit (don't place the client)
+	bool equalLSTeam = actualLSTeamLevel == actualLSTeamSkill;
+	if (!equalLSTeam)
+		return false;
+	
+	if (overBalance == TEAMS_EVEN && PutSamePlysLessSkill(playerSkill, pTeamDiffLevel, pTeamDiffSkill))
 	{
 		// Place the player on the least stacked skill team
-		SetTeamLessSkill(client, actualLSTeam);
+		SetTeamLessSkill(client, actualLSTeamLevel);
 		return true;		
 	}
 	
 	// if consort has one more player and less skill
-	else if (PutTwoExtraLessSkill(playerSkill, pTeamDiff))
+	else if (PutTwoExtraLessSkill(playerSkill, pTeamDiffLevel, pTeamDiffSkill))
 	{
 		// If empire has one more player and less skill
-		if (overBalance == EMPIRE_PLUS_ONE && actualLSTeam == TEAM_EMPIRE)
+		if (overBalance == EMPIRE_PLUS_ONE && actualLSTeamLevel == TEAM_EMPIRE)
 		{
 			// Place the player on team empire
 			SetTeamLessSkill(client, TEAM_EMPIRE);
@@ -228,7 +244,7 @@ bool PlaceTeamBySkill(int client)
 		}
 			
 		// if consort has one more player and less skill
-		else if (overBalance == CONSORT_PLUS_ONE && actualLSTeam == TEAM_CONSORT)
+		else if (overBalance == CONSORT_PLUS_ONE && actualLSTeamLevel == TEAM_CONSORT)
 		{
 			// Place the player on team consort
 			SetTeamLessSkill(client, TEAM_CONSORT);
@@ -239,26 +255,35 @@ bool PlaceTeamBySkill(int client)
 	return false;
 }
 
-bool PutSamePlysLessSkill(float pSkill, float pDiff)
+bool PutSamePlysLessSkill(float pSkill, float pDiffLevel, float pDiffSkill)
 {
 	// If the player skill is less than the threshold to place them on a team
 	if (pSkill < cvarMinPlaceSkillEven.IntValue)
 		return false;
 	
-	// If the teamdiff is within the placement threshold
-	if (pDiff >= cvarMinPlacementEven.IntValue)
+	// If the level teamdiff is within the placement threshold
+	if (pDiffLevel >= cvarMinPlacementEvenLevel.IntValue)
+		return true;
+	
+	// If the skill teamdiff is within the placement threshold
+	if (pDiffSkill >= cvarMinPlacementEvenSkill.IntValue)
 		return true;
 	
 	return false;
 }
 
-bool PutTwoExtraLessSkill(float pSkill, float pDiff)
+bool PutTwoExtraLessSkill(float pSkill, float pDiffLevel, float pDiffSkill)
 {
 	// If the player skill is less than the threshold to place them on a team
 	if (pSkill < cvarMinPlaceSkillOne.IntValue)
 		return false;
 	
-	if (pDiff >= cvarMinPlacementTwo.IntValue)
+	// If the level teamdiff is within the placement threshold
+	if (pDiffLevel >= cvarMinPlacementTwoLevel.IntValue)
+		return true;
+	
+	// If the skill teamdiff is within the placement threshold
+	if (pDiffSkill >= cvarMinPlacementTwoSkill.IntValue)
 		return true;
 	
 	return false
