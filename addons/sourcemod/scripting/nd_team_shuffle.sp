@@ -108,7 +108,7 @@ void BalanceTeams()
 	
 	for (; client <= MaxClients; client++) 
 	{ 
-		if (IsValidClient(client))
+		if (IsValidClientEx(client))
 		{		
 			int skill = GetFinalSkill(client, roundStarted);
 			players.Set(client, skill);
@@ -125,7 +125,7 @@ void BalanceTeams()
 			continue;
 		}
 			
-		else if (IsValidClient(client))
+		else if (IsValidClientEx(client))
 		{
 			/* Decide which team is next, using one of the two algorithums */
 			/* 1) Shuffle Every Other: Best player team x, next team y, next team x etc. */
