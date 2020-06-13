@@ -125,7 +125,7 @@ void BalanceTeams()
 			continue;
 		}
 			
-		else if (IsValidClientEx(client))
+		else if (IsValidClient(client))
 		{
 			/* Decide which team is next, using one of the two algorithums */
 			/* 1) Shuffle Every Other: Best player team x, next team y, next team x etc. */
