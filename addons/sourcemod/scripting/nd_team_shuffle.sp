@@ -120,7 +120,10 @@ void BalanceTeams()
 		client = players.FindValue(counter);
 		
 		if (client == -1)
+		{
 			counter--;
+			continue;
+		}
 			
 		else if (IsValidClient(client))
 		{
@@ -136,10 +139,10 @@ void BalanceTeams()
 			/* Set player team and mark balanced */
 			SetClientTeam(client, team);
 			MarkBalanced(client);
-			
-			/* Whipe the player from the arraylist */			
-			players.Set(client, -1);			
 		}		
+
+		/* Whipe the player from the arraylist */			
+		players.Set(client, -1);
 	}
 	
 	delete players;
