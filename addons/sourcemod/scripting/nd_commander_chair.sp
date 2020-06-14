@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_redstone>
 #include <nd_rounds>
 #include <nd_print>
+#include <nd_teampick>
 
 public Plugin myinfo =
 {
@@ -41,6 +42,7 @@ ConVar cvarMinTeam;
 ConVar cvarMinTotal;
 ConVar cvarMaxRStart;
 ConVar cvarMaxPromote;
+ConVar cvarMaxPromoteTP;
 ConVar cvarSelectMin;
 ConVar cvarSelectMax;
 
@@ -98,8 +100,9 @@ public void ND_OnRoundEnded()
 
 public void ND_OnCommanderPromoted(int client, int team)
 {
-	PromoteDelayTimer[team-2] = CreateTimer(cvarMaxRStart.FloatValue, TIMER_EnterChairPromoteDelay, 
-						GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+	// If we picked team this map reduce the delay after one commander is promoted, before the chair unlocks
+	float pDelay = ND_TeamsPickedThisMap() ? cvarMaxPromoteTP.FloatValue : cvarMaxPromote.FloatValue;
+	PromoteDelayTimer[team-2] = CreateTimer(pDelay, TIMER_EnterChairPromoteDelay, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void ND_BothCommandersPromoted(int consort, int empire)
@@ -205,8 +208,21 @@ void CreatePluginConvars()
 	cvarMinTotal		=	AutoExecConfig_CreateConVar("sm_chair_block_total", "12", "Min number of total players required to block the command chair");
 	cvarMaxRStart		= 	AutoExecConfig_CreateConVar("sm_chair_max_rstart", "120", "How long to block chair after round start if nobody applies for commander?");
 	cvarMaxPromote		= 	AutoExecConfig_CreateConVar("sm_chair_max_promote", "60", "How long to block chair after promotion if nobody applies for commander?");	
+	cvarMaxPromoteTP	= 	AutoExecConfig_CreateConVar("sm_chair_maxtp_promote", "30", "How long to block chair after promotion when team pick mode is running?");	
 	cvarSelectMin		=	AutoExecConfig_CreateConVar("sm_chair_select_min", "15", "Duration to wait to select commanders, with chair blocking");
 	cvarSelectMax		=	AutoExecConfig_CreateConVar("sm_chair_select_max", "30", "Duration to wait to select commanders, without chair blocks");
 	
 	AutoExecConfig_EC_File();
+}
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	// Make team pick natives optional
+	MarkNativeAsOptional("ND_PickedTeamsThisMap");
+	MarkNativeAsOptional("ND_GetTeamCaptain");
+	MarkNativeAsOptional("ND_GetPlayerPicked");
+	MarkNativeAsOptional("ND_GetTPTeam");
+	MarkNativeAsOptional("ND_CurrentPicking");
+	
+	return APLRes_Success;
 }
