@@ -5,6 +5,7 @@
 #include <smlib/math>
 #include <nd_redstone>
 #include <autoexecconfig>
+#include <nd_stype>
 
 public Plugin myinfo =
 {
@@ -136,7 +137,10 @@ void CreateMapThresholdList(bool debugFunction = false)
 	float plyAdjust = 1.5 * (clientCount - 14);
 	if (clientCount >= cvarMediumMapCount.IntValue)
 	{
-		ND_NominateMap(ND_CustomMaps[ND_Submarine], 60 + plyAdjust);
+		// Don't allow submarine on vanilla due to no extra tertaries
+		if (ND_GetServerTypeEx(ND_SType_Vanilla) != SERVER_TYPE_VANILLA)
+			ND_NominateMap(ND_CustomMaps[ND_Submarine], 60 + plyAdjust);
+		
 		ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
 		ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
 	}
