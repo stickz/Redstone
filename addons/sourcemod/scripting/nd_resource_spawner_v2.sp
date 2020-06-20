@@ -175,9 +175,9 @@ int GetSpawnCount(int min, int med, int max)
 	float avSkill = ND_GetEnhancedAverage();
 	
 	// Check if average skill is greater than the min or med thresholds
-	if (avSkill >= cvarSpawnSkill[SKILL_HIGH])
+	if (avSkill >= cvarSpawnSkill[SKILL_HIGH].IntValue)
 		return min;	
-	else if (avSkill >= cvarSpawnSkill[SKILL_LOW])
+	else if (avSkill >= cvarSpawnSkill[SKILL_LOW].IntValue)
 		return med;
 
 	// If not, return the maximum number of players to spawn extra tertaries
