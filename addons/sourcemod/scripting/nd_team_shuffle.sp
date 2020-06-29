@@ -8,6 +8,7 @@
 #include <nd_aweight>
 #include <nd_entities>
 #include <nd_print>
+#include <nd_afk>
 #include <autoexecconfig>
 
 /* Notice to plugin contributors: please create a new native and void,
@@ -228,8 +229,12 @@ bool IsReadyForBalance(int client, bool roundStarted)
 {
 	int team = GetClientTeam(client);
 	
-	//If checking for spec is removed after round start, we must add a check for server bots
-	return !roundStarted ? team != TEAM_UNASSIGNED : team > TEAM_SPEC;	
+	// If the round is started, only shuffle players not afk or ones that changed their team
+	if (!roundStarted)
+		return !ND_IsPlayerCheckedAFK(client) || team != TEAM_UNASSIGNED;
+	
+	// If the round is not started, only shuffle players currenly on a team
+	return team > TEAM_SPEC;
 }
 
 int GetSkillLevel(int client)
@@ -264,6 +269,10 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	
 	MarkNativeAsOptional("GameME_GetFinalSkill");
 	MarkNativeAsOptional("SteamWorks_GetFinalSkill");
+	
+	// Make the nd afk natives optional
+	MarkNativeAsOptional("ND_IsPlayerMarkedAFK");
+	MarkNativeAsOptional("ND_IsPlayerCheckedAFK");
 	return APLRes_Success;
 }
 
