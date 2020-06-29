@@ -32,6 +32,39 @@ public void OnPluginStart()
 	g_AFKSteamIdList = new ArrayList(128);
 }
 
+public void ND_OnRoundStarted()
+{
+	// If the AFK steamid list is empty, exit
+	if (g_AFKSteamIdList.Length == 0)
+		return;
+	
+	// Store the steam id's of all connected clients to a temporary array list
+	ArrayList g_ClientSteamIdList = new ArrayList(MaxClients+1);	
+	for (int client = 1; client <= MaxClients; client++)
+	{			
+		if (IsValidClientEx(client))
+		{
+			// Get the player's steam id.
+			char gAuth[32];
+			GetClientAuthId(client, AuthId_Steam2, gAuth, sizeof(gAuth));		
+			g_ClientSteamIdList.PushString(gAuth);
+		}
+	}
+	
+	// Delete the steam id's all clients currently not connected from the afk array list
+	for (int id = g_AFKSteamIdList.Length - 1; id >= 0; id--)
+	{
+		char gAuth[32];
+		g_AFKSteamIdList.GetString(id, gAuth, sizeof(gAuth));
+		
+		if (g_ClientSteamIdList.FindString(gAuth) == -1)
+			g_AFKSteamIdList.Erase(id);
+	}
+	
+	// Delete the temporary array list when complete
+	delete g_ClientSteamIdList;
+}
+
 public void OnClientAuthorized(int client)
 {	
 	/* retrieve client steam-id and check if client is set afk */
@@ -50,7 +83,7 @@ public void AFKM_OnClientBack(int client) {
 	SetAfkStatus(client, false);
 }
 
-public void OnClientDisconnect_Post(int client)
+public void OnClientDisconnect(int client)
 {
 	if (ND_RoundStarted())
 		SetAfkStatus(client, false);
