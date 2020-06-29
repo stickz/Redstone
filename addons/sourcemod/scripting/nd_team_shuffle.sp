@@ -231,7 +231,7 @@ bool IsReadyForBalance(int client, bool roundStarted)
 	
 	// If the round is started, only shuffle players not afk or ones that changed their team
 	if (!roundStarted)
-		return !ND_IsPlayerCheckedAFK(client) || team != TEAM_UNASSIGNED;
+		return !ND_IsCheckedAFK(client) || team != TEAM_UNASSIGNED;
 	
 	// If the round is not started, only shuffle players currenly on a team
 	return team > TEAM_SPEC;
