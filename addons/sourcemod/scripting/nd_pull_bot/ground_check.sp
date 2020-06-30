@@ -1,7 +1,7 @@
 float coords[MAXPLAYERS+1][2];
 
 void RegBotGroundCheck() {
-	HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_PostNoCopy);
+	HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
 }
 
 public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
