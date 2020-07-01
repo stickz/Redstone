@@ -116,7 +116,7 @@ void DecreaseRedCharges(int client, int team)
 public Action TIMER_RedChargeCooldown(Handle timer, any:UserId)
 {
 	// If the client userid is invalid - exit
-	int client = GetClientOfUserId(client);
+	int client = GetClientOfUserId(UserId);
 	if (client == INVALID_USERID || !IsValidClient(client))
 		return Plugin_Continue;
 	
