@@ -1,20 +1,30 @@
 #include <autoexecconfig>
 
+#define RED_COOLDOWN_SIZE 4
+
 /* Enumerated values for accessing ConVar arrays */
 enum multREDs 
 {
+	// Infantry boost multipliers
 	red_ib0_base_mult,
 	red_ib1_base_mult,
 	red_ib2_base_mult,
-	red_ib3_base_mult
+	red_ib3_base_mult,
+	
+	// Base damage multipliers
+	red_bunker_mult,
+	red_transport_mult,
+	red_ft_turret_mult,
+	red_wall_mult,
+	red_barrier_mult
 }
 
 /* ConVar and float arrays for the different types */
 ConVar gCvar_RedMult[multREDs];
 float gFloat_RedMult[multREDs];
 
-ConVar gCvar_RedCooldown[multREDs];
-float gFloat_RedCooldown[multREDs];
+ConVar gCvar_RedCooldown[RED_COOLDOWN_SIZE];
+float gFloat_RedCooldown[RED_COOLDOWN_SIZE];
 
 void CreateRedConVars()
 {
@@ -22,41 +32,63 @@ void CreateRedConVars()
 	
 	/* RED base damage multipliers */
 	char convarNameMult[multREDs][] = {
-		"sm_mult_baseIB0_red_mult",
-		"sm_mult_baseIB1_red_mult",
-		"sm_mult_baseIB2_red_mult",
-		"sm_mult_baseIB3_red_mult"	
+		// Infantry boost multipliers
+		"sm_mult_baseIB0_red",
+		"sm_mult_baseIB1_red",
+		"sm_mult_baseIB2_red",
+		"sm_mult_baseIB3_red",
+		
+		// Base damage multipliers
+		"sm_mult_bunker_red",
+		"sm_mult_transport_red",
+		"sm_mult_ft_turret_red",
+		"sm_mult_wall_red",
+		"sm_mult_barrier_red"
 	};	
 	char convarDescMult[multREDs][] = {
+		// Infantry boost multipliers
 		"Percentage of normal damage REDs deal at Infantry Boost 0",
 		"Percentage of normal damage REDs deal after Infantry Boost 1",
 		"Percentage of normal damage REDs deal after Infantry Boost 2",
-		"Percentage of normal damage REDs deal after Infantry Boost 3"
+		"Percentage of normal damage REDs deal after Infantry Boost 3",
+		
+		// Base damage multipliers
+		"Percentage of normal damage REDs deal to the bunker",
+		"Percentage of normal damage REDs deal to transport gates",
+		"Percentage of normal damage REDs deal to ft/sonic turrets",
+		"Percentage of normal damage REDs deal to walls",
+		"Percentage of normal damage REDs deal to barriers"
 	};	
 	char convarDefMult[multREDs][] = { 
-		"100", "110", "115", "125"
+		// Infantry boost multipliers
+		"100", "110", "115", "125",
+		
+		// Base damage multipliers
+		"100", "100", "100", "100", "100"
 	};
 	
+	for (int mult = 0; mult < view_as<int>(multREDs); mult++) {
+		gCvar_RedMult[mult] = 	AutoExecConfig_CreateConVar(convarNameMult[mult], convarDefMult[mult], convarDescMult[mult]);
+	}
+	
 	/* RED damage multiplier cooldowns */
-	char convarNameCD[multREDs][] = {
+	char convarNameCD[RED_COOLDOWN_SIZE][] = {
 		"sm_mult_baseIB0_red_cooldown",
 		"sm_mult_baseIB1_red_cooldown",
 		"sm_mult_baseIB2_red_cooldown",
 		"sm_mult_baseIB3_red_cooldown"	
 	};	
-	char convarDescCD[multREDs][] = {
+	char convarDescCD[RED_COOLDOWN_SIZE][] = {
 		"Percentage of normal damage REDs deal at Infantry Boost 0",
 		"Percentage of normal damage REDs deal after Infantry Boost 1",
 		"Percentage of normal damage REDs deal after Infantry Boost 2",
 		"Percentage of normal damage REDs deal after Infantry Boost 3"
 	};	
-	char convarDefCD[multREDs][] = { 
+	char convarDefCD[RED_COOLDOWN_SIZE][] = { 
 		"135", "120", "105", "90"
 	};
 	
-	for (int convar = 0; convar < view_as<int>(multREDs); convar++) 
-	{
-		gCvar_RedMult[convar] 		= 	AutoExecConfig_CreateConVar(convarNameMult[convar], convarDefMult[convar], convarDescMult[convar]);
+	for (int convar = 0; convar < RED_COOLDOWN_SIZE; convar++) {
 		gCvar_RedCooldown[convar] 	= 	AutoExecConfig_CreateConVar(convarNameCD[convar], convarDefCD[convar], convarDescCD[convar]);
 	}
 	

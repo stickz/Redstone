@@ -71,3 +71,70 @@ methodmap BaseStructure
 		return mult;
 	}	
 }
+
+methodmap Barrier
+{
+	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
+	{
+		float mult = 1.0;
+		
+		// Apply red base damage mult
+		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
+			mult = gFloat_RedMult[red_barrier_mult];
+		
+		return mult;
+	}
+}
+
+methodmap Wall
+{
+	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
+	{
+		float mult = 1.0;
+		
+		// Apply red base damage mult
+		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
+			mult = gFloat_RedMult[red_wall_mult];
+		
+		return mult;
+	}	
+}
+
+methodmap FlamerTurret
+{
+	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
+	{
+		float mult = 1.0;
+		
+		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
+			mult = gFloat_RedMult[red_ft_turret_mult];
+			
+		return mult;
+	}	
+}
+
+methodmap TransportGate
+{
+	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
+	{
+		float mult = 1.0;
+		
+		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
+			mult = gFloat_RedMult[red_transport_mult];
+
+		return mult;
+	}	
+}
+
+methodmap Bunker
+{
+	public static float GetDamageMult(int &attacker, int &inflictor, int &damagetype)
+	{
+		float mult = 1.0;
+		
+		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
+			mult = gFloat_RedMult[red_bunker_mult];
+		
+		return mult;
+	}
+}

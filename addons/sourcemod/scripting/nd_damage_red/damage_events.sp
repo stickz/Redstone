@@ -14,6 +14,10 @@ public Action ND_OnBarrierDamaged(int victim, int &attacker, int &inflictor, flo
 	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
 	damage *= multIB;
 	
+	// Get the damage multipler from the barrier methodmap
+	float multipler = Barrier.GetDamageMult(attacker, inflictor, damagetype);
+	damage *= multipler;
+	
 	// Return changed to update the damage
 	return Plugin_Changed;
 }
@@ -26,6 +30,10 @@ public Action ND_OnWallDamaged(int victim, int &attacker, int &inflictor, float 
 	// Get the damage multipler from the base structure methodmap
 	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
 	damage *= multIB;
+	
+	// Get the damage multipler from the wall methodmap
+	float multipler = Wall.GetDamageMult(attacker, inflictor, damagetype);
+	damage *= multipler;
 		
 	// Return changed to update the damage
 	return Plugin_Changed;
@@ -125,6 +133,10 @@ public Action ND_OnFlamerTurretDamaged(int victim, int &attacker, int &inflictor
 	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
 	damage *= multIB;
 	
+	// Get the damage multipler from the flamer turret methodmap
+	float multiplier = FlamerTurret.GetDamageMult(attacker, inflictor, damagetype);
+	damage *= multiplier;
+	
 	// Return changed to update the damage
 	return Plugin_Changed;
 }
@@ -153,6 +165,10 @@ public Action ND_OnTransportDamaged(int victim, int &attacker, int &inflictor, f
 	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
 	damage *= multIB;
 	
+	// Get the damage multipler from the transport gate methodmap
+	float multiplier = TransportGate.GetDamageMult(attacker, inflictor, damagetype);
+	damage *= multiplier;
+	
 	// Return changed to update the damage
 	return Plugin_Changed;
 }		
@@ -180,6 +196,10 @@ public Action ND_OnBunkerDamaged(int victim, int &attacker, int &inflictor, floa
 	// Get the damage multipler from the base structure methodmap
 	float multIB = BaseStructure.GetInfantryBoostMult(attacker, inflictor, damagetype);
 	damage *= multIB;
+	
+	// Get the damage multipler from the assembler methodmap
+	float multiplier = Bunker.GetDamageMult(attacker, inflictor, damagetype);
+	damage *= multiplier;
 
 	// Return changed to update the damage
 	return Plugin_Changed;
