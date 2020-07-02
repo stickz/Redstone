@@ -88,7 +88,7 @@ public void OnMapStart()
 public void OnConfigsExecuted()
 {
 	int serverType = ND_GetServerTypeEx(ND_SType_Vanilla);
-	if (serverType == SERVER_TYPE_VANILLA)
+	if (serverType >= SERVER_TYPE_VANILLA)
 	{
 		resVals[RESOURCE_PRIME][RES_VAL_EXTARCT] = RES_PRIME_EXTRACT;
 		resVals[RESOURCE_PRIME][RES_VAL_TRICKLE] = RES_PRIME_TRICKLE;
