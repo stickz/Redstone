@@ -18,7 +18,7 @@ public Plugin myinfo =
 	name = "[ND] Dynamic Sever Slots",
 	author = "Stickz",
 	description = "Controls server slots by map and reserved",
-	version = "dummy",
+	version = "recompile",
 	url = "https://github.com/stickz/Redstone/"	
 };
 
