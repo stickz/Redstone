@@ -101,7 +101,11 @@ void UpdateConVarCache()
 	for (int red = 0; red < view_as<int>(multREDs); red++) 
 	{
 		gFloat_RedMult[red] = gCvar_RedMult[red].FloatValue / 100.0;
-		gFloat_RedCooldown[red] = gCvar_RedCooldown[red].FloatValue;
+	}
+	
+	for (int red2 = 0; red2 < RED_COOLDOWN_SIZE; red2++)
+	{
+		gFloat_RedCooldown[red2] = gCvar_RedCooldown[red2].FloatValue;
 	}
 }
 void HookConVarChanges()
@@ -109,7 +113,11 @@ void HookConVarChanges()
 	for (int red = 0; red < view_as<int>(multREDs); red++) 
 	{
 		HookConVarChange(gCvar_RedMult[red], OnConfigPercentChange);
-		HookConVarChange(gCvar_RedCooldown[red], OnConfigPercentChange);
+	}
+	
+	for (int red2 = 0; red2 < RED_COOLDOWN_SIZE; red2++)
+	{
+		HookConVarChange(gCvar_RedCooldown[red2], OnConfigPercentChange);
 	}
 }
 public void OnConfigPercentChange(ConVar convar, char[] oldValue, char[] newValue) {	
