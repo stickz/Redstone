@@ -30,35 +30,6 @@
  */
 //forward GameME_OnPlayerStatsQueriedEx(client, rank, skill);
 
-#define GAMEME_TYPE_REGULAR 0
-#define GAMEME_TYPE_ROOKIE 	1
-#define GAMEME_TYPE_VETERN 	2
-
-/**
- * Retreive the server of type we're running
- *
- * See server types in constants above
- *
- * @return        			The type of server.
- */
-native int GameME_GetServerType();
-
-#define GST_LOADED() (GetFeatureStatus(FeatureType_Native, "GameME_GetServerType") == FeatureStatus_Available)
-
-stock bool RegularServerType()
-{
-	//assume true of native int is not availible
-	bool gstLoaded = GST_LOADED();
-	return gstLoaded && GameME_GetServerType() == GAMEME_TYPE_REGULAR || !gstLoaded;
-}
-
-stock bool RookieServerType() {
-	return GST_LOADED() && GameME_GetServerType() == GAMEME_TYPE_ROOKIE;
-}
-stock bool CompetitiveServerType() {
-	return GST_LOADED() && GameME_GetServerType() == GAMEME_TYPE_VETERN;
-}
-
 /**
  * Retreive the cached gameme client skill value
  *
@@ -132,16 +103,6 @@ native int GameME_GetClientHeadshots(int client);
 stock bool GameME_Headshots_Availible(int client) {
 	return GM_GCH_LOADED() && GameME_GetClientHeadshots(client) > 0;
 }
-
-/**
- * Check if the redstone server considers the client an vetern player.
- *
- * @param clientIDX  	The index of the client.
- * @return        		Is the client in the ranked database?
- */
-native bool GameME_RankedClient(int clientIDX);
-
-#define GM_RC_LOADED() (GetFeatureStatus(FeatureType_Native, "GameME_RankedClient") == FeatureStatus_Available)
 
 /**
  * Retreive the cached gameme client kdr
