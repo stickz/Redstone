@@ -108,16 +108,18 @@ public void OnClientAuthorized(int client)
 	IsCheckedAfk[client] = WasClientAFK;
 }
 
-public void AFKM_OnClientAFK(int client) 
+public Action AFKM_OnAFKEvent(const char[] name, int client)
 {
-	if (ND_RoundStarted())
-		SetAfkStatus(client, true);
+	// If the event is afk kick, we don't need to log it, just continue
+	if (StrEqual(name, "afk_kick", false))
+		return Plugin_Continue;
+	
+	SetAfkStatus(client, true);	
+	return Plugin_Continue;
 }
 
-public void AFKM_OnClientBack(int client) 
-{
-	if (ND_RoundStarted())
-		SetAfkStatus(client, false);
+public void AFKM_OnClientBack(int client) {
+	SetAfkStatus(client, false);
 }
 
 public void OnClientDisconnect(int client)

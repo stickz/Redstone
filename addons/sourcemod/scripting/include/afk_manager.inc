@@ -36,6 +36,16 @@ native int AFKM_GetClientAFKTime(int client);
 forward void AFKM_OnClientAFK(int client);
 
 /**
+ * Called when a client has been handled for being AFK.
+ *
+ * @param name		The name of the event "afk_spawn_move", "afk_move" or "afk_kick"
+ * @param client	The client index of the player being flagged.
+ * 
+ * @return Plugin_Continue to continue, otherwise stop the event
+ */
+forward Action AFKM_OnAFKEvent(const char[] name, int client)
+
+/**
  * Called when a client is back from AFK.
  *
  * @param client	The client index of the player being flagged.
