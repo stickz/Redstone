@@ -108,12 +108,16 @@ public void OnClientAuthorized(int client)
 	IsCheckedAfk[client] = WasClientAFK;
 }
 
-public void AFKM_OnClientAFK(int client) {
-	SetAfkStatus(client, true);
+public void AFKM_OnClientAFK(int client) 
+{
+	if (ND_RoundStarted())
+		SetAfkStatus(client, true);
 }
 
-public void AFKM_OnClientBack(int client) {
-	SetAfkStatus(client, false);
+public void AFKM_OnClientBack(int client) 
+{
+	if (ND_RoundStarted())
+		SetAfkStatus(client, false);
 }
 
 public void OnClientDisconnect(int client)
