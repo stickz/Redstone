@@ -19,7 +19,7 @@ public Plugin myinfo =
 };
 
 #define STRING_NOT_FOUND -1
-#define MIN_SKILL_VALUE 60
+#define MIN_SKILL_VALUE 20
 
 ArrayList g_PlayerSkillFloors;
 ArrayList g_SteamIDList;

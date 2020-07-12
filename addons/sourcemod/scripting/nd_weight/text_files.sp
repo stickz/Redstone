@@ -1,7 +1,9 @@
 #define STEAMID_SIZE 32
 
-#define TEXT_FILE_COUNT 6
+#define TEXT_FILE_COUNT 8
 char nd_text_file[TEXT_FILE_COUNT][] = {
+	"data/skill/w20.txt",
+	"data/skill/w40.txt",
 	"data/skill/w60.txt",
 	"data/skill/w80.txt",
 	"data/skill/w100.txt",
