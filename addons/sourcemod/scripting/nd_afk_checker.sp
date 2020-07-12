@@ -124,8 +124,26 @@ public void OnClientDisconnect(int client)
 
 public Action PlayerJoinTeam(int client, char[] command, int argc) 
 {
-	SetAfkStatus(client, false);
+	if (!IsValidClient(client))
+		return Plugin_Continue;
+	
+	CreateTimer(0.5, TIMER_CheckPlayerJoinTeam, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);	
 	return Plugin_Continue;
+}
+
+public Action TIMER_CheckPlayerJoinTeam(Handle timer, any userid)
+{
+	int client = GetClientOfUserId(userid);
+	if (client != INVALID_USERID)
+	{
+		if (IsValidClient(client) && GetClientTeam(client) != TEAM_UNASSIGNED)
+		{
+			SetAfkStatus(client, false);
+			return Plugin_Continue;
+		}
+	}
+	
+	return Plugin_Continue;	
 }
 
 void SetAfkStatus(int client, bool state)
