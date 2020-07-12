@@ -29,7 +29,40 @@ public void OnPluginStart()
 	AddCommandListener(PlayerJoinTeam, "jointeam");	// Listen for when a player joins a team
 	AddUpdaterLibrary(); // Add auto updater feature
 	
+	RegConsoleCmd("sm_DumpAFKs", CMD_DumpAFKs);
+	
 	g_AFKSteamIdList = new ArrayList(128);
+}
+
+public Action CMD_DumpAFKs(int client, int args)
+{
+	dumpAfkPlayers(client);
+	
+	if (g_AFKSteamIdList.Length == 0)
+		PrintToChat(client, "No afk players to show");
+	else	
+		PrintToChat(client, "See output in console.");
+	
+	return Plugin_Handled;
+}
+
+void dumpAfkPlayers(int player)
+{
+	PrintSpacer(player); PrintSpacer(player);
+	PrintToConsole(player, "--> Player AFK SteamIDs <--");
+	PrintSpacer(player);	
+	
+	for (int idx = 0; idx < g_AFKSteamIdList.Length; idx++)
+	{
+		char gAuth[32];
+		g_AFKSteamIdList.GetString(idx, gAuth, sizeof(gAuth));		
+		PrintToConsole(player, "Player #%d: %s", idx+1, gAuth);	
+		PrintSpacer(player);
+	}
+}
+
+void PrintSpacer(int player) {
+	PrintToConsole(player, "");
 }
 
 public void ND_OnRoundStarted()
