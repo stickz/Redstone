@@ -118,8 +118,10 @@ public Action AFKM_OnAFKEvent(const char[] name, int client)
 	return Plugin_Continue;
 }
 
-public void AFKM_OnClientBack(int client) {
-	SetAfkStatus(client, false);
+public void AFKM_OnClientBack(int client) 
+{
+	if (ND_RoundStarted())
+		SetAfkStatus(client, false);
 }
 
 public void OnClientDisconnect(int client)
