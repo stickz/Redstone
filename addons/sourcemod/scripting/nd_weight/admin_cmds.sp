@@ -1,14 +1,18 @@
-#define FILE60 	0
-#define FILE80 	1
-#define FILE100 2
-#define FILE120 3
-#define FILE140 4
-#define FILE160 5
+#define FILE20 	0
+#define FILE40 	1
+#define FILE60 	2
+#define FILE80 	3
+#define FILE100 4
+#define FILE120 5
+#define FILE140 7
+#define FILE160 8
 
 #define COMMAND_DESC "Sets a custom weighting for a player"
 
 void RegAdminCmds()
 {
+	RegAdminCmd("sm_Weight20", CMD_Weight20, ADMFLAG_ROOT, COMMAND_DESC);
+	RegAdminCmd("sm_Weight40", CMD_Weight40, ADMFLAG_ROOT, COMMAND_DESC);
 	RegAdminCmd("sm_Weight60", CMD_Weight60, ADMFLAG_ROOT, COMMAND_DESC);
 	RegAdminCmd("sm_Weight80", CMD_Weight80, ADMFLAG_ROOT, COMMAND_DESC);
 	RegAdminCmd("sm_Weight100", CMD_Weight100, ADMFLAG_ROOT, COMMAND_DESC);
@@ -89,6 +93,32 @@ public Action CMD_GetPlayerWFloor(int client, int args)
 	
 	int weight = g_PlayerSkillFloors.Get(found)
 	PrintToChat(client, "player weight is %d", weight);	
+	return Plugin_Handled;
+}
+
+public Action CMD_Weight20(int client, int args)
+{
+	char player[64];
+	GetCmdArg(1, player, sizeof(player));	
+	int target = FindTarget(client, player, true, true);
+	
+	if (InvalidCommandUse(client, target, args))
+		return Plugin_Handled;
+	
+	AddClientWeighting(target, FILE20);
+	return Plugin_Handled;
+}
+
+public Action CMD_Weight40(int client, int args)
+{
+	char player[64];
+	GetCmdArg(1, player, sizeof(player));	
+	int target = FindTarget(client, player, true, true);
+	
+	if (InvalidCommandUse(client, target, args))
+		return Plugin_Handled;
+	
+	AddClientWeighting(target, FILE40);
 	return Plugin_Handled;
 }
 

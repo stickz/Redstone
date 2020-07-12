@@ -14,7 +14,7 @@ public Plugin myinfo =
 	name = "[ND] Weighting Adjuster",
 	author = "Stickz",
 	description = "Allows admins to set asign floors to player skill",
-	version = "recompile",
+	version = "dummy",
 	url = "https://github.com/stickz/Redstone/"
 };
 
