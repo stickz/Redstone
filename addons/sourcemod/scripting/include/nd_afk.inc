@@ -10,5 +10,5 @@ stock bool ND_IsMarkedAFK(int client) {
 native bool ND_IsPlayerCheckedAFK(int client);
 
 stock bool ND_IsCheckedAFK(int client) {
-	return ND_IPCA_AVAILABLE() && ND_IsPlayerMarkedAFK(client);	
+	return ND_IPCA_AVAILABLE() && ND_IsPlayerCheckedAFK(client);
 }

@@ -23,7 +23,7 @@ public Plugin myinfo =
 	name 		= "[ND] Team Shuffle",
 	author 		= "Stickz",
 	description 	= "Shuffles teams using a sorting algorithm, against player skill",
-	version 	= "dummy",
+	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone"
 };
 
