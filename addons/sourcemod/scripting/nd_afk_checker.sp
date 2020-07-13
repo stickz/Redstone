@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <nd_stocks>
 #include <nd_rounds>
+#include <nd_afk_sweep>
 
 #undef REQUIRE_PLUGIN
 #include <afk_manager>
@@ -36,12 +37,13 @@ public void OnPluginStart()
 
 public Action CMD_DumpAFKs(int client, int args)
 {
-	dumpAfkPlayers(client);
-	
 	if (g_AFKSteamIdList.Length == 0)
 		PrintToChat(client, "No afk players to show");
-	else	
+	else
+	{
 		PrintToChat(client, "See output in console.");
+		dumpAfkPlayers(client);
+	}
 	
 	return Plugin_Handled;
 }
@@ -118,10 +120,8 @@ public Action AFKM_OnAFKEvent(const char[] name, int client)
 	return Plugin_Continue;
 }
 
-public void AFKM_OnClientBack(int client) 
-{
-	if (ND_RoundStarted())
-		SetAfkStatus(client, false);
+public void ND_OnPlayerAfkSweep(int client) {
+	SetAfkStatus(client, true);	
 }
 
 public void OnClientDisconnect(int client)

@@ -19,9 +19,13 @@ bool g_PlayerHasSpawned[MAXPLAYERS+1] = { false, ... };
 
 ConVar cvarAfkSweepTime;
 
+Handle g_OnPlayerAFKSweepForward;
+
 public void OnPluginStart()
 {
 	cvarAfkSweepTime = CreateConVar("sm_afk_sweep_time", "180", "Seconds after round start to move clients that haven't spawned yet to spectator");
+	
+	g_OnPlayerAFKSweepForward = CreateGlobalForward("ND_OnPlayerAfkSweep", ET_Ignore, Param_Cell);
 	
 	AddUpdaterLibrary(); // Add auto updater feature
 
@@ -81,8 +85,17 @@ public Action TIMER_CheckClientSpawn(Handle timer, any:Userid)
 	if (!g_PlayerHasSpawned[client] && GetClientTeam(client) > TEAM_SPEC)
 	{
 		ChangeClientTeam(client, TEAM_SPEC);
+		FireAfkSweepForward(client);
 		return Plugin_Continue;
 	}
 	
 	return Plugin_Continue;
 }
+
+void FireAfkSweepForward(int client)
+{
+	Action dummy;
+	Call_StartForward(g_OnPlayerAFKSweepForward);
+	Call_PushCell(client);
+	Call_Finish(dummy);
+}	
