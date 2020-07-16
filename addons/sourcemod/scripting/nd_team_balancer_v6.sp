@@ -91,6 +91,14 @@ public void ND_OnShuffleAskPlacement(int client) {
 	DoPlayerJoinTeam(client, true);
 }
 
+public Action ND_OnPlayerLockSpec(int client, int team)
+{
+	if (bTeamsLocked)
+		return Plugin_Handled;
+
+	return Plugin_Continue;
+}
+
 /* Disable team locking after warmup balance */
 public Action TIMER_UnlockTeams(Handle timer)
 {
