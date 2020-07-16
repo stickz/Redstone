@@ -31,11 +31,17 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_team_shuffle/nd_team_shuffle.txt"
 #include "updater/standard.sp"
 
+#define LOW_PLYS	0
+#define HIGH_PLYS	1
+
 ArrayList balancedPlayers;
 Handle g_OnTeamsShuffled_Forward;
+Handle g_OnAskPlacement_Forward;
 
 ConVar gcLevelEighty;
-ConVar gcShuffleThreshold;
+ConVar gcShuffleThresholdLevel[2];
+ConVar gcShuffleThresholdSkill[2];
+ConVar gcShuffleThresholdHighPlys;
 ConVar gcShuffleEveryOther;
 
 public void OnPluginStart() 
@@ -43,6 +49,7 @@ public void OnPluginStart()
 	balancedPlayers = new ArrayList(MaxClients+1);
 	
 	g_OnTeamsShuffled_Forward = CreateGlobalForward("ND_OnTeamsShuffled", ET_Ignore);
+	g_OnAskPlacement_Forward = CreateGlobalForward("ND_OnShuffleAskPlacement", ET_Ignore, Param_Cell);
 	
 	LoadTranslations("nd_team_shuffle.phrases");
 	
@@ -55,9 +62,17 @@ void CreateConVars()
 {
 	AutoExecConfig_Setup("nd_team_shuffle");
 	
-	gcLevelEighty 		= 	AutoExecConfig_CreateConVar("sm_ts_eightyExp", "450000", "Specifies the amount of exp to be considered level 80");	
-	gcShuffleThreshold 	= 	AutoExecConfig_CreateConVar("sm_ts_threshold", "60", "Specifies the skill difference precent to shuffle teams");
-	gcShuffleEveryOther	= 	AutoExecConfig_CreateConVar("sm_ts_every_other", "20", "Specifies the skill difference to shuffle every other player");
+	gcLevelEighty 						= 	AutoExecConfig_CreateConVar("sm_ts_eightyExp", "450000", "Specifies the amount of exp to be considered level 80");
+	
+	gcShuffleThresholdHighPlys			=	AutoExecConfig_CreateConVar("sm_ts_threshold_plys", "16", "Specifies number of players for high skill threshold");
+	
+	gcShuffleThresholdLevel[LOW_PLYS] 	= 	AutoExecConfig_CreateConVar("sm_ts_threshold_level_low", "40", "Specifies the level difference to shuffle teams");
+	gcShuffleThresholdLevel[HIGH_PLYS] 	= 	AutoExecConfig_CreateConVar("sm_ts_threshold_level_high", "60", "Specifies the level difference to shuffle teams");
+	
+	gcShuffleThresholdSkill[LOW_PLYS]	=	AutoExecConfig_CreateConVar("sm_ts_threshold_skill_low", "60", "Specifies the skill difference to shuffle teams");
+	gcShuffleThresholdSkill[HIGH_PLYS]	=	AutoExecConfig_CreateConVar("sm_ts_threshold_skill_high", "80", "Specifies the skill difference to shuffle teams");
+	
+	gcShuffleEveryOther					= 	AutoExecConfig_CreateConVar("sm_ts_every_other", "20", "Specifies the skill difference to shuffle every other player");
 	
 	AutoExecConfig_EC_File();	
 }
@@ -68,16 +83,34 @@ bool RunTeamShuffle(bool force)
 	// If they both are less than the shuffle threshold, start without shuffling
 	int skillDiffPer = ND_GetSkillDiffPercent();
 	int skillDiffPerEx = ND_GetSkillDiffPercentEx(80.0);
-	int shuffleThreshold = gcShuffleThreshold.IntValue;
 	
-	if (!force && skillDiffPer < shuffleThreshold && skillDiffPerEx < shuffleThreshold)
+	// Decide wether we're using the high player count thresholds or the low player count thresholds
+	int plys = RED_ValidClientCount() >= gcShuffleThresholdHighPlys.IntValue ? HIGH_PLYS : LOW_PLYS;
+	
+	// Find the shuffle thresholds for the level difference and skill difference based on player count
+	int shuffleThresholdLevel = gcShuffleThresholdLevel[plys].IntValue;
+	int shuffleThresholdSkill = gcShuffleThresholdSkill[plys].IntValue;
+	
+	if (!force && skillDiffPer < shuffleThresholdSkill && skillDiffPerEx < shuffleThresholdLevel)
 	{
-		PrintMessageAllTB("Shuffle Threshold Not Reached");
+		//PrintMessageAllTB("Shuffle Threshold Not Reached");
 		StartRound(); // Start round if teams are not shuffled		
 		return false;
 	}	
 	
 	return true;
+}
+
+// Pull players not afk out of spectator by firing the ask placement forward
+void PullSpectators()
+{
+	for (int client = 1; client <= MaxClients; client++)
+	{
+		if (RED_IsValidClient(client) && GetClientTeam(client) <= TEAM_SPEC)
+		{
+			FireAskPlacementForward(client);
+		}
+	}	
 }
 
 void BalanceTeams()
@@ -219,6 +252,14 @@ void FireTeamsShuffledForward()
 	StartRound();
 }
 
+void FireAskPlacementForward(int client)
+{
+	Action dummy;
+	Call_StartForward(g_OnAskPlacement_Forward);
+	Call_PushCell(client);
+	Call_Finish(dummy);
+}
+
 void StartRound()
 {
 	if (!ND_RoundStarted())
@@ -279,6 +320,8 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public Native_WarmupTeamBalance(Handle plugin, int numParms)
 {
 	bool force = GetNativeCell(1);
+	
+	PullSpectators();
 	
 	if (RunTeamShuffle(force))	
 		BalanceTeams();

@@ -87,6 +87,10 @@ public void ND_OnTeamsShuffled()
 	CreateTimer(90.0, TIMER_UnlockTeams, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
+public void ND_OnShuffleAskPlacement(int client) {
+	DoPlayerJoinTeam(client, true);
+}
+
 /* Disable team locking after warmup balance */
 public Action TIMER_UnlockTeams(Handle timer)
 {
@@ -94,16 +98,22 @@ public Action TIMER_UnlockTeams(Handle timer)
 	bTeamsLocked = false;
 }
 
-// Use team join action to decide if player can pick their team or not
 public Action PlayerJoinTeam(int client, char[] command, int argc) 
+{
+	// Use team join action to decide if player can pick their team or not
+	return DoPlayerJoinTeam(client, false) ? Plugin_Handled : Plugin_Continue;
+}
+
+// Return true to block, return false to not block
+bool DoPlayerJoinTeam(int client, bool fake)
 {
 	// Block this feature if team mode is running during the warmup
 	if (!ND_RoundStarted() && (IsTeamPickRunning() || ND_GetTeamPicking()))
-		return Plugin_Continue;
+		return false;
 	
 	// If the team balancer is disabled, allow team joining
 	if (!cvarEnableBalancer.BoolValue)
-		return Plugin_Continue;
+		return false;
 	
 	// If the client is valid 
 	if (IsValidClient(client))
@@ -112,37 +122,37 @@ public Action PlayerJoinTeam(int client, char[] command, int argc)
 		
 		// If the player is locked in spec, block team joining
 		if (PlayerIsTeamLocked(client, team))
-			return Plugin_Handled;
+			return true;
 
 		// if the client is not currently on a team
 		if (team < 2)
 		{	
 			// If the player was placed by team pick, block team joining
-			if (PlaceByTeamPick(client))
-				return Plugin_Handled;	
+			if (!fake && PlaceByTeamPick(client))
+				return true;
 			
 			// If the player was placed by skill, block team joining
-			if (PlaceTeamBySkill(client))
-				return Plugin_Handled;
+			if (PlaceTeamBySkill(client, fake))
+				return true;
 
 			// If the player was placed by less players, block team joining
-			if (PlacedTeamLessPlayers(client))
-				return Plugin_Handled;
+			if (PlacedTeamLessPlayers(client, fake))
+				return true;
 
 			// Otherwise, allow the client to choose their team
-			return Plugin_Continue;	
+			return false;	
 		}
 		
 		// Disable direct team switching, to properly balance teams
 		PutIntoSpecator(client);	
-		return Plugin_Handled;
+		return true;
 	}
 	
 	// If the client is not valid, they must be a bot or something
-	return Plugin_Continue;
+	return false;
 }
 
-bool PlacedTeamLessPlayers(int client)
+bool PlacedTeamLessPlayers(int client, bool fake)
 {
 	// If teams are not even by player count
 	int overBalance = getOverBalance();
@@ -150,7 +160,7 @@ bool PlacedTeamLessPlayers(int client)
 	{
 		// Put them on the team with less players		
 		int lessPlayers = getLessPlayerTeam(overBalance);
-		SetTeamLessPlayers(client, lessPlayers);
+		SetTeamLessPlayers(client, lessPlayers, fake);
 		return true;
 	}
 	
@@ -195,7 +205,7 @@ bool PlaceByTeamPick(int client)
 	return false;
 }
 
-bool PlaceTeamBySkill(int client)
+bool PlaceTeamBySkill(int client, bool fake)
 {
 	// Require three players on a team, to place by skill
 	int onTeamCount = RED_OnTeamCount();
@@ -228,7 +238,7 @@ bool PlaceTeamBySkill(int client)
 	if (overBalance == TEAMS_EVEN && PutSamePlysLessSkill(playerSkill, pTeamDiffLevel, pTeamDiffSkill))
 	{
 		// Place the player on the least stacked skill team
-		SetTeamLessSkill(client, actualLSTeamLevel);
+		SetTeamLessSkill(client, actualLSTeamLevel, fake);
 		return true;		
 	}
 	
@@ -239,7 +249,7 @@ bool PlaceTeamBySkill(int client)
 		if (overBalance == EMPIRE_PLUS_ONE && actualLSTeamLevel == TEAM_EMPIRE)
 		{
 			// Place the player on team empire
-			SetTeamLessSkill(client, TEAM_EMPIRE);
+			SetTeamLessSkill(client, TEAM_EMPIRE, fake);
 			return true;
 		}
 			
@@ -247,7 +257,7 @@ bool PlaceTeamBySkill(int client)
 		else if (overBalance == CONSORT_PLUS_ONE && actualLSTeamLevel == TEAM_CONSORT)
 		{
 			// Place the player on team consort
-			SetTeamLessSkill(client, TEAM_CONSORT);
+			SetTeamLessSkill(client, TEAM_CONSORT, fake);
 			return true;
 		}
 	}
@@ -310,15 +320,19 @@ void SetPickedTeam(int client, int team)
 	PrintMessage(client, "Placed Picked Team"); // Placed back on orginal team
 }
 
-void SetTeamLessPlayers(int client, int team)
+void SetTeamLessPlayers(int client, int team, bool fake)
 {
-	SetClientTeam(client, team);	
-	PrintMessage(client, "Placed Less Players"); // Placed on team with less players
+	SetClientTeam(client, team);
+	
+	if (!fake) // Don't display a message about placement if team shuffle moves a player
+		PrintMessage(client, "Placed Less Players"); // Placed on team with less players
 }
-void SetTeamLessSkill(int client, int team)
+void SetTeamLessSkill(int client, int team, bool fake)
 {
-	SetClientTeam(client, team);	
-	PrintMessage(client, "Placed Less Skill"); // Placed on team with less skill
+	SetClientTeam(client, team);
+	
+	if (!fake) // Don't display a message about placement if team shuffle moves a player
+		PrintMessage(client, "Placed Less Skill"); // Placed on team with less skill
 }
 void PutIntoSpecator(int client)
 {
