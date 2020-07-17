@@ -87,8 +87,13 @@ public void ND_OnTeamsShuffled()
 	CreateTimer(90.0, TIMER_UnlockTeams, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public void ND_OnShuffleAskPlacement(int client) {
-	DoPlayerJoinTeam(client, true);
+public void ND_OnShuffleAskPlacement(int client) 
+{
+	// Place the person on a random team if the option is a choice
+	if (!DoPlayerJoinTeam(client, true))
+	{
+		SetClientTeam(client, getRandomTeam());
+	}
 }
 
 public Action ND_OnPlayerLockSpec(int client, int team)
