@@ -108,7 +108,7 @@ void PullSpectators()
 	
 	for (int client = 1; client <= MaxClients; client++)
 	{
-		if (RED_IsValidClient(client) && IsReadyForBalance(client, roundStarted))
+		if (RED_IsValidClient(client) && !ND_IsCheckedAFK(client) && GetClientTeam(client) <= TEAM_SPEC)
 		{
 			FireAskPlacementForward(client);
 		}
