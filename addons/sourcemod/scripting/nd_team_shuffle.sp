@@ -104,9 +104,11 @@ bool RunTeamShuffle(bool force)
 // Pull players not afk out of spectator by firing the ask placement forward
 void PullSpectators()
 {
+	bool roundStarted = ND_RoundStarted();
+	
 	for (int client = 1; client <= MaxClients; client++)
 	{
-		if (RED_IsValidClient(client) && GetClientTeam(client) <= TEAM_SPEC)
+		if (RED_IsValidClient(client) && IsReadyForBalance(client, roundStarted))
 		{
 			FireAskPlacementForward(client);
 		}
