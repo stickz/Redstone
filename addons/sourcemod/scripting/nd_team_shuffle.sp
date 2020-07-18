@@ -48,7 +48,7 @@ public void OnPluginStart()
 {
 	balancedPlayers = new ArrayList(MaxClients+1);
 	
-	g_OnTeamsShuffled_Forward = CreateGlobalForward("ND_OnTeamsShuffled", ET_Ignore);
+	g_OnTeamsShuffled_Forward = CreateGlobalForward("ND_OnTeamsShuffled", ET_Ignore, Param_Cell);
 	g_OnAskPlacement_Forward = CreateGlobalForward("ND_OnShuffleAskPlacement", ET_Ignore, Param_Cell);
 	
 	LoadTranslations("nd_team_shuffle.phrases");
