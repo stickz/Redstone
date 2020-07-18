@@ -33,6 +33,9 @@ ConVar cvarMaxTeamPickReplace;
 
 ConVar cvarMinPlaceSkillCount;
 
+ConVar cvarNonAgreeanceThresholdOne;
+ConVar cvarNonAgreeanceThresholdTwo;
+
 ConVar cvarMinPlaceSkillEven;
 ConVar cvarMinPlaceSkillOne;
 
@@ -62,6 +65,9 @@ void CreatePluginConVars()
 	cvarEnableBalancer 				= 	AutoExecConfig_CreateConVar("sm_balance", "1", "Team Balancer: 0 to disable, 1 to enable");
 	
 	cvarMinPlaceSkillCount			=	AutoExecConfig_CreateConVar("sm_balance_mskill_count", "3", "Specifies min amount of players to place by skill");
+	
+	cvarNonAgreeanceThresholdOne 	=	AutoExecConfig_CreateConVar("sm_balance_non_agree_one", "20", "Specifies the threshold to place one extra if levels don't agree");
+	cvarNonAgreeanceThresholdTwo 	=	AutoExecConfig_CreateConVar("sm_balance_non_agree_one", "40", "Specifies the threshold to place two extra if levels don't agree");
 	
 	cvarMaxTeamPickReplace			=	AutoExecConfig_CreateConVar("sm_balance_tp_replace", "40", "Maxium skill difference to put player back on picked team");
 	
@@ -243,23 +249,21 @@ bool PlaceTeamBySkill(int client, bool fake)
 	int actualLSTeamLevel = getLeastStackedTeam(teamDiffLevel);
 	int actualLSTeamSkill = getLeastStackedTeam(teamDiffSkill);
 	
-	// Get if the level and skill team difference agrees, if not exit (don't place the client)
+	// Get if the level and skill team difference agrees
 	bool equalLSTeam = actualLSTeamLevel == actualLSTeamSkill;
-	if (!equalLSTeam)
-		return false;
 	
-	if (overBalance == TEAMS_EVEN && PutSamePlysLessSkill(playerSkill, pTeamDiffLevel, pTeamDiffSkill))
+	if (overBalance == TEAMS_EVEN && PutSamePlysLessSkill(playerSkill, pTeamDiffLevel, pTeamDiffSkill, equalLSTeam))
 	{
 		// Place the player on the least stacked skill team
-		SetTeamLessSkill(client, actualLSTeamLevel, fake);
-		return true;		
+		SetTeamLessSkill(client, actualLSTeamSkill, fake);
+		return true;
 	}
 	
 	// if consort has one more player and less skill
-	else if (PutTwoExtraLessSkill(playerSkill, pTeamDiffLevel, pTeamDiffSkill))
+	else if (PutTwoExtraLessSkill(playerSkill, pTeamDiffLevel, pTeamDiffSkill, equalLSTeam))
 	{
 		// If empire has one more player and less skill
-		if (overBalance == EMPIRE_PLUS_ONE && actualLSTeamLevel == TEAM_EMPIRE)
+		if (overBalance == EMPIRE_PLUS_ONE && actualLSTeamSkill == TEAM_EMPIRE)
 		{
 			// Place the player on team empire
 			SetTeamLessSkill(client, TEAM_EMPIRE, fake);
@@ -267,7 +271,7 @@ bool PlaceTeamBySkill(int client, bool fake)
 		}
 			
 		// if consort has one more player and less skill
-		else if (overBalance == CONSORT_PLUS_ONE && actualLSTeamLevel == TEAM_CONSORT)
+		else if (overBalance == CONSORT_PLUS_ONE && actualLSTeamSkill == TEAM_CONSORT)
 		{
 			// Place the player on team consort
 			SetTeamLessSkill(client, TEAM_CONSORT, fake);
@@ -278,8 +282,12 @@ bool PlaceTeamBySkill(int client, bool fake)
 	return false;
 }
 
-bool PutSamePlysLessSkill(float pSkill, float pDiffLevel, float pDiffSkill)
+bool PutSamePlysLessSkill(float pSkill, float pDiffLevel, float pDiffSkill, bool equalLSTeam)
 {
+	// If level & skill diff don't agree and level diff greater than threshold - exit
+	if (!equalLSTeam && pDiffLevel > cvarNonAgreeanceThresholdOne.IntValue)
+		return false;
+	
 	// If the player skill is less than the threshold to place them on a team
 	if (pSkill < cvarMinPlaceSkillEven.IntValue)
 		return false;
@@ -295,8 +303,12 @@ bool PutSamePlysLessSkill(float pSkill, float pDiffLevel, float pDiffSkill)
 	return false;
 }
 
-bool PutTwoExtraLessSkill(float pSkill, float pDiffLevel, float pDiffSkill)
+bool PutTwoExtraLessSkill(float pSkill, float pDiffLevel, float pDiffSkill, bool equalLSTeam)
 {
+	// If level & skill diff don't agree and level diff greater than threshold - exit
+	if (!equalLSTeam && pDiffLevel > cvarNonAgreeanceThresholdTwo.IntValue)
+		return false;
+	
 	// If the player skill is less than the threshold to place them on a team
 	if (pSkill < cvarMinPlaceSkillOne.IntValue)
 		return false;
@@ -309,7 +321,7 @@ bool PutTwoExtraLessSkill(float pSkill, float pDiffLevel, float pDiffSkill)
 	if (pDiffSkill >= cvarMinPlacementTwoSkill.IntValue)
 		return true;
 	
-	return false
+	return false;
 }
 
 void SetClientTeam(int client, int team)
