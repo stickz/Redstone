@@ -1,7 +1,7 @@
 /* Forwards and natives for the team shuffle plugin
  */
  
-forward void ND_OnTeamsShuffled();
+forward void ND_OnTeamsShuffled(bool phase2);
 forward void ND_OnShuffleAskPlacement(int client);
 
 native WB2_BalanceTeams(bool force);

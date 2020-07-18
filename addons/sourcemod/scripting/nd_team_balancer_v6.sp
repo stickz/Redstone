@@ -87,10 +87,13 @@ public void OnMapStart() {
 	bTeamsLocked = false;
 }
 
-public void ND_OnTeamsShuffled()
+public void ND_OnTeamsShuffled(bool phase2)
 {
-	bTeamsLocked = true;
-	CreateTimer(90.0, TIMER_UnlockTeams, _, TIMER_FLAG_NO_MAPCHANGE);
+	if (phase2)
+	{
+		bTeamsLocked = true;
+		CreateTimer(90.0, TIMER_UnlockTeams, _, TIMER_FLAG_NO_MAPCHANGE);
+	}
 }
 
 public void ND_OnShuffleAskPlacement(int client) 

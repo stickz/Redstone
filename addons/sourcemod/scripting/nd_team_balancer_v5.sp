@@ -163,10 +163,13 @@ public Action PlayerJoinTeam(int client, char[] command, int argc)
 	return Plugin_Continue;
 }
 
-public void ND_OnTeamsShuffled()
+public void ND_OnTeamsShuffled(bool phase2)
 {
-	bTeamsLocked = true;
-	CreateTimer(90.0, TIMER_UnlockTeams, _, TIMER_FLAG_NO_MAPCHANGE);
+	if (phase2)
+	{
+		bTeamsLocked = true;
+		CreateTimer(90.0, TIMER_UnlockTeams, _, TIMER_FLAG_NO_MAPCHANGE);
+	}
 }
 
 /* Disable team locking after warmup balance */

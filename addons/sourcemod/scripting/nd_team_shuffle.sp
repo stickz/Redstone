@@ -94,7 +94,7 @@ bool RunTeamShuffle(bool force)
 	if (!force && skillDiffPer < shuffleThresholdSkill && skillDiffPerEx < shuffleThresholdLevel)
 	{
 		//PrintMessageAllTB("Shuffle Threshold Not Reached");
-		StartRound(); // Start round if teams are not shuffled		
+		FireTeamsShuffledForward(false); // Fire teams shuffle forward and start round		
 		return false;
 	}	
 	
@@ -104,8 +104,6 @@ bool RunTeamShuffle(bool force)
 // Pull players not afk out of spectator by firing the ask placement forward
 void PullSpectators()
 {
-	bool roundStarted = ND_RoundStarted();
-	
 	for (int client = 1; client <= MaxClients; client++)
 	{
 		if (RED_IsValidClient(client) && !ND_IsCheckedAFK(client) && GetClientTeam(client) <= TEAM_SPEC)
@@ -182,7 +180,7 @@ void BalanceTeams()
 	}
 	
 	delete players;
-	FireTeamsShuffledForward();
+	FireTeamsShuffledForward(true);
 }
 
 int GetTopTwoSkillDiff(bool roundStarted)
@@ -244,10 +242,11 @@ void MarkBalanced(int client)
 	balancedPlayers.PushString(sSteamID);
 }
 
-void FireTeamsShuffledForward()
+void FireTeamsShuffledForward(bool phase2)
 {
 	Action dummy;
 	Call_StartForward(g_OnTeamsShuffled_Forward);
+	Call_PushCell(phase2);
 	Call_Finish(dummy);
 	
 	/* Start round after call is finished */
