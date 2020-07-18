@@ -33,8 +33,8 @@ ConVar cvarMaxTeamPickReplace;
 
 ConVar cvarMinPlaceSkillCount;
 
-ConVar cvarNonAgreeanceThresholdOne;
-ConVar cvarNonAgreeanceThresholdTwo;
+ConVar cvarNonAgreeanceLevelOne;
+ConVar cvarNonAgreeanceLevelTwo;
 
 ConVar cvarMinPlaceSkillEven;
 ConVar cvarMinPlaceSkillOne;
@@ -66,8 +66,8 @@ void CreatePluginConVars()
 	
 	cvarMinPlaceSkillCount			=	AutoExecConfig_CreateConVar("sm_balance_mskill_count", "3", "Specifies min amount of players to place by skill");
 	
-	cvarNonAgreeanceThresholdOne 	=	AutoExecConfig_CreateConVar("sm_balance_non_agree_one", "20", "Specifies the threshold to place one extra if levels don't agree");
-	cvarNonAgreeanceThresholdTwo 	=	AutoExecConfig_CreateConVar("sm_balance_non_agree_one", "40", "Specifies the threshold to place two extra if levels don't agree");
+	cvarNonAgreeanceLevelOne 		=	AutoExecConfig_CreateConVar("sm_balance_non_lagree_one", "20", "Specifies the threshold to place one extra if levels don't agree");
+	cvarNonAgreeanceLevelTwo 		=	AutoExecConfig_CreateConVar("sm_balance_non_lagree_two", "40", "Specifies the threshold to place two extra if levels don't agree");	
 	
 	cvarMaxTeamPickReplace			=	AutoExecConfig_CreateConVar("sm_balance_tp_replace", "40", "Maxium skill difference to put player back on picked team");
 	
@@ -284,42 +284,48 @@ bool PlaceTeamBySkill(int client, bool fake)
 
 bool PutSamePlysLessSkill(float pSkill, float pDiffLevel, float pDiffSkill, bool equalLSTeam)
 {
-	// If level & skill diff don't agree and level diff greater than threshold - exit
-	if (!equalLSTeam && pDiffLevel > cvarNonAgreeanceThresholdOne.IntValue)
-		return false;
-	
 	// If the player skill is less than the threshold to place them on a team
 	if (pSkill < cvarMinPlaceSkillEven.IntValue)
 		return false;
 	
 	// If the level teamdiff is within the placement threshold
-	if (pDiffLevel >= cvarMinPlacementEvenLevel.IntValue)
+	if (equalLSTeam && pDiffLevel >= cvarMinPlacementEvenLevel.IntValue)
 		return true;
 	
 	// If the skill teamdiff is within the placement threshold
 	if (pDiffSkill >= cvarMinPlacementEvenSkill.IntValue)
+	{
+		// If level & skill diff don't agree and level diff greater than threshold - exit
+		if (!equalLSTeam && pDiffLevel > cvarNonAgreeanceLevelOne.IntValue)
+			return false;
+		
+		// Otherwise place the player on the least stacked team by level
 		return true;
+	}
 	
 	return false;
 }
 
 bool PutTwoExtraLessSkill(float pSkill, float pDiffLevel, float pDiffSkill, bool equalLSTeam)
 {
-	// If level & skill diff don't agree and level diff greater than threshold - exit
-	if (!equalLSTeam && pDiffLevel > cvarNonAgreeanceThresholdTwo.IntValue)
-		return false;
-	
 	// If the player skill is less than the threshold to place them on a team
 	if (pSkill < cvarMinPlaceSkillOne.IntValue)
 		return false;
 	
 	// If the level teamdiff is within the placement threshold
-	if (pDiffLevel >= cvarMinPlacementTwoLevel.IntValue)
+	if (equalLSTeam && pDiffLevel >= cvarMinPlacementTwoLevel.IntValue)
 		return true;
 	
 	// If the skill teamdiff is within the placement threshold
 	if (pDiffSkill >= cvarMinPlacementTwoSkill.IntValue)
+	{
+		// If level & skill diff don't agree and level diff greater than threshold - exit
+		if (!equalLSTeam && pDiffLevel > cvarNonAgreeanceLevelTwo.IntValue)
+			return false;
+		
+		// Otherwise place the player on the least stacked team by level
 		return true;
+	}
 	
 	return false;
 }
