@@ -75,6 +75,9 @@ public Action Event_PlayerConnect(Event event, const char[] name, bool dontBroad
 	if (strncmp(steam_id, "STEAM_", 6) == 0)
 	{	
 		int client = GetClientOfUserId(event.GetInt("userid"));	
+		if (client == 0)
+			return Plugin_Continue;
+		
 		dontBroadcast = !RED_IsValidCIndex(client);
 	}
 	
