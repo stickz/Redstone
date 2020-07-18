@@ -77,7 +77,15 @@ void CreateConVars()
 	AutoExecConfig_EC_File();	
 }
 
-bool RunTeamShuffle(bool force)
+public Action TIMER_CheckBalanceTeams(Handle timer)
+{
+	if (RunTeamShuffle())	
+		BalanceTeams();
+	
+	return Plugin_Handled;
+}
+
+bool RunTeamShuffle()
 {
 	// Get the skill difference & ceiling 80 skill difference percent between teams
 	// If they both are less than the shuffle threshold, start without shuffling
@@ -91,7 +99,7 @@ bool RunTeamShuffle(bool force)
 	int shuffleThresholdLevel = gcShuffleThresholdLevel[plys].IntValue;
 	int shuffleThresholdSkill = gcShuffleThresholdSkill[plys].IntValue;
 	
-	if (!force && skillDiffPer < shuffleThresholdSkill && skillDiffPerEx < shuffleThresholdLevel)
+	if (skillDiffPer < shuffleThresholdSkill && skillDiffPerEx < shuffleThresholdLevel)
 	{
 		//PrintMessageAllTB("Shuffle Threshold Not Reached");
 		FireTeamsShuffledForward(false); // Fire teams shuffle forward and start round		
@@ -322,10 +330,17 @@ public Native_WarmupTeamBalance(Handle plugin, int numParms)
 {
 	bool force = GetNativeCell(1);
 	
-	PullSpectators();
-	
-	if (RunTeamShuffle(force))	
+	if (force)
 		BalanceTeams();
+	
+	else
+	{
+		// Pull all clients out of spectator using asynchronous forwards.
+		PullSpectators();
+		
+		// Check and balance teams afterwards to avoid a race condition.
+		CreateTimer(3.0, TIMER_CheckBalanceTeams, _, TIMER_FLAG_NO_MAPCHANGE);
+	}
 	
 	return;
 }
