@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <nd_stocks>
 #include <nd_rounds>
+#include <nd_teampick>
 
 public Plugin myinfo =
 {
@@ -81,6 +82,10 @@ public Action TIMER_CheckClientSpawn(Handle timer, any:Userid)
 	if (!IsValidClient(client))
 		return Plugin_Continue;
 	
+	// Check if the round is started and that we're not teampicking currently
+	if (!ND_RoundStarted() || ND_GetTeamPicking())
+		return Plugin_Continue;
+	
 	// If the player has not spawned and is still on a team, move them to spectator
 	if (!g_PlayerHasSpawned[client] && GetClientTeam(client) > TEAM_SPEC)
 	{
@@ -98,4 +103,16 @@ void FireAfkSweepForward(int client)
 	Call_StartForward(g_OnPlayerAFKSweepForward);
 	Call_PushCell(client);
 	Call_Finish(dummy);
-}	
+}
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	// Make team pick natives optional
+	MarkNativeAsOptional("ND_PickedTeamsThisMap");
+	MarkNativeAsOptional("ND_GetTeamCaptain");
+	MarkNativeAsOptional("ND_GetPlayerPicked");
+	MarkNativeAsOptional("ND_GetTPTeam");
+	MarkNativeAsOptional("ND_CurrentPicking");
+	
+	return APLRes_Success;
+}
