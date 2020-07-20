@@ -7,6 +7,9 @@
 #define WEAPON_PSG_CNAME "weapon_psg"
 #define WEAPON_PALADIN_CNAME "weapon_paladin"
 
+#define WEAPON_U23_GRENADE "weapon_u23_grenade"
+#define WEAPON_P12_GRENADE "weapon_p12_grenade"
+
 stock char iClass(int &inflictor)
 {
 	char wepClassName[64];
@@ -38,4 +41,10 @@ stock bool ND_WeaponIsSniper(const char[] wepClassName)
 {
 	return 	StrEqual(wepClassName, WEAPON_PSG_CNAME, true) ||
 			StrEqual(wepClassName, WEAPON_PALADIN_CNAME, true);			
+}
+
+stock bool InflictorIsGasGrenade(const char[] wepClassName)
+{
+	return 	StrEqual(wepClassName, WEAPON_U23_GRENADE, true) ||
+			StrEqual(wepClassName, WEAPON_P12_GRENADE, true);
 }
