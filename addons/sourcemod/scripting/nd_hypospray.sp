@@ -169,7 +169,7 @@ public Action OnPlayerTakeDamage(int victim, int &attacker, int &inflictor, floa
 		// Multiply damage taken: IE. 70% protection means 30% damage taken
 		float HyposprayDamage = 1.0 - HyposprayDamageMult[team];
 		damage *= HyposprayDamage;
-		return Plugin_Continue;
+		return Plugin_Changed;
 	}
 	
 	return Plugin_Continue;
