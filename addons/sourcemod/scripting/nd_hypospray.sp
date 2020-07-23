@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name 		= "[ND] Hypospray",
 	author 		= "stickz",
 	description	= "Makes hypospray more balanced by attaching value to it",
-    version 	= "recompile",
+    	version 	= "recompile",
 	url 		= "https://github.com/stickz/Redstone/"
 }
 
@@ -60,7 +60,7 @@ void CreatePluginConVars()
 public void OnConfigsExecuted()
 {
 	// Disable hypospray damage protect as the plugin overrides it
-	ServerCommand("nd_hypospray_damage_reduction 0");	
+	ServerCommand("sm_cvar nd_hypospray_damage_reduction 0");
 }
 
 /* Functions that restore varriables to default */
