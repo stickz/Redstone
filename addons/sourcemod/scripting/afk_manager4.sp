@@ -937,6 +937,10 @@ Action MoveAFKClient(int client) // Move AFK Client to Spectator Team
 
 Action KickAFKClient(int client) // Kick AFK Client
 {
+	// Add failsafe not to kick afk players, unless they're in spectator
+	if (g_iPlayerTeam[client] != g_iSpec_Team)
+		return Plugin_Continue;
+	
 	Action ForwardResult = Forward_OnAFKEvent("afk_kick", client);
 
 	if (ForwardResult != Plugin_Continue)
