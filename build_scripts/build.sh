@@ -158,21 +158,6 @@ fi
 # copy SDK for successful compile
 cp -r $SOURCEMOD_DIR/addons $ROOTDIR
 
-# download latest updater patch
-if [ ! -e "$UPDATER_PATCH_PATH" ] || [ "$cache" = false ]; then
-  if [ "$verbose" = true ]; then
-    echo "- Downloading updater patch from $UPDATER_PATCH_URL"
-  fi
-  wget $UPDATER_PATCH_URL -O $UPDATER_PATCH_PATH
-else
-  if [ "$verbose" = true ]; then
-    echo "- Using previously downloaded updater patch"
-  fi
-fi
-
-# Patch SourceMod updater
-cp $UPDATER_PATCH_PATH $PLUGINS_SRC_DIR/include/updater.inc
-
 # Compile
 for plugin_path in $plugins_paths
 do
