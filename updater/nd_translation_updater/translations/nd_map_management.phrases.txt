@@ -29,4 +29,10 @@
 		"#format"	"{1:s},{2:s}"
 		"en"		"Too many players for {1}! Next map changed to {2}!"	
 	}
+	
+	"Retrigger Player Count"
+	{
+		"#format"	"{1:i}"
+		"en"		"Player count changed by {1} players. Map voting will now recommence"
+	}
 }
