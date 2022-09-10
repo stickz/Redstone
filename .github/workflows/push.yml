@@ -1,0 +1,15 @@
+name: Redstone Push Commit
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+  steps:
+    - name: Build Stable
+      run: ./build_scripts/build.sh -v --sourcemod=1.10.0-6453 --out=build
+      shell: bash
