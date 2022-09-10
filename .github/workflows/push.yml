@@ -12,6 +12,9 @@ jobs:
       - uses: actions/checkout@master
         name: Clone Repo
 
+      - name: Run Chmod
+        run: chmod 777 /.github/scripts/build.sh
+
       - name: Build Stable
         run: ./.github/scripts/build.sh -v --sourcemod=1.10.0-6453 --out=build
         shell: bash
