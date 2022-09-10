@@ -56,7 +56,7 @@ if [ "$OS" = "Mac" ]; then
   SCRIPTDIR=$(cd "$(dirname "$0")"; pwd)
 elif [ "$OS" = "Linux" ]; then
   SCRIPTPATH=$(readlink -f "$0")
-  SCRIPTDIR=$(dirname "$SCRIPTPATH")
+  SCRIPTDIR=$(dirname $(dirname "$SCRIPTPATH"))
 fi
 
 # Get project ROOT directory
