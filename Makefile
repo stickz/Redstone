@@ -13,7 +13,7 @@ build-stable:
 	./build_scripts/build.sh -v --sourcemod=1.10.0-6453 --out=build
 
 build-dev:
-	./build_scripts/build.sh -v --sourcemod=1.10.0-6453 --out=build
+	./build_scripts/build.sh -v --sourcemod=1.11.0-6911 --out=build
 
 deploy:
 	@./build_scripts/deploy.sh -v \
