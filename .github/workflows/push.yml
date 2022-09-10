@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - name: Build Stable
+      - uses: actions/checkout@master
+        name: Build Stable
         run: ./.github/scripts/build.sh -v --sourcemod=1.10.0-6453 --out=build
         shell: bash
