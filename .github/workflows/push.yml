@@ -25,5 +25,5 @@ jobs:
         run: chmod 777 .github/scripts/build.sh
 
       - name: Build Stable
-        run: ./.github/scripts/build.sh -v --sourcemod=1.10.0-6453 --out=build
+        run: ./.github/scripts/build.sh -v --sourcemod=1.11.0-6911 --out=build
         shell: bash
