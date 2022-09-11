@@ -10,7 +10,12 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Clone Repo
-        run: git clone https://github.com/stickz/Redstone
+        uses: actions/checkout@master
+        
+      - name: Branch Commit History
+        run: |
+          git branch -D history
+          git branch history 6df183e
 
       - name: Run Chmod
         run: chmod 777 .github/scripts/build.sh
