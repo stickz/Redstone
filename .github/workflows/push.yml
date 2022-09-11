@@ -9,8 +9,8 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@master
-        name: Clone Repo
+      - name: Clone Repo
+        run: git clone https://github.com/stickz/Redstone
 
       - name: Run Chmod
         run: chmod 777 .github/scripts/build.sh

@@ -158,9 +158,6 @@ fi
 # copy SDK for successful compile
 cp -r $SOURCEMOD_DIR/addons $ROOTDIR
 
-# Get repo info
-git checkout
-
 # Compile
 for plugin_path in $plugins_paths
 do
