@@ -10,7 +10,9 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Clone Repo
-        uses: actions/checkout@master
+        run: |
+          rm -rf Redstone
+          git clone https://github.com/stickz/Redstone
         
       - name: Branch Commit History
         run: |
