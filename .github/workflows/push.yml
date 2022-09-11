@@ -17,7 +17,7 @@ jobs:
           git branch -D history 2>/dev/null
           git branch history 6df183e
         env:
-          CI: false
+          CI: ""
 
       - name: Run Chmod
         run: chmod 777 .github/scripts/build.sh
