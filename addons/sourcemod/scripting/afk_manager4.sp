@@ -239,7 +239,7 @@ void PurgeOldLogs() // Purge Old Log Files
 }
 
 // Chat Functions
-void AFK_PrintToChat(int client, const char[] sMessage, any:...)
+void AFK_PrintToChat(int client, const char[] sMessage, any ...)
 {
 	int iStart = client;
 	int iEnd = MaxClients;
