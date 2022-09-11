@@ -91,7 +91,7 @@ PLUGINS_DIST_DIR="$BUILDDIR/updater"
 COMPILE_BINARY="$PLUGINS_SRC_DIR/spcomp"
 COMPILE_INCLUDE_DIR="$PLUGINS_SRC_DIR/include"
 
-SOURCEMOD_DIR=$(dirname $(dirname "$ROOTDIR/sourcemod/$sourcemod_version"))
+SOURCEMOD_DIR=$(dirname "$ROOTDIR/sourcemod/$sourcemod_version")
 if [ "$OS" = "Mac" ]; then
   SOURCEMOD_ARCHIVE_URL="http://www.sourcemod.net/smdrop/$sourcemod_major_minor_version/sourcemod-$sourcemod_major_minor_patch_version-git$sourcemod_build-mac.zip"
   SOURCEMOD_ARCHIVE_PATH="$SOURCEMOD_DIR/archive.zip"
