@@ -30,34 +30,9 @@ sourcemod_major_minor_version=${sourcemod_version%.*}
 sourcemod_major_minor_patch_version=${sourcemod_version%-*}
 sourcemod_build=${sourcemod_version##*-}
 
-# Detect OS and exit if OS is not supported
-OS="`uname`"
-case $OS in
-  'Linux')
-    OS='Linux'
-    if [ "$verbose" = true ]; then
-      echo "- Detected Linux"
-    fi
-    ;;
-  'Darwin') 
-    OS='Mac'
-    if [ "$verbose" = true ]; then
-      echo "- Detected OS X"
-    fi
-    ;;
-  *)
-    echo "Only Linux and OS X are supported"
-    exit 1
-    ;;
-esac
-
 # Get directory path of this script
-if [ "$OS" = "Mac" ]; then
-  SCRIPTDIR=$(cd "$(dirname "$0")"; pwd)
-elif [ "$OS" = "Linux" ]; then
-  SCRIPTPATH=$(readlink -f "$0")
-  SCRIPTDIR=$(dirname $(dirname "$SCRIPTPATH"))
-fi
+SCRIPTPATH=$(readlink -f "$0")
+SCRIPTDIR=$(dirname $(dirname "$SCRIPTPATH"))
 
 # Get project ROOT directory
 ROOTDIR=$(dirname "$SCRIPTDIR")
@@ -92,13 +67,8 @@ COMPILE_BINARY="$PLUGINS_SRC_DIR/spcomp"
 COMPILE_INCLUDE_DIR="$PLUGINS_SRC_DIR/include"
 
 SOURCEMOD_DIR="$TMPDIR/sourcemod/$sourcemod_version"
-if [ "$OS" = "Mac" ]; then
-  SOURCEMOD_ARCHIVE_URL="http://www.sourcemod.net/smdrop/$sourcemod_major_minor_version/sourcemod-$sourcemod_major_minor_patch_version-git$sourcemod_build-mac.zip"
-  SOURCEMOD_ARCHIVE_PATH="$SOURCEMOD_DIR/archive.zip"
-elif [ "$OS" = "Linux" ]; then
-  SOURCEMOD_ARCHIVE_URL="http://www.sourcemod.net/smdrop/$sourcemod_major_minor_version/sourcemod-$sourcemod_major_minor_patch_version-git$sourcemod_build-linux.tar.gz"
-  SOURCEMOD_ARCHIVE_PATH="$SOURCEMOD_DIR/archive.tar.gz"
-fi
+SOURCEMOD_ARCHIVE_URL="http://www.sourcemod.net/smdrop/$sourcemod_major_minor_version/sourcemod-$sourcemod_major_minor_patch_version-git$sourcemod_build-linux.tar.gz"
+SOURCEMOD_ARCHIVE_PATH="$SOURCEMOD_DIR/archive.tar.gz"
 
 UPDATER_PATCH_URL="https://bitbucket.org/GoD_Tony/updater/raw/53ebb3e27e5a43bc46dc52dc0de76ac2fb48cd9e/include/updater.inc -O include/updater.inc"
 UPDATER_PATCH_PATH="$TMPDIR/updater.inc"
@@ -142,12 +112,7 @@ if [ ! -d "$SOURCEMOD_DIR" ] || [ "$cache" = false ]; then
   mkdir -p $SOURCEMOD_DIR
   wget $SOURCEMOD_ARCHIVE_URL -O $SOURCEMOD_ARCHIVE_PATH
 
-  if [ "$OS" = "Mac" ]; then
-    # -o stands for OVERWRITE, meaning don't prompt if overwriting files
-    unzip -o $SOURCEMOD_ARCHIVE_PATH -d $SOURCEMOD_DIR > /dev/null
-  elif [ "$OS" = "Linux" ]; then
-    tar xzf $SOURCEMOD_ARCHIVE_PATH -C $SOURCEMOD_DIR
-  fi
+  tar xzf $SOURCEMOD_ARCHIVE_PATH -C $SOURCEMOD_DIR
   rm -f $SOURCEMOD_ARCHIVE_PATH
 else
   if [ "$verbose" = true ]; then
