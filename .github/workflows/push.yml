@@ -12,8 +12,7 @@ jobs:
       - name: Clone Repo
         run: |
           cd ..
-          shopt -s extglob
-          rm -rf Redstone/!(.tmp)
+          rm -rf Redstone
           git clone -q https://github.com/stickz/Redstone
         
       - name: Branch Commit History

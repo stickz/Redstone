@@ -68,7 +68,7 @@ fi
 
 # Used for internal usage (e.g. backing up stuff, downloading sourcemod tarball
 # etc.)
-TMPDIR="$ROOTDIR/.tmp"
+TMPDIR=$(dirname "$ROOTDIR")/.tmp
 
 # If --out= is passed and path is absolute - set as is,
 # if path is relative - append to project root directory
