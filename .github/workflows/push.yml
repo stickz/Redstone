@@ -14,7 +14,7 @@ jobs:
         
       - name: Branch Commit History
         run: |
-          git branch -D history
+          git branch -D history 2>/dev/null
           git branch history 6df183e
 
       - name: Run Chmod
