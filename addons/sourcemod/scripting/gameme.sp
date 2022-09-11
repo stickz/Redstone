@@ -707,7 +707,7 @@ public OnPluginStart()
 	RegServerCmd("logaddress_delall", ProtectForwardingDelallChange);
 	RegServerCmd("gameme_message_prefix_clear", MessagePrefixClear);
 
-	gameme_plugin[custom_tags] = CreateArray(128);
+	gameme_plugin.custom_tags = CreateArray(128);
 	gameme_plugin.sv_tags = FindConVar("sv_tags");
 	gameme_plugin.engine_version = GetEngineVersion();
 	if (gameme_plugin.sv_tags != INVALID_HANDLE) {
@@ -3065,10 +3065,10 @@ public OnTagsChange(Handle:cvar, const String:oldVal[], const String:newVal[])
 		return;
 	}
 	
-	new count = GetArraySize(gameme_plugin[custom_tags]);
+	new count = GetArraySize(gameme_plugin.custom_tags);
 	for (new i = 0; (i < count); i++) {
 		decl String: tag[128];
-		GetArrayString(gameme_plugin[custom_tags], i, tag, 128);
+		GetArrayString(gameme_plugin.custom_tags, i, tag, 128);
 		AddPluginServerTag(tag);
 	}
 }
@@ -3562,7 +3562,7 @@ public native_query_gameme_stats(Handle: plugin, numParams)
 
 				callback_data data;
 				data.callback_data_id = queryid;
-				data.callback_data_time = GetGameTime();;
+				data.callback_data_time = GetGameTime();
 				data.callback_data_client = cb_client;
 				data.callback_data_plugin = plugin;
 				data.callback_data_function = cb_function;
@@ -5997,8 +5997,8 @@ stock AddPluginServerTag(const String:tag[])
 		return;
 	}
 	
-	if (FindStringInArray(gameme_plugin[custom_tags], tag) == -1) {
-		PushArrayString(gameme_plugin[custom_tags], tag);
+	if (FindStringInArray(gameme_plugin.custom_tags, tag) == -1) {
+		PushArrayString(gameme_plugin.custom_tags, tag);
 	}
 	
 	decl String: current_tags[128];
