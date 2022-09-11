@@ -185,7 +185,7 @@ do
   if [ -d "$plugin_translations_dir" ]; then
     plugin_paths_for_hash="$plugin_paths_for_hash $plugin_translations_dir"
   fi
-  plugin_hash=`git log -n 1 --oneline -- ${plugin_paths_for_hash}`
+  plugin_hash=`git log -n 1 --all --oneline -- ${plugin_paths_for_hash}`
   plugin_hash=`echo $plugin_hash | sed -e 's/\s.*$//g'`
 
   sed "s/version\s*=\s*[^,]*/version = \"${plugin_hash}\"/g" $plugin_path > $TMPDIR/${plugin_name}
