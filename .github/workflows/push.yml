@@ -13,7 +13,7 @@ jobs:
         run: |
           cd ..
           rm -rf Redstone
-          git clone https://github.com/stickz/Redstone
+          git clone -q https://github.com/stickz/Redstone
         
       - name: Branch Commit History
         run: |
