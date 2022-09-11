@@ -6,7 +6,7 @@
 #define ND_MAX_MAP_SIZE 32
 
 /* Custom Maps */
-enum ND_CustomMapCount {
+enum ND_CustomMapCount: {
 	ND_Rock,
 	ND_Mars,
 	ND_Roadwork,
@@ -16,13 +16,14 @@ enum ND_CustomMapCount {
 	ND_Submarine,
 	ND_MetroImp,
 	ND_Port,
-	ND_DowntownDyn
+	ND_DowntownDyn,
+	CustomMapSize
 }
 stock int cm(ND_CustomMapCount map) {
 	return view_as<int>(map);
 }
 
-stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] = 
+stock char ND_CustomMaps[CustomMapSize][ND_MAX_MAP_SIZE] = 
 {
 	"rockv19",
 	"mars_102",
@@ -38,7 +39,7 @@ stock char ND_CustomMaps[ND_CustomMapCount][ND_MAX_MAP_SIZE] =
 
 stock bool ND_IsCustomMap(char[] mapName)
 {
-	for (int m = 0; m < ND_CustomMapCount; m++)
+	for (int m = 0; m < view_as<int>(CustomMapSize); m++)
 	{
 		if (StrEqual(ND_CustomMaps[m], mapName, false))
 			return true;	
@@ -53,7 +54,7 @@ stock bool ND_CustomMapEquals(const char[] currentMap, ND_CustomMapCount searchM
 
 /* Stock Maps */
 
-enum ND_StockMapCount {
+enum ND_StockMapCount: {
 	ND_Hydro,
 	ND_Oasis,
 	ND_Silo,
@@ -63,13 +64,14 @@ enum ND_StockMapCount {
 	ND_Oilfield,
 	ND_Downtown,
 	ND_Clocktower,
-	SK_Metro
+	SK_Metro,
+	StockMapSize
 }
 stock int sm(ND_StockMapCount map) {
 	return view_as<int>(map);
 }
 
-stock char ND_StockMaps[ND_StockMapCount][ND_MAX_MAP_SIZE] = {
+stock char ND_StockMaps[StockMapSize][ND_MAX_MAP_SIZE] = {
 	"hydro",
 	"oasis",
 	"silo",
@@ -84,7 +86,7 @@ stock char ND_StockMaps[ND_StockMapCount][ND_MAX_MAP_SIZE] = {
 
 stock bool ND_IsStockMap(char[] mapName)
 {
-	for (int m = 0; m < ND_StockMapCount; m++)
+	for (int m = 0; m < view_as<int>(StockMapSize); m++)
 	{
 		if (StrEqual(ND_StockMaps[m], mapName, false))
 			return true;	
