@@ -313,7 +313,7 @@ char[] GetCheckListMessage(int array, int team, int commander)
 	int checkedItemCount = 0;
 	for (int idx = 0; idx < CHECKLIST_ITEM_COUNT; idx++)
 	{
-		char state;
+		char state[4];
 		if(teamChecklists[array][team][idx])
 		{
 			state="✔";
