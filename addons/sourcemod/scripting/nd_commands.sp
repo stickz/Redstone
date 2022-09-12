@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 #include <nd_access>
 
 public Plugin myinfo =

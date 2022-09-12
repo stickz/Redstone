@@ -128,11 +128,15 @@ public Action TIMER_DisableRestrictions(Handle timer)
 			PrintToChatAll("%s %t!", PREFIX, "Restrictions Relaxed"); //Commander restrictions relaxed
 			//PrintToChatAll("\x05[xG] Commander restrictions lifted! Mutiny threshold set to 70%! (no commander)");
 	}
+	return Plugin_Handled;
 }
 
-public Action TIMER_DisplayComWarning(Handle timer) {
+public Action TIMER_DisplayComWarning(Handle timer) 
+{
 	if (g_cvar.eRestrictions.BoolValue && ND_GetCommanderCount() != 2 && RED_OnTeamCount() >= g_cvar.cLowRestrictTeam.IntValue)
 		PrintToChatAll("%s %t!", PREFIX, "Last Chance Apply");
+	
+	return Plugin_Handled;
 }
 
 public Action Command_Apply(int client, const char[] command, int argc)
