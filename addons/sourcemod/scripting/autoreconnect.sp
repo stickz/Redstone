@@ -44,7 +44,8 @@ public Action OnDown(int args)
 	{
 		if (IsClientInGame(i) && !IsFakeClient(i))
 		{
-           		ClientCommand(i, "retry"); // force retry
-           	}
-        }
+			ClientCommand(i, "retry"); // force retry
+		}
+	}
+	return Plugin_Continue;
 }
