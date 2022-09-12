@@ -20,10 +20,10 @@ public Action TIMER_updateSPM(Handle timer)
 {
 	UpdateSPM();
 	
-	if (g_Bool[adjustedRookie])
+	if (g_Bool.adjustedRookie)
 	{
-		g_Bool[tdChange] = true;
-		g_Bool[adjustedRookie] = false;
+		g_Bool.tdChange = true;
+		g_Bool.adjustedRookie = false;
 	}
 	
 	return Plugin_Continue;
@@ -71,7 +71,7 @@ void UpdateSPM()
 						if (scorePerMinute[client] >= spmAverage[cTeamM2])
 						{
 							g_isSkilledRookie[client] = true;			
-							g_Bool[adjustedRookie] = true;
+							g_Bool.adjustedRookie = true;
 							
 							#if _DEBUG
 							PrintToAdmins("debug: adjusted skill level of a rookie", "a");
@@ -107,7 +107,7 @@ void UpdateSPM()
 void MakeVetSkillAdjust(int client)
 {
 	g_isWeakVeteran[client] = true;		
-	g_Bool[adjustedRookie] = true;
+	g_Bool.adjustedRookie = true;
 	#if _DEBUG
 	PrintToAdmins("debug: adjusted skill level of a veteran", "a");
 	#endif	

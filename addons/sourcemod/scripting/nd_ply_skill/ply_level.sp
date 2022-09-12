@@ -6,13 +6,13 @@ int getClientLevel(int client)
 	if (LevelCacheArray[client] < 2)
 	{
 		// If the client's exp is retrievable from steamworks, check if they're past level 80
-		if (ND_EXPAvailible(client) && ND_GetClientEXP(client) >= g_Cvar[LevelEightyExp].IntValue)
+		if (ND_EXPAvailible(client) && ND_GetClientEXP(client) >= g_Cvar.LevelEightyExp.IntValue)
 		{
 			LevelCacheArray[client] = 80;
-			return LevelCacheArray[client];			
+			return LevelCacheArray[client];
 		}
 		
-		int clientLevel = ND_RetreiveLevelEx(client);		
+		int clientLevel = ND_RetreiveLevelEx(client);
 		if (clientLevel > 1)
 		{
 			LevelCacheArray[client] = clientLevel;

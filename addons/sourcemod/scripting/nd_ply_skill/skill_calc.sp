@@ -33,7 +33,7 @@ float GetSkillLevel(int client)
 			float comSkill = GetCommanderSkill(client);
 			
 			// Get the max commander skill ceiling
-			float maxSkill = g_Cvar[MaxCommanderSkill].FloatValue;	
+			float maxSkill = g_Cvar.MaxCommanderSkill.FloatValue;
 			
 			// Clamp the commander skill at the skill ceiling
 			if (comSkill > maxSkill)

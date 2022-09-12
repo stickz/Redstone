@@ -27,10 +27,10 @@ bool g_isWeakVeteran[MAXPLAYERS+1] = {false, ...};
 
 enum Bools
 {
-	tdChange,
-	adjustedRookie
-};
-bool g_Bool[Bools];
+	bool tdChange;
+	bool adjustedRookie;
+}
+Bools g_Bool;
 
 /* Include various plugin modules */
 #include "nd_ply_skill/convars.sp"
