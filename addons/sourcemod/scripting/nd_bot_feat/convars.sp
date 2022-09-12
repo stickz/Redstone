@@ -26,7 +26,7 @@ enum struct convars
 	 
 	 ConVar BotOverblance;
 	 ConVar RegOverblance;
-};
+}
 
 convars g_cvar;
 
