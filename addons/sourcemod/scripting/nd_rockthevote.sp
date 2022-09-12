@@ -33,11 +33,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_maps>
 #include <mapchooser>
 
-enum Bools
+enum struct Bools
 {
-	enableRTV,
-	hasPassedRTV,
-	hasMapVoteStarted
+	bool enableRTV;
+	bool hasPassedRTV;
+	bool hasMapVoteStarted;
 };
 
 #define RTV_COMMANDS_SIZE 	3
@@ -51,7 +51,7 @@ char nd_rtv_commands[RTV_COMMANDS_SIZE][] =
 
 int voteCount;	
 
-bool g_Bool[Bools];
+Bools g_Bool;
 bool g_hasVoted[MAXPLAYERS+1] = {false, ... };
 bool isInsRTVMap = false;
 bool isUnpopularRTVMap = false;
@@ -92,7 +92,7 @@ public void OnPluginStart()
 }
 
 public void OnMapVoteStarted() {
-	g_Bool[hasMapVoteStarted] = true;
+	g_Bool.hasMapVoteStarted = true;
 }
 
 public void ND_OnRoundStarted() {
@@ -118,9 +118,9 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 public void OnMapStart()
 {
 	voteCount 		= 0;
-	g_Bool[enableRTV] 	= true;
-	g_Bool[hasPassedRTV] 	= false;
-	g_Bool[hasMapVoteStarted] = false;
+	g_Bool.enableRTV 	= true;
+	g_Bool.hasPassedRTV 	= false;
+	g_Bool.hasMapVoteStarted = false;
 	
 	for (int client = 1; client <= MaxClients; client++) {
 		g_hasVoted[client] = false;	
@@ -147,8 +147,10 @@ public void OnClientDisconnected(int client) {
 	resetValues(client);
 }
 
-public Action TIMER_DisableRTV(Handle timer) {
-	g_Bool[enableRTV] = false;
+public Action TIMER_DisableRTV(Handle timer) 
+{
+	g_Bool.enableRTV = false;
+	return Plugin_Continue;
 }
 
 public Action TIMER_ChangeMapNow(Handle timer)
@@ -169,7 +171,7 @@ public Action TIMER_ChangeMapNow(Handle timer)
 
 void callRockTheVote(int client)
 {
-	if (g_Bool[hasPassedRTV])
+	if (g_Bool.hasPassedRTV)
 		PrintMessage(client, "Already Passed");	
 
 	else if (g_hasVoted[client])
@@ -224,7 +226,7 @@ void checkForPass(bool display = false, int client = -1)
 float getPassPercentage(bool forceTimeout)
 {
 	// Set percentage required to pass AFTER timeout for popular and unpopular maps
-	if (!g_Bool[enableRTV] || isUnpopularRTVMap && forceTimeout)
+	if (!g_Bool.enableRTV || isUnpopularRTVMap && forceTimeout)
 		return isUnpopularRTVMap ? cvarPercentPassAfterEX.FloatValue : cvarPercentPassAfter.FloatValue;
 	
 	// Set percentage required to pass BEFORE timeout for popular and unpopular maps
@@ -242,9 +244,9 @@ void resetValues(int client)
 
 void prepMapChange()
 {
-	g_Bool[hasPassedRTV] = true;
+	g_Bool.hasPassedRTV = true;
 	
-	if (!g_Bool[hasMapVoteStarted])
+	if (!g_Bool.hasMapVoteStarted)
 	{
 		PrintToChatAll("%s %t", PREFIX, "RTV Wait"); //Pending map change due to successful rtv vote.
 		CreateTimer(0.5, Timer_StartMapVoteASAP, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
@@ -333,9 +335,11 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 }
 
 public int Native_GetRtvStatus(Handle plugin, int numParams) {
-	return g_Bool[enableRTV];
+	return g_Bool.enableRTV;
 }
 
-public int Native_ToogleRtvStatus(Handle plugin, int numParams) {
-	g_Bool[enableRTV] = GetNativeCell(1);
+public int Native_ToogleRtvStatus(Handle plugin, int numParams) 
+{
+	g_Bool.enableRTV = GetNativeCell(1);
+	return 0;
 }

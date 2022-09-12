@@ -93,8 +93,10 @@ public Action CMD_RestartTheRound(int client, int args)
 	return Plugin_Handled;
 }
 
-public Action TIMER_TimeoutRestart(Handle timer) {
+public Action TIMER_TimeoutRestart(Handle timer) 
+{
 	timeout = true;
+	return Plugin_Continue;
 }
 
 void StartRestartTimeout()
@@ -231,6 +233,8 @@ public int Native_GetRtvStatus(Handle plugin, int numParams) {
 	return timeout;
 }
 
-public int Native_ToogleRtvStatus(Handle plugin, int numParams) {
+public int Native_ToogleRtvStatus(Handle plugin, int numParams) 
+{
 	timeout = GetNativeCell(1);
+	return 0;
 }

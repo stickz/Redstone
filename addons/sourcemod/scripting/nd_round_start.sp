@@ -17,12 +17,12 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone"
 }
 
-enum Convars
+enum struct Convars
 {
-	ConVar:enableWarmupBalance,
-	ConVar:minPlayersForBalance
-};
-ConVar g_Cvar[Convars];
+	ConVar enableWarmupBalance;
+	ConVar minPlayersForBalance;
+}
+Convars g_Cvar;
 
 /* Include different modules of plug-in */
 #include "nd_rstart/countdown.sp"
@@ -88,8 +88,8 @@ void RegPluginCommands()
 
 void CreatePluginConvars()
 {
-	g_Cvar[enableWarmupBalance] 	=	CreateConVar("sm_warmup_balance", "1", "Warmup Balancer: 0 to disable, 1 to enable");
-	g_Cvar[minPlayersForBalance]	=	CreateConVar("sm_warmup_bmin", "6", "Sets minium number of players for warmup balance");
+	g_Cvar.enableWarmupBalance 	=	CreateConVar("sm_warmup_balance", "1", "Warmup Balancer: 0 to disable, 1 to enable");
+	g_Cvar.minPlayersForBalance	=	CreateConVar("sm_warmup_bmin", "6", "Sets minium number of players for warmup balance");
 	
 	AutoExecConfig(true, "nd_rstart"); // store convars
 }

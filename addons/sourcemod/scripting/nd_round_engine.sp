@@ -111,6 +111,7 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 	Action dummy;
 	Call_StartForward(g_OnRoundStartedForward);
 	Call_Finish(dummy);
+	return Plugin_Continue;
 }
 
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
@@ -126,7 +127,8 @@ public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
 	{
 		Call_StartForward(g_OnRoundEndedEXForward);
 		Call_Finish(dummy);
-	}		
+	}
+	return Plugin_Continue;
 }
 
 /* Natives */
@@ -178,10 +180,13 @@ public int Native_FireRoundStart(Handle plugin, int numParams)
 	Call_Finish(dummy);
 	
 	ServerCommand("mp_minplayers 1");
+	return 0;
 }
 
-public int Native_FireRoundEnd(Handle plugin, int numParams) {
+public int Native_FireRoundEnd(Handle plugin, int numParams) 
+{
 	Event_RoundEnd(null, "", false);
+	return 0;
 }
 
 /* Round restart logic with native */
@@ -213,6 +218,7 @@ public int Native_FireRoundRestart(Handle plugin, int numParams)
 	ServerCommand("mp_maxrounds %d", curRoundCount);
 	
 	CreateTimer(1.5, TIMER_PrepRoundRestart, toWarmup, TIMER_FLAG_NO_MAPCHANGE);
+	return 0;
 }
 public Action TIMER_PrepRoundRestart(Handle timer, any toWarmup)
 {	

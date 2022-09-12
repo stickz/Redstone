@@ -34,8 +34,8 @@ void RestoreServerConvars()
 
 bool RunWarmupBalancer()
 {
-	if (BT2_AVAILABLE() && g_Cvar[enableWarmupBalance].BoolValue)
-		return ReadyToBalanceCount() >= g_Cvar[minPlayersForBalance].IntValue;
+	if (BT2_AVAILABLE() && g_Cvar.enableWarmupBalance.BoolValue)
+		return ReadyToBalanceCount() >= g_Cvar.minPlayersForBalance.IntValue;
 	
 	return false;
 }
