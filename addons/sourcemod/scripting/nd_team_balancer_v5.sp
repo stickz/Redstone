@@ -178,6 +178,7 @@ public Action TIMER_UnlockTeams(Handle timer)
 {
 	PrintToAdmins("\x05[TB] Team balancer locks disabled!", "a");
 	bTeamsLocked = false;
+	return Plugin_Continue;
 }
 
 bool PlaceTeamBySkill(int client)

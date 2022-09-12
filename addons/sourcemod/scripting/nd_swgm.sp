@@ -282,11 +282,13 @@ public int Native_CheckPlayer(Handle hPlugin, int iNumParams)
 	}
 	
 	SteamWorks_GetUserGroupStatusAuthID(g_iAuthID[iClient], g_iGroupId);
+	return 0;
 }
 
 public int Native_CheckPlayers(Handle hPlugin, int iNumParams)
 {
 	Check();
+	return 0;
 }
 
 void Forward_OnLeaveCheck(int iClient)

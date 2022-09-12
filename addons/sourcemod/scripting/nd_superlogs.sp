@@ -269,6 +269,8 @@ public Action Event_PlayerSpawn(Event event, const char[] name, bool dontBroadca
 	
 	if (client > 0)
 		reset_player_stats(client);
+	
+	return Plugin_Continue;
 }
 
 public Action Event_PlayerDisconnect(Event event, const char[] name, bool dontBroadcast)
@@ -290,6 +292,7 @@ public Action Event_RoundWin(Event event, const char[] name, bool dontBroadcast)
 	g_iBunkerAttacked[0] = 0;
 	g_iBunkerAttacked[1] = 0;
 	WstatsDumpAll();
+	return Plugin_Continue;
 }
 
 public void ND_OnCommanderPromoted(int client, int team) {
@@ -301,12 +304,13 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 	int team = event.GetInt("team");
 	if(team >= 2)
 		LogTeamEvent(team, "triggered", "resource_captured");
+	return Plugin_Continue;
 }
 
 public Action Event_StructureDamageSparse(Event event, const char[] name, bool dontBroadcast)
 {
 	if(!event.GetBool("bunker"))
-		return;
+		return Plugin_Continue;
 		
 	int team = event.GetInt("ownerteam");
 	if(team >= 2)
@@ -319,6 +323,7 @@ public Action Event_StructureDamageSparse(Event event, const char[] name, bool d
 			g_iBunkerAttacked[team-2] = 0;
 		}
 	}
+	return Plugin_Continue;
 }
 
 public Action Event_StructureDeath(Event event, const char[] name, bool dontBroadcast)
@@ -347,12 +352,14 @@ public Action Event_StructureDeath(Event event, const char[] name, bool dontBroa
 			case 15: LogPlayerEvent(iAttacker, "triggered", "barrier_destroyed"); //not sure if this is correct
 		}	
 	}
+	return Plugin_Continue;
 }
 
 public Action LogMap(Handle timer)
 {
 	// Called 1 second after OnPluginStart since srcds does not log the first map loaded. Idea from Stormtrooper's "mapfix.sp" for psychostats
 	LogMapLoad();
+	return Plugin_Continue;
 }
 
 bool IsInvalid(iWeapon)

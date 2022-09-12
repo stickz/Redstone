@@ -13,17 +13,18 @@
 
 bool statusChanged = false;
  
-enum ClassBreakdown
+enum ClassBreakdown:
 {
 	DirectCombat = 0,
 	Snipers,
 	AntiStructure,
 	Stealth,
 	Medic,
-	Engineer
+	Engineer,
+	ClassBreakCount
 }
  
-int g_Layout[2][ClassBreakdown];
+int g_Layout[2][ClassBreakCount];
 int SaboteurCount[2];
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_team_breakdown/nd_team_breakdown.txt"
@@ -159,12 +160,13 @@ void ShowTeamBreakdown(int client, int clientTeam, float x, float y, int r, int 
 	int arrayIdx = clientTeam -2;
 	Handle hHudText = CreateHudSynchronizer();
 	SetHudTextParams(x, y, BREAKDOWN_UPDATE_RATE, r, g, b, a);
-	ShowSyncHudText(client, hHudText, "%t %d\n%t %d\n%t %d\n%t %d\n%t %d\n%t %d",	"Combat",  		g_Layout[arrayIdx][DirectCombat],					
-											"Anti-Structure",	g_Layout[arrayIdx][AntiStructure], 	
-											"Sniper", 		g_Layout[arrayIdx][Snipers], 	
-											"Stealth", 		g_Layout[arrayIdx][Stealth], 	
-											"Medic", 		g_Layout[arrayIdx][Medic], 			
-											"Engineer", 		g_Layout[arrayIdx][Engineer]);
+	ShowSyncHudText(client, hHudText, "%t %d\n%t %d\n%t %d\n%t %d\n%t %d\n%t %d",	
+											"Combat",  		g_Layout[arrayIdx][view_as<int>(DirectCombat)],					
+											"Anti-Structure",	g_Layout[arrayIdx][view_as<int>(AntiStructure)], 	
+											"Sniper", 		g_Layout[arrayIdx][view_as<int>(Snipers)], 	
+											"Stealth", 		g_Layout[arrayIdx][view_as<int>(Stealth)], 	
+											"Medic", 		g_Layout[arrayIdx][view_as<int>(Medic)], 			
+											"Engineer", 		g_Layout[arrayIdx][view_as<int>(Engineer]));
 	CloseHandle(hHudText);
 }
 
@@ -203,41 +205,41 @@ void AddClientClass(int client)
 	// Switch the main class, then switch it's corresponding sub class
 	switch (iClass)
 	{
-		case mAssault:
+		case view_as<int>(mAssault):
 		{
 			switch (iSubClass)
 			{
-				case aInfantry: g_Layout[cTeamIDX][DirectCombat]++;
-				case aGrenadier: g_Layout[cTeamIDX][AntiStructure]++; 
-				case aSniper: g_Layout[cTeamIDX][Snipers]++;
+				case view_as<int>(aInfantry): g_Layout[cTeamIDX][view_as<int>(DirectCombat)]++;
+				case view_as<int>(aGrenadier): g_Layout[cTeamIDX][view_as<int>(AntiStructure)]++;
+				case view_as<int>(aSniper): g_Layout[cTeamIDX][view_as<int>(Snipers)]++;
 			}
 		}
-		case mExo:
+		case view_as<int>(mExo):
 		{
 			switch (iSubClass)
 			{
-				case eSuppression: g_Layout[cTeamIDX][DirectCombat]++; 
-				case eSiege_Kit: g_Layout[cTeamIDX][AntiStructure]++;
+				case view_as<int>(eSuppression): g_Layout[cTeamIDX][view_as<int>(DirectCombat)]++;
+				case view_as<int>(eSiege_Kit): g_Layout[cTeamIDX][view_as<int>(AntiStructure)]++;
 			}
 		}
-		case mStealth:
+		case view_as<int>(mStealth):
 		{
 			g_Layout[cTeamIDX][Stealth]++;
 			switch (iSubClass)
 			{
-				case seAssassin: g_Layout[cTeamIDX][DirectCombat]++; 
-				case seSniper: g_Layout[cTeamIDX][Snipers]++;
-				case seSabateur: SaboteurCount[cTeamIDX]++;
+				case view_as<int>(seAssassin): g_Layout[cTeamIDX][view_as<int>(DirectCombat)]++;
+				case view_as<int>(seSniper): g_Layout[cTeamIDX][view_as<int>(Snipers)]++;
+				case view_as<int>(seSabateur): SaboteurCount[cTeamIDX]++;
 			}
 		}
 	
-		case mSupport:
+		case view_as<int>(mSupport):
 		{
 			switch (iSubClass)
 			{
-				case suMedic: g_Layout[cTeamIDX][Medic]++; 
-				case suEngineer: g_Layout[cTeamIDX][Engineer]++; 
-				case suBBQ: g_Layout[cTeamIDX][AntiStructure]++;
+				case view_as<int>(suMedic): g_Layout[cTeamIDX][view_as<int>(Medic)]++; 
+				case view_as<int>(suEngineer): g_Layout[cTeamIDX][view_as<int>(Engineer)]++; 
+				case view_as<int>(suBBQ): g_Layout[cTeamIDX][view_as<int>(AntiStructure)]++;
 			}
 		}
 	}	

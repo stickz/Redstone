@@ -160,8 +160,10 @@ public void OnClientDisconnect(int client) {
 	resetValues(client);
 }
 
-public Action TIMER_surrenderDelay(Handle timer) {
+public Action TIMER_surrenderDelay(Handle timer) 
+{
 	g_Bool[enableSurrender] = true;
+	return Plugin_Continue;
 }
 
 public Action TIMER_DisplaySurrender(Handle timer, any team)
@@ -171,6 +173,7 @@ public Action TIMER_DisplaySurrender(Handle timer, any team)
 		case TEAM_CONSORT: PrintToChatAll("\x05%t!", "Consort Surrendered");
 		case TEAM_EMPIRE: PrintToChatAll("\x05%t!", "Empire Surrendered");	
 	}
+	return Plugin_Continue;
 }
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
@@ -254,11 +257,11 @@ float getSurrenderPercentage()
 	return finalSurrenderPer / 100.0;
 }
 
-bool countTwoComVotes(int team, int teamCount, float voteCount) 
+bool countTwoComVotes(int team, int teamCount, float voteCount2) 
 {
 	// Is the team count 4 or less? Or is the surrender vote count 5 or more? If so...
 	// If the commander has voted, double the weight of their vote.
-	if (	teamCount <= cvarMaxComVotePlys.IntValue || voteCount >= cvarMinComVoteVotes.FloatValue)
+	if (	teamCount <= cvarMaxComVotePlys.IntValue || voteCount2 >= cvarMinComVoteVotes.FloatValue)
 		return g_commanderVoted[team - 2];
 	
 	return false;
