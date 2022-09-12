@@ -5968,7 +5968,7 @@ public OnHL2MPTakeDamage(victim, attacker, inflictor, Float:damage, damagetype)
 		if (weapon_index > -1) {
 			player_weapons[attacker][weapon_index].whits++;
 			player_weapons[attacker][weapon_index].wdamage += RoundToNearest(damage);
-			player_weapons[attacker][weapon_index][hitgroup]++;
+			player_weapons[attacker][weapon_index].hitgroup++;
 			if (headshot) {
 				player_weapons[attacker][weapon_index].wheadshots++;
 			}

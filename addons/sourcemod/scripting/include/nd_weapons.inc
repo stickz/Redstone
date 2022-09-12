@@ -10,7 +10,7 @@
 #define WEAPON_U23_GRENADE "weapon_u23_grenade"
 #define WEAPON_P12_GRENADE "weapon_p12_grenade"
 
-stock char iClass(int &inflictor)
+stock char[] iClass(int &inflictor)
 {
 	char wepClassName[64];
 	GetEntityClassname(inflictor, wepClassName, sizeof(wepClassName));
