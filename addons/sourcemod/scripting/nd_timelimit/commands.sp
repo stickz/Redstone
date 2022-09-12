@@ -25,11 +25,11 @@ bool strEqualsTime(int client, const char[] sArgs)
 
 void printTime(int client)
 {
-	if (!g_Bool[noTimeLimit])
+	if (!g_Bool.noTimeLimit)
 		PrintMessage(client, "Regular Time");
 		
-	else if (g_Bool[startedCountdown])
-		PrintToChat(client, "\x05[xG] There are %d minutes remaining!", g_Integer[totalTimeLeft]);
+	else if (g_Bool.startedCountdown)
+		PrintToChat(client, "\x05[xG] There are %d minutes remaining!", g_Integer.totalTimeLeft);
 	
 	else if (ND_RoundStarted())
 		PrintMessage(client, "Time Disabled");
