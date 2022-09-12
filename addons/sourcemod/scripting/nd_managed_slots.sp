@@ -23,22 +23,22 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"	
 };
 
-enum convars
+enum struct convars
 {
-	ConVar:MaxServerSlots,
-	ConVar:HighSkill,
-	ConVar:LowSkill,
-	ConVar:MinPlayServerSlots,
-	ConVar:AfkKickSlots
-};
-ConVar g_Cvar[convars];
+	ConVar MaxServerSlots;
+	ConVar HighSkill;
+	ConVar LowSkill;
+	ConVar MinPlayServerSlots;
+	ConVar AfkKickSlots;
+}
+convars g_Cvar;
 
 enum Integers
 {
-	maxKickCount,
-	mapTargetPlayers
-};
-int g_Integer[Integers];
+	int maxKickCount;
+	int mapTargetPlayers;
+}
+Integers g_Integer;
 
 bool slotUsed[MAXPLAYERS + 1] = {false, ...};
 bool eDynamicSlots = true;
@@ -51,11 +51,11 @@ public void OnPluginStart()
 	RegAdminCmd("sm_ClampSlots", Command_ClampSlots, ADMFLAG_KICK, "Sets the server slots a specified value");
 
 	/* Notice: Please launch server with 32 or 33 slots, this plugin will cap slots as required */	
-	g_Cvar[MaxServerSlots] 		= CreateConVar("sm_serverslots_max", "32", "Set Maximum  slots");
-	g_Cvar[HighSkill] 		= CreateConVar("sm_serverslots_hskill", "85", "Set the skill to decrease slots");
-	g_Cvar[LowSkill] 		= CreateConVar("sm_serverslots_lskill", "65", "Set the skill to decrease slots");
-	g_Cvar[MinPlayServerSlots] 	= CreateConVar("sm_serverslots_pmin", "14", "Set min amount of players to decrease slots");
-	g_Cvar[AfkKickSlots]		= CreateConVar("sm_serverslots_afk", "3", "Set amount of afk players to kick from ceiling");
+	g_Cvar.MaxServerSlots 		= CreateConVar("sm_serverslots_max", "32", "Set Maximum  slots");
+	g_Cvar.HighSkill 		= CreateConVar("sm_serverslots_hskill", "85", "Set the skill to decrease slots");
+	g_Cvar.LowSkill 		= CreateConVar("sm_serverslots_lskill", "65", "Set the skill to decrease slots");
+	g_Cvar.MinPlayServerSlots 	= CreateConVar("sm_serverslots_pmin", "14", "Set min amount of players to decrease slots");
+	g_Cvar.AfkKickSlots		= CreateConVar("sm_serverslots_afk", "3", "Set amount of afk players to kick from ceiling");
 	
 	LoadTranslations("nd_managed_slots.phrases");
 	
@@ -86,7 +86,7 @@ public void OnClientPutInServer(int client)
 
 public void OnClientAuthorized(int client)
 {	
-	if (!IsFakeClient(client) && GetClientCount() > g_Integer[maxKickCount] + 1)
+	if (!IsFakeClient(client) && GetClientCount() > g_Integer.maxKickCount + 1)
 	{		
 		if (eDynamicSlots)
 		{			
@@ -97,7 +97,7 @@ public void OnClientAuthorized(int client)
 				return;
 			}
 		}
-		g_Integer[maxKickCount]++;
+		g_Integer.maxKickCount++;
 	}
 }
 
@@ -114,8 +114,8 @@ public Action Event_PlayerDisconnected(Event event, const char[] name, bool dont
 	
 	if (strncmp(steam_id, "STEAM_", 6) == 0)
 	{
-		if (g_Integer[maxKickCount] > g_Integer[mapTargetPlayers])
-			g_Integer[maxKickCount]--;
+		if (g_Integer.maxKickCount > g_Integer.mapTargetPlayers)
+			g_Integer.maxKickCount--;
 	}
 }
 
@@ -158,8 +158,8 @@ public Action Command_ClampSlots(int client, int args)
 void InitializeVariables()
 {
 	/*Set Integers */	
-	g_Integer[maxKickCount] = 30;
-	g_Integer[mapTargetPlayers] = 30;
+	g_Integer.maxKickCount = 30;
+	g_Integer.mapTargetPlayers = 30;
 		
 	/*Set Booleans */
 	for (int client = 1; client <= MaxClients; client++) {
@@ -180,15 +180,15 @@ void setMapPlayerCount(int cap)
 {
 	int newCap = cap;
 		
-	int maxSlots = g_Cvar[MaxServerSlots].IntValue;
+	int maxSlots = g_Cvar.MaxServerSlots.IntValue;
 	
 	if (newCap > maxSlots)
 		newCap = maxSlots;
 		
-	g_Integer[maxKickCount] = g_Integer[maxKickCount] > newCap ? g_Integer[maxKickCount] : newCap;
-	g_Integer[mapTargetPlayers] = newCap;	
+	g_Integer.maxKickCount = g_Integer.maxKickCount > newCap ? g_Integer.maxKickCount : newCap;
+	g_Integer.mapTargetPlayers = newCap;	
 	ServerCommand("sv_visiblemaxplayers %d", newCap);
-	ServerCommand("sm_cvar sm_afk_kick_min_players %d", newCap - g_Cvar[AfkKickSlots].IntValue); 
+	ServerCommand("sm_cvar sm_afk_kick_min_players %d", newCap - g_Cvar.AfkKickSlots.IntValue); 
 }
 
 /* Natives */
@@ -205,13 +205,13 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public Native_ToggleDynamicSlots(Handle plugin, int numParams)
 {
 	bool state = GetNativeCell(1);
-	ServerCommand("sv_visiblemaxplayers %d", state ? g_Integer[mapTargetPlayers] : 32);
+	ServerCommand("sv_visiblemaxplayers %d", state ? g_Integer.mapTargetPlayers : 32);
 	eDynamicSlots = state;
 	return;
 }
 
 public Native_GetDynamicSlotCount(Handle plugin, int numParams) {
-	return _:g_Integer[mapTargetPlayers];
+	return _:g_Integer.mapTargetPlayers;
 }
 
 public Native_GetDynamicSlotStatus(Handle plugin, int numParams) {

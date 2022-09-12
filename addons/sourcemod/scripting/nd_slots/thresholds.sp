@@ -45,9 +45,9 @@ int GetSlotCount(int min, int med, int max)
 		return max;	
 		
 	float avSkill = ND_GetEnhancedAverage();	
-	return avSkill < g_Cvar[LowSkill].IntValue  ? max : avSkill < g_Cvar[HighSkill].IntValue ? med : min;
+	return avSkill < g_Cvar.LowSkill.IntValue  ? max : avSkill < g_Cvar.HighSkill.IntValue ? med : min;
 }
 
 bool eSkillBasedSlots() {
-	return ND_GetClientCount() > g_Cvar[MinPlayServerSlots].IntValue;
+	return ND_GetClientCount() > g_Cvar.MinPlayServerSlots.IntValue;
 }

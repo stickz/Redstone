@@ -95,8 +95,10 @@ public Action CMD_AdminKillBots(int client, int args)
 	return Plugin_Handled;
 }
 
-public Action Timer_EnableBotKill(Handle timer, any team) {
+public Action Timer_EnableBotKill(Handle timer, any team) 
+{
 	CanKillBots[team - 2] = true;
+	return Plugin_Handled;
 }
 
 bool RoundStarted(int client)

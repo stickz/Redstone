@@ -94,7 +94,7 @@ public void OnInfantryBoostResearched(int team, int level)
 		/* Display console values for hypospray increases */
 		PrintTeamSpacer(team); // Print spacer in console
 		PrintConsoleTeam(team, "Hypospray Header Console"); // Add hypospray header
-		PrintHypoIncreases(team, level); // Add Hypospray increase values
+		PrintHypoIncreases(team); // Add Hypospray increase values
 		PrintTeamSpacer(team); // Print spacer in console
 	}
 }
@@ -110,7 +110,7 @@ void PrintTeamSpacer(int team)
 	}
 }
 
-void PrintHypoIncreases(int team, int level)
+void PrintHypoIncreases(int team)
 {
 	for (int m = 1; m <= MaxClients; m++)
 	{

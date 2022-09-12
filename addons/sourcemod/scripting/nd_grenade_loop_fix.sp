@@ -39,7 +39,8 @@ public void OnPluginStart()
 
 public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast)
 {
-	CreateTimer(0.5, TIMER_TellSoundToStopRingingEars, event.GetInt("userid"), TIMER_FLAG_NO_MAPCHANGE);	
+	CreateTimer(0.5, TIMER_TellSoundToStopRingingEars, event.GetInt("userid"), TIMER_FLAG_NO_MAPCHANGE);
+	return Plugin_Continue;
 }
 
 public Action TIMER_TellSoundToStopRingingEars(Handle timer, any userid)
