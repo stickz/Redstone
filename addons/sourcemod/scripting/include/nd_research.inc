@@ -6,7 +6,7 @@
 #define RESEARCH_INCOMPLETE 0
 #define RESEARCH_COMPLETE 	1
 
-enum ND_ResearchItems {
+enum ND_ResearchItems: {
 	Advanced_Kits = 1,
 	Field_Tactics,
 	Commander_Abilities,

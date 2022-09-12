@@ -146,7 +146,7 @@ void SetTertariesList()
 	}
 }
 
-public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
+public void SpawnTertiaryPoint(float origin[VECTOR_SIZE])
 {
 	int rt = CreateEntityByName("nd_info_tertiary_resource_point");
 	int trigger = CreateEntityByName("nd_trigger_resource_point");
@@ -155,7 +155,7 @@ public void SpawnTertiaryPoint(float[VECTOR_SIZE] origin)
 	
 }
 
-public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float[VECTOR_SIZE] origin)
+public void SpawnResourcePoint( const char[] type, const char[] model, int rt, int trigger, float origin[VECTOR_SIZE])
 {	
 	char rt_name[32];
 	char trigger_name[32];

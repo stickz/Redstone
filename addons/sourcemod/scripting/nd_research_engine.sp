@@ -32,8 +32,10 @@ public void OnMapEnd() {
 	ResetResearchTech();
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) 
+{
 	ResetResearchTech();
+	return Plugin_Continue;
 }
 
 public Action Event_ResearchCompleted(Event event, const char[] name, bool dontBroadcast)
@@ -62,6 +64,7 @@ public Action Event_ResearchCompleted(Event event, const char[] name, bool dontB
 		// Shortcut for remaining armoury and bunker research
 		default: FireSingleTeirResearch(researchId, teamId);
 	}
+	return Plugin_Continue;
 }
 
 void ResetResearchTech()
