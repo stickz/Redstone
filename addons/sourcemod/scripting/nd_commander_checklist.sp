@@ -305,7 +305,7 @@ void ShowCheckList(int commander)
 	}
 }
 
-char GetCheckListMessage(int array, int team, int commander)
+char[] GetCheckListMessage(int array, int team, int commander)
 {
 	char message[256]; 
 	Format(message, sizeof(message), "%T\n", "COMMANDER_CHECKLIST", commander);
@@ -313,7 +313,7 @@ char GetCheckListMessage(int array, int team, int commander)
 	int checkedItemCount = 0;
 	for (int idx = 0; idx < CHECKLIST_ITEM_COUNT; idx++)
 	{
-		char state[2];
+		char state;
 		if(teamChecklists[array][team][idx])
 		{
 			state="✔";
