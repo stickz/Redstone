@@ -90,7 +90,7 @@ public bool isContinentEmpty(int contientNumber)
 
 char[] conientIntegerTOName(int value)
 {
-	char Name[2];
+	char Name[4];
 	switch(value)
 	{
 		case 0: Name = "XX";
@@ -126,7 +126,7 @@ int contientTOInteger(char contString[2])
 
 char[] getContient(int client)
 {
-	char code[2];
+	char code[4];
 	
 	char clientIp[16];			
 	if(!GetClientIP(client, clientIp, sizeof(clientIp), true)) //failed to get IP of client, do not procede further
