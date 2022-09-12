@@ -149,7 +149,8 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 	int entindex = event.GetInt("entindex");
 	int team = event.GetInt("team");
 	
-	if (team != TEAM_EMPIRE && team != TEAM_CONSORT) return;
+	if (team != TEAM_EMPIRE && team != TEAM_CONSORT)
+		return Plugin_Continue;
 	
 	// convert values for local use
 	int resIndex = GetResIndex(entindex);
