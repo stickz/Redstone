@@ -86,7 +86,6 @@ enum struct gameme_plugin_data {
   int damage_display_type;
   int display_spectator;
   bool sdkhook_available;
-  EngineVersion engine_version;
   bool ignore_next_tag_change;
   Handle custom_tags;
   Handle sv_tags;
@@ -709,7 +708,6 @@ public OnPluginStart()
 
 	gameme_plugin.custom_tags = CreateArray(128);
 	gameme_plugin.sv_tags = FindConVar("sv_tags");
-	//gameme_plugin.engine_version = GetEngineVersion();
 	if (gameme_plugin.sv_tags != INVALID_HANDLE) {
 		AddPluginServerTag(GAMEME_TAG);
 		HookConVarChange(gameme_plugin.sv_tags, OnTagsChange);
@@ -1273,8 +1271,8 @@ public OnClientPutInServer(client)
 		}
 
 		reset_player_data(client);
-		gameme_players[client][prole] = -1;
-		gameme_players[client][pgglevel] = 0;
+		gameme_players[client].prole = -1;
+		gameme_players[client].pgglevel = 0;
 		
 		if (!IsFakeClient(client)) {
 			QueryClientConVar(client, "cl_language", ConVarQueryFinished:ClientConVar, client);
@@ -3957,20 +3955,20 @@ public Action: gameme_raw_message(args)
 					
 					new cb_array_index = find_callback(query_id);
 					if (cb_array_index >= 0) {
-						decl data[callback_data];
+						callback_data data;
 						GetArrayArray(QueryCallbackArray, cb_array_index, data, sizeof(data));
-						if ((data[callback_data_plugin] != INVALID_HANDLE) && (data[callback_data_function] != INVALID_FUNCTION)) {
+						if ((data.callback_data_plugin != INVALID_HANDLE) && (data.callback_data_function != INVALID_FUNCTION)) {
 							decl Action: result;
-							Call_StartFunction(data[callback_data_plugin], data[callback_data_function]);
+							Call_StartFunction(data.callback_data_plugin, data.callback_data_function);
 							Call_PushCell(RAW_MESSAGE_CALLBACK_INT_SPECTATOR);
-							Call_PushCell(data[callback_data_payload]);
+							Call_PushCell(data.callback_data_payload);
 							Call_PushArray(caller, MAXPLAYERS + 1);
 							Call_PushArray(target, MAXPLAYERS + 1);
 							Call_PushString(gameme_plugin.message_prefix_value);
 							Call_PushString(message);
 							Call_Finish(_:result);
 
-							if (data[callback_data_limit] == 1) {
+							if (data.callback_data_limit == 1) {
 								RemoveFromArray(QueryCallbackArray, cb_array_index); 
 							}
 						}
@@ -5611,7 +5609,7 @@ public Event_TF2PlayerSpawn(Handle: event, const String: name[], bool:dontBroadc
 	}
 	
 	tf2_players[client].player_class = spawn_class;
-	tf2_players[client][dalokohs] = -30.0;
+	tf2_players[client].dalokohs = -30.0;
 }
 
 
@@ -5674,16 +5672,16 @@ public Action: check_player_loadout(Handle: timer, any: userid)
 				tf2_players[client].player_loadout1[check_slot] = -1;
 				continue;
 			}
-			if (tf2_players[client][player_loadout0][check_slot] == -1) {
+			if (tf2_players[client].player_loadout0[check_slot] == -1) {
 				continue;
 			}
-			tf2_players[client][player_loadout0][check_slot] = -1;
+			tf2_players[client].player_loadout0[check_slot] = -1;
 			tf2_players[client].player_loadout1[check_slot] = -1;
 			is_new_loadout = true;
 		} else {
 			new item_index = GetEntProp(entity, Prop_Send, "m_iItemDefinitionIndex");
-			if (tf2_players[client][player_loadout0][check_slot] != item_index) {
-				tf2_players[client][player_loadout0][check_slot] = item_index;
+			if (tf2_players[client].player_loadout0[check_slot] != item_index) {
+				tf2_players[client].player_loadout0[check_slot] = item_index;
 				is_new_loadout = true;
 			}
 			tf2_players[client].player_loadout1[check_slot] = EntIndexToEntRef(entity);
@@ -5988,12 +5986,7 @@ public OnHL2MPTakeDamage(victim, attacker, inflictor, Float:damage, damagetype)
 
 stock AddPluginServerTag(const String:tag[]) 
 {
-	if ((gameme_plugin.sv_tags == INVALID_HANDLE) ||
-	    ((gameme_plugin.engine_version != Engine_CSS) && (gameme_plugin.engine_version != Engine_HL2DM) &&
-	     (gameme_plugin.engine_version != Engine_DODS) && (gameme_plugin.engine_version != Engine_TF2) &&
-	     (gameme_plugin.engine_version != Engine_NuclearDawn) && (gameme_plugin.engine_version != Engine_Left4Dead) &&
-	     (gameme_plugin.engine_version != Engine_Left4Dead2) && (gameme_plugin.engine_version != Engine_CSGO) &&
-	     (gameme_plugin.engine_version != Engine_Insurgency))) {
+	if (gameme_plugin.sv_tags == INVALID_HANDLE) {
 		return;
 	}
 	
