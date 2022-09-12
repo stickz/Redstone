@@ -25,7 +25,7 @@ float lastMedian = 0.0;
 bool g_isSkilledRookie[MAXPLAYERS+1] = {false, ...};
 bool g_isWeakVeteran[MAXPLAYERS+1] = {false, ...};
 
-enum Bools
+enum struct Bools
 {
 	bool tdChange;
 	bool adjustedRookie;

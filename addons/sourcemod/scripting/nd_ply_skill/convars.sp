@@ -1,6 +1,6 @@
 #include <autoexecconfig>
 
-enum convars
+enum struct convars
 {
 	ConVar LevelEightyExp;
 	ConVar MaxCommanderSkill;
