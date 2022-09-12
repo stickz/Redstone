@@ -710,10 +710,10 @@ public OnPluginStart()
 	gameme_plugin.custom_tags = CreateArray(128);
 	gameme_plugin.sv_tags = FindConVar("sv_tags");
 	gameme_plugin.engine_version = GetEngineVersion();
-	if (gameme_plugin.sv_tags != INVALID_HANDLE) {
+	/*if (gameme_plugin.sv_tags != INVALID_HANDLE) {
 		AddPluginServerTag(GAMEME_TAG);
 		HookConVarChange(gameme_plugin.sv_tags, OnTagsChange);
-	}
+	}*/
 
 	
 	if ((gameme_plugin.mod_id == MOD_CSGO) || (gameme_plugin.mod_id == MOD_CSS) || (gameme_plugin.mod_id == MOD_HL2MP) || (gameme_plugin.mod_id == MOD_TF2) || (gameme_plugin.mod_id == MOD_L4D) || (gameme_plugin.mod_id == MOD_L4DII) || (gameme_plugin.mod_id == MOD_INSMOD)) {
