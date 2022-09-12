@@ -49,7 +49,7 @@ enum struct Bools
 {
 	bool relaxedRestrictions;
 	bool timeOut;
-};
+}
 
 enum struct convars
 {
@@ -65,7 +65,7 @@ enum struct convars
 	ConVar cLowRestrictTotal;
 	ConVar cHighRestrictTeam;
 	ConVar cHighRestrictTotal;
-};
+}
 
 convars g_cvar;
 Bools g_Bool;
