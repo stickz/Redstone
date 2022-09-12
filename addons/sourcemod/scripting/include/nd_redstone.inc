@@ -3,6 +3,8 @@
 #endif
 #define _nd_redstone_included_
 
+#include <nd_stocks>
+
 /**
  * Get's if the client is marked as a donator
  *
