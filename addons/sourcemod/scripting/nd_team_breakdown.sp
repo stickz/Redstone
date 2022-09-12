@@ -166,7 +166,7 @@ void ShowTeamBreakdown(int client, int clientTeam, float x, float y, int r, int 
 											"Sniper", 		g_Layout[arrayIdx][view_as<int>(Snipers)], 	
 											"Stealth", 		g_Layout[arrayIdx][view_as<int>(Stealth)], 	
 											"Medic", 		g_Layout[arrayIdx][view_as<int>(Medic)], 			
-											"Engineer", 		g_Layout[arrayIdx][view_as<int>(Engineer]));
+											"Engineer", 		g_Layout[arrayIdx][view_as<int>(Engineer)]);
 	CloseHandle(hHudText);
 }
 
@@ -180,7 +180,7 @@ public Action UpdateBreakdowns(Handle timer)
 		// clear breakdown list
 		for (int i = 0; i < 2; i++)
 		{
-			for (int y = 0; y < _:ClassBreakdown; y++)
+			for (int y = 0; y < view_as<int>(ClassBreakCount); y++)
 				g_Layout[i][y] = 0;
 				
 			SaboteurCount[i] = 0;
