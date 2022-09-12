@@ -514,7 +514,7 @@ public OnPluginStart()
 	gameme_plugin.log_locations       = 1;
 	gameme_plugin.damage_display      = 0;
 	gameme_plugin.damage_display_type = 1;
-	gameme_plugin[protobuf]            = 0;
+	gameme_plugin.protobuf            = 0;
 
 	LoadTranslations("gameme.phrases");
 	
@@ -672,7 +672,7 @@ public OnPluginStart()
 	get_server_mod();
 	if (gameme_plugin.mod_id == MOD_CSGO) {
 		if (GetUserMessageType() == UM_Protobuf) {
-			gameme_plugin[protobuf] = 1;
+			gameme_plugin.protobuf = 1;
 			LogToGame("gameME Protobuf user messages detected");
 		}
 	}
@@ -775,8 +775,8 @@ public OnPluginStart()
 			decl String: ProtectSplitArray[2][16];
 			new protect_split_count = ExplodeString(protect_address_cvar_value, ":", ProtectSplitArray, 2, 16);
 			if (protect_split_count == 2) {
-				strcopy(gameme_plugin[protect_address_value], 32, ProtectSplitArray[0]);
-				gameme_plugin[protect_address_port] = StringToInt(ProtectSplitArray[1]);
+				strcopy(gameme_plugin.protect_address_value, 32, ProtectSplitArray[0]);
+				gameme_plugin.protect_address_port = StringToInt(ProtectSplitArray[1]);
 			}
 		}
 	}
@@ -1521,7 +1521,7 @@ public Action: spectator_player_timer(Handle:timer, any: caller)
 						if ((GetGameTime() - gameme_players[caller].pspectator.srequested) > 5) {
 							new Handle: message_handle = StartMessageOne("KeyHintText", caller);
 							if (message_handle != INVALID_HANDLE) {
-								if (gameme_plugin[protobuf] == 1) {
+								if (gameme_plugin.protobuf == 1) {
 									PbAddString(message_handle, "hints", player_messages[caller][target].smessage);
 								} else {
 									BfWriteByte(message_handle, 1);
@@ -1537,7 +1537,7 @@ public Action: spectator_player_timer(Handle:timer, any: caller)
 						if (gameme_plugin.mod_id != MOD_CSGO) {
 							new Handle: message_handle = StartMessageOne("KeyHintText", caller);
 							if (message_handle != INVALID_HANDLE) {
-								if (gameme_plugin[protobuf] == 1) {
+								if (gameme_plugin.protobuf == 1) {
 									PbAddString(message_handle, "hints", "");
 								} else {
 									BfWriteByte(message_handle, 1);
@@ -1832,7 +1832,7 @@ public build_damage_chat(player_index)
 				} else { 
 					new Handle: message_handle = StartMessageOne("SayText2", player_index);
 					if (message_handle != INVALID_HANDLE) {
-						if (gameme_plugin[protobuf] == 1) {
+						if (gameme_plugin.protobuf == 1) {
 							PbSetInt(message_handle, "ent_idx", player_index);
 							PbSetBool(message_handle, "chat", false);
 							PbSetString(message_handle, "msg_name", killed_message);
@@ -3061,7 +3061,7 @@ public OnDamageDisplayChange(Handle:cvar, const String:oldVal[], const String:ne
 
 public OnTagsChange(Handle:cvar, const String:oldVal[], const String:newVal[])
 {
-	if (gameme_plugin[ignore_next_tag_change]){
+	if (gameme_plugin.ignore_next_tag_change){
 		return;
 	}
 	
@@ -3085,8 +3085,8 @@ public OnProtectAddressChange(Handle:cvar, const String:oldVal[], const String:n
 				decl String: SplitArray[2][16];
 				new split_count = ExplodeString(protect_address_cvar_value, ":", SplitArray, 2, 16);
 				if (split_count == 2) {
-					strcopy(gameme_plugin[protect_address_value], 32, SplitArray[0]);
-					gameme_plugin[protect_address_port] = StringToInt(SplitArray[1]);
+					strcopy(gameme_plugin.protect_address_value, 32, SplitArray[0]);
+					gameme_plugin.protect_address_port = StringToInt(SplitArray[1]);
 				}
 			}
 
@@ -4076,7 +4076,7 @@ public Action: gameme_psay(args)
 					} else { 
 						new Handle: message_handle = StartMessageOne("SayText2", player_index);
 						if (message_handle != INVALID_HANDLE) {
-							if (gameme_plugin[protobuf] == 1) {
+							if (gameme_plugin.protobuf == 1) {
 								PbSetInt(message_handle, "ent_idx", color_index);
 								PbSetBool(message_handle, "chat", false);
 								PbSetString(message_handle, "msg_name", client_message);
@@ -4321,7 +4321,7 @@ public Action: gameme_khint(args)
 				if ((player_index > 0) && (!IsFakeClient(player_index)) && (IsClientInGame(player_index))) {
 					new Handle: message_handle = StartMessageOne("KeyHintText", player_index);
 					if (message_handle != INVALID_HANDLE) {
-						if (gameme_plugin[protobuf] == 1) {
+						if (gameme_plugin.protobuf == 1) {
 							PbAddString(message_handle, "hints", client_message);
 						} else {
 							BfWriteByte(message_handle, 1);
@@ -6013,9 +6013,9 @@ stock AddPluginServerTag(const String:tag[])
 	
 	new flags = GetConVarFlags(gameme_plugin.sv_tags);
 	SetConVarFlags(gameme_plugin.sv_tags, flags & ~FCVAR_NOTIFY);
-	gameme_plugin[ignore_next_tag_change] = true;
+	gameme_plugin.ignore_next_tag_change = true;
 	SetConVarString(gameme_plugin.sv_tags, new_tags);
-	gameme_plugin[ignore_next_tag_change] = false;
+	gameme_plugin.ignore_next_tag_change = false;
 	SetConVarFlags(gameme_plugin.sv_tags, flags);
 
 	LogToGame("Added gameME gameserver tag [%s]", new_tags);
