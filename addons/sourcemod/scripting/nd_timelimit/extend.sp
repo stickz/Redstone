@@ -29,13 +29,13 @@ void callExtend(int client)
 {
 	int team = GetClientTeam(client);
 	
-	if (ValidTeamCount(team) < g_Cvar[extendMinPlayers].IntValue)
+	if (ValidTeamCount(team) < g_Cvar.extendMinPlayers.IntValue)
 		PrintMessage(client, "Six Required");
 	
-	else if (!g_Bool[enableExtend])
+	else if (!g_Bool.enableExtend)
 		PrintMessage(client, "Wait End");
 		
-	else if (g_Bool[hasExtended])
+	else if (g_Bool.hasExtended)
 		PrintMessage(client, "Already Extended");
 		
 	else if (team < 2)
@@ -44,7 +44,7 @@ void callExtend(int client)
 	else if (g_hasVotedEmpire[client] || g_hasVotedConsort[client])
 		PrintMessage(client, "You Extended");
 		
-	else if (g_Bool[roundHasEnded])
+	else if (g_Bool.roundHasEnded)
 		PrintMessage(client, "Round Ended");
 
 	else
@@ -80,14 +80,14 @@ void resetValues(int client)
 	if (team > TEAM_SPEC)
 	{
 		voteCount[team - 2]--;
-		if (ND_GetClientCount() < g_Cvar[extendMinPlayers].IntValue && !g_Bool[roundHasEnded] && !g_Bool[hasExtended] && g_Bool[enableExtend])
+		if (ND_GetClientCount() < g_Cvar.extendMinPlayers.IntValue && !g_Bool.roundHasEnded && !g_Bool.hasExtended && g_Bool.enableExtend)
 			checkVotes(false);		
 	}
 }
 
 void checkVotes(bool display, int team = -1, int client = -1)
 {
-	float teamPercent = g_Cvar[extendPercentage].FloatValue / 100.0;
+	float teamPercent = g_Cvar.extendPercentage.FloatValue / 100.0;
 	
 	float teamEmpireCount = ValidTeamCount(TEAM_EMPIRE) * teamPercent;
 	float teamConsortCount = ValidTeamCount(TEAM_CONSORT) * teamPercent;
@@ -106,22 +106,22 @@ void extendTime()
 	char currentMap[32];
 	GetCurrentMap(currentMap, sizeof(currentMap));
 	
-	if (!g_Bool[noTimeLimit])
+	if (!g_Bool.noTimeLimit)
 	{
-		int roundTime = g_Cvar[regularTimeLimit].IntValue; // the time we extend matches by
+		int roundTime = g_Cvar.regularTimeLimit.IntValue; // the time we extend matches by
 		
 		if (	StrEqual(currentMap, ND_CustomMaps[ND_Corner], false) || 
 			StrEqual(currentMap, ND_StockMaps[ND_Silo], false)) {
-				roundTime = g_Cvar[extendedTimeLimit].IntValue;
+				roundTime = g_Cvar.extendedTimeLimit.IntValue;
 		}		
 			
 		ServerCommand("mp_roundtime %d", roundTime);
 	}
 	else
-		g_Integer[totalTimeLeft] = g_Cvar[extendTimeLimit].IntValue;		
+		g_Integer.totalTimeLeft = g_Cvar.extendTimeLimit.IntValue;
 		
-	g_Bool[hasExtended] = true;
-	g_Bool[justExtended] = true;
+	g_Bool.hasExtended = true;
+	g_Bool.justExtended = true;
 	PrintMessageAll("Round Extended");
 }
 

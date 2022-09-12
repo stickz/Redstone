@@ -47,7 +47,7 @@ void cpShowCountDown()
 			
 	for (int idx = 1; idx <= MaxClients; idx++)
 		if (IsClientInGame(idx) && option_timelimit_features[idx] && !ND_IsCommander(idx))
-			ShowSyncHudText(idx, HudText, "%d", g_Integer[countdown]);
+			ShowSyncHudText(idx, HudText, "%d", g_Integer.countdown);
 				
 	CloseHandle(HudText);
 }

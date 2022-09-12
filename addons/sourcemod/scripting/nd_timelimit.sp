@@ -28,48 +28,49 @@ char nd_timelimit_commands[TIMELIMIT_COMMANDS_SIZE][] =
 	"time",
 	"timeleft"};
 	
-enum Integers
+enum struct Integers
 {
-	totalTimeLeft,
-	countdown
-};
+	int totalTimeLeft;
+	int countdown;
+}
 
-enum Bools
+enum struct Bools
 {
-	noTimeLimit,
-	startedCountdown,
-	enableExtend,
-	hasExtended,
-	justExtended,
-	roundHasEnded,
-	reducedResumeTime2,
-	canChangeTimeLimit
-};
+	bool noTimeLimit;
+	bool startedCountdown;
+	bool enableExtend;
+	bool hasExtended;
+	bool justExtended;
+	bool roundHasEnded;
+	bool reducedResumeTime2;
+	bool canChangeTimeLimit;
+}
 
-enum Convars {
-	ConVar:enableTimeLimit,
-	ConVar:regularTimeLimit,
-	ConVar:extendedTimeLimit,
+enum struct Convars 
+{
+	ConVar enableTimeLimit;
+	ConVar regularTimeLimit;
+	ConVar extendedTimeLimit;
 	
-	ConVar:reducedTimeLimit,
-	ConVar:reducedResumeTime,
+	ConVar reducedTimeLimit;
+	ConVar reducedResumeTime;
 	
-	ConVar:extendTimeLimit,
-	ConVar:extendMinPlayers,
-	ConVar:extendPercentage,
+	ConVar extendTimeLimit;
+	ConVar extendMinPlayers;
+	ConVar extendPercentage;
 	
-	ConVar:comIncSkill,
-	ConVar:comIncTime
-};
+	ConVar comIncSkill;
+	ConVar comIncTime;
+}
 
-ConVar g_Cvar[Convars];
+Convars g_Cvar;
 
 int voteCount[2];
-int g_Integer[Integers];
+Integers g_Integer;
 
 Handle cookie_timelimit_features;
 
-bool g_Bool[Bools];
+Bools g_Bool;
 bool g_hasVotedEmpire[MAXPLAYERS+1] = {false, ... };
 bool g_hasVotedConsort[MAXPLAYERS+1] = {false, ... };
 bool option_timelimit_features[MAXPLAYERS + 1] = {true,...};
@@ -116,7 +117,7 @@ public Event_MinuteLeft(Event event, const char[] name, bool dontBroadcast) {
 
 public void ND_BothCommandersPromoted(int consort, int empire) 
 {
-	if (g_Bool[canChangeTimeLimit])
+	if (g_Bool.canChangeTimeLimit)
 	{
 		// Get the name of the current map
 		char currentMap[32];
@@ -127,45 +128,45 @@ public void ND_BothCommandersPromoted(int consort, int empire)
 			SetTimeLimit(currentMap);
 		
 		// Reset the varriable, so we can't change it again
-		g_Bool[canChangeTimeLimit] = false;
+		g_Bool.canChangeTimeLimit = false;
 	}
 }
 
 public void OnClientPutInServer(int client)
 {
-	if (	g_Bool[noTimeLimit] && ND_RoundStarted() && !g_Bool[startedCountdown] && 
-		ND_GetClientCount() > g_Cvar[enableTimeLimit].IntValue)
+	if (	g_Bool.noTimeLimit && ND_RoundStarted() && !g_Bool.startedCountdown && 
+		ND_GetClientCount() > g_Cvar.enableTimeLimit.IntValue)
 	{
 		PrintMessageAll("Limit Effect");
 			
-		g_Integer[totalTimeLeft] = GetTimeLimit();
+		g_Integer.totalTimeLeft = GetTimeLimit();
 		
 		CreateTimer(60.0, TIMER_TotalTimeLeft, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 		
-		g_Bool[startedCountdown] = true;
+		g_Bool.startedCountdown = true;
 	}
 }
 
 int GetTimeLimit()
 {
 	// Decide wether to set the reduced time limit or the regular time limit
-	int time = g_Cvar[reducedTimeLimit].IntValue;
+	int time = g_Cvar.reducedTimeLimit.IntValue;
 	
 	// If we've played for less than the threshold (20 minutes by default)
-	if (!g_Bool[reducedResumeTime2])
+	if (!g_Bool.reducedResumeTime2)
 	{
 		// Get the current map
 		char currentMap[32];
 		GetCurrentMap(currentMap, sizeof(currentMap));
 		
 		if (ND_ExtendedTimeLimitMap(currentMap))
-			time = g_Cvar[extendedTimeLimit].IntValue;
+			time = g_Cvar.extendedTimeLimit.IntValue;
 		else
-			time = g_Cvar[regularTimeLimit].IntValue;
+			time = g_Cvar.regularTimeLimit.IntValue;
 	}
 	
 	if (ND_InitialCommandersReady(false) && IncComSkillTimeLimit())
-		time += g_Cvar[comIncTime].IntValue;
+		time += g_Cvar.comIncTime.IntValue;
 		
 	return time;
 }
@@ -179,7 +180,7 @@ bool IncComSkillTimeLimit()
 		if (commander == NO_COMMANDER)
 			return false;
 		
-		if (ND_GetRoundedCSkill(commander) >= g_Cvar[comIncSkill].IntValue)
+		if (ND_GetRoundedCSkill(commander) >= g_Cvar.comIncSkill.IntValue)
 			return false;
 	}
 	
@@ -212,37 +213,37 @@ public Action PlayerJoinTeam(client, char[] command, int argc)
 
 void setVarriableDefaults()
 {
-	g_Integer[totalTimeLeft] = 60;
-	g_Integer[countdown] = 61;
-	g_Bool[noTimeLimit] = false;
-	g_Bool[startedCountdown] = false;
+	g_Integer.totalTimeLeft = 60;
+	g_Integer.countdown = 61;
+	g_Bool.noTimeLimit = false;
+	g_Bool.startedCountdown = false;
 	
-	g_Bool[roundHasEnded] = false;
-	g_Bool[hasExtended] = false;
-	g_Bool[justExtended] = false;
-	g_Bool[enableExtend] = false;
-	g_Bool[reducedResumeTime2] = false;
-	g_Bool[canChangeTimeLimit] = false;
+	g_Bool.roundHasEnded = false;
+	g_Bool.hasExtended = false;
+	g_Bool.justExtended = false;
+	g_Bool.enableExtend = false;
+	g_Bool.reducedResumeTime2 = false;
+	g_Bool.canChangeTimeLimit = false;
 }
 
 void createConVars()
 {
 	AutoExecConfig_Setup("nd_timelimit");
 	
-	g_Cvar[enableTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_enable", "13", "Sets the number of players required to enable the time limit");
+	g_Cvar.enableTimeLimit = AutoExecConfig_CreateConVar("sm_timelimit_enable", "13", "Sets the number of players required to enable the time limit");
 	
-	g_Cvar[regularTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_regular", "60", "Sets the regular time limit on the server");
-	g_Cvar[extendedTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_corner", "75", "Sets the time for the corner map");
+	g_Cvar.regularTimeLimit = AutoExecConfig_CreateConVar("sm_timelimit_regular", "60", "Sets the regular time limit on the server");
+	g_Cvar.extendedTimeLimit = AutoExecConfig_CreateConVar("sm_timelimit_corner", "75", "Sets the time for the corner map");
 	
-	g_Cvar[reducedTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_reduced", "45", "Sets the reduced time limit on resume");
-	g_Cvar[reducedResumeTime] = AutoExecConfig_CreateConVar("sm_timelimit_rtime", "20", "Sets the time required for a reduced resume");
+	g_Cvar.reducedTimeLimit = AutoExecConfig_CreateConVar("sm_timelimit_reduced", "45", "Sets the reduced time limit on resume");
+	g_Cvar.reducedResumeTime = AutoExecConfig_CreateConVar("sm_timelimit_rtime", "20", "Sets the time required for a reduced resume");
 	
-	g_Cvar[extendTimeLimit] = AutoExecConfig_CreateConVar("sm_timelimit_extend", "15", "Sets how many minutes to add when an extension is voted"); 
-	g_Cvar[extendMinPlayers] = AutoExecConfig_CreateConVar("sm_timelimit_eplayers", "6", "Sets the minimum number of players for an extension");
-	g_Cvar[extendPercentage] = AutoExecConfig_CreateConVar("sm_timelimit_epercent", "40", "Sets the percent from each team required to extend timelimit");
+	g_Cvar.extendTimeLimit = AutoExecConfig_CreateConVar("sm_timelimit_extend", "15", "Sets how many minutes to add when an extension is voted"); 
+	g_Cvar.extendMinPlayers = AutoExecConfig_CreateConVar("sm_timelimit_eplayers", "6", "Sets the minimum number of players for an extension");
+	g_Cvar.extendPercentage = AutoExecConfig_CreateConVar("sm_timelimit_epercent", "40", "Sets the percent from each team required to extend timelimit");
 	
-	g_Cvar[comIncSkill] = AutoExecConfig_CreateConVar("sm_timelimit_cominc_skill", "15", "Sets skill level of commanders to increase time limit");
-	g_Cvar[comIncTime] = AutoExecConfig_CreateConVar("sm_timelimit_cominc_time", "30", "Sets the amount of time to add to the time limit");
+	g_Cvar.comIncSkill = AutoExecConfig_CreateConVar("sm_timelimit_cominc_skill", "15", "Sets skill level of commanders to increase time limit");
+	g_Cvar.comIncTime = AutoExecConfig_CreateConVar("sm_timelimit_cominc_time", "30", "Sets the amount of time to add to the time limit");
 	
 	AutoExecConfig_EC_File();
 }
@@ -262,12 +263,12 @@ public void ND_OnRoundStarted()
 	
 	else
 	{
-		g_Bool[noTimeLimit] = true;
-		CreateTimer(g_Cvar[reducedResumeTime].FloatValue, TIMER_ChangeResumeTime, _, TIMER_FLAG_NO_MAPCHANGE);
+		g_Bool.noTimeLimit = true;
+		CreateTimer(g_Cvar.reducedResumeTime.FloatValue, TIMER_ChangeResumeTime, _, TIMER_FLAG_NO_MAPCHANGE);
 	}
 	
 	// Allow the time limit to be changed in the first five minutes for rookie commanders
-	g_Bool[canChangeTimeLimit] = true;
+	g_Bool.canChangeTimeLimit = true;
 	CreateTimer(float(60 * 5), TIMER_CanChangeTimeLimit, _, TIMER_FLAG_NO_MAPCHANGE);	
 }
 
@@ -275,12 +276,12 @@ public void ND_OnRoundStarted()
 void SetTimeLimit(const char[] currentMap)
 {
 	// Calculate the base time limit, based on the current map
-	int timeLimit = ND_ExtendedTimeLimitMap(currentMap) ? g_Cvar[extendedTimeLimit].IntValue 
-														: g_Cvar[regularTimeLimit].IntValue;
+	int timeLimit = ND_ExtendedTimeLimitMap(currentMap) ? g_Cvar.extendedTimeLimit.IntValue 
+														: g_Cvar.regularTimeLimit.IntValue;
 		
 	// Increase the time limit, if there are rookie commanders
 	if (ND_InitialCommandersReady(false) && IncComSkillTimeLimit())
-		timeLimit += g_Cvar[comIncTime].IntValue;
+		timeLimit += g_Cvar.comIncTime.IntValue;
 	
 	// Set the time limit via the server command
 	ServerCommand("mp_roundtime %d", timeLimit);
@@ -292,27 +293,27 @@ void SetTimeLimit(const char[] currentMap)
 
 /* Timers */
 public Action TIMER_ChangeResumeTime(Handle timer) {
-	g_Bool[reducedResumeTime2] = true;
+	g_Bool.reducedResumeTime2 = true;
 }
 
 public Action TIMER_CanChangeTimeLimit(Handle timer) {
-	g_Bool[canChangeTimeLimit] = false;
+	g_Bool.canChangeTimeLimit = false;
 }
 
 public Action TIMER_ShowMinLeft(Handle timer)
 {
-	if (g_Bool[justExtended])
+	if (g_Bool.justExtended)
 	{
-		g_Bool[justExtended] = false;
+		g_Bool.justExtended = false;
 		return Plugin_Stop;
 	}
 	
-	g_Integer[countdown]--;
-	switch (g_Integer[countdown])
+	g_Integer.countdown--;
+	switch (g_Integer.countdown)
 	{
 		case 0:
 		{
-			if (g_Bool[noTimeLimit])
+			if (g_Bool.noTimeLimit)
 				PrintMessageAll("Time End");
 			
 			ServerCommand("mp_roundtime 1");
@@ -327,15 +328,15 @@ public Action TIMER_ShowMinLeft(Handle timer)
 
 public Action TIMER_TotalTimeLeft(Handle timer)
 {
-	g_Integer[totalTimeLeft]--;
+	g_Integer.totalTimeLeft--;
 	
-	switch (g_Integer[totalTimeLeft])
+	switch (g_Integer.totalTimeLeft)
 	{
 		case 45,30,15: PrintTimeLeft();
 		
 		case 5:
 		{
-			g_Bool[enableExtend] = true;
+			g_Bool.enableExtend = true;
 		
 			PrintTimeLeft();
 		}
@@ -352,7 +353,7 @@ public Action TIMER_TotalTimeLeft(Handle timer)
 }
 
 void PrintTimeLeft() {
-	PrintToChatAll("\x05 %d Minutes remaining!", g_Integer[totalTimeLeft]);
+	PrintToChatAll("\x05 %d Minutes remaining!", g_Integer.totalTimeLeft);
 }
 
 public Action TIMER_CheckAutoCycleMap(Handle timer)
@@ -361,7 +362,7 @@ public Action TIMER_CheckAutoCycleMap(Handle timer)
 	GetNextMap(nextMap, sizeof(nextMap));
 	
 	if (ND_IsAutoCycleMap(nextMap))
-		ServerCommand("mp_roundtime %d", g_Cvar[regularTimeLimit].IntValue);
+		ServerCommand("mp_roundtime %d", g_Cvar.regularTimeLimit.IntValue);
 	
 	return Plugin_Handled;	
 }
@@ -369,8 +370,8 @@ public Action TIMER_CheckAutoCycleMap(Handle timer)
 public Action TIMER_FiveMinLeft(Handle timer)
 {
 	//PrintToAdmins("debug: Five minutes left triggered", "b");
-	g_Bool[enableExtend] = true;
+	g_Bool.enableExtend = true;
 	
-	if (!g_Bool[hasExtended])
+	if (!g_Bool.hasExtended)
 		PrintExtendToEnabled();
 }

@@ -71,6 +71,7 @@ public Action Event_ChangeClass(Event event, const char[] name, bool dontBroadca
 		if (IsClientInGame(client))
 			statusChanged = true;
 	}
+	return Plugin_Continue;
 }
 
 public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast)
@@ -83,6 +84,7 @@ public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadca
 		if (RED_IsValidClient(client) && option_team_breakdown[client] && !ND_IsCommander(client))
 			CreateTimer(BREAKDOWN_UPDATE_RATE, DisplayBreakdownsClients, userID, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 	}
+	return Plugin_Continue;
 }
 
 public void ND_OnCommanderPromoted(int client, int team) {

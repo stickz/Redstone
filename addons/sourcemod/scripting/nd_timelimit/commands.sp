@@ -5,8 +5,10 @@ void regConsoleCommands()
 	RegConsoleCmd("sm_extend", CMD_Extend);	
 }	
 
-public Action CMD_Time(int client, int args) {
+public Action CMD_Time(int client, int args) 
+{
 	printTime(client);
+	return Plugin_Continue;
 }
 
 bool strEqualsTime(int client, const char[] sArgs)

@@ -70,4 +70,5 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	MarkNativeAsOptional("ND_PlayerSpecLocked");
 	RegPluginLibrary("afkmanager");
+	return APLRes_Success;
 }
