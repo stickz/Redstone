@@ -269,7 +269,7 @@ public void ND_OnStructureCreated(int entity, const char[] classname) {
 public Action CheckBorders(Handle timer, any entity) 
 {
     if (!IsValidEdict(entity))
-        return;
+        return Plugin_Handled;
 
     float position[3];
     GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);

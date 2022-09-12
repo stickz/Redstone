@@ -151,8 +151,10 @@ public Action Event_CommanderPromo(Event event, const char[] name, bool dontBroa
 	return Plugin_Continue;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) 
+{
 	ResetVariableDefaults();
+	return Plugin_Continue;
 }
 
 public Action startmutiny(int client, const char[] command, int argc)
