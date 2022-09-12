@@ -33,7 +33,7 @@ enum struct convars
 }
 convars g_Cvar;
 
-enum Integers
+enum struct Integers
 {
 	int maxKickCount;
 	int mapTargetPlayers;
