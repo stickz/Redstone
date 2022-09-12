@@ -31,14 +31,15 @@ public Plugin myinfo =
 #define IBLEVELS 4
 #define DEFAULT_SPEED 1.0
 
-enum MovementClasses {
+enum MovementClasses: {
 	StealthAssassin,
 	SupportBBQ,
 	AssaultGrenadier,
 	StealthClass,
 	ExoClass,
 	AssaultClass,
-	SupportClass
+	SupportClass,
+	MoveClassSize
 };
 public int move(MovementClasses mc) {
 	return view_as<int>(mc);
@@ -54,7 +55,7 @@ ConVar AssassinIBConVars[IBLEVELS];
 
 ConVar AssassinSpeedConVar;
 
-float MovementSpeedFloat[TEAM_COUNT][MovementClasses];
+float MovementSpeedFloat[TEAM_COUNT][MoveClassSize];
 bool HookedThink[MAXPLAYERS+1] = {false, ...};
 float PlayerMoveSpeed[MAXPLAYERS+1] = {1.0, ...};
 bool FirstThink[MAXPLAYERS+1] = {false, ...};
