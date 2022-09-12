@@ -20,13 +20,15 @@ public Action Event_ResourceStartCapture(Event event, const char[] name, bool do
 {
 	int entindex = event.GetInt("entindex");
 	int client = GetClientOfUserId(event.GetInt("userid"));
-	EntIndexCaping[client] = entindex;	
+	EntIndexCaping[client] = entindex;
+	return Plugin_Continue;
 }
 
 public Action Event_ResourceEndCapture(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	//EntIndexCaping[client] = NOT_CAPTURING;
+	return Plugin_Continue;
 }
 
 public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBroadcast)
@@ -44,6 +46,7 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 	}
 	
 	RemoveCaptureStatus(entindex);
+	return Plugin_Continue;
 }
 
 public Action Event_ResourceBreakCapture(Event event, const char[] name, bool dontBroadcast)
@@ -51,6 +54,7 @@ public Action Event_ResourceBreakCapture(Event event, const char[] name, bool do
 	int entindex = event.GetInt("entindex");
 	CheckCloackStatus(entindex);
 	RemoveCaptureStatus(entindex);
+	return Plugin_Continue;
 }
 
 void CheckCloackStatus(int entity)

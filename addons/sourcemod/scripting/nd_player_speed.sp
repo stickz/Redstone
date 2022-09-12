@@ -293,6 +293,8 @@ public Action OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 		SDKHook(client, SDKHook_PreThinkPost, OnPreThinkPost_Movement);
 		HookedThink[client] = true;
 	}
+	
+	return Plugin_Continue;
 }
 
 bool UpdateMovementSpeed(int client)
@@ -354,13 +356,16 @@ public Action OnPlayerDeath(Event event, const char[] name, bool dontBroadcast)
 		SetEntPropFloat(client, Prop_Data, "m_flLaggedMovementValue", DEFAULT_SPEED);
 		PlayerMoveSpeed[client] = DEFAULT_SPEED;
 		HookedThink[client] = false;
-	}	
+	}
+
+	return Plugin_Continue;
 }
 
 public Action OnPlayerChangeClass(Event event, const char[] name, bool dontBroadcast)
 {
 	// Unhook the think event for the client and disable movement speed
 	DisableMovementSpeed(GetClientOfUserId(event.GetInt("userid")));
+	return Plugin_Continue;
 }
 
 // Changing movement speed breaks if done while the player is alive, so disable it for now.

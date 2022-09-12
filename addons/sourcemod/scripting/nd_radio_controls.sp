@@ -23,23 +23,23 @@ bool enemySpottedDisabled = false;
 int last_radio_use[MAXPLAYERS+1];
 int note[MAXPLAYERS+1];
 
-enum convars
+enum struct convars
 {
-	 ConVar:block,
-	 ConVar:block_time,
-	 ConVar:block_all,
-	 ConVar:block_notify 
-};
+	 ConVar block;
+	 ConVar block_time;
+	 ConVar block_all;
+	 ConVar block_notify;
+}
 
-ConVar cvar_radio_spam[convars];
+convars cvar_radio_spam;
 bool g_IsRadioBlocked[MAXPLAYERS+1] = {false, ... };
 
 public OnPluginStart()
 {
-	cvar_radio_spam[block]		 	= CreateConVar("sm_radio_spam_block", "1", "0 = disabled, 1 = enabled Radio Spam Block functionality", FCVAR_PLUGIN, true, 0.0, true, 1.0);
-	cvar_radio_spam[block_time] 	= CreateConVar("sm_radio_spam_block_time", "5", "Time in seconds between radio messages", FCVAR_PLUGIN, true, 1.0, true, 60.0);
-	cvar_radio_spam[block_all] 		= CreateConVar("sm_radio_spam_block_all", "0", "0 = disabled, 1 = block all radio messages", FCVAR_PLUGIN, true, 0.0, true, 1.0);
-	cvar_radio_spam[block_notify] 	= CreateConVar("sm_radio_spam_block_notify", "1", "0 = disabled, 1 = show a chat message to the player when his radio spam blocked", FCVAR_PLUGIN, true, 0.0, true, 1.0);
+	cvar_radio_spam.block		 	= CreateConVar("sm_radio_spam_block", "1", "0 = disabled, 1 = enabled Radio Spam Block functionality", _, true, 0.0, true, 1.0);
+	cvar_radio_spam.block_time 		= CreateConVar("sm_radio_spam_block_time", "5", "Time in seconds between radio messages", _, true, 1.0, true, 60.0);
+	cvar_radio_spam.block_all 		= CreateConVar("sm_radio_spam_block_all", "0", "0 = disabled, 1 = block all radio messages", _, true, 0.0, true, 1.0);
+	cvar_radio_spam.block_notify 	= CreateConVar("sm_radio_spam_block_notify", "1", "0 = disabled, 1 = show a chat message to the player when his radio spam blocked", _, true, 0.0, true, 1.0);
 	
 	for (new i = 0; i < MaxClients; i++)
 	{
@@ -111,7 +111,6 @@ public Action Command_RadioBlock(int client, int args)
 	for (int i = 0; i < target_count; i++)
 	{
 		int target = target_list[i];
-		
 		PerformRadioBlock(target);
 	}
 	return Plugin_Handled;
@@ -155,12 +154,12 @@ public Action RestrictRadio(int client, const char[] command, int args)
 	if (g_IsRadioBlocked[client])
 		return Plugin_Handled;
 	
-	if (cvar_radio_spam[block].BoolValue)
+	if (cvar_radio_spam.block.BoolValue)
 		return Plugin_Continue;
 	
-	bool notify = cvar_radio_spam[block_notify].BoolValue;
+	bool notify = cvar_radio_spam.block_notify.BoolValue;
 	
-	if(cvar_radio_spam[block_all].BoolValue)
+	if(cvar_radio_spam.block_all.BoolValue)
 	{		
 		if (notify)
 			PrintToChat(client, "\x05[xG] %t", "Radio Disabled");
@@ -175,7 +174,7 @@ public Action RestrictRadio(int client, const char[] command, int args)
 	}
 	
 	int time = GetTime() - last_radio_use[client];
-	int blockTime = cvar_radio_spam[block_time].IntValue;
+	int blockTime = cvar_radio_spam.block_time.IntValue;
 	if ( time >= blockTime )
 	{
 		last_radio_use[client] = GetTime();
