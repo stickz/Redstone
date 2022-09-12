@@ -97,10 +97,10 @@ void checkCount()
 	
 		// Team count means the requirement for modulous bot quota
 		if (!CheckShutOffBots())
-			quota += boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
+			quota += boostBots() ? getBotModulusQuota() : g_cvar.BotCount.IntValue;
 		
 		// The plugin to get the server slot is available
-		else if (GDSC_AVAILABLE() && g_cvar[EnableFillerQuota].BoolValue)
+		else if (GDSC_AVAILABLE() && g_cvar.EnableFillerQuota.BoolValue)
 		{	
 			// Get team count difference and team skill difference multiplier
 			int posOverBalance = getPositiveOverBalance();
@@ -116,7 +116,7 @@ void checkCount()
 			}
 			
 			// If both teams have the same number of players and one team has 150%+ more skill
-			else if (teamDiffMult * 100.0 >= g_cvar[BotEvenPlysEnable].FloatValue)
+			else if (teamDiffMult * 100.0 >= g_cvar.BotEvenPlysEnable.FloatValue)
 			{
 				quota = getBotEvenQuota(teamDiffMult); // Get number of bots to fill
 				
@@ -150,10 +150,10 @@ void InitializeServerBots()
 	// Team count means the requirement for modulous bot quota
 	// Decide which type of modulous quota we're using (boosted or regular)
 	if (!CheckShutOffBots())
-		quota = boostBots() ? getBotModulusQuota() : g_cvar[BotCount].IntValue;
+		quota = boostBots() ? getBotModulusQuota() : g_cvar.BotCount.IntValue;
 	
 	ServerCommand("bot_quota %d", quota);
-	ServerCommand("mp_limitteams %d", g_cvar[RegOverblance].IntValue);
+	ServerCommand("mp_limitteams %d", g_cvar.RegOverblance.IntValue);
 }
 
 //Turn 32 slots on or off for bot quota
@@ -191,7 +191,7 @@ int getBotFillerQuota(int plyDiff, float teamDiffMult)
 	int teamCount = GetOnTeamCount(specCount);
 	
 	// Set bot count to player count difference ^ x or skill difference ^ x 
-	int add	= RoundPowToNearest(float(plyDiff), g_cvar[BotDiffMult].FloatValue);
+	int add	= RoundPowToNearest(float(plyDiff), g_cvar.BotDiffMult.FloatValue);
 	int physical = teamCount + Math_Max(add, 3);
 	
 	// Set a ceiling to be returned, leave two connecting slots	
@@ -204,7 +204,7 @@ int getBotEvenQuota(float teamDiffMult)
 {
 	// Get the team count offset to fill the bot quota and set bot count to skill difference ^ x
 	int specCount = ValidTeamCount(TEAM_SPEC);
-	int add = RoundPowToNearest(teamDiffMult, g_cvar[BotEvenSkillMult].FloatValue);
+	int add = RoundPowToNearest(teamDiffMult, g_cvar.BotEvenSkillMult.FloatValue);
 	int skill = GetOnTeamCount(specCount) + Math_Max(add, 3);
 	
 	// Set a ceiling to be returned, leave two connecting slots
@@ -212,7 +212,7 @@ int getBotEvenQuota(float teamDiffMult)
 }
 
 int GetMaxBotCount(int specCount) {
-	return g_cvar[BoosterQuota].IntValue - ValidTeamCount(TEAM_UNASSIGNED) - specCount;
+	return g_cvar.BoosterQuota.IntValue - ValidTeamCount(TEAM_UNASSIGNED) - specCount;
 }
 
 int GetOnTeamCount(int specCount) {
@@ -222,10 +222,10 @@ int GetOnTeamCount(int specCount) {
 float getBotSkillMult()
 {
 	float average = ND_GetEnhancedAverage();
-	int increase = g_cvar[BotSkillIncrease].IntValue;
+	int increase = g_cvar.BotSkillIncrease.IntValue;
 	
-	return average >= increase ? g_cvar[BotSkillMultHigh].FloatValue
-				   : g_cvar[BotSkillMultLow].FloatValue;
+	return average >= increase ? g_cvar.BotSkillMultHigh.FloatValue
+				   : g_cvar.BotSkillMultLow.FloatValue;
 }
 
 float getTeamDiffMult()
@@ -249,7 +249,7 @@ float getTeamDiffMult()
 int getBotModulusQuota()
 {	
 	// Get max quota and the current spectator & team count
-	int maxQuota = g_cvar[BoosterQuota].IntValue;
+	int maxQuota = g_cvar.BoosterQuota.IntValue;
 	int specCount = ValidTeamCount(TEAM_SPEC);	
 	int botAmount = maxQuota - specCount - ValidTeamCount(TEAM_UNASSIGNED);
 		
@@ -259,7 +259,7 @@ int getBotModulusQuota()
 
 bool boostBots()
 {
-	bool boost = g_cvar[BoostBots].BoolValue;
+	bool boost = g_cvar.BoostBots.BoolValue;
 	toggleBooster(boost);
 	return boost;
 }
