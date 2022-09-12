@@ -71,11 +71,14 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 	listTertiaries.Clear();	
 	
 	// Store entity index of all secondaries and tertaries on the map
-	CreateTimer(5.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);	
+	CreateTimer(5.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);
+	return Plugin_Continue;
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) 
+{
 	roundStarted = false;
+	return Plugin_Continue;
 }
 
 public Action TIMER_SetEntityClasses(Handle timer)
@@ -275,7 +278,8 @@ public int Native_SpawnTertiaryPoint(Handle plugin, int numParams)
 	GetNativeArray(1, origin, VECTOR_SIZE);
 	
 	// Spawn the tertiary resource point
-	SpawnTertiaryPoint(origin);	
+	SpawnTertiaryPoint(origin);
+	return 0;
 }
 
 public int Native_RemoveTertiaryPoint(Handle plugin, int numParams)
@@ -290,4 +294,5 @@ public int Native_RemoveTertiaryPoint(Handle plugin, int numParams)
 	
 	// Remove the tertiary resource point
 	RemoveTertiaryPoint(rtName, trigName);
+	return 0;
 }

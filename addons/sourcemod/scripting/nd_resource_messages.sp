@@ -129,6 +129,8 @@ public Action Event_ResourceStartCapture(Event event, const char[] name, bool do
 #if defined DEBUG
 	ShoutEntityLoc(entindex);
 #endif
+
+	return Plugin_Continue;
 }
 
 public Action Event_ResourceEndCapture(Event event, const char[] name, bool dontBroadcast)
@@ -139,6 +141,7 @@ public Action Event_ResourceEndCapture(Event event, const char[] name, bool dont
 	// remove user from the list of players capturing the resource 
 	// (TODO: move him to helpers)
 	RemoveCapturer(resIndex, client);
+	return Plugin_Continue;
 }
 
 public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBroadcast)
@@ -265,6 +268,7 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 	
 	// drop all info on that resource
 	ClearCapturers(resIndex);
+	return Plugin_Continue;
 }
 
 // ======== COOKIE HANDLING + MENU ========
@@ -377,7 +381,7 @@ bool IsCloseTo(float pos[3], float ref[3], float dist) {
 }
 
 /// Returns cardinal directions (N, NW, ... ) or own base, enemy base, central area (OB, EB, CE) according to the position and team
-String:GetDirection(float pos[3], int team, int type)
+char[] GetDirection(float pos[3], int team, int type)
 {
 	char direction[3];
 	

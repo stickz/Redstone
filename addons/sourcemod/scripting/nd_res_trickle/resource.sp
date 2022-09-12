@@ -67,7 +67,8 @@ enum struct ResPoint
 			case TEAM_EMPIRE: this.empireRes = amount;
 			case TEAM_CONSORT: this.consortRes = amount;
 			default: this.initialRes = amount;			
-		}		
+		}
+		return 0;
 	}
 	
 	int AddRes(int team, int amount)
@@ -77,7 +78,8 @@ enum struct ResPoint
 			case TEAM_EMPIRE: this.empireRes += amount;
 			case TEAM_CONSORT: this.consortRes += amount;
 			default: this.initialRes += amount;			
-		}		
+		}
+		return 0;
 	}
 	
 	int SubtractRes(int amount)
@@ -106,6 +108,7 @@ enum struct ResPoint
 				}
 			}
 		}
+		return 0;
 	}
 	
 	int SubtractResTeam(int team, int amount)
@@ -123,6 +126,7 @@ enum struct ResPoint
 				this.consortRes -= amount; // Clamp consort resources at 0
 				this.consortRes = Math_Min(this.consortRes, 0);
 			}
-		}		
+		}
+		return 0;
 	}
 }
