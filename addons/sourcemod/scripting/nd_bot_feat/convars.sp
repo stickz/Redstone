@@ -2,30 +2,30 @@
 
 enum struct convars
 {
-	 ConVar EnableFillerQuota,
-	 ConVar BoostBots,
+	 ConVar EnableFillerQuota;
+	 ConVar BoostBots;
 	 
-	 ConVar BotCount,
-	 ConVar BotReduction,
-	 ConVar BotReductionDec,
-	 ConVar BoosterQuota,
+	 ConVar BotCount;
+	 ConVar BotReduction;
+	 ConVar BotReductionDec;
+	 ConVar BoosterQuota;
 	 
-	 ConVar BotEvenPlysEnable,
-	 ConVar BotEvenSkillMult,
-	 ConVar BotSkillIncrease,
-	 ConVar BotSkillMultHigh,
-	 ConVar BotSkillMultLow,
-	 ConVar BotDiffMult,
+	 ConVar BotEvenPlysEnable;
+	 ConVar BotEvenSkillMult;
+	 ConVar BotSkillIncrease;
+	 ConVar BotSkillMultHigh;
+	 ConVar BotSkillMultLow;
+	 ConVar BotDiffMult;
 	 
-	 ConVar DisableBotsAt,
-	 ConVar DisableBotsAtDec,
-	 ConVar DisableBotsAtInc,
-	 ConVar DisableBotsTeam,
-	 ConVar DisableBotsTeamDec,
-	 ConVar DisableBotsTeamInc,
+	 ConVar DisableBotsAt;
+	 ConVar DisableBotsAtDec;
+	 ConVar DisableBotsAtInc;
+	 ConVar DisableBotsTeam;
+	 ConVar DisableBotsTeamDec;
+	 ConVar DisableBotsTeamInc;
 	 
-	 ConVar BotOverblance,
-	 ConVar RegOverblance
+	 ConVar BotOverblance;
+	 ConVar RegOverblance;
 };
 
 convars g_cvar;
