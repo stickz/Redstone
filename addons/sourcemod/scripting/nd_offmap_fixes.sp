@@ -258,81 +258,83 @@ void HandleCoast()
 	hax[3] = 3190.0;   	// maxY
 	hax[4] = 0.0;      	// minZ
 	hax[5] = 50.0;     	// maxZ
-	HAX.PushArray(hax)
+	HAX.PushArray(hax);
 }
 
 public void ND_OnStructureCreated(int entity, const char[] classname) {
     if (validMap)
-    	CreateTimer(0.1, CheckBorders, entity);
+        CreateTimer(0.1, CheckBorders, entity);
 }
 
 public Action CheckBorders(Handle timer, any entity) 
 {
     if (!IsValidEdict(entity))
-    	return;
-    	
+        return;
+
     float position[3];
     GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
     //PrintToChatAll("placed location %f - %f - %f", position[0], position[1], position[2]);
     float hax[6];
-    
-    for (int i = 0; i < GetArraySize(HAX); i++) 
+
+    for (int i = 0; i < GetArraySize(HAX); i++)
     {
-	tmpAxisCount = 0;
-	tmpAxisViolated = 0;
-    
-    	// minX
-	HAX.GetArray(i, hax);
-	if (hax[0] != 0.0) 
-    	{
+        tmpAxisCount = 0;
+        tmpAxisViolated = 0;
+
+        // minX
+        HAX.GetArray(i, hax);
+        if (hax[0] != 0.0)
+        {
       	    tmpAxisCount++;
-      	    
-      	    	if (hax[0] < position[0])
-      	        	tmpAxisViolated++;      
+
+            if (hax[0] < position[0])
+                tmpAxisViolated++;
         }
-    
+
         // maxX
-	if (hax[1] != 0.0) 
-    	{
+        if (hax[1] != 0.0)
+        {
       	    tmpAxisCount++;
-      			
-      		if (hax[1] > position[0]) 
-      	       		tmpAxisViolated++;
-    	}
-    
-	if (hax[2] != 0.0) 
-    	{
+
+            if (hax[1] > position[0])
+      	        tmpAxisViolated++;
+        }
+
+        if (hax[2] != 0.0)
+        {
       	    tmpAxisCount++;
-      	    
-      	    	if (hax[2] < position[1])
-      	    		tmpAxisViolated++;
-    	}
-    
-	if (hax[3] != 0.0) 
-	{
+
+      	    if (hax[2] < position[1])
+      	        tmpAxisViolated++;
+        }
+
+        if (hax[3] != 0.0)
+        {
       	    tmpAxisCount++;
-      			
-      		if (hax[3] > position[1])
-      	        	tmpAxisViolated++;
-    	}
-		
-	if (hax[4] != 0.0)
-	{
-		tmpAxisCount++;	
-			
-	    	if (hax[4] < position[2])
-			tmpAxisViolated++;
-	}
-		
-	if (hax[5] != 0.0)
-	{
-		tmpAxisCount++;	
-		
-		if (hax[5] > position[2])
-			tmpAxisViolated++;
-	}
-    
-	if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated))
-		SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
+
+            if (hax[3] > position[1])
+                tmpAxisViolated++;
+        }
+
+        if (hax[4] != 0.0)
+        {
+            tmpAxisCount++;
+
+            if (hax[4] < position[2])
+                tmpAxisViolated++;
+        }
+
+        if (hax[5] != 0.0)
+        {
+            tmpAxisCount++;
+
+            if (hax[5] > position[2])
+                tmpAxisViolated++;
+        }
+
+        if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated))
+            SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
     }
+
+    return Plugin_Handled;
 }

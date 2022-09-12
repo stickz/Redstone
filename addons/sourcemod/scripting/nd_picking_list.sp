@@ -232,7 +232,7 @@ bool IsValidTarget(int client, int target)
 	return true;	
 }
 
-stock char GetClientName2(int client) 
+stock char[] GetClientName2(int client) 
 {
 	char clientName[64];
 	GetClientName(client, clientName, sizeof(clientName));	

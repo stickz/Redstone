@@ -117,6 +117,7 @@ public Action Event_PlayerDisconnected(Event event, const char[] name, bool dont
 		if (g_Integer.maxKickCount > g_Integer.mapTargetPlayers)
 			g_Integer.maxKickCount--;
 	}
+	return Plugin_Continue;
 }
 
 public Action TIMER_SetNextMapCount(Handle timer)
