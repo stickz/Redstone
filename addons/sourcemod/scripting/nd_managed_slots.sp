@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 #include <nextmap>
 #include <nd_stocks>
 #include <nd_fskill>

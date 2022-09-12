@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 #include <nd_stocks>
 #include <nd_balancer>
 #include <nd_commands>

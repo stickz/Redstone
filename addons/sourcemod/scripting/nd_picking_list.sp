@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 #include <nd_stocks>
 #include <nd_fskill>
 #include <nd_print>

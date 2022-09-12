@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 #include <nd_maps>
 #include <nd_print>
 #include <nd_stocks>

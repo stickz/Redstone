@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 #include <sdkhooks>
 #include <nd_classes>
 #include <nd_rounds>

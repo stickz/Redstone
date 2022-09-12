@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 #include <clientprefs>
 #include <nd_stocks>
 #include <geoip>

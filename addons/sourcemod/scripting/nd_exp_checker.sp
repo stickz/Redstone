@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 #include <nd_stats>
 #include <nd_stocks>
 #include <nd_redstone>

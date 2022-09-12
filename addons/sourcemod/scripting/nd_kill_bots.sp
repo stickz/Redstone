@@ -6,6 +6,7 @@
 
 #pragma newdecls required
 #include <sourcemod>
+#include <sdktools>
 #include <nd_stocks>
 #include <nd_rounds>
 #include <nd_com_eng>
