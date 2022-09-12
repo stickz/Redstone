@@ -104,7 +104,7 @@ char[] conientIntegerTOName(int value)
 	return Name;
 }
 
-int contientTOInteger(char contString[2])
+int contientTOInteger(char contString[4])
 {
 	if (StrEqual(contString, "EU"))
 		return 1;			
