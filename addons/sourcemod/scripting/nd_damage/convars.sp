@@ -2,7 +2,7 @@
 /* The convar mess starts here! */
 
 /* Enumerated values for accessing ConVar arrays */
-enum multREDs 
+enum multREDs:
 {
 	red_bunker_mult = 0,
 	red_assembler_mult,
@@ -14,9 +14,10 @@ enum multREDs
 	red_supply_mult,
 	red_ib1_base_mult,
 	red_ib2_base_mult,
-	red_ib3_base_mult
+	red_ib3_base_mult,
+	multREDsSize
 }
-enum multBullets
+enum multBullets:
 {
 	bullet_bunker_mult = 0,
 	bullet_assembler_mult,
@@ -28,18 +29,20 @@ enum multBullets
 	bullet_radar_mult,
 	bullet_mg_turret_mult,
 	bullet_rocket_turret_mult,
-	bullet_supply_station_mult
+	bullet_supply_station_mult,
+	multBulletsSize
 }
-enum multSiege
+enum multSiege:
 {
 	// Siegers (m95 & x01)
 	siege_ib0_base_mult = 0,
 	siege_ib1_base_mult,
 	siege_ib2_base_mult,
-	siege_ib3_base_mult
+	siege_ib3_base_mult,
+	multSiegeSize
 }
 
-enum multGL
+enum multGL:
 {
 	gl_bunker_mult = 0,
 	gl_assembler_mult,
@@ -47,10 +50,11 @@ enum multGL
 	gl_ft_turret_mult,
 	gl_ib1_base_mult,
 	gl_ib2_base_mult,
-	gl_ib3_base_mult
+	gl_ib3_base_mult,
+	multGLSize
 }
 
-enum multOther
+enum multOther:
 {
 	nx300_ib1_base_mult = 0,
 	nx300_ib2_base_mult,
@@ -58,26 +62,27 @@ enum multOther
 	nx300_bunker_mult,
 	artillery_ib1_base_mult,
 	artillery_ib2_base_mult,
-	artillery_ib3_base_mult
+	artillery_ib3_base_mult,
+	multOtherSize
 }
 
 /* ConVar and float arrays for the different types */
-ConVar gCvar_Red[multREDs];
-ConVar gCvar_Bullet[multBullets];
-ConVar gCvar_Siege[multSiege];
-ConVar gCvar_GL[multGL];
-ConVar gCvar_Other[multOther];
+ConVar gCvar_Red[multREDsSize];
+ConVar gCvar_Bullet[multBulletsSize];
+ConVar gCvar_Siege[multSiegeSize];
+ConVar gCvar_GL[multGLSize];
+ConVar gCvar_Other[multOtherSize];
 ConVar cvarNoWarmupBunkerDamage;
 
 ConVar gCvarMinThresholdX01;
 ConVar gCvarMinIncreaseX01;
 ConVar gCvarMinWallDamageX01;
 
-float gFloat_Red[multREDs];
-float gFloat_Bullet[multBullets];
-float gFloat_Siege[multSiege];
-float gFloat_GL[multGL];
-float gFloat_Other[multOther];
+float gFloat_Red[multREDsSize];
+float gFloat_Bullet[multBulletsSize];
+float gFloat_Siege[multSiegeSize];
+float gFloat_GL[multGLSize];
+float gFloat_Other[multOtherSize];
 
 int iMinThresholdX01;
 float fMinWallDamageX01;
@@ -107,7 +112,7 @@ void CreateRedConVars()
 {
 	AutoExecConfig_SetFile("nd_mult_reds");
 	
-	char convarName[multREDs][] = {
+	char convarName[multREDsSize][] = {
 		// RED Structure Damage
 		"sm_mult_bunker_red",
 		"sm_mult_assembler_red",
@@ -124,7 +129,7 @@ void CreateRedConVars()
 		"sm_mult_baseIB3_red"	
 	};
 	
-	char convarDesc[multREDs][] = {
+	char convarDesc[multREDsSize][] = {
 		// RED Structure Damage
 		"Percentage of normal damage REDs deal to the bunker",
 		"Percentage of normal damage REDs deal to assemblers",
@@ -141,7 +146,7 @@ void CreateRedConVars()
 		"Percentage of normal damage REDs deal after Infantry Boost 3"
 	};
 	
-	char convarDef[multREDs][] = { 
+	char convarDef[multREDsSize][] = { 
 		// RED Structure Damage
 		"130", "110", "130", "110", "125", "130", "115", "105",
 		
@@ -149,7 +154,7 @@ void CreateRedConVars()
 		"103", "108", "115"	
 	};
 	
-	for (int convar = 0; convar < view_as<int>(multREDs); convar++) {
+	for (int convar = 0; convar < view_as<int>(multREDsSize); convar++) {
 		gCvar_Red[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
 	}
 	
@@ -159,7 +164,7 @@ void CreateBulletConVars()
 {
 	AutoExecConfig_SetFile("nd_mult_bullet");
 	
-	char convarName[multBullets][] = {	
+	char convarName[multBulletsSize][] = {	
 		"sm_mult_bunker_bullet",
 		"sm_mult_assembler_bullet",
 		"sm_mult_transport_bullet",
@@ -173,9 +178,9 @@ void CreateBulletConVars()
 		"sm_mult_supply_station_bullet"
 	};
 	
-	char convarDef[multBullets][] = { "150", "140", "135", "95", "115", "125", "115", "100", "115", "100", "75" };
+	char convarDef[multBulletsSize][] = { "150", "140", "135", "95", "115", "125", "115", "100", "115", "100", "75" };
 	
-	char convarDesc[multBullets][] = {
+	char convarDesc[multBulletsSize][] = {
 		"Percentage of normal damage bullets deal to the bunker",
 		"Percentage of normal damage bullets deal to assemblers",
 		"Percentage of normal damage bullets deal to transport gates",
@@ -189,7 +194,7 @@ void CreateBulletConVars()
 		"Percentage of normal damage bullets deal to supply stations"
 	};
 	
-	for (int convar = 0; convar < view_as<int>(multBullets); convar++) {
+	for (int convar = 0; convar < view_as<int>(multBulletsSize); convar++) {
 		gCvar_Bullet[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
 	}
 	
@@ -201,26 +206,26 @@ void CreateSiegeConVars()
 	AutoExecConfig_SetFile("nd_mult_siege");
 	
 	// Siegers (m95 & x01)
-	char convarName[multSiege][] = {	
+	char convarName[multSiegeSize][] = {	
 		// Siege Base Damage
 		"sm_mult_baseIB0_siege",
 		"sm_mult_baseIB1_siege",
 		"sm_mult_baseIB2_siege",
 		"sm_mult_baseIB3_siege"
 	};
-	char convarDesc[multSiege][] = {
+	char convarDesc[multSiegeSize][] = {
 		// Siege Base Damage
 		"Percentage of normal damage Siegers deal at Infantry Boost 0",
 		"Percentage of normal damage Siegers deal after Infantry Boost 1",
 		"Percentage of normal damage Siegers deal after Infantry Boost 2",
 		"Percentage of normal damage Siegers deal after Infantry Boost 3"
 	};	
-	char convarDef[multSiege][] = { 
+	char convarDef[multSiegeSize][] = { 
 		// Siege Base Damage
 		"95", "100", "105", "110"
 	};	
 
-	for (int convar = 0; convar < view_as<int>(multSiege); convar++) {
+	for (int convar = 0; convar < view_as<int>(multSiegeSize); convar++) {
 		gCvar_Siege[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
 	}
 	
@@ -232,7 +237,7 @@ void CreateGLConVars()
 	AutoExecConfig_SetFile("nd_mult_gl");
 	
 	// GLs (Grenade Launchers)
-	char convarName[multGL][] = {		
+	char convarName[multGLSize][] = {		
 		// GL Structure Damage
 		"sm_mult_bunker_gl",
 		"sm_mult_assembler_gl",
@@ -244,7 +249,7 @@ void CreateGLConVars()
 		"sm_mult_baseIB2_gl",
 		"sm_mult_baseIB3_gl"
 	};
-	char convarDesc[multGL][] = {		
+	char convarDesc[multGLSize][] = {		
 		// GL Structure Damage
 		"Percentage of normal damage GLs deal to the bunker",
 		"Percentage of normal damage GLs deal to assemblers",
@@ -256,10 +261,10 @@ void CreateGLConVars()
 		"Percentage of normal damage GLs deal to after Infantry Boost 2",
 		"Percentage of normal damage GLs deal to after Infantry Boost 3"
 	};
-	char convarDef[multGL][] = { 	"120", "110", "125", "110",
+	char convarDef[multGLSize][] = { 	"120", "110", "125", "110",
 					"103", "106", "109" };
 	
-	for (int convar = 0; convar < view_as<int>(multGL); convar++) {
+	for (int convar = 0; convar < view_as<int>(multGLSize); convar++) {
 		gCvar_GL[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
 	}
 	
@@ -270,7 +275,7 @@ void CreateOtherConVars()
 {
 	AutoExecConfig_SetFile("nd_mult_other");
 	
-	char convarName[multOther][] = {	
+	char convarName[multOtherSize][] = {	
 		"sm_mult_baseIB1_nx300",
 		"sm_mult_baseIB2_nx300",
 		"sm_mult_baseIB3_nx300",
@@ -279,7 +284,7 @@ void CreateOtherConVars()
 		"sm_mult_baseSR2_artillery",
 		"sm_mult_baseSR3_artillery"
 	};
-	char convarDesc[multOther][] = {
+	char convarDesc[multOtherSize][] = {
 		"Percentage of normal damage nx300 does after IB1",
 		"Percentage of normal damage nx300 does after IB2",
 		"Percentage of normal damage nx300 does after IB3",
@@ -288,7 +293,7 @@ void CreateOtherConVars()
 		"Percentage of normal damage artillery does after SR2",
 		"Percentage of normal damage artillery does after SR13",
 	};	
-	char convarDef[multOther][] = { 
+	char convarDef[multOtherSize][] = { 
 		// nx300 ib 1-3 base damage
 		"103", "105", "107", 
 		"85", // nx300 bunker damage
@@ -296,7 +301,7 @@ void CreateOtherConVars()
 		"95", "90", "85"
 	};		
 	
-	for (int convar = 0; convar < view_as<int>(multOther); convar++) {
+	for (int convar = 0; convar < view_as<int>(multOtherSize); convar++) {
 		gCvar_Other[convar] = AutoExecConfig_CreateConVar(convarName[convar], convarDef[convar], convarDesc[convar]);	
 	}
 	
@@ -306,23 +311,23 @@ void CreateOtherConVars()
 /* Manage when ConVars change mid-game */
 void UpdateConVarCache()
 {
-	for (int r = 0; r < view_as<int>(multREDs); r++) {
+	for (int r = 0; r < view_as<int>(multREDsSize); r++) {
 		gFloat_Red[r] = gCvar_Red[r].FloatValue / 100.0;
 	}
 	
-	for (int b = 0; b < view_as<int>(multBullets); b++) {
+	for (int b = 0; b < view_as<int>(multBulletsSize); b++) {
 		gFloat_Bullet[b] = gCvar_Bullet[b].FloatValue / 100.0;
 	}
 	
-	for (int s = 0; s < view_as<int>(multSiege); s++) {
+	for (int s = 0; s < view_as<int>(multSiegeSize); s++) {
 		gFloat_Siege[s] = gCvar_Siege[s].FloatValue / 100.0;
 	}
 	
-	for (int g = 0; g < view_as<int>(multGL); g++) {
+	for (int g = 0; g < view_as<int>(multGLSize); g++) {
 		gFloat_GL[g] = gCvar_GL[g].FloatValue / 100.0;
 	}
 	
-	for (int o = 0; o < view_as<int>(multOther); o++) {
+	for (int o = 0; o < view_as<int>(multOtherSize); o++) {
 		gFloat_Other[o] = gCvar_Other[o].FloatValue / 100.0;
 	}
 	
@@ -332,23 +337,23 @@ void UpdateConVarCache()
 }
 void HookConVarChanges()
 {
-	for (int r = 0; r < view_as<int>(multREDs); r++) {
+	for (int r = 0; r < view_as<int>(multREDsSize); r++) {
 		HookConVarChange(gCvar_Red[r], OnConfigPercentChange);
 	}
 	
-	for (int b = 0; b < view_as<int>(multBullets); b++) {
+	for (int b = 0; b < view_as<int>(multBulletsSize); b++) {
 		HookConVarChange(gCvar_Bullet[b], OnConfigPercentChange);
 	}
 	
-	for (int s = 0; s < view_as<int>(multSiege); s++) {
+	for (int s = 0; s < view_as<int>(multSiegeSize); s++) {
 		HookConVarChange(gCvar_Siege[s], OnConfigPercentChange);
 	}
 	
-	for (int g = 0; g < view_as<int>(multGL); g++) {
+	for (int g = 0; g < view_as<int>(multGLSize); g++) {
 		HookConVarChange(gCvar_GL[g], OnConfigPercentChange);
 	}
 	
-	for (int o = 0; o < view_as<int>(multOther); o++) {
+	for (int o = 0; o < view_as<int>(multOtherSize); o++) {
 		HookConVarChange(gCvar_Other[o], OnConfigPercentChange);
 	}
 	

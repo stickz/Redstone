@@ -11,9 +11,9 @@ methodmap BaseHelper
 		
 		switch(ibLevel)
 		{
-			case 1: mult = gFloat_Other[nx300_ib1_base_mult];
-			case 2: mult = gFloat_Other[nx300_ib2_base_mult];
-			case 3: mult = gFloat_Other[nx300_ib3_base_mult];	
+			case 1: mult = gFloat_Other[view_as<int>(nx300_ib1_base_mult)];
+			case 2: mult = gFloat_Other[view_as<int>(nx300_ib2_base_mult)];
+			case 3: mult = gFloat_Other[view_as<int>(nx300_ib3_base_mult)];	
 		}
 		
 		return mult;
@@ -25,9 +25,9 @@ methodmap BaseHelper
 		
 		switch(ibLevel)
 		{
-			case 1: mult = gFloat_GL[gl_ib1_base_mult];
-			case 2: mult = gFloat_GL[gl_ib2_base_mult];
-			case 3: mult = gFloat_GL[gl_ib3_base_mult];	
+			case 1: mult = gFloat_GL[view_as<int>(gl_ib1_base_mult)];
+			case 2: mult = gFloat_GL[view_as<int>(gl_ib2_base_mult)];
+			case 3: mult = gFloat_GL[view_as<int>(gl_ib3_base_mult)];	
 		}
 		
 		return mult;
@@ -39,10 +39,10 @@ methodmap BaseHelper
 		
 		switch (ibLevel)
 		{
-			case 0: mult = gFloat_Siege[siege_ib0_base_mult];
-			case 1: mult = gFloat_Siege[siege_ib1_base_mult];
-			case 2: mult = gFloat_Siege[siege_ib2_base_mult];
-			case 3:	mult = gFloat_Siege[siege_ib3_base_mult];		
+			case 0: mult = gFloat_Siege[view_as<int>(siege_ib0_base_mult)];
+			case 1: mult = gFloat_Siege[view_as<int>(siege_ib1_base_mult)];
+			case 2: mult = gFloat_Siege[view_as<int>(siege_ib2_base_mult)];
+			case 3:	mult = gFloat_Siege[view_as<int>(siege_ib3_base_mult)];		
 		}
 		
 		return mult;
@@ -54,9 +54,9 @@ methodmap BaseHelper
 		
 		switch (ibLevel)
 		{
-			case 1: mult = gFloat_Red[red_ib1_base_mult];
-			case 2: mult = gFloat_Red[red_ib2_base_mult];
-			case 3:	mult = gFloat_Red[red_ib3_base_mult];
+			case 1: mult = gFloat_Red[view_as<int>(red_ib1_base_mult)];
+			case 2: mult = gFloat_Red[view_as<int>(red_ib2_base_mult)];
+			case 3:	mult = gFloat_Red[view_as<int>(red_ib3_base_mult)];
 		}
 		
 		return mult;		
@@ -68,9 +68,9 @@ methodmap BaseHelper
 		
 		switch(srLevel)
 		{
-			case 1: mult = gFloat_Other[artillery_ib1_base_mult];
-			case 2: mult = gFloat_Other[artillery_ib2_base_mult];
-			case 3: mult = gFloat_Other[artillery_ib3_base_mult];	
+			case 1: mult = gFloat_Other[view_as<int>(artillery_ib1_base_mult)];
+			case 2: mult = gFloat_Other[view_as<int>(artillery_ib2_base_mult)];
+			case 3: mult = gFloat_Other[view_as<int>(artillery_ib3_base_mult)];	
 		}
 		
 		return mult;
@@ -138,7 +138,7 @@ methodmap Barrier
 		
 		// Apply red base damage mult
 		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult = gFloat_Red[red_barrier_mult];
+			mult = gFloat_Red[view_as<int>(red_barrier_mult)];
 		
 		return mult;
 	}
@@ -152,7 +152,7 @@ methodmap Wall
 		
 		// Apply red base damage mult
 		if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult = gFloat_Red[red_wall_mult];
+			mult = gFloat_Red[view_as<int>(red_wall_mult)];
 		
 		return mult;
 	}	
@@ -166,11 +166,11 @@ methodmap SupplyStation
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
-			mult = gFloat_Bullet[bullet_supply_station_mult];
+			mult = gFloat_Bullet[view_as<int>(bullet_supply_station_mult)];
 		
 		// Apply red base damage mult
 		else if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult = gFloat_Red[red_supply_mult];
+			mult = gFloat_Red[view_as<int>(red_supply_mult)];
 		
 		return mult;
 	}	
@@ -184,7 +184,7 @@ methodmap RocketTurret
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
-			mult = gFloat_Bullet[bullet_rocket_turret_mult];
+			mult = gFloat_Bullet[view_as<int>(bullet_rocket_turret_mult)];
 		
 		return mult;
 	}	
@@ -198,7 +198,7 @@ methodmap MGTurrent
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
-			mult = gFloat_Bullet[bullet_mg_turret_mult];		
+			mult = gFloat_Bullet[view_as<int>(bullet_mg_turret_mult)];		
 	
 		return mult;		
 	}	
@@ -212,7 +212,7 @@ methodmap Radar
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
-			mult = gFloat_Bullet[bullet_radar_mult];
+			mult = gFloat_Bullet[view_as<int>(bullet_radar_mult)];
 		
 		return mult;
 	}	
@@ -226,7 +226,7 @@ methodmap Armoury
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
-			mult = gFloat_Bullet[bullet_armoury_mult];
+			mult = gFloat_Bullet[view_as<int>(bullet_armoury_mult)];
 		
 		return mult;
 	}	
@@ -240,7 +240,7 @@ methodmap PowerPlant
 				
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
-			mult = gFloat_Bullet[bullet_power_plant_mult];
+			mult = gFloat_Bullet[view_as<int>(bullet_power_plant_mult)];
 		
 		return mult;
 	}
@@ -261,15 +261,15 @@ methodmap FlamerTurret
 				
 				// Apply base gl damage mult
 				if (InflictorIsGL(className))
-					mult = gFloat_GL[gl_ft_turret_mult];
+					mult = gFloat_GL[view_as<int>(gl_ft_turret_mult)];
 				
 				// Apply red base damage mult
 				else if (InflictorIsRED(className))
-					mult = gFloat_Red[red_ft_turret_mult];
+					mult = gFloat_Red[view_as<int>(red_ft_turret_mult)];
 			}
 			
 			// Apply bullet base damage mult
-			case WEAPON_BULLET_DT: mult = gFloat_Bullet[bullet_ft_turret_mult];
+			case WEAPON_BULLET_DT: mult = gFloat_Bullet[view_as<int>(bullet_ft_turret_mult)];
 		}
 		
 		return mult;
@@ -284,11 +284,11 @@ methodmap Artillery
 		
 		// Apply bullet base damage mult
 		if (damagetype == WEAPON_BULLET_DT)
-			mult = gFloat_Bullet[bullet_artillery_mult];
+			mult = gFloat_Bullet[view_as<int>(bullet_artillery_mult)];
 
 		// Apply red base damage mult
 		else if (damagetype == WEAPON_EXPLO_DT && InflictorIsRED(iClass(inflictor)))
-			mult = gFloat_Red[red_artillery_mult];
+			mult = gFloat_Red[view_as<int>(red_artillery_mult)];
 		
 		return mult;
 	}
@@ -307,16 +307,16 @@ methodmap TransportGate
 				
 			// Apply base gl damage mult
 			if (InflictorIsGL(className))
-				mult = gFloat_GL[gl_transport_mult];
+				mult = gFloat_GL[view_as<int>(gl_transport_mult)];
 				
 			// Apply red base damage mult
 			else if (InflictorIsRED(className))
-				mult = gFloat_Red[red_transport_mult];			
+				mult = gFloat_Red[view_as<int>(red_transport_mult)];			
 		}
 		
 		// Apply bullet base damage mult
 		else if (damagetype == WEAPON_BULLET_DT)
-			mult = gFloat_Bullet[bullet_transport_mult];		
+			mult = gFloat_Bullet[view_as<int>(bullet_transport_mult)];		
 
 		return mult;	
 	}	
@@ -335,16 +335,16 @@ methodmap Assembler
 				
 			// Apply base gl damage mult
 			if (InflictorIsGL(className))
-				mult = gFloat_GL[gl_assembler_mult];
+				mult = gFloat_GL[view_as<int>(gl_assembler_mult)];
 				
 			// Apply red base damage mult
 			else if (InflictorIsRED(className))
-				mult = gFloat_Red[red_assembler_mult];			
+				mult = gFloat_Red[view_as<int>(red_assembler_mult)];			
 		}
 		
 		// Apply bullet base damage mult
 		else if (damagetype == WEAPON_BULLET_DT)
-			mult = gFloat_Bullet[bullet_assembler_mult];	
+			mult = gFloat_Bullet[view_as<int>(bullet_assembler_mult)];	
 		
 		return mult;
 	}	
@@ -364,16 +364,16 @@ methodmap Bunker
 				
 			// Apply base gl damage mult
 			if (InflictorIsGL(className))
-				mult = gFloat_GL[gl_bunker_mult];				
+				mult = gFloat_GL[view_as<int>(gl_bunker_mult)];				
 
 			// Apply red base damage mult
 			else if (InflictorIsRED(className))
-				mult = gFloat_Red[red_bunker_mult];			
+				mult = gFloat_Red[view_as<int>(red_bunker_mult)];			
 		}
 		
 		// Apply the bunker damage reduction mult
 		else if (InflictorIsNX300(inflictor))
-			mult = gFloat_Other[nx300_bunker_mult];
+			mult = gFloat_Other[view_as<int>(nx300_bunker_mult)];
 		
 		return mult;
 	}

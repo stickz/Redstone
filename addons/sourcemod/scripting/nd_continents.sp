@@ -88,7 +88,7 @@ public bool isContinentEmpty(int contientNumber)
 	return contientNumber == 0;
 }
 
-char conientIntegerTOName(int value)
+char[] conientIntegerTOName(int value)
 {
 	char Name[2];
 	switch(value)
@@ -124,7 +124,7 @@ int contientTOInteger(char contString[2])
 	return 0;
 }
 
-char getContient(int client)
+char[] getContient(int client)
 {
 	char code[2];
 	

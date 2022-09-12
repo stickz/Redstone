@@ -45,30 +45,30 @@ public Plugin myinfo =
 	url = "https://github.com/stickz/Redstone/"
 }
 
-enum Bools
+enum struct Bools
 {
-	relaxedRestrictions,
-	timeOut
+	bool relaxedRestrictions;
+	bool timeOut;
 };
 
-enum convars
+enum struct convars
 {
-	ConVar:eRestrictions,
-	ConVar:aRestrictDisable,
-	ConVar:tRestrictDisableDelay,
-	ConVar:tRestrictWarningDelay,
+	ConVar eRestrictions;
+	ConVar aRestrictDisable;
+	ConVar tRestrictDisableDelay;
+	ConVar tRestrictWarningDelay;
 	
-	ConVar:cRestrictMinSkill,
-	ConVar:cRestrictMaxSkill,
+	ConVar cRestrictMinSkill;
+	ConVar cRestrictMaxSkill;
 	
-	ConVar:cLowRestrictTeam,
-	ConVar:cLowRestrictTotal,
-	ConVar:cHighRestrictTeam,
-	ConVar:cHighRestrictTotal
+	ConVar cLowRestrictTeam;
+	ConVar cLowRestrictTotal;
+	ConVar cHighRestrictTeam;
+	ConVar cHighRestrictTotal;
 };
 
-ConVar g_cvar[convars];
-bool g_Bool[Bools];
+convars g_cvar;
+Bools g_Bool;
 
 public void OnPluginStart()
 {
@@ -88,32 +88,32 @@ void CreatePluginConvars()
 {
 	AutoExecConfig_Setup("nd_commander_restrictions");
 	
-	g_cvar[eRestrictions] 			= 	AutoExecConfig_CreateConVar("sm_restrict_enable", "1", "0 to disable the restrictions, 1 to enable restrictions.");
-	g_cvar[aRestrictDisable] 		= 	AutoExecConfig_CreateConVar("sm_restrict_disable", "45", "Sets the skill average to disable all restrictions");	
-	g_cvar[tRestrictDisableDelay] 	=	AutoExecConfig_CreateConVar("sm_restrict_disable_delay", "120", "Sets the delay to disable commander restricts if nobody applies");
-	g_cvar[tRestrictWarningDelay] 	=	AutoExecConfig_CreateConVar("sm_restrict_warn_delay", "105", "Sets the delay to display the warning about restricts disabling soon");
+	g_cvar.eRestrictions 			= 	AutoExecConfig_CreateConVar("sm_restrict_enable", "1", "0 to disable the restrictions, 1 to enable restrictions.");
+	g_cvar.aRestrictDisable 		= 	AutoExecConfig_CreateConVar("sm_restrict_disable", "45", "Sets the skill average to disable all restrictions");	
+	g_cvar.tRestrictDisableDelay 	=	AutoExecConfig_CreateConVar("sm_restrict_disable_delay", "120", "Sets the delay to disable commander restricts if nobody applies");
+	g_cvar.tRestrictWarningDelay 	=	AutoExecConfig_CreateConVar("sm_restrict_warn_delay", "105", "Sets the delay to display the warning about restricts disabling soon");
 	
-	g_cvar[cRestrictMinSkill] 		= 	AutoExecConfig_CreateConVar("sm_restrict_skill_low", "15", "Sets the minimum skill threshold required to command");
-	g_cvar[cRestrictMaxSkill]		=	AutoExecConfig_CreateConVar("sm_restrict_skill_high", "45", "Sets the maximum skill threshold required to command");
+	g_cvar.cRestrictMinSkill 		= 	AutoExecConfig_CreateConVar("sm_restrict_skill_low", "15", "Sets the minimum skill threshold required to command");
+	g_cvar.cRestrictMaxSkill		=	AutoExecConfig_CreateConVar("sm_restrict_skill_high", "45", "Sets the maximum skill threshold required to command");
 	
-	g_cvar[cLowRestrictTeam]		= 	AutoExecConfig_CreateConVar("sm_restrict_low_team", "6", "Sets number of players on team to enable commander restrictions");
-	g_cvar[cLowRestrictTotal]		=	AutoExecConfig_CreateConVar("sm_restrict_low_total", "10", "Sets number of players on server to enable commander restrictions");
-	g_cvar[cHighRestrictTeam]		=	AutoExecConfig_CreateConVar("sm_restrict_high_team", "12", "Sets number of players on team to enable high command requirements");
-	g_cvar[cHighRestrictTotal]		=	AutoExecConfig_CreateConVar("sm_restrict_high_total", "16", "Sets number of players on server to enable high command requirements");	
+	g_cvar.cLowRestrictTeam		= 	AutoExecConfig_CreateConVar("sm_restrict_low_team", "6", "Sets number of players on team to enable commander restrictions");
+	g_cvar.cLowRestrictTotal		=	AutoExecConfig_CreateConVar("sm_restrict_low_total", "10", "Sets number of players on server to enable commander restrictions");
+	g_cvar.cHighRestrictTeam		=	AutoExecConfig_CreateConVar("sm_restrict_high_team", "12", "Sets number of players on team to enable high command requirements");
+	g_cvar.cHighRestrictTotal		=	AutoExecConfig_CreateConVar("sm_restrict_high_total", "16", "Sets number of players on server to enable high command requirements");	
 	
 	AutoExecConfig_EC_File();	
 }
 
 public void ND_OnRoundStarted() 
 {
-	CreateTimer(g_cvar[tRestrictDisableDelay].FloatValue, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
-	CreateTimer(g_cvar[tRestrictWarningDelay].FloatValue, TIMER_DisplayComWarning, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(g_cvar.tRestrictDisableDelay.FloatValue, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(g_cvar.tRestrictWarningDelay.FloatValue, TIMER_DisplayComWarning, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnMapStart() 
 {
-	g_Bool[timeOut] = false;
-	g_Bool[relaxedRestrictions] = false;
+	g_Bool.timeOut = false;
+	g_Bool.relaxedRestrictions = false;
 }
 
 public Action TIMER_DisableRestrictions(Handle timer)
@@ -121,17 +121,17 @@ public Action TIMER_DisableRestrictions(Handle timer)
 	/* If both teams don't have an commander */
 	if (ND_GetCommanderCount() != 2)
 	{
-		g_Bool[timeOut] = true;
-		g_Bool[relaxedRestrictions] = true;
+		g_Bool.timeOut = true;
+		g_Bool.relaxedRestrictions = true;
 		//ServerCommand("nd_commander_mutiny_vote_threshold 65.0");
-		if (RED_OnTeamCount() >= g_cvar[cLowRestrictTeam].IntValue)
+		if (RED_OnTeamCount() >= g_cvar.cLowRestrictTeam.IntValue)
 			PrintToChatAll("%s %t!", PREFIX, "Restrictions Relaxed"); //Commander restrictions relaxed
 			//PrintToChatAll("\x05[xG] Commander restrictions lifted! Mutiny threshold set to 70%! (no commander)");
 	}
 }
 
 public Action TIMER_DisplayComWarning(Handle timer) {
-	if (g_cvar[eRestrictions].BoolValue && ND_GetCommanderCount() != 2 && RED_OnTeamCount() >= g_cvar[cLowRestrictTeam].IntValue)
+	if (g_cvar.eRestrictions.BoolValue && ND_GetCommanderCount() != 2 && RED_OnTeamCount() >= g_cvar.cLowRestrictTeam.IntValue)
 		PrintToChatAll("%s %t!", PREFIX, "Last Chance Apply");
 }
 
@@ -156,7 +156,7 @@ public Action Command_Apply(int client, const char[] command, int argc)
 	if (ND_PickedTeamsThisMap())
 		return Plugin_Continue;
 	
-	if (g_cvar[eRestrictions].BoolValue)
+	if (g_cvar.eRestrictions.BoolValue)
 	{	
 		// If the commander is not depriotized and the average skill on the server is too low for restricts, disable them.
 		bool isDeprioritised = ND_IsCommanderDeprioritised(client)
@@ -168,11 +168,11 @@ public Action Command_Apply(int client, const char[] command, int argc)
 		int onServerCount = ND_GetClientCount();
 		
 		// If both the onTeamCount and onServerCount is less than the threshold, disable commander restrictions
-		if (onTeamCount < g_cvar[cLowRestrictTeam].IntValue && onServerCount < g_cvar[cLowRestrictTotal].IntValue)
+		if (onTeamCount < g_cvar.cLowRestrictTeam.IntValue && onServerCount < g_cvar.cLowRestrictTotal.IntValue)
 			return Plugin_Continue;
 			
 		// If commander restrictions relax because nobody else applys, allow all applications
-		if (g_Bool[timeOut])
+		if (g_Bool.timeOut)
 			return Plugin_Continue;
 		
 		// If the client is depriotized don't allow commander applications yet
@@ -195,9 +195,9 @@ public Action Command_Apply(int client, const char[] command, int argc)
 		}
 
 		// If we're using higher skill commander restrictions, check the player and skill thresholds
-		if (onTeamCount >= g_cvar[cHighRestrictTeam].IntValue || onServerCount >= g_cvar[cHighRestrictTotal].IntValue)
+		if (onTeamCount >= g_cvar.cHighRestrictTeam.IntValue || onServerCount >= g_cvar.cHighRestrictTotal.IntValue)
 		{
-			if (clientSkill <= g_cvar[cRestrictMaxSkill].IntValue && clientLevel <= g_cvar[cRestrictMaxSkill].IntValue)
+			if (clientSkill <= g_cvar.cRestrictMaxSkill.IntValue && clientLevel <= g_cvar.cRestrictMaxSkill.IntValue)
 			{
 				PrintMessage(client, "Fifty Five Required");
 				return Plugin_Handled;				
@@ -205,9 +205,9 @@ public Action Command_Apply(int client, const char[] command, int argc)
 		}
 		
 		// If we're using lower skill commander restrictions, check the player and skill thresholds
-		else if (onTeamCount >= g_cvar[cLowRestrictTeam].IntValue || onServerCount >= g_cvar[cLowRestrictTotal].IntValue)
+		else if (onTeamCount >= g_cvar.cLowRestrictTeam.IntValue || onServerCount >= g_cvar.cLowRestrictTotal.IntValue)
 		{
-			if (clientSkill <= g_cvar[cRestrictMinSkill].IntValue && clientLevel <= g_cvar[cRestrictMinSkill].IntValue)
+			if (clientSkill <= g_cvar.cRestrictMinSkill.IntValue && clientLevel <= g_cvar.cRestrictMinSkill.IntValue)
 			{
 				PrintMessage(client, "Bellow Ten");
 				return Plugin_Handled;				
@@ -219,12 +219,12 @@ public Action Command_Apply(int client, const char[] command, int argc)
 }
 
 bool DisableRestrictionsBySkill() {		
-	return ND_GEA_AVAILBLE() ? ND_GetEnhancedAverage() < g_cvar[aRestrictDisable].IntValue : true;
+	return ND_GEA_AVAILBLE() ? ND_GetEnhancedAverage() < g_cvar.aRestrictDisable.IntValue : true;
 }
 
 public Action ND_OnCommanderResigned(int client, int team)
 {
-	if (GetConVarBool(g_cvar[eRestrictions]) && !g_Bool[relaxedRestrictions])
+	if (GetConVarBool(g_cvar.eRestrictions) && !g_Bool.relaxedRestrictions)
 		CreateTimer(60.0, TIMER_DisableRestrictions, _, TIMER_FLAG_NO_MAPCHANGE);
 
 	return Plugin_Continue;

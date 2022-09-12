@@ -25,15 +25,16 @@ public Plugin myinfo =
 int InfantryBoostLevel[2] = { 0, ...};
 int StructureReinLevel[2] = { 0, ...};
 
-enum ibMults
+enum ibMults:
 {
 	ibMultBBQ = 0,
 	ibMultGL,
 	ibMultSIEGE,
-	ibMultRED
+	ibMultRED,
+	ibMultSize
 }
 
-float InfantryBoostMults[2][ibMults];
+float InfantryBoostMults[2][ibMultSize];
 float ArtillerySRMult[2];
 
 /* Plugin Includes */
@@ -88,10 +89,10 @@ public void OnInfantryBoostResearched(int team, int level)
 	PrintConsoleTeamTI1(team, "RED Damage Increase", increaseRed);
 	
 	// Update IB multipliers for fast lookup purposes
-	InfantryBoostMults[team-2][ibMultBBQ] = percentBBQ;
-	InfantryBoostMults[team-2][ibMultGL] = percentGL;
-	InfantryBoostMults[team-2][ibMultSIEGE] = percentSiege;
-	InfantryBoostMults[team-2][ibMultRED] = percentRed;
+	InfantryBoostMults[team-2][view_as<int>(ibMultBBQ)] = percentBBQ;
+	InfantryBoostMults[team-2][view_as<int>(ibMultGL)] = percentGL;
+	InfantryBoostMults[team-2][view_as<int>(ibMultSIEGE)] = percentSiege;
+	InfantryBoostMults[team-2][view_as<int>(ibMultRED)] = percentRed;
 }
 
 public void OnStructureReinResearched(int team, int level) 
@@ -169,10 +170,10 @@ void ResetResearchLevels()
 		InfantryBoostLevel[i] = 0;
 		StructureReinLevel[i] = 0;
 		
-		InfantryBoostMults[i][ibMultBBQ] = 1.0;
-		InfantryBoostMults[i][ibMultGL] = 1.0;
-		InfantryBoostMults[i][ibMultSIEGE] = 1.0;
-		InfantryBoostMults[i][ibMultRED] = 1.0;
+		InfantryBoostMults[i][view_as<int>(ibMultBBQ)] = 1.0;
+		InfantryBoostMults[i][view_as<int>(ibMultGL)] = 1.0;
+		InfantryBoostMults[i][view_as<int>(ibMultSIEGE)] = 1.0;
+		InfantryBoostMults[i][view_as<int>(ibMultRED)] = 1.0;
 		
 		ArtillerySRMult[i] = 1.0;
 	}
