@@ -66,6 +66,8 @@ public Action Event_PlayerDisconnected(Event event, const char[] name, bool dont
 				PrintLostConnection(client);
 		}
 	}
+	
+	return Plugin_Continue;
 }
 
 public Action Event_PlayerConnect(Event event, const char[] name, bool dontBroadcast)

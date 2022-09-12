@@ -6,14 +6,14 @@ float GameME_GetKpdFactor(int client)
 
 	if (ClientKdr < 1.0)
 	{
-		float base = gc_GameMe[kdrNegativeBase].FloatValue;
+		float base = gc_GameMe.kdrNegativeBase.FloatValue;
 		float divider = 1.0 / (1.0 - base);
 		
 		return GameME_SkillBase[client] <= 80 ? 1.0 : base + ClientKdr / divider;
 	}
 
 	//If the client kdr is greater than one
-	return 1.0 + ClientKdr / gc_GameMe[kdrPositiveDivider].FloatValue;
+	return 1.0 + ClientKdr / gc_GameMe.kdrPositiveDivider.FloatValue;
 }
 
 /* This function returns an imbalance calculated final kdr 
@@ -22,7 +22,7 @@ float GameME_GetKpdFactor(int client)
 float GameME_GetModifiedKdr(int client, bool resertive = false)
 {
 	float ClientKdr = GameME_KDR[client];
-	float kdrMin = gc_GameMe[kdrMinSetValue].FloatValue;
+	float kdrMin = gc_GameMe.kdrMinSetValue.FloatValue;
 	bool kdrChanged = false;
 		
 	if (ClientKdr < kdrMin)
@@ -37,8 +37,8 @@ float GameME_GetModifiedKdr(int client, bool resertive = false)
 		float ClientHpk = !resertive ? GameME_HPK[client] : (GameME_GetModifiedHpk(client) * 100.0);
 		
 		/* Calculate the percent the kdr and hpk is from the floor */
-		float percentKdr = ClientKdr / gc_GameMe[kdrImbalanceBaseKdr].FloatValue;
-		float percentHpk = ClientHpk / gc_GameMe[kdrImbalanceBaseHpk].FloatValue;		
+		float percentKdr = ClientKdr / gc_GameMe.kdrImbalanceBaseKdr.FloatValue;
+		float percentHpk = ClientHpk / gc_GameMe.kdrImbalanceBaseHpk.FloatValue;		
 			
 		/* If there's an imbalance between the client kdr and hpk */
 		if (percentKdr > percentHpk)
@@ -58,9 +58,9 @@ float GameME_GetHpkFactor(int client)
 	float ClientHpk = GameME_GetModifiedHpk(client, true);
 	
 	// Turn convars values into a decimal for the calculation
-	float negKdrDrop 	= percentToDecimal(gc_GameMe[hpkNegativeDrop].FloatValue);
-	float posKdrBoost 	= percentToDecimal(gc_GameMe[hpkPositiveBoost].FloatValue);	
-	float hpkMiddle		= 1 - percentToDecimal(gc_GameMe[hpkMiddleTendency].FloatValue);
+	float negKdrDrop 	= percentToDecimal(gc_GameMe.hpkNegativeDrop.FloatValue);
+	float posKdrBoost 	= percentToDecimal(gc_GameMe.hpkPositiveBoost.FloatValue);	
+	float hpkMiddle		= 1 - percentToDecimal(gc_GameMe.hpkMiddleTendency.FloatValue);
 	
 	// Check if the hpk factor is negative. Disable if Skill base is not 80+.
 	bool IsNegativeFactor = (hpkMiddle + ClientHpk) < 1;
@@ -85,8 +85,8 @@ float GameME_GetModifiedHpk(int client, bool resertive = false)
 		float ClientKdr = !resertive ? GameME_KDR[client] : GameME_GetModifiedKdr(client);
 		
 		/* Calculate the percent the kdr and hpk is from the floor */
-		float percentKdr = ClientKdr / gc_GameMe[hpkImbalanceBaseKdr].FloatValue;
-		float percentHpk = ClientHpk / percentToDecimal(gc_GameMe[hpkImbalanceBaseHpk].FloatValue);
+		float percentKdr = ClientKdr / gc_GameMe.hpkImbalanceBaseKdr.FloatValue;
+		float percentHpk = ClientHpk / percentToDecimal(gc_GameMe.hpkImbalanceBaseHpk.FloatValue);
 			
 		/* If there's an imbalance between the client kdr and hpk */
 		if (percentHpk > percentKdr)
@@ -104,12 +104,12 @@ float GameME_GetModifiedSkillBase(int client)
 {
 	/* Reseratively get the client's modified hpk */
 	float ClientHpk = GameME_GetModifiedHpk(client, true);
-	float ClientMinHpk = percentToDecimal(gc_GameMe[hpkMiddleTendency].FloatValue);
+	float ClientMinHpk = percentToDecimal(gc_GameMe.hpkMiddleTendency.FloatValue);
 	
 	if (ClientHpk < ClientMinHpk && GameME_UseHPK_Modifier(client) && GameME_SkillBase[client] > 80)
 	{
 		// calculate the percent taken off for every hpk percent missing
-		float ClientHpkMod = (ClientMinHpk - ClientHpk) * gc_GameMe[hpkSkillBaseModifer].FloatValue;
+		float ClientHpkMod = (ClientMinHpk - ClientHpk) * gc_GameMe.hpkSkillBaseModifer.FloatValue;
 		// Return the skill base times one minus the percent to take it off
 		return GameME_SkillBase[client] * (1 - ClientHpkMod);
 	}
@@ -126,13 +126,13 @@ bool GameME_UseHPK_Modifier(int client) { //Does the hpk modifier meet requireme
 }
 
 bool GameMe_UseKills(int client){ //Are the kills within the requirement to use them?
-	return GameME_Kills_Availible(client) && GameME_GetClientKills(client) >= gc_GameMe[killRequirement].IntValue;	
+	return GameME_Kills_Availible(client) && GameME_GetClientKills(client) >= gc_GameMe.killRequirement.IntValue;	
 }
 
 bool GameME_UseDeaths(int client){ //Are the deaths within the requirement to use them?
-	return GameME_Deaths_Availible(client) && GameME_GetClientDeaths(client) >= gc_GameMe[deathRequirement].IntValue;	
+	return GameME_Deaths_Availible(client) && GameME_GetClientDeaths(client) >= gc_GameMe.deathRequirement.IntValue;	
 }
 
 bool GameME_UseHeadShot(int client){ //Are the headshots within the requirement to use them?
-	return GameME_Headshots_Availible(client) && GameME_GetClientHeadshots(client) >= gc_GameMe[hsRequirement].IntValue;
+	return GameME_Headshots_Availible(client) && GameME_GetClientHeadshots(client) >= gc_GameMe.hsRequirement.IntValue;
 }

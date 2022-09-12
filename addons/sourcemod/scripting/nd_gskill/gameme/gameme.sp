@@ -57,33 +57,33 @@ void GameME_InitializeFeatures()
 GameME_AddConvarChangeHooks()
 {
 	/* GameME points base specific convars */
-	gc_GameMe[gmLevelEighty].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[gmGrowthInterval].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[gmDecayInterval].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[gmDecaySkill].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[gmSkillTeirOne].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[gmSkillTeirTwo].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[gmBaseMulitpler].AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.gmLevelEighty.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.gmGrowthInterval.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.gmDecayInterval.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.gmDecaySkill.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.gmSkillTeirOne.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.gmSkillTeirTwo.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.gmBaseMulitpler.AddChangeHook(GameME_RefireSRForwards);
 	
 	/* GameMe hpk convars */
-	gc_GameMe[hpkPositiveBoost].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[hpkNegativeDrop].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[hpkMiddleTendency].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[hpkImbalanceBaseHpk].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[hpkImbalanceBaseKdr].AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.hpkPositiveBoost.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.hpkNegativeDrop.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.hpkMiddleTendency.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.hpkImbalanceBaseHpk.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.hpkImbalanceBaseKdr.AddChangeHook(GameME_RefireSRForwards);
 	
 	/* GameMe kdr convars */
-	gc_GameMe[kdrPositiveDivider].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[kdrNegativeBase].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[kdrMinSetValue].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[kdrImbalanceOffset].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[kdrImbalanceBaseHpk].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[kdrImbalanceBaseKdr].AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.kdrPositiveDivider.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.kdrNegativeBase.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.kdrMinSetValue.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.kdrImbalanceOffset.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.kdrImbalanceBaseHpk.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.kdrImbalanceBaseKdr.AddChangeHook(GameME_RefireSRForwards);
 	
 	/* GameMe use convars */
-	gc_GameMe[killRequirement].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[deathRequirement].AddChangeHook(GameME_RefireSRForwards);
-	gc_GameMe[hsRequirement].AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.killRequirement.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.deathRequirement.AddChangeHook(GameME_RefireSRForwards);
+	gc_GameMe.hsRequirement.AddChangeHook(GameME_RefireSRForwards);
 }
 
 public void GameME_RefireSRForwards(ConVar convar, const char[] oldValue, const char[] newValue)
@@ -143,13 +143,13 @@ void GameME_ResetVariables(int client)
 
 void GameME_CalculateSkill(int client, int skill)
 {
-	int levelEighty = gc_GameMe[gmLevelEighty].IntValue;
+	int levelEighty = gc_GameMe.gmLevelEighty.IntValue;
 	
 	// Are we going to use the expontential growth equation ontop of the client level?
 	if (skill > levelEighty)
 	{
-		float multipler = gc_GameMe[gmBaseMulitpler].FloatValue;		
-		float growth = gc_GameMe[gmGrowthInterval].FloatValue;	
+		float multipler = gc_GameMe.gmBaseMulitpler.FloatValue;		
+		float growth = gc_GameMe.gmGrowthInterval.FloatValue;	
 		GameME_SkillBase[client] = MAX_INGAME_LEVEL + EXP_CalculateSkill(skill, levelEighty, multipler, growth);
 	}
 	
@@ -157,10 +157,10 @@ void GameME_CalculateSkill(int client, int skill)
 	// To Do: Calculate percentage client is to each interval
 	else if (skill != SKILL_NOT_FOUND)
 	{
-		int t2 = gc_GameMe[gmSkillTeirTwo].IntValue;
+		int t2 = gc_GameMe.gmSkillTeirTwo.IntValue;
 		if (skill >= t2)
 		{			
-			int t1 = gc_GameMe[gmSkillTeirOne].IntValue;			
+			int t1 = gc_GameMe.gmSkillTeirOne.IntValue;			
 			if (skill >= t1)
 				GameME_SetDecaySkill(client, skill, t1, 20);			
 			else
@@ -175,8 +175,8 @@ void GameME_CalculateSkill(int client, int skill)
  */
 void GameME_SetDecaySkill(int client, int skill, int teir, int base)
 {
-	float skillDecay	= gc_GameMe[gmDecayInterval].FloatValue;
-	int skillInterval 	= gc_GameMe[gmDecaySkill].IntValue;
+	float skillDecay	= gc_GameMe.gmDecayInterval.FloatValue;
+	int skillInterval 	= gc_GameMe.gmDecaySkill.IntValue;
 	
 	/* To Do: Don't use for loop intervals to exponentially decay skill
 	 * An equation would be better, but how can this relationally be done?

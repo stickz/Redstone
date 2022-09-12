@@ -61,10 +61,12 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 {	
 	UpdatingEntityCache = true;
 	CreateTimer(1.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);
+	return Plugin_Continue;
 }
 
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
 	ExpireRoundCache();
+	return Plugin_Continue;
 }
 
 /* Natives */
@@ -120,6 +122,7 @@ public int Native_UpdateEntityCache(Handle plugin, int numParams)
 		UpdatingEntityCache = true;
 		CreateTimer(1.0, TIMER_SetEntityClasses, _, TIMER_FLAG_NO_MAPCHANGE);
 	}
+	return 0;
 }
 
 bool IsTeamInvalid(int team) {
