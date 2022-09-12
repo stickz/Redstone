@@ -60,7 +60,7 @@ public void OnPluginStart()
 public Action CMD_CheckLocations(int client, int args)
 {
 	int counter[8]; //in order of possible values	
-	char playerContinent[MAXPLAYERS + 1][2]; 
+	char playerContinent[MAXPLAYERS + 1][4];
 	
 	for (int idx = 0; idx <= MaxClients; idx++)
 		if (RED_IsValidClient(idx))
