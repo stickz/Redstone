@@ -81,6 +81,7 @@ public Action CMD_CheckLocations(int client, int args)
 	}
 	
 	PrintToChat(client, "\x05[xG] %t", "Player Locations", printOut);
+	return Plugin_Handled;
 }
 
 public bool isContinentEmpty(int contientNumber)

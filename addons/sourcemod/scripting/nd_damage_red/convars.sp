@@ -3,7 +3,7 @@
 #define RED_COOLDOWN_SIZE 4
 
 /* Enumerated values for accessing ConVar arrays */
-enum multREDs 
+enum multREDs:
 {
 	// Infantry boost multipliers
 	red_ib0_base_mult,
@@ -16,12 +16,13 @@ enum multREDs
 	red_transport_mult,
 	red_ft_turret_mult,
 	red_wall_mult,
-	red_barrier_mult
+	red_barrier_mult,
+	multREDsSize
 }
 
 /* ConVar and float arrays for the different types */
-ConVar gCvar_RedMult[multREDs];
-float gFloat_RedMult[multREDs];
+ConVar gCvar_RedMult[multREDsSize];
+float gFloat_RedMult[multREDsSize];
 
 ConVar gCvar_RedCooldown[RED_COOLDOWN_SIZE];
 float gFloat_RedCooldown[RED_COOLDOWN_SIZE];
@@ -31,7 +32,7 @@ void CreateRedConVars()
 	AutoExecConfig_SetFile("nd_mult_reds");
 	
 	/* RED base damage multipliers */
-	char convarNameMult[multREDs][] = {
+	char convarNameMult[multREDsSize][] = {
 		// Infantry boost multipliers
 		"sm_mult_baseIB0_red",
 		"sm_mult_baseIB1_red",
@@ -45,7 +46,7 @@ void CreateRedConVars()
 		"sm_mult_wall_red",
 		"sm_mult_barrier_red"
 	};	
-	char convarDescMult[multREDs][] = {
+	char convarDescMult[multREDsSize][] = {
 		// Infantry boost multipliers
 		"Percentage of normal damage REDs deal at Infantry Boost 0",
 		"Percentage of normal damage REDs deal after Infantry Boost 1",
@@ -59,7 +60,7 @@ void CreateRedConVars()
 		"Percentage of normal damage REDs deal to walls",
 		"Percentage of normal damage REDs deal to barriers"
 	};	
-	char convarDefMult[multREDs][] = { 
+	char convarDefMult[multREDsSize][] = { 
 		// Infantry boost multipliers
 		"100", "110", "115", "125",
 		
@@ -67,7 +68,7 @@ void CreateRedConVars()
 		"100", "100", "100", "100", "100"
 	};
 	
-	for (int mult = 0; mult < view_as<int>(multREDs); mult++) {
+	for (int mult = 0; mult < view_as<int>(multREDsSize); mult++) {
 		gCvar_RedMult[mult] = 	AutoExecConfig_CreateConVar(convarNameMult[mult], convarDefMult[mult], convarDescMult[mult]);
 	}
 	
@@ -98,7 +99,7 @@ void CreateRedConVars()
 /* Manage when ConVars change mid-game */
 void UpdateConVarCache()
 {
-	for (int red = 0; red < view_as<int>(multREDs); red++) 
+	for (int red = 0; red < view_as<int>(multREDsSize); red++) 
 	{
 		gFloat_RedMult[red] = gCvar_RedMult[red].FloatValue / 100.0;
 	}
@@ -110,7 +111,7 @@ void UpdateConVarCache()
 }
 void HookConVarChanges()
 {
-	for (int red = 0; red < view_as<int>(multREDs); red++) 
+	for (int red = 0; red < view_as<int>(multREDsSize); red++) 
 	{
 		HookConVarChange(gCvar_RedMult[red], OnConfigPercentChange);
 	}

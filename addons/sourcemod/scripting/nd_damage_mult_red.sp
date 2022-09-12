@@ -84,8 +84,8 @@ void ResetResearchMults()
 {
 	for (int i = 0; i < 2; i++)
 	{
-		InfantryBoostRedMults[i] = gFloat_RedMult[red_ib0_base_mult];
-		InfantryBoostRedCooldown[i] = gFloat_RedCooldown[red_ib0_base_mult];
+		InfantryBoostRedMults[i] = gFloat_RedMult[view_as<int>(red_ib0_base_mult)];
+		InfantryBoostRedCooldown[i] = gFloat_RedCooldown[view_as<int>(red_ib0_base_mult)];
 		InfantryBoostLevel[i] = 0;
 	}
 	
