@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 #include <nd_shuffle>
 #include <nd_print>
 #include <nd_stocks>
