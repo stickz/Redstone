@@ -38,7 +38,7 @@ enum struct Bools
 	bool enableRTV;
 	bool hasPassedRTV;
 	bool hasMapVoteStarted;
-};
+}
 
 #define RTV_COMMANDS_SIZE 	3
 
