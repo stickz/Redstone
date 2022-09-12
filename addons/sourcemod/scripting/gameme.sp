@@ -274,13 +274,6 @@ new const String: css_weapon_list[][] = { "ak47", "m4a1", "awp", "deagle", "mp5n
 										  "p228", "sg550", "sg552", "tmp", "ump45", "xm1014", "knife",
 										  "smokegrenade", "flashbang" };
 
-enum css_plugin_data {
-	money_offset
-}
-
-new css_data[css_plugin_data];
-
-
 /**
  *  Day of Defeat: Source
  */
