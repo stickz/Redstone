@@ -19,7 +19,8 @@ enum ND_ResearchItems {
 	Infantry_Boost_Three,
 	Structure_Reinforcement,
 	Structure_Reinforcement_Two,
-	Structure_Reinforcement_Three	
+	Structure_Reinforcement_Three,
+	ND_ResearchItemsSize
 }
 
 stock int item(ND_ResearchItems item) {

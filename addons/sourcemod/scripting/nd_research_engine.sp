@@ -16,10 +16,10 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 // Hold the research completed forwards in an array
-Handle OnResearchCompleted[ND_ResearchItems];
+Handle OnResearchCompleted[ND_ResearchItemsSize];
 
 // Hold the research levels in an array
-int researchLevel[TEAM_COUNT][ND_ResearchItems];
+int researchLevel[TEAM_COUNT][ND_ResearchItemsSize];
 
 public void OnPluginStart()
 {
@@ -66,7 +66,7 @@ public Action Event_ResearchCompleted(Event event, const char[] name, bool dontB
 
 void ResetResearchTech()
 {
-	for (int tech = 0; tech < view_as<int>(ND_ResearchItems); tech++) 
+	for (int tech = 0; tech < view_as<int>(ND_ResearchItemsSize); tech++)
 	{
 		for (int team = 0; team < TEAM_COUNT; team++)
 		{
