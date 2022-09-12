@@ -3,6 +3,7 @@
 #endif
 #define _nd_redstone_included_
 
+#include <sdktools>
 #include <nd_stocks>
 
 /**
