@@ -18,7 +18,7 @@
 
 #define INVALID_USERID 		0
 
-stock char NumberInEnglish(int num)
+stock char[] NumberInEnglish(int num)
 {
 	char englishNumber[16];
 	switch (num)
@@ -47,7 +47,7 @@ stock char NumberInEnglish(int num)
  * @error			Invalid team index.
  */
 
-stock char ND_GetTeamName(int team)
+stock char[] ND_GetTeamName(int team)
 {
 	char TeamName[12];
 	
@@ -63,7 +63,7 @@ stock char ND_GetTeamName(int team)
 	return TeamName;
 }
 
-stock char GetTransNumber(int value)
+stock char[] GetTransNumber(int value)
 {
 	char number[32];
 	
