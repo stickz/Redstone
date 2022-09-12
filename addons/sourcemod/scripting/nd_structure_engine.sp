@@ -18,10 +18,10 @@ public Plugin myinfo =
 
 bool FirstStructurePlaced[2] = { false, ... };
 
-Handle OnStructBuildStarted[ND_Structures];
+Handle OnStructBuildStarted[ND_StructCount];
 Handle OnStructCreated;
 
-char fName[ND_Structures][64] = {
+char fName[ND_StructCount][64] = {
 	"OnBuildStarted_Bunker",
 	"OnBuildStarted_MGTurret",
 	"OnBuildStarted_TransportGate",
@@ -89,7 +89,7 @@ void FireStructBuildForward(int type, int team)
 
 void CreateBuildStartForwards()
 {
-	for (int idx = 0; idx < view_as<int>(ND_Structures); idx++) {
+	for (int idx = 0; idx < view_as<int>(ND_StructCount); idx++) {
 		OnStructBuildStarted[idx] = CreateGlobalForward(fName[idx], ET_Ignore, Param_Cell);		
 	}
 	

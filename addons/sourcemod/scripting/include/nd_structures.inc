@@ -6,7 +6,7 @@
 #include <sdktools>
 #include <nd_stocks>
 
-enum ND_Structures {
+enum ND_Structures: {
 	ND_Command_Bunker,
 	ND_MG_Turret,
 	ND_Transport_Gate,
@@ -22,7 +22,8 @@ enum ND_Structures {
 	ND_Sonic_Turret,
 	ND_Rocket_Turret,
 	ND_Wall,
-	ND_Barrier
+	ND_Barrier,
+	ND_StructCount
 }
 
 #define STRUCT_BUNKER "struct_command_bunker"
