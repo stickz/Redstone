@@ -212,7 +212,7 @@ void UpdateAllMovementSpeeds()
 
 void UpdateTeamMovementSpeeds(int team)
 {
-	for (int m = 0; m < view_as<int>(MovementClasses); m++)
+	for (int m = 0; m < view_as<int>(MoveClassSize); m++)
 	{
 		MovementSpeedFloat[team][m] = DEFAULT_SPEED;
 	}
