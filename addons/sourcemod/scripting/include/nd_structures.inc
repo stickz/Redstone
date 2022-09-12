@@ -3,6 +3,7 @@
 #endif
 #define _nd_structures_included
 
+#include <sdktools>
 #include <nd_stocks>
 
 enum ND_Structures {
