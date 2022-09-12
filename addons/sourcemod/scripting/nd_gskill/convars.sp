@@ -1,30 +1,30 @@
 enum struct GMConvars
 {
-	ConVar:gmLevelEighty;
-	ConVar:gmGrowthInterval;
-	ConVar:gmDecayInterval;
-	ConVar:gmDecaySkill;
-	ConVar:gmSkillTeirOne;
-	ConVar:gmSkillTeirTwo;
-	ConVar:gmBaseMulitpler;
+	ConVar gmLevelEighty;
+	ConVar gmGrowthInterval;
+	ConVar gmDecayInterval;
+	ConVar gmDecaySkill;
+	ConVar gmSkillTeirOne;
+	ConVar gmSkillTeirTwo;
+	ConVar gmBaseMulitpler;
 	
-	ConVar:hpkPositiveBoost;
-	ConVar:hpkNegativeDrop;
-	ConVar:hpkMiddleTendency;
-	ConVar:hpkImbalanceBaseHpk;
-	ConVar:hpkImbalanceBaseKdr;
-	ConVar:hpkSkillBaseModifer;
+	ConVar hpkPositiveBoost;
+	ConVar hpkNegativeDrop;
+	ConVar hpkMiddleTendency;
+	ConVar hpkImbalanceBaseHpk;
+	ConVar hpkImbalanceBaseKdr;
+	ConVar hpkSkillBaseModifer;
 	
-	ConVar:kdrPositiveDivider;
-	ConVar:kdrNegativeBase;
-	ConVar:kdrMinSetValue;
-	ConVar:kdrImbalanceOffset;
-	ConVar:kdrImbalanceBaseHpk;
-	ConVar:kdrImbalanceBaseKdr;
+	ConVar kdrPositiveDivider;
+	ConVar kdrNegativeBase;
+	ConVar kdrMinSetValue;
+	ConVar kdrImbalanceOffset;
+	ConVar kdrImbalanceBaseHpk;
+	ConVar kdrImbalanceBaseKdr;
 	
-	ConVar:killRequirement;
-	ConVar:deathRequirement;
-	ConVar:hsRequirement;
+	ConVar killRequirement;
+	ConVar deathRequirement;
+	ConVar hsRequirement;
 }
 
 GMConvars gc_GameMe;
