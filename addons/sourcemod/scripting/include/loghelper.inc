@@ -151,7 +151,7 @@ stock LogPSKillTraj(attacker, victim, const String:weapon[])
 		}
 		decl String:victim_authid[32];
 		//if (!GetClientAuthString(victim, victim_authid, sizeof(victim_authid)))
-		if (!GetClientAuthId(client, AuthId_Steam2, victim_authid, sizeof(victim_authid)))
+		if (!GetClientAuthId(victim, AuthId_Steam2, victim_authid, sizeof(victim_authid)))
 		{
 			strcopy(victim_authid, sizeof(victim_authid), "UNKNOWN");
 		}

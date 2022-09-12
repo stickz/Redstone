@@ -55,13 +55,15 @@ public Action Event_StructureBuildStarted(Event event, const char[] name, bool d
 	FirstStructurePlaced[team -2] = true;
 	
 	// Add fire the structure build forward
-	FireStructBuildForward(event.GetInt("type"), team);	
+	FireStructBuildForward(event.GetInt("type"), team);
+	return Plugin_Continue;
 }
 
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) 
 {
 	FirstStructurePlaced[0] = false;
 	FirstStructurePlaced[1] = false;
+	return Plugin_Continue;
 }
 
 public void OnEntityCreated(int entity, const char[] classname)
