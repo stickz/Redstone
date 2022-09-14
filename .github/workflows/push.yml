@@ -1,5 +1,7 @@
 name: Redstone Push Commit
 
+concurrency: production
+
 on:
   push:
     branches:
@@ -27,3 +29,17 @@ jobs:
       - name: Build Stable
         run: ./.github/scripts/build.sh -v --sourcemod=1.11.0-6911 --out=build
         shell: bash
+
+  deployment:
+    runs-on: self-hosted
+    environment: production
+    steps:
+      - name: Build Redstone Server
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: build
+          FOLDER: build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SQUASH_HISTORY: true
+          SKIP_EMPTY_COMMITS: true
