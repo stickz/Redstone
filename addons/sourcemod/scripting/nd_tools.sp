@@ -28,26 +28,12 @@ char nd_respawn_commands[RESPAWN_COMMANDS_SIZE][] =
 
 public void OnPluginStart()
 {
-	RegServerCmd("quit", OnDown); // Register quit to attempt client reconnection
-	
 	AddUpdaterLibrary(); //Auto-Updater
 	
 	AddClientPrefsSupport(); // For solution assist
 	
 	/* Translations for print-outs */
 	LoadTranslations("nd_tools.phrases");
-}
-
-public Action OnDown(int args) 
-{
-	for (int i = 1; i <= MaxClients; i++) 
-	{
-		if (IsClientInGame(i) && !IsFakeClient(i)) 
-		{
-           	ClientCommand(i, "retry"); // force retry
-		}
-	}
-	return Plugin_Continue;
 }
 
 public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
