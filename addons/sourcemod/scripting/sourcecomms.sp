@@ -185,7 +185,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, err_max)
 	return APLRes_Success;
 }
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	LoadTranslations("common.phrases");
 	LoadTranslations("sourcecomms.phrases");
@@ -236,18 +236,18 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public OnLibraryRemoved(const char[] name)
+public void OnLibraryRemoved(const char[] name)
 {
 	if (StrEqual(name, "adminmenu"))
 		hTopMenu = INVALID_HANDLE;
 }
 
-public OnMapStart()
+public void OnMapStart()
 {
 	ReadConfig();
 }
 
-public OnMapEnd()
+public void OnMapEnd()
 {
 	// Clean up on map end just so we can start a fresh connection when we need it later.
 	// Also it is necessary for using SQL_SetCharset
@@ -260,7 +260,7 @@ public OnMapEnd()
 
 // CLIENT CONNECTION FUNCTIONS //
 
-public OnClientDisconnect(client)
+public void OnClientDisconnect(client)
 {
 	if (g_hPlayerRecheck[client] != INVALID_HANDLE && CloseHandle(g_hPlayerRecheck[client]))
 		g_hPlayerRecheck[client] = INVALID_HANDLE;
@@ -275,7 +275,7 @@ public bool OnClientConnect(client, char[] rejectmsg, maxlen)
 	return true;
 }
 
-public OnClientConnected(client)
+public void OnClientConnected(client)
 {
 	g_sName[client][0] = '\0';
 	
@@ -283,7 +283,7 @@ public OnClientConnected(client)
 	MarkClientAsUnGagged(client);
 }
 
-public OnClientPostAdminCheck(client)
+public void OnClientPostAdminCheck(client)
 {
 	char clientAuth[64];
 	GetClientAuthId(client, AuthId_Steam2, clientAuth, sizeof(clientAuth));
@@ -339,6 +339,8 @@ public Action Event_OnPlayerName(Handle event, const char[] name, bool dontBroad
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	if (client > 0 && IsClientInGame(client))
 		GetEventString(event, "intname", g_sName[client], sizeof(g_sName[]));
+	
+	return Plugin_Continue;
 }
 
 public BaseComm_OnClientMute(client, bool muteState)
@@ -1440,7 +1442,7 @@ public Query_UnBlockSelect(Handle owner, Handle hndl, const char[] error, any:da
 			if (type == TYPE_UNSILENCE)
 			{
 				// check result for possible combination with temp and time punishments (temp was skipped in code above)
-				SetPackPosition(data, 16);
+				SetPackPosition(data, view_as<DataPackPos>(16));
 				if (g_MuteType[target] > bNot)
 				{
 					WritePackCell(data, TYPE_UNMUTE);
@@ -1692,19 +1694,20 @@ public Action ClientRecheck(Handle timer, any:userid)
 	
 	int client = GetClientOfUserId(userid);
 	if (!client)
-		return;
+		return Plugin_Handled;
 	
 	if (IsClientConnected(client))
 		OnClientPostAdminCheck(client);
 	
 	g_hPlayerRecheck[client] = INVALID_HANDLE;
+	return Plugin_Handled;
 }
 
 public Action Timer_MuteExpire(Handle timer, any:userid)
 {
 	int client = GetClientOfUserId(userid);
 	if (!client)
-		return;
+		return Plugin_Handled;
 	
 	#if defined DEBUG
 	char clientAuth[64];
@@ -1718,13 +1721,15 @@ public Action Timer_MuteExpire(Handle timer, any:userid)
 	MarkClientAsUnMuted(client);
 	if (IsClientInGame(client))
 		BaseComm_SetClientMute(client, false);
+	
+	return Plugin_Handled;
 }
 
 public Action Timer_GagExpire(Handle timer, any:userid)
 {
 	int client = GetClientOfUserId(userid);
 	if (!client)
-		return;
+		return Plugin_Handled;
 	
 	#if defined DEBUG
 	char clientAuth[64];
@@ -1738,12 +1743,15 @@ public Action Timer_GagExpire(Handle timer, any:userid)
 	MarkClientAsUnGagged(client);
 	if (IsClientInGame(client))
 		BaseComm_SetClientGag(client, false);
+	
+	return Plugin_Handled;
 }
 
 public Action Timer_StopWait(Handle timer, any:data)
 {
 	g_DatabaseState = DatabaseState_None;
 	DB_Connect();
+	return Plugin_Handled;
 }
 
 // PARSER //
