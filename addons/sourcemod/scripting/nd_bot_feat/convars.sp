@@ -81,7 +81,7 @@ public void OnBotBoostChange(ConVar convar, char[] oldValue, char[] newValue)
 	}
 	
 	SetBotDisableValues();
-	SetBotReductionValues();
+	//SetBotReductionValues();
 }
 
 void SetBotDisableValues()
@@ -111,7 +111,7 @@ void SetBotDisableValues()
 	}	
 }
 
-void SetBotReductionValues()
+stock void SetBotReductionValues()
 {
 	// Get the current map we're playing
 	char map[32];

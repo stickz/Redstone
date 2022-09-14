@@ -8,7 +8,7 @@ int DisplayedPrimeCapMsg[TEAM_COUNT] = { false, ... };
 
 void HookResourceEvents() {
 	HookEvent("resource_start_capture", Event_ResourceStartCapture, EventHookMode_Post);
-	HookEvent("resource_end_capture", Event_ResourceEndCapture, EventHookMode_Post);
+	//HookEvent("resource_end_capture", Event_ResourceEndCapture, EventHookMode_Post);
 	HookEvent("resource_captured", Event_ResourceCaptured, EventHookMode_Post);	
 	HookEvent("resource_break_capture", Event_ResourceBreakCapture, EventHookMode_Post);
 
@@ -24,12 +24,12 @@ public Action Event_ResourceStartCapture(Event event, const char[] name, bool do
 	return Plugin_Continue;
 }
 
-public Action Event_ResourceEndCapture(Event event, const char[] name, bool dontBroadcast)
+/*public Action Event_ResourceEndCapture(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
-	//EntIndexCaping[client] = NOT_CAPTURING;
+	EntIndexCaping[client] = NOT_CAPTURING;
 	return Plugin_Continue;
-}
+}*/
 
 public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBroadcast)
 {

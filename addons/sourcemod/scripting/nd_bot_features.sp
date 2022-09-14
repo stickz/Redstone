@@ -59,7 +59,7 @@ public void OnMapStart() {
 void SetBotValues()
 {
 	SetBotDisableValues(); // convars.sp
-	SetBotReductionValues(); // convars.sp	
+	//SetBotReductionValues(); // convars.sp	
 }
 
 public void OnMapEnd() 
@@ -184,7 +184,7 @@ void SignalMapChange()
 	ServerCommand("mp_limitteams 1");
 }
 
-int getBotFillerQuota(int plyDiff, float teamDiffMult)
+stock int getBotFillerQuota(int plyDiff, float teamDiffMult)
 {
 	// Get the team count offset to properly fill the bot quota
 	int specCount = ValidTeamCount(TEAM_SPEC);
@@ -219,7 +219,7 @@ int GetOnTeamCount(int specCount) {
 	return OnTeamCount() + specCount;
 }
 
-float getBotSkillMult()
+stock float getBotSkillMult()
 {
 	float average = ND_GetEnhancedAverage();
 	int increase = g_cvar.BotSkillIncrease.IntValue;
@@ -329,7 +329,6 @@ public Action TIMER_CooldownSwitchingBots(Handle timer)
 
 void SwitchBotsToTeam(int team)
 {
-	bool switchedBot = false;
 	isSwitchingBots = true;
 	
 	for (int bot = 1; bot < MaxClients; bot++)
@@ -338,9 +337,6 @@ void SwitchBotsToTeam(int team)
 		{
 			ChangeClientTeam(bot, TEAM_SPEC);
 			ChangeClientTeam(bot, team);
-			
-			// Mark switched bot, and force them to spawn after 8s
-			switchedBot = true;
 		}
 	}
 	

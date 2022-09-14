@@ -38,7 +38,7 @@ enum struct Convars
 }
 
 bool warmupCompleted;
-bool enableFunFeatures = false;
+int enableFunFeatures = VALUE_TYPE_DISABLED;
 
 Integers g_Integer;
 Convars g_Cvar;
@@ -70,8 +70,9 @@ public void ND_OnRoundStarted() {
 	ToogleWarmupConvars(VALUE_TYPE_DISABLED);
 }
 
-public void ND_OnRoundEnded() {
-	enableFunFeatures = ND_GetClientCount() >= g_Cvar.funFeaturesClientCount.IntValue;
+public void ND_OnRoundEnded() 
+{
+	enableFunFeatures = ND_GetClientCount() >= g_Cvar.funFeaturesClientCount.IntValue ? VALUE_TYPE_ENABLED : VALUE_TYPE_DISABLED;
 	ToogleWarmupConvars(VALUE_TYPE_ENABLED);
 }
 
@@ -178,7 +179,7 @@ void SetVarDefaults()
 void ToogleWarmupConvars(int value)
 {	
 	// Only enable these if enough players are connected
-	value = value == VALUE_TYPE_ENABLED ? enableFunFeatures : value;
+	value = value == VALUE_TYPE_ENABLED ? enableFunFeatures : VALUE_TYPE_DISABLED;
 	
 	ServerCommand("sm_cvar sv_alltalk %d", value);
 	ServerCommand("sm_cvar mp_friendlyfire %d", value);	
