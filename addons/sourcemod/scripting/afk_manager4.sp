@@ -584,7 +584,7 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
 						return Plugin_Continue;
 					}
 
-					if ( (iButtons[client] == buttons) && ( (FloatAbs(angles[0] - fEyeAngles[client][0]) < 2.0) && (FloatAbs(angles[1] - fEyeAngles[client][1]) < 2.0) && (FloatAbs(Fangles[2] - fEyeAngles[client][2]) < 2.0) ) )
+					if ( (iButtons[client] == buttons) && (FloatAbs(angles[0] - fEyeAngles[client][0]) < 2.0) && (FloatAbs(angles[1] - fEyeAngles[client][1]) < 2.0) && (FloatAbs(angles[2] - fEyeAngles[client][2]) < 2.0) )
 					{
 						fEyeAngles[client] = angles;
 						return Plugin_Continue;
