@@ -23,24 +23,25 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_warmup/nd_warmup.txt"
 #include "updater/standard.sp"
 
-enum Integers
+enum struct Integers
 {
-	warmupCountdown,
-	warmupTextType
-};
+	int warmupCountdown;
+	int warmupTextType;
+}
 
-enum Convars
+enum struct Convars
 {
-	ConVar:stockWarmupTime,
-	ConVar:customWarmupTime,
-	ConVar:rapidStartClientCount,
-	ConVar:funFeaturesClientCount
-};
+	ConVar stockWarmupTime;
+	ConVar customWarmupTime;
+	ConVar rapidStartClientCount;
+	ConVar funFeaturesClientCount;
+}
 
 bool warmupCompleted;
 bool enableFunFeatures = false;
-int g_Integer[Integers];
-ConVar g_Cvar[Convars];
+
+Integers g_Integer;
+Convars g_Cvar;
 
 /* Forwards */
 Handle g_OnWarmupCompleted = INVALID_HANDLE;
@@ -70,15 +71,15 @@ public void ND_OnRoundStarted() {
 }
 
 public void ND_OnRoundEnded() {
-	enableFunFeatures = ND_GetClientCount() >= g_Cvar[funFeaturesClientCount].IntValue;
+	enableFunFeatures = ND_GetClientCount() >= g_Cvar.funFeaturesClientCount.IntValue;
 	ToogleWarmupConvars(VALUE_TYPE_ENABLED);
 }
 
 public Action TIMER_WarmupRound(Handle timer)
 {
-	g_Integer[warmupCountdown]--;
+	g_Integer.warmupCountdown--;
 
-	switch (g_Integer[warmupCountdown])
+	switch (g_Integer.warmupCountdown)
 	{
 		// Notice: These hacks assume short circuit evaluation is used.
 		case RAPID_START:
@@ -88,7 +89,7 @@ public Action TIMER_WarmupRound(Handle timer)
 		}		
 		
 		//case 4: ServerCommand("bot_quota 0");		
-		case 3: g_Integer[warmupTextType] = 1;
+		case 3: g_Integer.warmupTextType = 1;
 		
 		case 1: 
 		{
@@ -105,7 +106,7 @@ bool CheckRapidStart()
 {
 	// Get the client count on the server. Try Redstone native first.
 	// If the client count is within range, start the game faster
-	if (ND_GetClientCount() <= g_Cvar[rapidStartClientCount].IntValue)
+	if (ND_GetClientCount() <= g_Cvar.rapidStartClientCount.IntValue)
 	{
 		FireWarmupCompleteForward();
 		return true;				
@@ -116,10 +117,10 @@ bool CheckRapidStart()
 
 void CreatePluginConvars()
 {
-	g_Cvar[stockWarmupTime]		=	CreateConVar("sm_warmup_rtime", "40", "Sets the warmup time for stock maps");
-	g_Cvar[customWarmupTime]	=	CreateConVar("sm_warmup_ctime", "55", "Sets the warmup time for custom maps");
-	g_Cvar[rapidStartClientCount]	=	CreateConVar("sm_warmup_rscc", "4", "Sets the number of players for rapid starting");
-	g_Cvar[funFeaturesClientCount] 	=	CreateConVar("sm_warmup_ffcc", "8", "Sets the number of players for fun features");
+	g_Cvar.stockWarmupTime			=	CreateConVar("sm_warmup_rtime", "40", "Sets the warmup time for stock maps");
+	g_Cvar.customWarmupTime			=	CreateConVar("sm_warmup_ctime", "55", "Sets the warmup time for custom maps");
+	g_Cvar.rapidStartClientCount	=	CreateConVar("sm_warmup_rscc", "4", "Sets the number of players for rapid starting");
+	g_Cvar.funFeaturesClientCount 	=	CreateConVar("sm_warmup_ffcc", "8", "Sets the number of players for fun features");
 	
 	AutoExecConfig(true, "nd_warmup");
 }
@@ -134,7 +135,7 @@ void DisplayHudText()
 		{
 			char hudTXT[32];
 			
-			switch (g_Integer[warmupTextType])
+			switch (g_Integer.warmupTextType)
 			{
 				case 0, 1: Format(hudTXT, sizeof(hudTXT), "%T", "Waiting", idx);
 				case 2: Format(hudTXT, sizeof(hudTXT), "%T...", "Please Wait", idx);
@@ -165,13 +166,13 @@ void SetMapWarmupTime()
 {
 	char currentMap[32];
 	GetCurrentMap(currentMap, sizeof(currentMap));		
-	g_Integer[warmupCountdown] = ND_IsCustomMap(currentMap) ? g_Cvar[customWarmupTime].IntValue : g_Cvar[stockWarmupTime].IntValue;
+	g_Integer.warmupCountdown = ND_IsCustomMap(currentMap) ? g_Cvar.customWarmupTime.IntValue : g_Cvar.stockWarmupTime.IntValue;
 }
 
 void SetVarDefaults()
 {
 	warmupCompleted = false;
-	g_Integer[warmupTextType] = 0;
+	g_Integer.warmupTextType = 0;
 }
 
 ToogleWarmupConvars(value)
