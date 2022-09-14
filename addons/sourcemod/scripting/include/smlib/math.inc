@@ -24,7 +24,7 @@ stock int RoundToMult(int value, int mult) {
 }
 
 stock float RoundToMultEx(int value, int mult) {
-	return (value + mult -1) / mult * mult;
+	return float(value + mult -1) / float(mult) * float(mult);
 }
 
 /**
