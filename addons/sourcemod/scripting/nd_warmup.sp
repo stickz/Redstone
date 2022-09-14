@@ -178,7 +178,7 @@ void SetVarDefaults()
 void ToogleWarmupConvars(int value)
 {	
 	// Only enable these if enough players are connected
-	value = value ? enableFunFeatures : value;
+	value = value == VALUE_TYPE_ENABLED ? enableFunFeatures : value;
 	
 	ServerCommand("sm_cvar sv_alltalk %d", value);
 	ServerCommand("sm_cvar mp_friendlyfire %d", value);	

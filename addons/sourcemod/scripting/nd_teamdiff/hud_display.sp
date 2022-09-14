@@ -34,7 +34,8 @@ public int CookieMenuHandler_TeamDiffHints(int client, CookieMenuAction action, 
 			SetClientCookie(client, cookie_team_difference_hints, option_team_diff_hints[client] ? "On" : "Off");		
 			ShowCookieMenu(client);		
 		}	
-	}
+	}	
+	return 0;
 }
 
 public void OnClientCookiesCached(int client) {

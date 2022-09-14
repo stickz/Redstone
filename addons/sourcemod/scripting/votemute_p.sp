@@ -268,7 +268,8 @@ public int MenuHandler_Vote(Menu menu, MenuAction action, int param1, int param2
 			else
 				DisplayVoteMuteMenu(param1, target);	
 		}
-	}
+	}	
+	return 0;
 }
 
 public int Handler_VoteCallback(Menu menu, MenuAction action, int param1, int param2)

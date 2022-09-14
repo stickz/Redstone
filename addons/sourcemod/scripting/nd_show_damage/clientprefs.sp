@@ -19,6 +19,7 @@ public int CookieMenuHandler_ShowDamage(int client, CookieMenuAction:action, any
 		SetClientCookie(client, cookie_show_damage, option_show_damage[client] ? "On" : "Off");
 		ShowCookieMenu(client);
 	}
+	return 0;
 }
 
 public int CookieMenuHandler_ShowThermal(int client, CookieMenuAction:action, any:info, char[] buffer, int maxlen)
@@ -36,6 +37,7 @@ public int CookieMenuHandler_ShowThermal(int client, CookieMenuAction:action, an
 		SetClientCookie(client, cookie_show_thermal, option_show_thermal[client] ? "On" : "Off");
 		ShowCookieMenu(client);
 	}
+	return 0;
 }
 
 public void OnClientCookiesCached(int client)

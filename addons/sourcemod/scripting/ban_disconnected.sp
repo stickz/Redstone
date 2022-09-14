@@ -153,6 +153,7 @@ public int MenuHandler_BanPlayerList(Menu menu, MenuAction action, int param1, i
 			DisplayBanTimeMenu(param1, state_);
 		}
 	}
+	return 0;
 }
 
 void AddMenuItemWithState(Menu menu, const char[] state_, const char[] addstate, const char[] display) 
@@ -200,6 +201,7 @@ public int MenuHandler_BanTimeList(Menu menu, MenuAction action, int param1, int
 			DisplayBanReasonMenu(param1, state_);
 		}
 	}
+	return 0;
 }
 
 void DisplayBanReasonMenu(client, const char[] state_) 
@@ -246,6 +248,7 @@ public int MenuHandler_BanReasonList(Menu menu, MenuAction action, int param1, i
 				CheckAndPerformBan(param1, state_parts[0], StringToInt(state_parts[1]), state_parts[2]);
 		}
 	}
+	return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

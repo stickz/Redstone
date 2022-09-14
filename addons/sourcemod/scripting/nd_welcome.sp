@@ -72,6 +72,7 @@ public int CookieMenuHandler_WelcomeMessage(int client, CookieMenuAction:action,
 			ShowCookieMenu(client);		
 		}	
 	}
+	return 0;
 }
 
 public void OnClientCookiesCached(int client) {
