@@ -99,6 +99,7 @@ public Action ShowDamage(Handle timer, int client)
 	}
 	
 	player_damage[client] = 0;
+	return Plugin_Continue;
 }
 
 public Action Event_PlayerHurt(Event event, const char[] name, bool dontBroadcast)

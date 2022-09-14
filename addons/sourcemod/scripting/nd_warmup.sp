@@ -175,7 +175,7 @@ void SetVarDefaults()
 	g_Integer.warmupTextType = 0;
 }
 
-ToogleWarmupConvars(value)
+void ToogleWarmupConvars(int value)
 {	
 	// Only enable these if enough players are connected
 	value = value ? enableFunFeatures : value;

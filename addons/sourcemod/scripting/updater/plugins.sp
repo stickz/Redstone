@@ -173,7 +173,9 @@ stock UnloadPlugin(Handle:plugin=INVALID_HANDLE)
 
 stock DisablePlugin(Handle:plugin=INVALID_HANDLE)
 {
-	decl String:filename[64] String:path_disabled[PLATFORM_MAX_PATH], String:path_plugin[PLATFORM_MAX_PATH];
+	char filename[64];
+	char path_disabled[PLATFORM_MAX_PATH];
+	char path_plugin[PLATFORM_MAX_PATH];
 	
 	GetPluginFilename(plugin, filename, sizeof(filename));
 	BuildPath(Path_SM, path_disabled, sizeof(path_disabled), "plugins/disabled/%s", filename);

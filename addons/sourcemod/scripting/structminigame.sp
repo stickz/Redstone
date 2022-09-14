@@ -190,9 +190,9 @@ public Action Event_StructDeath(Event event, const char[] name, bool dontBroadca
 				SetEntityHealth(idx, GetClientHealth(idx) + 175);
 			}
 		}
-		
-		return;
 	}
+	
+	return Plugin_Continue;
 }
 
 bool GiveAdvantage(int client, int team) {

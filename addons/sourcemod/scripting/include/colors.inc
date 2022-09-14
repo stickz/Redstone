@@ -458,4 +458,6 @@ public Action CEvent_MapStart(Event event, const char[] name, bool dontBroadcast
 	{
 		CSkipList[i] = false;
 	}
+	
+	return Plugin_Continue;
 }
