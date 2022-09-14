@@ -18,7 +18,7 @@ jobs:
       - name: Branch Commit History
         run: |
           git branch -D history
-          git branch history 6df183e
+          git branch history 57c5c38
         continue-on-error: true
 
       - name: Run Chmod
