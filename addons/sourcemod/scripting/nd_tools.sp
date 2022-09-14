@@ -38,12 +38,16 @@ public void OnPluginStart()
 	LoadTranslations("nd_tools.phrases");
 }
 
-public Action OnDown(int args) {
-	for (int i = 1; i <= MaxClients; i++) {
-		if (IsClientInGame(i) && !IsFakeClient(i)) {
-           		ClientCommand(i, "retry"); // force retry
+public Action OnDown(int args) 
+{
+	for (int i = 1; i <= MaxClients; i++) 
+	{
+		if (IsClientInGame(i) && !IsFakeClient(i)) 
+		{
+           	ClientCommand(i, "retry"); // force retry
 		}
 	}
+	return Plugin_Continue;
 }
 
 public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)

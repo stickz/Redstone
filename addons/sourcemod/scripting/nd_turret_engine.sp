@@ -62,11 +62,15 @@ public void OnPluginStart()
 	AddUpdaterLibrary();
 }
 
-public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast) {
+public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast) 
+{
 	DoStructureRemoved(event, "team");
+	return Plugin_Continue;
 }
-public Action Event_BuildingSold(Event event, const char[] name, bool dontBroadcast) {
+public Action Event_BuildingSold(Event event, const char[] name, bool dontBroadcast) 
+{
 	DoStructureRemoved(event, "ownerteam");
+	return Plugin_Continue;
 }
 
 /* Increment turret count when one is built */

@@ -292,12 +292,16 @@ void SetTimeLimit(const char[] currentMap)
 }
 
 /* Timers */
-public Action TIMER_ChangeResumeTime(Handle timer) {
+public Action TIMER_ChangeResumeTime(Handle timer) 
+{
 	g_Bool.reducedResumeTime2 = true;
+	return Plugin_Continue;
 }
 
-public Action TIMER_CanChangeTimeLimit(Handle timer) {
+public Action TIMER_CanChangeTimeLimit(Handle timer) 
+{
 	g_Bool.canChangeTimeLimit = false;
+	return Plugin_Continue;
 }
 
 public Action TIMER_ShowMinLeft(Handle timer)
@@ -374,4 +378,6 @@ public Action TIMER_FiveMinLeft(Handle timer)
 	
 	if (!g_Bool.hasExtended)
 		PrintExtendToEnabled();
+
+	return Plugin_Continue;
 }

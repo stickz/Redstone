@@ -46,18 +46,24 @@ public void OnPluginStart()
 	AddUpdaterLibrary();
 }
 
-public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast) {
+public Action Event_BuildingDeath(Event event, const char[] name, bool dontBroadcast) 
+{
 	if (event.GetInt("type") == view_as<int>(ND_Transport_Gate)) {
 		gateCount[event.GetInt("team")]--;
 	}
+	return Plugin_Continue;
 }
-public Action Event_BuildingSold(Event event, const char[] name, bool dontBroadcast) {
+public Action Event_BuildingSold(Event event, const char[] name, bool dontBroadcast) 
+{
 	if (event.GetInt("type") == view_as<int>(ND_Transport_Gate)) {
 		gateCount[event.GetInt("ownerteam")]--;
 	}
+	return Plugin_Continue;
 }
-public Action Event_GateCreated(Event event, const char[] name, bool dontBroadcast) {
+public Action Event_GateCreated(Event event, const char[] name, bool dontBroadcast) 
+{
 	gateCount[event.GetInt("teamid")]++;
+	return Plugin_Continue;
 }
 
 void RefreshTransports()
@@ -90,9 +96,11 @@ public int Native_GetTeamTGCount(Handle plugin, int numParams) {
 	return gateCount[GetNativeCell(1)];
 }
 
-public int Native_RefreshSpawnLocs(Handle plugin, int numParams) {
+public int Native_RefreshSpawnLocs(Handle plugin, int numParams) 
+{
 	float delay = GetNativeCell(1);
 	CreateTimer(delay, RefreshSpawnLocs, _, TIMER_FLAG_NO_MAPCHANGE);
+	return 0;
 }
 
 public Action RefreshSpawnLocs(Handle timer)
@@ -107,6 +115,7 @@ public int Native_ForceSpawnPlayer(Handle plugin, int numParams)
 	float delay = GetNativeCell(2);
 	
 	CreateTimer(delay, ForceSpawn, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+	return 0;
 }
 
 public Action ForceSpawn(Handle timer, any:Userid)

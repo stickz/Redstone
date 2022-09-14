@@ -61,7 +61,7 @@ void PrintCLangToTeam(int team, const char[] langName)
 	}
 }
 
-stock char GetLanguageName(int client)
+stock char[] GetLanguageName(int client)
 {
 	char langName[32];
 	

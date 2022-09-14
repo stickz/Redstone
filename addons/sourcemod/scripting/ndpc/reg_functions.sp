@@ -99,7 +99,7 @@ void NDPC_PrintNoTransFound(int client)
 }
 
 /* Translation Strings */
-char GetTransString(int client, const char[] tName)
+char[] GetTransString(int client, const char[] tName)
 {
 	char trans[PHRASE_SIZE];
 	Format(trans, PHRASE_SIZE, "%T", tName, client);
