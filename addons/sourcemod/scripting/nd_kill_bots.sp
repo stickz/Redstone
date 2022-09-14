@@ -1,5 +1,3 @@
-#include <sdktools>
-
 /* Auto Updater */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_kill_bots/nd_kill_bots.txt"
 #include "updater/standard.sp"
