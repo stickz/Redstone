@@ -76,7 +76,7 @@ public Action ShowDamage(Handle timer, int client)
 	block_timer[client] = false;
 	
 	if (player_damage[client] <= 0 || !client || !IsClientInGame(client))
-		return;
+		return Plugin_Continue;
 	
 	switch (gcvar_text_area.IntValue)
 	{
