@@ -32,7 +32,7 @@ convars g_cvar;
 
 bool visibleBoosted = false;
 int totalDisable, teamDisable;
-int botReductionValue;
+//int botReductionValue;
 
 void CreatePluginConvars()
 {
