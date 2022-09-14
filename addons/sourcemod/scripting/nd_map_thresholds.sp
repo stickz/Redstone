@@ -6,7 +6,6 @@
 #include <smlib/math>
 #include <nd_redstone>
 #include <autoexecconfig>
-#include <nd_stype>
 
 public Plugin myinfo =
 {
