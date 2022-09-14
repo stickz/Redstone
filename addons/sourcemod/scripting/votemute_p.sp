@@ -237,7 +237,7 @@ void DisplayVoteTargetMenu(int client)
 	menu.ExitBackButton = true;
 	
 	char playername[128], identifier[64];
-	for (int i = 1; i < GetMaxClients(); i++)
+	for (int i = 1; i <= MaxClients; i++)
 	{
 		if (IsClientInGame(i) && !(GetUserFlagBits(i) & ADMFLAG_CHAT))
 		{
@@ -369,7 +369,7 @@ public int Handler_VoteCallback(Menu menu, MenuAction action, int param1, int pa
 }
 
 float GetVotePercent(int votes, int totalVotes) {
-	return FloatDiv(float(votes),float(totalVotes));
+	return float(votes) / float(totalVotes);
 }
 
 bool TestVoteDelay(client)

@@ -342,7 +342,7 @@ void UnInitializePlayer(int index) // Player UnInitialization
 int AFK_GetClientCount(bool inGameOnly = true)
 {
 	int clients = 0;
-	for (int i = 1; i <= GetMaxClients(); i++)	
+	for (int i = 1; i <= MaxClients; i++)
 		if( ( ( inGameOnly ) ? IsClientInGame(i) : IsClientConnected(i) ) && !IsClientSourceTV(i) && !IsFakeClient(i) )
 			clients++;
 	return clients;
@@ -584,7 +584,7 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
 						return Plugin_Continue;
 					}
 
-					if ( (iButtons[client] == buttons) && ( (FloatAbs(FloatSub(angles[0],fEyeAngles[client][0])) < 2.0) && (FloatAbs(FloatSub(angles[1],fEyeAngles[client][1])) < 2.0) && (FloatAbs(FloatSub(angles[2],fEyeAngles[client][2])) < 2.0) ) )
+					if ( (iButtons[client] == buttons) && ( (FloatAbs(angles[0] - fEyeAngles[client][0]) < 2.0) && (FloatAbs(angles[1] - fEyeAngles[client][1]) < 2.0) && (FloatAbs(Fangles[2] - fEyeAngles[client][2]) < 2.0) ) )
 					{
 						fEyeAngles[client] = angles;
 						return Plugin_Continue;
