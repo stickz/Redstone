@@ -74,7 +74,7 @@ bool loadAdmins;
 bool loadGroups;
 bool loadOverrides;
 int curLoading = 0;
-new AdminFlag:g_FlagLetters[FLAG_LETTERS_SIZE];
+AdminFlag g_FlagLetters[FLAG_LETTERS_SIZE];
 
 /* Admin KeyValues */
 char groupsLoc[128];
@@ -140,7 +140,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, err_max)
 	return APLRes_Success;
 }
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	LoadTranslations("common.phrases");
 	LoadTranslations("plugin.basecommands");
@@ -214,7 +214,7 @@ public OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 }
 
-public OnAllPluginsLoaded()
+public void OnAllPluginsLoaded()
 {
 	Handle tMenu;
 	
@@ -223,7 +223,7 @@ public OnAllPluginsLoaded()
 	}
 }
 
-public OnConfigsExecuted()
+public void OnConfigsExecuted()
 {
 	char filename[200];
 	BuildPath(Path_SM, filename, sizeof(filename), "plugins/basebans.smx");
@@ -239,12 +239,12 @@ public OnConfigsExecuted()
 	}
 }
 
-public OnMapStart()
+public void OnMapStart()
 {
 	ResetSettings();
 }
 
-public OnMapEnd()
+public void OnMapEnd()
 {
 	for (int i = 0; i <= MaxClients; i++)
 	{
@@ -267,7 +267,7 @@ public Action OnClientPreAdminCheck(client)
 	return curLoading > 0 ? Plugin_Handled : Plugin_Continue;
 }
 
-public OnClientDisconnect(client)
+public void OnClientDisconnect(client)
 {
 	if (PlayerRecheck[client] != INVALID_HANDLE)
 	{
@@ -283,7 +283,7 @@ public bool OnClientConnect(client, char[] rejectmsg, maxlen)
 	return true;
 }
 
-public OnClientAuthorized(client, const char[] auth)
+public void OnClientAuthorized(client, const char[] auth)
 {
 	/* Do not check bots nor check player with lan steamid. */
 	if (auth[0] == 'B' || auth[9] == 'L' || DB == INVALID_HANDLE)
@@ -299,7 +299,7 @@ public OnClientAuthorized(client, const char[] auth)
 	SQL_TQuery(DB, VerifyBan, Query, GetClientUserId(client), DBPrio_High);
 }
 
-public OnRebuildAdminCache(AdminCachePart:part)
+public void OnRebuildAdminCache(AdminCachePart:part)
 {
 	loadPart = part;
 	switch (loadPart)
@@ -1846,11 +1846,12 @@ public Action ProcessQueue(Handle timer, any:data)
 	char buffer[512];
 	Format(buffer, sizeof(buffer), "SELECT steam_id, time, start_time, reason, name, ip, admin_id, admin_ip FROM queue");
 	SQL_TQuery(SQLiteDB, ProcessQueueCallback, buffer);
+	return Plugin_Continue;
 }
 
 // PARSER //
 
-static InitializeConfigParser()
+static void InitializeConfigParser()
 {
 	if (ConfigParser == INVALID_HANDLE)
 	{
@@ -1859,7 +1860,7 @@ static InitializeConfigParser()
 	}
 }
 
-static InternalReadConfig(const char[] path)
+static void InternalReadConfig(const char[] path)
 {
 	ConfigState = ConfigStateNone;
 	
@@ -2026,7 +2027,7 @@ public Native_SBBanPlayer(Handle plugin, numParams)
 
 // STOCK FUNCTIONS //
 
-public InitializeBackupDB()
+public void InitializeBackupDB()
 {
 	char error[255];
 	SQLiteDB = SQLite_UseDatabase("sourcebans-queue", error, sizeof(error));
@@ -2110,7 +2111,7 @@ public bool CreateBan(client, target, time, char[] reason)
 	return true;
 }
 
-stock UTIL_InsertBan(time, const char[] Name, const char[] Authid, const char[] Ip, const char[] Reason, const char[] AdminAuthid, const char[] AdminIp, Handle Pack)
+stock void UTIL_InsertBan(time, const char[] Name, const char[] Authid, const char[] Ip, const char[] Reason, const char[] AdminAuthid, const char[] AdminIp, Handle Pack)
 {
 	//Handle dummy;
 	//PruneBans(dummy);
@@ -2135,7 +2136,7 @@ stock UTIL_InsertBan(time, const char[] Name, const char[] Authid, const char[] 
 	SQL_TQuery(DB, VerifyInsert, Query, Pack, DBPrio_High);
 }
 
-stock UTIL_InsertTempBan(time, const char[] name, const char[] auth, const char[] ip, const char[] reason, const char[] adminAuth, const char[] adminIp, Handle dataPack)
+stock void UTIL_InsertTempBan(time, const char[] name, const char[] auth, const char[] ip, const char[] reason, const char[] adminAuth, const char[] adminIp, Handle dataPack)
 {
 	ReadPackCell(dataPack); // admin index
 	int client = ReadPackCell(dataPack);
@@ -2166,7 +2167,7 @@ stock UTIL_InsertTempBan(time, const char[] name, const char[] auth, const char[
 	SQL_TQuery(SQLiteDB, ErrorCheckCallback, query);
 }
 
-stock CheckLoadAdmins()
+stock void CheckLoadAdmins()
 {
 	for (int i = 1; i <= MaxClients; i++)
 	{
@@ -2178,7 +2179,7 @@ stock CheckLoadAdmins()
 	}
 }
 
-stock InsertServerInfo()
+stock void InsertServerInfo()
 {
 	if (DB == INVALID_HANDLE)
 	{
@@ -2241,7 +2242,7 @@ void PrepareBan(int client, int target, int time, char[] reason)
 	g_BanTime[client] = -1;
 }
 
-stock ReadConfig()
+stock void ReadConfig()
 {
 	InitializeConfigParser();
 	
@@ -2265,7 +2266,7 @@ stock ReadConfig()
 	}
 }
 
-stock ResetSettings()
+stock void ResetSettings()
 {
 	CommandDisable = 0;
 	
@@ -2273,7 +2274,7 @@ stock ResetSettings()
 	ReadConfig();
 }
 
-stock ParseBackupConfig_Overrides()
+stock void ParseBackupConfig_Overrides()
 {
 	Handle hKV = CreateKeyValues("SB_Overrides");
 	if (!FileToKeyValues(hKV, overridesLoc))
@@ -2309,9 +2310,9 @@ stock ParseBackupConfig_Overrides()
 	CloseHandle(hKV);
 }
 
-stock AdminFlag:CreateFlagLetters()
+stock AdminFlag[] CreateFlagLetters()
 {
-	new AdminFlag:FlagLetters[FLAG_LETTERS_SIZE];
+	AdminFlag FlagLetters[FLAG_LETTERS_SIZE];
 	
 	FlagLetters['a'-'a'] = Admin_Reservation;
 	FlagLetters['b'-'a'] = Admin_Generic;
@@ -2338,10 +2339,10 @@ stock AdminFlag:CreateFlagLetters()
 	return FlagLetters;
 }
 
-stock AccountForLateLoading()
+stock void AccountForLateLoading()
 {
 	char auth[30];
-	for (int i = 1; i <= GetMaxClients(); i++)
+	for (int i = 1; i <= MaxClients; i++)
 	{
 		if (IsClientConnected(i) && !IsFakeClient(i))
 		{
