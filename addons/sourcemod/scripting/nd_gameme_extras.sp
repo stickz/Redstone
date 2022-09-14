@@ -152,7 +152,7 @@ public QueryGameMEStatsCallback(int command, int payload, int client, &Handle: d
 		CloseHandle(data);
 		
 		// hide the compiler warnings by reassigning values
-		players = 0; kpd = 0.0; suicides = 0; accuracy = 0.0;
+		players = players + suicides; kpd = kpd + accuracy;
 
 		// only write this message to gameserver log if client has connected
 		if (payload == QUERY_TYPE_ONCLIENTPUTINSERVER) {
