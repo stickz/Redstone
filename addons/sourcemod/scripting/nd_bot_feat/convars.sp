@@ -111,7 +111,7 @@ void SetBotDisableValues()
 	}	
 }
 
-stock void SetBotReductionValues()
+/*stock void SetBotReductionValues()
 {
 	// Get the current map we're playing
 	char map[32];
@@ -120,4 +120,4 @@ stock void SetBotReductionValues()
 	// If small map, reduce the mnumber of bots. Otherwise, use the regular bot count
 	bool smallMap = ND_CustomMapEquals(map, ND_Sandbrick) || ND_CustomMapEquals(map, ND_Mars);
 	botReductionValue = smallMap ? g_cvar.BotReductionDec.IntValue : g_cvar.BotReduction.IntValue;
-}
+}*/
