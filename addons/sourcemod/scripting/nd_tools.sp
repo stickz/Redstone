@@ -45,9 +45,9 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 			if (StrContains(sArgs, nd_respawn_commands[idx], false) > -1)
 			{
 				new ReplySource:old = SetCmdReplySource(SM_REPLY_TO_CHAT);
-				
-				PrintToChat(client, "\x05[xG] %t!", "Spawn Bug"); //Change class and select anther spawn point			
-					
+
+				PrintMessage(client, "Spawn Bug"); //Change class and select anther spawn point
+
 				SetCmdReplySource(old);
 				return Plugin_Stop; 					
 			}		
