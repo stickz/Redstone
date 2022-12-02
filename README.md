@@ -1,9 +1,7 @@
 # Redstone Nuclear Dawn Server Project
 Get Started Using Github Here: https://guides.github.com/activities/hello-world/
 
-The current stable build environment for this github is sourcemod 1.10 build 6453.
-
-Compile checks are run with sourcemod 1.10 build 6453 to point out future issues.
+The current stable build environment for this github is sourcemod 1.11 build 6911.
 
 Bugs/Issues with sourcemod can be fixed here https://github.com/alliedmodders/sourcemod
 
@@ -14,18 +12,7 @@ https://wiki.alliedmods.net/Nuclear_Dawn_Events
 
 https://sm.alliedmods.net/new-api/
 
-# Build plugins
-
-Run `make` to compile `addons/sourcemod/scripting/*.sp` files using latest stable build of SourceMod or `make build-dev` to compile using latest dev build.
-
-# Deployment
-
-If you have write access to this repo then following command will compile and
-deploy all the files required by server to the `build` branch upstream:
-
-```
-export GH_TOKEN=<your token>; make build deploy
-```
-
-You won't likely need to do this manually though because Travis CI does
-that automatically each time `master` branch changes.
+# GitHub Actions
+Server plugins are now checked with GitHub Actions.
+* The script takes ten seconds to test your changes against the server environment.
+* Please submit a draft pull request if your contributions are *NOT* ready for review.
