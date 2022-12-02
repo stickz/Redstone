@@ -1,0 +1,31 @@
+name: Redstone Pull Request
+
+concurrency: production
+
+on:
+  pull_request:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Clone Repo
+        run: |
+          cd ..
+          rm -rf Redstone
+          git clone -q https://github.com/stickz/Redstone
+        
+      - name: Branch Commit History
+        run: |
+          git branch -D history
+          git branch history 57c5c38
+        continue-on-error: true
+
+      - name: Run Chmod
+        run: chmod 777 .github/scripts/build.sh
+
+      - name: Build Stable
+        run: ./.github/scripts/build.sh -v --sourcemod=1.11.0-6911 --out=build
+        shell: bash
