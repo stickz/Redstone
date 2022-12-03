@@ -124,14 +124,14 @@ void HandleHydro()
     
     // this disables building off cons base 
     
-    float hax[6] = {0.0, ...};
-    hax[0] = -5215.0;    // minX
-    hax[1] = -4200.0;    // maxX
-    hax[2] = -6590.0;       // minY
-    hax[3] = -4125.0;      // maxY
-    hax[4] = 0.0;       // minZ
-    hax[5] = 0.0;       // maxZ
-    HAX.PushArray(hax);
+    float hax2[6] = {0.0, ...};
+    hax2[0] = -5215.0;    // minX
+    hax2[1] = -4200.0;    // maxX
+    hax2[2] = -6590.0;       // minY
+    hax2[3] = -4125.0;      // maxY
+    hax2[4] = 0.0;       // minZ
+    hax2[5] = 0.0;       // maxZ
+    HAX.PushArray(hax2);
 }
 
 void HandleCoast()
