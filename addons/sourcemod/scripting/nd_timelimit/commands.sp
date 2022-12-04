@@ -25,7 +25,10 @@ bool strEqualsTime(int client, const char[] sArgs)
 
 void printTime(int client)
 {
-	if (!g_Bool.noTimeLimit)
+	if (client == 0)
+		printTimeServer();
+	
+	else if (!g_Bool.noTimeLimit)
 		PrintMessage(client, "Regular Time");
 		
 	else if (g_Bool.startedCountdown)
@@ -33,4 +36,16 @@ void printTime(int client)
 	
 	else if (ND_RoundStarted())
 		PrintMessage(client, "Time Disabled");
+}
+
+void printTimeServer()
+{
+	if (!g_Bool.noTimeLimit)
+		PrintToServer("Regular time limit being used.");
+		
+	else if (g_Bool.startedCountdown)
+		PrintToServer("There are %d minutes remaining.", g_Integer.totalTimeLeft);
+	
+	else if (ND_RoundStarted())
+		PrintToServer("Time limit disabled until more players");
 }
