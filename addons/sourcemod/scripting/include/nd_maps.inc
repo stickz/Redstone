@@ -17,6 +17,7 @@ enum ND_CustomMapCount: {
 	ND_MetroImp,
 	ND_Port,
 	ND_DowntownDyn,
+	ND_LostHorizons,
 	CustomMapSize
 }
 stock int cm(ND_CustomMapCount map) {
@@ -34,7 +35,8 @@ stock char ND_CustomMaps[CustomMapSize][ND_MAX_MAP_SIZE] =
 	"nd_submarine",
 	"metro_imp3",
 	"port",
-	"downtown_dyn_v0"
+	"downtown_dyn_v0",
+	"nd_lost_horizons"
 };
 
 stock bool ND_IsCustomMap(char[] mapName)
