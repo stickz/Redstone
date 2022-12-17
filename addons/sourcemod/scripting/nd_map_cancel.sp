@@ -7,6 +7,7 @@
 #include <nd_redstone>
 #include <nd_maps>
 #include <nd_stype>
+#include <nd_smode>
 #include <nd_mlist>
 #include <autoexecconfig>
 
@@ -60,7 +61,7 @@ void CreateConvars()
 public void OnClientPutInServer(int client)
 {
 	// Only check map thresholds if the round is started and the map voter isn't running
-	if (cvarUsePlayerThresolds.BoolValue && CanStartMapVote())
+	if (cvarUsePlayerThresolds.BoolValue && CanStartMapVote() && ND_GetServerModeEx() == SERVER_MODE_REGULAR)
 		checkMapExcludes();
 }
 
