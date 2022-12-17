@@ -2,6 +2,7 @@
 #include <sdktools>
 #include <nd_maps>
 #include <nd_stype>
+#include <nd_smode>
 #include <nd_stocks>
 #include <smlib/math>
 #include <nd_redstone>
@@ -57,6 +58,15 @@ void CreateConVars()
 	AutoExecConfig_EC_File();	
 }
 
+void CreateMapList(bool debugFunction = false)
+{
+        int serverMode = ND_GetServerModeEx();
+	if (serverMode == SERVER_MODE_REGULAR)	
+	        CreateMapThresholdList(debugFunction);
+	else if (serverMode == SERVER_MODE_MAPTEST)
+	        CreateMapTestList(debugFunction);
+}
+
 /* Handle shipping the map vote list to other plugins */
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
@@ -65,14 +75,14 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 }
 public int Native_GetMapVoteList(Handle plugin, int numParams) 
 {
-	CreateMapThresholdList();
+	CreateMapList();
 	return _:g_MapThresholdList;
 }
 
 /* Handle debugging the map voter list: print to console */
 public Action CMD_DebugMapVote(int client, int args)
 {
-	CreateMapThresholdList(true);
+	CreateMapList(true);
 	return Plugin_Handled;
 }
 void PrintMapVoteList()
@@ -93,7 +103,7 @@ void ND_NominateMap(char[] mapName, float fChance = 100.0)
 	{
 		TrimString(mapName);
 		g_MapThresholdList.PushString(mapName);
-	}	
+	}
 }
 bool StrEqualCurrentMap(char[] checkMap)
 {
@@ -161,6 +171,19 @@ void CreateMapThresholdList(bool debugFunction = false)
 	
 	if (debugFunction)
 		PrintMapVoteList();
+}
+
+void CreateMapTestList(bool debugFunction = false)
+{
+        g_MapThresholdList.Clear(); //clear the map list array
+        
+        ND_NominateMap(ND_CustomMaps[ND_LostHorizons]);
+        ND_NominateMap(ND_CustomMaps[ND_Cargoyard]);
+        ND_NominateMap(ND_CustomMaps[ND_Oblivion]);
+        ND_NominateMap(ND_CustomMaps[ND_Submarine]);
+        
+        if (debugFunction)
+                PrintMapVoteList();
 }
 
 /* Handle nominating the popular maps */
