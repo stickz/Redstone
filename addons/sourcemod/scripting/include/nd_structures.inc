@@ -43,6 +43,35 @@ enum ND_Structures: {
 #define STRUCT_WALL "struct_wall"
 #define STRUCT_BARRIER "struct_barrier"
 
+stock char ND_StructName[ND_StructCount][32] = {
+	STRUCT_BUNKER,
+	STRUCT_MG_TURRET,
+	STRUCT_TRANSPORT,
+	STRUCT_POWER_STATION,
+	STRUCT_REPEATER,
+	STRUCT_RELAY,
+	STRUCT_SUPPLY,
+	STRUCT_ASSEMBLER,
+	STRUCT_ARMOURY,
+	STRUCT_ARTILLERY,
+	STRUCT_RADAR,
+	STRUCT_FT_TURRET,
+	STRUCT_SONIC_TURRET,
+	STRUCT_ROCKET_TURRET,
+	STRUCT_WALL,
+	STRUCT_BARRIER
+};
+
+stock int ND_GetStructIndex(const char[] classname)
+{
+	for (int i = 0; i < view_as<int>(ND_StructCount); i++)
+	{
+		if (StrEqual(classname, ND_StructName[i], true))
+			return i;
+	}
+	return -1;
+}
+
 stock bool ND_IsStructRelay(const char[] classname) {
 	return StrEqual(classname, STRUCT_RELAY, true) || StrEqual(classname, STRUCT_REPEATER, true);
 }

@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <sdktools>
+#include <nd_struct_eng>
 
 public Plugin myinfo =
 {
@@ -16,6 +17,8 @@ public Plugin myinfo =
 public OnPluginStart() 
 {
 	RegAdminCmd("sm_entinfo", sm_entinfo, ADMFLAG_KICK, "Prints info about the target entity");
+	RegAdminCmd("sm_entinfoex", sm_entinfoex, ADMFLAG_KICK, "Prints info about the target entity");
+	RegAdminCmd("sm_entinfost", sm_entinfost, ADMFLAG_KICK, "Prints info about the target transport gate");
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -48,6 +51,59 @@ public Action:sm_entinfo(client, argc)
 		ReplyToCommand(client, "name = %s", entity_name);
 		ReplyToCommand(client, "Origin = %f, %f, %f", entity_origin[0], entity_origin[1], entity_origin[2]);
 		ReplyToCommand(client, "Angles = %f, %f, %f", entity_angles[0], entity_angles[1], entity_angles[2]);
+	}
+	
+	return Plugin_Handled;
+}
+
+public Action:sm_entinfoex(client, argc)
+{
+	if (!client)
+	{
+		ReplyToCommand(client, "Player only.");
+		return Plugin_Handled;
+	}
+	
+	int target = GetClientAimTarget(client, false);
+		
+	if (target < 0)
+		ReplyToCommand(client, "Nothing targeted");
+
+	else
+	{
+		char entity_classname[32];
+		float entity_origin[3];
+		int type;
+		
+		ND_GetBuildingInfo(target, type, entity_origin, entity_classname);	
+		ReplyToCommand(client, "classname = %s", entity_classname);
+		ReplyToCommand(client, "Origin = %f, %f, %f", entity_origin[0], entity_origin[1], entity_origin[2]);
+	}
+	
+	return Plugin_Handled;
+}
+
+public Action:sm_entinfost(client, argc)
+{
+	if (!client)
+	{
+		ReplyToCommand(client, "Player only.");
+		return Plugin_Handled;
+	}
+	
+	int target = GetClientAimTarget(client, false);
+		
+	if (target < 0)
+		ReplyToCommand(client, "Nothing targeted");
+
+	else
+	{
+		char entity_classname[32];
+		float entity_origin[3];
+		
+		ND_GetBuildingInfoEx(view_as<int>(ND_Transport_Gate), target, entity_origin, entity_classname);	
+		ReplyToCommand(client, "classname = %s", entity_classname);
+		ReplyToCommand(client, "Origin = %f, %f, %f", entity_origin[0], entity_origin[1], entity_origin[2]);
 	}
 	
 	return Plugin_Handled;

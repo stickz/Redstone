@@ -5,6 +5,9 @@
 
 #include <nd_structures>
 
+native int ND_GetBuildingInfo(int entity, int &type, float[] vecPos, char[] classname);
+native int ND_GetBuildingInfoEx(int type, int entity, float[] vecPos, char[] classname);
+
 // Check if the team has placed their first structure
 native bool ND_FirstStructurePlaced(int team);
 
