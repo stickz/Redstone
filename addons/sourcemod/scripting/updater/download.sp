@@ -80,7 +80,11 @@ ProcessDownloadQueue(bool:force=false)
 	
 	g_bDownloading = true;
 	
-	if (STEAMWORKS_AVAILABLE())
+	if (CURL_AVAILABLE())
+	{
+		Download_cURL(url, dest);
+	}	
+	else if (STEAMWORKS_AVAILABLE())
 	{
 		if (SteamWorks_IsLoaded())
 		{
@@ -101,10 +105,6 @@ ProcessDownloadQueue(bool:force=false)
 		{
 			CreateTimer(10.0, Timer_RetryQueue);
 		}
-	}
-	else if (CURL_AVAILABLE())
-	{
-		Download_cURL(url, dest);
 	}
 	else if (SOCKET_AVAILABLE())
 	{
