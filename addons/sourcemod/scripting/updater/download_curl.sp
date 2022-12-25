@@ -3,11 +3,7 @@
 
 Download_cURL(const String:url[], const String:dest[])
 {
-	decl String:sURL[MAX_URL_LENGTH];
-	PrefixURL(sURL, sizeof(sURL), url);
-	
 	new Handle:hFile = curl_OpenFile(dest, "wb");
-	
 	if (hFile == INVALID_HANDLE)
 	{
 		decl String:sError[256];
@@ -35,7 +31,7 @@ Download_cURL(const String:url[], const String:dest[])
 	new Handle:curl = curl_easy_init();
 	curl_easy_setopt_int_array(curl, CURL_Default_opt, sizeof(CURL_Default_opt));
 	curl_easy_setopt_handle(curl, CURLOPT_WRITEDATA, hFile);
-	curl_easy_setopt_string(curl, CURLOPT_URL, view_as<any>(url));
+	curl_easy_setopt_string(curl, CURLOPT_URL, url);
 	curl_easy_setopt_handle(curl, CURLOPT_HTTPHEADER, headers);
 	curl_easy_perform_thread(curl, OnCurlComplete, hDLPack);
 }

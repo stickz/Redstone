@@ -2,9 +2,6 @@
 /* Download Manager */
 
 #include "download_curl.sp"
-#include "download_socket.sp"
-#include "download_steamtools.sp"
-#include "download_steamworks.sp"
 
 static DataPackPos QueuePack_URL;
 
@@ -67,10 +64,14 @@ ProcessDownloadQueue(bool:force=false)
 	ReadPackString(hQueuePack, url, sizeof(url));
 	ReadPackString(hQueuePack, dest, sizeof(dest));
 	
-	if (!CURL_AVAILABLE() && !SOCKET_AVAILABLE() && !STEAMTOOLS_AVAILABLE() && !STEAMWORKS_AVAILABLE())
+	if (!CURL_AVAILABLE())
 	{
 		SetFailState(EXTENSION_ERROR);
 	}
+	
+	ReplaceString(url, sizeof(url), "https://github.com/stickz/Redstone/raw/build/", 
+					"https://raw.githubusercontent.com/stickz/Redstone/build/");
+	TrimString(url);
 	
 #if defined DEBUG
 	Updater_DebugLog("Download started:");
@@ -83,32 +84,6 @@ ProcessDownloadQueue(bool:force=false)
 	if (CURL_AVAILABLE())
 	{
 		Download_cURL(url, dest);
-	}	
-	else if (STEAMWORKS_AVAILABLE())
-	{
-		if (SteamWorks_IsLoaded())
-		{
-			Download_SteamWorks(url, dest);
-		}
-		else
-		{
-			CreateTimer(10.0, Timer_RetryQueue);
-		}
-	}
-	else if (STEAMTOOLS_AVAILABLE())
-	{
-		if (g_bSteamLoaded)
-		{
-			Download_SteamTools(url, dest);
-		}
-		else
-		{
-			CreateTimer(10.0, Timer_RetryQueue);
-		}
-	}
-	else if (SOCKET_AVAILABLE())
-	{
-		Download_Socket(url, dest);
 	}
 }
 

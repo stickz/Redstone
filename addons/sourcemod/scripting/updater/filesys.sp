@@ -23,7 +23,7 @@ GetPathBasename(String:path[], String:buffer[], maxlength)
 }
 
 // Add http protocol to url if it's missing.
-PrefixURL(String:buffer[], maxlength, const String:url[])
+stock PrefixURL(String:buffer[], maxlength, const String:url[])
 {
 	if (strncmp(url, "http://", 7) != 0 && strncmp(url, "https://", 8) != 0)
 	{
@@ -36,7 +36,7 @@ PrefixURL(String:buffer[], maxlength, const String:url[])
 }
 
 // Split URL into hostname, location, and filename. No trailing slashes.
-ParseURL(const String:url[], String:host[], maxHost, String:location[], maxLoc, String:filename[], maxName)
+stock ParseURL(const String:url[], String:host[], maxHost, String:location[], maxLoc, String:filename[], maxName)
 {
 	// Strip url prefix.
 	new idx = StrContains(url, "://");
