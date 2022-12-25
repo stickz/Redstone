@@ -16,7 +16,7 @@ public Plugin myinfo =
 };
 
 /* Auto Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_parachute_speed_tips/nd_parachute_speed.txt"
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_parachute_speed/nd_parachute_speed.txt"
 #include "updater/standard.sp"
 
 #define IBLEVELS 4
