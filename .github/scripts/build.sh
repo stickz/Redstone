@@ -187,7 +187,7 @@ do
     echo '}' >> $plugin_updater_path
     
     # remove any bad line endings when done
-    dos2unix $plugin_updater_path;
+    dos2unix $plugin_updater_path
     if [ "$verbose" = true ]; then
       echo "- Generated Updater file for plugin '$plugin_name'"
     fi
