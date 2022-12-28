@@ -120,22 +120,6 @@ enum SendRecv_Act {
 	SendRecv_Act_LAST,
 };
 
-/**
- * Hash type for curl_hash_file, curl_hash_string
- */
-enum Openssl_Hash {
-	Openssl_Hash_MD5 = 0,
-	Openssl_Hash_MD4,
-	Openssl_Hash_MD2,
-	Openssl_Hash_SHA,
-	Openssl_Hash_SHA1,
-	Openssl_Hash_SHA224,
-	Openssl_Hash_SHA256,
-	Openssl_Hash_SHA384,
-	Openssl_Hash_SHA512,
-	Openssl_Hash_RIPEMD160,
-};
-
 
 /*************************************************************************************************/
 /******************************************* CALLBACKS *******************************************/
@@ -523,28 +507,6 @@ native Handle:curl_slist();
  * @ noreturn
  */
 native curl_slist_append(Handle:hndl, const String:buffer[]);
-
-/**
- * Hash a file
- * @ parma String					file 				The file path. supports the "file://" notation.
- * @ param Openssl_Hash				algorithm			Hash Algorithm.
- * @ param Openssl_Hash_Complete	complete_callback	The complete callback.
- * @ param cell_t					value				Value to set.
- * @ noreturn
- */
-native curl_hash_file(const String:file[], Openssl_Hash:algorithm, Openssl_Hash_Complete:complete_callback, any:value=0);
-
-/**
- * Hash a string
- * @ parma String			input			The string to hash.
- * @ param cell_t			dataSize		The input string size.
- * @ param Openssl_Hash		algorithm		Hash Algorithm.
- * @ param String			buffer			Destination string buffer to copy to.
- * @ param cell_t			maxlen			Destination buffer length (includes null terminator).
- * @ return									1 on success
- */
-native bool:curl_hash_string(const String:input[], dataSize, Openssl_Hash:algorithm, String:buffer[], maxlength);
-
 
 /**
  * Do not edit below this line!
