@@ -1,0 +1,80 @@
+"Games"
+{
+    "nucleardawn"
+    {
+        "Signatures"
+        {
+            "CNDPlayer::Commander_BuildStructure"
+            {
+                "library"   "server"
+                "linux"     "@_ZN9CNDPlayer24Commander_BuildStructureEi13eNDStructuresRK6VectorRK6QAnglei"
+                "windows"   "\x55\x89\xE5\x57\x56\x53\x81\xEC\x3C\x01\x00\x00\x8B\x45\x2A\xC7\x44\x24\x2A\x07\x00\x00\x00"
+            }
+            "CNDPlayer::Commander_BuildEmergencyAssembler"
+            {
+                "library"   "server"
+                "linux"     "@_ZN9CNDPlayer33Commander_BuildEmergencyAssemblerEiRK6VectorRK6QAnglei"
+                "windows"   "\x55\x89\xE5\x57\x56\x53\x83\xEC\x2C\x8B\x45\x2A\x8B\x7D\x2A\x8B\x5D\x2A\x8B\x75\x2A\x89\x45\x2A\x8B\x45\x2A\x89\x45\x2A"
+            }
+        }
+        "Functions"
+        {
+            "CNDPlayer::Commander_BuildStructure"
+            {
+                "signature" "CNDPlayer::Commander_BuildStructure"
+                "callconv"  "thiscall"
+                "return"    "void"
+                "this"      "entity"
+                "arguments"
+                {
+                    "entity"
+                    {
+                        "type"  "int"
+                    }
+                    "structure"
+                    {
+                        "type"  "int"
+                    }
+                    "position"
+                    {
+                        "type"  "vectorptr"
+                    }
+                    "angles"
+                    {
+                        "type"  "vectorptr"
+                    }
+                    "mystery"
+                    {
+                        "type"  "int"
+                    }
+                }
+            }
+            "CNDPlayer::Commander_BuildEmergencyAssembler"
+            {
+                "signature" "CNDPlayer::Commander_BuildEmergencyAssembler"
+                "callconv"  "thiscall"
+                "return"    "void"
+                "this"      "entity"
+                "arguments"
+                {
+                    "entity"
+                    {
+                        "type"  "int"
+                    }
+                    "position"
+                    {
+                        "type"  "vectorptr"
+                    }
+                    "angles"
+                    {
+                        "type"  "vectorptr"
+                    }
+                    "mystery"
+                    {
+                        "type"  "int"
+                    }
+                }
+            }
+        }
+    }
+}
