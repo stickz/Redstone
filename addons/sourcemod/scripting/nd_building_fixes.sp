@@ -4,6 +4,7 @@
 #include <nd_rounds>
 #include <nd_struct_eng>
 #include <nd_stocks>
+#include <nd_commander_build>
 
 //Version is auto-filled by the travis builder
 public Plugin myinfo =
@@ -13,6 +14,15 @@ public Plugin myinfo =
     description = "Prevent building walls inside relays/repeaters",
     version     = "dummy",
     url         = "https://github.com/stickz/Redstone/"
+}
+
+// Check for dependency on nd_structure_intercept
+public void OnAllPluginsLoaded()
+{
+    if (!LibraryExists("nd_structure_intercept"))
+    {
+        SetFailState("Failed to find plugin dependency nd_structure_intercept");
+    }
 }
 
 /* Auto-Updater Support */
@@ -26,33 +36,75 @@ public void OnPluginStart()
     AddUpdaterLibrary(); //auto-updater
 }
 
-public void ND_OnStructureCreated(int entity, const char[] classname)
+public Action ND_OnCommanderBuildStructure(int client, eNDStructures &structure, float position[3])
 {
     if (!ND_RoundStarted())
-        return;
+        return Plugin_Continue;
 
-    if (ND_IsStructRelay(classname))
-        CreateTimer(0.1, CheckRelay, entity);
-    else if (StrEqual(classname, STRUCT_WALL, true))
-        CreateTimer(0.1, CheckWall, entity);
-}
+    if (structure == eND_RelayTower || structure == eND_WirelessRepeater)
+    {
+        // Get the team the relay tower or wireless repeater belongs to
+        int relayTeam = GetClientTeam(client);
 
-public Action CheckRelay(Handle timer, any entity)
-{
-    if (!IsValidEdict(entity))
-        return Plugin_Handled;
+        int wallEntity = INVALID_ENT_REFERENCE;
+        while ((wallEntity = FindEntityByClassname(wallEntity, STRUCT_WALL)) != INVALID_ENT_REFERENCE)
+        {
+            // Get the team of the entity from the wall index
+            // If the wall belongs to the same team as the relay
+            int wallTeam = GetEntProp(wallEntity, Prop_Send, "m_iTeamNum");
+            if (wallTeam == relayTeam)
+            {
+                // Get the position of the wall
+                float wallPos[3];
+                GetEntPropVector(wallEntity, Prop_Data, "m_vecOrigin", wallPos);
 
-    CheckRelayInsideWall(entity);
-    return Plugin_Handled;
-}
+                // Compare it to the relay tower. Get the vector distance apart.
+                int distance = RoundFloat(GetVectorDistance(position, wallPos));
+                if (distance <= DISTANCE_INSIDE_RELAY)
+                {
+                    UTIL_Commander_FailureText(client, "CANNOT BUILD TOO NEAR WALL.");
+                    return Plugin_Stop;
+                }
+            }
+        }
+    }
+    else if (structure == eND_Wall)
+    {
+        // Get the team the wall belongs to
+        int wallTeam = GetClientTeam(client);
 
-public Action CheckWall(Handle timer, any entity)
-{
-    if (!IsValidEdict(entity))
-        return Plugin_Handled;
+        // Get the name of the relay tower (wireless repeater or relay tower)
+        char relayName[32];
+        Format(relayName, sizeof(relayName), "%s", GetRelayTowerName(wallTeam));
 
-    CheckWallInsideRelay(entity);
-    return Plugin_Handled;
+        int relayEntity = INVALID_ENT_REFERENCE;
+        while ((relayEntity = FindEntityByClassname(relayEntity, relayName)) != INVALID_ENT_REFERENCE)
+        {
+            // Get the team of the entity from the relay index
+            // If the wall belongs to the same team as the relay
+            int relayTeam = GetEntProp(relayEntity, Prop_Send, "m_iTeamNum");
+            if (wallTeam == relayTeam)
+            {
+                // Get the position of the relay tower or wireless repeater
+                float relayPos[3];
+                GetEntPropVector(relayEntity, Prop_Data, "m_vecOrigin", relayPos);
+
+                // Compare it to the wall. Get the vector distance apart.
+                int distance = RoundFloat(GetVectorDistance(relayPos, position));
+                if (distance <= DISTANCE_INSIDE_RELAY)
+                {
+                    if (wallTeam == TEAM_CONSORT)
+                        UTIL_Commander_FailureText(client, "CANNOT BUILD TOO NEAR WIRELESS REPEATER.");
+                    else if (wallTeam == TEAM_EMPIRE)
+                        UTIL_Commander_FailureText(client, "CANNOT BUILD TOO NEAR RELAY TOWER.");
+
+                    return Plugin_Stop;
+                }
+            }
+        }
+    }
+
+    return Plugin_Continue;
 }
 
 stock void ShowDebugInfo(int entity)
@@ -67,74 +119,4 @@ stock void ShowDebugInfo(int entity)
 
     PrintToChatAll("Structure: %s, Team: %d", className, team);
     PrintToChatAll("Structure Cords: %f, %f, %f", pos[0], pos[1], pos[2]);
-}
-
-void CheckRelayInsideWall(int entity)
-{
-    // Get the team the relay tower or wireless repeater belongs to
-    int relayTeam = GetEntProp(entity, Prop_Send, "m_iTeamNum");
-
-    // Get the position of the relay tower or wireless repeater
-    float relayPos[3];
-    GetEntPropVector(entity, Prop_Data, "m_vecOrigin", relayPos);
-
-    int wallEntity = INVALID_ENT_REFERENCE;
-    while ((wallEntity = FindEntityByClassname(wallEntity, STRUCT_WALL)) != INVALID_ENT_REFERENCE)
-    {
-        // Get the team of the entity from the wall index
-        // If the wall belongs to the same team as the relay
-        int wallTeam = GetEntProp(wallEntity, Prop_Send, "m_iTeamNum");
-        if (wallTeam == relayTeam)
-        {
-            // Get the position of the wall
-            float wallPos[3];
-            GetEntPropVector(wallEntity, Prop_Data, "m_vecOrigin", wallPos);
-
-            // Compare it to the relay tower. Get the vector distance apart.
-            int distance = RoundFloat(GetVectorDistance(relayPos, wallPos));
-            if (distance <= DISTANCE_INSIDE_RELAY)
-            {
-                PrintToChatAll("\x05[xG] Wall built inside relay destoryed!");
-                SDKHooks_TakeDamage(wallEntity, 0, 0, 10000.0);
-                break; // Exit the loop becuase we just destoryed the wall
-            }
-        }
-    }
-}
-
-void CheckWallInsideRelay(int entity)
-{
-    // Get the team the wall belongs to
-    int wallTeam = GetEntProp(entity, Prop_Send, "m_iTeamNum");
-
-    // Get the position of the wall
-    float wallPos[3];
-    GetEntPropVector(entity, Prop_Data, "m_vecOrigin", wallPos);
-
-    // Get the name of the relay tower (wireless repeater or relay tower)
-    char relayName[32];
-    Format(relayName, sizeof(relayName), "%s", GetRelayTowerName(wallTeam));
-
-    int relayEntity = INVALID_ENT_REFERENCE;
-    while ((relayEntity = FindEntityByClassname(relayEntity, relayName)) != INVALID_ENT_REFERENCE)
-    {
-        // Get the team of the entity from the relay index
-        // If the wall belongs to the same team as the relay
-        int relayTeam = GetEntProp(relayEntity, Prop_Send, "m_iTeamNum");
-        if (wallTeam == relayTeam)
-        {
-            // Get the position of the relay tower or wireless repeater
-            float relayPos[3];
-            GetEntPropVector(relayEntity, Prop_Data, "m_vecOrigin", relayPos);
-
-            // Compare it to the wall. Get the vector distance apart.
-            int distance = RoundFloat(GetVectorDistance(relayPos, wallPos));
-            if (distance <= DISTANCE_INSIDE_RELAY)
-            {
-                PrintToChatAll("\x05[xG] Wall built inside relay destoryed!");
-                SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
-                break; // Exit the loop becuase we just destoryed the wall
-            }
-        }
-    }
 }
