@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_rounds>
 #include <nd_maps>
 #include <nd_struct_eng>
+#include <nd_commander_build>
 
 #define DEBUG 0
 
@@ -38,6 +39,15 @@ public Plugin myinfo =
     description = "Prevents building things in glitched locations",
     version     = "dummy",
     url         = "https://github.com/stickz/Redstone/"
+}
+
+// Check for dependency on nd_structure_intercept
+public void OnAllPluginsLoaded()
+{
+    if (!LibraryExists("nd_structure_intercept"))
+    {
+        SetFailState("Failed to find plugin dependency nd_structure_intercept");
+    }
 }
 
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_offmap_fixes/nd_offmap_fixes.txt"
@@ -274,19 +284,10 @@ void HandleCoast()
     HAX.PushArray(hax);
 }
 
-public void ND_OnStructureCreated(int entity, const char[] classname)
+public Action ND_OnCommanderBuildStructure(int client, eNDStructures &structure, float position[3])
 {
-    if (validMap)
-        CreateTimer(0.1, CheckBorders, entity);
-}
-
-public Action CheckBorders(Handle timer, any entity)
-{
-    if (!IsValidEdict(entity))
-        return Plugin_Handled;
-
-    float position[3];
-    GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
+    if (!validMap)
+        return Plugin_Continue;
 
     #if DEBUG != 0
     PrintToChatAll("placed location %f - %f - %f", position[0], position[1], position[2]);
@@ -351,8 +352,11 @@ public Action CheckBorders(Handle timer, any entity)
         }
 
         if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated))
-            SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
+        {
+            UTIL_Commander_FailureText(client, "INVALID BUILDING LOCATION.");
+            return Plugin_Stop;
+        }
     }
 
-    return Plugin_Handled;
+    return Plugin_Continue;
 }
