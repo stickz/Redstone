@@ -25,22 +25,9 @@
         eND_Wall,
         eND_Barrier
     }
-
-    /**
-     * Allows a plugin to block a structure form being built by returning Plugin_Stop
-     * or change the structure and/or position by returning Plugin_Changed.
-     *
-     * @param int client                     client index of the commander who attempted to build the structure
-     * @param eNDStructures &structure       type of structure being built
-     * @param float position[3]              x,y,z coordinate of where structure is being built
-     * @return                               Action that should be taken
-     */
-    forward Action ND_OnCommanderBuildStructure(int client, eNDStructures &structure, float position[3]);
 #endif
 
-#define PLUGIN_VERSION "1.1"
-
-#define INVALID_STRUCTURE_ID 22
+#define PLUGIN_VERSION "1.1.1"
 
 #define BUILD_PARAM_PLACEMENT 1
 #define BUILD_PARAM_STRUCTURE 2
@@ -55,7 +42,7 @@
 
 public Plugin myinfo =
 {
-    name = "ND Intercept Structure Build",
+    name = "[ND] Intercept Structure Build",
     author = "databomb",
     description = "Intercepts and allows plugins to block or change structures before the build order is finalized",
     version = PLUGIN_VERSION,
@@ -183,24 +170,6 @@ MRESReturn Detour_PlayerBuildEmergencyAssembler(int iClient, DHookParam hParams)
     // aBuildStructure = Plugin_Continue
     return MRES_Ignored;
 }
-
-#if !defined _nd_commmander_build_included_
-    // This helper function will display red text and a failed sound to the commander
-    stock void UTIL_Commander_FailureText(int iClient, char sMessage[64])
-    {
-        ClientCommand(iClient, "play buttons/button7");
-
-        Handle hBfCommanderText;
-        hBfCommanderText = StartMessageOne("CommanderNotice", iClient, USERMSG_BLOCKHOOKS);
-        BfWriteString(hBfCommanderText, sMessage);
-        EndMessage();
-
-        // clear other messages from notice area
-        hBfCommanderText = StartMessageOne("CommanderNotice", iClient, USERMSG_BLOCKHOOKS);
-        BfWriteString(hBfCommanderText, "");
-        EndMessage();
-    }
-#endif
 
 // This helper function will gracefully cancel the building and remove the yellow structure outline
 void UTIL_SendBuildingFailed(int iClient, int iID)
