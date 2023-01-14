@@ -42,15 +42,6 @@ public Plugin myinfo =
     url         = "https://github.com/stickz/Redstone/"
 }
 
-// Check for dependency on nd_structure_intercept
-public void OnAllPluginsLoaded()
-{
-    if (!LibraryExists("nd_structure_intercept"))
-    {
-        SetFailState("Failed to find plugin dependency nd_structure_intercept");
-    }
-}
-
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_offmap_fixes/nd_offmap_fixes.txt"
 #include "updater/standard.sp"
 

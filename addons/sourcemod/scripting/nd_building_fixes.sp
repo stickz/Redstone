@@ -19,15 +19,6 @@ public Plugin myinfo =
 
 char g_sPowerStructErrorMessage[2][64] = {"CANNOT BUILD TOO NEAR WIRELESS REPEATER.", "CANNOT BUILD TOO NEAR RELAY TOWER."};
 
-// Check for dependency on nd_structure_intercept
-public void OnAllPluginsLoaded()
-{
-    if (!LibraryExists("nd_structure_intercept"))
-    {
-        SetFailState("Failed to find plugin dependency nd_structure_intercept");
-    }
-}
-
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_building_fixes/nd_building_fixes.txt"
 #include "updater/standard.sp"
