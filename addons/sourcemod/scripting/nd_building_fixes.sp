@@ -17,6 +17,8 @@ public Plugin myinfo =
     url         = "https://github.com/stickz/Redstone/"
 }
 
+char g_sPowerStructErrorMessage[2][64] = {"CANNOT BUILD TOO NEAR WIRELESS REPEATER.", "CANNOT BUILD TOO NEAR RELAY TOWER."};
+
 // Check for dependency on nd_structure_intercept
 public void OnAllPluginsLoaded()
 {
@@ -94,11 +96,7 @@ public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure,
                 int distance = RoundFloat(GetVectorDistance(relayPos, position));
                 if (distance <= DISTANCE_INSIDE_RELAY)
                 {
-                    if (wallTeam == TEAM_CONSORT)
-                        UTIL_Commander_FailureText(client, "CANNOT BUILD TOO NEAR WIRELESS REPEATER.");
-                    else if (wallTeam == TEAM_EMPIRE)
-                        UTIL_Commander_FailureText(client, "CANNOT BUILD TOO NEAR RELAY TOWER.");
-
+                    UTIL_Commander_FailureText(client, g_sPowerStructErrorMessage[wallTeam-2]);
                     return Plugin_Stop;
                 }
             }
