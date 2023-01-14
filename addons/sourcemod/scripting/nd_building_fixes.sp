@@ -4,6 +4,7 @@
 #include <nd_rounds>
 #include <nd_struct_eng>
 #include <nd_stocks>
+#include <nd_structures>
 #include <nd_commander_build>
 
 //Version is auto-filled by the travis builder
@@ -36,12 +37,12 @@ public void OnPluginStart()
     AddUpdaterLibrary(); //auto-updater
 }
 
-public Action ND_OnCommanderBuildStructure(int client, eNDStructures &structure, float position[3])
+public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure, float position[3])
 {
     if (!ND_RoundStarted())
         return Plugin_Continue;
 
-    if (structure == eND_RelayTower || structure == eND_WirelessRepeater)
+    if (structure == ND_Relay_Tower || structure == ND_Wireless_Repeater)
     {
         // Get the team the relay tower or wireless repeater belongs to
         int relayTeam = GetClientTeam(client);
@@ -68,7 +69,7 @@ public Action ND_OnCommanderBuildStructure(int client, eNDStructures &structure,
             }
         }
     }
-    else if (structure == eND_Wall)
+    else if (structure == ND_Wall)
     {
         // Get the team the wall belongs to
         int wallTeam = GetClientTeam(client);

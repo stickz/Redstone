@@ -2,32 +2,35 @@
 #include <dhooks>
 #include <sdkhooks>
 
-#tryinclude <nd_commander_build>
+#tryinclude <nd_structures>
 
-#if !defined _nd_commmander_build_included_
+#if !defined _nd_structures_included
 
-    enum eNDStructures
-    {
-        eND_CommandBunker = 0,
-        eND_MachineGunTurret,
-        eND_TransportGate,
-        eND_PowerStation,
-        eND_WirelessRepeater,
-        eND_RelayTower,
-        eND_SupplyStation,
-        eND_Assembler,
-        eND_Armory,
-        eND_Artillery,
-        eND_RadarStation,
-        eND_FlamethrowerTurret,
-        eND_SonicTurret,
-        eND_RocketTurret,
-        eND_Wall,
-        eND_Barrier
+    enum ND_Structures: {
+        ND_Command_Bunker,
+        ND_MG_Turret,
+        ND_Transport_Gate,
+        ND_Power_Plant,
+        ND_Wireless_Repeater,
+        ND_Relay_Tower,
+        ND_Supply_Station,
+        ND_Assembler,
+        ND_Armory,
+        ND_Artillery,
+        ND_Radar_Station,
+        ND_FT_Turret,
+        ND_Sonic_Turret,
+        ND_Rocket_Turret,
+        ND_Wall,
+        ND_Barrier,
+        ND_StructCount
     }
+
 #endif
 
-#define PLUGIN_VERSION "1.1.1"
+#tryinclude <nd_commander_build>
+
+#define PLUGIN_VERSION "1.1.2"
 
 #define BUILD_PARAM_PLACEMENT 1
 #define BUILD_PARAM_STRUCTURE 2
@@ -87,7 +90,7 @@ public void OnPluginStart()
 
 MRESReturn Detour_PlayerBuildStructure(int iClient, DHookParam hParams)
 {
-    eNDStructures eStructure = DHookGetParam(hParams, BUILD_PARAM_STRUCTURE);
+    ND_Structures eStructure = DHookGetParam(hParams, BUILD_PARAM_STRUCTURE);
     float fOrigin[3];
     DHookGetParamVector(hParams, BUILD_PARAM_POSITION, fOrigin);
     float fAngles[3];
@@ -128,7 +131,7 @@ MRESReturn Detour_PlayerBuildStructure(int iClient, DHookParam hParams)
 
 MRESReturn Detour_PlayerBuildEmergencyAssembler(int iClient, DHookParam hParams)
 {
-    eNDStructures eStructure = eND_Assembler;
+    ND_Structures eStructure = ND_Assembler;
     float fOrigin[3];
     DHookGetParamVector(hParams, BUILD_EMERGENCY_ASSEMBLER_PARAM_POSITION, fOrigin);
     float fAngles[3];
@@ -152,7 +155,7 @@ MRESReturn Detour_PlayerBuildEmergencyAssembler(int iClient, DHookParam hParams)
         }
         case Plugin_Changed:
         {
-            if (eStructure != eND_Assembler)
+            if (eStructure != ND_Assembler)
             {
                 LogError("Cannot change emergency assembler build structure to non-assembler structure type.");
                 return MRES_Ignored;

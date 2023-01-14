@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <nd_rounds>
 #include <nd_maps>
 #include <nd_struct_eng>
+#include <nd_structures>
 #include <nd_commander_build>
 
 #define DEBUG 0
@@ -284,7 +285,7 @@ void HandleCoast()
     HAX.PushArray(hax);
 }
 
-public Action ND_OnCommanderBuildStructure(int client, eNDStructures &structure, float position[3])
+public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure, float position[3])
 {
     if (!validMap)
         return Plugin_Continue;
