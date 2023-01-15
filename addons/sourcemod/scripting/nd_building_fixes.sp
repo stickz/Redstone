@@ -17,7 +17,7 @@ public Plugin myinfo =
     url         = "https://github.com/stickz/Redstone/"
 }
 
-char g_sPowerStructErrorMessage[2][64] = {"CANNOT BUILD TOO NEAR WIRELESS REPEATER.", "CANNOT BUILD TOO NEAR RELAY TOWER."};
+#define NOTE_PREFIX "CANNOT BUILD TOO NEAR"
 
 /* Auto-Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_building_fixes/nd_building_fixes.txt"
@@ -53,7 +53,11 @@ public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure,
 
         if (IsPowerTooCloseToWall(relayTeam, position))
         {
-            UTIL_Commander_FailureText(client, "CANNOT BUILD TOO NEAR WALL.");
+            char notice[64];
+            Format(notice, sizeof(notice), "%s %s.", \
+                NOTE_PREFIX, \
+                GetStructureDisplayName(ND_Wall, true));
+            UTIL_Commander_FailureText(client, notice);
             return Plugin_Stop;
         }
     }
@@ -64,7 +68,11 @@ public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure,
 
         if (IsWallTooCloseToPower(wallTeam, position))
         {
-            UTIL_Commander_FailureText(client, g_sPowerStructErrorMessage[wallTeam-2]);
+            char notice[64];
+            Format(notice, sizeof(notice), "%s %s.", \
+                NOTE_PREFIX, \
+                GetStructureDisplayName(wallTeam == TEAM_CONSORT ? ND_Wireless_Repeater : ND_Relay_Tower, true));
+            UTIL_Commander_FailureText(client, notice);
             return Plugin_Stop;
         }
     }
@@ -107,7 +115,11 @@ public Action Timer_CheckRelay(Handle timer, any entref)
         int client = GameRules_GetPropEnt("m_hCommanders", team-2);
         if (client && IsClientInGame(client))
         {
-            UTIL_Commander_FailureText(client, "CANNOT BUILD TOO NEAR WALL.");
+            char notice[64];
+            Format(notice, sizeof(notice), "%s %s.", \
+                NOTE_PREFIX, \
+                GetStructureDisplayName(ND_Wall, true));
+            UTIL_Commander_FailureText(client, notice);
         }
 
         SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
@@ -136,7 +148,11 @@ public Action Timer_CheckWall(Handle timer, any entref)
         int client = GameRules_GetPropEnt("m_hCommanders", team-2);
         if (client && IsClientInGame(client))
         {
-            UTIL_Commander_FailureText(client, g_sPowerStructErrorMessage[team-2]);
+            char notice[64];
+            Format(notice, sizeof(notice), "%s %s.", \
+                NOTE_PREFIX, \
+                GetStructureDisplayName(team == TEAM_CONSORT ? ND_Wireless_Repeater : ND_Relay_Tower, true));
+            UTIL_Commander_FailureText(client, notice);
         }
 
         SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
