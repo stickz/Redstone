@@ -25,6 +25,17 @@ char g_sPowerStructErrorMessage[2][64] = {"CANNOT BUILD TOO NEAR WIRELESS REPEAT
 
 #define DISTANCE_INSIDE_RELAY 60
 
+// Check for nd_structure_intercept being available
+bool g_bStructureDetourAvailable = true;
+public void OnAllPluginsLoaded()
+{
+    g_bStructureDetourAvailable = LibraryExists("nd_structure_intercept");
+    if (!g_bStructureDetourAvailable)
+    {
+        LogError("Problem was found and automatically reverting to ND_OnStructureCreated. Check gamedata.");
+    }
+}
+
 public void OnPluginStart()
 {
     AddUpdaterLibrary(); //auto-updater
@@ -59,6 +70,79 @@ public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure,
     }
 
     return Plugin_Continue;
+}
+public void ND_OnStructureCreated(int entity, const char[] classname)
+{
+    if (!g_bStructureDetourAvailable && ND_RoundStarted())
+    {
+        int entref = EntIndexToEntRef(entity);
+        if (ND_IsStructRelay(classname))
+        {
+            CreateTimer(0.1, Timer_CheckRelay, entref);
+        }
+        else if (!strcmp(classname, STRUCT_WALL))
+        {
+            CreateTimer(0.1, Timer_CheckWall, entref);
+        }
+    }
+}
+
+public Action Timer_CheckRelay(Handle timer, any entref)
+{
+    int entity = EntRefToEntIndex(entref);
+    if (entity == INVALID_ENT_REFERENCE || !IsValidEdict(entity))
+    {
+        return Plugin_Handled;
+    }
+
+    // Get the team the structure belongs to
+    int team = GetEntProp(entity, Prop_Send, "m_iTeamNum");
+
+    // Get the position of the structure
+    float position[3];
+    GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
+
+    if (IsPowerTooCloseToWall(team, position))
+    {
+        int client = GameRules_GetPropEnt("m_hCommanders", team-2);
+        if (client && IsClientInGame(client))
+        {
+            UTIL_Commander_FailureText(client, "CANNOT BUILD TOO NEAR WALL.");
+        }
+
+        SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
+    }
+
+    return Plugin_Handled;
+}
+
+public Action Timer_CheckWall(Handle timer, any entref)
+{
+    int entity = EntRefToEntIndex(entref);
+    if (entity == INVALID_ENT_REFERENCE || !IsValidEdict(entity))
+    {
+        return Plugin_Handled;
+    }
+
+    // Get the team the structure belongs to
+    int team = GetEntProp(entity, Prop_Send, "m_iTeamNum");
+
+    // Get the position of the structure
+    float position[3];
+    GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
+
+    if (IsWallTooCloseToPower(team, position))
+    {
+        int client = GameRules_GetPropEnt("m_hCommanders", team-2);
+        if (client && IsClientInGame(client))
+        {
+            UTIL_Commander_FailureText(client, g_sPowerStructErrorMessage[team-2]);
+        }
+
+        SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
+    }
+
+    return Plugin_Handled;
 }
 
 bool IsPowerTooCloseToWall(int team, float position[3])
