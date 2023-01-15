@@ -43,6 +43,25 @@ enum ND_Structures: {
 #define STRUCT_WALL "struct_wall"
 #define STRUCT_BARRIER "struct_barrier"
 
+stock char ND_StructName[ND_StructCount][32] = {
+	STRUCT_BUNKER,
+	STRUCT_MG_TURRET,
+	STRUCT_TRANSPORT,
+	STRUCT_POWER_STATION,
+	STRUCT_REPEATER,
+	STRUCT_RELAY,
+	STRUCT_SUPPLY,
+	STRUCT_ASSEMBLER,
+	STRUCT_ARMOURY,
+	STRUCT_ARTILLERY,
+	STRUCT_RADAR,
+	STRUCT_FT_TURRET,
+	STRUCT_SONIC_TURRET,
+	STRUCT_ROCKET_TURRET,
+	STRUCT_WALL,
+	STRUCT_BARRIER
+};
+
 #define MAX_STRUCT_DISPLAYNAME 22
 #define DISPLAYNAME_BUNKER "Command Bunker"
 #define DISPLAYNAME_MG_TURRET "Machine Gun Turret"
@@ -61,23 +80,23 @@ enum ND_Structures: {
 #define DISPLAYNAME_WALL "Wall"
 #define DISPLAYNAME_BARRIER "Barrier"
 
-stock char ND_StructName[ND_StructCount][32] = {
-	STRUCT_BUNKER,
-	STRUCT_MG_TURRET,
-	STRUCT_TRANSPORT,
-	STRUCT_POWER_STATION,
-	STRUCT_REPEATER,
-	STRUCT_RELAY,
-	STRUCT_SUPPLY,
-	STRUCT_ASSEMBLER,
-	STRUCT_ARMOURY,
-	STRUCT_ARTILLERY,
-	STRUCT_RADAR,
-	STRUCT_FT_TURRET,
-	STRUCT_SONIC_TURRET,
-	STRUCT_ROCKET_TURRET,
-	STRUCT_WALL,
-	STRUCT_BARRIER
+stock char ND_StructDisplayName[ND_StructCount][MAX_STRUCT_DISPLAYNAME] = {
+	DISPLAYNAME_BUNKER,
+	DISPLAYNAME_MG_TURRET,
+	DISPLAYNAME_TRANSPORT,
+	DISPLAYNAME_POWER_STATION,
+	DISPLAYNAME_REPEATER,
+	DISPLAYNAME_RELAY,
+	DISPLAYNAME_SUPPLY,
+	DISPLAYNAME_ASSEMBLER,
+	DISPLAYNAME_ARMORY,
+	DISPLAYNAME_ARTILLERY,
+	DISPLAYNAME_RADAR,
+	DISPLAYNAME_FT_TURRET,
+	DISPLAYNAME_SONIC_TURRET,
+	DISPLAYNAME_ROCKET_TURRET,
+	DISPLAYNAME_WALL,
+	DISPLAYNAME_BARRIER
 };
 
 stock int ND_GetStructIndex(const char[] classname)
@@ -119,25 +138,7 @@ stock char[] GetStructureDisplayName(ND_Structures structure, bool uppercase=fal
 	}
 
 	char name[MAX_STRUCT_DISPLAYNAME];
-	switch (structure)
-	{
-		case ND_Command_Bunker: Format(name, sizeof(name), DISPLAYNAME_BUNKER);
-		case ND_MG_Turret: Format(name, sizeof(name), DISPLAYNAME_MG_TURRET);
-		case ND_Transport_Gate: Format(name, sizeof(name), DISPLAYNAME_TRANSPORT);
-		case ND_Power_Plant: Format(name, sizeof(name), DISPLAYNAME_POWER_STATION);
-		case ND_Wireless_Repeater: Format(name, sizeof(name), DISPLAYNAME_REPEATER);
-		case ND_Relay_Tower: Format(name, sizeof(name), DISPLAYNAME_RELAY);
-		case ND_Supply_Station: Format(name, sizeof(name), DISPLAYNAME_SUPPLY);
-		case ND_Assembler: Format(name, sizeof(name), DISPLAYNAME_ASSEMBLER);
-		case ND_Armory: Format(name, sizeof(name), DISPLAYNAME_ARMORY);
-		case ND_Artillery: Format(name, sizeof(name), DISPLAYNAME_ARTILLERY);
-		case ND_Radar_Station: Format(name, sizeof(name), DISPLAYNAME_RADAR);
-		case ND_FT_Turret: Format(name, sizeof(name), DISPLAYNAME_FT_TURRET);
-		case ND_Sonic_Turret: Format(name, sizeof(name), DISPLAYNAME_SONIC_TURRET);
-		case ND_Rocket_Turret: Format(name, sizeof(name), DISPLAYNAME_ROCKET_TURRET);
-		case ND_Wall: Format(name, sizeof(name), DISPLAYNAME_WALL);
-		case ND_Barrier: Format(name, sizeof(name), DISPLAYNAME_BARRIER);
-	}
+	strcopy(name, sizeof(name), ND_StructDisplayName[view_as<int>(structure)]);
 
 	if (uppercase)
 	{
