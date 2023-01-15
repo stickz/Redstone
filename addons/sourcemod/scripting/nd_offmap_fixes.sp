@@ -285,6 +285,17 @@ public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure,
     PrintToChatAll("placed location %f - %f - %f", position[0], position[1], position[2]);
     #endif
 
+    if (IsPositionInvalid(position))
+    {
+        UTIL_Commander_FailureText(client, "INVALID BUILDING LOCATION.");
+        return Plugin_Stop;
+    }
+
+    return Plugin_Continue;
+}
+
+bool IsPositionInvalid(float position[3])
+{
     float hax[6];
 
     for (int i = 0; i < GetArraySize(HAX); i++)
@@ -345,10 +356,9 @@ public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure,
 
         if (tmpAxisViolated && (tmpAxisCount == tmpAxisViolated))
         {
-            UTIL_Commander_FailureText(client, "INVALID BUILDING LOCATION.");
-            return Plugin_Stop;
+            return true;
         }
     }
 
-    return Plugin_Continue;
+    return false;
 }
