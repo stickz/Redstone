@@ -310,7 +310,7 @@ public void ND_OnStructureCreated(int entity, const char[] classname)
     if (!g_bStructureDetourAvailable && validMap)
     {
         int entref = EntIndexToEntRef(entity);
-        CreateTimer(0.1, Timer_CheckBorders, entref);
+        CreateTimer(0.1, Timer_CheckBorders, entref, TIMER_FLAG_NO_MAPCHANGE);
     }
 }
 

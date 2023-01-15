@@ -78,11 +78,11 @@ public void ND_OnStructureCreated(int entity, const char[] classname)
         int entref = EntIndexToEntRef(entity);
         if (ND_IsStructRelay(classname))
         {
-            CreateTimer(0.1, Timer_CheckRelay, entref);
+            CreateTimer(0.1, Timer_CheckRelay, entref, TIMER_FLAG_NO_MAPCHANGE);
         }
         else if (!strcmp(classname, STRUCT_WALL))
         {
-            CreateTimer(0.1, Timer_CheckWall, entref);
+            CreateTimer(0.1, Timer_CheckWall, entref, TIMER_FLAG_NO_MAPCHANGE);
         }
     }
 }
