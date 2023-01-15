@@ -45,6 +45,17 @@ public Plugin myinfo =
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_offmap_fixes/nd_offmap_fixes.txt"
 #include "updater/standard.sp"
 
+// Check for nd_structure_intercept being available
+bool g_bStructureDetourAvailable = true;
+public void OnAllPluginsLoaded()
+{
+    g_bStructureDetourAvailable = LibraryExists("nd_structure_intercept");
+    if (!g_bStructureDetourAvailable)
+    {
+        LogError("Problem was found and automatically reverting to ND_OnStructureCreated. Check gamedata.");
+    }
+}
+
 public void OnPluginStart()
 {
     HAX = new ArrayList(6);
@@ -292,6 +303,41 @@ public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure,
     }
 
     return Plugin_Continue;
+}
+
+public void ND_OnStructureCreated(int entity, const char[] classname)
+{
+    if (!g_bStructureDetourAvailable && validMap)
+    {
+        int entref = EntIndexToEntRef(entity);
+        CreateTimer(0.1, Timer_CheckBorders, entref);
+    }
+}
+
+public Action Timer_CheckBorders(Handle timer, any entref)
+{
+    int entity = EntRefToEntIndex(entref);
+    if (entity == INVALID_ENT_REFERENCE || !IsValidEdict(entity))
+    {
+        return Plugin_Handled;
+    }
+
+    float position[3];
+    GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
+
+    if (IsPositionInvalid(position))
+    {
+        int team = GetEntProp(entity, Prop_Send, "m_iTeamNum");
+        int client = GameRules_GetPropEnt("m_hCommanders", team-2);
+        if (client && IsClientInGame(client))
+        {
+            UTIL_Commander_FailureText(client, "INVALID BUILDING LOCATION.");
+        }
+
+        SDKHooks_TakeDamage(entity, 0, 0, 10000.0);
+    }
+
+    return Plugin_Handled;
 }
 
 bool IsPositionInvalid(float position[3])
