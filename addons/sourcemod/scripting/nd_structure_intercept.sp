@@ -28,9 +28,7 @@
 
 #endif
 
-#tryinclude <nd_commander_build>
-
-#define PLUGIN_VERSION "1.1.2"
+#define PLUGIN_VERSION "1.1.3"
 
 #define BUILD_PARAM_PLACEMENT 1
 #define BUILD_PARAM_STRUCTURE 2
