@@ -1,34 +1,9 @@
 #include <sourcemod>
 #include <dhooks>
 #include <sdkhooks>
+#include <nd_structures>
 
-#tryinclude <nd_structures>
-
-#if !defined _nd_structures_included
-
-    enum ND_Structures: {
-        ND_Command_Bunker,
-        ND_MG_Turret,
-        ND_Transport_Gate,
-        ND_Power_Plant,
-        ND_Wireless_Repeater,
-        ND_Relay_Tower,
-        ND_Supply_Station,
-        ND_Assembler,
-        ND_Armory,
-        ND_Artillery,
-        ND_Radar_Station,
-        ND_FT_Turret,
-        ND_Sonic_Turret,
-        ND_Rocket_Turret,
-        ND_Wall,
-        ND_Barrier,
-        ND_StructCount
-    }
-
-#endif
-
-#define PLUGIN_VERSION "1.1.3"
+#define PLUGIN_VERSION "1.1.4"
 
 #define BUILD_PARAM_PLACEMENT 1
 #define BUILD_PARAM_STRUCTURE 2
