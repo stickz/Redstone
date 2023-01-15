@@ -52,7 +52,7 @@ public void OnAllPluginsLoaded()
     g_bStructureDetourAvailable = LibraryExists("nd_structure_intercept");
     if (!g_bStructureDetourAvailable)
     {
-        LogError("Problem was found and automatically reverting to ND_OnStructureCreated. Check gamedata.");
+        LogError("Structure detour not available. Reverting to ND_OnStructureCreated. Check gamedata.");
     }
 }
 
