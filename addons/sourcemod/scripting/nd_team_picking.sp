@@ -8,7 +8,7 @@
 #include <nd_swgm>
 #include <nd_warmup>
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
 	name = "[ND] Team Picker",
 	author = "Stickz",
@@ -48,18 +48,18 @@ public void OnPluginStart()
 {
 	LoadTranslations("common.phrases");
 	LoadTranslations("nd_team_picking.phrases");
-	
+
 	cvarPickTimeLimit = CreateConVar("sm_tp_time", "20", "Set time allocated for each pick");
-	cvarFirstPickTime = CreateConVar("sm_tp_time_first", "40", "Set time allocated for first pick");	
+	cvarFirstPickTime = CreateConVar("sm_tp_time_first", "40", "Set time allocated for first pick");
 	AutoExecConfig(true, "nd_teampick");
-	
+
 	PickedConsort = new ArrayList(32);
 	PickedEmpire = new ArrayList(32);
-	
+
 	RegisterPickingCommand(); //start_picking.sp: Command for starting team picking
 	RegisterCommands(); //commands.sp: Extra commands, not directly related to picking
-	
-	AddCommandListener(Command_JoinTeam, "jointeam");	
+
+	AddCommandListener(Command_JoinTeam, "jointeam");
 	PrintToChatAll("\x05[xG] Team picker plugin reloaded successfully");
 
 	AddUpdaterLibrary(); //auto-updater
@@ -84,11 +84,11 @@ public Action Command_JoinTeam(int client, char[] command, int argc)
 		PrintToChat(client,"\x05Please stay in spectator until you're chosen.");
 		return Plugin_Handled;
 	}
-	
+
 	return Plugin_Continue;
 }
 
-void InitiateRoundEnd() 
+void InitiateRoundEnd()
 {
 	g_bPickedThisMap = false;
 	PickedConsort.Clear();
@@ -97,7 +97,7 @@ void InitiateRoundEnd()
 
 bool PlayerIsPickable(int client) {
 	// If the client is valid by Redstone standards and not already on a team
-	return IsValidClient(client, !DebugTeamPicking) && RED_IsValidCIndex(client) && 
+	return IsValidClient(client, !DebugTeamPicking) && IsValidClient(client) &&
 				     GetClientTeam(client) < 2 && !ND_IsMarkedAFK(client);
 }
 
@@ -109,7 +109,7 @@ void MarkPlayerPicked(int client, int team)
 {
 	char gAuth[32];
 	GetClientAuthId(client, AuthId_Steam2, gAuth, sizeof(gAuth));
-					
+
 	switch (team)
 	{
 		case TEAM_EMPIRE: 	PickedEmpire.PushString(gAuth);
