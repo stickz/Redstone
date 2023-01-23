@@ -63,7 +63,7 @@ ConVar cDemoteVetSkill;
 #define DEMOTE_SCOUNT 2
 char nd_demote_strings[DEMOTE_SCOUNT][] = {
 	"demote",
-	"mutiny"	
+	"mutiny"
 };
 
 ArrayList g_DemotedSteamIdList;
@@ -72,32 +72,32 @@ public void OnPluginStart()
 {
 	CreatePluginConvars(); // for convars
 	RegPluginCommands(); // for commands
-	
+
 	AddCommandListener(PlayerJoinTeam, "jointeam");
 	AddCommandListener(view_as<CommandListener>(Command_Apply), "applyforcommander");
 
 	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_commander_restrictions.phrases");
-	
+
 	g_DemotedSteamIdList = new ArrayList(MaxClients+1);
-	
+
 	AddUpdaterLibrary(); //auto-updater
 }
 
 public void OnClientAuthorized(int client)
-{	
+{
 	/* retrieve client steam-id and check if client has been demoted */
 	char gAuth[32];
 	GetClientAuthId(client, AuthId_Steam2, gAuth, sizeof(gAuth));
-	
+
 	if (g_DemotedSteamIdList.FindString(gAuth) != -1)
-		g_hasBeenDemoted[client] = true;	
+		g_hasBeenDemoted[client] = true;
 }
 
 void CreatePluginConvars()
 {
 	AutoExecConfig_Setup("nd_commander_demote");
-	
+
 	tNoBuildDemoteTime 	= 	AutoExecConfig_CreateConVar("sm_demote_build", "150", "How long should we demote the commander, after not building anything");
 	tNoBunkerDemoteTime 	= 	AutoExecConfig_CreateConVar("sm_demote_bunker", "180", "How long should we demote the commander, after not entering the bunker");
 	cDemotePercentage	= 	AutoExecConfig_CreateConVar("sm_demote_percent", "51", "Specifies the percent rounded to nearest required for demotion");
@@ -112,7 +112,7 @@ void RegPluginCommands()
 {
 	RegConsoleCmd("sm_mutiny", CMD_Demote);
 	RegConsoleCmd("sm_demote", CMD_Demote);
-	
+
 	RegConsoleCmd("sm_unmutiny", CMD_UnDemote);
 	RegConsoleCmd("sm_undemote", CMD_UnDemote);
 }
@@ -124,12 +124,12 @@ void resetForGameStart()
 	}
 
 	for (int client = 1; client <= MaxClients; client++)
-	{		
+	{
 		g_hasVoted[0][client] = false;
 		g_hasVoted[1][client] = false;
-		g_hasBeenDemoted[client] = false;		
+		g_hasBeenDemoted[client] = false;
 	}
-	
+
 	g_DemotedSteamIdList.Clear();
 }
 
@@ -150,12 +150,12 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 		{
 			if (StrEqual(sArgs, nd_demote_strings[i], false))
 			{
-				callMutiny(client, GetClientTeam(client));				
-				return Plugin_Handled;					
-			}			
+				callMutiny(client, GetClientTeam(client));
+				return Plugin_Handled;
+			}
 		}
 	}
-	
+
 	return Plugin_Continue;
 }
 
@@ -176,13 +176,13 @@ public Action Command_Apply(int client, const char[] command, int argc)
 		PrintMessage(client, "Demotion Reapply");
 		return Plugin_Handled;
 	}
-	
+
 	return Plugin_Continue;
 }
 
 public Action PlayerJoinTeam(int client, char[] command, int argc)
 {
-	resetValues(client);	
+	resetValues(client);
 	return Plugin_Continue;
 }
 
@@ -205,33 +205,33 @@ public void OnClientDisconnect(int client) {
 
 public Action TIMER_CheckChairDemote(Handle timer, any userid)
 {
-	int client = GetClientOfUserId(userid);	
+	int client = GetClientOfUserId(userid);
 	if (client == INVALID_CLIENT)
 		return Plugin_Handled;
-		
+
 	if (ND_IsCommander(client))
 	{
 		int team = GetClientTeam(client);
 		if (team > 1 && !ND_HasEnteredCommanderMode(client))
-			demoteCommander(team, false);	
-	}		
-		
+			demoteCommander(team, false);
+	}
+
 	return Plugin_Handled;
 }
 
 public Action TIMER_CheckBuildDemote(Handle timer, any userid)
 {
-	int client = GetClientOfUserId(userid);	
+	int client = GetClientOfUserId(userid);
 	if (client == INVALID_CLIENT)
 		return Plugin_Handled;
-		
+
 	if (ND_IsCommander(client))
 	{
 		int team = GetClientTeam(client);
 		if (team > 1 && !ND_TeamPlacedStructure(team, true))
-			demoteCommander(team, false);	
-	}		
-		
+			demoteCommander(team, false);
+	}
+
 	return Plugin_Handled;
 }
 
@@ -244,7 +244,7 @@ public Action ND_OnCommanderResigned(int client, int team)
 
 public Action ND_OnCommanderMutiny(int client, int commander, int team)
 {
-	callMutiny(client, team);	
+	callMutiny(client, team);
 	return Plugin_Handled;
 }
 
@@ -252,31 +252,31 @@ void callMutiny(int client, int team)
 {
 	int teamIDX = team - 2;
 	int com = ND_GetCommanderOnTeam(team);
-	
+
 	if (com == -1) //The team you're trying to demote has no commander
 		PrintMessage(client, "No Commander");
-	
+
 	else if (CheckCommandAccess(com, "mutiny_immunity", ADMFLAG_GENERIC, true))
 		return; //Server adminisators can't be demoted, to prevent conflicts of interest with moderation
-	
+
 	else if (team < 2)
 		PrintMessage(client, "On Team"); //You must be on a team, to vote commander demote
-		
+
 	else if (g_hasVoted[teamIDX][client])
 		PrintMessage(client, "Already Voted"); //You've already voted to demote the commander
-	
+
 	else if (ND_RoundEnded())
 		PrintMessage(client, "Round End Usage"); //You cannot demote after the round has ended
-	
+
 	else if (!ND_RoundStarted())
 		PrintMessage(client, "Round Start Usage"); //You cannot demote before the round has started
-	
+
 	else if (g_hasBeenDemoted[client] && voteCount[teamIDX] == 0)
 		PrintMessage(client, "Demote First"); //You cannot cast the first demote vote after demotion
-		
+
 	else if (IsSourceCommSilenced(client) && voteCount[teamIDX] == 0)
 		PrintMessage(client, "Silence First"); //You cannot cast the first demote vote while silenced
-	
+
 	else
 		castDemoteVote(team, teamIDX, client, com); //Cast the vote to demote the commander
 }
@@ -284,23 +284,23 @@ void callMutiny(int client, int team)
 void castDemoteVote(int team, int teamIDX, int client, int commander)
 {
 	voteCount[teamIDX]++;
-		
+
 	/* Get the number of votes required for demote, and round to nereast */
-	int minPercent = IncreaseDemotePercent(commander) ? cDemotePercentEx.IntValue : cDemotePercentage.IntValue;			 
+	int minPercent = IncreaseDemotePercent(commander) ? cDemotePercentEx.IntValue : cDemotePercentage.IntValue;
 	int demotePercent = RoundToNearest(float(RED_GetTeamCount(team)) * (float(minPercent) / 100.0));
-	
+
 	/* Enforce a minium number of votes required for demote, regardless of percent */
 	int minDemoteCount = cDemoteMinValue.IntValue;
 	int demoteCount = minDemoteCount > demotePercent ? minDemoteCount : demotePercent;
 
 	/* Get the remainder of votes needed to demote the commander */
 	int Remainder = demoteCount - voteCount[teamIDX];
-		
+
 	if (Remainder <= 0)
 		demoteCommander(team, true);
 	else
 		displayVotes(team, Remainder, client);
-			
+
 	g_hasVoted[teamIDX][client] = true;
 }
 
@@ -309,7 +309,7 @@ bool IncreaseDemotePercent(int commander) {
 }
 
 void demoteCommander(int team, bool store)
-{	
+{
 	int commander = ND_GetTeamCommander(team);
 
 	if (commander != NO_COMMANDER)
@@ -317,15 +317,15 @@ void demoteCommander(int team, bool store)
 		/* Demote the commadner */
 		FakeClientCommand(commander, "startmutiny");
 		FakeClientCommand(commander, "rtsview");
-		
+
 		/* Store for mutiny restrictions */
 		g_hasBeenDemoted[commander] = store;
-		
+
 		/* Push SteamID to ArrayList in-case of disconnect */
 		char gAuth[32];
 		GetClientAuthId(commander, AuthId_Steam2, gAuth, sizeof(gAuth));
 		g_DemotedSteamIdList.PushString(gAuth);
-						
+
 		/* Let the team know the demote was succesful */
 		PrintCommanderDemoted(team);
 	}
@@ -335,7 +335,7 @@ void PrintCommanderDemoted(int team)
 {
 	for (int client = 0; client <= MAXPLAYERS; client++)
 	{
-		if (RED_IsValidClient(client) && GetClientTeam(client) == team)
+		if (IsValidClient(client) && GetClientTeam(client) == team)
 		{
 			PrintMessage(client, "Commander Demoted");
 		}
@@ -343,7 +343,7 @@ void PrintCommanderDemoted(int team)
 }
 
 void resetValues(int client)
-{	
+{
 	for (int team = 0; team < 2; team++)
 	{
 		if (g_hasVoted[team][client])
@@ -352,18 +352,18 @@ void resetValues(int client)
 			voteCount[team]--;
 		}
 	}
-	
+
 	g_hasBeenDemoted[client] = false;
 }
 
 void resetVotes(int team)
 {
 	int teamIDX = team - 2;
-	
+
 	for (int client = 0; client <= MAXPLAYERS; client++) {
-		g_hasVoted[teamIDX][client] = false;			
+		g_hasVoted[teamIDX][client] = false;
 	}
-	
+
 	voteCount[teamIDX] = 0;
 }
 
@@ -371,10 +371,10 @@ void displayVotes(int team, int remainder, int client)
 {
 	char name[64];
 	GetClientName(client, name, sizeof(name));
-	
+
 	for (int idx = 1; idx <= MaxClients; idx++)
 	{
-		if (RED_IsValidClient(idx) && GetClientTeam(idx) == team)
+		if (IsValidClient(idx) && GetClientTeam(idx) == team)
 			PrintToChat(idx, "\x05 %t", "Demote Vote", name, remainder);
 	}
 }
@@ -386,7 +386,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	MarkNativeAsOptional("SourceComms_SetClientGag");
 	MarkNativeAsOptional("SourceComms_GetClientMuteType");
 	MarkNativeAsOptional("SourceComms_GetClientGagType");
-	
+
 	// Make nd_fskill optional
 	MarkNativeAsOptional("ND_GetTeamDifference");
 	MarkNativeAsOptional("ND_GetPlayerSkill");
@@ -396,9 +396,9 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	MarkNativeAsOptional("ND_GetSkillMedian");
 	MarkNativeAsOptional("ND_GetSkillAverage");
 	MarkNativeAsOptional("ND_GetTeamSkillAverage");
-	
+
 	// Make commander deprioritization optional
 	MarkNativeAsOptional("ND_IsCommanderDeprioritised");
 
-	return APLRes_Success;	
+	return APLRes_Success;
 }

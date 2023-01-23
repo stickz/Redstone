@@ -25,11 +25,11 @@ char expNames[EXP_NAME_COUNT][] = {
 
 public void OnPluginStart() {
 	RegConsoleCmd("sm_CheckExp", CMD_GetExp);
-	
+
 	for (int i = 0; i < EXP_NAME_COUNT; i++){
-		RegConsoleCmd(expNames[i], CMD_DumpPlayerEXP);		
+		RegConsoleCmd(expNames[i], CMD_DumpPlayerEXP);
 	}
-	
+
 	AddUpdaterLibrary(); // for auto-updater
 	LoadTranslations("common.phrases"); //required for findtarget
 }
@@ -41,27 +41,27 @@ public Action CMD_GetExp(int client, int args)
 		ReplyToCommand(client, "Usage: sm_CheckExp [player name]");
 		return Plugin_Handled;
 	}
-	
+
 	// Try to find a target player
 	char targetArg[50];
 	GetCmdArg(1, targetArg, sizeof(targetArg));
-	
+
 	int target = FindTarget(client, targetArg);
 	if (target == -1)
 	{
 		ReplyToCommand(client, "Target player name not found");
-		return Plugin_Handled;	
+		return Plugin_Handled;
 	}
-	
+
 	if (!ND_EXPAvailible(target))
 	{
 		ReplyToCommand(client, "Failed to reteive exp from steamworks");
-		return Plugin_Handled;	
+		return Plugin_Handled;
 	}
-	
+
 	char pName[64];
 	GetClientName(target, pName, sizeof(pName))
-	
+
 	PrintToChat(client, "\x05%s's exp is %d", pName, ND_GetClientEXP(target));
 	return Plugin_Handled;
 }
@@ -74,7 +74,7 @@ public Action CMD_DumpPlayerEXP(int client, int args)
 		ReplyToCommand(client, "Failed to reteive exp from steamworks");
 		return Plugin_Handled;
 	}
-	
+
 	DumpPlayerEXP(client);
 	PrintToChat(client, "[xG] Output dummped to client console press ~.");
 	return Plugin_Handled;
@@ -83,11 +83,11 @@ public Action CMD_DumpPlayerEXP(int client, int args)
 void DumpPlayerEXP(int player)
 {
 	PrintSpacer(player); PrintSpacer(player);
-	
+
 	PrintToConsole(player, "--> Player Experience Values <--");
 	PrintToConsole(player, "Format: Name, Player Experience");
 	PrintSpacer(player);
-	
+
 	for (int team = 0; team < 4; team++)
 	{
 		if (RED_GetTeamCount(team > 0))
@@ -100,13 +100,13 @@ void DumpPlayerEXP(int player)
 }
 
 void dumpPlayersOnTeam(int team, int player)
-{	
+{
 	char Name[32];
 	for (int client; client <= MaxClients; client++)
 	{
-		if (RED_IsValidClient(client) && GetClientTeam(client) == team)
+		if (IsValidClient(client) && GetClientTeam(client) == team)
 		{
-			GetClientName(client, Name, sizeof(Name));		
+			GetClientName(client, Name, sizeof(Name));
 			PrintToConsole(player, "Name: %s, Experience: %d", Name, ND_GetClientEXP(client));
 		}
 	}

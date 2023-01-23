@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sourcemod>
 #include <geoip2>
 #include <nd_redstone>
-     
+
 // possible values are:
 //AF = Africa
 //EU = Europe
@@ -53,33 +53,33 @@ public void OnPluginStart()
 {
 	RegConsoleCmd("sm_locations", CMD_CheckLocations);
 	LoadTranslations("nd_continents.phrases");
-	
+
 	AddUpdaterLibrary(); //auto-updater
 }
 
 public Action CMD_CheckLocations(int client, int args)
 {
-	int counter[8]; //in order of possible values	
+	int counter[8]; //in order of possible values
 	char playerContinent[MAXPLAYERS + 1][4];
-	
+
 	for (int idx = 0; idx <= MaxClients; idx++)
-		if (RED_IsValidClient(idx))
+		if (IsValidClient(idx))
 		{
-			playerContinent[idx] = getContient(idx);	
+			playerContinent[idx] = getContient(idx);
 			counter[contientTOInteger(playerContinent[idx])]++;
 		}
-	
+
 	char printOut[128];
 	for (int i = 0; i < sizeof(counter); i++)
 	{
 		if (!isContinentEmpty(counter[i]))
 		{
 			char contient[16];
-			Format(contient, sizeof(contient), " %s: %d", conientIntegerTOName(i), counter[i]);   
+			Format(contient, sizeof(contient), " %s: %d", conientIntegerTOName(i), counter[i]);
 			StrCat(printOut, sizeof(printOut), contient);
 		}
 	}
-	
+
 	PrintToChat(client, "\x05[xG] %t", "Player Locations", printOut);
 	return Plugin_Handled;
 }
@@ -100,7 +100,7 @@ char[] conientIntegerTOName(int value)
 		case 3: Name = "AS";
 		case 4: Name = "SA";
 		case 5: Name = "AF";
-		case 6: Name = "AN";	
+		case 6: Name = "AN";
 	}
 	return Name;
 }
@@ -108,41 +108,41 @@ char[] conientIntegerTOName(int value)
 int contientTOInteger(char contString[4])
 {
 	if (StrEqual(contString, "EU"))
-		return 1;			
+		return 1;
 	else if (StrEqual(contString, "NA"))
-		return 2;				
+		return 2;
 	else if (StrEqual(contString, "AU"))
-		return 3;				
+		return 3;
 	else if (StrEqual(contString, "AS"))
-		return 4;				
+		return 4;
 	else if (StrEqual(contString, "SA"))
-		return 5;			
+		return 5;
 	else if (StrEqual(contString, "AF"))
-		return 6;				
+		return 6;
 	else if (StrEqual(contString, "AN"))
 		return 7;
-		
+
 	return 0;
 }
 
 char[] getContient(int client)
 {
 	char code[4];
-	
-	char clientIp[16];			
+
+	char clientIp[16];
 	if(!GetClientIP(client, clientIp, sizeof(clientIp), true)) //failed to get IP of client, do not procede further
 	{
 		code = "XX";
 		return code;
 	}
-                       
+
 	char countryCode[3];
 	if (!GeoipCode2(clientIp, countryCode))  //failed to get Geo Location of client, do not procede further
 	{
 		code = "XX";
 		return code;
 	}
-        
+
     //check Europe Array
 	for(int i=0;i<sizeof(aEurope)-1;i++)
 		if(StrEqual(aEurope[i],countryCode))
@@ -150,23 +150,23 @@ char[] getContient(int client)
 			code = "EU";
 			return code;
 		}
-	
+
 	//check North America array
-	for(int i=0;i<sizeof(aNorthAmerica)-1;i++)	
+	for(int i=0;i<sizeof(aNorthAmerica)-1;i++)
 		if(StrEqual(aNorthAmerica[i],countryCode))
 		{
 			code = "NA";
 			return code;
 		}
-	
+
 	//check Australia array
 	for(int i=0;i<sizeof(aAustralia)-1;i++)
-		if(StrEqual(aAustralia[i],countryCode))                                   
+		if(StrEqual(aAustralia[i],countryCode))
 		{
 			code = "AU";
 			return code;
 		}
-	
+
 	//check Asia array
 	for(int i=0;i<sizeof(aAsia)-1;i++)
 		if(StrEqual(aAsia[i],countryCode))
@@ -174,7 +174,7 @@ char[] getContient(int client)
 			code = "AS";
 			return code;
 		}
-	
+
 	//check South America array
 	for(int i=0;i<sizeof(aSouthAmerica)-1;i++)
 		if(StrEqual(aSouthAmerica[i],countryCode))
@@ -182,7 +182,7 @@ char[] getContient(int client)
 			code = "SA";
 			return code;
 		}
-	
+
 	//check Africa array
 	for(int i=0;i<sizeof(aAfrica)-1;i++)
 		if(StrEqual(aAfrica[i],countryCode))
@@ -190,7 +190,7 @@ char[] getContient(int client)
 			code = "AF";
 			return code;
 		}
-	
+
 	//check Antarctica array
 	for(int i=0;i<sizeof(aAntarctica)-1;i++)
 		if(StrEqual(aAntarctica[i],countryCode))
@@ -198,7 +198,7 @@ char[] getContient(int client)
 			code = "AN";
 			return code;
 		}
-                   
+
 	// Not found, might be one of the special codes bug we'll just return an unknown!
 	code = "XX";
 	return code;

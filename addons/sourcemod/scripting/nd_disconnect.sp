@@ -28,7 +28,7 @@ Handle cookie_lost_connection_message = INVALID_HANDLE;
 bool option_lost_connection_message[MAXPLAYERS + 1] = {true,...}; //off by default
 
 //Version is auto-filled by the travis builder
-public Plugin myinfo = 
+public Plugin myinfo =
 {
 	name 		= "[ND] Disconnect Messages",
 	author 		= "stickz",
@@ -42,9 +42,9 @@ public void OnPluginStart()
 	HookEvent("player_disconnect", Event_PlayerDisconnected, EventHookMode_Pre);
 	HookEvent("player_connect", Event_PlayerConnect, EventHookMode_Pre);
 	LoadTranslations("nd_disconnect.phrases");
-	
+
 	AddClientPrefsSupport();
-	
+
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -52,21 +52,21 @@ public Action Event_PlayerDisconnected(Event event, const char[] name, bool dont
 {
 	char steam_id[32];
 	event.GetString("networkid", steam_id, sizeof(steam_id));
-	
+
 	if (strncmp(steam_id, "STEAM_", 6) == 0)
 	{
-		int client = GetClientOfUserId(event.GetInt("userid"));	
-		
-		if (RED_IsValidClient(client))
+		int client = GetClientOfUserId(event.GetInt("userid"));
+
+		if (IsValidClient(client))
 		{
 			char reason[64];
 			GetEventString(event, "reason", reason, sizeof(reason));
-			
+
 			if(StrContains(reason, "timed out", false) != -1)
 				PrintLostConnection(client);
 		}
 	}
-	
+
 	return Plugin_Continue;
 }
 
@@ -74,16 +74,16 @@ public Action Event_PlayerConnect(Event event, const char[] name, bool dontBroad
 {
 	char steam_id[32];
 	event.GetString("networkid", steam_id, sizeof(steam_id));
-	
+
 	if (strncmp(steam_id, "STEAM_", 6) == 0)
-	{	
-		int client = GetClientOfUserId(event.GetInt("userid"));	
+	{
+		int client = GetClientOfUserId(event.GetInt("userid"));
 		if (client == 0)
 			return Plugin_Continue;
-		
-		dontBroadcast = !RED_IsValidCIndex(client);
+
+		dontBroadcast = !IsValidClient(client);
 	}
-	
+
 	return Plugin_Continue;
 }
 
@@ -91,7 +91,7 @@ void PrintLostConnection(int client)
 {
 	char clientName[64];
 	GetClientName(client, clientName, sizeof(clientName))
-	
+
 	for (int idx = 1; idx <= MaxClients; idx++)
 	{
 		if (IsValidClient(idx) && option_lost_connection_message[idx])
@@ -108,16 +108,16 @@ public CookieMenuHandler_LostConnectionMessage(int client, CookieMenuAction:acti
 		case CookieMenuAction_DisplayOption:
 		{
 			char status[10];
-			Format(status, sizeof(status), "%T", option_lost_connection_message[client] ? "On" : "Off", client);		
-			Format(buffer, maxlen, "%T: %s", "Cookie Lost Connect", client, status);		
+			Format(status, sizeof(status), "%T", option_lost_connection_message[client] ? "On" : "Off", client);
+			Format(buffer, maxlen, "%T: %s", "Cookie Lost Connect", client, status);
 		}
-		
+
 		case CookieMenuAction_SelectOption:
 		{
 			option_lost_connection_message[client] = !option_lost_connection_message[client];
-			SetClientCookie(client, cookie_lost_connection_message, option_lost_connection_message[client] ? "On" : "Off");		
-			ShowCookieMenu(client);		
-		}	
+			SetClientCookie(client, cookie_lost_connection_message, option_lost_connection_message[client] ? "On" : "Off");
+			ShowCookieMenu(client);
+		}
 	}
 }
 
@@ -130,14 +130,14 @@ bool GetCookieLostConnectionMessage(int client)
 {
 	char buffer[10];
 	GetClientCookie(client, cookie_lost_connection_message, buffer, sizeof(buffer));
-	
+
 	return !StrEqual(buffer, "Off");
 }
 
 void AddClientPrefsSupport()
 {
 	LoadTranslations("common.phrases"); //required for on and off
-	
+
 	cookie_lost_connection_message = RegClientCookie("Lost Connection Message On/Off", "", CookieAccess_Protected);
 	int info;
 	SetCookieMenuItem(CookieMenuHandler_LostConnectionMessage, info, "Lost Connection Message");
