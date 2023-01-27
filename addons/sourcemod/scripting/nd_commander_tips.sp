@@ -27,7 +27,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	LoadTranslations("nd_commander_tips.phrases");
-	
+
 	AddClientPrefsSupport(); // For client prefs on/off
 	AddUpdaterLibrary(); // Add updater support
 }
@@ -37,7 +37,7 @@ public void ND_OnCommanderPromoted(int client, int team)
 	if (option_commander_tips[client])
 	{
 		CreateTimer(TIP_DURATION, TIMER_DisplayCommanderTip, GetClientUserId(client), TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
-	}	
+	}
 }
 
 public Action TIMER_DisplayCommanderTip(Handle timer, any:Userid)
@@ -45,29 +45,29 @@ public Action TIMER_DisplayCommanderTip(Handle timer, any:Userid)
 	// If the round is done, stop sending tips
 	if (!ND_RoundStarted())
 		return Plugin_Stop;
-	
+
 	// If the client is no longer valid, stop sendng tips
-	int client = GetClientOfUserId(Userid);	
-	if (client == 0 || !RED_IsValidClient(client)) //invalid userid/client
-		return Plugin_Stop;	
-		
+	int client = GetClientOfUserId(Userid);
+	if (client == 0 || !IsValidClient(client)) //invalid userid/client
+		return Plugin_Stop;
+
 	// If the client has turned off tips, stop sending them
 	if (!option_commander_tips[client])
-		return Plugin_Stop;	
-		
+		return Plugin_Stop;
+
 	// If all the tips have been sent, stop sending tips
-	int clientTeam = GetClientTeam(client);	
+	int clientTeam = GetClientTeam(client);
 	if (teamCounter[clientTeam] > COMMANDER_TIPS_COUNT - 1)
 		return Plugin_Stop;
-	
-	// Otherwise, send the next tip in the string list	
+
+	// Otherwise, send the next tip in the string list
 	int curTip = teamCounter[clientTeam];
 	PrintToChat(client, "\x05(Commander Tip) \x03%t", nd_commander_tips[curTip]);
 	teamCounter[clientTeam]++; // client team counter for next tip
 	return Plugin_Continue;
 }
 
-public void ND_OnRoundStarted() 
+public void ND_OnRoundStarted()
 {
 	teamCounter[TEAM_EMPIRE] = 0;
 	teamCounter[TEAM_CONSORT] = 0;

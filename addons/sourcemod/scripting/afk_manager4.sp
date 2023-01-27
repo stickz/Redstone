@@ -81,7 +81,7 @@ bool g_bWaitRound 		=	true;
 
 enum
 {
-	hOnAFKEvent, 
+	hOnAFKEvent,
 	hOnClientAFK,
 	hOnClientBack,
 	forwards
@@ -106,10 +106,10 @@ enum
 	WarnTimeToKick,
 	SpawnTime,
 	WarnSpawnTime,
-	
+
 #if defined _colors_included
 	PrefixColor,
-#endif	
+#endif
 
 	convars
 };
@@ -296,7 +296,7 @@ void ResetPlayer(int index, bool FullReset = true) // Player Resetting
 		g_iPlayerTeam[index] = -1;
 		ResetAttacker(index);
 		ResetObserver(index);
-	} 
+	}
 	else { g_iAFKTime[index] = GetTime(); }
 }
 
@@ -318,7 +318,7 @@ void InitializePlayer(int index) // Player Initialization
 			g_hAFKTimer[index] = INVALID_HANDLE;
 		}
 
-		// Check Admin immunity, replaced by opposite operator instead of bool FullImmunity = false;	
+		// Check Admin immunity, replaced by opposite operator instead of bool FullImmunity = false;
 		if (!(g_cvar[AdminsImmune].IntValue == 1 && CheckAdminImmunity(index)))
 		{
 			g_iAFKTime[index] = GetTime();
@@ -351,8 +351,8 @@ int AFK_GetClientCount(bool inGameOnly = true)
 void CheckMinPlayers()
 {
 	bMovePlayers = RED_OnTeamCount() >= g_cvar[MinPlayersMove].IntValue;
-	
-	int kickPlayers = RED_VC_AVAILABLE() ? RED_ValidClientCount() : AFK_GetClientCount();
+
+	int kickPlayers = AFK_GetClientCount();
 	bKickPlayers = kickPlayers >= g_cvar[MinPlayersKick].IntValue;
 }
 
@@ -404,7 +404,7 @@ void HookConVars() // ConVar Hook Registrations
 		g_cvar[Enabled].AddChangeHook(CvarChange_Status); // Hook Enabled Variable
 		bCvarIsHooked[CONVAR_ENABLED] = true;
 	}
-	
+
 	if (!bCvarIsHooked[CONVAR_PREFIXSHORT])
 	{
 		g_cvar[PrefixShort].AddChangeHook(CvarChange_Status); // Hook Short Prefix Variable
@@ -458,7 +458,7 @@ void RegisterCvars() // Cvar Registrations
 	g_cvar[WarnTimeToKick] 	= CreateConVar("sm_afk_kick_warn_time", "30.0", "Time in seconds remaining, player should be warned before being kicked for AFK. [DEFAULT: 30.0 seconds]");
 	g_cvar[SpawnTime] 	= CreateConVar("sm_afk_spawn_time", "20.0", "Time in seconds (total) that player should have moved from their spawn position. [0 = DISABLED, DEFAULT: 20.0 seconds]");
 	g_cvar[WarnSpawnTime] 	= CreateConVar("sm_afk_spawn_warn_time", "15.0", "Time in seconds remaining, player should be warned for being AFK in spawn. [DEFAULT: 15.0 seconds]");
-	
+
 	#if defined _colors_included
 	g_cvar[PrefixColor]	= CreateConVar("sm_afk_prefix_color", "1", "Should the AFK Manager use color for the prefix tag? [0 = DISABLED, 1 = ENABLED, DEFAULT: 1]", FCVAR_NONE, true, 0.0, true, 1.0);
 	#endif
@@ -492,11 +492,9 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 #endif
 	MarkNativeAsOptional("GetEngineVersion");
 	MarkNativeAsOptional("ND_GetTeamTGCache");
-	
+
 	MarkNativeAsOptional("RED_Donator");
-	MarkNativeAsOptional("RED_ValidClient");
-	MarkNativeAsOptional("RED_ValidCIndex");
-	
+
 	return APLRes_Success;
 }
 
@@ -520,7 +518,7 @@ public void OnPluginStart() // AFK Manager Plugin has started
 
 	if (ND_RoundStarted()) // Account for Late Loading
 		g_bWaitRound = false;
-		
+
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -612,7 +610,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 {
 	if (g_bEnabled && g_hAFKTimer[client] != INVALID_HANDLE)
 		ResetPlayer(client, false); // Reset timer once player has said something in chat.
-		
+
 	return Plugin_Continue;
 }
 
@@ -646,7 +644,7 @@ public Action Event_PlayerSpawn(Event event, const char[] name, bool dontBroadca
 	if (g_bEnabled)
 	{
 		int client = GetClientOfUserId(event.GetInt("userid"));
-		
+
 		if (client > 0 && IsValidClient(client))
 		{
 			if (g_hAFKTimer[client] != INVALID_HANDLE)
@@ -701,7 +699,7 @@ public Action Event_PlayerDeathPost(Event event, const char[] name, bool dontBro
 }
 
 public void ND_OnRoundStarted() {
-	g_bWaitRound = false; // Un-Pause Plugin on Map Start	
+	g_bWaitRound = false; // Un-Pause Plugin on Map Start
 }
 
 public void ND_OnRoundEnded() {
@@ -718,7 +716,7 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			g_iAFKTime[client]++;
 			return Plugin_Continue;
 		}
-		
+
 		/* Handle the logistics of dealing with afk spectators */
 		if (IsClientObserver(client))
 		{
@@ -744,10 +742,10 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 						iObserverTarget[client] = m_hObserverTarget;
 						return Plugin_Continue;
 					}
-					
+
 					iObserverTarget[client] = m_hObserverTarget;
 				}
-				
+
 				SetClientAFK(client);
 				return Plugin_Continue;
 			}
@@ -769,14 +767,14 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 				}
 			}
 		}
-		
+
 
 		int Time = GetTime();
 		if (!bPlayerAFK[client]) // Player Marked as not AFK?
 		{
 			bool playerHasSpawned = g_iSpawnTime[client] > 0 && (Time - g_iSpawnTime[client]) < 2;
 			bool isDeathCam = !IsPlayerAlive(client) && iObserverTarget[client] == client;
-			
+
 			//if the player has spawned or is a death cam they're not afk; otherwise they are afk.
 			SetClientAFK(client, !(playerHasSpawned || isDeathCam));
 			return Plugin_Continue;
@@ -788,7 +786,7 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 			g_iAFKTime[client]++;
 			return Plugin_Continue;
 		}
-		
+
 		// If there's no spawns left, reset the clients afk time to 0
 		if (g_iPlayerTeam[client] > 1 && ND_TeamTGCount(g_iPlayerTeam[client]) <= 0)
 		{
@@ -815,11 +813,11 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 
 		/* Handle the logistics of moving afk clients to spectator */
 		int AFKTime = g_iAFKTime[client] >= 0 ? Time - g_iAFKTime[client] : 0;
-		if ( g_iPlayerTeam[client] != g_iSpec_Team && !ND_IsCommander(client) && g_cvar[MoveSpec].BoolValue && 
+		if ( g_iPlayerTeam[client] != g_iSpec_Team && !ND_IsCommander(client) && g_cvar[MoveSpec].BoolValue &&
 		     bMovePlayers && IsNotAdminImmune(client, true) && g_iTimeToMove > 0)
 		{
 			int AFKMoveTimeleft = g_iTimeToMove - AFKTime;
-				
+
 			if (AFKMoveTimeleft >= 0)
 			{
 				if (AFKSpawnTimeleft >= 0)
@@ -850,7 +848,7 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 				return Plugin_Continue; // Fix for AFK Spawn Kick Notifications
 			}
 		}
-	
+
 		/* Handle the logistics of kicking afk clients */
 		int iKickPlayers = g_cvar[KickPlayers].IntValue;
 		if (iKickPlayers && bKickPlayers)
@@ -869,27 +867,27 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 						// Take Action on AFK Spawn Player
 						if (AFKSpawnTime >= cvarSpawnTime)
 							return KickAFKClient(client);
-							
-						// Warn AFK Spawn Player	
+
+						// Warn AFK Spawn Player
 						else if (AFKSpawnTime%AFK_WARNING_INTERVAL == 0)
 						{
 							if ((cvarSpawnTime - AFKSpawnTime) <= g_cvar[WarnSpawnTime].IntValue)
 								AFK_PrintToChat(client, "%t", "Spawn_Kick_Warning", AFKSpawnTimeleft);
-								
+
 							return Plugin_Continue;
 						}
 					}
-					
+
 					// Take Action on AFK Player
 					if (AFKTime >= g_iTimeToKick)
 						return KickAFKClient(client);
-						
+
 					// Warn AFK Player
 					else if (AFKTime%AFK_WARNING_INTERVAL == 0)
 					{
 						if ((g_iTimeToKick - AFKTime) <= g_cvar[WarnTimeToKick].IntValue)
 							AFK_PrintToChat(client, "%t", "Kick_Warning", AFKKickTimeleft);
-							
+
 						return Plugin_Continue;
 					}
 				}
@@ -906,10 +904,10 @@ public Action Timer_CheckPlayer(Handle Timer, int client) // General AFK Timers
 bool IsNotAdminImmune(int client, bool moveType)
 {
 	int adminImmune = g_cvar[AdminsImmune].IntValue;
-	
+
 	if ((moveType && adminImmune == 2) || (!moveType && adminImmune == 3))
 		return true;
-	
+
 	return adminImmune == 0 || !CheckAdminImmunity(client);
 }
 
@@ -918,7 +916,7 @@ Action MoveAFKClient(int client) // Move AFK Client to Spectator Team
 {
 	Action ForwardResult = Plugin_Continue;
 
-	ForwardResult = g_iSpawnTime[client] != -1 	? Forward_OnAFKEvent("afk_spawn_move", client) 
+	ForwardResult = g_iSpawnTime[client] != -1 	? Forward_OnAFKEvent("afk_spawn_move", client)
 						  	: Forward_OnAFKEvent("afk_move", client);
 
 	if (ForwardResult != Plugin_Continue)
@@ -940,7 +938,7 @@ Action KickAFKClient(int client) // Kick AFK Client
 	// Add failsafe not to kick afk players, unless they're in spectator
 	if (g_iPlayerTeam[client] != g_iSpec_Team)
 		return Plugin_Continue;
-	
+
 	Action ForwardResult = Forward_OnAFKEvent("afk_kick", client);
 
 	if (ForwardResult != Plugin_Continue)
@@ -969,7 +967,7 @@ bool CheckAdminImmunity(int client) // Check Admin Immunity
 		AdminFlag flag;
 
 		g_cvar[AdminsFlag].GetString(flags, sizeof(flags));
-		
+
 		// Are we checking for specific admin flags?
 		// If so, Is the admin flag valid with the correct immunity?
 		return StrEqual(flags, "", false) || (FindFlagByChar(flags[0], flag) && GetAdminFlag(admin, flag));
