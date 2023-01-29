@@ -245,7 +245,7 @@ stock int ND_GetNearbyTeammateInClass(int client, eNDClass class)
 {
     float fClientPosition[3];
     GetClientEyePosition(client, fClientPosition);
-    float fMedicPosition[3];
+    float fTeammatePosition[3];
     float fClosestDistance = MAX_NEARBY_DISTANCE;
     float fDistance;
     int iClosestInClass = 0;
@@ -256,8 +256,8 @@ stock int ND_GetNearbyTeammateInClass(int client, eNDClass class)
         {
             continue;
         }
-        GetClientEyePosition(index, fMedicPosition);
-        fDistance = GetVectorDistance(fClientPosition, fMedicPosition);
+        GetClientEyePosition(index, fTeammatePosition);
+        fDistance = GetVectorDistance(fClientPosition, fTeammatePosition);
 
         if (fDistance < fClosestDistance)
         {
