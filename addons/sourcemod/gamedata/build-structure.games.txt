@@ -2,6 +2,17 @@
 {
     "nucleardawn"
     {
+        "Offsets"
+        {
+            "CNDPlayer::GetEntity"
+            {
+                "linux"     "6"
+            }
+            "CBaseEntity::GetEntity"
+            {
+                "linux"     "6"
+            }
+        }
         "Signatures"
         {
             "CNDPlayer::Commander_BuildStructure"
@@ -15,6 +26,11 @@
                 "library"   "server"
                 "linux"     "@_ZN9CNDPlayer33Commander_BuildEmergencyAssemblerEiRK6VectorRK6QAnglei"
                 "windows"   "\x55\x8B\xEC\xA1\x2A\x2A\x2A\x2A\x83\xEC\x20\x56"
+            }
+            "SellActionHandlerObject::Run"
+            {
+                "library"   "server"
+                "linux"     "@_ZN23SellActionHandlerObject3RunEP9CNDPlayerP11CBaseEntityP7bf_read"
             }
         }
         "Functions"
@@ -72,6 +88,27 @@
                     "id"
                     {
                         "type"  "int"
+                    }
+                }
+            }
+            "SellActionHandlerObject::Run"
+            {
+                "signature" "SellActionHandlerObject::Run"
+                "callconv"  "cdecl"
+                "return"    "bool"
+                "arguments"
+                {
+                    "player"
+                    {
+                        "type"  "objectptr"
+                    }
+                    "entity"
+                    {
+                        "type"  "objectptr"
+                    }
+                    "bf_read"
+                    {
+                        "type"  "objectptr"
                     }
                 }
             }
