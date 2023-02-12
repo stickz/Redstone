@@ -164,12 +164,11 @@ void SaveTeams_Step1_RemovePlayers(Handle owner, Handle handle, const char[] err
     for (int player = 0; player < numSpectator; player++)
     {
         SQL_EscapeString(DatabaseHandle, PlayerNames[spectator[player]], escapedName, sizeof(escapedName));
-        FormatEx(queryPart, sizeof(queryPart), ", ('%s', '%s'), ", escapedName, "spectator");
+        FormatEx(queryPart, sizeof(queryPart), ", ('%s', '%s')", escapedName, "spectator");
         StrCat(queryvalues, sizeof(queryvalues), queryPart);
     }
 
     ReplaceStringEx(queryvalues, sizeof(queryvalues), ", (", "("); // Remove the first comma and space
-    TrimString(queryvalues); // remove whitespace from begin and end of string
     FormatEx(query, sizeof(query), "INSERT INTO players (name, team) VALUES %s", queryvalues);
     SQL_TQuery(DatabaseHandle, SaveTeams_Step2_AddPlayers, query, _, DBPrio_Low);
 }
