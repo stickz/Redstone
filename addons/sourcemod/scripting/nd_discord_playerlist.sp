@@ -169,6 +169,7 @@ void SaveTeams_Step1_RemovePlayers(Handle owner, Handle handle, const char[] err
     }
 
     ReplaceStringEx(queryvalues, sizeof(queryvalues), ", ", ""); // Remove the first comma and space
+    TrimString(queryvalues); // remove whitespace from begin and end of string
     FormatEx(query, sizeof(query), "INSERT INTO players (name, team) VALUES %s", queryvalues);
     SQL_TQuery(DatabaseHandle, SaveTeams_Step2_AddPlayers, query, _, DBPrio_Low);
 }
