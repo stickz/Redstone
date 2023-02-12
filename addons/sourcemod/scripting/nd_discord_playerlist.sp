@@ -75,6 +75,7 @@ public OnDatabaseConnected(Handle owner, Handle handle, const char[] error, any 
     }
 
     DatabaseHandle = handle;
+    SQL_SetCharset(DatabaseHandle, "utf8");
 
     char query[1024];
     FormatEx(query, sizeof(query), "CREATE TABLE IF NOT EXISTS `players` (`id` bigint NOT NULL AUTO_INCREMENT, `name` varchar(128) NOT NULL, `team` varchar(128) NOT NULL, PRIMARY KEY (`id`))");
