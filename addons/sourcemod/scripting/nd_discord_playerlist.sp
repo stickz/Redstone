@@ -142,8 +142,8 @@ void SaveTeams_Step1_RemovePlayers(Handle owner, Handle handle, const char[] err
         return;
     }
 
-    char query[10000];
-    char queryvalues[10000];
+    char query[3072];
+    char queryvalues[3072];
     char[][] queryparts = new char[numConsortium + numEmpire + numSpectator][1024];
     int part = 0;
     char escapedName[MAX_NAME_LENGTH * 2 + 1];
