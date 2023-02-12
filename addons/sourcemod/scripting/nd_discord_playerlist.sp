@@ -2,10 +2,12 @@
 #include <nd_stocks>
 #include <nd_team_eng>
 
+#define BOT_PREFIX "[BOT] "
+
 Handle SaveTeamsTimer;
 bool SavingTeams;
 Handle DatabaseHandle;
-char PlayerNames[MAXPLAYERS + 1][MAX_NAME_LENGTH];
+char PlayerNames[MAXPLAYERS + 1][MAX_NAME_LENGTH + 6];
 
 /* Auto Updater Support */
 #define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_discord_playerlist/nd_discord_playerlist.txt"
@@ -34,11 +36,14 @@ public void OnPluginStart()
 
 void RefreshPlayerNames()
 {
+    char clientName[MAX_NAME_LENGTH];
     for (int client = 1; client <= MaxClients; client++)
     {
         if (IsValidClient(client, false))
         {
-            GetClientName(client, PlayerNames[client], MAX_NAME_LENGTH);
+            GetClientName(client, clientName, MAX_NAME_LENGTH);
+            FormatEx(PlayerNames[client], sizeof(PlayerNames[client], 
+                     "%s%s", IsFakeClient(client) ? BOT_PREFIX : "", clientName);
         }
     }
 }
@@ -50,7 +55,12 @@ public void ND_OnPlayerTeamChanged(int client, bool valid)
 
 public void OnClientPutInServer(int client)
 {
-    GetClientName(client, PlayerNames[client], MAX_NAME_LENGTH);
+    char clientName[MAX_NAME_LENGTH];
+    GetClientName(client, clientName, MAX_NAME_LENGTH);
+    
+    FormatEx(PlayerNames[client], sizeof(PlayerNames[client], 
+             "%s%s", IsFakeClient(client) ? BOT_PREFIX : "", clientName);
+
     SaveTeams();
 }
 
