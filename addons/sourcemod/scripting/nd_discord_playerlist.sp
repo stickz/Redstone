@@ -7,6 +7,10 @@ bool SavingTeams;
 Handle DatabaseHandle;
 char PlayerNames[MAXPLAYERS + 1][MAX_NAME_LENGTH];
 
+/* Auto Updater Support */
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_discord_playerlist/nd_discord_playerlist.txt"
+#include "updater/standard.sp"
+
 public Plugin myinfo =
 {
     name        = "[ND] Discord Player List",
@@ -24,6 +28,7 @@ public void OnPluginStart()
     }
 
     SQL_TConnect(OnDatabaseConnected, "discord");
+    AddUpdaterLibrary(); // Add auto updater feature
 }
 
 public void ND_OnPlayerTeamChanged(int client, bool valid)
