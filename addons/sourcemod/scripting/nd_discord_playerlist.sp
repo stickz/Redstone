@@ -144,29 +144,31 @@ void SaveTeams_Step1_RemovePlayers(Handle owner, Handle handle, const char[] err
 
     char query[3072];
     char queryvalues[3072];
-    char[][] queryparts = new char[numConsortium + numEmpire + numSpectator][1024];
-    int part = 0;
+    char queryPart[256];
     char escapedName[MAX_NAME_LENGTH * 2 + 1];
 
     for (int player = 0; player < numConsortium; player++)
     {
         SQL_EscapeString(DatabaseHandle, PlayerNames[consortium[player]], escapedName, sizeof(escapedName));
-        FormatEx(queryparts[part++], 1024, "('%s', '%s')", escapedName, "consortium");
+        FormatEx(queryPart, sizeof(queryPart), ", ('%s', '%s')", escapedName, "consortium");
+        StrCat(queryvalues, sizeof(queryValues), queryPart);
     }
 
     for (int player = 0; player < numEmpire; player++)
     {
         SQL_EscapeString(DatabaseHandle, PlayerNames[empire[player]], escapedName, sizeof(escapedName));
-        FormatEx(queryparts[part++], 1024, "('%s', '%s')", escapedName, "empire");
+        FormatEx(queryPart, sizeof(queryPart), ", ('%s', '%s')", escapedName, "empire");
+        StrCat(queryvalues, sizeof(queryvalues), queryPart);
     }
 
     for (int player = 0; player < numSpectator; player++)
     {
         SQL_EscapeString(DatabaseHandle, PlayerNames[spectator[player]], escapedName, sizeof(escapedName));
-        FormatEx(queryparts[part++], 1024, "('%s', '%s')", escapedName, "spectator");
+        FormatEx(queryPart, sizeof(queryPart), ", ('%s', '%s'), ", escapedName, "spectator");
+        StrCat(queryvalues, sizeof(queryvalues), queryPart);
     }
 
-    ImplodeStrings(queryparts, numConsortium + numEmpire + numSpectator, ", ", queryvalues, sizeof(queryvalues));
+    ReplaceStringEx(queryvalues, sizeof(queryvalues", ", ", ""); // Remove the first comma and space
     FormatEx(query, sizeof(query), "INSERT INTO players (name, team) VALUES %s", queryvalues);
     SQL_TQuery(DatabaseHandle, SaveTeams_Step2_AddPlayers, query, _, DBPrio_Low);
 }
