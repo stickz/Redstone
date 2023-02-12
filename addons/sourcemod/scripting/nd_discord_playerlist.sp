@@ -42,7 +42,7 @@ void RefreshPlayerNames()
         if (IsValidClient(client, false))
         {
             GetClientName(client, clientName, MAX_NAME_LENGTH);
-            FormatEx(PlayerNames[client], sizeof(PlayerNames[client], 
+            FormatEx(PlayerNames[client], sizeof(PlayerNames[client]), 
                      "%s%s", IsFakeClient(client) ? BOT_PREFIX : "", clientName);
         }
     }
@@ -58,7 +58,7 @@ public void OnClientPutInServer(int client)
     char clientName[MAX_NAME_LENGTH];
     GetClientName(client, clientName, MAX_NAME_LENGTH);
     
-    FormatEx(PlayerNames[client], sizeof(PlayerNames[client], 
+    FormatEx(PlayerNames[client], sizeof(PlayerNames[client]), 
              "%s%s", IsFakeClient(client) ? BOT_PREFIX : "", clientName);
 
     SaveTeams();
