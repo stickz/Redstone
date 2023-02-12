@@ -151,7 +151,7 @@ void SaveTeams_Step1_RemovePlayers(Handle owner, Handle handle, const char[] err
     {
         SQL_EscapeString(DatabaseHandle, PlayerNames[consortium[player]], escapedName, sizeof(escapedName));
         FormatEx(queryPart, sizeof(queryPart), ", ('%s', '%s')", escapedName, "consortium");
-        StrCat(queryvalues, sizeof(queryValues), queryPart);
+        StrCat(queryvalues, sizeof(queryvalues), queryPart);
     }
 
     for (int player = 0; player < numEmpire; player++)
