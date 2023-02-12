@@ -29,6 +29,18 @@ public void OnPluginStart()
 
     SQL_TConnect(OnDatabaseConnected, "discord");
     AddUpdaterLibrary(); // Add auto updater feature
+    RefreshPlayerNames(); // Load player names
+}
+
+void RefreshPlayerNames()
+{
+    for (int client = 1; client <= MaxClients; client++)
+    {
+        if (IsValidClient(client, false))
+        {
+            GetClientName(client, PlayerNames[client], MAX_NAME_LENGTH);
+        }
+    }
 }
 
 public void ND_OnPlayerTeamChanged(int client, bool valid)
