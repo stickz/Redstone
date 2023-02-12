@@ -92,7 +92,9 @@ void Setup_Step1_CreateTable(Handle owner, Handle handle, const char[] error, an
 
 void SaveTeams()
 {
-    delete SaveTeamsTimer;
+    if (IsValidHandle(SaveTeamsTimer))
+        delete SaveTeamsTimer;
+
     SaveTeamsTimer = CreateTimer(1.0, Timer_SaveTeams, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
