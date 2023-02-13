@@ -14,7 +14,7 @@ public Plugin myinfo =
     url = "https://forums.alliedmods.net/member.php?u=54648"
 };
 
-#define COMMAND_BUNKER_POWERED_DISTANCE     1175.0
+#define COMMAND_BUNKER_POWERED_DISTANCE     1250.0
 
 public void OnAllPluginsLoaded()
 {
