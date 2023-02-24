@@ -16,6 +16,14 @@ public Plugin myinfo =
 
 #define COMMAND_BUNKER_POWERED_DISTANCE     1250.0
 
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_save_basespawn/nd_save_basespawn.txt"
+#include "updater/standard.sp"
+
+public void OnPluginStart()
+{
+    AddUpdaterLibrary(); //auto-updater
+}
+
 public void OnAllPluginsLoaded()
 {
     if (!LibraryExists("nd_structure_intercept"))
