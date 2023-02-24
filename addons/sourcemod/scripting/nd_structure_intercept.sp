@@ -40,6 +40,9 @@ Handle gH_Frwd_OnCommanderSellStructure = INVALID_HANDLE;
 Handle g_hSDKCall_CNDPlayerGetEntity = INVALID_HANDLE;
 Handle g_hSDKCall_CBaseEntityGetEntity = INVALID_HANDLE;
 
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_structure_intercept/nd_structure_intercept.txt"
+#include "updater/standard.sp"
+
 public void OnPluginStart()
 {
     GameData hGameData = new GameData("build-structure.games");
@@ -96,6 +99,8 @@ public void OnPluginStart()
 
     gH_Frwd_OnCommanderBuildStructure = CreateGlobalForward("ND_OnCommanderBuildStructure", ET_Hook, Param_Cell, Param_CellByRef, Param_Array);
     gH_Frwd_OnCommanderSellStructure = CreateGlobalForward("ND_OnCommanderSellStructure", ET_Hook, Param_Cell, Param_Cell);
+    
+    AddUpdaterLibrary(); //auto-updater
 }
 
 MRESReturn Detour_PlayerSellStructure(DHookReturn hReturn, DHookParam hParams)
