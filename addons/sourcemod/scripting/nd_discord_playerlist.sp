@@ -55,7 +55,7 @@ public void ND_OnPlayerTeamChanged(int client, bool valid)
 public void OnClientPutInServer(int client)
 {
     char clientName[MAX_NAME_LENGTH];
-    GetClientName(client, clientName, MAX_NAME_LENGTH);    
+    GetClientName(client, clientName, MAX_NAME_LENGTH);
     FormatEx(PlayerNames[client], MAX_NAME_LENGTH, "%s%s", (IsFakeClient(client) ? BOT_PREFIX : ""), clientName);
 
     SaveTeams();
@@ -75,7 +75,7 @@ public OnDatabaseConnected(Handle owner, Handle handle, const char[] error, any 
     }
 
     DatabaseHandle = handle;
-    SQL_SetCharset(DatabaseHandle, "utf8");
+    SQL_SetCharset(DatabaseHandle, "utf8mb4");
 
     char query[1024];
     FormatEx(query, sizeof(query), "CREATE TABLE IF NOT EXISTS `players` (`id` bigint NOT NULL AUTO_INCREMENT, `name` varchar(128) NOT NULL, `team` varchar(128) NOT NULL, PRIMARY KEY (`id`))");
