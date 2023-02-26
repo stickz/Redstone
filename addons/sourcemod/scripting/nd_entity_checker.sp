@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <nd_struct_eng>
+#include <nd_stocks>
 
 public Plugin myinfo =
 {
@@ -19,6 +20,8 @@ public OnPluginStart()
 	RegAdminCmd("sm_entinfo", sm_entinfo, ADMFLAG_KICK, "Prints info about the target entity");
 	RegAdminCmd("sm_entinfoex", sm_entinfoex, ADMFLAG_KICK, "Prints info about the target entity");
 	RegAdminCmd("sm_entinfost", sm_entinfost, ADMFLAG_KICK, "Prints info about the target transport gate");
+	RegAdminCmd("sm_entinfoall", sm_entinfoall, ADMFLAG_KICK, "Prints a list of all structure entities to console");
+	RegAdminCmd("sm_tgemp", sm_tgemp, ADMFLAG_KICK, "Prints a list of all transport gates on empire to console");
 	AddUpdaterLibrary(); //auto-updater
 }
 
@@ -101,10 +104,46 @@ public Action:sm_entinfost(client, argc)
 		char entity_classname[32];
 		float entity_origin[3];
 		
-		ND_GetBuildingInfoEx(view_as<int>(ND_Transport_Gate), target, entity_origin, entity_classname);	
+		ND_GetBuildingInfoType(view_as<int>(ND_Transport_Gate), target, entity_origin, entity_classname);	
 		ReplyToCommand(client, "classname = %s", entity_classname);
 		ReplyToCommand(client, "Origin = %f, %f, %f", entity_origin[0], entity_origin[1], entity_origin[2]);
 	}
 	
 	return Plugin_Handled;
+}
+
+public Action:sm_entinfoall(client, argc)
+{
+        ArrayList buildings;
+        ND_GetBuildInfoArray(buildings);
+        
+        PrintToConsole(client, "**** Building List ****");
+        PrintToConsole(client, "");
+        
+        for (int i = 0; i < buildings.Length; i++)
+        {
+                BuildingEntity ent;
+                buildings.GetArray(i, ent);
+                PrintToConsole(client, "%s", ent.classname);
+        }
+        
+        return Plugin_Handled;
+}
+
+public Action:sm_tgemp(client, argc)
+{
+        ArrayList buildings;
+        ND_GetBuildInfoArrayTypeTeam(buildings, view_as<int>(ND_Transport_Gate), TEAM_EMPIRE);
+        
+        PrintToConsole(client, "**** Empire TG List ****");
+        PrintToConsole(client, "");
+        
+        for (int i = 0; i < buildings.Length; i++)
+        {
+                BuildingEntity ent;
+                buildings.GetArray(i, ent);
+                PrintToConsole(client, "%s", ent.classname);
+        }
+        
+        return Plugin_Handled;
 }

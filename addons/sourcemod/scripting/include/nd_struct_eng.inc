@@ -5,8 +5,32 @@
 
 #include <nd_structures>
 
+enum struct BuildingEntity
+{
+      int entIndex;
+      int type;
+      int team;
+      char classname[32];
+      float vecPos[3];
+      
+      int initByIndex(int index) {
+            this.entIndex = index;
+            GetEntityClassname(index, this.classname, sizeof(this.classname));
+            GetEntPropVector(index, Prop_Send, "m_vecOrigin", this.vecPos);
+            this.type = ND_GetStructIndex(this.classname);
+            this.team = GetEntProp(index, Prop_Send, "m_iTeamNum");
+            return 0;
+      }
+}
+
 native int ND_GetBuildingInfo(int entity, int &type, float[] vecPos, char[] classname);
-native int ND_GetBuildingInfoEx(int type, int entity, float[] vecPos, char[] classname);
+native int ND_GetBuildingInfoType(int type, int entity, float[] vecPos, char[] classname);
+native int ND_GetBuildingInfoTeam(int team, int entity, float[] vecPos, char[] classname);
+
+native void ND_GetBuildInfoArray(ArrayList &buildings);
+native void ND_GetBuildInfoArrayType(ArrayList &buildings, int type);
+native void ND_GetBuildInfoArrayTeam(ArrayList &buildings, int team);
+native void ND_GetBuildInfoArrayTypeTeam(ArrayList &buildings, int type, int team);
 
 // Check if the team has placed their first structure
 native bool ND_FirstStructurePlaced(int team);
