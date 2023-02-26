@@ -4,7 +4,7 @@
 #include <nd_ammo>
 #include <nd_classes>
 
-#define PLUGIN_VERSION "1.0.0"
+#define PLUGIN_VERSION "1.0.1"
 
 public Plugin myinfo =
 {
@@ -91,8 +91,6 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
     {
         eNDClass ePlayerClass = ND_GetPlayerClass(client);
         char sClassname[64];
-        float fDistance;
-        float fTargetPosition[3];
 
         switch (ePlayerClass)
         {
@@ -151,24 +149,8 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
                         // look towards the target
                         ND_ClientLookAtTarget(client, target);
 
-                        // check if we're too far away
-                        float fMedicPosition[3];
-                        GetClientEyePosition(client, fMedicPosition);
-                        GetClientEyePosition(target, fTargetPosition);
-                        fDistance = GetVectorDistance(fMedicPosition, fTargetPosition);
-                        if (fDistance > MAX_NEARBY_DISTANCE)
-                        {
-                            // steer the medic closer to the target
-                            float fVector[3];
-                            MakeVectorFromPoints(fMedicPosition, fTargetPosition, fVector);
-                            float fDesiredAngles[3];
-                            GetVectorAngles(fVector, fDesiredAngles);
-                            angles[0] = fDesiredAngles[0];
-                            angles[1] = fDesiredAngles[1];
-                            vel[0] = 400.0;
-                            vel[1] = 0.0;
-                            vel[2] = 0.0;
-                        }
+                        // move closer if we're too far away
+                        ND_MoveCloserToTarget(client, target, angles, vel);
                     }
                 }
             }
@@ -236,24 +218,8 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
                         // look towards the target
                         ND_ClientLookAtTarget(client, target);
 
-                        // check if we're too far away
-                        float fEngineerPosition[3];
-                        GetClientEyePosition(client, fEngineerPosition);
-                        GetClientEyePosition(target, fTargetPosition);
-                        fDistance = GetVectorDistance(fEngineerPosition, fTargetPosition);
-                        if (fDistance > MAX_NEARBY_DISTANCE)
-                        {
-                            // steer the engineer closer to the target
-                            float fVector[3];
-                            MakeVectorFromPoints(fEngineerPosition, fTargetPosition, fVector);
-                            float fDesiredAngles[3];
-                            GetVectorAngles(fVector, fDesiredAngles);
-                            angles[0] = fDesiredAngles[0];
-                            angles[1] = fDesiredAngles[1];
-                            vel[0] = 400.0;
-                            vel[1] = 0.0;
-                            vel[2] = 0.0;
-                        }
+                        // move closer if we're too far away
+                        ND_MoveCloserToTarget(client, target, angles, vel);
                     }
                 }
             }
@@ -346,6 +312,29 @@ public Action Timer_MedicChangeWeapon(Handle hTimer, any iUserId)
     }
 
     return Plugin_Handled;
+}
+
+void ND_MoveCloserToTarget(client, target, float angles[3], float vel[3])
+{
+    float fPlayerPosition[3];
+    float fTargetPosition[3];
+    GetClientEyePosition(client, fPlayerPosition);
+    GetClientEyePosition(target, fTargetPosition);
+    float fDistance = GetVectorDistance(fPlayerPosition, fTargetPosition);
+
+    if (fDistance > MAX_NEARBY_DISTANCE)
+    {
+        // steer the player closer to the target
+        float fVector[3];
+        MakeVectorFromPoints(fPlayerPosition, fTargetPosition, fVector);
+        float fDesiredAngles[3];
+        GetVectorAngles(fVector, fDesiredAngles);
+        angles[0] = fDesiredAngles[0];
+        angles[1] = fDesiredAngles[1];
+        vel[0] = 400.0;
+        vel[1] = 0.0;
+        vel[2] = 0.0;
+    }
 }
 
 void ND_ClientLookAtTarget(int client, int target)
