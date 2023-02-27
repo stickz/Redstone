@@ -1,34 +1,35 @@
 /*  [ND] Bot Radio Helpers
     Copyright (C) 2023 by databomb
 
+    ***************************************************************************
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ***************************************************************************
 
-	***************************************************************************
-	
     Description:
-    This plugin will check for a bot medic when a player calls for a Medic! on the radio buttons
-    and change the bot's behavior to travel towards the player requesting medical attention and
-    throw a medpack. Similar behavior was added for an engineer throwing an ammopack to players
-    requesting supplies.
-    
+    When a player calls for a medic using the built-in radio commands, this
+    plugin will check if there's a nearby teammate bot who's a medic. If one is
+    found then this changes the bot's behavior to travel towards the player
+    requesting medical attention and throw a medpack. Similar behavior was added
+    for a bot engineer to throw an ammopack to teammates requesting supplies.
+
     Special Thanks:
-    The team of the [TF2] Bot Combat Improvements plugin greatly helped guide this ND plugin
-    EfeDursun125
-    enderandrew
-    Marqueritte
-    Showin'
-    Crasher_3637
+    The team who perfected the [TF2] Bot Combat Improvements plugin were a great
+    help with this plugin. Many of the functions towards the tail end of this
+    plugin are based on or wholly adopted from the TF2 plugin.
+    - EfeDursun125
+    - enderandrew
+    - Marqueritte
+    - Showin'
+    - Crasher_3637
 */
 
 #include <sourcemod>
@@ -37,7 +38,7 @@
 #include <nd_ammo>
 #include <nd_classes>
 
-#define PLUGIN_VERSION "1.0.1"
+#define PLUGIN_VERSION "1.0.2"
 
 public Plugin myinfo =
 {
@@ -54,9 +55,12 @@ int g_iAmmopackRequested[MAXPLAYERS+1];
 int  g_iMedpackRequested[MAXPLAYERS+1];
 float g_fEquipTime[MAXPLAYERS+1];
 float g_fFollowTime[MAXPLAYERS+1];
+eNDClass g_eNDClass[MAXPLAYERS+1];
 
 public OnPluginStart()
 {
+    CreateConVar("sm_nd_botradiohelpers_version", PLUGIN_VERSION, "ND Bot Radio Helpers Version", FCVAR_SPONLY|FCVAR_DONTRECORD|FCVAR_REPLICATED|FCVAR_NOTIFY);
+
     UserMsg hSayTextTwo = GetUserMessageId("SayText2");
     if (hSayTextTwo == INVALID_MESSAGE_ID)
     {
@@ -64,6 +68,7 @@ public OnPluginStart()
     }
 
     HookUserMessage(hSayTextTwo, MessageHook_SayTextTwo);
+    HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
 
     // Account for late loading
     for (int iClient = 1; iClient <= MaxClients ; iClient++)
@@ -71,6 +76,7 @@ public OnPluginStart()
         if (IsClientInGame(iClient) && IsFakeClient(iClient))
         {
             SDKHook(iClient, SDKHook_WeaponCanSwitchTo, OnWeaponCanSwitchTo);
+            g_eNDClass[iClient] = ND_GetPlayerClass(iClient);
         }
     }
 }
@@ -85,9 +91,12 @@ public OnClientPutInServer(client)
 
 public Action OnWeaponCanSwitchTo(client, weapon)
 {
-    eNDClass ePlayerClass = ND_GetPlayerClass(client);
+    if (!IsFakeClient(client))
+    {
+        return Plugin_Continue;
+    }
 
-    switch (ePlayerClass)
+    switch (g_eNDClass[client])
     {
         case eNDClass_SupportMedic:
         {
@@ -122,16 +131,14 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
 {
     if(client && IsClientInGame(client) && IsFakeClient(client) && IsPlayerAlive(client))
     {
-        eNDClass ePlayerClass = ND_GetPlayerClass(client);
-        char sClassname[64];
-
-        switch (ePlayerClass)
+        switch (g_eNDClass[client])
         {
             case eNDClass_SupportMedic:
             {
                 if (g_iMedpackRequested[client])
                 {
                     int iMedicWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
+                    char sClassname[64];
                     GetEntityClassname(iMedicWeapon, sClassname, sizeof(sClassname));
                     bool bMedpackEquipped = StrEqual(sClassname, "weapon_medpack");
 
@@ -192,6 +199,7 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
                 if (g_iAmmopackRequested[client])
                 {
                     int iEngineerWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
+                    char sClassname[64];
                     GetEntityClassname(iEngineerWeapon, sClassname, sizeof(sClassname));
                     bool bAmmopackEquipped = StrEqual(sClassname, "weapon_ammopack");
 
@@ -258,6 +266,14 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
             }
         }
     }
+
+    return Plugin_Continue;
+}
+
+public Action Event_PlayerSpawn(Event event, const char[] sName, bool bDontBroadcast)
+{
+    int iPlayerUserId = event.GetInt("userid");
+    CreateTimer(0.2, Timer_AssignPlayerClass, iPlayerUserId, TIMER_FLAG_NO_MAPCHANGE);
 
     return Plugin_Continue;
 }
@@ -342,6 +358,18 @@ public Action Timer_MedicChangeWeapon(Handle hTimer, any iUserId)
     if (iClient && IsClientInGame(iClient))
     {
         FakeClientCommand(iClient, "use weapon_mp7");
+    }
+
+    return Plugin_Handled;
+}
+
+public Action Timer_AssignPlayerClass(Handle hTimer, any iUserId)
+{
+    int iClient = GetClientOfUserId(iUserId);
+    // we'll only need to store this for bots
+    if (iClient && IsClientInGame(iClient) && IsPlayerAlive(iClient) && IsFakeClient(iClient))
+    {
+        g_eNDClass[iClient] = ND_GetPlayerClass(iClient);
     }
 
     return Plugin_Handled;
