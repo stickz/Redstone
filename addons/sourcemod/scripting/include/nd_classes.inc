@@ -241,7 +241,7 @@ stock int ND_GetMaxHealth(int client)
 	return health;
 }
 
-stock int ND_GetNearbyTeammateInClass(int client, eNDClass class)
+stock int ND_GetNearbyTeammateInClass(int client, eNDClass class, bool botsonly = false)
 {
     float fClientPosition[3];
     GetClientEyePosition(client, fClientPosition);
@@ -252,7 +252,12 @@ stock int ND_GetNearbyTeammateInClass(int client, eNDClass class)
 
     for (int index = 1; index <= MaxClients; index++)
     {
-        if (index == client || !IsClientInGame(index) || !IsPlayerAlive(index) || (GetClientTeam(index) != GetClientTeam(client)) || (ND_GetPlayerClass(index) != class))
+        if (index == client || \
+            !IsClientInGame(index) || \
+            !IsPlayerAlive(index) || \
+            (GetClientTeam(index) != GetClientTeam(client)) || \
+            (ND_GetPlayerClass(index) != class) || \
+            (botsonly && !IsFakeClient(index)))
         {
             continue;
         }
