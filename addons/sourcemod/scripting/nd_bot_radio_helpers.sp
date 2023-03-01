@@ -57,6 +57,9 @@ float g_fEquipTime[MAXPLAYERS+1];
 float g_fFollowTime[MAXPLAYERS+1];
 eNDClass g_eNDClass[MAXPLAYERS+1];
 
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_bot_radio_helpers/nd_bot_radio_helpers.txt"
+#include "updater/standard.sp"
+
 public OnPluginStart()
 {
     CreateConVar("sm_nd_botradiohelpers_version", PLUGIN_VERSION, "ND Bot Radio Helpers Version", FCVAR_SPONLY|FCVAR_DONTRECORD|FCVAR_REPLICATED|FCVAR_NOTIFY);
@@ -79,6 +82,8 @@ public OnPluginStart()
             g_eNDClass[iClient] = ND_GetPlayerClass(iClient);
         }
     }
+    
+    AddUpdaterLibrary(); //auto-updater
 }
 
 public OnClientPutInServer(client)
