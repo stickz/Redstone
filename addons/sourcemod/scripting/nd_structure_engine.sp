@@ -108,8 +108,11 @@ public Action Event_StructureDeath(Event event, const char[] name, bool dontBroa
         int entIndex = event.GetInt("entindex");
         int typeIndex = event.GetInt("type");
         int teamIndex = event.GetInt("ownerteam");
-        
-        
+
+	// Ensure the owner team which destroyed the structure is valid
+	if (teamIndex != TEAM_EMPIRE && teamIndex != TEAM_CONSORT)
+		return Plugin_Continue;
+
         /* Remove the entity index reference */
         int arrIndex = FindStructureIndex(entIndex);
         if (arrIndex != -1)
