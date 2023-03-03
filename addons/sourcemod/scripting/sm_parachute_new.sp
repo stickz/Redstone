@@ -39,6 +39,9 @@ public Plugin myinfo =
 	url = "http://www.sourcemod.net/"
 };
 
+#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/sm_parachute_new/sm_parachute_new.txt"
+#include "updater/standard.sp"
+
 public void OnPluginStart()
 {
 	LoadTranslations ("sm_parachute.phrases");
@@ -52,6 +55,8 @@ public void OnPluginStart()
 	HookEvent("player_death", OnPlayerDeath);
 	
 	g_model.AddChangeHook(CvarChange_Model);
+	
+	AddUpdaterLibrary(); //auto-updater
 }
 
 public void OnConfigsExecuted() {
