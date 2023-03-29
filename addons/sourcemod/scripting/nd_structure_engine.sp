@@ -107,7 +107,7 @@ public Action Event_StructureDeath(Event event, const char[] name, bool dontBroa
 {
         int entIndex = event.GetInt("entindex");
         int typeIndex = event.GetInt("type");
-        int teamIndex = event.GetInt("ownerteam");
+        int teamIndex = event.GetInt("team");
 
 	// Ensure the owner team which destroyed the structure is valid
 	if (teamIndex != TEAM_EMPIRE && teamIndex != TEAM_CONSORT)
