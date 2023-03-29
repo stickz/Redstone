@@ -2,8 +2,9 @@
 #include <nd_structures>
 #include <nd_stocks>
 
-// sdk hooks function. Only forward the required function
+// sdk hooks functions. Only register the required forwards.
 forward void OnEntityCreated(int entity, const char[] classname);
+forward void OnEntityDestroyed(int entity);
 
 public Plugin myinfo = 
 {
@@ -70,7 +71,6 @@ public void OnPluginStart()
 {
 	CreateBuildStartForwards(); // Create structure forwards
 	HookEvent("commander_start_structure_build", Event_StructureBuildStarted);
-	HookEvent("structure_death", Event_StructureDeath);
 	HookEvent("round_win", Event_RoundEnd, EventHookMode_PostNoCopy);
 	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	
@@ -101,36 +101,6 @@ public Action Event_StructureBuildStarted(Event event, const char[] name, bool d
 	// Add fire the structure build forward
 	FireStructBuildForward(event.GetInt("type"), team);
 	return Plugin_Continue;
-}
-
-public Action Event_StructureDeath(Event event, const char[] name, bool dontBroadcast)
-{
-        int entIndex = event.GetInt("entindex");
-        int typeIndex = event.GetInt("type");
-        int teamIndex = event.GetInt("team");
-
-	// Ensure the owner team which destroyed the structure is valid
-	if (teamIndex != TEAM_EMPIRE && teamIndex != TEAM_CONSORT)
-		return Plugin_Continue;
-
-        /* Remove the entity index reference */
-        int arrIndex = FindStructureIndex(entIndex);
-        if (arrIndex != -1)
-                BuildEntStructs.Erase(arrIndex);
-
-        int arrIndexType = FindStructureIndexType(typeIndex, entIndex);       
-        if (arrIndexType != -1)
-                BuildEntStructsType[typeIndex].Erase(arrIndexType);
-
-        int arrIndexTeam = FindStructureIndexTeam(teamIndex, entIndex);        
-        if (arrIndexTeam != -1)
-                BuildEntStructsTeam[teamIndex-2].Erase(arrIndexTeam);
-                
-        int arrIndexTypeTeam = FindStructureIndexTypeTeam(typeIndex, teamIndex, entIndex); 
-        if (arrIndexTypeTeam != -1)
-                BuildEntStructsTypeTeam[typeIndex][teamIndex-2].Erase(arrIndexTypeTeam);
-  
-        return Plugin_Continue;
 }
 
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) 
@@ -194,6 +164,32 @@ public void OnEntityCreated(int entity, const char[] classname)
 	}
 }
 
+public void OnEntityDestroyed(int entity)
+{
+        char classname[64];
+        GetEntityClassname(entity, classname, sizeof(classname));
+        
+        if (roundStarted && strncmp(classname, "struct_", 7) == 0)
+        {
+                int arrIndex = FindStructureIndex(entity);
+                if (arrIndex != -1)
+                {
+                       BuildingEntity ent;
+                       BuildEntStructs.GetArray(arrIndex, ent);                  
+                       BuildEntStructs.Erase(arrIndex);
+                       RemoveEntityFromArrays(entity, ent.type, ent.team);                       
+                }        
+        }
+}
+
+void RemoveEntityFromArrays(int entity, int type, int team)
+{
+        // Call find index functions with remove variable set to true
+        FindStructureIndexType(type, entity, true);       
+        FindStructureIndexTeam(team, entity, true);
+        FindStructureIndexTypeTeam(type, team, entity, true);
+}
+
 int FindStructureIndex(int entity)
 {
         for (int idx = 0; idx < BuildEntStructs.Length; idx++)
@@ -203,25 +199,30 @@ int FindStructureIndex(int entity)
                 
                 if (ent.entIndex == entity)
                         return idx;
-        }        
+        }
         return -1;
 }
 
-int FindStructureIndexTeam(int team, int entity)
+int FindStructureIndexTeam(int team, int entity, bool remove=false)
 {
-        for (int idx = 0; idx < BuildEntStructsType[team-2].Length; idx++)
+        for (int idx = 0; idx < BuildEntStructsTeam[team-2].Length; idx++)
         {
                 BuildingEntity ent;
                 BuildEntStructsTeam[team-2].GetArray(idx, ent);
                 
                 if (ent.entIndex == entity)
+                {
+                        if (remove)
+                                BuildEntStructsTeam[team-2].Erase(idx);                      
+
                         return idx;
+                }
         }        
         return -1;
 }
 
 
-int FindStructureIndexType(int type, int entity)
+int FindStructureIndexType(int type, int entity, bool remove=false)
 {
         for (int idx = 0; idx < BuildEntStructsType[type].Length; idx++)
         {
@@ -229,12 +230,17 @@ int FindStructureIndexType(int type, int entity)
                 BuildEntStructsType[type].GetArray(idx, ent);
                 
                 if (ent.entIndex == entity)
+                {
+                        if (remove)
+                                BuildEntStructsType[type].Erase(idx);
+
                         return idx;
+                }
         }        
         return -1;
 }
 
-int FindStructureIndexTypeTeam(int type, int team, int entity)
+int FindStructureIndexTypeTeam(int type, int team, int entity, bool remove=false)
 {
         for (int idx = 0; idx < BuildEntStructsTypeTeam[type][team-2].Length; idx++)
         {
@@ -242,7 +248,12 @@ int FindStructureIndexTypeTeam(int type, int team, int entity)
                 BuildEntStructsTypeTeam[type][team-2].GetArray(idx, ent);
                 
                 if (ent.entIndex == entity)
+                {
+                        if (remove)
+                                BuildEntStructsTypeTeam[type][team-2].Erase(idx);
+
                         return idx;
+                }
         }        
         return -1;
 }
