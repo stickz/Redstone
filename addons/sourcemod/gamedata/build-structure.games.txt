@@ -2,19 +2,38 @@
 {
     "nucleardawn"
     {
+        "Offsets"
+        {
+            "CNDPlayer::GetEntity"
+            {
+                "linux"     "6"
+                "windows"   "5"
+            }
+            "CBaseEntity::GetEntity"
+            {
+                "linux"     "6"
+                "windows"   "5"
+            }
+        }
         "Signatures"
         {
             "CNDPlayer::Commander_BuildStructure"
             {
                 "library"   "server"
                 "linux"     "@_ZN9CNDPlayer24Commander_BuildStructureEi13eNDStructuresRK6VectorRK6QAnglei"
-                "windows"   "\x55\x89\xE5\x57\x56\x53\x81\xEC\x3C\x01\x00\x00\x8B\x45\x2A\xC7\x44\x24\x2A\x07\x00\x00\x00"
+                "windows"   "\x55\x8B\xEC\x81\xEC\x48\x01\x00\x00\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\x2A\x8B\x45\x2A\x53"
             }
             "CNDPlayer::Commander_BuildEmergencyAssembler"
             {
                 "library"   "server"
                 "linux"     "@_ZN9CNDPlayer33Commander_BuildEmergencyAssemblerEiRK6VectorRK6QAnglei"
-                "windows"   "\x55\x89\xE5\x57\x56\x53\x83\xEC\x2C\x8B\x45\x2A\x8B\x7D\x2A\x8B\x5D\x2A\x8B\x75\x2A\x89\x45\x2A\x8B\x45\x2A\x89\x45\x2A"
+                "windows"   "\x55\x8B\xEC\xA1\x2A\x2A\x2A\x2A\x83\xEC\x20\x56"
+            }
+            "SellActionHandlerObject::Run"
+            {
+                "library"   "server"
+                "linux"     "@_ZN23SellActionHandlerObject3RunEP9CNDPlayerP11CBaseEntityP7bf_read"
+                "windows"   "\x55\x8B\xEC\x57\x8B\x7D\x2A\x85\xFF\x74\x2A\x8B\x4D\x2A\x56\xE8\x2A\x2A\x2A\x2A\x8B\xCF\x8B\xF0\xE8\x2A\x2A\x2A\x2A\x3B\xC6\x5E\x75\x2A\x8B\x07"
             }
         }
         "Functions"
@@ -43,7 +62,7 @@
                     {
                         "type"  "vectorptr"
                     }
-                    "mystery"
+                    "id"
                     {
                         "type"  "int"
                     }
@@ -69,9 +88,30 @@
                     {
                         "type"  "vectorptr"
                     }
-                    "mystery"
+                    "id"
                     {
                         "type"  "int"
+                    }
+                }
+            }
+            "SellActionHandlerObject::Run"
+            {
+                "signature" "SellActionHandlerObject::Run"
+                "callconv"  "cdecl"
+                "return"    "bool"
+                "arguments"
+                {
+                    "player"
+                    {
+                        "type"  "objectptr"
+                    }
+                    "entity"
+                    {
+                        "type"  "objectptr"
+                    }
+                    "bf_read"
+                    {
+                        "type"  "objectptr"
                     }
                 }
             }

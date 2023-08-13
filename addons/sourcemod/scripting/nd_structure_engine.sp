@@ -1,8 +1,10 @@
 #include <sourcemod>
 #include <nd_structures>
+#include <nd_stocks>
 
-// sdk hooks function. Only forward the required function
+// sdk hooks functions. Only register the required forwards.
 forward void OnEntityCreated(int entity, const char[] classname);
+forward void OnEntityDestroyed(int entity);
 
 public Plugin myinfo = 
 {
@@ -18,6 +20,7 @@ public Plugin myinfo =
 #include "updater/standard.sp"
 
 bool FirstStructurePlaced[2] = { false, ... };
+bool roundStarted = false;
 
 Handle OnStructBuildStarted[ND_StructCount];
 Handle OnStructCreated;
@@ -26,6 +29,7 @@ enum struct BuildingEntity
 {
       int entIndex;
       int type;
+      int team;
       char classname[32];
       float vecPos[3];
       
@@ -34,12 +38,15 @@ enum struct BuildingEntity
             GetEntityClassname(index, this.classname, sizeof(this.classname));
             GetEntPropVector(index, Prop_Send, "m_vecOrigin", this.vecPos);
             this.type = ND_GetStructIndex(this.classname);
+            this.team = GetEntProp(index, Prop_Send, "m_iTeamNum");
             return 0;
       }
 }
 
 ArrayList BuildEntStructs;
-ArrayList BuildEntStructsEx[ND_StructCount];
+ArrayList BuildEntStructsTeam[2];
+ArrayList BuildEntStructsType[ND_StructCount];
+ArrayList BuildEntStructsTypeTeam[ND_StructCount][2];
 
 char fName[ND_StructCount][64] = {
 	"OnBuildStarted_Bunker",
@@ -64,14 +71,19 @@ public void OnPluginStart()
 {
 	CreateBuildStartForwards(); // Create structure forwards
 	HookEvent("commander_start_structure_build", Event_StructureBuildStarted);
-	HookEvent("structure_death", Event_StructureDeath);
 	HookEvent("round_win", Event_RoundEnd, EventHookMode_PostNoCopy);
+	HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 	
 	BuildEntStructs = new ArrayList(sizeof(BuildingEntity));
 	
 	for (int i = 0; i < view_as<int>(ND_StructCount); i++) {
-	          BuildEntStructsEx[i] = new ArrayList(sizeof(BuildingEntity));
+	          BuildEntStructsType[i] = new ArrayList(sizeof(BuildingEntity));
+	          BuildEntStructsTypeTeam[i][0] = new ArrayList(sizeof(BuildingEntity));
+	          BuildEntStructsTypeTeam[i][1] = new ArrayList(sizeof(BuildingEntity));
 	}
+	
+	BuildEntStructsTeam[0] = new ArrayList(sizeof(BuildingEntity));
+	BuildEntStructsTeam[1] = new ArrayList(sizeof(BuildingEntity));
 	
 	AddUpdaterLibrary(); // Add auto updater feature
 }
@@ -91,48 +103,91 @@ public Action Event_StructureBuildStarted(Event event, const char[] name, bool d
 	return Plugin_Continue;
 }
 
-public Action Event_StructureDeath(Event event, const char[] name, bool dontBroadcast)
-{
-        int entIndex = event.GetInt("entindex");
-        int typeIndex = event.GetInt("type");
-        int arrIndex = FindStructureIndex(entIndex);
-        int arrIndexEx = FindStructureIndexEx(typeIndex, entIndex);
-        
-        // Remove the entity index reference
-        if (arrIndex != -1)
-                BuildEntStructs.Erase(arrIndex);
-                
-        if (arrIndexEx != -1)
-                BuildEntStructsEx[typeIndex].Erase(arrIndexEx);
-  
-        return Plugin_Continue;
-}
-
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) 
 {
+	roundStarted = false;
 	PerformCleanup();	
 	return Plugin_Continue;
 }
 
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) 
+{
+	roundStarted = true;
+	
+	InitStructureByType(STRUCT_BUNKER);
+        InitStructureByType(STRUCT_ASSEMBLER);
+        InitStructureByType(STRUCT_TRANSPORT);
+        InitStructureByType(STRUCT_MG_TURRET);
+	
+	return Plugin_Continue;
+}
+
+void InitStructureByType(const char[] name)
+{
+   	int loopEntity = INVALID_ENT_REFERENCE;
+   	while ((loopEntity = FindEntityByClassname(loopEntity, name)) != INVALID_ENT_REFERENCE)
+	{
+	         if (!HasEntProp(loopEntity, Prop_Send, "m_vecOrigin") || 
+	             !HasEntProp(loopEntity, Prop_Send, "m_iTeamNum"))
+	                  continue;
+	                  
+	         InitBuildEnt(loopEntity);
+	}
+}
+
 public Action TIMER_InitBuildEntStructs(Handle timer, int entity)
 {
-	if (!HasEntProp(entity, Prop_Send, "m_vecOrigin"))
-	        return Plugin_Handled;
-	
+	if (!HasEntProp(entity, Prop_Send, "m_vecOrigin") || 
+	    !HasEntProp(entity, Prop_Send, "m_iTeamNum"))
+	        return Plugin_Handled;	
+
+	InitBuildEnt(entity);	
+	return Plugin_Handled;
+}
+
+void InitBuildEnt(int entity)
+{
 	BuildingEntity ent;
 	ent.initByIndex(entity);
 	BuildEntStructs.PushArray(ent);
-	BuildEntStructsEx[ent.type].PushArray(ent);
-	return Plugin_Handled;
+	BuildEntStructsTeam[ent.team-2].PushArray(ent);
+        BuildEntStructsType[ent.type].PushArray(ent);
+        BuildEntStructsTypeTeam[ent.type][ent.team-2].PushArray(ent);
 }
 
 public void OnEntityCreated(int entity, const char[] classname)
 {
-	if (strncmp(classname, "struct_", 7) == 0)
+	if (roundStarted && strncmp(classname, "struct_", 7) == 0)
 	{
 	        FireStructCreatedForward(entity, classname);
 		CreateTimer(0.1, TIMER_InitBuildEntStructs, entity, TIMER_FLAG_NO_MAPCHANGE);
 	}
+}
+
+public void OnEntityDestroyed(int entity)
+{
+        char classname[64];
+        GetEntityClassname(entity, classname, sizeof(classname));
+        
+        if (roundStarted && strncmp(classname, "struct_", 7) == 0)
+        {
+                int arrIndex = FindStructureIndex(entity);
+                if (arrIndex != -1)
+                {
+                       BuildingEntity ent;
+                       BuildEntStructs.GetArray(arrIndex, ent);                  
+                       BuildEntStructs.Erase(arrIndex);
+                       RemoveEntityFromArrays(entity, ent.type, ent.team);                       
+                }        
+        }
+}
+
+void RemoveEntityFromArrays(int entity, int type, int team)
+{
+        // Call find index functions with remove variable set to true
+        FindStructureIndexType(type, entity, true);       
+        FindStructureIndexTeam(team, entity, true);
+        FindStructureIndexTypeTeam(type, team, entity, true);
 }
 
 int FindStructureIndex(int entity)
@@ -144,19 +199,61 @@ int FindStructureIndex(int entity)
                 
                 if (ent.entIndex == entity)
                         return idx;
+        }
+        return -1;
+}
+
+int FindStructureIndexTeam(int team, int entity, bool remove=false)
+{
+        for (int idx = 0; idx < BuildEntStructsTeam[team-2].Length; idx++)
+        {
+                BuildingEntity ent;
+                BuildEntStructsTeam[team-2].GetArray(idx, ent);
+                
+                if (ent.entIndex == entity)
+                {
+                        if (remove)
+                                BuildEntStructsTeam[team-2].Erase(idx);                      
+
+                        return idx;
+                }
         }        
         return -1;
 }
 
-int FindStructureIndexEx(int type, int entity)
+
+int FindStructureIndexType(int type, int entity, bool remove=false)
 {
-        for (int idx = 0; idx < BuildEntStructsEx[type].Length; idx++)
+        for (int idx = 0; idx < BuildEntStructsType[type].Length; idx++)
         {
                 BuildingEntity ent;
-                BuildEntStructsEx[type].GetArray(idx, ent);
+                BuildEntStructsType[type].GetArray(idx, ent);
                 
                 if (ent.entIndex == entity)
+                {
+                        if (remove)
+                                BuildEntStructsType[type].Erase(idx);
+
                         return idx;
+                }
+        }        
+        return -1;
+}
+
+int FindStructureIndexTypeTeam(int type, int team, int entity, bool remove=false)
+{
+        for (int idx = 0; idx < BuildEntStructsTypeTeam[type][team-2].Length; idx++)
+        {
+                BuildingEntity ent;
+                BuildEntStructsTypeTeam[type][team-2].GetArray(idx, ent);
+                
+                if (ent.entIndex == entity)
+                {
+                        if (remove)
+                                BuildEntStructsTypeTeam[type][team-2].Erase(idx);
+
+                        return idx;
+                }
         }        
         return -1;
 }
@@ -166,9 +263,14 @@ void PerformCleanup()
       	FirstStructurePlaced[0] = false;
 	FirstStructurePlaced[1] = false;
 	BuildEntStructs.Clear();
-	for (int i = 0; i < view_as<int>(ND_StructCount); i++) {
-	          BuildEntStructsEx[i].Clear();
-	}
+	for (int i = 0; i < view_as<int>(ND_StructCount); i++) 
+	{
+	          BuildEntStructsType[i].Clear();
+	          BuildEntStructsTypeTeam[i][0].Clear();
+	          BuildEntStructsTypeTeam[i][1].Clear();
+	}	
+	BuildEntStructsTeam[0].Clear();
+	BuildEntStructsTeam[1].Clear();
 }
 
 void FireStructCreatedForward(int entity, const char[] classname)
@@ -203,8 +305,15 @@ void CreateBuildStartForwards()
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("ND_FirstStructurePlaced", Native_GetFirstStructurePlaced);
+	
 	CreateNative("ND_GetBuildingInfo", Native_GetBuildingInfo);
-	CreateNative("ND_GetBuildingInfoEx", Native_GetBuildingInfoEx);
+	CreateNative("ND_GetBuildingInfoType", Native_GetBuildingInfoType);
+	CreateNative("ND_GetBuildingInfoTeam", Native_GetBuildingInfoTeam);
+	
+	CreateNative("ND_GetBuildInfoArray", Native_GetBuildInfoArray);
+	CreateNative("ND_GetBuildInfoArrayType", Native_GetBuildInfoArrayType);
+	CreateNative("ND_GetBuildInfoArrayTeam", Native_GetBuildInfoArrayTeam);
+	CreateNative("ND_GetBuildInfoArrayTypeTeam", Native_GetBuildInfoArrayTypeTeam);
 	return APLRes_Success;
 }
 
@@ -232,16 +341,16 @@ public int Native_GetBuildingInfo(Handle plugin, int numParams)
 	return array;
 }
 
-public int Native_GetBuildingInfoEx(Handle plugin, int numParams)
+public int Native_GetBuildingInfoType(Handle plugin, int numParams)
 {
 	int type = GetNativeCell(1);
 	int entity = GetNativeCell(2);
-	int array = FindStructureIndexEx(type, entity);
+	int array = FindStructureIndexType(type, entity);
 	
 	if (array != -1)
 	{	  
 	        BuildingEntity ent;
-	        BuildEntStructsEx[type].GetArray(array, ent);
+	        BuildEntStructsType[type].GetArray(array, ent);
 	  
 	        SetNativeArray(3, ent.vecPos, sizeof(ent.vecPos));
 	        SetNativeString(4, ent.classname, sizeof(ent.classname));
@@ -249,3 +358,50 @@ public int Native_GetBuildingInfoEx(Handle plugin, int numParams)
 	
 	return array;
 }
+
+public int Native_GetBuildingInfoTeam(Handle plugin, int numParams)
+{
+	int team = GetNativeCell(1);
+	int entity = GetNativeCell(2);
+	int array = FindStructureIndexTeam(team, entity);
+	
+	if (array != -1)
+	{	  
+	        BuildingEntity ent;
+	        BuildEntStructsTeam[team-2].GetArray(array, ent);
+	  
+	        SetNativeArray(3, ent.vecPos, sizeof(ent.vecPos));
+	        SetNativeString(4, ent.classname, sizeof(ent.classname));
+	}
+	
+	return array;
+}
+
+public int Native_GetBuildInfoArray(Handle plugin, int numParams)
+{
+        SetNativeCellRef(1, BuildEntStructs);
+        return 0;
+}
+
+public int Native_GetBuildInfoArrayType(Handle plugin, int numParams)
+{
+        int type = GetNativeCell(2);
+        SetNativeCellRef(1, BuildEntStructsType[type]);
+        return 0;
+}
+
+public int Native_GetBuildInfoArrayTeam(Handle plugin, int numParams)
+{
+        int team = GetNativeCell(2);
+        SetNativeCellRef(1, BuildEntStructsTeam[team-2]);
+        return 0;
+}
+
+public int Native_GetBuildInfoArrayTypeTeam(Handle plugin, int numParams)
+{
+        int type = GetNativeCell(2);
+        int team = GetNativeCell(3);
+        SetNativeCellRef(1, BuildEntStructsTypeTeam[type][team-2]);
+        return 0;
+}
+

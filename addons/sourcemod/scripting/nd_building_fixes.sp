@@ -51,27 +51,25 @@ public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure,
         // Get the team the relay tower or wireless repeater belongs to
         int relayTeam = GetClientTeam(client);
 
-        if (IsPowerTooCloseToWall(relayTeam, position))
+        if (IsBuildingTooClose(relayTeam, ND_Wall, position))
         {
             char notice[64];
-            Format(notice, sizeof(notice), "%s %s.", \
-                NOTE_PREFIX, \
-                GetStructureDisplayName(ND_Wall, true));
+            FormatFailureNotice(notice, sizeof(notice), ND_Wall);
             UTIL_Commander_FailureText(client, notice);
             return Plugin_Stop;
         }
     }
+    
     else if (structure == ND_Wall)
     {
         // Get the team the wall belongs to
         int wallTeam = GetClientTeam(client);
+        ND_Structures teamRelayStruct = wallTeam == TEAM_CONSORT ? ND_Wireless_Repeater : ND_Relay_Tower;
 
-        if (IsWallTooCloseToPower(wallTeam, position))
+        if (IsBuildingTooClose(wallTeam, teamRelayStruct, position))
         {
             char notice[64];
-            Format(notice, sizeof(notice), "%s %s.", \
-                NOTE_PREFIX, \
-                GetStructureDisplayName(wallTeam == TEAM_CONSORT ? ND_Wireless_Repeater : ND_Relay_Tower, true));
+            FormatFailureNotice(notice, sizeof(notice), teamRelayStruct);
             UTIL_Commander_FailureText(client, notice);
             return Plugin_Stop;
         }
@@ -79,6 +77,7 @@ public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure,
 
     return Plugin_Continue;
 }
+
 public void ND_OnStructureCreated(int entity, const char[] classname)
 {
     if (!g_bStructureDetourAvailable && ND_RoundStarted())
@@ -110,15 +109,13 @@ public Action Timer_CheckRelay(Handle timer, any entref)
     float position[3];
     GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
 
-    if (IsPowerTooCloseToWall(team, position))
+    if (IsBuildingTooClose(team, ND_Wall, position))
     {
         int client = GameRules_GetPropEnt("m_hCommanders", team-2);
         if (client && IsClientInGame(client))
         {
             char notice[64];
-            Format(notice, sizeof(notice), "%s %s.", \
-                NOTE_PREFIX, \
-                GetStructureDisplayName(ND_Wall, true));
+            FormatFailureNotice(notice, sizeof(notice), ND_Wall);
             UTIL_Commander_FailureText(client, notice);
         }
 
@@ -142,16 +139,15 @@ public Action Timer_CheckWall(Handle timer, any entref)
     // Get the position of the structure
     float position[3];
     GetEntPropVector(entity, Prop_Data, "m_vecOrigin", position);
-
-    if (IsWallTooCloseToPower(team, position))
+    
+    ND_Structures structure = team == TEAM_CONSORT ? ND_Wireless_Repeater : ND_Relay_Tower;
+    if (IsBuildingTooClose(team, structure, position))
     {
         int client = GameRules_GetPropEnt("m_hCommanders", team-2);
         if (client && IsClientInGame(client))
         {
             char notice[64];
-            Format(notice, sizeof(notice), "%s %s.", \
-                NOTE_PREFIX, \
-                GetStructureDisplayName(team == TEAM_CONSORT ? ND_Wireless_Repeater : ND_Relay_Tower, true));
+            FormatFailureNotice(notice, sizeof(notice), structure);
             UTIL_Commander_FailureText(client, notice);
         }
 
@@ -161,60 +157,33 @@ public Action Timer_CheckWall(Handle timer, any entref)
     return Plugin_Handled;
 }
 
-bool IsPowerTooCloseToWall(int team, float position[3])
+void FormatFailureNotice(char[] string, int size, ND_Structures structure)
 {
-    int wallEntity = INVALID_ENT_REFERENCE;
-    while ((wallEntity = FindEntityByClassname(wallEntity, STRUCT_WALL)) != INVALID_ENT_REFERENCE)
-    {
-        // Get the team of the entity from the wall index
-        // If the wall belongs to the same team as the relay
-        int wallTeam = GetEntProp(wallEntity, Prop_Send, "m_iTeamNum");
-        if (wallTeam == team)
-        {
-            // Get the position of the wall
-            float wallPos[3];
-            GetEntPropVector(wallEntity, Prop_Data, "m_vecOrigin", wallPos);
+    Format(string, size, "%s %s.", NOTE_PREFIX, GetStructureDisplayName(structure, true));
+}
 
-            // Compare it to the relay tower. Get the vector distance apart.
-            int distance = RoundFloat(GetVectorDistance(position, wallPos));
-            if (distance <= DISTANCE_INSIDE_RELAY)
-            {
-                return true;
-            }
+bool IsBuildingTooClose(int team, ND_Structures structure, float position[3])
+{
+    ArrayList buildings;
+    ND_GetBuildInfoArrayTypeTeam(buildings, view_as<int>(structure), team);
+    
+    for (int i = 0; i < buildings.Length; i++)
+    {
+        BuildingEntity ent;
+        buildings.GetArray(i, ent);
+
+        if (IsBuildingInsideRelay(position, ent.vecPos))
+        {
+            return true;
         }
     }
 
     return false;
 }
 
-bool IsWallTooCloseToPower(int team, float position[3])
+bool IsBuildingInsideRelay(float first[3], float second[3])
 {
-    // Get the name of the relay tower (wireless repeater or relay tower)
-    char relayName[32];
-    Format(relayName, sizeof(relayName), "%s", GetRelayTowerName(team));
-
-    int relayEntity = INVALID_ENT_REFERENCE;
-    while ((relayEntity = FindEntityByClassname(relayEntity, relayName)) != INVALID_ENT_REFERENCE)
-    {
-        // Get the team of the entity from the relay index
-        // If the wall belongs to the same team as the relay
-        int relayTeam = GetEntProp(relayEntity, Prop_Send, "m_iTeamNum");
-        if (team == relayTeam)
-        {
-            // Get the position of the relay tower or wireless repeater
-            float relayPos[3];
-            GetEntPropVector(relayEntity, Prop_Data, "m_vecOrigin", relayPos);
-
-            // Compare it to the wall. Get the vector distance apart.
-            int distance = RoundFloat(GetVectorDistance(relayPos, position));
-            if (distance <= DISTANCE_INSIDE_RELAY)
-            {
-                return true;
-            }
-        }
-    }
-
-    return false;
+    return RoundFloat(GetVectorDistance(first, second)) <= DISTANCE_INSIDE_RELAY;
 }
 
 stock void ShowDebugInfo(int entity)

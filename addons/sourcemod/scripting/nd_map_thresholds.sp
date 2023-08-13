@@ -158,6 +158,7 @@ void CreateMapThresholdList(bool debugFunction = false)
 		
 		ND_NominateMap(ND_CustomMaps[ND_Nuclear], 60 + plyAdjust);
 		ND_NominateMap(ND_CustomMaps[ND_Rock], 60 + plyAdjust);
+		ND_NominateMap(ND_CustomMaps[ND_Oblivion], 60 + plyAdjust);
 	}
 	
 	if (clientCount >= cvarDowntownMapCount.IntValue)
