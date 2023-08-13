@@ -72,7 +72,7 @@ public Action ND_OnCommanderBuildStructure(int client, ND_Structures &structure,
 	if (!MGTurrentBuildAllowed && structure == ND_MG_Turret)
 	{
 		int team = GetClientTeam(client);
-		if (!ND_ItemHasBeenResearched(team, Advanced_Manufacturing) && ND_GetMGTurretCount(team) > cvarMGTurrentMax.IntValue)
+		if (!ND_ItemHasBeenResearched(team, Advanced_Manufacturing) && ND_GetMGTurretCount(team) >= cvarMGTurrentMax.IntValue)
 		{
 			PrintToChat(client, "[RS] MG Torrent limit researched. Advanced Manufacturing research required.");
 			return Plugin_Stop;
