@@ -9,19 +9,18 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
-      - name: Clone Repo
+      - name: Setup GitHub Runner
         run: |
-          cd ..
-          rm -rf Redstone
-          git clone -q https://github.com/stickz/Redstone
-        
-      - name: Branch Commit History
-        run: |
-          git branch -D history
-          git branch history 57c5c38
-        continue-on-error: true
+          sudo apt update
+          sudo apt install dos2unix
+
+      - name: Checkout Pull Request
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: Run Chmod
         run: chmod 777 .github/scripts/build.sh
