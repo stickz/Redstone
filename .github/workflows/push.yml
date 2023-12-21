@@ -12,6 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
+      - name: Setup GitHub Runner
+        run: |
+          sudo apt update
+          sudo apt install dos2unix
+
       - name: Clone Repo
         run: |
           cd ..
