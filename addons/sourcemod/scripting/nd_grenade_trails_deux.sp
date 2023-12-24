@@ -9,7 +9,6 @@
 #include <nd_swgm>
 #include <nd_print>
 
-#define NO_COMMANDER -1
 #define MAX_DISPLAYNAME_SIZE 30
 #define COLOUR_SCALE_SIZE 4
 
