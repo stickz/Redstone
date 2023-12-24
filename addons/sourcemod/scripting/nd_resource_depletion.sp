@@ -149,6 +149,9 @@ public Action TIMER_CheckMainResourcesOwned(Handle timer)
 
 int MainPointsOwnedByTeam()
 {
+	if (ND_GetPrimaryPoint() == -1)
+		return TEAM_NONE;
+	
 	int primeOwner = ND_GetPrimeOwner();	
 	
 	for (int s = 0; s < listSecondaries.Length; s++)
