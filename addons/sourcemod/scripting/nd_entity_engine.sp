@@ -86,7 +86,8 @@ public int Native_GetPrimeEntity(Handle plugin, int numParams)
 {
 	// Get the current name of the prime entity index
 	char entityName[32];
-	GetEntityClassname(g_iPrimeEntity, entityName, sizeof(entityName)); 
+	if (g_iPrimeEntity != -1)
+		GetEntityClassname(g_iPrimeEntity, entityName, sizeof(entityName)); 
 	
 	// If it's not equal the prime entity, refresh it
 	if (!StrEqual(entityName, PRIME_ENTITY, true))
