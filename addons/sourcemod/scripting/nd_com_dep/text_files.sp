@@ -1,8 +1,15 @@
 #define STEAMID_SIZE 32
+
+#define DATA_FOLDER "data/com/"
 #define TEXT_FILE_PATH "data/com/dep.txt"
 
 void CreateTextFile()
 {
+	char folderPath[PLATFORM_MAX_PATH];
+	BuildPath(Path_SM, folderPath, PLATFORM_MAX_PATH, DATA_FOLDER);
+	if (!DirExists(folderPath, false))
+		CreateDirectory(folderPath, 511);
+	
 	/* Build a path to the text file */
 	char path[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, path, PLATFORM_MAX_PATH, TEXT_FILE_PATH);

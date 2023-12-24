@@ -1,5 +1,6 @@
 #define STEAMID_SIZE 32
 
+#define DATA_FOLDER "data/skill/"
 #define TEXT_FILE_COUNT 8
 char nd_text_file[TEXT_FILE_COUNT][] = {
 	"data/skill/w20.txt",
@@ -14,6 +15,11 @@ char nd_text_file[TEXT_FILE_COUNT][] = {
 
 void CreateTextFiles()
 {
+	char folderPath[PLATFORM_MAX_PATH];
+	BuildPath(Path_SM, folderPath, PLATFORM_MAX_PATH, DATA_FOLDER);
+	if (!DirExists(folderPath, false))
+		CreateDirectory(folderPath, 511);
+	
 	/* For the number of previousily stored maps */
 	for (int idx = 0; idx < TEXT_FILE_COUNT; idx++)
 	{

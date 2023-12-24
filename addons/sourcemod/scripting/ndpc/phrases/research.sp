@@ -1,5 +1,4 @@
 #define RESEARCH_NOT_FOUND -1
-#define R_ALIAS_COUNT 3
 
 #define REQUEST_RESEARCH_COUNT 7
 char nd_request_research[REQUEST_RESEARCH_COUNT][] = {

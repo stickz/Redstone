@@ -30,7 +30,9 @@ public CookieMenuHandler_TeamBreakdown(client, CookieMenuAction:action, any:info
 }
 
 public OnClientCookiesCached(client)
+{
 	option_team_breakdown[client] = GetCookieTeamBreakdown(client);
+}
 
 bool GetCookieTeamBreakdown(client)
 {
