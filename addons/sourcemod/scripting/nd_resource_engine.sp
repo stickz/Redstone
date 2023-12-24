@@ -107,6 +107,9 @@ public Action TIMER_CheckPrimeDepleted(Handle timer)
 	if (!roundStarted)
 		return Plugin_Stop;
 	
+	if (PrimeEntity == -1)
+		return Plugin_Continue;
+	
 	// Get the current resources prime has left
 	int curRes = GetEntProp(PrimeEntity, Prop_Send, "m_iCurrentResources");
 	if (curRes <= PRIMARY_FRACKING_LEFT)
