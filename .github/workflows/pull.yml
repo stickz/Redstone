@@ -8,7 +8,7 @@ on:
       - 'master'
 
 jobs:
-  build:
+  stable:
     runs-on: ubuntu-latest
     steps:
       - name: Setup GitHub Runner
@@ -27,4 +27,25 @@ jobs:
 
       - name: Build Stable
         run: ./.github/scripts/build.sh -v --sourcemod=1.11.0-6911 --out=build
+        shell: bash
+        
+  develop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup GitHub Runner
+        run: |
+          sudo apt update
+          sudo apt install dos2unix
+
+      - name: Checkout Pull Request
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Run Chmod
+        run: chmod 777 .github/scripts/build.sh
+
+      - name: Build Develop
+        run: ./.github/scripts/build.sh -v --sourcemod=1.12.0-7100 --out=build
         shell: bash
