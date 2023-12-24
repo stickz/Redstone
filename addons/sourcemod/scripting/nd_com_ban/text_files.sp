@@ -1,4 +1,6 @@
 #define STEAMID_SIZE 32
+
+#define DATA_FOLDER "data/com/"
 #define TEXT_FILE_PATH "data/com/ban.txt"
 
 void CreateTextFile()
@@ -18,6 +20,11 @@ void CreateTextFile()
 
 void ReadTextFile()
 {
+	char folderPath[PLATFORM_MAX_PATH];
+	BuildPath(Path_SM, folderPath, PLATFORM_MAX_PATH, DATA_FOLDER);
+	if (!DirExists(folderPath, false))
+		CreateDirectory(folderPath, 511);
+	
 	/* Clear the steamid array */
 	g_SteamIDList.Clear();
 		
