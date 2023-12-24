@@ -20,7 +20,6 @@
 #define CHANGE_TYPE_HIGH 	1
 
 #define IN_EXCLUDE_ARRAY 	0
-#define INVALID_USERID		0
 
 #define NOT_IN_ARRAY -1
 
