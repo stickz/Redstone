@@ -22,9 +22,6 @@ int GetCaptureByIndex(const char[] sArgs)
 	return RESOURCE_NOT_FOUND;
 }
 
-#define LOCATION_NOT_FOUND -1
-#define COMPASS_NOT_FOUND -1
-
 // A list of locations by their translation phrase
 #define REQUEST_LOCATION_EX_COUNT 3
 char nd_request_location_ex[REQUEST_LOCATION_EX_COUNT][] =
