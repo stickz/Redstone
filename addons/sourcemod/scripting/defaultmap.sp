@@ -74,8 +74,15 @@ public void OnMapStart()
 {
 	isHostMap = ND_IsServerHostMap();
 	
+	CreateTimer(1.0, TIMER_CheckPlyrCount, _, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+Action TIMER_CheckPlyrCount(Handle timer)
+{
 	if(!g_PlyrCount)
 		SetDefaultMap();
+	
+	return Plugin_Handled;
 }
 
 void SetDefaultMap()

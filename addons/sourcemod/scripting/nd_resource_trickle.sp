@@ -168,7 +168,8 @@ public Action TIMER_SetResPointStructs(Handle timer)
 	initSecondaryStructs();
 	
 	/* Set primary resources and initilize primary structure */
-	ND_SetCurrentResources(PrimeEntity, PRIMARY_TRICKLE_SET + PRIMARY_TEAM_TRICKLE);
+	if (PrimeEntity != -1)
+		ND_SetCurrentResources(PrimeEntity, PRIMARY_TRICKLE_SET + PRIMARY_TEAM_TRICKLE);
 	initNewPrimary(PrimeEntity);
 
 	return Plugin_Continue;
