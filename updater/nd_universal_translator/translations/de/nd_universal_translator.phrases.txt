@@ -1,0 +1,321 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 15:00:35 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/260
+//
+"Phrases"
+{
+
+	"Team Languages"
+	{
+		"de"		"Teamsprachen: {1}."
+	}
+
+	"Commander Language"
+	{
+		"de"		"Die Sprache des Kommandanten ist {1}."
+	}
+
+	"Simple Building Request"
+	{
+		"de"		"fordert {1} an."
+	}
+
+	"Compass Building Request"
+	{
+		"de"		"fordert {1} im {2} an."
+	}
+
+	"Spot Building Request"
+	{
+		"de"		"fordert {1} bei {2} an."
+	}
+
+	"Complex Building Request"
+	{
+		"de"		"fordert das Gebäude {1} bei {2} im {3} an."
+	}
+
+	"Tert"
+	{
+		"de"		"Tertiär"
+	}
+
+	"Translate Tag"
+	{
+		"de"		"(Übersetzer)"
+	}
+
+	"No Translate Keyword"
+	{
+		"de"		"keinen übersetzbaren Begriff erkannt."
+	}
+
+	"No Team Commander"
+	{
+		"de"		"Das Team hat zur Zeit keinen Kommandanten."
+	}
+
+	"Roof"
+	{
+		"de"		"Dach"
+	}
+
+	"Base"
+	{
+		"de"		"Basis"
+	}
+
+	"Prim"
+	{
+		"de"		"Primär"
+	}
+
+	"Pos"
+	{
+		"de"		"Deren Position"
+	}
+
+	"Sec"
+	{
+		"de"		"Sekundär"
+	}
+
+	"North"
+	{
+		"de"		"Norden"
+	}
+
+	"South"
+	{
+		"de"		"Süden"
+	}
+
+	"East"
+	{
+		"de"		"Osten"
+	}
+
+	"West"
+	{
+		"de"		"Westen"
+	}
+
+	"Right"
+	{
+		"de"		"Rechts"
+	}
+
+	"Left"
+	{
+		"de"		"Links"
+	}
+
+	"Simple Research Request"
+	{
+		"de"		"bittet, {1} zu erforschen."
+	}
+
+	"Simple Capture Request"
+	{
+		"de"		"meldet, dass die Ressource(n) bei {1} eingenommen werden müssen!"
+	}
+
+	"Extended Capture Request"
+	{
+		"de"		"{1} will {2} {3} einnehmen"
+	}
+
+	"Advanced Kits"
+	{
+		"de"		"Erweiterte Ausrüstung"
+	}
+
+	"Field Tactics"
+	{
+		"de"		"Feldtaktik"
+	}
+
+	"Commander Abilities"
+	{
+		"de"		"Kommandantenfähigkeiten"
+	}
+
+	"Power Modulation"
+	{
+		"de"		"Energieregulierung"
+	}
+
+	"Advanced Manufacturing"
+	{
+		"de"		"Erweiterte Herstellung"
+	}
+
+	"Infantry Boost"
+	{
+		"de"		"Infanterieverstärkung"
+	}
+
+	"Structure Reinforcement"
+	{
+		"de"		"Strukturelle Verstärkung"
+	}
+
+	"Simple Compass Request"
+	{
+		"de"		"empfielt, im {1} der Karte zu bauen."
+	}
+
+	"Simple Location Request"
+	{
+		"de"		"empfielt bei {1} zu bauen."
+	}
+
+	"Building Repair Request"
+	{
+		"de"		"meldet, dass {1} repariert werden muss!"
+	}
+
+	"Build Comp Repair Request"
+	{
+		"de"		"meldet, dass {1} in {2} repariert werden muss!"
+	}
+
+	"Compass Repair Request"
+	{
+		"de"		"meldet Gebäude im {1} der Karte, die repariert werden müssen!"
+	}
+
+	"Comp Loc Repair Request"
+	{
+		"de"		"meldet, dass die Gebäude bei {2} im {1} repariert werden müssen!"
+	}
+
+	"Location Repair Request"
+	{
+		"de"		"meldet Gebäude bei {1}, die repariert werden müssen!"
+	}
+
+	"Build Loc Repair Request"
+	{
+		"de"		"meldet, dass {1} bei {2} repariert werden muss!"
+	}
+
+	"Extended Repair Request"
+	{
+		"de"		"meldet, dass {1} bei {3} im {2} repariert werden muss!"
+	}
+
+	"Compass Capture Request"
+	{
+		"de"		"meldet, dass der Ressourcenpunkt {1} im {2} eingenommen werden muss!"
+	}
+
+	"Location Capture Request"
+	{
+		"de"		"meldet, dass der Ressourcenpunkt {1} bei {2} eingenommen werden muss!"
+	}
+
+	"Generic Capture Request"
+	{
+		"de"		"meldet, dass Ressourcenpunkte eingenommen werden müssen!"
+	}
+
+	"Terts"
+	{
+		"de"		"Tertiäre"
+	}
+
+	"Building Now"
+	{
+		"de"		"Das Gebäude wird gerade gebaut."
+	}
+
+	"Build Flanks"
+	{
+		"de"		"empfielt, auch auf den leeren Pfaden zu bauen, wo Gegner bislang unentdeckt bleiben."
+	}
+
+	"Complex Tango Request"
+	{
+		"de"		"hat Feinde im {1} bei {2} im {3} gesichtet."
+	}
+
+	"Spot Tango Request"
+	{
+		"de"		"hat Feinde bei {2} {1} gesichtet."
+	}
+
+	"Compass Tango Request"
+	{
+		"de"		"hat Feinde bei {1} in {2} gesichtet."
+	}
+
+	"Tango Building"
+	{
+		"de"		"hat Feinde bei {1} gesichtet."
+	}
+
+	"Tango Compass"
+	{
+		"de"		"hat einen Feind im {1} der Karte gesichtet."
+	}
+
+	"Tango Location"
+	{
+		"de"		"hat einen Feind bei {1} gesichtet."
+	}
+
+	"Bulldozer"
+	{
+		"de"		"Planierraupe"
+	}
+
+	"Courtyard"
+	{
+		"de"		"Hof"
+	}
+
+	"Forward"
+	{
+		"de"		"Außenposten"
+	}
+
+	"Garage"
+	{
+		"de"		"Garage"
+	}
+
+	"Helicopter"
+	{
+		"de"		"Hubschrauber"
+	}
+
+	"Silo"
+	{
+		"de"		"Silo"
+	}
+
+	"Stairs"
+	{
+		"de"		"Treppe"
+	}
+
+	"Statue"
+	{
+		"de"		"Statue"
+	}
+
+	"Truck"
+	{
+		"de"		"LKW"
+	}
+
+	"Tunnel"
+	{
+		"de"		"Tunneleingang"
+	}
+
+}

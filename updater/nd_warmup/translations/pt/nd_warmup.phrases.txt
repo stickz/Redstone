@@ -1,0 +1,22 @@
+﻿"Phrases"
+{
+	"Balancer Not Run"
+	{
+		"pt"		"Balanceamento prévio NÃO ocorre devido à ausência de jogadores"
+	}
+	
+	"Balancer Off"
+	{
+		"pt"		"Balanceamento de Times está DESATIVADO no momento"
+	}
+
+	"Waiting"
+	{
+		"pt"		"Aguardando os jogadores conectarem"	
+	}
+	
+	"Please Wait"
+	{
+		"pt"		"Por favor espere"
+	}	
+}

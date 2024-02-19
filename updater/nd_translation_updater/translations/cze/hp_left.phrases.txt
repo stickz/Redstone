@@ -1,0 +1,19 @@
+﻿"Phrases"
+{
+	"Cookie HP Left"
+	{
+		"cze"			"Zobrazovat zbývající HP"
+	}
+	"Notdied"
+	{
+		"cze"			"Ještě jsi nezemřel"
+	}
+	"Killedhs"
+	{
+		"cze"			"{1}{2}{3} tě zabil pomocí {4} (headshot), zbylo mu {5} HP"		
+	}
+	"Killed"
+	{
+		"cze"      		"{1}{2}{3} tě zabil pomocí {4}, zbylo mu {5} HP"
+	}
+}

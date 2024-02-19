@@ -1,0 +1,70 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:39:02 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/253
+//
+"Phrases"
+{
+
+	"Twelve Required"
+	{
+		"de"		"Für diese Funktion werden mindestens 12 Spieler benötigt"
+	}
+
+	"Ten Required"
+	{
+		"de"		"Für diese Funktion werden mindestens 10 Spieler benötigt"
+	}
+
+	"Four Required"
+	{
+		"de"		"Zum Kapitulieren werden mindestens 4 Spieler benötigt"
+	}
+
+	"Too Soon"
+	{
+		"de"		"Es ist noch zu früh, um zu kapitulieren"
+	}
+
+	"Team Surrendered"
+	{
+		"de"		"Dein Team hat bereits kapituliert"
+	}
+	
+	"Consort Surrendered"
+	{
+		"de"		"Das Konsortium hat aufgegeben"
+	}
+
+	"Empire Surrendered"
+	{
+		"de"		"Das Imperium hat aufgegeben"
+	}
+
+	"Typed Surrender"
+	{
+		"de"		"{1} will kapitulieren : {2} weitere Stimmen benötigt"
+	}
+
+	"Low Bunker Health"
+	{
+		"de"		"Mit stark beschädigtem Bunker kann nicht kapituliert werden"
+	}
+
+	"Veto Already Used"
+	{
+		"de"		"Das Veto wurde bereits verbraucht"
+	}
+
+	"Veto Commander Only"
+	{
+		"de"		"Die \"Veto\"-Funktion kann nur vom Kommandanten benutzt werden!"
+	}
+
+	"Commander Used Veto"
+	{
+		"de"		"Der Kommandant hat die schnelle Kapitulation verhindert. Die Kapitulation muss jetzt mehrheitlich beschlossen werden"
+	}
+}

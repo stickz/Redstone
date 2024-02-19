@@ -1,0 +1,156 @@
+"Phrases"
+{
+
+	"IngameMenu_Caption"
+	{
+		"pt"		"gameME - Menu Principal"
+	}
+	"IngameMenu_Menu1"
+	{
+		"pt"		"Exibicao Terminou"
+	}
+	"IngameMenu_Menu2"
+	{
+		"pt"		"Proximos Jogadores"
+	}
+	"IngameMenu_Menu3"
+	{
+		"pt"		"Top10 Jogadores"
+	}
+	"IngameMenu_Menu4"
+	{
+		"pt"		"Auto Ranking"
+	}
+	"IngameMenu_Menu5"
+	{
+		"pt"		"Chat-Eventos"
+	}
+	"IngameMenu_Menu6"
+	{
+		"pt"		"Alternar Ranking de Exibicao"
+	}
+	"IngameMenu_Menu7"
+	{
+		"pt"		"Clan Ranking"
+	}
+	"IngameMenu_Menu8"
+	{
+		"pt"		"Server Status"
+	}
+	"IngameMenu_Menu9"
+	{
+		"pt"		"Statsme"
+	}
+	"IngameMenu_Menu10"
+	{
+		"pt"		"Arma usada"
+	}
+	"IngameMenu_Menu11"
+	{
+		"pt"		"Precisao Armas"
+	}
+	"IngameMenu_Menu12"
+	{
+		"pt"		"Metas de Armas"
+	}
+	"IngameMenu_Menu13"
+	{
+		"pt"		"Morte de Jogadores"
+	}
+	"IngameMenu_Menu14"
+	{
+		"pt"		"Bans listas"
+	}
+	"IngameMenu_Menu15"
+	{
+		"pt"		"Exibir a ajuda"
+	}
+	"IngameMenu_Menu16"
+	{
+		"pt"		"Resetar Estatisticas"
+	}
+
+
+	"AutoMenu_Caption"
+	{
+		"pt"		"gameME - Auto-Ranking"
+	}
+	"AutoMenu_Menu1"
+	{
+		"pt"		"Ativar em round-start"
+	}
+	"AutoMenu_Menu2"
+	{
+		"pt"		"Ativar em round-end"
+	}
+	"AutoMenu_Menu3"
+	{
+		"pt"		"Ativar na morte de jogadores"
+	}
+	"AutoMenu_Menu4"
+	{
+		"pt"		"Desativado"
+	}
+
+
+	"ConsoleMenu_Caption"
+	{
+		"pt"		"gameME - Chat-Eventos"
+	}
+	"ConsoleMenu_Menu1"
+	{
+		"pt"		"Ativar Eventos"
+	}
+	"ConsoleMenu_Menu2"
+	{
+		"pt"		"Desativar Eventos"
+	}
+	"ConsoleMenu_Menu3"
+	{
+		"pt"		"Ativar Global Chat"
+	}
+	"ConsoleMenu_Menu4"
+	{
+		"pt"		"Desativar Global Chat"
+	}
+
+
+	"DamagePanel_Attackers"
+	{
+		"pt"		"Ataques"
+	}
+	"DamagePanel_Killed"
+	{
+		"pt"		"Assasinado"
+	}
+	"DamagePanel_Wounded"
+	{
+		"pt"		"Feridos"
+	}
+	"DamagePanel_Killer"
+	{
+		"pt"		"Assasino"
+	}
+	"DamagePanel_Dmg"
+	{
+		"pt"		"Dmg"
+	}
+	"DamagePanel_Hit"
+	{
+		"pt"		"Bater"
+	}
+	"DamagePanel_Hits"
+	{
+		"pt"		"Acessos"
+	}
+	"DamagePanel_Hp"
+	{
+		"pt"		"hp"
+	}
+
+	"DamageChat_Killedyou"
+	{
+		"pt"		"{1} voce matou com {2} dmg, {3} hp esquerda"
+	}
+
+}

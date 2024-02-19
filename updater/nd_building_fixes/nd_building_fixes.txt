@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "37013df8"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_building_fixes.smx"
+  }
+}

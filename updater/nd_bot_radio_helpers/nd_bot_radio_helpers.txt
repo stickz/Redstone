@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "671c48db"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_bot_radio_helpers.smx"
+  }
+}

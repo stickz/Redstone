@@ -1,0 +1,96 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:41:17 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/257
+//
+"Phrases"
+{
+
+	"Demotion Reapply"
+	{
+		"ru"		"Нельзя стать командиром после понижения"
+	}
+
+	"Resignation Reapply"
+	{
+		"ru"		"Вы не можете сделать это, подождите 30 секунд"
+	}
+
+	"Spawn Before Apply"
+	{
+		"ru"		"Вы должны появиться на карте перед этим"
+	}
+
+	"Bellow Ten"
+	{
+		"ru"		"Игроки с 1 по 10 уровни, могут командовать только такими же игроками"
+	}
+
+	"Fifty Five Required"
+	{
+		"ru"		"Вам нужен уровень больше 45, для командования таким большим отрядом"
+	}
+
+	"Total Level"
+	{
+		"ru"		"Ваш уровень должен быть равен количеству игроков"
+	}
+
+	"No Commander"
+	{
+		"ru"		"Нет командира для понижения"
+	}
+
+	"Four Required"
+	{
+		"ru"		"Для использования этой функции нужно 4 солдата"
+	}
+
+	"Commander Demoted"
+	{
+		"ru"		"Командир успешно понижен"
+	}
+
+	"Demote Failed"
+	{
+		"ru"		"Не найдено командира для понижения"
+	}
+
+	"Demote First"
+	{
+		"ru"		"Вы не можете начать новое голосование после разжалования"
+	}
+
+	"Silence First"
+	{
+		"ru"		"Вы не можете начать новое голосование пока молчите"
+	}
+
+	"Silence Command"
+	{
+		"ru"		"Вы не можете командовать пока молчите"
+	}
+
+	"Restrictions Relaxed"
+	{
+		"ru"		"Ограничения командира уменьшенны"
+	}
+
+	"Demote Not Found"
+	{
+		"ru"		"Ваш голос разжаловать командира отменен"
+	}
+
+	"Demote Vote"
+	{
+		"ru"		"{1} проголосовал за устранение командира. Необходимо ещё голосов: {2}"
+	}
+
+	"Skill Required"
+	{
+		"ru"		"Минимальный рейтинг для командования: {1}"
+	}
+
+}

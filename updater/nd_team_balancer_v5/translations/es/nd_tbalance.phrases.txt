@@ -1,0 +1,15 @@
+﻿"Phrases"
+{
+	"Resign Switch"
+	{
+		"es"		"Debes resignar de comandante antes de cambiar de equipo"
+	}
+	"Revoke Spectator"
+	{
+		"es"		"Petición de espectador debe ser declinada antes de unirte"
+	}
+	"Retry Placement"
+	{
+		"es"		"En modo espectador! Por favor somete su solicitud de colocación de equipo nuevamente"
+	}
+}

@@ -1,0 +1,88 @@
+"Phrases"
+{
+	// Mod Detection (Debug Messages)
+    "NUCLEARDAWN"
+    {
+		"de"		"Mod Nuclear Dawn erkannt"
+    }
+
+	"Insurgency"
+	{
+		"de"		"Mod Insurgency erkannt"
+	}
+
+	"Synergy"
+	{
+		"de"		"Mod Synergy erkannt"
+	}
+
+	"TF2"
+	{
+		"de"		"Mod Team Fortress 2 erkannt"
+	}
+
+	"CSTRIKE"
+	{
+		"de"		"Mod Counter-Strike erkannt"
+	}
+
+	"L4D"
+	{
+		"de"		"Mod Left 4 Dead erkannt"
+	}
+
+
+	// Debug Messages
+
+
+	// Plugin Messages
+	"Spectate_Force"
+	{
+		"de"		"Zwingt Spieler {1} in den Zuschauermodus."
+	}
+
+	"Spawn_Move_Warning"
+	{
+		"de"		"Warnung: Wenn du dich nicht in {1} Sekunden von deiner Spawnposition bewegst, wirst du in den Zuschauermodus versetzt."
+	}
+
+	"Move_Warning"
+	{
+		"de"		"Warnung: Wenn du dich nicht in {1} Sekunden bewegst, wirst du in den Zuschauermodus versetzt."
+	}
+
+	"Spawn_Kick_Warning"
+	{
+		"de"		"Warnung: Wenn du dich nicht in {1} Sekunden von deiner Spawnposition bewegst, wirst du vom Server entfernt."
+	}
+
+	"Kick_Warning"
+	{
+		"de"		"Warnung: Wenn du dich nicht in {1} Sekunden bewegst, wirst du vom Server entfernt."
+	}
+
+	"Move_Announce"
+	{
+		"de"		"{1} wurde entfernt, weil er zu lange abwesend war."
+	}
+
+	"Move_Log"
+	{
+		"de"		"{1} wurde in den Zuschauermodus versetzt, weil er zu lange in Abwesehenheit war."
+	}
+
+	"Kick_Announce"
+	{
+		"de"		"{1} wurde entfernt, weil er zu lange in Abwesenheit war."
+	}
+
+	"Kick_Message"
+	{
+		"de"		"Du wurdest vom Server entfernt, weil du zu lange in Abwesenheit warst."
+	}
+
+	"Kick_Log"
+	{
+		"de"		"{1} wurde entfernt, weil er zu lange abwesend war."
+	}
+}

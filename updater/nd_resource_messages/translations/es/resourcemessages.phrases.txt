@@ -1,0 +1,90 @@
+"Phrases"
+{
+	// !settings menu label
+	"Cookie Resource Messages"
+	{
+		"es"			"Show Resource Messages"
+	}
+	
+	//Example: "Cube, MissLiss (+3) have captured the primary!"
+	// {1} are the people capturing plus some
+	"Primary Resource Captured"
+	{
+		"es"			"{1} have captured the primary."
+	}
+	
+	//Example: "Cube (+2) has captured north secondary!"
+	// {1} is the person capturing plus some
+	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
+	"Secondary Resource Captured"
+	{
+		"es"			"{1} has captured{2} secondary."
+	}
+	
+	//Example: "djfishfish (+2) has captured northeast tertiary!"
+	// {1} is the person capturing plus some
+	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
+	"Tertiary Resource Captured"
+	{
+		"es"			"{1} has captured{2} tertiary."
+	}
+	
+	"Map Area "
+	{
+		"es"			""
+	}
+	"Map Area N"
+	{
+		"es"			" north"
+	}
+	
+	"Map Area NE"
+	{
+		"es"			" northeast"
+	}
+	
+	"Map Area NW"
+	{
+		"es"			" northwest"
+	}
+	
+	"Map Area S"
+	{
+		"es"			" south"
+	}
+	
+	"Map Area SE"
+	{
+		"es"			" southeast"
+	}
+	
+	"Map Area SW"
+	{
+		"es"			" southwest"
+	}
+	
+	"Map Area E"
+	{
+		"es"			" east"
+	}
+	
+	"Map Area W"
+	{
+		"es"			" west"
+	}
+	
+	"Map Area CE"
+	{
+		"es"			" central"
+	}
+	
+	"Map Area OB"
+	{
+		"es"			" our base"
+	}
+	
+	"Map Area EB"
+	{
+		"es"			" enemy base"
+	}
+}

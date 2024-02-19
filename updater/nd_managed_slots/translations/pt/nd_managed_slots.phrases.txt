@@ -1,0 +1,7 @@
+﻿"Phrases"
+{
+	"Slot Used"
+	{
+		"pt"		"Slot reverso utilizado com sucesso"	
+	}	
+}

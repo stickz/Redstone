@@ -1,0 +1,12 @@
+"Phrases"
+{
+	"Cookie Welcome Message"
+	{
+		"nl"			"Welcome Message"
+	}
+
+	"Welcome"
+	{
+		"nl"			"Welkom op Redstone, sommige functie’s zijn beschikbaar in het Nederlands door het volgende te typen !settings in chat!!"
+	}
+}

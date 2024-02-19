@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "a33182dd"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_grenade_loop_fix.smx"
+  }
+}

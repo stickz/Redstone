@@ -1,0 +1,75 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:45:23 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/241
+//
+"Phrases"
+{
+	"Only Commanders"
+	{
+		"de"		"Dieses Funktion ist den Kommandanten vorbehalten"
+	}
+
+	"Commander Disabled"
+	{
+		"de"		"Die Option, dass Kommandanten die Anzahl an Heckenschützen festlegen können, wurde deaktiviert"
+	}
+
+	"Invalid Team"
+	{
+		"de"		"Ungültiges Team (0 = Konsortium, 1 = Imperium)"
+	}
+
+	"Sniper Limit Reached"
+	{
+		"de"		"Zu viele Heckenschützen, auf Assault zurückgesetzt"
+	}
+
+	"Stealth Limit Reached"
+	{
+		"de"		"Zu viele getarnte Einheiten, auf Assault zurückgesetzt"
+	}
+
+	"AntiStructure Limit Reached"
+	{
+		"de"		"Zu viele Anti-Gebäude-Einheiten, auf Assault zurückgesetzt"
+	}
+
+	"Proper Sniper Usage"
+	{
+		"de"		"Verwendung: !maxsnipers <Limit>"
+	}
+
+	"Proper Stealth Usage"
+	{
+		"de"		"Verwendung: !maxstealth <Limit>"
+	}
+
+	"Proper Structure Usage"
+	{
+		"de"		"Verwendung: !MaxAntiStructure <Percent>"
+	}
+
+	"Set Sniper Limit"
+	{
+		"de"		"Heckenschützen-Limit beträgt jetzt {1}"
+	}
+
+	"Set Stealth Limit"
+	{
+		"de"		"Tarneinheiten-Limit beträgt jetzt{1}"
+	}
+
+	"Set Structure Limit"
+	{
+		"de"		"Anti-Gebäude-Limit beträgt jetzt {1} percent"
+	}
+
+	"Invalid Args"
+	{
+		"de"		"Ungültige Anzahl an Argumenten: <Team> <Anzahl>"
+	}
+
+}

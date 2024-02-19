@@ -1,0 +1,17 @@
+"Phrases"
+{
+	"Hypospray Increases"
+	{
+		"en"		"Increased hypospray damage protection by 10%"
+	}
+	
+	"Hypospray Header Console"
+	{
+		"en"		"--> Hypospray Changes <--"
+	}
+	
+	"Hypospray Increase"
+	{
+		"en"		"Increased hypospray damage protection from 60%% to 70%"
+	}
+}

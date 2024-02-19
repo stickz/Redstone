@@ -1,0 +1,15 @@
+﻿"Phrases"
+{
+	"Resign Switch"
+	{
+		"fr"		"Vous devez quitter le commandement avec de changer d'équipe"
+	}
+	"Revoke Spectator"
+	{
+		"fr"		"La requête de spectateur doit être annulée avant de pouvoir rejoindre"
+	}
+	"Retry Placement"
+	{
+		"fr"		"Vous êtes maintenant en mode spectateur ! Veuillez réessayer votre requête de placement en équipe"
+	}
+}

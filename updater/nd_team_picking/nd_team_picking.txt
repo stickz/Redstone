@@ -1,0 +1,14 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "b1b78c05"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_team_picking.smx"
+    "Plugin" "Path_SM/translations/es/nd_team_picking.phrases.txt"
+    "Plugin" "Path_SM/translations/nd_team_picking.phrases.txt"
+    "Plugin" "Path_SM/translations/de/nd_team_picking.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/nd_team_picking.phrases.txt"
+  }
+}

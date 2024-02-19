@@ -1,0 +1,12 @@
+﻿"Phrases"
+{
+	"Slot Used"
+	{
+		"de"		"Reservierten Platz erfolgreich verwendet"
+	}
+
+	"Donors Only"
+	{
+		"de"		"Reservierte Plätze sind Spendern vorbehalten"
+	}	
+}

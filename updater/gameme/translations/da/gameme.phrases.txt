@@ -1,0 +1,149 @@
+"Phrases"
+{
+	"IngameMenu_Caption"
+	{
+		"da"		"gameME - Hovedmenu"
+	}
+	"IngameMenu_Menu1"
+	{
+		"da"		"Vis Rank"
+	}
+	"IngameMenu_Menu2"
+	{
+		"da"		"Næste Spillere"
+	}
+	"IngameMenu_Menu3"
+	{
+		"da"		"Top10 Spillere"
+	}
+	"IngameMenu_Menu4"
+	{
+		"da"		"Auto Ranking"
+	}
+	"IngameMenu_Menu5"
+	{
+		"da"		"Chat-Begivenheder"
+	}
+	"IngameMenu_Menu6"
+	{
+		"da"		"Til/Fra Rank Visning"
+	}
+	"IngameMenu_Menu7"
+	{
+		"da"		"Clan Rank"
+	}
+	"IngameMenu_Menu8"
+	{
+		"da"		"Server Status"
+	}
+	"IngameMenu_Menu9"
+	{
+		"da"		"Statsme"
+	}
+	"IngameMenu_Menu10"
+	{
+		"da"		"Våben Brug"
+	}
+	"IngameMenu_Menu11"
+	{
+		"da"		"Våben Sigtbarhed"
+	}
+	"IngameMenu_Menu12"
+	{
+		"da"		"Våben Mål"
+	}
+	"IngameMenu_Menu13"
+	{
+		"da"		"Spillere Dræbte"
+	}
+	"IngameMenu_Menu14"
+	{
+		"da"		"Banliste"
+	}
+	"IngameMenu_Menu15"
+	{
+		"da"		"Vis Hjælp"
+	}
+	"IngameMenu_Menu16"
+	{
+		"da"		"Nulstil Statistik"
+	}
+
+
+	"AutoMenu_Caption"
+	{
+		"da"		"gameME - Auto-Ranking"
+	}
+	"AutoMenu_Menu1"
+	{
+		"da"		"Aktiver ved runde-start"
+	}
+	"AutoMenu_Menu2"
+	{
+		"da"		"Aktiver ved runde-afslutning"
+	}
+	"AutoMenu_Menu3"
+	{
+		"da"		"Aktiver ved spiller død"
+	}
+	"AutoMenu_Menu4"
+	{
+		"da"		"Deaktiver"
+	}
+
+
+	"ConsoleMenu_Caption"
+	{
+		"da"		"gameME - Chat-Begivenheder"
+	}
+	"ConsoleMenu_Menu1"
+	{
+		"da"		"Aktiver Begivenheder"
+	}
+	"ConsoleMenu_Menu2"
+	{
+		"da"		"Deaktiver Begivenheder"
+	}
+	"ConsoleMenu_Menu3"
+	{
+		"da"		"Aktiver Global Chat"
+	}
+	"ConsoleMenu_Menu4"
+	{
+		"da"		"Deaktiver Global Chat"
+	}
+
+
+	"DamagePanel_Attackers"
+	{
+		"da"		"Angribere"
+	}
+	"DamagePanel_Killed"
+	{
+		"da"		"Dræbte"
+	}
+	"DamagePanel_Wounded"
+	{
+		"da"		"Sårede"
+	}
+	"DamagePanel_Killer"
+	{
+		"da"		"Morder"
+	}
+	"DamagePanel_Dmg"
+	{
+		"da"		"Skade"
+	}
+	"DamagePanel_Hit"
+	{
+		"da"		"Ramt"
+	}
+	"DamagePanel_Hits"
+	{
+		"da"		"Ramte"
+	}
+	"DamagePanel_Hp"
+	{
+		"da"		"Liv"
+	}
+}

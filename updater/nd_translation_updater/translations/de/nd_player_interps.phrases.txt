@@ -1,0 +1,28 @@
+"Phrases"
+{
+	"Cookie Interp Warning"
+	{
+		"de"		"Interp Warning"
+	}
+	
+	"Incorrect Interp"
+	{
+		"de"		"Incorrect interps are damaging your hit registration"	
+	}
+	
+	"Interp GoTo"
+	{
+		"de"		"Right Click on ND -> Properties -> Set Launch Options"
+	}
+	
+	"Unexpected Interp"
+	{
+		"de"		"Found cl_interp {1}, Expected: cl_interp {2}"	
+	}
+	
+	"Interp Rates"
+	{
+		//{1} = the cl_interp in decimal forum ex. 0.115
+		"de"		"To resolve, add +cl_interp_ratio 1 +cl_interp {1}"	
+	}	
+}

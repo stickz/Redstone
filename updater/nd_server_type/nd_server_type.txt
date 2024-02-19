@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "377277ae"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_server_type.smx"
+  }
+}

@@ -1,0 +1,22 @@
+﻿"Phrases"
+{
+	"Chat Damage Text"
+	{
+		"de"			"{green}- {1} HP"
+	}
+	
+	"HintText Damage Text"
+	{
+		"de"			"- {1} HP"
+	}
+	
+	"CenterText Damage Text"
+	{
+		"de"			"- {1} HP"
+	}
+
+	"Cookie Show Damage"
+	{
+		"de"			"Schaden anzeigen lassen"
+	}
+}

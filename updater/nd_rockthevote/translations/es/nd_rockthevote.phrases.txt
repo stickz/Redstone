@@ -1,0 +1,47 @@
+"Phrases"
+{
+	"Eight Required"
+	{
+		"es"		"Requeridos ocho jugadores o menos para cambiar el mapa durante una partida avanzada"
+	}
+	
+	"Ten Required"
+	{
+		"es"		"Requeridos diez o menos jugadores para cambiar el mapa durante una partida avanzada"
+	}
+	
+	"Twelve Required"
+	{
+		"es"		"Requeridos doce o menos jugadores para cambiar el mapa durante una partida avanzada"	
+	}
+	
+	"Too Late"
+	{
+		"es"		"RTV no puede ser usado tán tarde durante la partida"	
+	}
+	
+	"Already Passed"
+	{
+		"es"		"El cambio de mapa está pendiente, por favor ten paciencia"
+	}
+	
+	"RTV Changing"
+	{
+		"es"		"RTV Con éxito: El mapa cambiará en cinco segundos"		
+	}
+	
+	"RTV Wait"
+	{
+		"es"		"RTV Con éxito: Pendiente de la siguiente votación de mapa para cambiar"
+	}
+	
+	
+	//Notice: If the numbers.phrases file isn't translated, it will fill {2} with English
+	//{2} is not a number like 1,2,3 etc, (improper grammer) instead it's one,two,three etc.
+	"Typed Change Map"
+	{
+		//{1} = Player's Name
+		//{2} = Translated numbers from number.phrases		
+		"es"		"{1} escribió 'change map' (cambiar de mapa): {2} jugadores más necesarios"
+	}
+}

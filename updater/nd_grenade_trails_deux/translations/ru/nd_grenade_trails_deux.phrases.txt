@@ -1,0 +1,16 @@
+// Exported from SourceMod Translator
+// Date: 2018-03-17 15:06:00 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/300
+//
+"Phrases"
+{
+
+	"Cookie Trails"
+	{
+		"ru"		"Шлейф от гранат"
+	}
+
+}

@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "41e61578"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_save_basespawn.smx"
+  }
+}

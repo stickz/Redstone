@@ -1,0 +1,17 @@
+﻿"Phrases"
+{
+	"Respect"
+	{
+		"en"		"Please be respectful of other players on the server"
+	}
+	
+	"Advertise"
+	{
+		"en"		"Please refrain from posting advertisements"	
+	}
+	
+	"Spawn Sell"
+	{
+		"en"		"Selling all the spawns is prohibited on this server"	
+	}
+}

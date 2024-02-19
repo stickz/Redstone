@@ -1,0 +1,11 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "b1b78c05"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/afk_manager4.smx"
+    "Plugin" "Path_SM/translations/afk_manager.phrases.txt"
+  }
+}

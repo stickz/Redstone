@@ -1,0 +1,39 @@
+﻿"Phrases"
+{
+	"Twelve Required"
+	{
+		"pt"		"São necessários ao menos 12 jogadores para utilizar esta funcionalidade"
+	}
+	
+	"Ten Required"
+	{
+		"pt"		"São necessários ao menos 10 jogadores para utilizar esta funcionalidade"	
+	}
+	
+	//This phrase is incorrect, translate from this instead
+	//"Four players on your team are required to surrender"
+	"Four Required"
+	{
+		"es"		"São necessários ao menos 8 jogadores para utilizar esta funcionalidade"	
+	}
+	
+	"Too Soon"
+	{
+		"pt"		"Você não pode render-se tão cedo na partida"	
+	}
+	
+	"Team Surrendered"
+	{
+		"pt"		"Seu time já se rendeu"
+	}
+	
+	"Consort Surrendered"
+	{
+		"pt"		"Consortium se rendeu"	
+	}
+	
+	"Empire Surrendered"
+	{
+		"pt"		"Empire se rendeu"	
+	}
+}

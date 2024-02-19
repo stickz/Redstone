@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "0535d262"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_afk_checker.smx"
+  }
+}

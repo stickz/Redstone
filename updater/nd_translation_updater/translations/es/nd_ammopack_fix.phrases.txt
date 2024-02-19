@@ -1,0 +1,7 @@
+"Phrases"
+{
+	"Ammo Supply"
+	{
+		"es"		"No puedes colocar un paquete de munición cerca de una estación de suministro"
+	}
+}

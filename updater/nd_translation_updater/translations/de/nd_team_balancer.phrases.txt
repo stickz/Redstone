@@ -1,0 +1,196 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:42:24 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/252
+//
+"Phrases"
+{
+
+	"Cookie TeamDiff Hints"
+	{
+		"de"		"TeamDiff HUD Anzeige"
+	}
+
+	"Cookie TeamBalancer Messages"
+	{
+		"de"		"Teambalancer Nachrichten"
+	}
+
+	"Choice Granted"
+	{
+		"de"		"Teamauswahl wegen ausbalancierten Teams gestattet"
+	}
+
+	"TP Spectator"
+	{
+		"de"		"Diese Funktion ist während der Teamauswahl gesperrt"
+	}
+
+	"Rookie Only"
+	{
+		"de"		"Dieser Server ist nur für Anfänger"
+	}
+
+	"Veteran Only"
+	{
+		"de"		"Dieser Server ist nur für Veteranen"
+	}
+
+	"Graduated"
+	{
+		"de"		"Glückwunsch Soldat, du hast die Ausbildung bestanden"
+	}
+
+	"Submitted Placement"
+	{
+		"de"		"Als Kommandant beworben"
+	}
+
+	"Revoked Placement"
+	{
+		"de"		"Bewerbung zum Kommandant zurückgezogen"
+	}
+
+	"Balancer Running"
+	{
+		"de"		"Dem Team kann nicht beigetreten werden, solange der Aufwärmbalancer läuft"
+	}
+
+	"Resign Switch"
+	{
+		"de"		"Du musst vom Kommandantenposten zurücktreten, bevor du das Team wechseln kannst"
+	}
+
+	"Switch Disabled"
+	{
+		"de"		"Teamwechsel ist, für ein paar Minuten oder bis die Teams unausgeglichen sind, deaktiviert"
+	}
+
+	"Retry Placement"
+	{
+		"de"		"Du bist jetzt im Zuschauermodus! Versuche die Teamauswahl nochmal"
+	}
+
+	"Level Retrieved"
+	{
+		"de"		"Level erfolgreich abgerufen. Bitte nochmal versuchen"
+	}
+
+	"Level Switch Wait"
+	{
+		"de"		"Bitte warte mit dem Teamwechsel, bis Level 2+ in den Ergebnissen angezeigt wird"
+	}
+
+	"Revoke Spectator"
+	{
+		"de"		"Du musst deine Anfrage, ein Zuschauer zu werden, zuerst zurückziehen, bevor du teilnehmen kannst"
+	}
+
+	"Spectator Avoid"
+	{
+		"de"		"Dieses Kommando kann nicht benutzt werden, um dem Teambalancer zu entkommen"
+	}
+
+	"Spectator Unlocked"
+	{
+		"de"		"Zuschauermodus freigegeben"
+	}
+
+	"Spectator Joined"
+	{
+		"de"		"Du bist jetzt Zuschauer. Zum Verlassen \"!spec\" eingeben"
+	}
+
+	"Teamdiff Round Wait"
+	{
+		"de"		"Teamdiff kann nicht verwendet werden, solange die Runde nicht gestartet wurde"
+	}
+
+	"Ether Team Stack"
+	{
+		"de"		"Beide Teams sind voll. Warte bis ein Platz frei wird"
+	}
+
+	"Could Be Switched"
+	{
+		"de"		"Du kannst in das andere Team gewechselt werden, nachdem dein Level geladen wurde"
+	}
+
+	"Initial Team Lock"
+	{
+		"de"		"Das Team kann nicht gewechselt werden, solange die Teams unausgeglichen sind"
+	}
+
+	"Separate Placement"
+	{
+		"de"		"Teamwechsel ausgeführt, damit beide Teams einen Kommandanten haben"
+	}
+
+	"Random Selection"
+	{
+		"de"		"Die Kommandantenauswahl ist zufällig, deine Chance, gewählt zu werden, ist allerdings hoch"
+	}
+
+	"Balancer Not Run"
+	{
+		"de"		"Aufgrund fehlender Spieler wurde der Aufwärmbalancer NICHT ausgeführt"
+	}
+
+	"Balancer Off"
+	{
+		"de"		"Teambalancer ist ausgeschaltet"
+	}
+	
+	"Status"
+	{
+		"de"		"Status"
+	}
+
+	"Switch Recommended"
+	{
+		"de"		"Wechsel empfohlen"
+	}
+
+	"Slightly Imbalanced"
+	{
+		"de"		"Etwas unausgeglichen"
+	}
+
+	"Moderately Imbalanced"
+	{
+		"de"		"Einigermaßen unausgeglichen"
+	}
+
+	"Heavily Imbalanced"
+	{
+		"de"		"Stark unausgeglichen"
+	}
+
+	"Skill"
+	{
+		"de"		"Können"
+	}
+
+	"Disconnected WB"
+	{
+		"de"		"Die Teams sind nicht mehr ausgeglichen, weil {1} das Match verlassen hat"
+	}
+
+	"Imbalanced Teams"
+	{
+		"de"		"Unausgeglichene Teams"
+	}
+
+	"Player Assigned"
+	{
+		"de"		"Du wurdest {1} zugewiesen. ({2})"
+	}
+
+	"Skill Averages"
+	{
+		"de"		"Durchschnittliches Können: Imperium: {1}, Konsortium: {2}"
+	}
+
+}

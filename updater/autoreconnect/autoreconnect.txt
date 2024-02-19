@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "af8c22bf"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/autoreconnect.smx"
+  }
+}

@@ -1,0 +1,7 @@
+"Phrases"
+{
+	"Cookie Set Language"
+	{
+		"en"		"Change Language"
+	}
+}

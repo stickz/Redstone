@@ -1,0 +1,22 @@
+﻿"Phrases"
+{
+	"Chat Damage Text"
+	{
+		"cze"			"{green}- {1} HP"
+	}
+	
+	"HintText Damage Text"
+	{
+		"cze"			"- {1} HP"
+	}
+	
+	"CenterText Damage Text"
+	{
+		"cze"			"- {1} HP"
+	}
+
+	"Cookie Show Damage"
+	{
+		"cze"			"Zobrazovat poškození"
+	}
+}

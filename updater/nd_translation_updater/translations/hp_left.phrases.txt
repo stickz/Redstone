@@ -1,0 +1,21 @@
+﻿"Phrases"
+{
+	"Cookie HP Left"
+	{
+		"en"			"Show HP Left"
+	}
+	"Notdied"
+	{
+        "en"        	"You have not died yet"
+	}
+	"Killedhs"
+	{
+		"#format"		"{1:c},{2:s},{3:c},{4:s},{5:i}"
+        "en"        	"{1}{2}{3} killed you with a {4} (headshot) and has {5} hp left"
+	}
+	"Killed"
+	{
+		"#format"		"{1:c},{2:s},{3:c},{4:s},{5:i}"
+        "en"        	"{1}{2}{3} killed you with a {4} and has {5} hp left"
+	}
+}

@@ -1,0 +1,36 @@
+"Phrases"
+{
+	"Movement Speed Increases"
+	{
+		"en"		"See console for movement speed increases"
+	}
+	
+	"Movement Header Console"
+	{
+		"en"		"--> Movement Speed Increases <--"	
+	}
+	
+	"Main Speed Increase"
+	{
+		"#format"	"{1:i},{2:i},{3:i},{4:i}"
+		"en"		"Assault: +{1}%%, Exo: +{2}%%, Stealth: +{3}%%, Support: +{4}%"	
+	}
+	
+	"Sub Speed Increase"
+	{
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"Additional Increases -> Assassin: +{1}%%, BBQ: +{2}%%, Grenadier: +{3}%"
+	}
+	
+	"Recent Assassin Speed"
+	{
+		"#format"	"{1:i}"
+		"en"		"The Assassin movement speed is currently +{1}%"	
+	}
+	
+	"Recent BBQ Speed"
+	{
+		"#format"	"{1:i}"
+		"en"		"The BBQ Kit movement speed is currently +{1}%"
+	}
+}

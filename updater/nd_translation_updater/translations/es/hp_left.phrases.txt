@@ -1,0 +1,19 @@
+"Phrases"
+{
+	"Cookie HP Left"
+	{
+		"es"		"Mostrar HP restante"
+	}
+	"Notdied"
+	{
+        	"es"        	"No has muerto todavía"
+	}
+	"Killedhs"
+	{
+        	"es"        	"{1}{2}{3} te ha matado con {4} (headshot) y tiene {5} HP restante"
+	}
+	"Killed"
+	{
+        	"es"        	"{1}{2}{3} te ha matado con {4} y tiene {5} HP restante"
+	}
+}

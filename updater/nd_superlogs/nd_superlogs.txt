@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "3ef3d785"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_superlogs.smx"
+  }
+}

@@ -1,0 +1,42 @@
+"Phrases"
+{
+   	"Empire"
+	{
+		"en"		"Empire"
+	}
+
+	"Consortium"
+	{
+		"en"		"Consort"
+	}
+
+	"Round End Usage"
+	{
+		"en"		"This feature can't be used when the game is over"
+	}
+
+	"Round Start Usage"
+	{
+		"en"		"This feature requires the round to be started"	
+	}
+
+	"Already Voted"
+	{
+		"en"		"You've already voted"
+	}
+
+	"Feature Unavailable"
+	{
+		"en"		"This feature is currently unavailable"
+	}
+
+	"On Team"
+	{
+		"en"		"You must be on a team to use this command"
+	}
+	
+	"Steam Group Usage"
+	{
+		"en"		"You must join the RedstoneND steam group to use this feature"
+	}
+}

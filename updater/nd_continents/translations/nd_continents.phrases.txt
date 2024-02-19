@@ -1,0 +1,9 @@
+﻿"Phrases"
+{
+	"Player Locations"
+	{
+		//{1} = A list of player locations
+		"#format"	"{1:s}"
+		"en"		"Player Locations: {1}"
+	}
+}

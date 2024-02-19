@@ -1,0 +1,37 @@
+﻿"Phrases"
+{
+	"Cookie Team Breakdown"
+	{
+		"ru"			"Количество отрядов"
+	}
+	
+	"Combat"
+	{
+		"ru"			"Солдат"
+	}
+	
+	"Anti-Structure"
+	{
+		"ru"			"Против-Структур"		
+	}
+	
+	"Sniper"
+	{
+		"ru"			"Снайпера"		
+	}
+	
+	"Stealth"
+	{
+		"ru"			"Невидимки"
+	}
+	
+	"Medic"
+	{
+		"ru"			"Медики"
+	}
+	
+	"Engineer"
+	{
+		"ru"			"Инженеры"
+	}
+}

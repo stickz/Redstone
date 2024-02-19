@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "cace9462"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_exp_checker.smx"
+  }
+}

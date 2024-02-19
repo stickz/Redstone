@@ -1,0 +1,12 @@
+"Phrases"
+{
+	"Cookie Welcome Message"
+	{
+		"fr"			"Welcome Message"
+	}
+
+	"Welcome"
+	{
+		"fr"			"Bienvenue à Redstone! Redstone à la recherche de traductions pour la communauté française"
+	}
+}

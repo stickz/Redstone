@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "1939f547"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_structure_intercept.smx"
+  }
+}

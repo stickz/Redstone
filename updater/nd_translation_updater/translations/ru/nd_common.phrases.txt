@@ -1,0 +1,46 @@
+// Exported from SourceMod Translator
+// Date: 2018-03-17 15:06:20 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/297
+//
+"Phrases"
+{
+
+	"Empire"
+	{
+		"ru"		"Империя"
+	}
+
+	"Consortium"
+	{
+		"ru"		"Консирициум"
+	}
+
+	"Round End Usage"
+	{
+		"ru"		"Раунд уже закончился, надо было использовать это раньше"
+	}
+
+	"Round Start Usage"
+	{
+		"ru"		"Подождите начала раунда"
+	}
+
+	"Already Voted"
+	{
+		"ru"		"Ваш голос уже засчитан"
+	}
+
+	"Feature Unavailable"
+	{
+		"ru"		"Эта функция сейчас недоступна"
+	}
+
+	"On Team"
+	{
+		"ru"		"Вы должны играть в команде, чтобы использовать эту команду."
+	}
+
+}

@@ -1,0 +1,31 @@
+// Exported from SourceMod Translator
+// Date: 2018-08-20 06:44:17 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/312
+//
+"Phrases"
+{
+
+	"Cookie Server Adverts"
+	{
+		"ru"		"Реклама"
+	}
+
+	"Join RedstoneND Events"
+	{
+		"ru"		"Присоединяйтесь к группе RedstoneND в стиме. Мы проводим командные турниры в сообществе 'Teampick'."
+	}
+
+	"Join RedstoneND Features"
+	{
+		"ru"		"Присоединяйтесь к группе RedstoneND в стиме для доступа к особым функциям сервера."
+	}
+
+	"Join RedstoneND Advertise"
+	{
+		"ru"		"Присоединяйтесь к группе RedstoneND в стиме чтобы отключить рекламу на сервере."
+	}
+
+}

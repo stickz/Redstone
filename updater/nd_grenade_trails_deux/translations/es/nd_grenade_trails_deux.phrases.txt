@@ -1,0 +1,16 @@
+// Exported from SourceMod Translator
+// Date: 2018-03-27 19:46:03 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/300
+//
+"Phrases"
+{
+
+	"Cookie Trails"
+	{
+		"es"		"Rastros de granadas"
+	}
+
+}

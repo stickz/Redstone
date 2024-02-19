@@ -1,0 +1,37 @@
+"Phrases"
+{
+    "Empire"
+	{
+		"de"		"Imperium"
+	}
+	
+	"Consortium"
+	{
+		"de"		"Konsortium"
+	}
+	
+	"Round End Usage"
+	{
+		"de"		"Diese Funktion kann nach dem Ende der Runde nicht benutzt werden"
+	}
+
+	"Round Start Usage"
+	{
+		"de"		"Für diese Funktion muss die Runde gestartet sein"
+	}
+
+	"Already Voted"
+	{
+		"de"		"Du hast bereits abgestimmt"
+	}
+
+	"Feature Unavailable"
+	{
+		"de"		"Diese Funktion ist gerade nicht verfügbar"
+	}
+	
+	"On Team"
+	{
+		"de"		"Für diese Funktion musst du in einem Team sein."
+	}
+}

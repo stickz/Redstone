@@ -1,0 +1,28 @@
+"Phrases"
+{
+	"Cookie Interp Warning"
+	{
+		"es"		"Alerta de interp"
+	}
+	
+	"Incorrect Interp"
+	{
+		"es"		"Interps incorrectos están afectando a tu precisión"	
+	}
+	
+	"Interp GoTo"
+	{
+		"es		"Click derecho en ND -> Propiedades -> Definir Parámetros de Lanzamiento"
+	}
+	
+	"Unexpected Interp"
+	{
+		"es"		"Encontrado cl_interp {1}, Se esperaba: cl_interp {2}"	
+	}
+	
+	"Interp Rates"
+	{
+		//{1} = the cl_interp in decimal forum ex. 0.115
+		"es"		"Para resolver, añade +cl_interp_ratio 1 +cl_interp {1}"	
+	}	
+}

@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "3f6b806b"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_tick_engine.smx"
+  }
+}

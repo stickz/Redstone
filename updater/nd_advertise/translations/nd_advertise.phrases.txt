@@ -1,0 +1,22 @@
+"Phrases"
+{
+	"Cookie Server Adverts"
+	{
+		"en"		"Advertisements"
+	}
+	
+	"Join RedstoneND Events"
+	{
+		"en"		"Join the RedstoneND steam group. We host community teampick events."
+	}
+	
+	"Join RedstoneND Features"
+	{
+		"en"		"Join the RedstoneND steam group. For access to exclusive server features."
+	}
+	
+	"Join RedstoneND Advertise"
+	{
+		"en"		"Join the RedstoneND steam group. To disable server advertisements."
+	}
+}

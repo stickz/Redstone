@@ -1,0 +1,106 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-19 21:59:24 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/294
+//
+"Phrases"
+{
+
+	"Team Captain Left"
+	{
+		"ru"		"Подбор игроков прерван. Один из капитанов покинул сервер."
+	}
+
+	"Pick Again"
+	{
+		"ru"		"Игрок покинул сервер. Пожалуйста, выберите еще раз."
+	}
+
+	"Picking Completed"
+	{
+		"ru"		"Подбор игроков был завершен."
+	}
+
+	"Picking Started"
+	{
+		"ru"		"Подбор игроков начался."
+	}
+
+	"Each Pick Time"
+	{
+		"ru"		"У капитанов есть {1} секунд для выбора каждого игрока."
+	}
+
+	"First Pick Time"
+	{
+		"ru"		"{1} секунд подготовки перед первым выбором игрока."
+	}
+
+	"Auto Select"
+	{
+		"ru"		"Автоматический выбор через {1} секунд."
+	}
+
+	"Auto Selected Join"
+	{
+		"ru"		"Игрок {1} был автоматически выбран командой {2}."
+	}
+
+	"Choosen Join"
+	{
+		"ru"		"{1} был выбран( -а) командой {2}."
+	}
+
+	"Got First Pick"
+	{
+		"ru"		"Игрок {1} выбирает первым."
+	}
+
+	"Got Next Picks"
+	{
+		"ru"		"{1} выбирает следующие 2 раза."
+	}
+
+	"Already Running"
+	{
+		"ru"		"Ошибка команды !PlayerPicking: Подбор уже запущен или дал сбой. Перезагрузите плагин с помощью !ReloadPicker, если требуется."
+	}
+
+	"Four Players Required"
+	{
+		"ru"		"Ошибка команды !PlayerPicking: Требуется 4 игрока для того, чтобы использовать эту команду."
+	}
+
+	"Correct Usage"
+	{
+		"ru"		"Ошибка команды !PlayerPicking: Неправильный формат. Порядок ввода: !PlayerPicking капитан1 капитан1 начинающая команда."
+	}
+
+	"Vote Currently Running"
+	{
+		"ru"		"Ошибка команды !PlayerPicking: Используется ли сейчас !vote, идел ли голосование за карту?"
+	}
+
+	"Next Pick On"
+	{
+		"ru"		"Ошибка команды !PlayerPicking: Используйте '!NextPick on', а затем перезапустите карту."
+	}
+
+	"Name Segment Invalid"
+	{
+		"ru"		"Ошибка команды !PlayerPicking: '{1}', часть имени введена неправильно ИЛИ найдена несколько раз."
+	}
+
+	"Name Segment Duplicate"
+	{
+		"ru"		"Ошибка команды !PlayerPicking: '{1}' помечен, как выбирающий в двух командах одновременно."
+	}
+
+	"Invalid Starting Team"
+	{
+		"ru"		"Ошибка команды !PlayerPicking: Игрок '{1}' был определён, но начинающая команда неправильная."
+	}
+
+}

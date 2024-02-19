@@ -1,0 +1,88 @@
+"Phrases"
+{
+	// Mod Detection (Debug Messages)
+    "NUCLEARDAWN"
+    {
+		"pt"		"Mod detectado Nuclear Dawn"
+    }
+
+	"Insurgency"
+	{
+		"pt"		"Mod detectado Insurgency"
+	}
+
+	"Synergy"
+	{
+		"pt"		"Mod detectado Synergy"
+	}
+
+	"TF2"
+	{
+		"pt"		"Mod detectado Team Fortress 2"
+	}
+
+	"CSTRIKE"
+	{
+		"pt"		"Mod detectado Counter Strike Source"
+	}
+
+	"L4D"
+	{
+		"pt"		"Mod detectado Left 4 Dead"
+	}
+
+
+	// Debug Messages
+
+
+	// Plugin Messages
+	"Spectate_Force"
+	{
+		"pt"		"Jogador {1} foi forcado a entrar de espectador."
+	}
+
+	"Spawn_Move_Warning"
+	{
+		"pt"		"PERIGO: Se voce nao sair da base em {1} segundos, voce sera movido para espectador."
+	}
+
+	"Move_Warning"
+	{
+		"pt"		"PERIGO: se voce nao se mover em {1} segundos, voce sera movido para espectador."
+	}
+
+	"Spawn_Kick_Warning"
+	{
+		"pt"		"PERIGO: Se voce nao sair da base em {1} segundos, voce sera kickado."
+	}
+
+	"Kick_Warning"
+	{
+		"pt"		"PERIGO: Se voce nao se mover em {1} segundos, voce sera kickado."
+	}
+
+	"Move_Announce"
+	{
+		"pt"		"{1} Foi movido para spectador por ficar AFK."
+	}
+
+	"Move_Log"
+	{
+		"pt"		"{1} foi movido para spectador por ficar AFK."
+	}
+
+	"Kick_Announce"
+	{
+		"pt"		"{1} foi kickado por ficar AFK."
+	}
+
+	"Kick_Message"
+	{
+		"pt"		"Voce foi kickado por ficar AFK."
+	}
+
+	"Kick_Log"
+	{
+		"pt"		"{1} foi kickado por ficar muito tempo AFK."
+	}
+}

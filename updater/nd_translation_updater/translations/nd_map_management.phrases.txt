@@ -1,0 +1,38 @@
+"Phrases"
+{
+	"Wait Map List"
+	{
+		"#format"	"{1:d}"
+		"en"		"Please wait {1} seconds before listing previous maps again!"	
+	}
+	
+	"Prev Maps Listed"
+	{
+		"en"		"Previous maps listed succesfully. See console for output"
+	}
+	
+	//{1} = Next Map
+	"Retrigger Map Vote"
+	{
+		"#format"	"{1:s}"
+		"en"		"Cycling to {1} canceled by player count thresholds. Map voting will now recommence"
+	}
+	
+	//{1} = Next Map, {2} = Changed map
+	"Not Enough Players"
+	{
+		"#format"	"{1:s},{2:s}"
+		"en"		"Not enough players for {1}! Next map changed to {2}!"
+	}
+	"Too Many Players"
+	{
+		"#format"	"{1:s},{2:s}"
+		"en"		"Too many players for {1}! Next map changed to {2}!"	
+	}
+	
+	"Retrigger Player Count"
+	{
+		"#format"	"{1:i}"
+		"en"		"Player count changed by {1} players. Map voting will now recommence"
+	}
+}

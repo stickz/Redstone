@@ -1,0 +1,37 @@
+﻿"Phrases"
+{
+	"Cookie Team Breakdown"
+	{
+		"en"			"Troop Counts"
+	}
+	
+	"Combat"
+	{
+		"en"			"Combat"
+	}
+	
+	"Anti-Structure"
+	{
+		"en"			"Anti-Structure"
+	}
+	
+	"Sniper"
+	{
+		"en"			"Sniper"		
+	}
+	
+	"Stealth"
+	{
+		"en"			"Stealth"
+	}
+	
+	"Medic"
+	{
+		"en"			"Medic"
+	}
+	
+	"Engineer"
+	{
+		"en"			"Engineer"
+	}
+}

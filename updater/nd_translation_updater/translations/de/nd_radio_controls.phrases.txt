@@ -1,0 +1,21 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:53:31 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/254
+//
+"Phrases"
+{
+
+	"Radio Disabled"
+	{
+		"de"		"Das Radiomenü ist momentan deaktiviert"
+	}
+
+	"Radio Wait"
+	{
+		"de"		"Noch {1} Sekunde(n) gesperrt"
+	}
+
+}

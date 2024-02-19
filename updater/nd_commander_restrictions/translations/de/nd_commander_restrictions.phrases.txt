@@ -1,0 +1,96 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:41:16 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/257
+//
+"Phrases"
+{
+
+	"Demotion Reapply"
+	{
+		"de"		"Du kannst dich nicht als Kommandant bewerben, nachdem du abgesetzt wurdest"
+	}
+
+	"Resignation Reapply"
+	{
+		"de"		"Eine erneute Bewerbung als Kommandant ist erst 30 Sekunden nach dem Abdanken möglich"
+	}
+
+	"Spawn Before Apply"
+	{
+		"de"		"Du musst ins Spiel einsteigen, bevor du dich als Kommandant bewerben kannst!"
+	}
+
+	"Bellow Ten"
+	{
+		"de"		"Spieler unter level 10 können nur <10 Spieler befehligen oder der Durchschnittslevel muss <25 betragen"
+	}
+
+	"Fifty Five Required"
+	{
+		"de"		"Level 40+ Spieler werden ab 24 Spielern als Kommandant bevorzugt"
+	}
+
+	"Total Level"
+	{
+		"de"		"Du kannst nicht mehr Spieler befehlen, als dein Level zulässt"
+	}
+
+	"No Commander"
+	{
+		"de"		"Ohne Kommandant kann die Meuterei nicht gestartet werden"
+	}
+
+	"Four Required"
+	{
+		"de"		"Für diese Funktion werden 4 Spieler pro Team benötigt"
+	}
+
+	"Commander Demoted"
+	{
+		"de"		"Kommandant erfolgreich abgesetzt"
+	}
+
+	"Demote Failed"
+	{
+		"de"		"Fehler! Keinen Kommandant zum Absetzen gefunden"
+	}
+
+	"Demote First"
+	{
+		"de"		"Du kannst keine neue Abstimmung nach dem Absetzen starten"
+	}
+
+	"Silence First"
+	{
+		"de"		"Du kannst keine Meuterei starten, während du verstummt bist"
+	}
+
+	"Silence Command"
+	{
+		"de"		"Du kannst nichts befehlen, während du stumm bist"
+	}
+
+	"Restrictions Relaxed"
+	{
+		"de"		"Kommandantbeschränkung reduziert"
+	}
+
+	"Demote Not Found"
+	{
+		"de"		"Deine Stimme zum Absetzen des Kommandanten wurde bereits zurückgezogen"
+	}
+
+	"Demote Vote"
+	{
+		"de"		"{1} will den Kommandanten absetzen - '!demote' ({2} weitere Stimmen benötigt)"
+	}
+
+	"Skill Required"
+	{
+		"de"		"Um auf diesem Server kommandieren zu dürfen, ist ein Skillwertung von {1} benötigt"
+	}
+
+}

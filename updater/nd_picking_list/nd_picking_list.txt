@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "02f3285b"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_picking_list.smx"
+  }
+}

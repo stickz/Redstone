@@ -1,0 +1,15 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "b1b78c05"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_continents.smx"
+    "Plugin" "Path_SM/translations/pt/nd_continents.phrases.txt"
+    "Plugin" "Path_SM/translations/es/nd_continents.phrases.txt"
+    "Plugin" "Path_SM/translations/de/nd_continents.phrases.txt"
+    "Plugin" "Path_SM/translations/nd_continents.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/nd_continents.phrases.txt"
+  }
+}

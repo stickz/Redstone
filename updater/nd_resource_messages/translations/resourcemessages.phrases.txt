@@ -1,0 +1,135 @@
+"Phrases"
+{
+	// !settings menu label
+	"Cookie Resource Messages"
+	{
+		"en"			"Resource Messages"
+	}
+	
+	//Example: "Cube, MissLiss (+3) have captured the primary!"
+	// {1} are the people capturing plus some
+	"Primary Resource Captured"
+	{
+		"#format"		"{1:s},{2:s}"
+		"en"			"{1} have captured the primary."
+	}
+	
+	//Example: "Cube (+2) has captured north secondary!"
+	// {1} is the person capturing plus some
+	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
+	"Secondary Resource Captured"
+	{
+		"#format"		"{1:s},{2:s}"
+		"en"			"{1} has captured{2} secondary."
+	}
+	
+	//Example: "djfishfish (+2) has captured northeast tertiary!"
+	// {1} is the person capturing plus some
+	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
+	"Tertiary Resource Captured"
+	{
+		"#format"		"{1:s},{2:s}"
+		"en"			"{1} has captured{2} tertiary."
+	}
+	
+	"Captured Resource Primary"
+	{
+		// to show infomation on the Primary resource point that just got captured 
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"Captured Primary resource point generates {1} res/min. After {2}, it generates {3} res/min"
+	}
+		
+	"Captured Resource Secondary"
+	{
+		// to show infomation on the Secondary resource point that just got captured 
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"Captured Secondary resource point generates {1} res/min. After {2}, it generates {3} res/min"
+	}
+	
+	"Captured Resource Tertiary"
+	{
+		// to show infomation on the Tertiary resource point that just got captured 
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"Captured Tertiary resource point generates {1} res/min. After {2}, it generates {3} res/min"
+	}
+	
+	"Trickled Resource Primary"
+	{
+		// to show infomation on the Primary resource point that just got captured 
+		"#format"	"{1:i}"
+		"en"		"Captured Primary resource generates {1} res/min."
+	}
+		
+	"Trickled Resource Secondary"
+	{
+		// to show infomation on the Secondary resource point that just got captured 
+		"#format"	"{1:i}"
+		"en"		"Captured Secondary resource generates {1} res/min."
+	}
+	
+	"Trickled Resource Tertiary"
+	{
+		// to show infomation on the Tertiary resource point that just got captured 
+		"#format"	"{1:i}"
+		"en"		"Captured Tertiary resource generates {1} res/min."
+	}
+	
+	"Map Area "
+	{
+		"en"			""
+	}
+	"Map Area N"
+	{
+		"en"			" north"
+	}
+	
+	"Map Area NE"
+	{
+		"en"			" northeast"
+	}
+	
+	"Map Area NW"
+	{
+		"en"			" northwest"
+	}
+	
+	"Map Area S"
+	{
+		"en"			" south"
+	}
+	
+	"Map Area SE"
+	{
+		"en"			" southeast"
+	}
+	
+	"Map Area SW"
+	{
+		"en"			" southwest"
+	}
+	
+	"Map Area E"
+	{
+		"en"			" east"
+	}
+	
+	"Map Area W"
+	{
+		"en"			" west"
+	}
+	
+	"Map Area CE"
+	{
+		"en"			" central"
+	}
+	
+	"Map Area OB"
+	{
+		"en"			" our base"
+	}
+	
+	"Map Area EB"
+	{
+		"en"			" enemy base"
+	}
+}

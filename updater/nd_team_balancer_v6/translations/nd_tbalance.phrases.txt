@@ -1,0 +1,31 @@
+﻿"Phrases"
+{
+	"Resign Switch"
+	{
+		"en"		"You must resign from commander before switching teams"	
+	}
+	"Revoke Spectator"
+	{
+		"en"		"You must revoke spectator! To join type !spec"
+	}
+	"Admin Lock Spectator"
+	{
+		"en"		"Server admin locked you into spectator until round end"
+	}
+	"Retry Placement"
+	{
+		"en"		"You're now in spectator mode! Please try your team placement request again"	
+	}
+	"Placed Less Players"
+	{
+		"en"		"You were placed on the team with less players"	
+	}	
+	"Placed Less Skill"
+	{
+		"en"		"You were placed on the team with less skill"	
+	}
+	"Placed Picked Team"
+	{
+		"en"		"Team pick mode is active! You were placed back on your orginal team"
+	}
+}

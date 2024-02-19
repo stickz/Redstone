@@ -1,0 +1,86 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:59:24 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/250
+//
+"Phrases"
+{
+
+	"Cookie TimeLimit Features"
+	{
+		"de"		"Zeitlimitfunktionen"
+	}
+
+	"Six Required"
+	{
+		"de"		"Für diese Funktion werden 6 Spieler benötigt"
+	}
+
+	"Already Extended"
+	{
+		"de"		"Pro Karte kann nur einmal verlängert werden"
+	}
+
+	"You Extended"
+	{
+		"de"		"Du hast der Verlängerung bereits zugestimmt"
+	}
+
+	"Round Ended"
+	{
+		"de"		"Diese Funktion kann nicht am Rundenende benutzt werden"
+	}
+
+	"Wait End"
+	{
+		"de"		"Bitte warte mit dem Verlängern bis 5 Minuten vor Rundenende"
+	}
+
+	"Regular Time"
+	{
+		"de"		"Momentan ist das Standardzeitlimit aktiv"
+	}
+
+	"Time Disabled"
+	{
+		"de"		"Das Zeitlimit ist deaktiviert, bis mehr Spieler verbunden sind"
+	}
+
+	"Time End"
+	{
+		"de"		"Zeitlimit erreicht. Die Runde wurde beendet"
+	}
+
+	"Limit Effect"
+	{
+		"de"		"Das Zeitlimit beträgt ab jetzt eine Stunde"
+	}
+
+	"Round Extended"
+	{
+		"de"		"Das Zeitlimit wurde um 15 Minuten erhöht"
+	}
+
+	"Extend Availible"
+	{
+		"de"		"Die Verlängerungsabstimmung ist jetzt verfügbar"
+	}
+
+	"Extend Both"
+	{
+		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer vom Konsortium & {3} Unterstützer aus dem Imperium benötigt"
+	}
+
+	"Extend Empire"
+	{
+		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer aus dem Imperium benötigt"
+	}
+
+	"Extend Consort"
+	{
+		"de"		"{1} will das Spiel verlängern : Es werden noch {2} Unterstützer aus dem Konsortium benötigt"
+	}
+
+}

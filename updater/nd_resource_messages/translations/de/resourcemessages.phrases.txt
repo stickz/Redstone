@@ -1,0 +1,92 @@
+"Phrases"
+{
+	//Translated by Kinev
+	
+	// !settings menu label
+	"Cookie Resource Messages"
+	{
+		"de"			"Zeige eroberte Ressourcen an"
+	}
+	
+	//Example: "Cube, MissLiss (+3) haben die Primäre Ressource erobert."
+	// {1} are the people capturing plus some
+	"Primary Resource Captured"
+	{
+		"de"			"{1} haben die Primäre Ressource erobert."
+	}
+	
+	//Example: "Cube (+2) hat die sekundäre Ressource im Norden erobert."
+	// {1} is the person capturing plus some
+	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
+	"Secondary Resource Captured"
+	{
+		"de"			"{1} hat die sekundäre Ressource{2} erobert."
+	}
+	
+	//Example: "djfishfish (+2) hat eine tertiäre Ressource im Nordosten erobert."
+	// {1} is the person capturing plus some
+	// {2} is the location of the resource using the translated "Map Area X" keys (possibly empty when using "Map Area ")
+	"Tertiary Resource Captured"
+	{
+		"de"			"{1} hat die tertiäre Ressource{2} erobert."
+	}
+	
+	"Map Area "
+	{
+		"de"			""
+	}
+	"Map Area N"
+	{
+		"de"			" im Norden"
+	}
+	
+	"Map Area NE"
+	{
+		"de"			" im Nordosten"
+	}
+	
+	"Map Area NW"
+	{
+		"de"			" im Nordwesten"
+	}
+	
+	"Map Area S"
+	{
+		"de"			" im Süden"
+	}
+	
+	"Map Area SE"
+	{
+		"de"			" im Südosten"
+	}
+	
+	"Map Area SW"
+	{
+		"de"			" im Südwesten"
+	}
+	
+	"Map Area E"
+	{
+		"de"			" im Osten"
+	}
+	
+	"Map Area W"
+	{
+		"de"			" im Westen"
+	}
+	
+	"Map Area CE"
+	{
+		"de"			" in der Mitte"
+	}
+	
+	"Map Area OB"
+	{
+		"de"			" in unserer Basis"
+	}
+	
+	"Map Area EB"
+	{
+		"de"			" in der feindlichen Basis"
+	}
+}

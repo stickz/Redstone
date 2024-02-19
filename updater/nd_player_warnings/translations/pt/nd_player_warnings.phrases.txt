@@ -1,0 +1,26 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:52:55 UTC
+// Language: Brazilian Portuguese (pt)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/243
+//
+"Phrases"
+{
+
+	"Respect"
+	{
+		"pt"		"Respeite os outros jogadores no servidor"
+	}
+
+	"Advertise"
+	{
+		"pt"		"Por favor, evite publicar anúncios"
+	}
+
+	"Spawn Sell"
+	{
+		"pt"		"Vender todos os spawns é proibido neste servidor"
+	}
+
+}

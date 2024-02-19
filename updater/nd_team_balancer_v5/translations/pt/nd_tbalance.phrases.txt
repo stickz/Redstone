@@ -1,0 +1,15 @@
+﻿"Phrases"
+{
+	"Resign Switch"
+	{
+		"pt"		"Você precisa renunciar o comando antes de mudar de time"
+	}
+	"Revoke Spectator"
+	{
+		"pt"		"É preciso tornar-se espectador antes de juntar-se"
+	}
+	"Retry Placement"
+	{
+		"pt"		"Você está no modo espectador! Por favor tente jutar-se a um dos times novamente"
+	}
+}

@@ -1,0 +1,106 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:48:03 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/293
+//
+"Phrases"
+{
+
+	"Cookie Commander Checklist"
+	{
+		"de"		"Kommandanten Kontroll-Liste"
+	}
+
+	"BUILD_FWD_SPAWN"
+	{
+		"de"		"Außenposten Transporttor errichten"
+	}
+
+	"RESEARCH_TACTICS"
+	{
+		"de"		"Feldtaktik erforschen"
+	}
+
+	"BUILD_ARMORY"
+	{
+		"de"		"Waffenlager errichten"
+	}
+
+	"RESEARCH_KITS"
+	{
+		"de"		"Fortgeschrittene Ausrüstung erforschen"
+	}
+
+	"COMMANDER_CHECKLIST"
+	{
+		"de"		"Kontroll-Liste"
+	}
+
+	"COMM_THANKS"
+	{
+		"de"		"Danke, Kommandant!"
+	}
+
+	"COMM_SUPPORTTROOPS"
+	{
+		"de"		"Denk daran, deine Truppen zu unterstützen!"
+	}
+
+	"CHAT_MSG"
+	{
+		"de"		"Im Chat schreiben"
+	}
+
+	"BUILD_POWER"
+	{
+		"de"		"Kraftwerk"
+	}
+
+	"BUILD_SUPPLY"
+	{
+		"de"		"Versorgungsstation"
+	}
+
+	"BUILD_TWO_SPAWN"
+	{
+		"de"		"Zwei weitere Transporttore errichten"
+	}
+
+	"RESEARCH_ADV_MAN"
+	{
+		"de"		"Fortgeschrittene Gebäude"
+	}
+
+	"RESEARCH_SR"
+	{
+		"de"		"Strukturelle Verstärkung"
+	}
+
+	"RESEARCH_MOD"
+	{
+		"de"		"Energieregulierung"
+	}
+
+	"BUILD_RADAR"
+	{
+		"de"		"Radarstation"
+	}
+
+	"RESEARCH_COM_ABB2"
+	{
+		"de"		"Kommandantenfähigkeiten 2"
+	}
+
+	"BUILD_WALL"
+	{
+		"de"		"Eine Wand errichten"
+	}
+
+	"RESEARCH_SR2"
+	{
+		"de"		"Strukturelle Verstärkung 2"
+	}
+
+}

@@ -1,0 +1,16 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:40:03 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/240
+//
+"Phrases"
+{
+
+	"Welcome"
+	{
+		"ru"		"Добро пожаловать в Редстоун, вы можете изменять ваши настройки !settings в чат!!"
+	}
+
+}

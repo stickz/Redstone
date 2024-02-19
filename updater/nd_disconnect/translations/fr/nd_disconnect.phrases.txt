@@ -1,0 +1,21 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:49:08 UTC
+// Language: French (fr)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/244
+//
+"Phrases"
+{
+
+	"Cookie Lost Connect"
+	{
+		"fr"		"Message de déconnexion"
+	}
+
+	"Lost Connection"
+	{
+		"fr"		"{1} a perdu la connexion !"
+	}
+
+}

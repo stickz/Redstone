@@ -1,0 +1,26 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 15:05:42 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/244
+//
+"Phrases"
+{
+
+	"Cookie Lost Connect"
+	{
+		"ru"		"Сообщение об отключении"
+	}
+
+	"Cookie Lost Connect"
+	{
+		"ru"		"Сообщение о отключении"
+	}
+
+	"Lost Connection"
+	{
+		"ru"		"{1} потерял связь!"
+	}
+
+}

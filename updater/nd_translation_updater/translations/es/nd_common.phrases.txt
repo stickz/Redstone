@@ -1,0 +1,46 @@
+// Exported from SourceMod Translator
+// Date: 2018-03-27 19:45:01 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/297
+//
+"Phrases"
+{
+
+	"Empire"
+	{
+		"es"		"Imperio"
+	}
+
+	"Consortium"
+	{
+		"es"		"Consorcio"
+	}
+
+	"Round End Usage"
+	{
+		"es"		"No puedes utilizar esta opción después de terminar la ronda"
+	}
+
+	"Round Start Usage"
+	{
+		"es"		"Por favor espera a que la partida haya empezado"
+	}
+
+	"Already Voted"
+	{
+		"es"		"Ya has votado"
+	}
+
+	"Feature Unavailable"
+	{
+		"es"		"Esta función no está disponible en este momento"
+	}
+
+	"On Team"
+	{
+		"es"		"Debes estar en un equipo para usar este comando."
+	}
+
+}

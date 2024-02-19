@@ -1,0 +1,37 @@
+"Phrases"
+{
+	"Already Muted"
+	{
+		"de"		"This client is already muted"
+	}
+	
+	"Already Gagged"
+	{
+		"de"		"This client is already gagged"
+	}
+	
+	"Already Silenced"
+	{
+		"de"		"This client is already silenced"
+	}
+	
+	"Vote in Progress"
+	{
+		"de"		"Please wait for the current server-wide vote to finish"
+	}
+	
+	"Moderater Only"
+	{
+		"de"		"This command is set to moderators only"
+	}
+	
+	"Silence Use"
+	{
+		"de"		"You cannot use this feature while silenced"
+	}
+	
+	"Wait Seconds"
+	{
+		"de"		"Please wait {1} seconds before starting a vote"
+	}
+}
