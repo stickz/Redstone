@@ -19,7 +19,6 @@
  
 #pragma semicolon 1
 
-#define REQUIRE_EXTENSIONS 
 #include <lang>
 #include <sourcemod>
 #include <keyvalues>
@@ -452,22 +451,6 @@ enum struct tf2_player {
 
 tf2_player tf2_players[MAXPLAYERS + 1];
 
-
-/**
- *  Raw Messages Interface
- */
-
-#define RAW_MESSAGE_RANK				1
-#define RAW_MESSAGE_PLACE				2
-#define RAW_MESSAGE_KDEATH				3
-#define RAW_MESSAGE_SESSION_DATA		4
-#define RAW_MESSAGE_TOP10				5
-#define RAW_MESSAGE_NEXT				6
-
-// callbacks
-#define RAW_MESSAGE_CALLBACK_PLAYER		101
-#define RAW_MESSAGE_CALLBACK_TOP10		102
-#define RAW_MESSAGE_CALLBACK_NEXT		103
 
 // internal usage
 #define RAW_MESSAGE_CALLBACK_INT_CLOSE		1000
