@@ -11,7 +11,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Sourcecomms. If not, see <http://www.gnu.org/licenses/>.
 //
-//  This file is based off work covered by the following copyright(s):  
+//  This file is based off work covered by the following copyright(s):
 //
 //   SourceComms 0.9.266
 //   Copyright (C) 2013-2014 Alexandr Duplishchev
@@ -31,8 +31,8 @@
 #include <sourcecomms>
 
 /* Auto Updater Suport */
-#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/sourcecomms/sourcecomms.txt"
-#include 		"updater/standard.sp"
+#define UPDATE_URL "https://github.com/stickz/Redstone/raw/build/updater/sourcecomms/sourcecomms.txt"
+#include "updater/standard.sp"
 
 #undef REQUIRE_PLUGIN
 #include <adminmenu>
@@ -78,18 +78,18 @@ char g_sTimeDisplays[MAX_TIMES][DISPLAY_SIZE];
 
 enum State/* ConfigState */
 {
-	ConfigStateNone = 0, 
-	ConfigStateConfig, 
-	ConfigStateReasons, 
-	ConfigStateTimes, 
-	ConfigStateServers, 
+	ConfigStateNone = 0,
+	ConfigStateConfig,
+	ConfigStateReasons,
+	ConfigStateTimes,
+	ConfigStateServers,
 }
 enum DatabaseState/* Database connection state */
 {
-	DatabaseState_None = 0, 
-	DatabaseState_Wait, 
-	DatabaseState_Connecting, 
-	DatabaseState_Connected, 
+	DatabaseState_None = 0,
+	DatabaseState_Wait,
+	DatabaseState_Connecting,
+	DatabaseState_Connected,
 }
 
 new DatabaseState:g_DatabaseState;
@@ -119,7 +119,6 @@ Handle g_hPlayerRecheck[MAXPLAYERS + 1] =  { INVALID_HANDLE, ... };
 Handle g_hGagExpireTimer[MAXPLAYERS + 1] =  { INVALID_HANDLE, ... };
 Handle g_hMuteExpireTimer[MAXPLAYERS + 1] =  { INVALID_HANDLE, ... };
 
-
 /* Log Stuff */
 #if defined LOG_QUERIES
 char logQuery[256];
@@ -136,11 +135,11 @@ int serverID = 0;
 /* List menu */
 enum PeskyPanels
 {
-	curTarget, 
-	curIndex, 
-	viewingMute, 
-	viewingGag, 
-	viewingList, 
+	curTarget,
+	curIndex,
+	viewingMute,
+	viewingGag,
+	viewingList,
 }
 int g_iPeskyPanels[MAXPLAYERS + 1][PeskyPanels];
 
@@ -165,12 +164,12 @@ char g_sGagAdminAuth[MAXPLAYERS + 1][64];
 
 Handle g_hServersWhiteList = INVALID_HANDLE;
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
-	name = "SourceComms", 
-	author = "Alex, Sarabveer(VEER™)", 
-	description = "Advanced punishments management for the Source engine in SourceBans style", 
-	version = "dummy", 
+	name = "SourceComms",
+	author = "Alex, Sarabveer(VEER™)",
+	description = "Advanced punishments management for the Source engine in SourceBans style",
+	version = "dummy",
 	url = "https://sarabveer.github.io/SourceBans-Fork/"
 };
 
@@ -218,7 +217,7 @@ public void OnPluginStart()
 	// Catch config error
 	if (!SQL_CheckConfig(DATABASE))
 	{
-		SetFailState("Database failure: could not find database conf  %s", DATABASE);
+		SetFailState("Database failure: could not find database conf %s", DATABASE);
 		return;
 	}
 	DB_Connect();
@@ -226,14 +225,14 @@ public void OnPluginStart()
 	
 	ServerInfo();
 	
-	//Late loading support
+	// Late loading support
 	for (int client = 1; client <= MaxClients; client++)
 	{
 		if (IsClientInGame(client) && IsClientAuthorized(client))
 			OnClientPostAdminCheck(client);
 	}
 	
-	AddUpdaterLibrary(); //auto-updater
+	AddUpdaterLibrary(); // auto-updater
 }
 
 public void OnLibraryRemoved(const char[] name)
@@ -256,7 +255,6 @@ public void OnMapEnd()
 	
 	g_hDatabase = INVALID_HANDLE;
 }
-
 
 // CLIENT CONNECTION FUNCTIONS //
 
@@ -312,7 +310,7 @@ public void OnClientPostAdminCheck(client)
 		SQL_EscapeString(g_hDatabase, clientAuth[8], sClAuthYZEscaped, sizeof(sClAuthYZEscaped));
 		
 		char Query[4096];
-		FormatEx(Query, sizeof(Query), 
+		FormatEx(Query, sizeof(Query),
 			"SELECT      (c.ends - UNIX_TIMESTAMP()) AS remaining, \
                         c.length, c.type, c.created, c.reason, a.user, \
                         IF (a.immunity>=g.immunity, a.immunity, IFNULL(g.immunity,0)) AS immunity, \
@@ -322,7 +320,7 @@ public void OnClientPostAdminCheck(client)
             LEFT JOIN   %s_srvgroups AS g  ON g.name = a.srv_group \
             WHERE       RemoveType IS NULL \
                           AND c.authid REGEXP '^STEAM_[0-9]:%s$' \
-                          AND (length = '0' OR ends > UNIX_TIMESTAMP())", 
+                          AND (length = '0' OR ends > UNIX_TIMESTAMP())",
 			DatabasePrefix, DatabasePrefix, DatabasePrefix, sClAuthYZEscaped);
 		#if defined LOG_QUERIES
 		LogToFile(logQuery, "OnClientPostAdminCheck for: %s. QUERY: %s", clientAuth, Query);
@@ -330,7 +328,6 @@ public void OnClientPostAdminCheck(client)
 		SQL_TQuery(g_hDatabase, Query_VerifyBlock, Query, GetClientUserId(client), DBPrio_High);
 	}
 }
-
 
 // OTHER CLIENT CODE //
 
@@ -525,7 +522,6 @@ public Action FWUnmute(args)
 	return Plugin_Handled;
 }
 
-
 public Action CommandCallback(client, const char[] command, args)
 {
 	if (client && !CheckCommandAccess(client, command, ADMFLAG_CHAT))
@@ -565,7 +561,6 @@ public Action CommandCallback(client, const char[] command, args)
 	
 	return Plugin_Stop;
 }
-
 
 // MENU CODE //
 
@@ -1177,13 +1172,12 @@ public PanelHandler_ListTargetReason(Handle menu, MenuAction action, param1, par
 {
 	if (action == MenuAction_Select)
 	{
-		AdminMenu_ListTarget(param1, g_iPeskyPanels[param1][curTarget], 
-			g_iPeskyPanels[param1][curIndex], 
-			g_iPeskyPanels[param1][viewingMute], 
+		AdminMenu_ListTarget(param1, g_iPeskyPanels[param1][curTarget],
+			g_iPeskyPanels[param1][curIndex],
+			g_iPeskyPanels[param1][viewingMute],
 			g_iPeskyPanels[param1][viewingGag]);
 	}
 }
-
 
 // SQL CALLBACKS //
 
@@ -1229,7 +1223,7 @@ public GotDatabase(Handle owner, Handle hndl, const char[] error, any:data)
 	}
 	
 	// Process queue
-	SQL_TQuery(SQLiteDB, Query_ProcessQueue, 
+	SQL_TQuery(SQLiteDB, Query_ProcessQueue,
 		"SELECT  id, steam_id, time, start_time, reason, name, admin_id, admin_ip, type \
         FROM    queue2");
 	
@@ -1276,12 +1270,12 @@ public Query_UnBlockSelect(Handle owner, Handle hndl, const char[] error, any:da
 	int target = GetClientOfUserId(targetUserID);
 	
 	#if defined DEBUG
-	PrintToServer("Query_UnBlockSelect(adminUID: %d/%d, targetUID: %d/%d, type: %d, adminAuth: %s, targetAuth: %s, reason: %s)", 
+	PrintToServer("Query_UnBlockSelect(adminUID: %d/%d, targetUID: %d/%d, type: %d, adminAuth: %s, targetAuth: %s, reason: %s)",
 		adminUserID, admin, targetUserID, target, type, adminAuth, targetAuth, reason);
 	#endif
 	
 	char targetName[MAX_NAME_LENGTH];
-	strcopy(targetName, MAX_NAME_LENGTH, target && IsClientInGame(target) ? g_sName[target] : targetAuth); //FIXME
+	strcopy(targetName, MAX_NAME_LENGTH, target && IsClientInGame(target) ? g_sName[target] : targetAuth); // FIXME
 	
 	bool hasErrors = false;
 	// If error is not an empty string the query failed
@@ -1388,13 +1382,13 @@ public Query_UnBlockSelect(Handle owner, Handle hndl, const char[] error, any:da
 				SQL_EscapeString(g_hDatabase, reason, unbanReason, sizeof(unbanReason));
 				
 				char query[2048];
-				Format(query, sizeof(query), 
+				Format(query, sizeof(query),
 					"UPDATE  %s_comms \
                     SET     RemovedBy = %d, \
                             RemoveType = 'U', \
                             RemovedOn = UNIX_TIMESTAMP(), \
                             ureason = '%s' \
-                    WHERE   bid = %d", 
+                    WHERE   bid = %d",
 					DatabasePrefix, iAID, unbanReason, bid);
 				#if defined LOG_QUERIES
 				LogToFile(logQuery, "Query_UnBlockSelect. QUERY: %s", query);
@@ -1545,7 +1539,7 @@ public Query_ProcessQueue(Handle owner, Handle hndl, const char[] error, any:dat
 		char sAdmAuthYZEscaped[sizeof(adminAuth) * 2 + 1];
 		
 		// if we get to here then there are rows in the queue pending processing
-		//steam_id TEXT, time INTEGER, start_time INTEGER, reason TEXT, name TEXT, admin_id TEXT, admin_ip TEXT, type INTEGER
+		// steam_id TEXT, time INTEGER, start_time INTEGER, reason TEXT, name TEXT, admin_id TEXT, admin_ip TEXT, type INTEGER
 		int id = SQL_FetchInt(hndl, 0);
 		SQL_FetchString(hndl, 1, auth, sizeof(auth));
 		int time = SQL_FetchInt(hndl, 2);
@@ -1567,11 +1561,11 @@ public Query_ProcessQueue(Handle owner, Handle hndl, const char[] error, any:dat
 			continue;
 		// all blocks should be entered into db!
 		
-		FormatEx(query, sizeof(query), 
+		FormatEx(query, sizeof(query),
 			"INSERT INTO     %s_comms (authid, name, created, ends, length, reason, aid, adminIp, sid, type) \
                 VALUES         ('%s', '%s', %d, %d, %d, '%s', \
                                 IFNULL((SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '0'), \
-                                '%s', %d, %d)", 
+                                '%s', %d, %d)",
 			DatabasePrefix, sAuthEscaped, banName, startTime, (startTime + (time * 60)), (time * 60), banReason, DatabasePrefix, sAdmAuthEscaped, sAdmAuthYZEscaped, adminIp, serverID, type);
 		#if defined LOG_QUERIES
 		LogToFile(logQuery, "Query_ProcessQueue. QUERY: %s", query);
@@ -1586,9 +1580,9 @@ public Query_AddBlockFromQueue(Handle owner, Handle hndl, const char[] error, an
 	if (error[0] == '\0')
 	{
 		// The insert was successful so delete the record from the queue
-		FormatEx(query, sizeof(query), 
+		FormatEx(query, sizeof(query),
 			"DELETE FROM queue2 \
-            WHERE       id = %d", 
+            WHERE       id = %d",
 			data);
 		#if defined LOG_QUERIES
 		LogToFile(logQuery, "Query_AddBlockFromQueue. QUERY: %s", query);
@@ -1682,7 +1676,6 @@ public Query_VerifyBlock(Handle owner, Handle hndl, const char[] error, any:user
 	
 	g_bPlayerStatus[client] = true;
 }
-
 
 // TIMER CALL BACKS //
 
@@ -1999,7 +1992,7 @@ stock InitializeBackupDB()
 		SetFailState(error);
 	}
 	
-	SQL_TQuery(SQLiteDB, Query_ErrorCheck, 
+	SQL_TQuery(SQLiteDB, Query_ErrorCheck,
 		"CREATE TABLE IF NOT EXISTS queue2 ( \
             id INTEGER PRIMARY KEY, \
             steam_id TEXT, \
@@ -2018,8 +2011,8 @@ stock CreateBlock(client, targetId = 0, length = -1, type, const char[] sReason 
 	PrintToServer("CreateBlock(admin: %d, target: %d, length: %d, type: %d, reason: %s, args: %s)", client, targetId, length, type, sReason, sArgs);
 	#endif
 	
-	decl target_list[MAXPLAYERS], target_count; 
-	bool tn_is_ml; 
+	decl target_list[MAXPLAYERS], target_count;
+	bool tn_is_ml;
 	char target_name[MAX_NAME_LENGTH];
 	char reason[256];
 	bool skipped = false;
@@ -2053,13 +2046,13 @@ stock CreateBlock(client, targetId = 0, length = -1, type, const char[] sReason 
 		
 		// Get the target, find target returns a message on failure so we do not
 		if ((target_count = ProcessTargetString(
-					sArg[0], 
-					client, 
-					target_list, 
-					MAXPLAYERS, 
-					COMMAND_FILTER_NO_BOTS, 
-					target_name, 
-					sizeof(target_name), 
+					sArg[0],
+					client,
+					target_list,
+					MAXPLAYERS,
+					COMMAND_FILTER_NO_BOTS,
+					target_name,
+					sizeof(target_name),
 					tn_is_ml)) <= 0)
 		{
 			ReplyToTargetError(client, target_count);
@@ -2252,13 +2245,13 @@ stock ProcessUnBlock(client, targetId = 0, type, char[] sReason = "", const char
 		
 		// Get the target, find target returns a message on failure so we do not
 		if ((target_count = ProcessTargetString(
-					sArg[0], 
-					client, 
-					target_list, 
-					MAXPLAYERS, 
-					COMMAND_FILTER_NO_BOTS, 
-					target_name, 
-					sizeof(target_name), 
+					sArg[0],
+					client,
+					target_list,
+					MAXPLAYERS,
+					COMMAND_FILTER_NO_BOTS,
+					target_name,
+					sizeof(target_name),
 					tn_is_ml)) <= 0)
 		{
 			ReplyToTargetError(client, target_count);
@@ -2308,7 +2301,7 @@ stock ProcessUnBlock(client, targetId = 0, type, char[] sReason = "", const char
 				}
 				case TYPE_UNSILENCE:
 				{
-					if ((g_MuteType[target] == bTime || g_MuteType[target] == bPerm) && 
+					if ((g_MuteType[target] == bTime || g_MuteType[target] == bPerm) &&
 						(g_GagType[target] == bTime || g_GagType[target] == bPerm))
 					continue;
 				}
@@ -2416,7 +2409,7 @@ stock ProcessUnBlock(client, targetId = 0, type, char[] sReason = "", const char
 			SQL_EscapeString(g_hDatabase, targetAuth[8], sTargetAuthYZEscaped, sizeof(sTargetAuthYZEscaped));
 			
 			char query[4096];
-			Format(query, sizeof(query), 
+			Format(query, sizeof(query),
 				"SELECT      c.bid, \
                             IFNULL((SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '0') as iaid, \
                             c.aid, \
@@ -2428,7 +2421,7 @@ stock ProcessUnBlock(client, targetId = 0, type, char[] sReason = "", const char
                 WHERE       RemoveType IS NULL \
                               AND (c.authid = '%s' OR c.authid REGEXP '^STEAM_[0-9]:%s$') \
                               AND (length = '0' OR ends > UNIX_TIMESTAMP()) \
-                              AND %s", 
+                              AND %s",
 				DatabasePrefix, sAdminAuthEscaped, sAdminAuthYZEscaped, DatabasePrefix, DatabasePrefix, DatabasePrefix, sTargetAuthEscaped, sTargetAuthYZEscaped, typeWHERE);
 			
 			#if defined LOG_QUERIES
@@ -2558,9 +2551,9 @@ stock InsertTempBlock(length, type, const char[] name, const char[] auth, const 
 	char banReason[256 * 2 + 1];
 	char sAuthEscaped[64 * 2 + 1];
 	char sAdminAuthEscaped[64 * 2 + 1];
-	char sQuery[4096]; 
+	char sQuery[4096];
 	char sQueryVal[2048];
-	char sQueryMute[2048]; 
+	char sQueryMute[2048];
 	char sQueryGag[2048];
 	
 	// escaping everything
@@ -2570,8 +2563,8 @@ stock InsertTempBlock(length, type, const char[] name, const char[] auth, const 
 	SQL_EscapeString(SQLiteDB, adminAuth, sAdminAuthEscaped, sizeof(sAdminAuthEscaped));
 	
 	// steam_id time start_time reason name admin_id admin_ip
-	FormatEx(sQueryVal, sizeof(sQueryVal), 
-		"'%s', %d, %d, '%s', '%s', '%s', '%s'", 
+	FormatEx(sQueryVal, sizeof(sQueryVal),
+		"'%s', %d, %d, '%s', '%s', '%s', '%s'",
 		sAuthEscaped, length, GetTime(), banReason, banName, sAdminAuthEscaped, adminIp);
 	
 	switch (type)
@@ -2585,8 +2578,8 @@ stock InsertTempBlock(length, type, const char[] name, const char[] auth, const 
 		}
 	}
 	
-	FormatEx(sQuery, sizeof(sQuery), 
-		"INSERT INTO queue2 (steam_id, time, start_time, reason, name, admin_id, admin_ip, type) VALUES %s%s%s", 
+	FormatEx(sQuery, sizeof(sQuery),
+		"INSERT INTO queue2 (steam_id, time, start_time, reason, name, admin_id, admin_ip, type) VALUES %s%s%s",
 		sQueryMute, type == TYPE_SILENCE ? ", " : "", sQueryGag);
 	
 	#if defined LOG_QUERIES
@@ -2626,7 +2619,7 @@ stock ReadConfig()
 		PrintToServer("%sLoading configs/sourcebans/sourcebans.cfg config file", PREFIX);
 		InternalReadConfig(ConfigFile1);
 	}
-	else 
+	else
 		SetFailState("FATAL *** ERROR *** can't find %s", ConfigFile1);
 	
 	if (FileExists(ConfigFile2))
@@ -2657,7 +2650,6 @@ stock ReadConfig()
 	PrintToServer("Loaded DisableUnblockImmunityCheck value: %d", DisUBImCheck);
 	#endif
 }
-
 
 // some more
 
@@ -2708,7 +2700,7 @@ stock bool IsAllowedBlockLength(admin, length, target_count = 1)
 		if (!ConfigMaxLength || !admin || AdmHasFlag(admin))
 			return true;
 		
-		//return false if one of these statements evaluates to true; otherwise, return true
+		// return false if one of these statements evaluates to true; otherwise, return true
 		return !(!length || length > ConfigMaxLength);
 	}
 	else
@@ -2716,7 +2708,7 @@ stock bool IsAllowedBlockLength(admin, length, target_count = 1)
 		if (length < 0) //'session punishments allowed for mass-targeting'
 			return true;
 		
-		//return false if one of these statements evaluates to true; otherwise, return true
+		// return false if one of these statements evaluates to true; otherwise, return true
 		return !(!length || length > MAX_TIME_MULTI || length > DefaultTime);
 	}
 }
@@ -2728,7 +2720,7 @@ stock bool AdmHasFlag(admin)
 
 stock _:GetAdmImmunity(admin)
 {
-	return admin > 0 && GetUserAdmin(admin) != INVALID_ADMIN_ID ? 
+	return admin > 0 && GetUserAdmin(admin) != INVALID_ADMIN_ID ?
 	GetAdminImmunityLevel(GetUserAdmin(admin)) : 0;
 }
 
@@ -2940,14 +2932,14 @@ stock SavePunishment(admin = 0, target, type, length = -1, const char[] reason =
 		SQL_EscapeString(g_hDatabase, adminAuth, sAdminAuthIdEscaped, sizeof(sAdminAuthIdEscaped));
 		SQL_EscapeString(g_hDatabase, adminAuth[8], sAdminAuthIdYZEscaped, sizeof(sAdminAuthIdYZEscaped));
 		
-		// bid    authid    name    created ends lenght reason aid adminip    sid    removedBy removedType removedon type ureason
-		FormatEx(sQueryAdm, sizeof(sQueryAdm), 
-			"IFNULL((SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), 0)", 
+		// bid, authid, name, created, ends, lenght, reason, aid, adminip, sid, removedBy, removedType, removedon, type, ureason
+		FormatEx(sQueryAdm, sizeof(sQueryAdm),
+			"IFNULL((SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), 0)",
 			DatabasePrefix, sAdminAuthIdEscaped, sAdminAuthIdYZEscaped);
 		
-		// authid name, created, ends, length, reason, aid, adminIp, sid
-		FormatEx(sQueryVal, sizeof(sQueryVal), 
-			"'%s', '%s', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', %s, '%s', %d", 
+		// authid, name, created, ends, length, reason, aid, adminIp, sid
+		FormatEx(sQueryVal, sizeof(sQueryVal),
+			"'%s', '%s', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %d, %d, '%s', %s, '%s', %d",
 			sAuthidEscaped, banName, length * 60, length * 60, banReason, sQueryAdm, adminIp, serverID);
 		
 		switch (type)
@@ -2962,8 +2954,8 @@ stock SavePunishment(admin = 0, target, type, length = -1, const char[] reason =
 		}
 		
 		// litle magic - one query for all actions (mute, gag or silence)
-		FormatEx(sQuery, sizeof(sQuery), 
-			"INSERT INTO %s_comms (authid, name, created, ends, length, reason, aid, adminIp, sid, type) VALUES %s%s%s", 
+		FormatEx(sQuery, sizeof(sQuery),
+			"INSERT INTO %s_comms (authid, name, created, ends, length, reason, aid, adminIp, sid, type) VALUES %s%s%s",
 			DatabasePrefix, sQueryMute, type == TYPE_SILENCE ? ", " : "", sQueryGag);
 		
 		#if defined LOG_QUERIES
@@ -2989,11 +2981,11 @@ stock SavePunishment(admin = 0, target, type, length = -1, const char[] reason =
 stock ShowActivityToServer(admin, type, length = 0, char[] reason = "", char[] targetName, bool ml = false)
 {
 	#if defined DEBUG
-	PrintToServer("ShowActivityToServer(admin: %d, type: %d, length: %d, reason: %s, name: %s, ml: %b", 
+	PrintToServer("ShowActivityToServer(admin: %d, type: %d, length: %d, reason: %s, name: %s, ml: %b",
 		admin, type, length, reason, targetName, ml);
 	#endif
 	
-	char actionName[32]; 
+	char actionName[32];
 	char translationName[64];
 	switch (type)
 	{
@@ -3013,7 +3005,7 @@ stock ShowActivityToServer(admin, type, length = 0, char[] reason = "", char[] t
 				strcopy(actionName, sizeof(actionName), "Gagged");
 			else if (length == 0)
 				strcopy(actionName, sizeof(actionName), "Permagagged");
-			else //temp block
+			else // temp block
 				strcopy(actionName, sizeof(actionName), "Temp gagged");
 		}
 		//-------------------------------------------------------------------------------------------------
@@ -3023,7 +3015,7 @@ stock ShowActivityToServer(admin, type, length = 0, char[] reason = "", char[] t
 				strcopy(actionName, sizeof(actionName), "Silenced");
 			else if (length == 0)
 				strcopy(actionName, sizeof(actionName), "Permasilenced");
-			else //temp block
+			else // temp block
 				strcopy(actionName, sizeof(actionName), "Temp silenced");
 		}
 		//-------------------------------------------------------------------------------------------------
@@ -3219,5 +3211,3 @@ public Native_GetClientGagType(Handle hPlugin, numParams)
 	
 	return bType:g_GagType[target];
 }
-
-//Yarr!

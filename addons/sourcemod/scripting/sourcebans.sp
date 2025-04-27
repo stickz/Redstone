@@ -25,12 +25,13 @@
 // *************************************************************************
 
 #pragma semicolon 1
+
 #include <sourcemod>
 #include <sourcebans>
 
 /* Auto Updater Suport */
-#define UPDATE_URL  	"https://github.com/stickz/Redstone/raw/build/updater/sourcebans/sourcebans.txt"
-#include 		"updater/standard.sp"
+#define UPDATE_URL "https://github.com/stickz/Redstone/raw/build/updater/sourcebans/sourcebans.txt"
+#include "updater/standard.sp"
 
 #undef REQUIRE_PLUGIN
 #include <adminmenu>
@@ -122,7 +123,7 @@ bool g_bConnecting = false;
 
 int serverID = -1;
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
 	name = "SourceBans++", 
 	author = "SourceBans Development Team, Sarabveer(VEER™)", 
@@ -626,8 +627,6 @@ public Action sm_rehash(args)
 	return Plugin_Handled;
 }
 
-
-
 // MENU CODE //
 
 public OnAdminMenuReady(Handle:topmenu)
@@ -669,7 +668,7 @@ public AdminMenu_Ban(Handle:topmenu, TopMenuAction:action, TopMenuObject:object_
 		
 		case TopMenuAction_SelectOption:
 		{
-			DisplayBanTargetMenu(param); // Someone chose to ban someone, show the list of users menu		
+			DisplayBanTargetMenu(param); // Someone chose to ban someone, show the list of users menu
 		}
 	}
 }
@@ -839,11 +838,11 @@ stock DisplayBanTargetMenu(client)
 	char title[100];
 	Format(title, sizeof(title), "%T:", "Ban player", client);
 	
-	//Format(title, sizeof(title), "Ban player", client);	// Create the title of the menu
+	//Format(title, sizeof(title), "Ban player", client); // Create the title of the menu
 	SetMenuTitle(menu, title); // Set the title
 	SetMenuExitBackButton(menu, true); // Yes we want back/exit
 	
-	AddTargetsToMenu(menu, client, false, false);	
+	AddTargetsToMenu(menu, client, false, false);
 	DisplayMenu(menu, client, MENU_TIME_FOREVER); // Show the menu to the client FOREVER!
 }
 
@@ -909,7 +908,7 @@ public GotDatabase(Handle owner, Handle hndl, const char[] error, any:data)
 	
 	if (loadGroups && enableAdmins)
 	{
-		FormatEx(query, 1024, "SELECT name, flags, immunity, groups_immune   \
+		FormatEx(query, 1024, "SELECT name, flags, immunity, groups_immune \
 					FROM %s_srvgroups ORDER BY id", DatabasePrefix);
 		curLoading++;
 		SQL_TQuery(DB, GroupsDone, query);
@@ -926,18 +925,18 @@ public GotDatabase(Handle owner, Handle hndl, const char[] error, any:data)
 		
 		if (serverID == -1)
 		{
-			FormatEx(query, 1024, "SELECT authid, srv_password, (SELECT name FROM %s_srvgroups WHERE name = srv_group AND flags != '') AS srv_group, srv_flags, user, immunity  \
+			FormatEx(query, 1024, "SELECT authid, srv_password, (SELECT name FROM %s_srvgroups WHERE name = srv_group AND flags != '') AS srv_group, srv_flags, user, immunity \
 						FROM %s_admins_servers_groups AS asg \
 						LEFT JOIN %s_admins AS a ON a.aid = asg.admin_id \
-						WHERE %s (server_id = (SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1)  \
+						WHERE %s (server_id = (SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1) \
 						OR srv_group_id = ANY (SELECT group_id FROM %s_servers_groups WHERE server_id = (SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1))) \
 						GROUP BY aid, authid, srv_password, srv_group, srv_flags, user", 
 				DatabasePrefix, DatabasePrefix, DatabasePrefix, queryLastLogin, DatabasePrefix, ServerIp, ServerPort, DatabasePrefix, DatabasePrefix, ServerIp, ServerPort);
 		} else {
-			FormatEx(query, 1024, "SELECT authid, srv_password, (SELECT name FROM %s_srvgroups WHERE name = srv_group AND flags != '') AS srv_group, srv_flags, user, immunity  \
+			FormatEx(query, 1024, "SELECT authid, srv_password, (SELECT name FROM %s_srvgroups WHERE name = srv_group AND flags != '') AS srv_group, srv_flags, user, immunity \
 						FROM %s_admins_servers_groups AS asg \
 						LEFT JOIN %s_admins AS a ON a.aid = asg.admin_id \
-						WHERE %s server_id = %d  \
+						WHERE %s server_id = %d \
 						OR srv_group_id = ANY (SELECT group_id FROM %s_servers_groups WHERE server_id = %d) \
 						GROUP BY aid, authid, srv_password, srv_group, srv_flags, user", 
 				DatabasePrefix, DatabasePrefix, DatabasePrefix, queryLastLogin, serverID, DatabasePrefix, serverID);
@@ -1009,7 +1008,7 @@ public VerifyInsert(Handle owner, Handle hndl, const char[] error, any:dataPack)
 		if (Reason[0] == '\0')
 			ShowActivityEx(admin, Prefix, "%t", "Permabanned player", Name);
 		else 
-			ShowActivityEx(admin, Prefix, "%t", "Permabanned player reason", Name, Reason);		
+			ShowActivityEx(admin, Prefix, "%t", "Permabanned player reason", Name, Reason);
 	} 
 
 	else 
@@ -1017,7 +1016,7 @@ public VerifyInsert(Handle owner, Handle hndl, const char[] error, any:dataPack)
 		if (Reason[0] == '\0')
 			ShowActivityEx(admin, Prefix, "%t", "Banned player", Name, time);
 		else
-			ShowActivityEx(admin, Prefix, "%t", "Banned player reason", Name, time, Reason);		
+			ShowActivityEx(admin, Prefix, "%t", "Banned player reason", Name, time, Reason);
 	}
 	
 	LogAction(admin, client, "\"%L\" banned \"%L\" (minutes \"%d\") (reason \"%s\")", admin, client, time, Reason);
@@ -1332,7 +1331,7 @@ public ProcessQueueCallback(Handle owner, Handle hndl, const char[] error, any:d
 			if (serverID == -1)
 			{
 				FormatEx(query, sizeof(query), 
-					"INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid) VALUES  \
+					"INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid) VALUES \
 						('%s', '%s', '%s', %d, %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						(SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1))", 
 					DatabasePrefix, ip, auth, banName, startTime, startTime + time * 60, time * 60, banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, DatabasePrefix, ServerIp, ServerPort);
@@ -1340,7 +1339,7 @@ public ProcessQueueCallback(Handle owner, Handle hndl, const char[] error, any:d
 			else
 			{
 				FormatEx(query, sizeof(query), 
-					"INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid) VALUES  \
+					"INSERT INTO %s_bans (ip, authid, name, created, ends, length, reason, aid, adminIp, sid) VALUES \
 						('%s', '%s', '%s', %d, %d, %d, '%s', (SELECT aid FROM %s_admins WHERE authid = '%s' OR authid REGEXP '^STEAM_[0-9]:%s$'), '%s', \
 						%d)", 
 					DatabasePrefix, ip, auth, banName, startTime, startTime + time * 60, time * 60, banReason, DatabasePrefix, adminAuth, adminAuth[8], adminIp, serverID);
@@ -1436,14 +1435,14 @@ public VerifyBan(Handle owner, Handle hndl, const char[] error, any:userid)
 		SQL_EscapeString(DB, clientName, Name, sizeof(Name));
 		if (serverID == -1)
 		{
-			FormatEx(Query, sizeof(Query), "INSERT INTO %s_banlog (sid ,time ,name ,bid) VALUES  \
+			FormatEx(Query, sizeof(Query), "INSERT INTO %s_banlog (sid ,time ,name ,bid) VALUES \
 				((SELECT sid FROM %s_servers WHERE ip = '%s' AND port = '%s' LIMIT 0,1), UNIX_TIMESTAMP(), '%s', \
 				(SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND RemoveType IS NULL LIMIT 0,1))", 
 				DatabasePrefix, DatabasePrefix, ServerIp, ServerPort, Name, DatabasePrefix, clientAuth[8], clientIp);
 		}
 		else
 		{
-			FormatEx(Query, sizeof(Query), "INSERT INTO %s_banlog (sid ,time ,name ,bid) VALUES  \
+			FormatEx(Query, sizeof(Query), "INSERT INTO %s_banlog (sid ,time ,name ,bid) VALUES \
 				(%d, UNIX_TIMESTAMP(), '%s', \
 				(SELECT bid FROM %s_bans WHERE ((type = 0 AND authid REGEXP '^STEAM_[0-9]:%s$') OR (type = 1 AND ip = '%s')) AND RemoveType IS NULL LIMIT 0,1))", 
 				DatabasePrefix, serverID, Name, DatabasePrefix, clientAuth[8], clientIp);
@@ -1711,7 +1710,7 @@ public GroupsSecondPass(Handle owner, Handle hndl, const char[] error, any:data)
 		if (immuneGrp == INVALID_GROUP_ID)
 			continue;
 		
-		SetAdmGroupImmuneFrom(curGrp, immuneGrp);		
+		SetAdmGroupImmuneFrom(curGrp, immuneGrp);
 	}
 	--curLoading;
 	CheckLoadAdmins();
@@ -1984,7 +1983,6 @@ public SMCResult:ReadConfig_EndSection(Handle smc)
 	return SMCParse_Continue;
 }
 
-
 /*********************************************************
  * Ban Player from server
  *
@@ -2023,7 +2021,6 @@ public Native_SBBanPlayer(Handle plugin, numParams)
 	PrepareBan(client, target, time, reason);
 	return true;
 }
-
 
 // STOCK FUNCTIONS //
 
@@ -2219,7 +2216,7 @@ void PrepareBan(int client, int target, int time, char[] reason)
 			if (reason[0] == '\0')
 				ShowActivity(client, "%t", "Permabanned player", name);
 			else
-				ShowActivity(client, "%t", "Permabanned player reason", name, reason);			
+				ShowActivity(client, "%t", "Permabanned player reason", name, reason);
 		} 
 
 		else 
@@ -2227,7 +2224,7 @@ void PrepareBan(int client, int target, int time, char[] reason)
 			if (reason[0] == '\0')
 				ShowActivity(client, "%t", "Banned player", name, time);
 			else
-				ShowActivity(client, "%t", "Banned player reason", name, time, reason);			
+				ShowActivity(client, "%t", "Banned player reason", name, time, reason);
 		}
 
 		LogAction(client, target, "\"%L\" banned \"%L\" (minutes \"%d\") (reason \"%s\")", client, target, time, reason);
@@ -2354,5 +2351,3 @@ stock void AccountForLateLoading()
 		}
 	}
 }
-
-//Yarr!

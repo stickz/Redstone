@@ -1,3 +1,6 @@
+#pragma semicolon 1
+#pragma newdecls required
+
 #include <sourcemod>
 #include <sdktools>
 #include <sourcecomms>
@@ -17,8 +20,8 @@ Menu g_hVoteMenu = null;
 #define VOTE_CLIENTID	0
 #define VOTE_USERID		1
 #define VOTE_NAME		0
-#define VOTE_NO 		"###no###"
-#define VOTE_YES 		"###yes###"
+#define VOTE_NO			"###no###"
+#define VOTE_YES		"###yes###"
 
 #define VOTE_TYPE_GAG 0
 #define VOTE_TYPE_MUTE 1
@@ -31,18 +34,18 @@ char g_voteInfo[3][65];
 
 int g_votetype = 0;
 
-//Version is auto-filled by the travis builder
+// Version is auto-filled by the travis builder
 public Plugin myinfo =
 {
-	name 		= "Vote Gag, Mute, Silence",
-	author 		= "<eVa>Dog, Stickz",
-	description 	= "Allows vote gag, mute and silencing for sourcecomms",
-	version 	= "dummy",
-	url 		= "http://www.theville.org"
+	name = "Vote Gag, Mute, Silence",
+	author = "<eVa>Dog, Stickz",
+	description = "Allows vote gag, mute and silencing for sourcecomms",
+	version = "dummy",
+	url = "http://www.theville.org"
 }
 
 /* Auto Updater */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/votemute_p/votemute_p.txt"
+#define UPDATE_URL "https://github.com/stickz/Redstone/raw/build/updater/votemute_p/votemute_p.txt"
 #include "updater/standard.sp"
 
 public void OnPluginStart()
@@ -53,15 +56,15 @@ public void OnPluginStart()
 	
 	AutoExecConfig(true, "votemute_p");
 	
-	//Allowed for ALL players
-	RegConsoleCmd("sm_votemute", Command_Votemute,  "sm_votemute <player> ");  
-	RegConsoleCmd("sm_votesilence", Command_Votesilence,  "sm_votesilence <player> ");  
-	RegConsoleCmd("sm_votegag", Command_Votegag,  "sm_votegag <player> "); 
+	// Allowed for ALL players
+	RegConsoleCmd("sm_votemute", Command_Votemute,  "sm_votemute <player> ");
+	RegConsoleCmd("sm_votesilence", Command_Votesilence,  "sm_votesilence <player> ");
+	RegConsoleCmd("sm_votegag", Command_Votegag,  "sm_votegag <player> ");
 
 	LoadTranslations("common.phrases"); // required for find target
 	LoadTranslations("votemute_p.phrases");
 	
-	AddUpdaterLibrary(); //auto-updater
+	AddUpdaterLibrary(); // auto-updater
 }
 
 public Action Command_Votemute(int client, int args)
@@ -85,7 +88,7 @@ public Action Command_Votemute(int client, int args)
 
 		else if (SourceComms_GetClientMuteType(target) != bNot)
 		{
-			PrintMessage(client, "Already Muted"); //This client is already muted!
+			PrintMessage(client, "Already Muted"); // This client is already muted!
 			return Plugin_Handled;
 		}
 
@@ -109,7 +112,7 @@ public Action Command_Votesilence(int client, int args)
 	else
 	{
 		char arg[64];
-		GetCmdArg(1, arg, sizeof(args));
+		GetCmdArg(1, arg, sizeof(arg));
 		
 		int target = FindTarget(client, arg);
 		if (target == INVALID_TARGET)
@@ -117,8 +120,8 @@ public Action Command_Votesilence(int client, int args)
 
 		else if (IsSourceCommSilenced(target))
 		{
-			PrintMessage(client, "Already Silenced"); //This client is already silenced
-			return Plugin_Handled;		
+			PrintMessage(client, "Already Silenced"); // This client is already silenced
+			return Plugin_Handled;
 		}
 
 		g_votetype = VOTE_TYPE_SILENCE;
@@ -148,7 +151,7 @@ public Action Command_Votegag(int client, int args)
 
 		else if (SourceComms_GetClientGagType(target) != bNot)
 		{
-			PrintMessage(client, "Already Gagged"); //This client is already gagged
+			PrintMessage(client, "Already Gagged"); // This client is already gagged
 			return Plugin_Handled;
 		}
 		
@@ -162,23 +165,23 @@ bool CanStartVote(int client)
 {
 	if (IsVoteInProgress())
 	{
-		PrintMessage(client, "Vote in Progress"); //Please wait for the current server-wide vote to finish
+		PrintMessage(client, "Vote in Progress"); // Please wait for the current server-wide vote to finish
 		return false;
 	}
 
 	if (g_Cvar_Admins.BoolValue && !IsValidAdmin(client, "k"))
 	{
-		PrintMessage(client, "Moderater Only"); //This command is for server moderators only
+		PrintMessage(client, "Moderater Only"); // This command is for server moderators only
 		return false;
-	}		
+	}
 	
 	if (!TestVoteDelay(client))
 		return false;
 		
 	if (IsSourceCommSilenced(client))
 	{
-		PrintMessage(client, "Silence Use"); //You cannot use this feature while silenced
-		return false;				
+		PrintMessage(client, "Silence Use"); // You cannot use this feature while silenced
+		return false;
 	}
 
 	return true;
@@ -194,9 +197,9 @@ void DisplayVoteMuteMenu(int client, int target)
 	char Name[16];
 	switch (g_votetype)
 	{
-		case VOTE_TYPE_MUTE: 	Format(Name, sizeof(Name), "Mute");
-		case VOTE_TYPE_GAG:  	Format(Name, sizeof(Name), "Gag");
-		case VOTE_TYPE_SILENCE: Format(Name, sizeof(Name), "Silence");	
+		case VOTE_TYPE_MUTE:	Format(Name, sizeof(Name), "Mute");
+		case VOTE_TYPE_GAG:		Format(Name, sizeof(Name), "Gag");
+		case VOTE_TYPE_SILENCE:	Format(Name, sizeof(Name), "Silence");
 	}
 	
 	PrintAndLogVoteStart(client, target, Name);
@@ -205,17 +208,17 @@ void DisplayVoteMuteMenu(int client, int target)
 
 Menu CreateGlobalVoteMenu(const char[] name)
 {
-	//Create new menu object
-	Menu menu = new Menu(Handler_VoteCallback, MenuAction:MENU_ACTIONS_ALL);
+	// Create new menu object
+	Menu menu = new Menu(Handler_VoteCallback, MENU_ACTIONS_ALL);
 	
-	//Set various menu properties
+	// Set various menu properties
 	menu.SetTitle("%s Player:", name);
 	menu.AddItem(VOTE_YES, "Yes");
 	menu.AddItem(VOTE_NO, "No");
 	menu.ExitButton = false;
 	menu.DisplayVoteToAll(20);
 	
-	//return the created menu
+	// return the created menu
 	return menu;
 }
 
@@ -250,7 +253,6 @@ void DisplayVoteTargetMenu(int client)
 	menu.Display(client, MENU_TIME_FOREVER);
 }
 
-
 public int MenuHandler_Vote(Menu menu, MenuAction action, int param1, int param2)
 {
 	switch (action)
@@ -266,9 +268,9 @@ public int MenuHandler_Vote(Menu menu, MenuAction action, int param1, int param2
 				PrintToChat(param1, "[SM] %s", "Player no longer available");
 
 			else
-				DisplayVoteMuteMenu(param1, target);	
+				DisplayVoteMuteMenu(param1, target);
 		}
-	}	
+	}
 	return 0;
 }
 
@@ -290,28 +292,28 @@ public int Handler_VoteCallback(Menu menu, MenuAction action, int param1, int pa
 			char buffer[255];
 			Format(buffer, sizeof(buffer), "%s %s", title, g_voteInfo[VOTE_NAME]);
 
-			new Handle:panel = Handle:param2;
-			SetPanelTitle(panel, buffer);
+			Panel panel = view_as<Panel>(param2);
+			panel.SetTitle(buffer);
 		}
 		
 		case MenuAction_DisplayItem:
 		{
 			char display[64];
 			menu.GetItem(param2, "", 0, _, display, sizeof(display));
-		 
+			
 			if (strcmp(display, "No") == 0 || strcmp(display, "Yes") == 0)
 			{
 				char buffer[255];
 				Format(buffer, sizeof(buffer), "%s", display);
 
 				return RedrawMenuItem(buffer);
-			}		
+			}
 		}
 		//case MenuAction_Select: VoteSelect(menu, param1, param2);
 		
 		case MenuAction_VoteCancel:
 		{
-			if (param1 == VoteCancel_NoVotes)	
+			if (param1 == VoteCancel_NoVotes)
 				PrintToChatAll("[SM] %s", "No Votes Cast");
 		}
 		
@@ -337,7 +339,7 @@ public int Handler_VoteCallback(Menu menu, MenuAction action, int param1, int pa
 			}
 			else
 			{
-				PrintToChatAll("[SM] %s", "Vote Successful", RoundToNearest(100.0*percent), totalVotes);			
+				PrintToChatAll("[SM] %s", "Vote Successful", RoundToNearest(100.0*percent), totalVotes);
 				
 				switch (g_votetype)
 				{
@@ -350,38 +352,38 @@ public int Handler_VoteCallback(Menu menu, MenuAction action, int param1, int pa
 					
 					case VOTE_TYPE_GAG:
 					{
-						PrintToChatAll("[SM] %s", "Gagged target", "_s", g_voteInfo[VOTE_NAME]);	
+						PrintToChatAll("[SM] %s", "Gagged target", "_s", g_voteInfo[VOTE_NAME]);
 						LogAction(-1, g_voteClient[VOTE_CLIENTID], "Vote gag successful, gagged \"%L\" ", g_voteClient[VOTE_CLIENTID]);
-						SourceComms_SetClientGag(g_voteClient[VOTE_CLIENTID], true, g_Cvar_Duration.IntValue, true, "Voted by players");						
+						SourceComms_SetClientGag(g_voteClient[VOTE_CLIENTID], true, g_Cvar_Duration.IntValue, true, "Voted by players");
 					}
 					
 					case VOTE_TYPE_SILENCE:
 					{
-						PrintToChatAll("[SM] %s", "Silenced target", "_s", g_voteInfo[VOTE_NAME]);	
+						PrintToChatAll("[SM] %s", "Silenced target", "_s", g_voteInfo[VOTE_NAME]);
 						LogAction(-1, g_voteClient[VOTE_CLIENTID], "Vote silence successful, silenced \"%L\" ", g_voteClient[VOTE_CLIENTID]);
 						SourceComms_SetClientGag(g_voteClient[VOTE_CLIENTID], true, g_Cvar_Duration.IntValue, true, "Voted by players");
-						SourceComms_SetClientMute(g_voteClient[VOTE_CLIENTID], true, g_Cvar_Duration.IntValue, true, "Voted by players");					
+						SourceComms_SetClientMute(g_voteClient[VOTE_CLIENTID], true, g_Cvar_Duration.IntValue, true, "Voted by players");
 					}				
 				}
 			}		
 		}	
 	}
-	return 0;	
+	return 0;
 }
 
 float GetVotePercent(int votes, int totalVotes) {
 	return float(votes) / float(totalVotes);
 }
 
-bool TestVoteDelay(client)
+bool TestVoteDelay(int client)
 {
- 	int delay = CheckVoteDelay();
- 	
- 	if (delay > 0)
- 	{
- 		PrintToChat(client, "%s %t.", PREFIX, "Wait Seconds", delay);
- 		return false;
- 	}
- 	
+	int delay = CheckVoteDelay();
+
+	if (delay > 0)
+	{
+		PrintToChat(client, "%s %t.", PREFIX, "Wait Seconds", delay);
+		return false;
+	}
+
 	return true;
 }
