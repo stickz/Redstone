@@ -1,0 +1,36 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:51:07 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/255
+//
+"Phrases"
+{
+
+	"Retrigger Map Vote"
+	{
+		"ru"		"Цикл {1} отменил порог числа игроков. Новое голосование начнется сейчас"
+	}
+
+	"Not Enough Players"
+	{
+		"ru"		"Для карты {1} нехватает игроков! Выбрана следующая карта: {2}!"
+	}
+
+	"Too Many Players"
+	{
+		"ru"		"Слишком много игроков для карты {1}! Выбрана следующая карта: {2}!"
+	}
+
+	"Wait Map List"
+	{
+		"ru"		"Пожалуйста, подожди {1} секунд перед тем, как составиться список предыдущих карт снова!"
+	}
+
+	"Prev Maps Listed"
+	{
+		"ru"		"Предыдущие карты внесены в список. Посмотри в консоли, чтобы увидеть результат"
+	}
+
+}

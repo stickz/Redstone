@@ -1,0 +1,15 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/showdamage.smx"
+    "Plugin" "Path_SM/translations/es/showdamage.phrases.txt"
+    "Plugin" "Path_SM/translations/cze/showdamage.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/showdamage.phrases.txt"
+    "Plugin" "Path_SM/translations/de/showdamage.phrases.txt"
+    "Plugin" "Path_SM/translations/showdamage.phrases.txt"
+  }
+}

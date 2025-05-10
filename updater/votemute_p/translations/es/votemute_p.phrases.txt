@@ -1,0 +1,37 @@
+"Phrases"
+{
+	"Already Muted"
+	{
+		"es"		"Este cliente ya está silenciado"
+	}
+	
+	"Already Gagged"
+	{
+		"es"		"Este cliente ya está amordazado"
+	}
+	
+	"Already Silenced"
+	{
+		"es"		"Este cliente ya está silenciado"
+	}
+	
+	"Vote in Progress"
+	{
+		"es"		"Por favor espera a que la votación del servidor termine"
+	}
+	
+	"Moderater Only"
+	{
+		"es"		"Este comando solo está disponible para moderadores"
+	}
+	
+	"Silence Use"
+	{
+		"es"		"No puedes usar esta función mientras estés silenciado"
+	}
+	
+	"Wait Seconds"
+	{
+		"es"		"Por favor, espera {1} segundos antes de empezar una votación"
+	}
+}

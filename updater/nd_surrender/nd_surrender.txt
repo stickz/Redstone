@@ -1,0 +1,16 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_surrender.smx"
+    "Plugin" "Path_SM/translations/es/nd_surrender.phrases.txt"
+    "Plugin" "Path_SM/translations/pt/nd_surrender.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/nd_surrender.phrases.txt"
+    "Plugin" "Path_SM/translations/nd_surrender.phrases.txt"
+    "Plugin" "Path_SM/translations/fr/nd_surrender.phrases.txt"
+    "Plugin" "Path_SM/translations/de/nd_surrender.phrases.txt"
+  }
+}

@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "07e12ab2"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_server_mode.smx"
+  }
+}

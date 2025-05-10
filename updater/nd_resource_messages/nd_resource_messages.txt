@@ -1,0 +1,15 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_resource_messages.smx"
+    "Plugin" "Path_SM/translations/resourcemessages.phrases.txt"
+    "Plugin" "Path_SM/translations/es/resourcemessages.phrases.txt"
+    "Plugin" "Path_SM/translations/cze/resourcemessages.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/resourcemessages.phrases.txt"
+    "Plugin" "Path_SM/translations/de/resourcemessages.phrases.txt"
+  }
+}

@@ -1,0 +1,13 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_grenade_trails_deux.smx"
+    "Plugin" "Path_SM/translations/es/nd_grenade_trails_deux.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/nd_grenade_trails_deux.phrases.txt"
+    "Plugin" "Path_SM/translations/nd_grenade_trails_deux.phrases.txt"
+  }
+}

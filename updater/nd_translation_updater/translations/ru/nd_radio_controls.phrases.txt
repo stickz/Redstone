@@ -1,0 +1,21 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:53:31 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/254
+//
+"Phrases"
+{
+
+	"Radio Disabled"
+	{
+		"ru"		"Радио передачи отключены или неисправны"
+	}
+
+	"Radio Wait"
+	{
+		"ru"		"Пожалуйста подождите {1} сек. перед отправкой радио передачи"
+	}
+
+}

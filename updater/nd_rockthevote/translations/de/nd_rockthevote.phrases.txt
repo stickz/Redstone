@@ -1,0 +1,51 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:55:46 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/242
+//
+"Phrases"
+{
+
+	"Eight Required"
+	{
+		"de"		"Um die Karte im späten Verlauf einer Runde zu wechseln, müssen weniger als 9 Spieler vorhanden sein"
+	}
+
+	"Ten Required"
+	{
+		"de"		"Um die Karte im späten Verlauf einer Runde zu wechseln, müssen weniger als 11 Spieler vorhanden sein"
+	}
+
+	"Twelve Required"
+	{
+		"de"		"Um die Karte im späten Verlauf einer Runde zu wechseln, müssen weniger als 13 Spieler vorhanden sein"
+	}
+
+	"Too Late"
+	{
+		"de"		"RTV kann im späten Verlauf der Runde nicht benutzt werden"
+	}
+
+	"Already Passed"
+	{
+		"de"		"Anstehender Kartenwechsel, bitte warten"
+	}
+
+	"RTV Changing"
+	{
+		"de"		"RTV Erfolgreich: Die Karte wird in Fünf Sekunden gewechselt"
+	}
+
+	"RTV Wait"
+	{
+		"de"		"RTV Erfolgreich: Auswahl für die Folgekarte aktiviert"
+	}
+
+	"Typed Change Map"
+	{
+		"de"		"{1} hat einen Kartenwechsel vorgeschlagen: {2} weitere Unterstützer benötigt"
+	}
+
+}

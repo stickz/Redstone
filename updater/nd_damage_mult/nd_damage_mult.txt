@@ -1,0 +1,11 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_damage_mult.smx"
+    "Plugin" "Path_SM/translations/nd_damage_mult.phrases.txt"
+  }
+}

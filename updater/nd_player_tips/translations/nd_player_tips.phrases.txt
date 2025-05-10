@@ -1,0 +1,64 @@
+"Phrases"
+{
+	"Cookie Player Tips"
+	{
+		// This is the text for the settings menu in game (!settings)
+		"en"		"Player Tips"
+	}
+	
+	"Shooting Structure"
+	{
+		// To alert players who are trying to shoot at structures with non-siege weapons 
+		"en"		"Standard weapons deal very little damage to structures! You require siege equipment"
+	}
+	
+	"Grenade Spam"
+	{
+		// To alert players who are throwing multiple grenades in quick succession 
+		"en"		"Multiple grenades have no increased damage on target. Throw in different areas or wait until the first has exploded"
+	}
+	
+	"Lockdown Capture"
+	{
+		// To alert players who are attempting to capture resources as Exo, whilst in lockdown 
+		"en"		"You cannot capture resources while in lockdown mode"
+	}
+	
+	"Stealth Capture"
+	{
+		// To alert players who are attempting to capture resources as Stealth, whilst in stealth mode 
+		"en"		"You cannot capture resources while in stealth mode"
+	}
+	
+	"Hypospray Capture"
+	{
+		// To alert the medic who is attempting to hypospray a teamate, whilst capturing resources
+		"en"		"Your teamates cannot capture resources if you hypospray them"
+	}
+	
+	"Lost Prime"
+	{
+		// To alert players that they have just lost Prime 
+		"en"		"You have just lost the Primary resource point. This is valuable to your team. Try to re-capture ASAP"
+	}
+	
+	"Bunker Health Warning"
+	{
+		// To alert players when their teams Command Bunkers health is low and suggest they spawn as Engie ASAP
+		"en"		"Your Bunker health is low, consider spawning as Support Engineer to repair"
+	}	
+	
+	"Low Team Health"
+	{
+		// To warn when average health of players on your team is low
+		// Would need a check about number of Medics already in the field (to suspend notice if already 1 or 2) 
+		"en"		"The average health of players on your team is low, consider spawning as Support Medic"
+	}
+	
+	"name"
+	{
+		// note 
+		"#format"	"{1:i}"
+		"en"		"text"
+	}	
+}

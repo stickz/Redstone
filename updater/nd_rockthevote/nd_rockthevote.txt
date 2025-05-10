@@ -1,0 +1,14 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_rockthevote.smx"
+    "Plugin" "Path_SM/translations/es/nd_rockthevote.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/nd_rockthevote.phrases.txt"
+    "Plugin" "Path_SM/translations/nd_rockthevote.phrases.txt"
+    "Plugin" "Path_SM/translations/de/nd_rockthevote.phrases.txt"
+  }
+}

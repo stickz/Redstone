@@ -1,0 +1,116 @@
+// Exported from SourceMod Translator
+// Date: 2019-07-01 11:24:57 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/246
+//
+"Phrases"
+{
+
+	"Cookie Resource Messages"
+	{
+		"ru"		"Ďîęŕçűâŕňü ńîîáůĺíč˙ î ńîńňî˙íčč đĺńóđńîâ."
+	}
+
+	"Primary Resource Captured"
+	{
+		"ru"		"{1} çŕőâŕňčëč ăëŕâíűé đĺńóđń."
+	}
+
+	"Secondary Resource Captured"
+	{
+		"ru"		"{1} çŕőâŕňčë âňîđîńňĺďĺííűé đĺńóđń{2}."
+	}
+
+	"Tertiary Resource Captured"
+	{
+		"ru"		"{1} çŕőâŕňčë ňđĺňüĺńňĺďĺííűé đĺńóđń{2}."
+	}
+
+	"Map Area N"
+	{
+		"ru"		" íŕ ńĺâĺđĺ"
+	}
+
+	"Map Area NE"
+	{
+		"ru"		" íŕ ńĺâĺđî-âîńňîęĺ"
+	}
+
+	"Map Area NW"
+	{
+		"ru"		" íŕ ńĺâĺđî-çŕďŕäĺ"
+	}
+
+	"Map Area S"
+	{
+		"ru"		" íŕ ţăĺ"
+	}
+
+	"Map Area SE"
+	{
+		"ru"		" íŕ ţăî-âîńňîęĺ"
+	}
+
+	"Map Area SW"
+	{
+		"ru"		" íŕ ţăî-çŕďŕäĺ"
+	}
+
+	"Map Area E"
+	{
+		"ru"		" íŕ âîńňîęĺ"
+	}
+
+	"Map Area W"
+	{
+		"ru"		" íŕ ţăî-çŕďŕäĺ"
+	}
+
+	"Map Area CE"
+	{
+		"ru"		" â öĺíňđĺ"
+	}
+
+	"Map Area OB"
+	{
+		"ru"		" â íŕřĺé áŕçĺ"
+	}
+
+	"Map Area EB"
+	{
+		"ru"		" â âđŕćĺńęîé áŕçĺ"
+	}
+
+	"Captured Resource Primary"
+	{
+		"ru"		"Захваченный первичный ресурс генерирует {1} рес / мин. После {2} он генерирует {3} рес / мин"
+	}
+
+	"Captured Resource Secondary"
+	{
+		"ru"		"Захваченный вторичный ресурс генерирует {1} рес / мин. После {2} он генерирует {3} рес / мин"
+	}
+
+	"Captured Resource Tertiary"
+	{
+		"ru"		"Захваченный малый ресурс генерирует {1} рес / мин. После {2} он генерирует {3} рес / мин"
+	}
+
+	"Trickled Resource Primary"
+	{
+		"ru"		"Захваченный первичный ресурс генерирует {1} рес / мин."
+	}
+
+	"Trickled Resource Secondary"
+	{
+		"ru"		"Захваченный вторичный ресурс генерирует {1} рес / мин"
+	}
+
+	"Trickled Resource Tertiary"
+	{
+		"ru"		"Захваченный малый ресурс генерирует {1} рес / мин"
+	}
+
+}

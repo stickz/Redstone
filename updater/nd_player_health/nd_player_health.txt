@@ -1,0 +1,11 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_player_health.smx"
+    "Plugin" "Path_SM/translations/nd_player_health.phrases.txt"
+  }
+}

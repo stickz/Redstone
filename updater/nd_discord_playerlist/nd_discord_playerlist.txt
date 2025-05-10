@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "1fbbc0f6"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_discord_playerlist.smx"
+  }
+}

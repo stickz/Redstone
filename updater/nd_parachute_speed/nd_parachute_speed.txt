@@ -1,0 +1,11 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_parachute_speed.smx"
+    "Plugin" "Path_SM/translations/nd_parachute_speed.phrases.txt"
+  }
+}

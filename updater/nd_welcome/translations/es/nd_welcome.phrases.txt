@@ -1,0 +1,12 @@
+"Phrases"
+{
+	"Cookie Welcome Message"
+	{
+		"es"			"Mensaje de bienvenida"
+	}
+
+	"Welcome"
+	{
+		"es"			"Bienvenido a Redstone, puedes personalizar tu estancia escribiendo !settings en el chat!!"
+	}
+}

@@ -1,0 +1,14 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_commander_checklist.smx"
+    "Plugin" "Path_SM/translations/es/nd_commander_checklist.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/nd_commander_checklist.phrases.txt"
+    "Plugin" "Path_SM/translations/nd_commander_checklist.phrases.txt"
+    "Plugin" "Path_SM/translations/de/nd_commander_checklist.phrases.txt"
+  }
+}

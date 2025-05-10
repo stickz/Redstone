@@ -1,0 +1,321 @@
+// Exported from SourceMod Translator
+// Date: 2016-11-24 19:30:18 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/260
+//
+"Phrases"
+{
+
+	"Team Languages"
+	{
+		"ru"		"Язык игры команды."
+	}
+
+	"Commander Language"
+	{
+		"ru"		"Язык игры командира {1}."
+	}
+
+	"Simple Building Request"
+	{
+		"ru"		"Запрашивает построить {1}."
+	}
+
+	"Compass Building Request"
+	{
+		"ru"		"Запрашивает построить {1} на {2} стороне."
+	}
+
+	"Spot Building Request"
+	{
+		"ru"		"Запрашивает построить {1} у {2}."
+	}
+
+	"Complex Building Request"
+	{
+		"ru"		"Запрашивает построить {1} у {3} {2}."
+	}
+
+	"Tert"
+	{
+		"ru"		"маленьком ресурсе"
+	}
+
+	"Translate Tag"
+	{
+		"ru"		"Переводчик"
+	}
+
+	"No Translate Keyword"
+	{
+		"ru"		"Нет перевода слова"
+	}
+
+	"No Team Commander"
+	{
+		"ru"		"Команде нужен командир."
+	}
+
+	"Roof"
+	{
+		"ru"		"крыше"
+	}
+
+	"Base"
+	{
+		"ru"		"базе"
+	}
+
+	"Prim"
+	{
+		"ru"		"основном ресурсе"
+	}
+
+	"Pos"
+	{
+		"ru"		"их расположении"
+	}
+
+	"Sec"
+	{
+		"ru"		"второстепенном ресурсе"
+	}
+
+	"North"
+	{
+		"ru"		"севере"
+	}
+
+	"South"
+	{
+		"ru"		"юге"
+	}
+
+	"East"
+	{
+		"ru"		"востоке"
+	}
+
+	"West"
+	{
+		"ru"		"западе"
+	}
+
+	"Right"
+	{
+		"ru"		"справа"
+	}
+
+	"Left"
+	{
+		"ru"		"слева"
+	}
+
+	"Simple Research Request"
+	{
+		"ru"		"Запрашивает провести исследования {1}."
+	}
+
+	"Simple Capture Request"
+	{
+		"ru"		"Указывается,что нужно захватить {1} ресурс."
+	}
+
+	"Extended Capture Request"
+	{
+		"ru"		"{1} сказано захватить {2} {3}."
+	}
+
+	"Advanced Kits"
+	{
+		"ru"		"Улучшенные комплекты"
+	}
+
+	"Field Tactics"
+	{
+		"ru"		"Полевая тактика"
+	}
+
+	"Commander Abilities"
+	{
+		"ru"		"Способности командира"
+	}
+
+	"Power Modulation"
+	{
+		"ru"		"Производство электроэнергии"
+	}
+
+	"Advanced Manufacturing"
+	{
+		"ru"		"Улучшенное производство"
+	}
+
+	"Infantry Boost"
+	{
+		"ru"		"Усиление пехоты"
+	}
+
+	"Structure Reinforcement"
+	{
+		"ru"		"Усиление строения"
+	}
+
+	"Simple Compass Request"
+	{
+		"ru"		"Рекомендует построить на {1} стороне карты."
+	}
+
+	"Simple Location Request"
+	{
+		"ru"		"Рекомендует построить сооружения у {1}."
+	}
+
+	"Building Repair Request"
+	{
+		"ru"		"Указывается,что нужно починить {1}!"
+	}
+
+	"Build Comp Repair Request"
+	{
+		"ru"		"Указывается,что нужно починить {2} {1}!"
+	}
+
+	"Compass Repair Request"
+	{
+		"ru"		"Указывается,что нужно отремонтировать постройки, на {1} стороне карты!"
+	}
+
+	"Comp Loc Repair Request"
+	{
+		"ru"		"Указывается,что нужно починить постройки у {1} {2}!"
+	}
+
+	"Location Repair Request"
+	{
+		"ru"		"Указывается,что постройка у {1} нуждаются в ремонте."
+	}
+
+	"Build Loc Repair Request"
+	{
+		"ru"		"Указывается,что нужно починить {1} у {2}!"
+	}
+
+	"Extended Repair Request"
+	{
+		"ru"		"Указывается,что {1} у {2} {3} нужно починить!"
+	}
+
+	"Compass Capture Request"
+	{
+		"ru"		"Указывается,что {2} {1} ресурс нужно захватить!"
+	}
+
+	"Location Capture Request"
+	{
+		"ru"		"Указывается,что нужно захватить ресурс {2} {1}!"
+	}
+
+	"Generic Capture Request"
+	{
+		"ru"		"Указывается,что нужно захватить точки с ресурсами!"
+	}
+
+	"Terts"
+	{
+		"ru"		"Маленькие ресурсы"
+	}
+
+	"Building Now"
+	{
+		"ru"		"Сейчас я строю это сооружение."
+	}
+
+	"Build Flanks"
+	{
+		"ru"		"Рекомендуется застроить пустые проходы, где враг может пройти к нам с фланга."
+	}
+
+	"Complex Tango Request"
+	{
+		"ru"		"Указывается,что враг замечен на {3} {2} {1}."
+	}
+
+	"Spot Tango Request"
+	{
+		"ru"		"Указывается,что враг замечен у {2} {1}."
+	}
+
+	"Compass Tango Request"
+	{
+		"ru"		"Указывается,что враг обнаружен на {2} {1}!"
+	}
+
+	"Tango Building"
+	{
+		"ru"		"Указывается,что враг замечен у {1}."
+	}
+
+	"Tango Compass"
+	{
+		"ru"		"Указывается,что враг замечен на {1} стороне карты."
+	}
+
+	"Tango Location"
+	{
+		"ru"		"Указывается,что враг замечен у {1}."
+	}
+
+	"Bulldozer"
+	{
+		"ru"		"Бульдозер"
+	}
+
+	"Courtyard"
+	{
+		"ru"		"Внутренний двор"
+	}
+
+	"Forward"
+	{
+		"ru"		"Передовая позиция"
+	}
+
+	"Garage"
+	{
+		"ru"		"Гараж"
+	}
+
+	"Helicopter"
+	{
+		"ru"		"Вертолет"
+	}
+
+	"Silo"
+	{
+		"ru"		"Шахта"
+	}
+
+	"Stairs"
+	{
+		"ru"		"Лестницы"
+	}
+
+	"Statue"
+	{
+		"ru"		"Статуя"
+	}
+
+	"Truck"
+	{
+		"ru"		"Грузовик"
+	}
+
+	"Tunnel"
+	{
+		"ru"		"Вход в туннель"
+	}
+
+}

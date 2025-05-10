@@ -1,0 +1,88 @@
+"Phrases"
+{
+	// Mod Detection (Debug Messages)
+    "NUCLEARDAWN"
+    {
+		"fr"		"Mod Nuclear Dawn detecté"
+    }
+
+	"Insurgency"
+	{
+		"fr"		"Mod Insurgency detecté"
+	}
+
+	"Synergy"
+	{
+		"fr"		"Mod Synergy detecté"
+	}
+
+	"TF2"
+	{
+		"fr"		"Team Fortress 2 detecté"
+	}
+
+	"CSTRIKE"
+	{
+		"fr"		"Counter-Strike detecté"
+	}
+
+	"L4D"
+	{
+		"fr"		"Left 4 Dead detecté"
+	}
+
+
+	// Debug Messages
+
+
+	// Plugin Messages
+	"Spectate_Force"
+	{
+		"fr"		"{1} a été déplacé en spectateur."
+	}
+
+	"Spawn_Move_Warning"
+	{
+		"fr"		"Attention: Si vous ne bougez de votre spawn dans {1} secondes, vous deviendrez spectateur."
+	}
+
+	"Move_Warning"
+	{
+		"fr"		"Attention: Si vous ne bougez pas dans les {1} prochaines secondes, vous deviendrez spectateur."
+	}
+
+	"Spawn_Kick_Warning"
+	{
+		"fr"		"Attention: Si vous ne bougez de votre spawn dans {1} secondes, vous serez kické."
+	}
+
+	"Kick_Warning"
+	{
+		"fr"		"Attention: Si vous ne bougez pas dans les {1} prochaines secondes, vous serez kické."
+	}
+
+	"Move_Announce"
+	{
+		"fr"		"{1} est devenu spectateur pour avoir été AFK trop longtemps."
+	}
+
+	"Move_Log"
+	{
+		"fr"		"{1} est devenu spectateur pour avoir été AFK trop longtemps."
+	}
+
+	"Kick_Announce"
+	{
+		"fr"		"{1} a été kické pour avoir été AFK trop longtemps."
+	}
+
+	"Kick_Message"
+	{
+		"fr"		"Vous avez été kické pour avoir été AFK trop longtemps."
+	}
+
+	"Kick_Log"
+	{
+		"fr"		"{1} a été kické pour avoir été AFK trop longtemps."
+	}
+}

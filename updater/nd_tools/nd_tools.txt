@@ -1,0 +1,15 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_tools.smx"
+    "Plugin" "Path_SM/translations/es/nd_tools.phrases.txt"
+    "Plugin" "Path_SM/translations/pt/nd_tools.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/nd_tools.phrases.txt"
+    "Plugin" "Path_SM/translations/nd_tools.phrases.txt"
+    "Plugin" "Path_SM/translations/de/nd_tools.phrases.txt"
+  }
+}

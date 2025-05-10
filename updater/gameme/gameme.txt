@@ -1,0 +1,19 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/gameme.smx"
+    "Plugin" "Path_SM/translations/rs/gameme.phrases.txt"
+    "Plugin" "Path_SM/translations/es/gameme.phrases.txt"
+    "Plugin" "Path_SM/translations/pt/gameme.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/gameme.phrases.txt"
+    "Plugin" "Path_SM/translations/da/gameme.phrases.txt"
+    "Plugin" "Path_SM/translations/fr/gameme.phrases.txt"
+    "Plugin" "Path_SM/translations/de/gameme.phrases.txt"
+    "Plugin" "Path_SM/translations/gameme.phrases.txt"
+    "Plugin" "Path_SM/translations/pl/gameme.phrases.txt"
+  }
+}

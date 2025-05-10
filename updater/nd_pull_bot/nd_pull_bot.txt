@@ -1,0 +1,13 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_pull_bot.smx"
+    "Plugin" "Path_SM/translations/es/nd_pull_bot.phrases.txt"
+    "Plugin" "Path_SM/translations/nd_pull_bot.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/nd_pull_bot.phrases.txt"
+  }
+}

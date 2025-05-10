@@ -1,0 +1,16 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_warmup.smx"
+    "Plugin" "Path_SM/translations/nd_warmup.phrases.txt"
+    "Plugin" "Path_SM/translations/es/nd_warmup.phrases.txt"
+    "Plugin" "Path_SM/translations/pt/nd_warmup.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/nd_warmup.phrases.txt"
+    "Plugin" "Path_SM/translations/fr/nd_warmup.phrases.txt"
+    "Plugin" "Path_SM/translations/de/nd_warmup.phrases.txt"
+  }
+}

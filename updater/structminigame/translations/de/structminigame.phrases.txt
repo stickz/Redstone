@@ -1,0 +1,111 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:44:07 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/238
+//
+"Phrases"
+{
+
+	"Cookie Structure Killings"
+	{
+		"de"		"zerstörte Gebäude"
+	}
+
+	"Command Bunker"
+	{
+		"de"		"ein Kommandobunker"
+	}
+
+	"MG Turret"
+	{
+		"de"		"ein MG-Geschützturm"
+	}
+
+	"Transport Gate"
+	{
+		"de"		"ein Transporttor"
+	}
+
+	"Power Station"
+	{
+		"de"		"ein Kraftwerk"
+	}
+
+	"Wireless Repeater"
+	{
+		"de"		"ein drahtloser Verstärker"
+	}
+
+	"Relay Tower"
+	{
+		"de"		"ein Relais"
+	}
+
+	"Supply Station"
+	{
+		"de"		"eine Versorgungstation"
+	}
+
+	"Assembler"
+	{
+		"de"		"ein Montagewerk"
+	}
+
+	"Armory"
+	{
+		"de"		"ein Waffenlager"
+	}
+
+	"Artillery"
+	{
+		"de"		"eine Artillerie"
+	}
+
+	"Radar Station"
+	{
+		"de"		"eine Radarstation"
+	}
+
+	"FT Turret"
+	{
+		"de"		"ein Flammenwerfer-Geschützturm"
+	}
+
+	"Sonic Turret"
+	{
+		"de"		"ein Schall-Geschützturm"
+	}
+
+	"Rocket Turret"
+	{
+		"de"		"ein Raketen-Geschützturm"
+	}
+
+	"Wall"
+	{
+		"de"		"eine Wand"
+	}
+
+	"Barrier"
+	{
+		"de"		"eine Barriere"
+	}
+
+	"Building Destoryed"
+	{
+		"de"		"{1}{2} hat {3} zerstört"
+	}
+
+	"Advantage Message"
+	{
+		"de"		"{1}{2} {3} hat gerade den Vorteil für das {4}{5} {6} geholt"
+	}
+
+	"Advantage Center"
+	{
+		"de"		"Vorteil - {1}"
+	}
+
+}

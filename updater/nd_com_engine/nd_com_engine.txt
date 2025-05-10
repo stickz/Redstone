@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "41f752f2"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_com_engine.smx"
+  }
+}

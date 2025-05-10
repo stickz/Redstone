@@ -1,0 +1,43 @@
+"Phrases"
+{
+	"Current Map Extended"
+	{
+		"l0l"		"73h curr3n7 m4p h4s b33n 3x73nd3d"
+	}
+
+	"Extend Map"
+	{
+		"l0l"		"3x73nd curr3n7 m4p"
+	}
+
+	"Nextmap Voting Finished"
+	{
+		"l0l"		"M4p v07ing h4s finish3d. 73h n3xt m4p wi11 b3 {1}"
+	}
+
+	"Nextmap Voting Started"
+	{
+		"l0l"		"V07ing f0r 73h n3xt m4p h4s s74r73d"
+	}
+
+	"Vote Nextmap"
+	{
+		"l0l"		"V073 f0r 73h n3xt m4p"
+	}
+
+	"Changed Next Map"
+	{
+		"l0l"		"Ch4n63d n3x7m4p 70 \"{1}\""
+	}
+
+	"Current Map Stays"
+	{
+		"l0l"		"Curr3n7 m4p c0n71nu35! 7h3 v073 h45 5p0k3n! (r3c31v3d {1}%% 0f {2} v0735)"
+	}
+
+	"Dont Change"
+	{
+		"l0l"		"D0n'7 ch4n63"
+	}
+
+}

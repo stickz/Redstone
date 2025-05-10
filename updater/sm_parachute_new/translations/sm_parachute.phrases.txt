@@ -1,0 +1,103 @@
+﻿"Phrases"
+{
+    "Have Got Free Parachute"
+    {
+        "#format"    "{1:s}"
+        "en"        "You have got a free parachute to use it press {1} while falling."
+        "fr"        "Vous avez un parachute gratuit, pour l'employer pressez la touche {1} tout en tombant."
+        "de"        "Du hast einen Gratis-Fallschirm bekommen, um ihn zu verwenden druecke {1} waehrend des Fallens."
+        "nl"        "U heeft één gratis parachute. Om deze te gebruiken, druk op {1} terwijl u valt."
+    }
+    "Have Free Parachute"
+    {
+        "en"        "You have already a free parachute."
+        "fr"        "Vous avez déjà un parachute gratuit."
+        "de"        "Du hast bereits einen Gratis-Fallschirm."
+        "nl"        "U heeft al een gratis parachute."
+    }
+    "No Money"
+    {
+        "en"        "You have not enough money."
+        "fr"        "Vous n'avez pas assez d'argent."
+        "de"        "Du hast nicht genug Geld."
+        "nl"        "U heeft niet genoeg geld."
+    }
+    "Have Bought Parachute"
+    {
+        "#format"    "{1:s}"
+        "en"        "You have bought a parachute to use it press {1} while falling."
+        "fr"        "Vous avez acheté un parachute, pour l'employer pressez la touche {1} tout en tombant."
+        "de"        "Du hast einen Fallschirm gekauft, um ihn zu verwenden druecke {1} waehrend des Fallens."
+        "nl"        "U heeft een parachute gekocht. Om deze te gebruiken, druk op {1} terwijl u valt."
+    }
+    "Have Parachute"
+    {
+        "en"        "You have already a parachute."
+        "fr"        "Vous avez déjà un parachute."
+        "de"        "Du hast bereits einen Fallschirm."
+        "nl"        "U heeft al een parachute."
+    }
+    "Sold Parachute"
+    {
+        "en"        "You have sold your parachute."
+        "fr"        "Vous avez vendu votre parachute."
+        "de"        "Du hast deinen Fallschirm verkauft."
+        "nl"        "U heeft uw parachute verkocht."
+    }
+    "Sell Free Parachute"
+    {
+        "en"        "You cannot sell a free parachute."
+        "fr"        "Vous ne pouvez pas vendre un parachute gratuit."
+        "de"        "Du kannst keinen Gratis-Fallschirm verkaufen."
+        "nl"        "U kan geen gratis parachute verkopen"
+    }
+    "No Parachute"
+    {
+        "en"        "You dont have a parachute."
+        "fr"        "Vous n'avez pas de parachute."
+        "de"        "Du hast keinen Fallschirm."
+        "nl"        "U heeft geen parachute."
+    }
+    "Welcome"
+    {
+        "en"        "Welcome! This server is running SM Parachute."
+        "fr"        "Bienvenue! Ce serveur utilise le plugin SM Parachute."
+        "de"        "Willkommen! Auf diesem Server laeuft SM Parachute."
+        "nl"        "Welkom! Deze server draait SM Parachute."
+    }
+    "Parachute For Everyone"
+    {
+        "en"        "Free parachute for everyone is enabled!"
+        "fr"        "Le parachute libre pour chacun est activé!"
+        "de"        "Gratis-Fallschirm fuer alle ist aktiviert!"
+        "nl"        "Gratis parachute voor iedereen is geactiveerd!"
+    }
+    "Buy Help"
+    {
+        "en"        "To buy a parachute type !bp or !buy_parachute."
+        "fr"        "Pour acheter un parachute, tape !bp ou !buy_parachute."
+        "de"        "Um einen Fallschirm zu kaufen schreibe !bp oder !buy_parachute."
+        "nl"        "Om een parachute te kopen type !bp of !buy_parachute"
+    }
+    "Sell Help"
+    {
+        "en"        "To sell your parachute type !sp or !sell_parachute."
+        "fr"        "Pour vendre un parachute, tape !sp ou !sell_parachute."
+        "de"        "Um deinen Fallschirm zu verkaufen schreibe !sp oder !sell_parachute."
+        "nl"        "Om uw parachute te verkopen type !sp of !sell_parachute"
+    }
+    "Disabled"
+    {
+        "en"        "Parachute is disabled!"
+        "fr"        "Parachute est désactivé!"
+        "de"        "Fallschirm ist deaktiviert!"
+        "nl"        "Parachute is gedesactiveerd"
+    }
+    "Enabled"
+    {
+        "en"        "Parachute is enabled!"
+        "fr"        "Parachute est activé!"
+        "de"        "Fallschirm ist aktiviert!"
+        "nl"        "Parachute is geactiveerd"
+    }
+}

@@ -1,0 +1,8 @@
+"Phrases"
+{
+	"Parachute Speed Increase"
+	{
+		"#format"	"{1:i}"
+		"en"		"Parachute speed increased by {1}%"
+	}
+}

@@ -1,0 +1,99 @@
+﻿"Phrases"
+{
+	"Demotion Reapply"
+	{
+		"en"		"You cannot reapply for commander after being demoted"
+	}
+
+	"Resignation Reapply"
+	{
+		"en"		"You cannot reapply for 30s after mutiny resignation"	
+	}
+	
+	"Spawn Before Apply"
+	{
+		"en"		"Please spawn before applying for commander!"	
+	}
+	
+	"Bellow Ten"
+	{
+		"en"		"Level 15+ commanders are given first pick with 10+ players"
+	}
+	
+	"Fifty Five Required"
+	{
+		"en"		"Level 45+ commanders are given first pick with 16+ players"
+	}
+	
+	"Total Level"
+	{
+		"en"		"You cannot command more total players than your level"
+	}
+	
+	"No Commander"
+	{
+		"en"		"There is no commander to demote"
+	}
+	
+	"Four Required"
+	{
+		"en"		"Four team players required to use this feature"
+	}
+	
+	"Commander Demoted"
+	{
+		"en"		"Commander demoted successfully"	
+	}
+	
+	"Demote Failed"
+	{
+		"en"		"Error! Commander not found for demotion!"
+	}
+	
+	"Demote First"
+	{
+		"en"		"You cannot cast the first demote vote after demotion"
+	}
+	
+	"Silence First"
+	{
+		"en"		"You cannot cast the first demote vote while silenced"
+	}
+	
+	"Silence Command"
+	{
+		"en"		"You cannot command while silenced"
+	}
+	
+	"Restrictions Relaxed"
+	{
+		"en"		"Commander restrictions relaxed"
+	}
+	
+	"Demote Not Found"
+	{
+		"en"		"Your vote to demote the commander is already reversed or not present"
+	}
+	
+	"Demote Vote"
+	{
+		"#format"	"{1:s},{2:d}"
+		"en"		"{1} has voted to !demote the commander. ({2} more required)"
+	}
+	
+	"Skill Required"
+	{
+		"#format"	"{1:i}"
+		"en"		"{1} skill on server stats required to command!"
+	}
+	
+	"Commander Deprioritised"
+	{
+		"en"		"You're deprioritized from commander selection and cannot apply in the first 90s"
+	}
+	
+	"Last Chance Apply"
+	{
+		"en"		"15s remaining on prioritized commander applications!"
+	}
+}

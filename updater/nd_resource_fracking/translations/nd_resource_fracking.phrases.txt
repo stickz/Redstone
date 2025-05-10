@@ -1,0 +1,25 @@
+"Phrases"
+{
+	"Cookie Resource Frack"
+	{
+		"en" 		"Resource Frack Messages"
+	}
+	
+	"Prime Resource Fracking"
+	{
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"Prime has started fracking {1} res/min. Neutralize to reset to {2} res/min for {3}m"
+	}
+	
+	"Secondary Resource Fracking"
+	{
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"A Secondary has started fracking {1} res/min. Neutralize to reset to {2} res/min for {3}m"
+	}
+	
+	"Tertiary Resource Fracking"
+	{
+		"#format"	"{1:i},{2:i},{3:i}"
+		"en"		"A Tertiary has started fracking {1} res/min. Neutralize to reset to {2} res/min for {3}m"
+	}
+}

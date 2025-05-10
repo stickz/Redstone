@@ -1,0 +1,12 @@
+﻿"Phrases"
+{	
+	"Donars Only"
+	{
+		"es"		"Las ranuras reservadas son solo para donantes"
+	}
+	
+	"Slot Used"	
+	{
+		"es"		"Vacante invertida utilizada exitosamente"
+	}	
+}

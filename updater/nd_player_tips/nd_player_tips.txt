@@ -1,0 +1,12 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_player_tips.smx"
+    "Plugin" "Path_SM/translations/ru/nd_player_tips.phrases.txt"
+    "Plugin" "Path_SM/translations/nd_player_tips.phrases.txt"
+  }
+}

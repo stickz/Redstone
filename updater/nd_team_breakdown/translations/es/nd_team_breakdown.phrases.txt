@@ -1,0 +1,37 @@
+"Phrases"
+{
+	"Cookie Team Breakdown"
+	{
+		"es"			"Recuento de tropas"
+	}
+	
+	"Combat"
+	{
+		"es"			"Combate"
+	}
+	
+	"Anti-Structure"
+	{
+		"es"			"Anti-Estructura"
+	}
+	
+	"Sniper"
+	{
+		"es"			"Francotirador"		
+	}
+	
+	"Stealth"
+	{
+		"es"			"Sigilo"
+	}
+	
+	"Medic"
+	{
+		"es"			"Médico"
+	}
+	
+	"Engineer"
+	{
+		"es"			"Ingeniero"
+	}
+}

@@ -1,0 +1,11 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/afk_manager4.smx"
+    "Plugin" "Path_SM/translations/afk_manager.phrases.txt"
+  }
+}

@@ -1,0 +1,26 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:59:53 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/249
+//
+"Phrases"
+{
+
+	"Cookie Solution Assist"
+	{
+		"es"		"Asistencia de solución"
+	}
+
+	"Spawn Bug"
+	{
+		"es"		"Cambia de clase y selecciona otro punto de aparición. De ser necesario, presiona Enter para abrir el menú de aparición"
+	}
+
+	"Suicide Request"
+	{
+		"es"		"Tu petición de suicidio estará lista en {1} segundos"
+	}
+
+}

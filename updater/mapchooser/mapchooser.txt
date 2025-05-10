@@ -1,0 +1,38 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/mapchooser.smx"
+    "Plugin" "Path_SM/translations/no/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/fi/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/el/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/zho/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/es/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/sv/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/pt/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/cze/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/chi/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/ua/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/da/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/l0l/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/lt/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/sk/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/nl/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/hu/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/ro/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/ko/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/jp/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/pt_p/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/tr/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/fr/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/lv/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/de/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/it/mapchooser.phrases.txt"
+    "Plugin" "Path_SM/translations/pl/mapchooser.phrases.txt"
+  }
+}

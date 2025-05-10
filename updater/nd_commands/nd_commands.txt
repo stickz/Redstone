@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "24a08996"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_commands.smx"
+  }
+}

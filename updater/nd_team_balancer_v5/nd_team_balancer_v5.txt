@@ -1,0 +1,16 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_team_balancer_v5.smx"
+    "Plugin" "Path_SM/translations/es/nd_tbalance.phrases.txt"
+    "Plugin" "Path_SM/translations/pt/nd_tbalance.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/nd_tbalance.phrases.txt"
+    "Plugin" "Path_SM/translations/fr/nd_tbalance.phrases.txt"
+    "Plugin" "Path_SM/translations/de/nd_tbalance.phrases.txt"
+    "Plugin" "Path_SM/translations/nd_tbalance.phrases.txt"
+  }
+}

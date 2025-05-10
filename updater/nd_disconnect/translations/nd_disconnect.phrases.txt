@@ -1,0 +1,14 @@
+"Phrases"
+{
+	"Cookie Lost Connect"
+	{
+		"en"		"D/C Message"
+	}
+	
+	"Lost Connection"
+	{
+		//{1} = Player Name
+		"#format"	"{1:s}"
+		"en"		"{1} lost connection!"
+	}
+}

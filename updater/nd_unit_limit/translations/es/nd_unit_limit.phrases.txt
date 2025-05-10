@@ -1,0 +1,67 @@
+"Phrases"
+{	
+	"Only Commanders"
+	{
+		"es"		"Esta característica solo está disponible para comandantes"
+	}
+	
+	"Commander Disabled"
+	{
+		"es"		"La configuración del límite de francotiradores del comandante está deshabilitado"	
+	}
+	
+	"Invalid Team"
+	{
+		"es"		"Equipo (0 = Consorte, 1 = Imperio)"
+	}
+	
+	"Sniper Limit Reached"
+	{
+		"es"		"Límite de francotiradores alcanzado, cambiando a Asalto"
+	}
+	
+	"Stealth Limit Reached"
+	{
+		"es"		"Límite de Sigilo alcanzado, cambiando a Asalto"
+	}
+	
+	"AntiStructure Limit Reached"
+	{
+		"es"		"Límite de Anti-Estructuras alcanzado, cambiando a Asalto"
+	}
+	
+	"Proper Sniper Usage"
+	{
+		"es"		"Uso: !maxsnipers <límite>"
+	}
+	
+	"Proper Stealth Usage"
+	{
+		"es"		"Uso: !maxstealth <límite>"
+	}
+	
+	"Proper Structure Usage"
+	{
+		"es"		"Uso: !MaxAntiStructure <porcentaje>"
+	}
+	
+	"Set Sniper Limit"
+	{
+		"es"		"Límite de francotiradores establecido a {1}"
+	}
+	
+	"Set Stealth Limit"
+	{
+		"es"		"Límite de Sigilo establecido a {1}"
+	}
+	
+	"Set Structure Limit"
+	{
+		"es" 		"Anti-Estructura limitado a {1} porciento"
+	}
+	
+	"Invalid Args"
+	{
+		"es"		"Cantidad de argumentos inválida: <equipo> <cantidad>"
+	}
+}

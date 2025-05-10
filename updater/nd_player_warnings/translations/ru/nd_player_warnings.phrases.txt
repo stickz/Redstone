@@ -1,0 +1,26 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:52:55 UTC
+// Language: Russian (ru)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/243
+//
+"Phrases"
+{
+
+	"Respect"
+	{
+		"ru"		"Пожалуйста, относитесь с уважением к другим игрокам"
+	}
+
+	"Advertise"
+	{
+		"ru"		"Пожалуйста, воздержитесь от размещения рекламы"
+	}
+
+	"Spawn Sell"
+	{
+		"ru"		"Не продавайте все телепорты, уважайте игроков. Даже в, казалось бы, проигранной игре можно выиграть"
+	}
+
+}

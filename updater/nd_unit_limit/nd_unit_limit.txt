@@ -1,0 +1,14 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_unit_limit.smx"
+    "Plugin" "Path_SM/translations/es/nd_unit_limit.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/nd_unit_limit.phrases.txt"
+    "Plugin" "Path_SM/translations/de/nd_unit_limit.phrases.txt"
+    "Plugin" "Path_SM/translations/nd_unit_limit.phrases.txt"
+  }
+}

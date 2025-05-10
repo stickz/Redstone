@@ -1,0 +1,24 @@
+"Phrases"
+{
+	"Pull Retry Delay"
+	{
+		"#format"	"{1:i}"
+		"en"		"Please wait {1} seconds for this feature"	
+	}
+	
+	"Bot Too Far"
+	{
+		"#format"	"{1:i}"
+		"en"		"Bot is {1} units too far away to pull"	
+	}
+	
+	"Bot Pull Successful"
+	{
+		"en"		"Bot successfully pulled toward you"
+	}
+	
+	"Bot Not Found"
+	{
+		"en"		"No bot was found in your crosshair"	
+	}
+}

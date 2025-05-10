@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "877dbf97"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_research_engine.smx"
+  }
+}

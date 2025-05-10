@@ -1,0 +1,12 @@
+"Phrases"
+{
+	"Cookie Welcome Message"
+	{
+		"cze"			"Uvítací zpráva"
+	}
+
+	"Welcome"
+	{
+		"cze"			"Vítej na serveru Redstone. Nastavení lze měnit příkazem !settings v chatu"
+	}
+}

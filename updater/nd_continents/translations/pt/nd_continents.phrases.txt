@@ -1,0 +1,16 @@
+// Exported from SourceMod Translator
+// Date: 2018-03-27 19:59:58 UTC
+// Language: Brazilian Portuguese (pt)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/245
+//
+"Phrases"
+{
+
+	"Player Locations"
+	{
+		"pt"		"Locais de Jogadores: {1}"
+	}
+
+}

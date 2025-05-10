@@ -1,0 +1,14 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "23ed1f2c"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/votemute_p.smx"
+    "Plugin" "Path_SM/translations/votemute_p.phrases.txt"
+    "Plugin" "Path_SM/translations/es/votemute_p.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/votemute_p.phrases.txt"
+    "Plugin" "Path_SM/translations/de/votemute_p.phrases.txt"
+  }
+}

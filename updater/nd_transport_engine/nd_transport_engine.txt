@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "adb62abb"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_transport_engine.smx"
+  }
+}

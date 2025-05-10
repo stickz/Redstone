@@ -1,0 +1,15 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/structminigame.smx"
+    "Plugin" "Path_SM/translations/es/structminigame.phrases.txt"
+    "Plugin" "Path_SM/translations/cze/structminigame.phrases.txt"
+    "Plugin" "Path_SM/translations/ru/structminigame.phrases.txt"
+    "Plugin" "Path_SM/translations/structminigame.phrases.txt"
+    "Plugin" "Path_SM/translations/de/structminigame.phrases.txt"
+  }
+}

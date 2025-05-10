@@ -1,0 +1,11 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "23ed1f2c"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/sourcebans.smx"
+    "Plugin" "Path_SM/translations/sourcebans.phrases.txt"
+  }
+}

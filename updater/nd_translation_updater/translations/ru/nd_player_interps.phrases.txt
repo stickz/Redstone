@@ -1,0 +1,29 @@
+"Phrases"
+{
+	"Cookie Interp Warning"
+	{
+		"ru"		"Предупреждение о синхронизации"
+	}
+	
+	"Incorrect Interp"
+	{
+		"ru"		"Медленная синхронизация с сервером понижает точность выстрелов"	
+	}
+	
+	"Interp GoTo"
+	{
+		"ru"		"Выберите Установить Параметры Запуска... в Свойствах игры"
+	}
+	
+	"Unexpected Interp"
+	{
+		//{1} and {2} are both decimal numbers
+		"ru"		"Текущее значение cl_interp: {1}, ожидаемое: cl_interp {2}"	
+	}
+	
+	"Interp Rates"
+	{
+		//{1} = the cl_interp in decimal forum ex. 0.115
+		"ru"		"Для исправления, установите +cl_interp_ratio 1 +cl_interp {1}"
+	}	
+}

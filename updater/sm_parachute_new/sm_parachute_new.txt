@@ -1,0 +1,11 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "e8e06886"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/sm_parachute_new.smx"
+    "Plugin" "Path_SM/translations/sm_parachute.phrases.txt"
+  }
+}

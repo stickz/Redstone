@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "3f64ede2"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/defaultmap.smx"
+  }
+}

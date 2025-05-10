@@ -1,0 +1,23 @@
+"Phrases"
+{
+	"Weapon Damage Console"
+	{
+		"en"		"See console for weapon damage increases"
+	}
+	
+	"RED Damage Increase"
+	{
+		"#format"	"{1:i},{2:i}"
+		"en"		"RED weapon damage increased by {1}% with {2}s cooldown"
+	}	
+	
+	"Red Cooldown Complete"
+	{
+		"en"		"REDs are now supercharged with more damage"
+	}
+	
+	"Red Cooldown Started"
+	{
+		"en"		"REDs damage supercharge is now on cooldown"
+	}
+}

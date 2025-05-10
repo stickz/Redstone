@@ -1,0 +1,106 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-20 03:36:14 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/294
+//
+"Phrases"
+{
+
+	"Team Captain Left"
+	{
+		"es"		"Selección terminada. Un capitán dejó el servidor"
+	}
+
+	"Pick Again"
+	{
+		"es"		"Jugador desconectado. Por favor, elige de nuevo"
+	}
+
+	"Picking Completed"
+	{
+		"es"		"La Selección de Jugadores se ha completado"
+	}
+
+	"Picking Started"
+	{
+		"es"		"La Selección de Jugadores ha iniciado"
+	}
+
+	"Each Pick Time"
+	{
+		"es"		"Los capitanes tienen {1}s para cada elección"
+	}
+
+	"First Pick Time"
+	{
+		"es"		"La primera elección tiene {1}s para prepararse"
+	}
+
+	"Auto Select"
+	{
+		"es"		"Selección automática en {1}s"
+	}
+
+	"Auto Selected Join"
+	{
+		"es"		"{1} ha sido seleccionado automáticamente para unirse al {2}"
+	}
+
+	"Choosen Join"
+	{
+		"es"		"{1} ha sido elegido para unirse al {2}"
+	}
+
+	"Got First Pick"
+	{
+		"es"		"{1} ha hecho la primera elección"
+	}
+
+	"Got Next Picks"
+	{
+		"es"		"{1} tiene las dos elecciones siguientes"
+	}
+
+	"Already Running"
+	{
+		"es"		"!PlayerPicking fallido: Ya activo o con errores. Usa !ReloadPicker si se requiere"
+	}
+
+	"Four Players Required"
+	{
+		"es"		"!PlayerPicking fallido: Se requieren cuatro jugadores para su uso"
+	}
+
+	"Correct Usage"
+	{
+		"es"		"!PlayerPicking fallido: Formato incorrecto. Uso: !PlayerPicking capitán1 capitán2 equipoInicial"
+	}
+
+	"Vote Currently Running"
+	{
+		"es"		"!PlayerPicking fallido: ¿Hay un !vote o mapvote actualmente en curso?"
+	}
+
+	"Next Pick On"
+	{
+		"es"		"!PlayerPicking fallido: Usa '!Nexpick on' y, entonces, cargad otra vez el mapa"
+	}
+
+	"Name Segment Invalid"
+	{
+		"es"		"!PlayerPicking fallido: El segmento de nombre '{1}' no es válido O se repite varias veces"
+	}
+
+	"Name Segment Duplicate"
+	{
+		"es"		"!PlayerPicking fallido: '{1}' apuntado como selector en ambos equipos"
+	}
+
+	"Invalid Starting Team"
+	{
+		"es"		"!PlayerPicking fallido: '{1}' fue especificado, pero no es un equipo inicial válido"
+	}
+
+}

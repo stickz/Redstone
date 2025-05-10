@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "dc09367f"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_radio_controls.smx"
+  }
+}

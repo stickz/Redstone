@@ -1,0 +1,31 @@
+// Exported from SourceMod Translator
+// Date: 2018-08-20 06:44:17 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/312
+//
+"Phrases"
+{
+
+	"Cookie Server Adverts"
+	{
+		"es"		"Publicidad"
+	}
+
+	"Join RedstoneND Events"
+	{
+		"es"		"Únete al grupo de Steam de RedstoneND. Hacemos eventos de selección de equipo."
+	}
+
+	"Join RedstoneND Features"
+	{
+		"es"		"Únete al grupo de Steam de RedstoneND para tener acceso a características exclusivas del servidor."
+	}
+
+	"Join RedstoneND Advertise"
+	{
+		"es"		"Únete al grupo de Steam de RedstoneND para deshabilitar la publicidad en el servidor."
+	}
+
+}

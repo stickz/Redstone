@@ -1,0 +1,17 @@
+﻿"Phrases"
+{
+	"Balancer Not Run"
+	{
+		"de"		"Warm-up balancer NOT run due to lack of players"
+	}
+	
+	"Balancer Off"
+	{
+		"de"		"Team balancer is currently OFF"
+	}
+	
+	"Please Wait"
+	{
+		"de"		"Please Wait"
+	}
+}

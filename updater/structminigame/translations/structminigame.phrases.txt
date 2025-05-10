@@ -1,0 +1,112 @@
+"Phrases"
+{
+	//!settings feature name
+	"Cookie Structure Killings"
+	{
+		"en"		"Structure Killings"
+	}
+	
+	//Building Names
+	"Bunker"
+	{
+		"en"		"Command Bunker"
+	}
+	"MG"
+	{
+		"en"		"Machine Gun Turret"
+	}
+	"Transport"
+	{
+		"en"		"Transport Gate"
+	}
+	"Power"
+	{
+		"en"		"Power Station"
+	}
+	"Repeater"
+	{
+		"en"		"Wireless Repeater"
+	}
+	"Relay"
+	{
+		"en"		"Relay Tower"
+	}
+	"Supply"
+	{
+		"en"		"Supply Station"
+	}
+	"Assembler"
+	{
+		"en"		"Assembler"
+	}
+	"Armory"
+	{
+		"en"		"Armory"
+	}
+	"Artillery"
+	{
+		"en"		"Artillery"
+	}
+	"Radar"
+	{
+		"en"		"Radar Station"
+	}
+	"Flame"
+	{
+		"en"		"Flamethrower Turret"
+	}
+	"Sonic"
+	{
+		"en"		"Sonic Turret"
+	}
+	"Rocket"
+	{
+		"en"		"Rocket Turret"
+	}
+	"Wall"
+	{
+		"en"		"Wall"
+	}
+	"Barrier"
+	{
+		"en"		"Barrier"
+	}
+	
+	"Building Destoryed"
+	{
+		//{1} = team colour (always keep this first)
+		//{2} = Player's name who destoryed the structure
+		//{3} = The name of the structure destoryed (translated above)
+		"#format"	"{1:s},{2:s},{3:s}"
+		"en"		"{1}{2} destroyed a {3}"
+	}
+	
+	//This message is a complicated mess, so read carefully
+	"Advantage Message"
+	{
+		//{1} changes {2} to the team colour
+		//{2} = Is the player's name
+		
+		//{3} changes the 'just gave' colour to green
+		
+		//{4} changes {5} to the team colour
+		//{5} = Is either "Empire" or "Consort" as translated above
+		
+		//{6} changes 'the advantage' colour to green
+		
+		//Ex1. Vertex just gave Consortium the advantage! -without colours
+		//Ex2. {blue} Vertex {green} just gave {blue} Consortium {green} the advantage!
+		//If required, change the number order to suit your needs
+		
+		"#format"	"{1:s},{2:s},{3:s},{4:s},{5:s},{6:s}"
+		"en"		"{1}{2} {3}just gave {4}{5} {6}the advantage"
+	}
+	
+	//This message only uses the phrase "Empire" or "Consort"
+	"Advantage Center"
+	{
+		//{1} = Is either "Empire" or "Consort" as translated above
+		"#format"	"{1:s}"
+		"en"		"Advantage - {1}"
+	}
+}

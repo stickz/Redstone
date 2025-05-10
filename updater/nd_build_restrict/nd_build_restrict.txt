@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "82686c99"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_build_restrict.smx"
+  }
+}

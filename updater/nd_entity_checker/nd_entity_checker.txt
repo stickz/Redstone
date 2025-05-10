@@ -1,0 +1,10 @@
+"Updater" {
+  "Information" {
+    "Version" {
+      "Latest" "da3f0101"
+    }
+  }
+  "Files" {
+    "Plugin" "Path_SM/plugins/nd_entity_checker.smx"
+  }
+}

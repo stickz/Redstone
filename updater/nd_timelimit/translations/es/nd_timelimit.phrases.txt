@@ -1,0 +1,86 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:59:24 UTC
+// Language: Spanish (es)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/250
+//
+"Phrases"
+{
+
+	"Cookie TimeLimit Features"
+	{
+		"es"		"Características de Tiempo Restante"
+	}
+
+	"Six Required"
+	{
+		"es"		"Hacen falta seis jugadores para usar esta característica"
+	}
+
+	"Already Extended"
+	{
+		"es"		"Solo una prórroga está permitida por mapa"
+	}
+
+	"You Extended"
+	{
+		"es"		"Ya has votado para prorrogar la partida"
+	}
+
+	"Round Ended"
+	{
+		"es"		"Esta característica no puede ser usada al final de la ronda"
+	}
+
+	"Wait End"
+	{
+		"es"		"Por favor espera al menos hasta los últimos cinco minutos antes de prorrogar"
+	}
+
+	"Regular Time"
+	{
+		"es"		"El límite de tiempo predeterminado está siendo usado actualmente"
+	}
+
+	"Time Disabled"
+	{
+		"es"		"El límite de tiempo está deshabilitado hasta que se conecten más jugadores"
+	}
+
+	"Time End"
+	{
+		"es"		"Ronda terminada una hora más tarde debido al límite de población"
+	}
+
+	"Limit Effect"
+	{
+		"es"		"Límite de tiempo de población activo por una hora"
+	}
+
+	"Round Extended"
+	{
+		"es"		"Tiempo límite extendido por quince minutos"
+	}
+
+	"Extend Availible"
+	{
+		"es"		"Prórroga de tiempo límite está disponible"
+	}
+
+	"Extend Both"
+	{
+		"es"		"{1} decidió prorrogar : {2} Con & {3} Imp requeridos"
+	}
+
+	"Extend Empire"
+	{
+		"es"		"{1} decidió prorrogar : {2} imperio requeridos"
+	}
+
+	"Extend Consort"
+	{
+		"es"		"{1} decidió prorrogar : {2} consorte requeridos"
+	}
+
+}

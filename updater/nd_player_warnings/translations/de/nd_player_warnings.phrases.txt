@@ -1,0 +1,26 @@
+// Exported from SourceMod Translator
+// Date: 2017-11-26 14:52:55 UTC
+// Language: German (de)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/243
+//
+"Phrases"
+{
+
+	"Respect"
+	{
+		"de"		"Bitte sei respektvoll gegenüber anderen Spielern"
+	}
+
+	"Advertise"
+	{
+		"de"		"Bitte unterlasse es Werbung zu posten"
+	}
+
+	"Spawn Sell"
+	{
+		"de"		"Der Verkauf aller Einstiegspunkte ist auf diesem Server untersagt"
+	}
+
+}
