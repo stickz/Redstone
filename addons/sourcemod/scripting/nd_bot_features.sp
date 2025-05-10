@@ -3,6 +3,9 @@
  * Filler Quota: When lots of people are on teams, fill player count differences with bots
  */
 
+#pragma semicolon 1
+#pragma newdecls required
+
 #include <sourcemod>
 #include <sdktools>
 #include <nd_stocks>
@@ -12,10 +15,9 @@
 #include <smlib/math>
 
 /* Auto-Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_bot_features/nd_bot_features.txt"
+#define UPDATE_URL "https://github.com/stickz/Redstone/raw/build/updater/nd_bot_features/nd_bot_features.txt"
 #include "updater/standard.sp"
 
-#pragma newdecls required
 #include <nd_team_eng>
 #include <nd_transport_eng>
 #include <nd_redstone>
@@ -45,7 +47,7 @@ public void OnPluginStart()
 {
 	CreatePluginConvars(); // convars.sp
 	RegisterPluginCMDS(); // commands.sp
-	AddUpdaterLibrary(); //auto-updater
+	AddUpdaterLibrary(); // auto-updater
 	
 	// Late-Loading Support
 	if (ND_MapStarted())
@@ -59,17 +61,17 @@ public void OnMapStart() {
 void SetBotValues()
 {
 	SetBotDisableValues(); // convars.sp
-	//SetBotReductionValues(); // convars.sp	
+	//SetBotReductionValues(); // convars.sp
 }
 
-public void OnMapEnd() 
+public void OnMapEnd()
 {
 	disableBots = false;
 	isSwitchingBots = false;
-	SignalMapChange();	
+	SignalMapChange();
 }
 
-public void ND_OnPlayerTeamChanged(int client, bool valid) 
+public void ND_OnPlayerTeamChanged(int client, bool valid)
 {
 	if (valid)
 		CreateTimer(0.5, TIMER_CC, _, TIMER_FLAG_NO_MAPCHANGE);
@@ -101,15 +103,15 @@ void checkCount()
 		
 		// The plugin to get the server slot is available
 		else if (GDSC_AVAILABLE() && g_cvar.EnableFillerQuota.BoolValue)
-		{	
+		{
 			// Get team count difference and team skill difference multiplier
 			int posOverBalance = getPositiveOverBalance();
 			float teamDiffMult = getTeamDiffMult();
 			
 			// If one team has less players than the other
 			if (posOverBalance >= 1)
-			{				
-				quota = getBotFillerQuota(posOverBalance, teamDiffMult); // Get number of bots to fill
+			{
+				quota = getBotFillerQuota(posOverBalance); // Get number of bots to fill
 				
 				// Create a timer after envoking bot quota, to switch bots to the fill team
 				CreateTimer(timerDuration, TIMER_CheckAndSwitchFiller, _, TIMER_FLAG_NO_MAPCHANGE);
@@ -121,7 +123,7 @@ void checkCount()
 				quota = getBotEvenQuota(teamDiffMult); // Get number of bots to fill
 				
 				// Create a timer after envoking bot quota, to switch bots to the fill team
-				CreateTimer(timerDuration, TIMER_CheckAndSwitchEven, _, TIMER_FLAG_NO_MAPCHANGE)			
+				CreateTimer(timerDuration, TIMER_CheckAndSwitchEven, _, TIMER_FLAG_NO_MAPCHANGE);
 			}
 			
 			// Otherwise, set filler quota to 0
@@ -145,7 +147,7 @@ public void ND_OnRoundStarted() {
 
 void InitializeServerBots()
 {
-	int quota = 0;	
+	int quota = 0;
 	
 	// Team count means the requirement for modulous bot quota
 	// Decide which type of modulous quota we're using (boosted or regular)
@@ -156,9 +158,9 @@ void InitializeServerBots()
 	ServerCommand("mp_limitteams %d", g_cvar.RegOverblance.IntValue);
 }
 
-//Turn 32 slots on or off for bot quota
+// Turn 32 slots on or off for bot quota
 void toggleBooster(bool state)
-{	
+{
 	// Exit function if the state is not changing
 	if (visibleBoosted == state)
 		return;
@@ -176,7 +178,7 @@ void toggleBooster(bool state)
 	}
 }
 
-//Disable the 32 slots (if activate) when the map changes
+// Disable the 32 slots (if activate) when the map changes
 void SignalMapChange()
 {
 	toggleBooster(false);
@@ -184,17 +186,17 @@ void SignalMapChange()
 	ServerCommand("mp_limitteams 1");
 }
 
-stock int getBotFillerQuota(int plyDiff, float teamDiffMult)
+stock int getBotFillerQuota(int plyDiff)
 {
 	// Get the team count offset to properly fill the bot quota
 	int specCount = ValidTeamCount(TEAM_SPEC);
 	int teamCount = GetOnTeamCount(specCount);
 	
-	// Set bot count to player count difference ^ x or skill difference ^ x 
-	int add	= RoundPowToNearest(float(plyDiff), g_cvar.BotDiffMult.FloatValue);
+	// Set bot count to player count difference ^ x or skill difference ^ x
+	int add = RoundPowToNearest(float(plyDiff), g_cvar.BotDiffMult.FloatValue);
 	int physical = teamCount + Math_Max(add, 3);
 	
-	// Set a ceiling to be returned, leave two connecting slots	
+	// Set a ceiling to be returned, leave two connecting slots
 	// Determine the maximum bot count to use. Skill difference or player difference.
 	// Limit the bot count to the maximum available on the server. (if required)
 	return Math_Max(physical, GetMaxBotCount(specCount));
@@ -247,12 +249,12 @@ float getTeamDiffMult()
 }
 
 int getBotModulusQuota()
-{	
+{
 	// Get max quota and the current spectator & team count
 	int maxQuota = g_cvar.BoosterQuota.IntValue;
-	int specCount = ValidTeamCount(TEAM_SPEC);	
+	int specCount = ValidTeamCount(TEAM_SPEC);
 	int botAmount = maxQuota - specCount - ValidTeamCount(TEAM_UNASSIGNED);
-		
+	
 	// If required, modulate the bot count so the number is even on the scoreboard
 	return botAmount % 2 != specCount % 2 ? botAmount - 1 : botAmount;
 }
@@ -265,10 +267,10 @@ bool boostBots()
 }
 
 bool CheckShutOffBots()
-{	
+{
 	// Get the empire, consort and total on team count
 	int empireCount = RED_GetTeamCount(TEAM_EMPIRE);
-	int consortCount = RED_GetTeamCount(TEAM_CONSORT);	
+	int consortCount = RED_GetTeamCount(TEAM_CONSORT);
 	
 	// If total count on one or both teams is reached, disable bots
 	bool isTotalDisable = (empireCount + consortCount) >= totalDisable;

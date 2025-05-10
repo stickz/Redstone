@@ -1,16 +1,19 @@
+#pragma semicolon 1
+#pragma newdecls required
+
 #if defined _sourcebans_included
-  #endinput
+	#endinput
 #endif
 #define _sourcebans_included
 
-public SharedPlugin:__pl_sourcebans = 
+public SharedPlugin __pl_sourcebans =
 {
 	name = "SourceBans",
 	file = "sourcebans.smx",
 #if defined REQUIRE_PLUGIN
-    required = 1
+	required = 1
 #else
-    required = 0
+	required = 0
 #endif
 };
 
@@ -21,7 +24,6 @@ public __pl_sourcebans_SetNTVOptional()
 }
 #endif
 
-
 /*********************************************************
  * Ban Player from server
  *
@@ -29,8 +31,6 @@ public __pl_sourcebans_SetNTVOptional()
  * @param target	The client index of the player to ban
  * @param time		The time to ban the player for (in minutes, 0 = permanent)
  * @param reason	The reason to ban the player from the server
- * @noreturn		
+ * @noreturn
  *********************************************************/
-native SBBanPlayer(client, target, time, String:reason[]);
-
-//Yarr!
+native void SBBanPlayer(int client, int target, int time, char[] reason);
