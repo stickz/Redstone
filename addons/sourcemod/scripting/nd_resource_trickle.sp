@@ -10,22 +10,22 @@
 #include <nd_maps>
 #include <nd_team_eng>
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
-	name 		= "[ND] Resource Trickle",
-	author 		= "Stickz",
-	description 	= "Adjusts tertaries to have team trickle amounts",
-	version 	= "dummy",
-	url 		= "https://github.com/stickz/Redstone/"
+	name		= "[ND] Resource Trickle",
+	author		= "Stickz",
+	description	= "Adjusts tertaries to have team trickle amounts",
+	version		= "dummy",
+	url			= "https://github.com/stickz/Redstone/"
 };
 
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_resource_trickle/nd_resource_trickle.txt"
+#define UPDATE_URL "https://github.com/stickz/Redstone/raw/build/updater/nd_resource_trickle/nd_resource_trickle.txt"
 #include "updater/standard.sp"
 
-#define RESOURCE_NOT_TERTIARY 	-1
-#define RESPOINT_NOT_FOUND		-1
-#define RESPOINT_FRACK_FALSE 	0
-#define RESPOINT_FRACK_TRUE 	1
+#define RESOURCE_NOT_TERTIARY		-1
+#define RESPOINT_NOT_FOUND			-1
+#define RESPOINT_FRACK_FALSE		0
+#define RESPOINT_FRACK_TRUE			1
 
 ArrayList listTertiaries;
 ArrayList structTertaries;
@@ -60,10 +60,13 @@ int primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS;
 float primaryFrackingDelay = PRIMARY_FRACKING_DELAY;
 
 // Resource entity lookup functions for tertaries and secondaries
-int Tertiary_FindArrayIndex(int entity) {
-	return structTertaries.FindValue(entity, ResPoint::entIndex);	
+int Tertiary_FindArrayIndex(int entity)
+{
+	return structTertaries.FindValue(entity, ResPoint::entIndex);
 }
-int Secondary_FindArrayIndex(int entity) {
+
+int Secondary_FindArrayIndex(int entity)
+{
 	return structSecondaries.FindValue(entity, ResPoint::entIndex);
 }
 
@@ -88,7 +91,7 @@ public void OnPluginStart()
 		ND_OnResPointsCached();
 }
 
-public void OnMapStart() 
+public void OnMapStart()
 {
 	// Get the current map
 	char currentMap[32];
@@ -110,7 +113,7 @@ public void OnMapStart()
 }
 
 public void ND_OnPlayerTeamChanged(int client, bool valid)
-{	
+{
 	if (ND_RoundStarted())
 		curPlyCount = RED_OnTeamCount();
 }
@@ -122,10 +125,10 @@ public void ND_OnRoundStarted()
 	structTertaries.Clear();
 	listSecondaries.Clear();
 	structSecondaries.Clear();
-	PrimeEntity = -1;	
+	PrimeEntity = -1;
 	structPrimary.Clear();
 	
-	int clientCount = ND_GetClientCount();	
+	int clientCount = ND_GetClientCount();
 	initPlyCount = clientCount;
 	curPlyCount = clientCount;
 }
@@ -150,21 +153,21 @@ public void ND_OnTertairySpawned(int entity, int trigger)
 }
 
 public Action TIMER_SetResPointStructs(Handle timer)
-{	
+{
 	/* Set tertiary resources and initilize teritary structure */
-	for (int t = 0; t < listTertiaries.Length; t++) 
+	for (int t = 0; t < listTertiaries.Length; t++)
 	{
 		int tert = listTertiaries.Get(t);
 		ND_SetCurrentResources(tert, TERTIARY_TRICKLE_SET + TERTIARY_TEAM_TRICKLE);
-	}	
-	initTertairyStructs();		
+	}
+	initTertairyStructs();
 	
 	/* Set secondary resources and initilize secondary structure */
 	for (int s = 0; s < listSecondaries.Length; s++)
 	{
 		int sec = listSecondaries.Get(s);
-		ND_SetCurrentResources(sec, SECONDARY_TRICKLE_SET + SECONDARY_TEAM_TRICKLE);		
-	}	
+		ND_SetCurrentResources(sec, SECONDARY_TRICKLE_SET + SECONDARY_TEAM_TRICKLE);
+	}
 	initSecondaryStructs();
 	
 	/* Set primary resources and initilize primary structure */
@@ -184,7 +187,7 @@ void initTertairyStructs()
 void initSecondaryStructs()
 {
 	for (int s = 0; s < listSecondaries.Length; s++)
-		initNewSecondary(s, listSecondaries.Get(s));	
+		initNewSecondary(s, listSecondaries.Get(s));
 }
 
 void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
@@ -206,10 +209,10 @@ void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
 		{
 			tert.initialRes = TERTIARY_TRICKLE_SET_LRG;
 			tert.empireRes = TERTIARY_TEAM_TRICKLE_LRG;
-			tert.consortRes = TERTIARY_TEAM_TRICKLE_LRG;			
+			tert.consortRes = TERTIARY_TEAM_TRICKLE_LRG;
 		}
 		else
-		{		
+		{
 			tert.initialRes = TERTIARY_TRICKLE_SET;
 			tert.empireRes = TERTIARY_TEAM_TRICKLE;
 			tert.consortRes = TERTIARY_TEAM_TRICKLE;
@@ -223,10 +226,10 @@ void initNewTertiary(int arrIndex, int entIndex, bool fullRes)
 		tert.initialRes = split;
 		tert.empireRes = split;
 		tert.consortRes = split;
-	}	
+	}
 	
 	// Push the teritary object into the struct list
-	structTertaries.PushArray(tert);	
+	structTertaries.PushArray(tert);
 }
 
 void initNewSecondary(int arrIndex, int entIndex)
@@ -242,7 +245,7 @@ void initNewSecondary(int arrIndex, int entIndex)
 	
 	// Don't enable team resource feature or trickle regen for secondaries on corner
 	if (cornerMap)
-	{	
+	{
 		sec.initialRes = RES_SECONDARY_START;
 		sec.empireRes = 0;
 		sec.consortRes = 0;
@@ -252,17 +255,17 @@ void initNewSecondary(int arrIndex, int entIndex)
 	{
 		sec.initialRes = SECONDARY_TRICKLE_SET_LRG;
 		sec.empireRes = SECONDARY_TEAM_TRICKLE_LRG;
-		sec.consortRes = SECONDARY_TEAM_TRICKLE_LRG;	
+		sec.consortRes = SECONDARY_TEAM_TRICKLE_LRG;
 	}
 	// Otherwise, give secondary 40700 inital and 3300 reserved
 	else
 	{
 		sec.initialRes = SECONDARY_TRICKLE_SET;
 		sec.empireRes = SECONDARY_TEAM_TRICKLE;
-		sec.consortRes = SECONDARY_TEAM_TRICKLE;		
+		sec.consortRes = SECONDARY_TEAM_TRICKLE;
 	}
 	
-	structSecondaries.PushArray(sec);	
+	structSecondaries.PushArray(sec);
 }
 
 void initNewPrimary(int entIndex)
@@ -276,7 +279,7 @@ void initNewPrimary(int entIndex)
 	
 	/* Decide based on the map and player count how many resources to prime prime */
 	if (cornerMap) // If corner give prime 40k inital and 40k reserved
-	{	
+	{
 		prime.initialRes = PRIMARY_TRICKLE_SET_CORNER;
 		prime.empireRes = PRIMARY_TEAM_TRICKLE_CORNER;
 		prime.consortRes = PRIMARY_TEAM_TRICKLE_CORNER;
@@ -293,7 +296,7 @@ void initNewPrimary(int entIndex)
 		prime.initialRes = PRIMARY_TRICKLE_SET;
 		prime.empireRes = PRIMARY_TEAM_TRICKLE;
 		prime.consortRes = PRIMARY_TEAM_TRICKLE;
-	}	
+	}
 	
 	prime.timeOwned = 0;
 	
@@ -307,7 +310,7 @@ void SetPrimaryFrackingIntervals()
 	{
 		primaryFrackingAmount = PRIMARY_FRACKING_AMOUNT_FASTER;
 		primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS_FASTER;
-		primaryFrackingDelay = PRIMARY_FRACKING_DELAY_FASTER;	
+		primaryFrackingDelay = PRIMARY_FRACKING_DELAY_FASTER;
 	}
 	
 	else if (coastMap)
@@ -321,8 +324,8 @@ void SetPrimaryFrackingIntervals()
 	{
 		primaryFrackingAmount = PRIMARY_FRACKING_AMOUNT;
 		primaryFrackingSeconds = PRIMARY_FRACKING_SECONDS;
-		primaryFrackingDelay = PRIMARY_FRACKING_DELAY;		
-	}	
+		primaryFrackingDelay = PRIMARY_FRACKING_DELAY;
+	}
 }
 
 void SetFrackingMinPlyCount()
@@ -351,7 +354,7 @@ int GetAverageSpawnRes()
 	
 	// Calculate the average initial resources and return it as an integer
 	float average = float(totalRes) / float(structTertaries.Length);
-	return RoundFloat(average);	
+	return RoundFloat(average);
 }
 
 bool ReduceTrickleRes()
@@ -379,7 +382,7 @@ public Action Event_ResourceCaptured(Event event, const char[] name, bool dontBr
 	switch (type)
 	{
 		case RESOURCE_TERTIARY: Tertiary_Captured(entity, team);
-		case RESOURCE_SECONDARY: Secondary_Captured(entity, team);		
+		case RESOURCE_SECONDARY: Secondary_Captured(entity, team);
 		case RESOURCE_PRIME: Primary_Captured(team);
 	}
 	
@@ -402,11 +405,8 @@ void Primary_Captured(int team)
 	ND_SetPrimeResources(prime.GetRes());
 	
 	// Kill the timer before the next one
-	if (primaryTimer != INVALID_HANDLE && IsValidHandle(primaryTimer))
-	{
-		KillTimer(primaryTimer);
-		primaryTimer = INVALID_HANDLE;	
-	}
+	if (primaryTimer != INVALID_HANDLE && primaryTimer != null)
+		delete primaryTimer;
 	
 	// Since the resource extract event doesn't work, we must use a repeating timer to simulate resource extracts
 	if (prime.owner == TEAM_EMPIRE || prime.owner == TEAM_CONSORT)
@@ -434,11 +434,8 @@ void Secondary_Captured(int entity, int team)
 	ND_SetCurrentResources(sec.entIndex, sec.GetRes());
 	
 	// Kill the timer before creating the next one
-	if (secondaryTimer[arrIndex] != INVALID_HANDLE && IsValidHandle(secondaryTimer[arrIndex]))
-	{
-		KillTimer(secondaryTimer[arrIndex]);
-		secondaryTimer[arrIndex] = INVALID_HANDLE;
-	}
+	if (secondaryTimer[arrIndex] != INVALID_HANDLE && secondaryTimer[arrIndex] != null)
+		delete secondaryTimer[arrIndex];
 	
 	// Since the resource extract event doesn't work, we must use a repeating timer to simulate resource extracts
 	secondaryTimer[arrIndex] = CreateTimer(10.0, TIMER_SecondaryExtract, arrIndex, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
@@ -447,9 +444,9 @@ void Secondary_Captured(int entity, int team)
 void Tertiary_Captured(int entity, int team)
 {
 	// Get the array index of Tertiary, exit if not found
-	int arrIndex = Tertiary_FindArrayIndex(entity);		
+	int arrIndex = Tertiary_FindArrayIndex(entity);
 	if (arrIndex == RESPOINT_NOT_FOUND)
-		return;	
+		return;
 	
 	// Get the tertiary structure from the ArrayList
 	ResPoint tert;
@@ -465,15 +462,12 @@ void Tertiary_Captured(int entity, int team)
 	ND_SetCurrentResources(tert.entIndex, tert.GetRes());
 		
 	// Kill the timer before creating the next one
-	if (tertiaryTimer[arrIndex] != INVALID_HANDLE && IsValidHandle(tertiaryTimer[arrIndex]))
-	{
-		KillTimer(tertiaryTimer[arrIndex]);
-		tertiaryTimer[arrIndex] = INVALID_HANDLE;
-	}
+	if (tertiaryTimer[arrIndex] != INVALID_HANDLE && tertiaryTimer[arrIndex] != null)
+		delete tertiaryTimer[arrIndex];
 		
 	// Since the resource extract event doesn't work, we must use a repeating timer to simulate resource extracts
 	if (tert.owner == TEAM_EMPIRE || tert.owner == TEAM_CONSORT)
-		tertiaryTimer[arrIndex] = CreateTimer(5.0, TIMER_TertiaryExtract, arrIndex, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);	
+		tertiaryTimer[arrIndex] = CreateTimer(5.0, TIMER_TertiaryExtract, arrIndex, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action TIMER_TertiaryExtract(Handle timer, int arrIndex)
@@ -560,7 +554,7 @@ public Action TIMER_SecondaryExtract(Handle timer, int arrIndex)
 	
 	// Update the secondary structure in the ArrayList
 	structSecondaries.SetArray(arrIndex, sec);
-	return Plugin_Continue;	
+	return Plugin_Continue;
 }
 
 public Action TIMER_PrimaryExtract(Handle timer)
@@ -601,22 +595,22 @@ public Action TIMER_PrimaryExtract(Handle timer)
 			prime.firstFrack = RESPOINT_FRACK_FALSE;
 		}
 		
-		// Add the resources to the primary struct and update the prime entity resources		
+		// Add the resources to the primary struct and update the prime entity resources
 		prime.AddRes(prime.owner, primaryFrackingAmount);
-		ND_SetPrimeResources(prime.GetRes());		
+		ND_SetPrimeResources(prime.GetRes());
 	}
 	
 	// Update the primary structure in the ArrayList
-	structPrimary.SetArray(0, prime);	
+	structPrimary.SetArray(0, prime);
 	return Plugin_Continue;
 }
 
 bool ResPointReadyForFrack(ResPoint point, float frackDelay, int resLeft, int interval)
 {
 	if (point.timeOwned > frackDelay * 60.0 && point.GetResTeam(point.owner) <= resLeft &&
-	    (point.owner == TEAM_CONSORT || point.owner == TEAM_EMPIRE) && 
-		 point.timeOwned % interval == 0 && curPlyCount >= frackPlyCount)
-			return true;			
+		(point.owner == TEAM_CONSORT || point.owner == TEAM_EMPIRE) &&
+		point.timeOwned % interval == 0 && curPlyCount >= frackPlyCount)
+			return true;
 			
 	return false;
 }

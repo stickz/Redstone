@@ -15,7 +15,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 /* Auto-Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_commander_chair/nd_commander_chair.txt"
+#define UPDATE_URL "https://github.com/stickz/Redstone/raw/build/updater/nd_commander_chair/nd_commander_chair.txt"
 #include "updater/standard.sp"
 
 #include <sourcemod>
@@ -30,11 +30,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 public Plugin myinfo =
 {
-	name = "[ND] Commander Chair",
-	author = "Stickz",
-	description = "Blocks entering chair until both team gets a commander",
-	version = "dummy",
-	url = "https://github.com/stickz/Redstone/"
+	name		= "[ND] Commander Chair",
+	author		= "Stickz",
+	description	= "Blocks entering chair until both team gets a commander",
+	version		= "dummy",
+	url			= "https://github.com/stickz/Redstone/"
 }
 
 ConVar cvarMinEach;
@@ -54,7 +54,7 @@ Handle PromoteDelayTimer[2] = { INVALID_HANDLE, ...};
 
 public void OnPluginStart()
 {
-	CreatePluginConvars(); // for convars	
+	CreatePluginConvars(); // for convars
 
 	LoadTranslations("nd_common.phrases");
 	LoadTranslations("nd_commander_chair.phrases");
@@ -62,7 +62,7 @@ public void OnPluginStart()
 	AddUpdaterLibrary(); //auto-updater
 	
 	// If the plugin loads late, disable the chair waiting
-	bool rStart = ND_RoundStarted();	
+	bool rStart = ND_RoundStarted();
 	ToggleWaitPromote(rStart);
 	ChairWaitRStartElapsed = rStart;
 }
@@ -74,27 +74,22 @@ public void ND_OnPreRoundStart()
 	ServerCommand("sm_cvar nd_commander_election_time %d", selectTime);
 }
 
-public void ND_OnRoundStarted() 
+public void ND_OnRoundStarted()
 {
 	ToggleWaitPromote(false);
 	ChairWaitRStartElapsed = false;
 	BunkerDelayTimer = CreateTimer(cvarMaxRStart.FloatValue, TIMER_EnterChairRStartDelay, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public void ND_OnRoundEnded() 
+public void ND_OnRoundEnded()
 {
-	if (BunkerDelayTimer != INVALID_HANDLE && IsValidHandle(BunkerDelayTimer))
-	{
-		CloseHandle(BunkerDelayTimer);
-		BunkerDelayTimer = INVALID_HANDLE;
-	}
+	if (BunkerDelayTimer != INVALID_HANDLE && BunkerDelayTimer != null)
+		delete BunkerDelayTimer;
 	
-	for (int h = 0; h < 2; h++) {
-		if (PromoteDelayTimer[h] != INVALID_HANDLE && IsValidHandle(PromoteDelayTimer[h])) 
-		{
-			CloseHandle(PromoteDelayTimer[h]);
-			PromoteDelayTimer[h] = INVALID_HANDLE;
-		}
+	for (int h = 0; h < 2; h++)
+	{
+		if (PromoteDelayTimer[h] != INVALID_HANDLE && PromoteDelayTimer[h] != null)
+			delete PromoteDelayTimer[h];
 	}
 }
 
@@ -126,7 +121,7 @@ public Action TIMER_EnterChairRStartDelay(Handle timer)
 public Action TIMER_EnterChairPromoteDelay(Handle timer, any:userid)
 {
 	// Get client and check if userid is valid
-	int client = GetClientOfUserId(userid);		
+	int client = GetClientOfUserId(userid);
 	if (client == INVALID_USERID)
 		return Plugin_Handled;
 	
@@ -146,7 +141,7 @@ public Action TIMER_EnterChairPromoteDelay(Handle timer, any:userid)
 }
 
 public Action ND_OnCommanderEnterChair(int client, int team)
-{	
+{
 	if (!BothTeamsHadCommander())
 	{
 		// Check if both the wait after round start and the wait after one commander is promoted is active
@@ -163,7 +158,8 @@ public Action ND_OnCommanderEnterChair(int client, int team)
 	return Plugin_Continue;
 }
 
-bool TotalPlayerTresholdReached() {
+bool TotalPlayerTresholdReached()
+{
 	return ND_GetClientCount() >= cvarMinTotal.IntValue;
 }
 
@@ -182,7 +178,8 @@ bool WaitPromotionThresholdReached()
 	return teamThreshold || TotalPlayerTresholdReached();
 }
 
-bool BothTeamsHadCommander() {
+bool BothTeamsHadCommander()
+{
 	return ND_InitialCommandersReady(true) || ND_GetCommanderCount() >= 2;
 }
 
@@ -203,14 +200,14 @@ void CreatePluginConvars()
 {
 	AutoExecConfig_Setup("nd_commander_chair");
 	
-	cvarMinEach		=	AutoExecConfig_CreateConVar("sm_chair_wait_each", "3", "Min number of players on each team to block chair after promotion");
-	cvarMinTeam		=	AutoExecConfig_CreateConVar("sm_chair_block_team", "8", "Min number of players on any team required to block char after round start");
-	cvarMinTotal		=	AutoExecConfig_CreateConVar("sm_chair_block_total", "12", "Min number of total players required to block the command chair");
-	cvarMaxRStart		= 	AutoExecConfig_CreateConVar("sm_chair_max_rstart", "120", "How long to block chair after round start if nobody applies for commander?");
-	cvarMaxPromote		= 	AutoExecConfig_CreateConVar("sm_chair_max_promote", "60", "How long to block chair after promotion if nobody applies for commander?");	
-	cvarMaxPromoteTP	= 	AutoExecConfig_CreateConVar("sm_chair_maxtp_promote", "30", "How long to block chair after promotion when team pick mode is running?");	
-	cvarSelectMin		=	AutoExecConfig_CreateConVar("sm_chair_select_min", "15", "Duration to wait to select commanders, with chair blocking");
-	cvarSelectMax		=	AutoExecConfig_CreateConVar("sm_chair_select_max", "30", "Duration to wait to select commanders, without chair blocks");
+	cvarMinEach			= AutoExecConfig_CreateConVar("sm_chair_wait_each", "3", "Min number of players on each team to block chair after promotion");
+	cvarMinTeam			= AutoExecConfig_CreateConVar("sm_chair_block_team", "8", "Min number of players on any team required to block char after round start");
+	cvarMinTotal		= AutoExecConfig_CreateConVar("sm_chair_block_total", "12", "Min number of total players required to block the command chair");
+	cvarMaxRStart		= AutoExecConfig_CreateConVar("sm_chair_max_rstart", "120", "How long to block chair after round start if nobody applies for commander?");
+	cvarMaxPromote		= AutoExecConfig_CreateConVar("sm_chair_max_promote", "60", "How long to block chair after promotion if nobody applies for commander?");
+	cvarMaxPromoteTP	= AutoExecConfig_CreateConVar("sm_chair_maxtp_promote", "30", "How long to block chair after promotion when team pick mode is running?");
+	cvarSelectMin		= AutoExecConfig_CreateConVar("sm_chair_select_min", "15", "Duration to wait to select commanders, with chair blocking");
+	cvarSelectMax		= AutoExecConfig_CreateConVar("sm_chair_select_max", "30", "Duration to wait to select commanders, without chair blocks");
 	
 	AutoExecConfig_EC_File();
 }

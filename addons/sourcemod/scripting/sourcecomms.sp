@@ -115,9 +115,9 @@ Handle SQLiteDB;
 char DatabasePrefix[10] = "sb";
 
 /* Timer handles */
-Handle g_hPlayerRecheck[MAXPLAYERS + 1] =  { INVALID_HANDLE, ... };
-Handle g_hGagExpireTimer[MAXPLAYERS + 1] =  { INVALID_HANDLE, ... };
-Handle g_hMuteExpireTimer[MAXPLAYERS + 1] =  { INVALID_HANDLE, ... };
+Handle g_hPlayerRecheck[MAXPLAYERS + 1] = { INVALID_HANDLE, ... };
+Handle g_hGagExpireTimer[MAXPLAYERS + 1] = { INVALID_HANDLE, ... };
+Handle g_hMuteExpireTimer[MAXPLAYERS + 1] = { INVALID_HANDLE, ... };
 
 /* Log Stuff */
 #if defined LOG_QUERIES
@@ -260,8 +260,8 @@ public void OnMapEnd()
 
 public void OnClientDisconnect(client)
 {
-	if (g_hPlayerRecheck[client] != INVALID_HANDLE && CloseHandle(g_hPlayerRecheck[client]))
-		g_hPlayerRecheck[client] = INVALID_HANDLE;
+	if (g_hPlayerRecheck[client] != INVALID_HANDLE && g_hPlayerRecheck[client] != null)
+		delete g_hPlayerRecheck[client];
 	
 	CloseMuteExpireTimer(client);
 	CloseGagExpireTimer(client);
@@ -1199,7 +1199,7 @@ public GotDatabase(Handle owner, Handle hndl, const char[] error, any:data)
 	g_DatabaseState = DatabaseState_Connected;
 	g_hDatabase = hndl;
 	
-	// See if the connection is valid.  If not, don't un-mark the caches
+	// See if the connection is valid. If not, don't un-mark the caches
 	// as needing rebuilding, in case the next connection request works.
 	if (!g_hDatabase)
 	{
@@ -1225,7 +1225,7 @@ public GotDatabase(Handle owner, Handle hndl, const char[] error, any:data)
 	// Process queue
 	SQL_TQuery(SQLiteDB, Query_ProcessQueue,
 		"SELECT  id, steam_id, time, start_time, reason, name, admin_id, admin_ip, type \
-        FROM    queue2");
+        FROM     queue2");
 	
 	// Force recheck players
 	ForcePlayersRecheck();
@@ -2209,6 +2209,8 @@ stock ProcessUnBlock(client, targetId = 0, type, char[] sReason = "", const char
 	PrintToServer("ProcessUnBlock(admin: %d, target: %d, type: %d, reason: %s, args: %s)", client, targetId, type, sReason, sArgs);
 	#endif
 	
+	if (sArgs[0]) {} // silent warning fix: symbol is never used: "sArgs"
+	
 	decl target_list[MAXPLAYERS], target_count;
 	bool tn_is_ml;
 	char target_name[MAX_NAME_LENGTH];
@@ -2818,14 +2820,14 @@ stock MarkClientAsGagged(target, time = NOW, length = -1, const char[] adminName
 
 stock CloseMuteExpireTimer(target)
 {
-	if (g_hMuteExpireTimer[target] != INVALID_HANDLE && CloseHandle(g_hMuteExpireTimer[target]))
-		g_hMuteExpireTimer[target] = INVALID_HANDLE;
+	if (g_hMuteExpireTimer[target] != INVALID_HANDLE && g_hMuteExpireTimer[target] != null)
+		delete g_hMuteExpireTimer[target];
 }
 
 stock CloseGagExpireTimer(target)
 {
-	if (g_hGagExpireTimer[target] != INVALID_HANDLE && CloseHandle(g_hGagExpireTimer[target]))
-		g_hGagExpireTimer[target] = INVALID_HANDLE;
+	if (g_hGagExpireTimer[target] != INVALID_HANDLE && g_hGagExpireTimer[target] != null)
+		delete g_hGagExpireTimer[target];
 }
 
 stock CreateMuteExpireTimer(target, remainingTime = 0)
