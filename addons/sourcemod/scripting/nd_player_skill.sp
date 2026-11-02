@@ -30,6 +30,7 @@ enum struct Bools
 	bool tdChange;
 	bool adjustedRookie;
 }
+
 Bools g_Bool;
 
 /* Include various plugin modules */

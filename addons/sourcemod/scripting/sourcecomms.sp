@@ -84,6 +84,7 @@ enum State/* ConfigState */
 	ConfigStateTimes,
 	ConfigStateServers,
 }
+
 enum DatabaseState/* Database connection state */
 {
 	DatabaseState_None = 0,
@@ -141,6 +142,7 @@ enum PeskyPanels
 	viewingGag,
 	viewingList,
 }
+
 int g_iPeskyPanels[MAXPLAYERS + 1][PeskyPanels];
 
 bool g_bPlayerStatus[MAXPLAYERS + 1]; // Player block check status
