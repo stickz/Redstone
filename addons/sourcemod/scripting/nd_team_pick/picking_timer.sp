@@ -7,10 +7,11 @@ void ResetPickTimer(int client)
 {
 	if (lastTimerEnded)
 		lastTimerEnded = false
-	else if (hPickTimerHandler != INVALID_HANDLE && IsValidHandle(hPickTimerHandler))
-		KillTimer(hPickTimerHandler, false);
 	
-	PickTimeRemaining = GetPickingTimeLimit();	
+	if (hPickTimerHandler != INVALID_HANDLE && hPickTimerHandler != null)
+		delete hPickTimerHandler;
+	
+	PickTimeRemaining = GetPickingTimeLimit();
 	hPickTimerHandler = CreateTimer(1.0, TIMER_CountdownPickTime, GetClientUserId(client), TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
 }
 
@@ -25,7 +26,7 @@ public Action TIMER_CountdownPickTime(Handle timer, any:userid)
 	
 	// Get the client from userid, if invalid stop timer
 	int client = GetClientOfUserId(userid);
-	if (client == INVALID_USERID)		
+	if (client == INVALID_USERID)
 		return Plugin_Stop;
 	
 	if (DebugTeamPicking)
@@ -57,7 +58,7 @@ public Action TIMER_CountdownPickTime(Handle timer, any:userid)
 	if (DebugTeamPicking)
 	{
 		char message[64];
-		Format(message, sizeof(message), "TIMER_CountdownPickTime(): counter: %d", PickTimeRemaining);		
+		Format(message, sizeof(message), "TIMER_CountdownPickTime(): counter: %d", PickTimeRemaining);
 		ConsoleToAdmins(message, "b");
 	}
 
@@ -66,8 +67,9 @@ public Action TIMER_CountdownPickTime(Handle timer, any:userid)
 
 bool DisplayPickWarning()
 {
-	switch (PickTimeRemaining) {
-		case 10, 5, 4, 3, 2, 1: return true;	
+	switch (PickTimeRemaining)
+	{
+		case 10, 5, 4, 3, 2, 1: return true;
 	}
 	
 	return false;
@@ -87,7 +89,7 @@ void AutoSelectPlayer(int picker)
 			if (pSkill > highestSkill)
 			{
 				playerToSelect = player;
-				highestSkill = pSkill;				
+				highestSkill = pSkill;
 			}
 		}
 	}
@@ -97,7 +99,7 @@ void AutoSelectPlayer(int picker)
 	
 	// If we found a player, set their team and print their name
 	if (playerToSelect != -1)
-	{		
+	{
 		if (DebugTeamPicking)
 			ConsoleToAdmins( "AutoSelectPlayer(): Found player", "b");
 		
@@ -108,7 +110,7 @@ void AutoSelectPlayer(int picker)
 		// Print the auto assignment to server chat
 		PrintAutoSelected(playerToSelect, team);
 	}
-	else if (DebugTeamPicking) 
+	else if (DebugTeamPicking)
 		ConsoleToAdmins( "AutoSelectPlayer(): Didn't find anybody", "b");
 }
 
@@ -120,13 +122,11 @@ void PrintAutoSelected(int player, int team)
 	char teamName[32];
 	Format(teamName, sizeof(teamName), ND_GetTeamName(team));
 	
-	for (int client = 1; client <= MaxClients; client++) 
+	for (int client = 1; client <= MaxClients; client++)
 	{
 		if (IsClientInGame(client))
 		{
 			PrintToChat(client, "%t", "Auto Selected Join", playerName, teamName);
 		}
-	}		
+	}
 }
-
-

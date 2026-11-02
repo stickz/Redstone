@@ -15,8 +15,8 @@
 #define CONSORT_aIDX 0
 #define EMPIRE_aIDX 1
 
-float GameME_PlayerSkill[MAXPLAYERS+1] = {-1.0,...};
-float GameME_CommanderSkill[MAXPLAYERS+1] = {-1.0,...};
+float GameME_PlayerSkill[MAXPLAYERS+1] = {-1.0, ...};
+float GameME_CommanderSkill[MAXPLAYERS+1] = {-1.0, ...};
 
 float lastAverage = 0.0;
 float lastMedian = 0.0;
@@ -30,6 +30,7 @@ enum struct Bools
 	bool tdChange;
 	bool adjustedRookie;
 }
+
 Bools g_Bool;
 
 /* Include various plugin modules */
@@ -46,15 +47,15 @@ Bools g_Bool;
 
 public Plugin myinfo =
 {
-	name = "[ND] Player Skill Management",
-	author = "Stickz",
-	description = "Finalizes a player's skill level",
-	version = "dummy",
-	url = "https://github.com/stickz/Redstone"
+	name		= "[ND] Player Skill Management",
+	author		= "Stickz",
+	description	= "Finalizes a player's skill level",
+	version		= "dummy",
+	url			= "https://github.com/stickz/Redstone/"
 };
 
 /* Auto-Updater Support */
-#define UPDATE_URL  "https://github.com/stickz/Redstone/raw/build/updater/nd_player_skill/nd_player_skill.txt"
+#define UPDATE_URL "https://github.com/stickz/Redstone/raw/build/updater/nd_player_skill/nd_player_skill.txt"
 #include "updater/standard.sp"
 
 public void OnPluginStart()
@@ -71,34 +72,35 @@ public void OnPluginStart()
 		startSPMTimer();
 }
 
-public void GameME_OnSkillCalculated(int client, float base, float skill) {
-	GameME_PlayerSkill[client] = skill;	
+public void GameME_OnSkillCalculated(int client, float base, float skill)
+{
+	GameME_PlayerSkill[client] = skill;
 	GameME_CommanderSkill[client] = base;
 }
 
-public void ND_OnRoundStarted() {
-	startSPMTimer();	
+public void ND_OnRoundStarted()
+{
+	startSPMTimer();
 }
 
-public void ND_OnRoundEndedEX() 
+public void ND_OnRoundEndedEX()
 {
 	// If the round ended & started this map, reset the client varriables
 	for (int client = 1; client <= MaxClients; client++)
 		resetVarriables(client, false);
 	
 	// If the round ended & started this map, stop the SPM logic timer
-	if (hTimerSPM != INVALID_HANDLE && IsValidHandle(hTimerSPM))
-	{
-		KillTimer(hTimerSPM);
-		hTimerSPM = INVALID_HANDLE;
-	}
+	if (hTimerSPM != INVALID_HANDLE && hTimerSPM != null)
+		delete hTimerSPM;
 }
 
-public void OnClientConnected(int client) {
+public void OnClientConnected(int client)
+{
 	resetVarriables(client);
 }
 
-public void OnClientDisconnect(int client) {
+public void OnClientDisconnect(int client)
+{
 	resetVarriables(client);
 }
 
@@ -124,8 +126,9 @@ void ReloadGameMeSkill()
 	if (!GM_GFS_LOADED() || !GM_GSB_LOADED())
 		return;
 	
-	RED_LOOP_CLIENTS(client) {
-		GameME_PlayerSkill[client] = GameME_GetFinalSkill(client);	
+	RED_LOOP_CLIENTS(client)
+	{
+		GameME_PlayerSkill[client] = GameME_GetFinalSkill(client);
 		GameME_CommanderSkill[client] = GameME_GetSkillBase(client);
 	}
 }
