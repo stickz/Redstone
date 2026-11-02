@@ -130,5 +130,3 @@ void PrintAutoSelected(int player, int team)
 		}
 	}
 }
-
-
